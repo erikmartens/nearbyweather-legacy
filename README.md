@@ -1,8 +1,5 @@
 <p align="center">
-<img src="Resources/app_icon.png" alt="NearbyWeather for iOS" height="256" width="256">
-</p>
-<p align="center">
-<a href="https://itunes.apple.com/app/nearbyweather/id1227313069"><img src="Resources/app_store_badge.svg" alt="Download on the App Store"/></a>
+<img src="Resources/app_icon.png" alt="NearbyWeather for iOS" height="128" width="128">
 </p>
 
 <h1 align="center">NearbyWeather - Open Source Weather</h1>
@@ -12,6 +9,9 @@
 <img src="https://img.shields.io/badge/Platform-iOS%209.0+-lightgrey.svg" alt="Platform: iOS">
 <img src="https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat" alt="License: MIT">
 <a href="https://twitter.com/erik_martens"><img src="https://img.shields.io/badge/Twitter-@erik_martens-blue.svg" alt="Twitter: @erik_martens"/></a>
+</p>
+<p align="center">
+<a href="https://itunes.apple.com/app/nearbyweather/id1227313069"><img src="Resources/app_store_badge.svg" alt="Download on the App Store"/></a>
 </p>
 
 |List View|Map View|Detail View|

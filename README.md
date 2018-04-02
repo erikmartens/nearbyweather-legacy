@@ -1,6 +1,7 @@
 # NearbyWeather - Open Source Weather
 
 ![Language](https://img.shields.io/badge/language-Swift%204-orange.svg)
+<img src="https://img.shields.io/badge/Platform-iOS%209.0+-lightgrey.svg" alt="Platform: iOS">
 ![License](https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat)
 [![](https://img.shields.io/badge/Twitter-@erik_martens-blue.svg)](https://twitter.com/erik_martens)
 

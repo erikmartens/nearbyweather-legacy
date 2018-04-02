@@ -1,17 +1,18 @@
 <p align="center">
-<img src="resources/app_icon.png" alt="NearbyWeather for iOS" height="256" width="256">
+<img src="Resources/app_icon.png" alt="NearbyWeather for iOS" height="256" width="256">
 </p>
 <p align="center">
-<a href="https://itunes.apple.com/app/nearbyweather/id1227313069"><img src="resources/app_store_badge.svg" alt="Download on the App Store"/></a>
+<a href="https://itunes.apple.com/app/nearbyweather/id1227313069"><img src="Resources/app_store_badge.svg" alt="Download on the App Store"/></a>
 </p>
 
 <h1 align="center">NearbyWeather - Open Source Weather</h1>
 
 <p align="center">
-![Language](https://img.shields.io/badge/language-Swift%204-orange.svg)
+<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-4.0-orange.svg?style=flat" alt="Swift"/></a>
 <img src="https://img.shields.io/badge/Platform-iOS%209.0+-lightgrey.svg" alt="Platform: iOS">
-![License](https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat)
-[![](https://img.shields.io/badge/Twitter-@erik_martens-blue.svg)](https://twitter.com/erik_martens)
+<img src="https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat" alt="License: MIT">
+<a href="https://twitter.com/erik_martens"><img src="https://img.shields.io/badge/Twitter-@erik_martens-blue.svg" alt="Twitter: @erik_martens"/></a>
+</p>
 
 |List View|Map View|Detail View|
 |:---:|:---:|:---:|

@@ -1,5 +1,13 @@
-# NearbyWeather - Open Source Weather
+<p align="center">
+<img src="resources/app_icon.png" alt="NearbyWeather for iOS" height="256" width="256">
+</p>
+<p align="center">
+<a href="https://itunes.apple.com/app/nearbyweather/id1227313069"><img src="resources/app_store_badge.svg" alt="Download on the App Store"/></a>
+</p>
 
+<h1 align="center">NearbyWeather - Open Source Weather</h1>
+
+<p align="center">
 ![Language](https://img.shields.io/badge/language-Swift%204-orange.svg)
 <img src="https://img.shields.io/badge/Platform-iOS%209.0+-lightgrey.svg" alt="Platform: iOS">
 ![License](https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat)
@@ -8,6 +16,7 @@
 |List View|Map View|Detail View|
 |:---:|:---:|:---:|
 ![](https://i.imgur.com/Fba7ppE.png) | ![](https://i.imgur.com/fgPbJVx.png) | ![](https://i.imgur.com/MdQJiLj.png)
+</p>
 
 ## About the App
 NearbyWeather is a simple weather app, that provides current weather information for nearby cities, as well for bookmarked locations. NearbyWeather uses the OpenWeatherMap api to download weather data. Additionally the OpenWeatherMaps location database is directly bootstrapped into the app for quick access.

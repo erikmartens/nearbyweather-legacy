@@ -56,6 +56,8 @@ Support is provided at the given support link, including instructions to get sta
 
 ## Future Developments and Goals
 - [Release 2.1](https://github.com/erikmartens/NearbyWeather/projects/1)
-- Integrate Fastlane
-- Integrate XCTests and Travis
-- Integrate Fabric
+- Integrate [Fastlane](https://fastlane.tools)
+- Integrate XCTests and [Travis](https://travis-ci.org)
+- Integrate [Fabric](https://get.fabric.io)
+- Integrate [Swift Lint](https://github.com/realm/SwiftLint)
+- Integrate [R.swift](https://github.com/mac-cain13/R.swift)

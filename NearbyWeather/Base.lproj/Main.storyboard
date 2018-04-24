@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="s4e-Da-pCP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="s4e-Da-pCP">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,10 +20,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="emF-ra-DfX" userLabel="EmptyListOverlay">
-                                <rect key="frame" x="0.0" y="-3382" width="375" height="7432"/>
+                                <rect key="frame" x="0.0" y="208" width="375" height="252"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="GoQ-X0-C04">
-                                        <rect key="frame" x="20" y="0.0" width="335" height="7432.5"/>
+                                        <rect key="frame" x="20" y="0.0" width="335" height="252.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BEa-pQ-8ou">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="103"/>
@@ -44,7 +44,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xn8-ZN-U03">
-                                                <rect key="frame" x="0.0" y="123" width="335" height="7309.5"/>
+                                                <rect key="frame" x="0.0" y="123" width="335" height="129.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Weather Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ty3-Y9-aU0">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
@@ -53,13 +53,13 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather data could not be loaded. Make sure you are connected to the Internet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccx-2t-Xmu">
-                                                        <rect key="frame" x="0.0" y="30.5" width="335" height="7218"/>
+                                                        <rect key="frame" x="0.0" y="30.5" width="335" height="38"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cer-qV-AGC">
-                                                        <rect key="frame" x="0.0" y="7258.5" width="335" height="51"/>
+                                                        <rect key="frame" x="0.0" y="78.5" width="335" height="51"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rhs-0q-gZs">
                                                                 <rect key="frame" x="92.5" y="15" width="150" height="36"/>
@@ -553,13 +553,13 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cloud Cover:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6s4-0c-zud">
-                                                                        <rect key="frame" x="30" y="0.0" width="188" height="20"/>
+                                                                        <rect key="frame" x="30" y="0.0" width="187" height="20"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="73%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5O-i9-OKP">
-                                                                        <rect key="frame" x="228" y="0.0" width="107" height="20"/>
+                                                                        <rect key="frame" x="227" y="0.0" width="108" height="20"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -577,13 +577,13 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Uh-or-qTy">
-                                                                        <rect key="frame" x="30" y="0.0" width="162" height="20"/>
+                                                                        <rect key="frame" x="30" y="0.0" width="161" height="20"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="26%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0JP-S7-swS">
-                                                                        <rect key="frame" x="202" y="0.0" width="133" height="20"/>
+                                                                        <rect key="frame" x="201" y="0.0" width="134" height="20"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -888,7 +888,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fEf-49-wjI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="FeV-Kh-e6R">
-                    <rect key="frame" x="0.0" y="0.0" width="121" height="28"/>
+                    <rect key="frame" x="0.0" y="-1" width="121" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
                         <segment title="First"/>
@@ -898,12 +898,12 @@
                         <action selector="mapTypeSegmentedControlTapped:" destination="QDY-p7-fJq" eventType="valueChanged" id="iWv-bY-xUv"/>
                     </connections>
                 </segmentedControl>
-                <barButtonItem title="Item" id="xQz-jH-Buh">
+                <barButtonItem id="xQz-jH-Buh">
                     <connections>
                         <action selector="focusUserLocationButtonTapped:" destination="QDY-p7-fJq" id="tp2-BT-foL"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Item" id="Ryu-Qk-ojB">
+                <barButtonItem id="Ryu-Qk-ojB">
                     <connections>
                         <action selector="focusBookmarkedLocationButtonTapped:" destination="QDY-p7-fJq" id="IaC-tk-oY9"/>
                     </connections>

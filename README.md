@@ -55,6 +55,7 @@ It therefore otherwise refrains from advanced concepts. The architecture is kept
 Support is provided at the given support link, including instructions to get started with the app. The app's source code is open source. You can download and contribute via GitHub. To learn more about the project, visit the support website.
 
 ## Future Developments
+- [Release 2.0.1](https://github.com/erikmartens/NearbyWeather/projects/2)
 - [Release 2.1](https://github.com/erikmartens/NearbyWeather/projects/1)
 - Integrate [Fastlane](https://fastlane.tools)
 - Integrate XCTests and [Travis](https://travis-ci.org)

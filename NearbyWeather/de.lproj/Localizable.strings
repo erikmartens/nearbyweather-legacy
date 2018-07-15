@@ -55,6 +55,7 @@ LocationsListTVC_MalformedUrlError = "Beim Laden der Wetterdaten ist ein Fehler 
 LocationsListTVC_UnreadableResult = "Beim Laden der Wetterdaten ist ein Fehler aufgetreten. Die Antwort konnte nicht verarbeitet werden.";
 LocationsListTVC_UnauthorizedApiKey = "Beim Laden der Wetterdaten ist ein Fehler aufgetreten. Dein OpenWeatherMap API-Schlüssel ist ungültig.";
 LocationsListTVC_LocationUnavailable = "Beim Laden der Wetterdaten ist ein Fehler aufgetreten. Dein Standort konnte nicht bestimmt werden.";
+LocationsListTVC_LocationDenied = "Sie haben Ihren Standort nicht freigegeben. Nahegelegene Orte konnten nicht bestimmt werden.";
 
 
 // MARK: - WeatherDetailViewController
@@ -146,6 +147,9 @@ OpenWeatherMapCityFilterTVC_SearchBarPlaceholder = "Suche nach Namen";
 OpenWeatherMapCityFilterTVC_FocusOnBookmarkedLocation = "Gespeicherten Ort zentrieren";
 
 // MARK: - General
+
+bookmarked = "Gespeicher";
+nearby = "In der Nähe";
 
 apiKey = "API Schlüssel";
 

@@ -55,6 +55,7 @@ LocationsListTVC_MalformedUrlError = "An error occurred while downloading weathe
 LocationsListTVC_UnreadableResult = "An error occurred while downloading weather data. The response could not be parsed.";
 LocationsListTVC_UnauthorizedApiKey = "An error occurred while downloading weather data. Your OpenWeatherMap API key is invalid.";
 LocationsListTVC_LocationUnavailable = "An error occurred while downloading weather data. Your location could not be determined.";
+LocationsListTVC_LocationDenied = "You have disabled access to your current location. Nearby locations cannot be determined.";
 
 
 // MARK: - WeatherDetailViewController
@@ -146,6 +147,9 @@ OpenWeatherMapCityFilterTVC_SearchBarPlaceholder = "Search by Name";
 OpenWeatherMapCityFilterTVC_FocusOnBookmarkedLocation = "Focus on Bookmarked Location";
 
 // MARK: - General
+
+bookmarked = "Bookmarked";
+nearby = "Nearby";
 
 apiKey = "API Key";
 

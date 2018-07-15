@@ -377,12 +377,26 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nS6-ez-n3P"/>
                     </view>
-                    <navigationItem key="navigationItem" id="6qG-dF-Od0"/>
+                    <navigationItem key="navigationItem" id="6qG-dF-Od0">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="dxg-P4-uoA">
+                            <rect key="frame" x="67.5" y="7.5" width="240" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="First"/>
+                                <segment title="Second"/>
+                            </segments>
+                            <connections>
+                                <action selector="listTypeSegmentedControlTapped:" destination="cxL-TF-plr" eventType="valueChanged" id="Og8-9v-cMo"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
                     <connections>
                         <outlet property="emptyListDescriptionLabel" destination="4Nw-Qq-7X7" id="awE-YN-KeR"/>
                         <outlet property="emptyListImageView" destination="NS3-M3-ypt" id="j5Y-9r-OHx"/>
                         <outlet property="emptyListOverlayContainerView" destination="dCD-Pk-ElR" id="uJB-bX-bgd"/>
                         <outlet property="emptyListTitleLabel" destination="Yjm-ww-Vml" id="Nnn-cL-sAt"/>
+                        <outlet property="listTypeSegmentedControl" destination="dxg-P4-uoA" id="R8O-gV-EVX"/>
                         <outlet property="refreshDateLabel" destination="Zxd-yW-ewy" id="Pvq-Bn-IWB"/>
                         <outlet property="reloadButton" destination="UIc-oz-UI0" id="iur-9C-VlN"/>
                         <outlet property="separatoLineViewHeightConstraint" destination="Q2S-m7-rvZ" id="bLs-6A-Q3i"/>
@@ -391,7 +405,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H2Y-sx-AN6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1391" y="196"/>
+            <point key="canvasLocation" x="1389.5999999999999" y="195.6521739130435"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WcG-7u-hxa">

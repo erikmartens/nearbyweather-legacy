@@ -11,14 +11,23 @@ import MapKit
 import SafariServices
 import RainyRefreshControl
 
+enum ListType {
+    case bookmarked
+    case nearby
+}
+
 class WeatherListViewController: UIViewController {
     
     // MARK: - Properties
     
     private var refreshControl = RainyRefreshControl()
     
+    private var listType: ListType = .bookmarked
+    
     
     // MARK: - Outlets
+    
+    @IBOutlet weak var listTypeSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var separatoLineViewHeightConstraint: NSLayoutConstraint!
@@ -76,6 +85,8 @@ class WeatherListViewController: UIViewController {
     // MARK: - Private Helpers
     
     private func configure() {
+        navigationItem.title = nil
+        
         navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
         navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
         
@@ -86,7 +97,13 @@ class WeatherListViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(WeatherListViewController.updateWeatherData), for: .valueChanged)
         tableView.addSubview(refreshControl)
         tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
+        
+        listTypeSegmentedControl.isHidden = !WeatherDataManager.shared.hasDisplayableData
+        listTypeSegmentedControl.setTitle(R.string.localizable.bookmarked(), forSegmentAt: 0)
+        listTypeSegmentedControl.setTitle(R.string.localizable.nearby(), forSegmentAt: 1)
+        
         emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData
+        
         separatoLineViewHeightConstraint.constant = 1/UIScreen.main.scale
     }
     
@@ -119,7 +136,7 @@ class WeatherListViewController: UIViewController {
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .short
             let dateString = dateFormatter.string(from: lastRefreshDate)
-            let title = String(format: NSLocalizedString("LocationsListTVC_LastRefresh", comment: ""), dateString)
+            let title = R.string.localizable.locationsListTVC_LastRefresh(dateString)
             refreshDateLabel.text = title
             refreshDateLabel.isHidden = false
         } else {
@@ -153,6 +170,16 @@ class WeatherListViewController: UIViewController {
     
     
     // MARK: - Button Interaction
+    
+    @IBAction func listTypeSegmentedControlTapped(_ sender: UISegmentedControl) {
+        let index = sender.selectedSegmentIndex
+        switch index {
+        case 0: listType = .bookmarked
+        case 1: listType = .nearby
+        default: break
+        }
+        tableView.reloadData()
+    }
 
     @IBAction func didTapReloadButton(_ sender: UIButton) {
         updateWeatherData()
@@ -186,31 +213,14 @@ extension WeatherListViewController: UITableViewDelegate {
 extension WeatherListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if !WeatherDataManager.shared.hasDisplayableData
-            || WeatherDataManager.shared.apiKeyUnauthorized {
-            return nil
-        }
-        switch section {
-        case 0:
-            return NSLocalizedString("LocationsListTVC_TableViewSectionHeader1", comment: "")
-        case 1:
-            return NSLocalizedString("LocationsListTVC_TableViewSectionHeader2", comment: "")
-        default:
-            return nil
-        }
+       return nil
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         if !WeatherDataManager.shared.hasDisplayableData {
             return 0
         }
-        if !LocationService.shared.locationPermissionsGranted
-            || WeatherDataManager.shared.bookmarkedWeatherDataObjects == nil
-            || WeatherDataManager.shared.nearbyWeatherDataObject == nil
-            || WeatherDataManager.shared.apiKeyUnauthorized {
-            return 1
-        }
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -220,15 +230,15 @@ extension WeatherListViewController: UITableViewDataSource {
         if WeatherDataManager.shared.apiKeyUnauthorized {
             return 1
         }
-        switch section {
-        case 0:
+        switch listType {
+        case .bookmarked:
             if WeatherDataManager.shared.bookmarkedWeatherDataObjects == nil {
                 return 0
             }
             return WeatherDataManager.shared.bookmarkedWeatherDataObjects?.count ?? 1
-        case 1:
+        case .nearby:
             if !LocationService.shared.locationPermissionsGranted {
-                return 0
+                return 1
             }
             if WeatherDataManager.shared.nearbyWeatherDataObject == nil {
                 return 0
@@ -254,23 +264,26 @@ extension WeatherListViewController: UITableViewDataSource {
             return alertCell
         }
         
-        switch indexPath.section {
-        case 0:
+        switch listType {
+        case .bookmarked:
             guard let weatherDTO = WeatherDataManager.shared.bookmarkedWeatherDataObjects?[indexPath.row].weatherInformationDTO else {
                     alertCell.configureWithErrorDataDTO(WeatherDataManager.shared.bookmarkedWeatherDataObjects?[indexPath.row].errorDataDTO)
                     return alertCell
             }
             weatherCell.configureWithWeatherDTO(weatherDTO)
             return weatherCell
-        case 1:
+        case .nearby:
+            if !LocationService.shared.locationPermissionsGranted {
+                let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .locationAccessDenied), httpStatusCode: nil)
+                alertCell.configureWithErrorDataDTO(errorDataDTO)
+                return alertCell
+            }
             guard let weatherDTO = WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?[indexPath.row] else {
                 alertCell.configureWithErrorDataDTO(WeatherDataManager.shared.nearbyWeatherDataObject?.errorDataDTO)
                 return alertCell
             }
             weatherCell.configureWithWeatherDTO(weatherDTO)
             return weatherCell
-        default:
-            return UITableViewCell()
         }
     }
     

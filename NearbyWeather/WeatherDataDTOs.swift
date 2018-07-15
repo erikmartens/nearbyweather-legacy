@@ -169,6 +169,7 @@ public class ErrorType: Codable {
         case jsonSerializationError
         case unrecognizedApiKeyError
         case locationUnavailableError
+        case locationAccessDenied
     }
 }
 

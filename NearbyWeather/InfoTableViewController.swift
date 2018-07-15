@@ -18,6 +18,7 @@ class InfoTableViewController: UITableViewController {
                                                     CocoaPodMeta(name: "FMDB", urlString: "https://github.com/ccgus/fmdb"),
                                                     CocoaPodMeta(name: "PKHUD", urlString: "https://github.com/pkluz/PKHUD"),
                                                     CocoaPodMeta(name: "RainyRefreshControl", urlString: "https://github.com/Onix-Systems/RainyRefreshControl"),
+                                                    CocoaPodMeta(name: "R.swift", urlString: "https://github.com/mac-cain13/R.swift"),
                                                     CocoaPodMeta(name: "TextFieldCounter", urlString: "https://github.com/serralvo/TextFieldCounter")]
     
     struct Contributor { var name: String; var subtitle: String }

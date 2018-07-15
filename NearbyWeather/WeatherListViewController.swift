@@ -56,7 +56,6 @@ class WeatherListViewController: UIViewController {
         configure()
         tableView.reloadData()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(WeatherListViewController.reconfigureOnDidAppBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(WeatherListViewController.reconfigureOnWeatherDataServiceDidUpdate), name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: nil)
         
         if !WeatherDataManager.shared.hasDisplayableData {
@@ -98,17 +97,9 @@ class WeatherListViewController: UIViewController {
         tableView.addSubview(refreshControl)
         tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
         
-        listTypeSegmentedControl.isHidden = !WeatherDataManager.shared.hasDisplayableData
-        listTypeSegmentedControl.setTitle(R.string.localizable.bookmarked(), forSegmentAt: 0)
-        listTypeSegmentedControl.setTitle(R.string.localizable.nearby(), forSegmentAt: 1)
-        
         emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData
         
         separatoLineViewHeightConstraint.constant = 1/UIScreen.main.scale
-    }
-    
-    @objc private func reconfigureOnDidAppBecomeActive() {
-        configureButtons()
     }
     
     @objc private func reconfigureOnWeatherDataServiceDidUpdate() {
@@ -145,13 +136,18 @@ class WeatherListViewController: UIViewController {
     }
     
     private func configureButtons() {
-        reloadButton.setTitle(NSLocalizedString("Reload", comment: "").uppercased(), for: .normal)
-        reloadButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
-        reloadButton.layer.cornerRadius = 5.0
-        reloadButton.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor
-        reloadButton.layer.borderWidth = 1.0
-        
         reloadButton.isHidden = NetworkingService.shared.reachabilityStatus != .connected
+        if !reloadButton.isHidden {
+            reloadButton.setTitle(NSLocalizedString("Reload", comment: "").uppercased(), for: .normal)
+            reloadButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
+            reloadButton.layer.cornerRadius = 5.0
+            reloadButton.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor
+            reloadButton.layer.borderWidth = 1.0
+        }
+        
+        listTypeSegmentedControl.isHidden = !WeatherDataManager.shared.hasDisplayableData
+        listTypeSegmentedControl.setTitle(R.string.localizable.bookmarked(), forSegmentAt: 0)
+        listTypeSegmentedControl.setTitle(R.string.localizable.nearby(), forSegmentAt: 1)
     }
     
     @objc private func updateWeatherData() {
@@ -159,6 +155,7 @@ class WeatherListViewController: UIViewController {
         WeatherDataManager.shared.update(withCompletionHandler: {
             DispatchQueue.main.async {
                 self.refreshControl.endRefreshing()
+                self.configureButtons()
                 self.tableView.reloadData()
             }
         })
@@ -195,6 +192,7 @@ class WeatherListViewController: UIViewController {
         } else {
             safariController.view.tintColor = .nearbyWeatherStandard
         }
+        safariController.modalPresentationStyle = .overFullScreen
         present(safariController, animated: true, completion: nil)
     }
 }

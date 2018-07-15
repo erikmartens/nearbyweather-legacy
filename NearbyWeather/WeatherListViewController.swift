@@ -28,9 +28,6 @@ class WeatherListViewController: UIViewController {
     @IBOutlet weak var emptyListTitleLabel: UILabel!
     @IBOutlet weak var emptyListDescriptionLabel: UILabel!
     
-    @IBOutlet weak var mapButton: UIBarButtonItem!
-    @IBOutlet weak var settingsButton: UIBarButtonItem!
-    
     @IBOutlet weak var reloadButton: UIButton!
     
     
@@ -130,13 +127,6 @@ class WeatherListViewController: UIViewController {
     }
     
     private func configureButtons() {
-        let weatherDataAvailable = WeatherDataManager.shared.hasDisplayableWeatherData
-        
-        mapButton.isEnabled = weatherDataAvailable
-        mapButton.tintColor = weatherDataAvailable ? .white : .darkGray
-        
-        settingsButton.tintColor = .white
-        
         reloadButton.setTitle(NSLocalizedString("Reload", comment: "").uppercased(), for: .normal)
         reloadButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
         reloadButton.layer.cornerRadius = 5.0
@@ -162,22 +152,6 @@ class WeatherListViewController: UIViewController {
     
     
     // MARK: - Button Interaction
-    
-    @IBAction func didTapSettingsButton(_ sender: UIBarButtonItem) {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "SettingsTVC") as! SettingsTableViewController
-        let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
-        destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
-        navigationController?.present(destinationNavigationController, animated: true, completion: nil)
-    }
-    
-    @IBAction func didTapMapButton(_ sender: UIBarButtonItem) {
-        let storyboard = UIStoryboard(name: "Weather", bundle: nil)
-        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "NearbyLocationsMapViewController") as! NearbyLocationsMapViewController
-        let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
-        destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
-        navigationController?.present(destinationNavigationController, animated: true, completion: nil)
-    }
 
     @IBAction func didTapReloadButton(_ sender: UIButton) {
         updateWeatherData()

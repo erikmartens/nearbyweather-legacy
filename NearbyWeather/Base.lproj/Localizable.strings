@@ -6,6 +6,12 @@
  Copyright © 2016 Erik Maximilian Martens. All rights reserved.
  */
 
+// MARK: - TabBar
+
+tab_weatherList = "List";
+tab_weatherMap = "Map";
+tab_settings = "Settings";
+
 
 // MARK: - WelcomeScreenViewController
 

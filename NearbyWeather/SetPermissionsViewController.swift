@@ -87,13 +87,9 @@ class SetPermissionsViewController: UIViewController {
         warningImageView.animatePulse(withAnimationDelegate: self)
     }
     
-    @objc func launchApp() {        
-        WeatherDataManager.instantiateSharedInstance()
-        
-        let storyboard = UIStoryboard(name: "Weather", bundle: nil)
-        let destinationViewController = storyboard.instantiateInitialViewController()
-        
-        UIApplication.shared.keyWindow?.rootViewController = destinationViewController
+    // TODO:
+    @objc func launchApp() {
+        (navigationController as? WelcomeNavigationController)?.welcomeNavigationDelegate?.dismissSplashScreen()
     }
     
     

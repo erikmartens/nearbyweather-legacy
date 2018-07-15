@@ -32,21 +32,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /* Weather List Controller */
         let weatherListNav = R.storyboard.list().instantiateInitialViewController()
         let weatherList = (weatherListNav as? UINavigationController)?.viewControllers.first as? WeatherListViewController
-        weatherList?.title = R.string.localizable.tab_weatherList()
+        weatherList?.title = R.string.localizable.tab_weatherList().uppercased()
         weatherList?.tabBarItem.selectedImage = R.image.cloudCoverFilled()
         weatherList?.tabBarItem.image = R.image.cloudCoverFilled()
         
         /* Map Controller */
         let mapNav = R.storyboard.map().instantiateInitialViewController()
         let map = (mapNav as? UINavigationController)?.viewControllers.first as? NearbyLocationsMapViewController
-        map?.title = R.string.localizable.tab_weatherMap()
+        map?.title = R.string.localizable.tab_weatherMap().uppercased()
         map?.tabBarItem.selectedImage = R.image.map()
         map?.tabBarItem.image = R.image.map()
 
         /* Settings Controller */
         let settingsNav = R.storyboard.settings().instantiateInitialViewController()
         let settings = (settingsNav as? UINavigationController)?.viewControllers.first as? SettingsTableViewController
-        settings?.title = R.string.localizable.tab_settings()
+        settings?.title = R.string.localizable.tab_settings().uppercased()
         settings?.tabBarItem.selectedImage = R.image.settings()
         settings?.tabBarItem.image = R.image.settings()
 

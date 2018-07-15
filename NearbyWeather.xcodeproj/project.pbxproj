@@ -23,6 +23,7 @@
 		F26699581E9AD0F100498F99 /* WeatherDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699571E9AD0F100498F99 /* WeatherDataManager.swift */; };
 		F266995A1E9ADBC300498F99 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699591E9ADBC300498F99 /* LocationService.swift */; };
 		F26A6D5920FB687C0033BC49 /* Weather.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F26A6D5820FB687C0033BC49 /* Weather.storyboard */; };
+		F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26A6D5D20FB6E610033BC49 /* R.generated.swift */; };
 		F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254B2032051F00A1DBD1 /* ButtonCell.swift */; };
 		F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */; };
 		F274FC37202D005800049144 /* NotificationCenterKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC36202D005800049144 /* NotificationCenterKeys.swift */; };
@@ -105,6 +106,7 @@
 		F26699571E9AD0F100498F99 /* WeatherDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
 		F26699591E9ADBC300498F99 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		F26A6D5820FB687C0033BC49 /* Weather.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Weather.storyboard; sourceTree = "<group>"; };
+		F26A6D5D20FB6E610033BC49 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		F273254B2032051F00A1DBD1 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		F274FC36202D005800049144 /* NotificationCenterKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterKeys.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 		F204B7791DF2EFA3000F4371 /* NearbyWeather */ = {
 			isa = PBXGroup;
 			children = (
+				F26A6D5C20FB6E520033BC49 /* External */,
 				F2FE3EFB20027DE600EBC429 /* Bootsrapped Data */,
 				F28CA547202CE83700209397 /* Services */,
 				F266995C1E9AE23900498F99 /* Model */,
@@ -286,6 +289,14 @@
 				F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		F26A6D5C20FB6E520033BC49 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				F26A6D5D20FB6E610033BC49 /* R.generated.swift */,
+			);
+			name = External;
 			sourceTree = "<group>";
 		};
 		F28CA5422027AE9B00209397 /* Custom Objects */ = {
@@ -377,6 +388,7 @@
 			buildConfigurationList = F204B79F1DF2EFA3000F4371 /* Build configuration list for PBXNativeTarget "NearbyWeather" */;
 			buildPhases = (
 				1590338BD2860479FB938C6A /* [CP] Check Pods Manifest.lock */,
+				F26A6D5B20FB6DFA0033BC49 /* R.Swift Generate File */,
 				F204B7731DF2EFA3000F4371 /* Sources */,
 				F204B7741DF2EFA3000F4371 /* Frameworks */,
 				F204B7751DF2EFA3000F4371 /* Resources */,
@@ -644,6 +656,20 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F26A6D5B20FB6DFA0033BC49 /* R.Swift Generate File */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "R.Swift Generate File";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -661,6 +687,7 @@
 				F2FE3F01200285B100EBC429 /* WeatherLocationService.swift in Sources */,
 				F266995A1E9ADBC300498F99 /* LocationService.swift in Sources */,
 				F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */,
+				F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */,
 				F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */,
 				F2B8EA061EA2893C00704E90 /* WelcomeScreenViewController.swift in Sources */,
 				F28CA53F2026285000209397 /* UserDefaultsKeys.swift in Sources */,

@@ -97,38 +97,60 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="vHU-c0-y50">
-                                    <rect key="frame" x="0.0" y="258.5" width="375" height="41"/>
+                                    <rect key="frame" x="0.0" y="258.5" width="375" height="61"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4Z-wx-c41" userLabel="Line View">
-                                            <rect key="frame" x="20" y="0.0" width="335" height="1"/>
-                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="Q2S-m7-rvZ"/>
-                                            </constraints>
-                                        </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Xe-7R-osm">
-                                            <rect key="frame" x="135.5" y="21" width="104" height="10"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="10" id="ZLa-5y-fGw"/>
-                                                <constraint firstAttribute="width" secondItem="8Xe-7R-osm" secondAttribute="height" multiplier="207:20" id="eHt-pf-SMl"/>
-                                            </constraints>
-                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" image="OpenWeatherMapLogo"/>
-                                            <connections>
-                                                <action selector="openWeatherMapButtonPressed:" destination="cxL-TF-plr" eventType="touchUpInside" id="Uq2-g6-O2h"/>
-                                            </connections>
-                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ujx-CJ-GVk">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="51"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4Z-wx-c41" userLabel="Line View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="1"/>
+                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="Q2S-m7-rvZ"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Refresh: 01.01.2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxd-yW-ewy" userLabel="RefreshDatelabel">
+                                                    <rect key="frame" x="0.0" y="11" width="343" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="p58-hq-MZz"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2xa-TC-tnT">
+                                                    <rect key="frame" x="0.0" y="41" width="343" height="10"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Xe-7R-osm">
+                                                            <rect key="frame" x="120" y="0.0" width="103.5" height="10"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="10" id="ZLa-5y-fGw"/>
+                                                                <constraint firstAttribute="width" secondItem="8Xe-7R-osm" secondAttribute="height" multiplier="207:20" id="eHt-pf-SMl"/>
+                                                            </constraints>
+                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal" image="OpenWeatherMapLogo"/>
+                                                            <connections>
+                                                                <action selector="openWeatherMapButtonPressed:" destination="cxL-TF-plr" eventType="touchUpInside" id="Uq2-g6-O2h"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="8Xe-7R-osm" secondAttribute="bottom" id="3nE-ef-TlT"/>
+                                                        <constraint firstItem="8Xe-7R-osm" firstAttribute="top" secondItem="2xa-TC-tnT" secondAttribute="top" id="HDv-hC-McE"/>
+                                                        <constraint firstItem="8Xe-7R-osm" firstAttribute="centerX" secondItem="2xa-TC-tnT" secondAttribute="centerX" id="I8n-Wb-RGI"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="8Xe-7R-osm" secondAttribute="bottom" constant="10" id="Nxl-fd-DNH"/>
-                                        <constraint firstItem="8Xe-7R-osm" firstAttribute="top" secondItem="vHU-c0-y50" secondAttribute="top" constant="21" id="O5c-gY-b55"/>
-                                        <constraint firstItem="S4Z-wx-c41" firstAttribute="centerX" secondItem="vHU-c0-y50" secondAttribute="centerX" id="Uwi-Ac-UWH"/>
-                                        <constraint firstItem="8Xe-7R-osm" firstAttribute="centerX" secondItem="vHU-c0-y50" secondAttribute="centerX" id="fyp-Nf-4vG"/>
-                                        <constraint firstItem="S4Z-wx-c41" firstAttribute="leading" secondItem="vHU-c0-y50" secondAttribute="leading" constant="20" id="hr3-4U-y1P"/>
-                                        <constraint firstItem="S4Z-wx-c41" firstAttribute="top" secondItem="vHU-c0-y50" secondAttribute="top" id="qAI-9Y-mOa"/>
-                                        <constraint firstAttribute="trailing" secondItem="S4Z-wx-c41" secondAttribute="trailing" constant="20" id="xb0-Bt-EFv"/>
+                                        <constraint firstItem="Ujx-CJ-GVk" firstAttribute="top" secondItem="vHU-c0-y50" secondAttribute="top" id="7l1-dL-TSv"/>
+                                        <constraint firstItem="Ujx-CJ-GVk" firstAttribute="leading" secondItem="vHU-c0-y50" secondAttribute="leading" constant="16" id="Cd9-gI-H9a"/>
+                                        <constraint firstAttribute="bottom" secondItem="Ujx-CJ-GVk" secondAttribute="bottom" constant="10" id="fl6-IZ-wSz"/>
+                                        <constraint firstAttribute="trailing" secondItem="Ujx-CJ-GVk" secondAttribute="trailing" constant="16" id="muS-kT-eyR"/>
                                     </constraints>
                                 </view>
                                 <prototypes>
@@ -361,6 +383,7 @@
                         <outlet property="emptyListImageView" destination="NS3-M3-ypt" id="j5Y-9r-OHx"/>
                         <outlet property="emptyListOverlayContainerView" destination="dCD-Pk-ElR" id="uJB-bX-bgd"/>
                         <outlet property="emptyListTitleLabel" destination="Yjm-ww-Vml" id="Nnn-cL-sAt"/>
+                        <outlet property="refreshDateLabel" destination="Zxd-yW-ewy" id="Pvq-Bn-IWB"/>
                         <outlet property="reloadButton" destination="UIc-oz-UI0" id="iur-9C-VlN"/>
                         <outlet property="separatoLineViewHeightConstraint" destination="Q2S-m7-rvZ" id="bLs-6A-Q3i"/>
                         <outlet property="tableView" destination="W1m-KA-D3D" id="ZN0-WM-ziz"/>

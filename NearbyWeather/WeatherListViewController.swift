@@ -22,6 +22,7 @@ class WeatherListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var separatoLineViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var refreshDateLabel: UILabel!
     
     @IBOutlet weak var emptyListOverlayContainerView: UIView!
     @IBOutlet weak var emptyListImageView: UIImageView!
@@ -78,7 +79,7 @@ class WeatherListViewController: UIViewController {
         navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
         navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
         
-        configureNavigationTitle()
+        configureLastRefreshDate()
         configureButtons()
         configureWeatherDataUnavailableElements()
         
@@ -94,7 +95,7 @@ class WeatherListViewController: UIViewController {
     }
     
     @objc private func reconfigureOnWeatherDataServiceDidUpdate() {
-        configureNavigationTitle()
+        configureLastRefreshDate()
         configureButtons()
         tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
         tableView.reloadData()
@@ -112,17 +113,17 @@ class WeatherListViewController: UIViewController {
         emptyListDescriptionLabel.text = NSLocalizedString("LocationsListTVC_EmptyListDescription", comment: "")
     }
     
-    private func configureNavigationTitle() {
-        let title = "NearbyWeather"
+    private func configureLastRefreshDate() {
         if let lastRefreshDate = UserDefaults.standard.object(forKey: kWeatherDataLastRefreshDateKey) as? Date {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .short
             let dateString = dateFormatter.string(from: lastRefreshDate)
-            let subtitle = String(format: NSLocalizedString("LocationsListTVC_LastRefresh", comment: ""), dateString)
-            navigationItem.setTitle(title, andSubtitle: subtitle)
+            let title = String(format: NSLocalizedString("LocationsListTVC_LastRefresh", comment: ""), dateString)
+            refreshDateLabel.text = title
+            refreshDateLabel.isHidden = false
         } else {
-            navigationItem.title = title
+            refreshDateLabel.isHidden = true
         }
     }
     

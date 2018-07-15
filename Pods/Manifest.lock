@@ -5,6 +5,9 @@ PODS:
     - FMDB/standard (= 2.7.2)
   - FMDB/standard (2.7.2)
   - PKHUD (5.0.0)
+  - R.swift (4.0.0):
+    - R.swift.Library (~> 4.0.0)
+  - R.swift.Library (4.0.0)
   - RainyRefreshControl (0.4.0)
   - TextFieldCounter (1.0.1)
 
@@ -13,6 +16,7 @@ DEPENDENCIES:
   - APTimeZones (from `https://github.com/Alterplay/APTimeZones.git`, commit `9ffd147`, branch `master`)
   - FMDB (~> 2.6)
   - PKHUD (~> 5.0)
+  - R.swift
   - RainyRefreshControl (~> 0.4)
   - TextFieldCounter (from `https://github.com/serralvo/TextFieldCounter.git`, commit `4a746ad`, branch `master`)
 
@@ -39,9 +43,11 @@ SPEC CHECKSUMS:
   APTimeZones: ddb9aca50fff41d6313eb29d86d37b1edf9d2942
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
   PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
+  R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
+  R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   RainyRefreshControl: de2236ad2f46d6cfb22bf029e0067b48cdcb2925
   TextFieldCounter: de9550356d9ad86fff29e817587e8ac2d7705003
 
-PODFILE CHECKSUM: abb597c9b11836ae97005da5cbc20d6402093fe6
+PODFILE CHECKSUM: 48d00b29498cf545ad52c472177f771ceb510664
 
 COCOAPODS: 1.4.0

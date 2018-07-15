@@ -172,7 +172,7 @@ class WeatherListViewController: UIViewController {
     }
     
     @IBAction func didTapMapButton(_ sender: UIBarButtonItem) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Weather", bundle: nil)
         let destinationViewController = storyboard.instantiateViewController(withIdentifier: "NearbyLocationsMapViewController") as! NearbyLocationsMapViewController
         let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
         destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)

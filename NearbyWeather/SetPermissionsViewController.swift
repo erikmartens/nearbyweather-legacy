@@ -90,7 +90,7 @@ class SetPermissionsViewController: UIViewController {
     @objc func launchApp() {        
         WeatherDataManager.instantiateSharedInstance()
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Weather", bundle: nil)
         let destinationViewController = storyboard.instantiateInitialViewController()
         
         UIApplication.shared.keyWindow?.rootViewController = destinationViewController

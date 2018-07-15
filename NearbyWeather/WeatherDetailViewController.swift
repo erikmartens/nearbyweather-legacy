@@ -15,7 +15,7 @@ import MapKit
 class WeatherDetailViewController: UIViewController {
     
     static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailViewController {
-        let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "WeatherDetailViewController") as! WeatherDetailViewController
+        let viewController = UIStoryboard(name: "Weather", bundle: .main).instantiateViewController(withIdentifier: "WeatherDetailViewController") as! WeatherDetailViewController
         viewController.titleString = title
         viewController.weatherDTO = weatherDTO
         return viewController

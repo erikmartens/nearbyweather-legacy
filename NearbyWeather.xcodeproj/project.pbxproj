@@ -22,6 +22,7 @@
 		F260C4431F9D4883000D2BC0 /* UINavigationControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260C4421F9D4883000D2BC0 /* UINavigationControllerExtensions.swift */; };
 		F26699581E9AD0F100498F99 /* WeatherDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699571E9AD0F100498F99 /* WeatherDataManager.swift */; };
 		F266995A1E9ADBC300498F99 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699591E9ADBC300498F99 /* LocationService.swift */; };
+		F26A6D5920FB687C0033BC49 /* Weather.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F26A6D5820FB687C0033BC49 /* Weather.storyboard */; };
 		F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254B2032051F00A1DBD1 /* ButtonCell.swift */; };
 		F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */; };
 		F274FC37202D005800049144 /* NotificationCenterKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC36202D005800049144 /* NotificationCenterKeys.swift */; };
@@ -103,6 +104,7 @@
 		F260C4421F9D4883000D2BC0 /* UINavigationControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationControllerExtensions.swift; sourceTree = "<group>"; };
 		F26699571E9AD0F100498F99 /* WeatherDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
 		F26699591E9ADBC300498F99 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		F26A6D5820FB687C0033BC49 /* Weather.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Weather.storyboard; sourceTree = "<group>"; };
 		F273254B2032051F00A1DBD1 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		F274FC36202D005800049144 /* NotificationCenterKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterKeys.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				F204B77E1DF2EFA3000F4371 /* Main.storyboard */,
 				F2B8EA031EA286F000704E90 /* Welcome.storyboard */,
 				F28DA85E203B999400879E6C /* Settings.storyboard */,
+				F26A6D5820FB687C0033BC49 /* Weather.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F204B7851DF2EFA3000F4371 /* LaunchScreen.storyboard in Resources */,
+				F26A6D5920FB687C0033BC49 /* Weather.storyboard in Resources */,
 				F204B7B01DF2F1BC000F4371 /* Localizable.strings in Resources */,
 				F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */,
 				F28DA85F203B999400879E6C /* Settings.storyboard in Resources */,

@@ -199,13 +199,7 @@ class WeatherDetailViewController: UIViewController {
         guard let url = URL(string: "https://openweathermap.org/find?q=\(weatherDTO.cityName)") else {
                 return
         }
-        let safariController = SFSafariViewController(url: url)
-        if #available(iOS 10, *) {
-            safariController.preferredControlTintColor = .nearbyWeatherStandard
-        } else {
-            safariController.view.tintColor = .nearbyWeatherStandard
-        }
-        present(safariController, animated: true, completion: nil)
+        presentSafariViewController(for: url)
     }
 }
 

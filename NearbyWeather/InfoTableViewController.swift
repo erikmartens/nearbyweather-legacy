@@ -80,8 +80,10 @@ class InfoTableViewController: UITableViewController {
         if indexPath.section == 3 {
             urlStringValue = InfoTableViewController.cocoaPods[indexPath.row].urlString
         }
-        
-        presentSafariViewController(forUrlString: urlStringValue)
+        guard let urlString = urlStringValue, let url = URL(string: urlString) else {
+            return
+        }
+        presentSafariViewController(for: url)
     }
     
     
@@ -138,8 +140,12 @@ class InfoTableViewController: UITableViewController {
                                      leftButtonTitle: NSLocalizedString("viaGitHub", comment: ""),
                                      rightButtonTitle: NSLocalizedString("viaEmail", comment: ""),
                                      leftButtonHandler: { [unowned self] button in
-                                        let urlString = "https://github.com/erikmartens/NearbyWeather/issues"
-                                        self.presentSafariViewController(forUrlString: urlString)
+                                        guard let url = URL(string: "https://github.com/erikmartens/NearbyWeather/issues") else {
+                                            return
+                                        }
+                                        DispatchQueue.main.async {
+                                            self.presentSafariViewController(for: url)
+                                        }
                 },
                                      rightButtonHandler: { [unowned self] button in
                                         let mailAddress = "erikmartens.developer@gmail.com"
@@ -186,22 +192,6 @@ class InfoTableViewController: UITableViewController {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "#UNDEFINED"
         let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "#UNDEFINED"
         appVersionLabel.text = "Version \(appVersion) Build #\(appBuild)"
-    }
-    
-    private func presentSafariViewController(forUrlString urlString: String?) {
-        guard let urlString = urlString,
-            let url = URL(string: urlString) else {
-                return
-        }
-        DispatchQueue.main.async {
-            let safariController = SFSafariViewController(url: url)
-            if #available(iOS 10, *) {
-                safariController.preferredControlTintColor = .nearbyWeatherStandard
-            } else {
-                safariController.view.tintColor = .nearbyWeatherStandard
-            }
-            self.present(safariController, animated: true, completion: nil)
-        }
     }
     
     private func sendMail(to recipients: [String], withSubject subject: String, withMessage message: String) {

@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import SafariServices
 import RainyRefreshControl
 
 enum ListType {
@@ -100,7 +99,7 @@ class WeatherListViewController: UIViewController {
         emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData
         
         separatoLineViewHeightConstraint.constant = 1/UIScreen.main.scale
-    }
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
     
     @objc private func reconfigureOnWeatherDataServiceDidUpdate() {
         configureLastRefreshDate()
@@ -186,14 +185,7 @@ class WeatherListViewController: UIViewController {
         guard let url = URL(string: "https://openweathermap.org") else {
             return
         }
-        let safariController = SFSafariViewController(url: url)
-        if #available(iOS 10, *) {
-            safariController.preferredControlTintColor = .nearbyWeatherStandard
-        } else {
-            safariController.view.tintColor = .nearbyWeatherStandard
-        }
-        safariController.modalPresentationStyle = .overFullScreen
-        present(safariController, animated: true, completion: nil)
+        presentSafariViewController(for: url)
     }
 }
 
@@ -242,8 +234,6 @@ extension WeatherListViewController: UITableViewDataSource {
                 return 0
             }
             return WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.count ?? 1
-        default:
-            return 0
         }
     }
     

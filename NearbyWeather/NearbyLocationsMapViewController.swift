@@ -17,7 +17,6 @@ class NearbyLocationsMapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
-    @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var focusUserLocationButton: UIBarButtonItem!
     @IBOutlet weak var focusBookmarkedLocationButton: UIBarButtonItem!
     
@@ -35,8 +34,7 @@ class NearbyLocationsMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.titleView = mapTypeSegmentedControl
-        navigationItem.rightBarButtonItems = [focusBookmarkedLocationButton, focusUserLocationButton]
+        navigationItem.title = navigationItem.title?.capitalized
         mapView.delegate = self
     }
     
@@ -104,12 +102,6 @@ class NearbyLocationsMapViewController: UIViewController {
         navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
         navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
         
-        mapView.mapType = mapTypeSegmentedControl.selectedSegmentIndex == 0 ? .standard : .hybrid
-        
-        mapTypeSegmentedControl.tintColor = .white
-        mapTypeSegmentedControl.setTitle(NSLocalizedString("NearbyLocationsMapVC_MapTypeSegmentedControl_Title_0", comment: ""), forSegmentAt: 0)
-        mapTypeSegmentedControl.setTitle(NSLocalizedString("NearbyLocationsMapVC_MapTypeSegmentedControl_Title_1", comment: ""), forSegmentAt: 1)
-        
         focusUserLocationButton.tintColor = .white
         
         let locationAvailable = LocationService.shared.locationPermissionsGranted
@@ -151,20 +143,37 @@ class NearbyLocationsMapViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func focusUserLocationButtonTapped(_ sender: UIBarButtonItem) {
-        focusMapOnUserLocation()
+        triggerMapTypeAlert()
     }
     
     @IBAction func focusBookmarkedLocationButtonTapped(_ sender: UIBarButtonItem) {
         triggerFocusOnBookmarkedLocationAlert()
     }
     
-    @IBAction func mapTypeSegmentedControlTapped(_ sender: UISegmentedControl) {
-        let index = sender.selectedSegmentIndex
-        switch index {
-        case 0: mapView.mapType = .standard
-        case 1: mapView.mapType = .hybrid
-        default: break
+    // MARK: - Helpers
+    
+    private func triggerMapTypeAlert() {
+        let mapTypes: [MKMapType] = [.standard, .satellite, .hybrid]
+        let mapTypeTitles: [MKMapType: String] = [.standard: R.string.localizable.map_type_standard(),
+                                                  .satellite: R.string.localizable.map_type_satellite(),
+                                                  .hybrid: R.string.localizable.map_type_hybrid()]
+        
+        let optionsAlert = UIAlertController(title: R.string.localizable.select_list_type().capitalized, message: nil, preferredStyle: .alert)
+        mapTypes.forEach { mapTypeCase in
+            let action = UIAlertAction(title: mapTypeTitles[mapTypeCase], style: .default, handler: { _ in
+                DispatchQueue.main.async {
+                    self.mapView.mapType = mapTypeCase
+                }
+            })
+            if mapTypeCase == self.mapView.mapType {
+                action.setValue(true, forKey: "checked")
+            }
+            optionsAlert.addAction(action)
         }
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
+        optionsAlert.addAction(cancelAction)
+        
+        present(optionsAlert, animated: true, completion: nil)
     }
 }
 

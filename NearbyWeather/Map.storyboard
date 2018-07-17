@@ -34,36 +34,25 @@
                         <viewLayoutGuide key="safeArea" id="Ske-ID-w9t"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="P3e-Hw-rZB"/>
+                    <navigationItem key="navigationItem" id="P3e-Hw-rZB">
+                        <barButtonItem key="leftBarButtonItem" id="FEM-TH-1xM">
+                            <connections>
+                                <action selector="focusUserLocationButtonTapped:" destination="kQi-K9-35K" id="WUm-ID-epf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="c5r-Af-9gI">
+                            <connections>
+                                <action selector="focusBookmarkedLocationButtonTapped:" destination="kQi-K9-35K" id="9RV-Zb-KEt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="focusBookmarkedLocationButton" destination="c5r-Af-9gI" id="j9t-hF-cFg"/>
                         <outlet property="focusUserLocationButton" destination="FEM-TH-1xM" id="RVt-9f-qJX"/>
-                        <outlet property="mapTypeSegmentedControl" destination="v7E-Mp-L6A" id="Y1v-km-SkV"/>
                         <outlet property="mapView" destination="CiC-GD-nsA" id="BZJ-Gj-MMt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Ud-nx-8o3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="v7E-Mp-L6A">
-                    <rect key="frame" x="0.0" y="0.0" width="121" height="28"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <segments>
-                        <segment title="First"/>
-                        <segment title="Second"/>
-                    </segments>
-                    <connections>
-                        <action selector="mapTypeSegmentedControlTapped:" destination="kQi-K9-35K" eventType="valueChanged" id="EQS-db-mT3"/>
-                    </connections>
-                </segmentedControl>
-                <barButtonItem id="FEM-TH-1xM">
-                    <connections>
-                        <action selector="focusUserLocationButtonTapped:" destination="kQi-K9-35K" id="WUm-ID-epf"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem id="c5r-Af-9gI">
-                    <connections>
-                        <action selector="focusBookmarkedLocationButtonTapped:" destination="kQi-K9-35K" id="9RV-Zb-KEt"/>
-                    </connections>
-                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="3772" y="195.6521739130435"/>
         </scene>

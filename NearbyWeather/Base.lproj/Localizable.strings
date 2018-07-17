@@ -57,6 +57,8 @@ LocationsListTVC_UnauthorizedApiKey = "An error occurred while downloading weath
 LocationsListTVC_LocationUnavailable = "An error occurred while downloading weather data. Your location could not be determined.";
 LocationsListTVC_LocationDenied = "You have disabled access to your current location. Nearby locations cannot be determined.";
 
+select_list_type = "Select list type";
+
 
 // MARK: - WeatherDetailViewController
 
@@ -80,8 +82,9 @@ WeatherDetailVC_Distance = "Distance";
 
 // MARK: - NearbyLocationsMapViewController
 
-NearbyLocationsMapVC_MapTypeSegmentedControl_Title_0 = "Map";
-NearbyLocationsMapVC_MapTypeSegmentedControl_Title_1 = "Hybrid";
+map_type_standard = "Map";
+map_type_hybrid = "Hybrid";
+map_type_satellite = "Satellite";
 
 
 // MARK: - InfoTableViewController

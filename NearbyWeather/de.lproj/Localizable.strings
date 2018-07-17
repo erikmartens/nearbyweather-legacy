@@ -57,6 +57,8 @@ LocationsListTVC_UnauthorizedApiKey = "Beim Laden der Wetterdaten ist ein Fehler
 LocationsListTVC_LocationUnavailable = "Beim Laden der Wetterdaten ist ein Fehler aufgetreten. Dein Standort konnte nicht bestimmt werden.";
 LocationsListTVC_LocationDenied = "Sie haben Ihren Standort nicht freigegeben. Nahegelegene Orte konnten nicht bestimmt werden.";
 
+select_list_type = "Listen-Typ auswählen";
+
 
 // MARK: - WeatherDetailViewController
 
@@ -80,8 +82,9 @@ WeatherDetailVC_Distance = "Entfernung";
 
 // MARK: - NearbyLocationsMapViewController
 
-NearbyLocationsMapVC_MapTypeSegmentedControl_Title_0 = "Karte";
-NearbyLocationsMapVC_MapTypeSegmentedControl_Title_1 = "Hybrid";
+map_type_standard = "Karte";
+map_type_hybrid = "Hybrid";
+map_type_satellite = "Satellit";
 
 
 // MARK: - InfoTableViewController

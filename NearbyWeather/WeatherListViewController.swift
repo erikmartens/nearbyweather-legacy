@@ -13,6 +13,10 @@ import RainyRefreshControl
 enum ListType {
     case bookmarked
     case nearby
+    
+    static let cases: [ListType] = [.bookmarked, .nearby]
+    static let titles: [ListType: String] = [.bookmarked: R.string.localizable.bookmarked(),
+                                             .nearby: R.string.localizable.nearby()]
 }
 
 class WeatherListViewController: UIViewController {
@@ -25,8 +29,6 @@ class WeatherListViewController: UIViewController {
     
     
     // MARK: - Outlets
-    
-    @IBOutlet weak var listTypeSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var separatoLineViewHeightConstraint: NSLayoutConstraint!
@@ -83,7 +85,7 @@ class WeatherListViewController: UIViewController {
     // MARK: - Private Helpers
     
     private func configure() {
-        navigationItem.title = nil
+        navigationItem.title = navigationItem.title?.capitalized
         
         navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
         navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
@@ -143,10 +145,11 @@ class WeatherListViewController: UIViewController {
             reloadButton.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor
             reloadButton.layer.borderWidth = 1.0
         }
-        
-        listTypeSegmentedControl.isHidden = !WeatherDataManager.shared.hasDisplayableData
-        listTypeSegmentedControl.setTitle(R.string.localizable.bookmarked(), forSegmentAt: 0)
-        listTypeSegmentedControl.setTitle(R.string.localizable.nearby(), forSegmentAt: 1)
+        if WeatherDataManager.shared.hasDisplayableData {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Sorting"), style: .plain, target: self, action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:)))
+        } else {
+            navigationItem.leftBarButtonItem = nil
+        }
     }
     
     @objc private func updateWeatherData() {
@@ -167,14 +170,8 @@ class WeatherListViewController: UIViewController {
     
     // MARK: - Button Interaction
     
-    @IBAction func listTypeSegmentedControlTapped(_ sender: UISegmentedControl) {
-        let index = sender.selectedSegmentIndex
-        switch index {
-        case 0: listType = .bookmarked
-        case 1: listType = .nearby
-        default: break
-        }
-        tableView.reloadData()
+    @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
+        triggerListTypeAlert()
     }
 
     @IBAction func didTapReloadButton(_ sender: UIButton) {
@@ -186,6 +183,29 @@ class WeatherListViewController: UIViewController {
             return
         }
         presentSafariViewController(for: url)
+    }
+    
+    // MARK: - Helpers
+    
+    private func triggerListTypeAlert() {
+        let optionsAlert = UIAlertController(title: R.string.localizable.select_list_type().capitalized, message: nil, preferredStyle: .alert)
+        
+        ListType.cases.forEach { listTypeCase in
+            let action = UIAlertAction(title: ListType.titles[listTypeCase], style: .default, handler: { _ in
+                self.listType = listTypeCase
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            })
+            if listTypeCase == self.listType {
+                action.setValue(true, forKey: "checked")
+            }
+            optionsAlert.addAction(action)
+        }
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
+        optionsAlert.addAction(cancelAction)
+        
+        present(optionsAlert, animated: true, completion: nil)
     }
 }
 

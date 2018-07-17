@@ -56,13 +56,13 @@ class NearbyLocationsMapViewController: UIViewController {
     private func prepareMapAnnotations() {
         weatherLocationMapAnnotations = [WeatherLocationMapAnnotation]()
         
-        let bookmarkedLocationAnnotations: [WeatherLocationMapAnnotation]? = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.flatMap {
+        let bookmarkedLocationAnnotations: [WeatherLocationMapAnnotation]? = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.compactMap {
             guard let weatherDTO = $0.weatherInformationDTO else { return nil }
             return WeatherLocationMapAnnotation(weatherDTO: weatherDTO)
             }
         weatherLocationMapAnnotations.append(contentsOf: bookmarkedLocationAnnotations ?? [WeatherLocationMapAnnotation]())
         
-        let nearbyocationAnnotations = WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.flatMap {
+        let nearbyocationAnnotations = WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.compactMap {
             return WeatherLocationMapAnnotation(weatherDTO: $0)
         }
         weatherLocationMapAnnotations.append(contentsOf: nearbyocationAnnotations ?? [WeatherLocationMapAnnotation]())
@@ -122,7 +122,7 @@ class NearbyLocationsMapViewController: UIViewController {
     private func triggerFocusOnBookmarkedLocationAlert() {
         let optionsAlert: UIAlertController = UIAlertController(title: NSLocalizedString("OpenWeatherMapCityFilterTVC_FocusOnBookmarkedLocation", comment: ""), message: nil, preferredStyle: .alert)
         
-        guard let bookmarkedWeatherDataObjects = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.flatMap({
+        guard let bookmarkedWeatherDataObjects = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.compactMap({
             return $0.weatherInformationDTO
         }) else {
             return

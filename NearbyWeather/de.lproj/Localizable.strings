@@ -75,7 +75,7 @@ WeatherDetailVC_WindSpeed = "Windgeschwindigkeit";
 WeatherDetailVC_WindDirection = "Windrichtung";
 
 WeatherDetailVC_Coordinates = "Koordinaten";
-WeatherDetailVC_DistanceFrom = "Entfernung";
+WeatherDetailVC_Distance = "Entfernung";
 
 
 // MARK: - NearbyLocationsMapViewController

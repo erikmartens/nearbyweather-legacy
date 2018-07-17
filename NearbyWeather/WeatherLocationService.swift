@@ -42,7 +42,7 @@ class WeatherLocationService {
         
         openWeatherMapCityServiceBackgroundQueue.async {
             self.databaseQueue.inDatabase { database in
-                let usedLocationIdentifiers: [String] = WeatherDataManager.shared.bookmarkedLocations.flatMap {
+                let usedLocationIdentifiers: [String] = WeatherDataManager.shared.bookmarkedLocations.compactMap {
                     return String($0.identifier)
                 }
                 let sqlUsedLocationsIdentifierssArray = "('" + usedLocationIdentifiers.joined(separator: "','") + "')"

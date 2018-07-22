@@ -147,7 +147,7 @@ LocationManagementTVC_NavigationBarTitle = "Orte Verwalten";
 OpenWeatherMapCityFilterTVC_NavigationBarTitle = "Ort Hinzufügen";
 OpenWeatherMapCityFilterTVC_SearchBarPlaceholder = "Suche nach Namen";
 
-OpenWeatherMapCityFilterTVC_FocusOnBookmarkedLocation = "Gespeicherten Ort zentrieren";
+focus_on_location = "Ort Zentrieren";
 
 // MARK: - General
 
@@ -182,3 +182,5 @@ mph = "m/h";
 
 km = "km";
 mi = "mi";
+
+current_location = "Standort";

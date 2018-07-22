@@ -35,20 +35,20 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="P3e-Hw-rZB">
-                        <barButtonItem key="leftBarButtonItem" id="FEM-TH-1xM">
+                        <barButtonItem key="leftBarButtonItem" image="AirPressure" id="RMB-DD-tEX">
                             <connections>
-                                <action selector="focusUserLocationButtonTapped:" destination="kQi-K9-35K" id="WUm-ID-epf"/>
+                                <action selector="changeMapTypeButtonTapped:" destination="kQi-K9-35K" id="eoQ-jC-hCS"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="c5r-Af-9gI">
+                        <barButtonItem key="rightBarButtonItem" image="CloudCover" id="Mc4-xD-6LL">
                             <connections>
-                                <action selector="focusBookmarkedLocationButtonTapped:" destination="kQi-K9-35K" id="9RV-Zb-KEt"/>
+                                <action selector="focusLocationButtonTapped:" destination="kQi-K9-35K" id="fEg-VW-5F8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="focusBookmarkedLocationButton" destination="c5r-Af-9gI" id="j9t-hF-cFg"/>
-                        <outlet property="focusUserLocationButton" destination="FEM-TH-1xM" id="RVt-9f-qJX"/>
+                        <outlet property="changeMapTypeButton" destination="RMB-DD-tEX" id="f4D-M8-y73"/>
+                        <outlet property="focusLocationButton" destination="Mc4-xD-6LL" id="BOC-Lv-Bvp"/>
                         <outlet property="mapView" destination="CiC-GD-nsA" id="BZJ-Gj-MMt"/>
                     </connections>
                 </viewController>
@@ -75,4 +75,8 @@
             <point key="canvasLocation" x="2832.8000000000002" y="195.6521739130435"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="AirPressure" width="37" height="37"/>
+        <image name="CloudCover" width="25" height="25"/>
+    </resources>
 </document>

@@ -71,9 +71,6 @@ class NearbyLocationsMapViewController: UIViewController {
     private func configure() {
         navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
         navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
-        
-        changeMapTypeButton.tintColor = .white        
-        focusLocationButton.tintColor = .white
     }
     
     private func triggerMapTypeAlert() {
@@ -82,7 +79,7 @@ class NearbyLocationsMapViewController: UIViewController {
                                                   .satellite: R.string.localizable.map_type_satellite(),
                                                   .hybrid: R.string.localizable.map_type_hybrid()]
         
-        let optionsAlert = UIAlertController(title: R.string.localizable.select_list_type().capitalized, message: nil, preferredStyle: .alert)
+        let optionsAlert = UIAlertController(title: R.string.localizable.select_map_type().capitalized, message: nil, preferredStyle: .alert)
         mapTypes.forEach { mapTypeCase in
             let action = UIAlertAction(title: mapTypeTitles[mapTypeCase], style: .default, handler: { _ in
                 DispatchQueue.main.async {

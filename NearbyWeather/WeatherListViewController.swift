@@ -146,7 +146,7 @@ class WeatherListViewController: UIViewController {
             reloadButton.layer.borderWidth = 1.0
         }
         if WeatherDataManager.shared.hasDisplayableData {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Sorting"), style: .plain, target: self, action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:)))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChangeType"), style: .plain, target: self, action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:)))
         } else {
             navigationItem.leftBarButtonItem = nil
         }

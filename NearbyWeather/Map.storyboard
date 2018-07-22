@@ -35,12 +35,14 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="P3e-Hw-rZB">
-                        <barButtonItem key="leftBarButtonItem" image="AirPressure" id="RMB-DD-tEX">
+                        <barButtonItem key="leftBarButtonItem" image="ChangeType" id="RMB-DD-tEX">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="changeMapTypeButtonTapped:" destination="kQi-K9-35K" id="eoQ-jC-hCS"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="CloudCover" id="Mc4-xD-6LL">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="focusLocationButtonTapped:" destination="kQi-K9-35K" id="fEg-VW-5F8"/>
                             </connections>
@@ -76,7 +78,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AirPressure" width="37" height="37"/>
+        <image name="ChangeType" width="25" height="25"/>
         <image name="CloudCover" width="25" height="25"/>
     </resources>
 </document>

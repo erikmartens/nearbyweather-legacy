@@ -58,6 +58,7 @@ LocationsListTVC_LocationUnavailable = "Beim Laden der Wetterdaten ist ein Fehle
 LocationsListTVC_LocationDenied = "Sie haben Ihren Standort nicht freigegeben. Nahegelegene Orte konnten nicht bestimmt werden.";
 
 select_list_type = "Listen-Typ auswählen";
+select_map_type = "Karten-Typ auswählen";
 
 
 // MARK: - WeatherDetailViewController

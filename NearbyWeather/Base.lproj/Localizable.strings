@@ -58,6 +58,7 @@ LocationsListTVC_LocationUnavailable = "An error occurred while downloading weat
 LocationsListTVC_LocationDenied = "You have disabled access to your current location. Nearby locations cannot be determined.";
 
 select_list_type = "Select list type";
+select_map_type = "Select map type";
 
 
 // MARK: - WeatherDetailViewController

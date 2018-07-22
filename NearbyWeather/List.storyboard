@@ -379,7 +379,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="6qG-dF-Od0">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="dPI-6R-vhc"/>
                     </navigationItem>
                     <connections>
                         <outlet property="emptyListDescriptionLabel" destination="4Nw-Qq-7X7" id="awE-YN-KeR"/>

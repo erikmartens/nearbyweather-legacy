@@ -33,22 +33,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let weatherListNav = R.storyboard.list().instantiateInitialViewController()
         let weatherList = (weatherListNav as? UINavigationController)?.viewControllers.first as? WeatherListViewController
         weatherList?.title = R.string.localizable.tab_weatherList().uppercased()
-        weatherList?.tabBarItem.selectedImage = R.image.cloudCoverFilled()
-        weatherList?.tabBarItem.image = R.image.cloudCoverFilled()
-        
+        if #available(iOS 11, *) {
+            weatherList?.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
+            weatherList?.tabBarItem.image = R.image.tabbar_list_ios11()
+        } else {
+            weatherList?.tabBarItem.selectedImage = R.image.tabbar_list_ios7()
+            weatherList?.tabBarItem.image = R.image.tabbar_list_ios7()
+        }
+    
         /* Map Controller */
         let mapNav = R.storyboard.map().instantiateInitialViewController()
         let map = (mapNav as? UINavigationController)?.viewControllers.first as? NearbyLocationsMapViewController
         map?.title = R.string.localizable.tab_weatherMap().uppercased()
-        map?.tabBarItem.selectedImage = R.image.map()
-        map?.tabBarItem.image = R.image.map()
+        if #available(iOS 11, *) {
+            map?.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
+            map?.tabBarItem.image = R.image.tabbar_map_ios11()
+        } else {
+            map?.tabBarItem.selectedImage = R.image.tabbar_map_ios7()
+            map?.tabBarItem.image = R.image.tabbar_map_ios7()
+        }
 
         /* Settings Controller */
         let settingsNav = R.storyboard.settings().instantiateInitialViewController()
         let settings = (settingsNav as? UINavigationController)?.viewControllers.first as? SettingsTableViewController
         settings?.title = R.string.localizable.tab_settings().uppercased()
-        settings?.tabBarItem.selectedImage = R.image.settings()
-        settings?.tabBarItem.image = R.image.settings()
+        if #available(iOS 11, *) {
+            settings?.tabBarItem.selectedImage = R.image.tabbar_settings_ios11()
+            settings?.tabBarItem.image = R.image.tabbar_settings_ios11()
+        } else {
+            settings?.tabBarItem.selectedImage = R.image.tabbar_settings_ios7()
+            settings?.tabBarItem.image = R.image.tabbar_settings_ios7()
+        }
 
         tabbar?.viewControllers = [weatherListNav!, mapNav!, settingsNav!]
         

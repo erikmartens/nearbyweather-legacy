@@ -41,7 +41,7 @@
                                 <action selector="changeMapTypeButtonTapped:" destination="kQi-K9-35K" id="eoQ-jC-hCS"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="FocusOnLocation" id="Mc4-xD-6LL">
+                        <barButtonItem key="rightBarButtonItem" image="marker" id="Mc4-xD-6LL">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="focusLocationButtonTapped:" destination="kQi-K9-35K" id="fEg-VW-5F8"/>
@@ -79,6 +79,6 @@
     </scenes>
     <resources>
         <image name="ChangeType" width="25" height="25"/>
-        <image name="FocusOnLocation" width="25" height="25"/>
+        <image name="marker" width="25" height="25"/>
     </resources>
 </document>

@@ -80,6 +80,9 @@ class InfoTableViewController: UITableViewController {
         if indexPath.section == 3 {
             urlStringValue = InfoTableViewController.cocoaPods[indexPath.row].urlString
         }
+        if indexPath.section == 4 && indexPath.row == 0 {
+            urlStringValue = "https://www.icons8.com"
+        }
         guard let urlString = urlStringValue, let url = URL(string: urlString) else {
             return
         }
@@ -90,7 +93,7 @@ class InfoTableViewController: UITableViewController {
     // MARK: - TableView Data Source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -103,6 +106,8 @@ class InfoTableViewController: UITableViewController {
             return 2
         case 3:
             return InfoTableViewController.cocoaPods.count
+        case 4:
+            return 1
         default:
             return 0
         }
@@ -110,11 +115,18 @@ class InfoTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return NSLocalizedString("InfoTVC_TableViewSectionHeader1", comment: "")
-        case 1: return NSLocalizedString("InfoTVC_TableViewSectionHeader2", comment: "")
-        case 2: return nil
-        case 3: return NSLocalizedString("InfoTVC_TableViewSectionHeader3", comment: "")
-        default: return nil
+        case 0:
+            return NSLocalizedString("InfoTVC_TableViewSectionHeader1", comment: "")
+        case 1:
+            return NSLocalizedString("InfoTVC_TableViewSectionHeader2", comment: "")
+        case 2:
+            return nil
+        case 3:
+            return NSLocalizedString("InfoTVC_TableViewSectionHeader3", comment: "")
+        case 4:
+            return R.string.localizable.icons()
+        default:
+            return nil
         }
     }
     
@@ -171,6 +183,9 @@ class InfoTableViewController: UITableViewController {
         case 3:
             let pod = InfoTableViewController.cocoaPods[indexPath.row]
             labelCell.contentLabel.text = pod.name
+            return labelCell
+        case 4:
+            labelCell.contentLabel.text = "Icons8"
             return labelCell
         default:
             return UITableViewCell()

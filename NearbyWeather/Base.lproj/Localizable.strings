@@ -152,6 +152,8 @@ focus_on_location = "Focus on Location";
 
 // MARK: - General
 
+icons = "Icons";
+
 bookmarked = "Bookmarked";
 nearby = "Nearby";
 

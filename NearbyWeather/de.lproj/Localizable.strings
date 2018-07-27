@@ -152,6 +152,8 @@ focus_on_location = "Ort Zentrieren";
 
 // MARK: - General
 
+icons = "Icons";
+
 bookmarked = "Gespeicher";
 nearby = "In der Nähe";
 

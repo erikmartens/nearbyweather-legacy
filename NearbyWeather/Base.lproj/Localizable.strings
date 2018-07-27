@@ -57,7 +57,7 @@ LocationsListTVC_UnauthorizedApiKey = "An error occurred while downloading weath
 LocationsListTVC_LocationUnavailable = "An error occurred while downloading weather data. Your location could not be determined.";
 LocationsListTVC_LocationDenied = "You have disabled access to your current location. Nearby locations cannot be determined.";
 
-select_list_type = "Select list type";
+select_list_type = "Select list content";
 select_map_type = "Select map type";
 
 
@@ -94,7 +94,7 @@ InfoTVC_NavigationItemTitle = "About";
 
 InfoTVC_TableViewSectionHeader1 = "Resources";
 InfoTVC_TableViewSectionHeader2 = "Contributors";
-InfoTVC_TableViewSectionHeader3 = "Libraries Used";
+InfoTVC_TableViewSectionHeader3 = "Libraries";
 
 InfoTVC_AppTitle = "NearbyWeather - Open Source Weather";
 

@@ -15,7 +15,7 @@ import MapKit
 class WeatherDetailViewController: UIViewController {
     
     static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailViewController {
-        let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "WeatherDetailViewController") as! WeatherDetailViewController
+        let viewController = UIStoryboard(name: "Details", bundle: .main).instantiateViewController(withIdentifier: "WeatherDetailViewController") as! WeatherDetailViewController
         viewController.titleString = title
         viewController.weatherDTO = weatherDTO
         return viewController
@@ -199,13 +199,7 @@ class WeatherDetailViewController: UIViewController {
         guard let url = URL(string: "https://openweathermap.org/find?q=\(weatherDTO.cityName)") else {
                 return
         }
-        let safariController = SFSafariViewController(url: url)
-        if #available(iOS 10, *) {
-            safariController.preferredControlTintColor = .nearbyWeatherStandard
-        } else {
-            safariController.view.tintColor = .nearbyWeatherStandard
-        }
-        present(safariController, animated: true, completion: nil)
+        presentSafariViewController(for: url)
     }
 }
 

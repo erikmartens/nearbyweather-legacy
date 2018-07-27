@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3g-si-AGs">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +13,7 @@
         <!--SettingsTableViewController-->
         <scene sceneID="ZVC-yB-9JL">
             <objects>
-                <tableViewController storyboardIdentifier="SettingsTVC" id="KTn-Zy-K5w" userLabel="SettingsTableViewController" customClass="SettingsTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingsTableViewController" id="KTn-Zy-K5w" userLabel="SettingsTableViewController" customClass="SettingsTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="jap-OX-yKq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,7 +128,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ypx-Nl-yPb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2480.8000000000002" y="1010.6446776611695"/>
+            <point key="canvasLocation" x="3420" y="1010.6446776611695"/>
         </scene>
         <!--InfoTVC-->
         <scene sceneID="50s-1l-Sb3">
@@ -396,7 +396,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WSi-Wd-oaP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3287" y="652"/>
+            <point key="canvasLocation" x="4224.8000000000002" y="651.72413793103453"/>
         </scene>
         <!--Weather Location Management Table View Controller-->
         <scene sceneID="UpR-3y-toF">
@@ -454,7 +454,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wMX-rL-rbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4030" y="652"/>
+            <point key="canvasLocation" x="4968.8000000000002" y="651.72413793103453"/>
         </scene>
         <!--SettingsInputTableViewController-->
         <scene sceneID="7CC-tz-Fn4">
@@ -507,7 +507,25 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="La3-Wx-Np3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3287" y="1368"/>
+            <point key="canvasLocation" x="4224.8000000000002" y="1367.7661169415294"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6Eh-oU-jN3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="F3g-si-AGs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uQb-Lx-V5j">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="KTn-Zy-K5w" kind="relationship" relationship="rootViewController" id="wub-hL-NAO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w3W-y1-GD6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2480.8000000000002" y="1010.6446776611695"/>
         </scene>
     </scenes>
     <resources>

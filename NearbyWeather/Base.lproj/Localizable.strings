@@ -6,6 +6,12 @@
  Copyright © 2016 Erik Maximilian Martens. All rights reserved.
  */
 
+// MARK: - TabBar
+
+tab_weatherList = "List";
+tab_weatherMap = "Map";
+tab_settings = "Settings";
+
 
 // MARK: - WelcomeScreenViewController
 
@@ -49,6 +55,10 @@ LocationsListTVC_MalformedUrlError = "An error occurred while downloading weathe
 LocationsListTVC_UnreadableResult = "An error occurred while downloading weather data. The response could not be parsed.";
 LocationsListTVC_UnauthorizedApiKey = "An error occurred while downloading weather data. Your OpenWeatherMap API key is invalid.";
 LocationsListTVC_LocationUnavailable = "An error occurred while downloading weather data. Your location could not be determined.";
+LocationsListTVC_LocationDenied = "You have disabled access to your current location. Nearby locations cannot be determined.";
+
+select_list_type = "Select list content";
+select_map_type = "Select map type";
 
 
 // MARK: - WeatherDetailViewController
@@ -73,8 +83,9 @@ WeatherDetailVC_Distance = "Distance";
 
 // MARK: - NearbyLocationsMapViewController
 
-NearbyLocationsMapVC_MapTypeSegmentedControl_Title_0 = "Map";
-NearbyLocationsMapVC_MapTypeSegmentedControl_Title_1 = "Hybrid";
+map_type_standard = "Map";
+map_type_hybrid = "Hybrid";
+map_type_satellite = "Satellite";
 
 
 // MARK: - InfoTableViewController
@@ -83,7 +94,7 @@ InfoTVC_NavigationItemTitle = "About";
 
 InfoTVC_TableViewSectionHeader1 = "Resources";
 InfoTVC_TableViewSectionHeader2 = "Contributors";
-InfoTVC_TableViewSectionHeader3 = "Libraries Used";
+InfoTVC_TableViewSectionHeader3 = "Libraries";
 
 InfoTVC_AppTitle = "NearbyWeather - Open Source Weather";
 
@@ -137,9 +148,14 @@ LocationManagementTVC_NavigationBarTitle = "Manage Locations";
 OpenWeatherMapCityFilterTVC_NavigationBarTitle = "Add Location";
 OpenWeatherMapCityFilterTVC_SearchBarPlaceholder = "Search by Name";
 
-OpenWeatherMapCityFilterTVC_FocusOnBookmarkedLocation = "Focus on Bookmarked Location";
+focus_on_location = "Focus on Location";
 
 // MARK: - General
+
+icons = "Icons";
+
+bookmarked = "Bookmarked";
+nearby = "Nearby";
 
 apiKey = "API Key";
 
@@ -169,3 +185,5 @@ mph = "mp/h";
 
 km = "km";
 mi = "mi";
+
+current_location = "Current Location";

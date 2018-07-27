@@ -8,8 +8,16 @@
 
 import UIKit
 import MapKit
-import SafariServices
 import RainyRefreshControl
+
+enum ListType {
+    case bookmarked
+    case nearby
+    
+    static let cases: [ListType] = [.bookmarked, .nearby]
+    static let titles: [ListType: String] = [.bookmarked: R.string.localizable.bookmarked(),
+                                             .nearby: R.string.localizable.nearby()]
+}
 
 class WeatherListViewController: UIViewController {
     
@@ -17,19 +25,19 @@ class WeatherListViewController: UIViewController {
     
     private var refreshControl = RainyRefreshControl()
     
+    private var listType: ListType = .bookmarked
+    
     
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var separatoLineViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var refreshDateLabel: UILabel!
     
     @IBOutlet weak var emptyListOverlayContainerView: UIView!
     @IBOutlet weak var emptyListImageView: UIImageView!
     @IBOutlet weak var emptyListTitleLabel: UILabel!
     @IBOutlet weak var emptyListDescriptionLabel: UILabel!
-    
-    @IBOutlet weak var mapButton: UIBarButtonItem!
-    @IBOutlet weak var settingsButton: UIBarButtonItem!
     
     @IBOutlet weak var reloadButton: UIButton!
     
@@ -49,7 +57,6 @@ class WeatherListViewController: UIViewController {
         configure()
         tableView.reloadData()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(WeatherListViewController.reconfigureOnDidAppBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(WeatherListViewController.reconfigureOnWeatherDataServiceDidUpdate), name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: nil)
         
         if !WeatherDataManager.shared.hasDisplayableData {
@@ -78,26 +85,26 @@ class WeatherListViewController: UIViewController {
     // MARK: - Private Helpers
     
     private func configure() {
+        navigationItem.title = navigationItem.title?.capitalized
+        
         navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
         navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
         
-        configureNavigationTitle()
+        configureLastRefreshDate()
         configureButtons()
         configureWeatherDataUnavailableElements()
         
         refreshControl.addTarget(self, action: #selector(WeatherListViewController.updateWeatherData), for: .valueChanged)
         tableView.addSubview(refreshControl)
         tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
+        
         emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData
+        
         separatoLineViewHeightConstraint.constant = 1/UIScreen.main.scale
-    }
-    
-    @objc private func reconfigureOnDidAppBecomeActive() {
-        configureButtons()
-    }
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
     
     @objc private func reconfigureOnWeatherDataServiceDidUpdate() {
-        configureNavigationTitle()
+        configureLastRefreshDate()
         configureButtons()
         tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
         tableView.reloadData()
@@ -115,35 +122,34 @@ class WeatherListViewController: UIViewController {
         emptyListDescriptionLabel.text = NSLocalizedString("LocationsListTVC_EmptyListDescription", comment: "")
     }
     
-    private func configureNavigationTitle() {
-        let title = "NearbyWeather"
+    private func configureLastRefreshDate() {
         if let lastRefreshDate = UserDefaults.standard.object(forKey: kWeatherDataLastRefreshDateKey) as? Date {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .short
             let dateString = dateFormatter.string(from: lastRefreshDate)
-            let subtitle = String(format: NSLocalizedString("LocationsListTVC_LastRefresh", comment: ""), dateString)
-            navigationItem.setTitle(title, andSubtitle: subtitle)
+            let title = R.string.localizable.locationsListTVC_LastRefresh(dateString)
+            refreshDateLabel.text = title
+            refreshDateLabel.isHidden = false
         } else {
-            navigationItem.title = title
+            refreshDateLabel.isHidden = true
         }
     }
     
     private func configureButtons() {
-        let weatherDataAvailable = WeatherDataManager.shared.hasDisplayableWeatherData
-        
-        mapButton.isEnabled = weatherDataAvailable
-        mapButton.tintColor = weatherDataAvailable ? .white : .darkGray
-        
-        settingsButton.tintColor = .white
-        
-        reloadButton.setTitle(NSLocalizedString("Reload", comment: "").uppercased(), for: .normal)
-        reloadButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
-        reloadButton.layer.cornerRadius = 5.0
-        reloadButton.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor
-        reloadButton.layer.borderWidth = 1.0
-        
         reloadButton.isHidden = NetworkingService.shared.reachabilityStatus != .connected
+        if !reloadButton.isHidden {
+            reloadButton.setTitle(NSLocalizedString("Reload", comment: "").uppercased(), for: .normal)
+            reloadButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
+            reloadButton.layer.cornerRadius = 5.0
+            reloadButton.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor
+            reloadButton.layer.borderWidth = 1.0
+        }
+        if WeatherDataManager.shared.hasDisplayableData {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "swap"), style: .plain, target: self, action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:)))
+        } else {
+            navigationItem.leftBarButtonItem = nil
+        }
     }
     
     @objc private func updateWeatherData() {
@@ -151,6 +157,7 @@ class WeatherListViewController: UIViewController {
         WeatherDataManager.shared.update(withCompletionHandler: {
             DispatchQueue.main.async {
                 self.refreshControl.endRefreshing()
+                self.configureButtons()
                 self.tableView.reloadData()
             }
         })
@@ -163,20 +170,8 @@ class WeatherListViewController: UIViewController {
     
     // MARK: - Button Interaction
     
-    @IBAction func didTapSettingsButton(_ sender: UIBarButtonItem) {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "SettingsTVC") as! SettingsTableViewController
-        let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
-        destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
-        navigationController?.present(destinationNavigationController, animated: true, completion: nil)
-    }
-    
-    @IBAction func didTapMapButton(_ sender: UIBarButtonItem) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "NearbyLocationsMapViewController") as! NearbyLocationsMapViewController
-        let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
-        destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
-        navigationController?.present(destinationNavigationController, animated: true, completion: nil)
+    @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
+        triggerListTypeAlert()
     }
 
     @IBAction func didTapReloadButton(_ sender: UIButton) {
@@ -187,13 +182,30 @@ class WeatherListViewController: UIViewController {
         guard let url = URL(string: "https://openweathermap.org") else {
             return
         }
-        let safariController = SFSafariViewController(url: url)
-        if #available(iOS 10, *) {
-            safariController.preferredControlTintColor = .nearbyWeatherStandard
-        } else {
-            safariController.view.tintColor = .nearbyWeatherStandard
+        presentSafariViewController(for: url)
+    }
+    
+    // MARK: - Helpers
+    
+    private func triggerListTypeAlert() {
+        let optionsAlert = UIAlertController(title: R.string.localizable.select_list_type().capitalized, message: nil, preferredStyle: .alert)
+        
+        ListType.cases.forEach { listTypeCase in
+            let action = UIAlertAction(title: ListType.titles[listTypeCase], style: .default, handler: { _ in
+                self.listType = listTypeCase
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            })
+            if listTypeCase == self.listType {
+                action.setValue(true, forKey: "checked")
+            }
+            optionsAlert.addAction(action)
         }
-        present(safariController, animated: true, completion: nil)
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
+        optionsAlert.addAction(cancelAction)
+        
+        present(optionsAlert, animated: true, completion: nil)
     }
 }
 
@@ -211,31 +223,14 @@ extension WeatherListViewController: UITableViewDelegate {
 extension WeatherListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if !WeatherDataManager.shared.hasDisplayableData
-            || WeatherDataManager.shared.apiKeyUnauthorized {
-            return nil
-        }
-        switch section {
-        case 0:
-            return NSLocalizedString("LocationsListTVC_TableViewSectionHeader1", comment: "")
-        case 1:
-            return NSLocalizedString("LocationsListTVC_TableViewSectionHeader2", comment: "")
-        default:
-            return nil
-        }
+       return nil
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         if !WeatherDataManager.shared.hasDisplayableData {
             return 0
         }
-        if !LocationService.shared.locationPermissionsGranted
-            || WeatherDataManager.shared.bookmarkedWeatherDataObjects == nil
-            || WeatherDataManager.shared.nearbyWeatherDataObject == nil
-            || WeatherDataManager.shared.apiKeyUnauthorized {
-            return 1
-        }
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -245,22 +240,20 @@ extension WeatherListViewController: UITableViewDataSource {
         if WeatherDataManager.shared.apiKeyUnauthorized {
             return 1
         }
-        switch section {
-        case 0:
+        switch listType {
+        case .bookmarked:
             if WeatherDataManager.shared.bookmarkedWeatherDataObjects == nil {
                 return 0
             }
             return WeatherDataManager.shared.bookmarkedWeatherDataObjects?.count ?? 1
-        case 1:
+        case .nearby:
             if !LocationService.shared.locationPermissionsGranted {
-                return 0
+                return 1
             }
             if WeatherDataManager.shared.nearbyWeatherDataObject == nil {
                 return 0
             }
             return WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.count ?? 1
-        default:
-            return 0
         }
     }
     
@@ -279,23 +272,26 @@ extension WeatherListViewController: UITableViewDataSource {
             return alertCell
         }
         
-        switch indexPath.section {
-        case 0:
+        switch listType {
+        case .bookmarked:
             guard let weatherDTO = WeatherDataManager.shared.bookmarkedWeatherDataObjects?[indexPath.row].weatherInformationDTO else {
                     alertCell.configureWithErrorDataDTO(WeatherDataManager.shared.bookmarkedWeatherDataObjects?[indexPath.row].errorDataDTO)
                     return alertCell
             }
             weatherCell.configureWithWeatherDTO(weatherDTO)
             return weatherCell
-        case 1:
+        case .nearby:
+            if !LocationService.shared.locationPermissionsGranted {
+                let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .locationAccessDenied), httpStatusCode: nil)
+                alertCell.configureWithErrorDataDTO(errorDataDTO)
+                return alertCell
+            }
             guard let weatherDTO = WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?[indexPath.row] else {
                 alertCell.configureWithErrorDataDTO(WeatherDataManager.shared.nearbyWeatherDataObject?.errorDataDTO)
                 return alertCell
             }
             weatherCell.configureWithWeatherDTO(weatherDTO)
             return weatherCell
-        default:
-            return UITableViewCell()
         }
     }
     

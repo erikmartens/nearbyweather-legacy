@@ -18,6 +18,7 @@ class InfoTableViewController: UITableViewController {
                                                     CocoaPodMeta(name: "FMDB", urlString: "https://github.com/ccgus/fmdb"),
                                                     CocoaPodMeta(name: "PKHUD", urlString: "https://github.com/pkluz/PKHUD"),
                                                     CocoaPodMeta(name: "RainyRefreshControl", urlString: "https://github.com/Onix-Systems/RainyRefreshControl"),
+                                                    CocoaPodMeta(name: "R.swift", urlString: "https://github.com/mac-cain13/R.swift"),
                                                     CocoaPodMeta(name: "TextFieldCounter", urlString: "https://github.com/serralvo/TextFieldCounter")]
     
     struct Contributor { var name: String; var subtitle: String }
@@ -79,15 +80,20 @@ class InfoTableViewController: UITableViewController {
         if indexPath.section == 3 {
             urlStringValue = InfoTableViewController.cocoaPods[indexPath.row].urlString
         }
-        
-        presentSafariViewController(forUrlString: urlStringValue)
+        if indexPath.section == 4 && indexPath.row == 0 {
+            urlStringValue = "https://www.icons8.com"
+        }
+        guard let urlString = urlStringValue, let url = URL(string: urlString) else {
+            return
+        }
+        presentSafariViewController(for: url)
     }
     
     
     // MARK: - TableView Data Source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,6 +106,8 @@ class InfoTableViewController: UITableViewController {
             return 2
         case 3:
             return InfoTableViewController.cocoaPods.count
+        case 4:
+            return 1
         default:
             return 0
         }
@@ -107,11 +115,18 @@ class InfoTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return NSLocalizedString("InfoTVC_TableViewSectionHeader1", comment: "")
-        case 1: return NSLocalizedString("InfoTVC_TableViewSectionHeader2", comment: "")
-        case 2: return nil
-        case 3: return NSLocalizedString("InfoTVC_TableViewSectionHeader3", comment: "")
-        default: return nil
+        case 0:
+            return NSLocalizedString("InfoTVC_TableViewSectionHeader1", comment: "")
+        case 1:
+            return NSLocalizedString("InfoTVC_TableViewSectionHeader2", comment: "")
+        case 2:
+            return nil
+        case 3:
+            return NSLocalizedString("InfoTVC_TableViewSectionHeader3", comment: "")
+        case 4:
+            return R.string.localizable.icons()
+        default:
+            return nil
         }
     }
     
@@ -137,8 +152,12 @@ class InfoTableViewController: UITableViewController {
                                      leftButtonTitle: NSLocalizedString("viaGitHub", comment: ""),
                                      rightButtonTitle: NSLocalizedString("viaEmail", comment: ""),
                                      leftButtonHandler: { [unowned self] button in
-                                        let urlString = "https://github.com/erikmartens/NearbyWeather/issues"
-                                        self.presentSafariViewController(forUrlString: urlString)
+                                        guard let url = URL(string: "https://github.com/erikmartens/NearbyWeather/issues") else {
+                                            return
+                                        }
+                                        DispatchQueue.main.async {
+                                            self.presentSafariViewController(for: url)
+                                        }
                 },
                                      rightButtonHandler: { [unowned self] button in
                                         let mailAddress = "erikmartens.developer@gmail.com"
@@ -165,6 +184,9 @@ class InfoTableViewController: UITableViewController {
             let pod = InfoTableViewController.cocoaPods[indexPath.row]
             labelCell.contentLabel.text = pod.name
             return labelCell
+        case 4:
+            labelCell.contentLabel.text = "Icons8"
+            return labelCell
         default:
             return UITableViewCell()
         }
@@ -185,22 +207,6 @@ class InfoTableViewController: UITableViewController {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "#UNDEFINED"
         let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "#UNDEFINED"
         appVersionLabel.text = "Version \(appVersion) Build #\(appBuild)"
-    }
-    
-    private func presentSafariViewController(forUrlString urlString: String?) {
-        guard let urlString = urlString,
-            let url = URL(string: urlString) else {
-                return
-        }
-        DispatchQueue.main.async {
-            let safariController = SFSafariViewController(url: url)
-            if #available(iOS 10, *) {
-                safariController.preferredControlTintColor = .nearbyWeatherStandard
-            } else {
-                safariController.view.tintColor = .nearbyWeatherStandard
-            }
-            self.present(safariController, animated: true, completion: nil)
-        }
     }
     
     private func sendMail(to recipients: [String], withSubject subject: String, withMessage message: String) {

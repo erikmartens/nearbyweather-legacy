@@ -49,6 +49,8 @@ class AlertCell: UITableViewCell {
                 noticeLabel.text = NSLocalizedString("LocationsListTVC_UnauthorizedApiKey", comment: "")
             case .locationUnavailableError:
                 noticeLabel.text = NSLocalizedString("LocationsListTVC_LocationUnavailable", comment: "")
+            case .locationAccessDenied:
+               noticeLabel.text =  NSLocalizedString("LocationsListTVC_LocationDenied", comment: "")
             }
         } else {
             noticeLabel.text = NSLocalizedString("LocationsListTVC_UnknownError", comment: "")

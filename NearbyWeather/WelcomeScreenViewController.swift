@@ -135,16 +135,10 @@ class WelcomeScreenViewController: UIViewController {
     }
     
     @IBAction func didTapGetInstructionsButton(_ sender: UIButton) {
-        let urlString = "https://openweathermap.org/appid"
-        
-        guard let url = URL(string: urlString) else { return }
-        let safariController = SFSafariViewController(url: url)
-        if #available(iOS 10, *) {
-            safariController.preferredControlTintColor = .nearbyWeatherStandard
-        } else {
-            safariController.view.tintColor = .nearbyWeatherStandard
+        guard let url = URL(string: "https://openweathermap.org/appid") else {
+            return
         }
-        present(safariController, animated: true, completion: nil)
+        presentSafariViewController(for: url)
     }
 }
 

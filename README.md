@@ -5,7 +5,7 @@
 <h1 align="center">NearbyWeather - Open Source Weather</h1>
 
 <p align="center">
-<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-4.0-orange.svg?style=flat" alt="Swift"/></a>
+<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-4.1-orange.svg?style=flat" alt="Swift"/></a>
 <img src="https://img.shields.io/badge/Platform-iOS%209.0+-lightgrey.svg" alt="Platform: iOS">
 <img src="https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat" alt="License: MIT">
 <a href="https://twitter.com/erik_martens"><img src="https://img.shields.io/badge/Twitter-@erik_martens-blue.svg" alt="Twitter: @erik_martens"/></a>
@@ -55,8 +55,8 @@ It therefore otherwise refrains from advanced concepts. The architecture is kept
 Support is provided at the given support link, including instructions to get started with the app. The app's source code is open source. You can download and contribute via GitHub. To learn more about the project, visit the support website.
 
 ## Future Developments
-- [Release 2.0.1](https://github.com/erikmartens/NearbyWeather/projects/2)
-- [Release 2.1](https://github.com/erikmartens/NearbyWeather/projects/1)
+- [Release 2.1](https://github.com/erikmartens/NearbyWeather/projects/2)
+- [Release 2.2](https://github.com/erikmartens/NearbyWeather/projects/1)
 - Integrate [Fastlane](https://fastlane.tools)
 - Integrate XCTests and [Travis](https://travis-ci.org)
 - Integrate [Fabric](https://get.fabric.io)

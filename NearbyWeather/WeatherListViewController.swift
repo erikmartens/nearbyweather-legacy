@@ -118,8 +118,8 @@ class WeatherListViewController: UIViewController {
     
     private func configureWeatherDataUnavailableElements() {
         emptyListImageView.tintColor = .lightGray
-        emptyListTitleLabel.text = NSLocalizedString("LocationsListTVC_EmptyListTitle", comment: "")
-        emptyListDescriptionLabel.text = NSLocalizedString("LocationsListTVC_EmptyListDescription", comment: "")
+        emptyListTitleLabel.text = R.string.localizable.no_weather_data()
+        emptyListDescriptionLabel.text = R.string.localizable.no_data_description()
     }
     
     private func configureLastRefreshDate() {
@@ -128,7 +128,7 @@ class WeatherListViewController: UIViewController {
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .short
             let dateString = dateFormatter.string(from: lastRefreshDate)
-            let title = R.string.localizable.locationsListTVC_LastRefresh(dateString)
+            let title = R.string.localizable.last_refresh_at(dateString)
             refreshDateLabel.text = title
             refreshDateLabel.isHidden = false
         } else {
@@ -139,7 +139,7 @@ class WeatherListViewController: UIViewController {
     private func configureButtons() {
         reloadButton.isHidden = NetworkingService.shared.reachabilityStatus != .connected
         if !reloadButton.isHidden {
-            reloadButton.setTitle(NSLocalizedString("Reload", comment: "").uppercased(), for: .normal)
+            reloadButton.setTitle(R.string.localizable.reload().uppercased(), for: .normal)
             reloadButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
             reloadButton.layer.cornerRadius = 5.0
             reloadButton.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor

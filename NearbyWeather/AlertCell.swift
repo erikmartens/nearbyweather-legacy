@@ -36,24 +36,24 @@ class AlertCell: UITableViewCell {
             switch errorDataDTO.errorType.value {
             case .httpError:
                 let errorCode = errorDataDTO.httpStatusCode ?? -1
-                noticeLabel.text = String(format: NSLocalizedString("LocationsListTVC_HttpError", comment: ""), "\(errorCode)")
+                noticeLabel.text = R.string.localizable.http_error("\(errorCode)")
             case .requestTimOutError:
-                noticeLabel.text = NSLocalizedString("LocationsListTVC_RequestTimOutError", comment: "")
+                noticeLabel.text = R.string.localizable.request_timeout_error()
             case .malformedUrlError:
-                noticeLabel.text = NSLocalizedString("LocationsListTVC_MalformedUrlError", comment: "")
+                noticeLabel.text = R.string.localizable.malformed_url_error()
             case .unparsableResponseError:
-                noticeLabel.text = NSLocalizedString("LocationsListTVC_UnreadableResult", comment: "")
+                noticeLabel.text = R.string.localizable.unreadable_result_error()
             case .jsonSerializationError:
-                noticeLabel.text = NSLocalizedString("LocationsListTVC_UnreadableResult", comment: "")
+                noticeLabel.text = R.string.localizable.unreadable_result_error()
             case .unrecognizedApiKeyError:
-                noticeLabel.text = NSLocalizedString("LocationsListTVC_UnauthorizedApiKey", comment: "")
+                noticeLabel.text = R.string.localizable.unauthorized_api_key_error()
             case .locationUnavailableError:
-                noticeLabel.text = NSLocalizedString("LocationsListTVC_LocationUnavailable", comment: "")
+                noticeLabel.text = R.string.localizable.location_unavailable_error()
             case .locationAccessDenied:
-               noticeLabel.text =  NSLocalizedString("LocationsListTVC_LocationDenied", comment: "")
+               noticeLabel.text =  R.string.localizable.location_denied_error()
             }
         } else {
-            noticeLabel.text = NSLocalizedString("LocationsListTVC_UnknownError", comment: "")
+            noticeLabel.text = R.string.localizable.unknown_error()
         }
         startAnimationTimer()
     }

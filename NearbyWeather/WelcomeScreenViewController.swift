@@ -33,7 +33,7 @@ class WelcomeScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("WelcomeScreenVC_NavigationBarTitle", comment: "")
+        navigationItem.title = R.string.localizable.welcome()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,14 +68,14 @@ class WelcomeScreenViewController: UIViewController {
         
         descriptionLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
         descriptionLabel.textColor = .white
-        descriptionLabel.text! = NSLocalizedString("WelcomeScreenVC_Description", comment: "")
+        descriptionLabel.text! = R.string.localizable.welcome_api_key_description()
         
         inputTextField.counterColor = inputTextField.textColor ?? .black
         inputTextField.limitColor = .nearbyWeatherStandard
         inputTextField.textColor = .lightGray
         inputTextField.tintColor = .lightGray
         
-        saveButton.setTitle(NSLocalizedString("WelcomeScreenVC_SaveButtonTitle", comment: "").uppercased(), for: .normal)
+        saveButton.setTitle(R.string.localizable.save().uppercased(), for: .normal)
         saveButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
         saveButton.setTitleColor(.nearbyWeatherStandard, for: .highlighted)
         saveButton.setTitleColor(.lightGray, for: .disabled)
@@ -83,7 +83,7 @@ class WelcomeScreenViewController: UIViewController {
         saveButton.layer.borderColor = UIColor.lightGray.cgColor
         saveButton.layer.borderWidth = 1.0
         
-        getInstructionsButtons.setTitle(NSLocalizedString("WelcomeScreenVC_GetInstructionsButtonTitle", comment: "").uppercased(), for: .normal)
+        getInstructionsButtons.setTitle(R.string.localizable.get_api_key_description().uppercased(), for: .normal)
         getInstructionsButtons.setTitleColor(.nearbyWeatherStandard, for: .normal)
         getInstructionsButtons.setTitleColor(.nearbyWeatherStandard, for: .highlighted)
     }

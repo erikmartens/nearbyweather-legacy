@@ -125,7 +125,7 @@ class NearbyLocationsMapViewController: UIViewController {
         currentLocationAction.setValue(UIImage(named: "LocateUserActiveIcon"), forKey: "image")
         optionsAlert.addAction(currentLocationAction)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
         optionsAlert.addAction(cancelAction)
         
         present(optionsAlert, animated: true, completion: nil)

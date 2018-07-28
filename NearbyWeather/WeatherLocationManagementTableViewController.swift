@@ -15,7 +15,7 @@ class WeatherLocationManagementTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("LocationManagementTVC_NavigationBarTitle", comment: "")
+        navigationItem.title = R.string.localizable.manage_locations()
         
         self.tableView.isEditing = true
     }

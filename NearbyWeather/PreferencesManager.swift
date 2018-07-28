@@ -42,9 +42,9 @@ public class SortingOrientation: Codable, PreferencesOption {
     
     public var stringValue: String {
         switch value {
-        case .name: return NSLocalizedString("sortByName", comment: "")
-        case .temperature: return NSLocalizedString("sortByTemperature", comment: "")
-        case .distance: return NSLocalizedString("sortByDistance", comment: "")
+        case .name: return R.string.localizable.sortByName()
+        case .temperature: return R.string.localizable.sortByTemperature()
+        case .distance: return R.string.localizable.sortByDistance()
         }
     }
 }
@@ -107,8 +107,8 @@ public class DistanceSpeedUnit: Codable, PreferencesOption {
     
     public var stringValue: String {
         switch value {
-        case .kilometres: return "\(NSLocalizedString("metric", comment: ""))"
-        case .miles: return "\(NSLocalizedString("imperial", comment: ""))"
+        case .kilometres: return "\(R.string.localizable.metric())"
+        case .miles: return "\(R.string.localizable.imperial())"
         }
     }
 }
@@ -141,11 +141,11 @@ public class AmountOfResults: Codable, PreferencesOption {
     
     public var stringValue: String {
         switch value {
-        case .ten: return "\(10) \(NSLocalizedString("results", comment: ""))"
-        case .twenty: return "\(20) \(NSLocalizedString("results", comment: ""))"
-        case .thirty: return "\(30) \(NSLocalizedString("results", comment: ""))"
-        case .forty: return "\(40) \(NSLocalizedString("results", comment: ""))"
-        case .fifty: return "\(50) \(NSLocalizedString("results", comment: ""))"
+        case .ten: return "\(10) \(R.string.localizable.results())"
+        case .twenty: return "\(20) \(R.string.localizable.results())"
+        case .thirty: return "\(30) \(R.string.localizable.results())"
+        case .forty: return "\(40) \(R.string.localizable.results())"
+        case .fifty: return "\(50) \(R.string.localizable.results())"
         }
     }
     

@@ -73,18 +73,18 @@ class ConversionService {
     public static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forWindspeed windspeed: Double) -> String {
         switch distanceSpeedUnit.value {
         case .kilometres:
-            return "\(String(format:"%.02f", windspeed)) \(NSLocalizedString("kph", comment: ""))"
+            return "\(String(format:"%.02f", windspeed)) \(R.string.localizable.kph())"
         case .miles:
-            return "\(String(format:"%.02f", windspeed / 1.609344)) \(NSLocalizedString("mph", comment: ""))"
+            return "\(String(format:"%.02f", windspeed / 1.609344)) \(R.string.localizable.mph())"
         }
     }
     
     public static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forDistanceInMetres distance: Double) -> String {
         switch distanceSpeedUnit.value {
         case .kilometres:
-            return "\(String(format:"%.02f", distance/1000)) \(NSLocalizedString("km", comment: ""))"
+            return "\(String(format:"%.02f", distance/1000)) \(R.string.localizable.km())"
         case .miles:
-            return "\(String(format:"%.02f", distance/1609.344)) \(NSLocalizedString("mi", comment: ""))"
+            return "\(String(format:"%.02f", distance/1609.344)) \(R.string.localizable.mi())"
         }
     }
     

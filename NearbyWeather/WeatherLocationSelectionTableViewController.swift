@@ -22,13 +22,13 @@ class WeatherLocationSelectionTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("OpenWeatherMapCityFilterTVC_NavigationBarTitle", comment: "")
+        navigationItem.title = R.string.localizable.add_location()
         
         tableView.delegate = self
         searchController.delegate = self
         
         searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = NSLocalizedString("OpenWeatherMapCityFilterTVC_SearchBarPlaceholder", comment: "")
+        searchController.searchBar.placeholder = R.string.localizable.search_by_name()
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar

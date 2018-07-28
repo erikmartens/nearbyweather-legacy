@@ -24,7 +24,7 @@ class SettingsInputTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("api_settings", comment: "")
+        navigationItem.title = R.string.localizable.api_settings()
         
         tableView.delegate = self
         inputTextField.delegate = self
@@ -55,11 +55,11 @@ class SettingsInputTableViewController: UITableViewController {
     // MARK: - TableViewDataSource
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return NSLocalizedString("enter_api_key", comment: "")
+        return R.string.localizable.enter_api_key()
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return NSLocalizedString("api_key_length_description", comment: "")
+        return R.string.localizable.api_key_length_description()
     }
     
     

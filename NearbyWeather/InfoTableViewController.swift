@@ -22,7 +22,7 @@ class InfoTableViewController: UITableViewController {
                                                     CocoaPodMeta(name: "TextFieldCounter", urlString: "https://github.com/serralvo/TextFieldCounter")]
     
     struct Contributor { var name: String; var subtitle: String }
-    private static let contributors: [Contributor] = [Contributor(name: "Erik Maximilian Martens", subtitle: NSLocalizedString("project_owner", comment: ""))]
+    private static let contributors: [Contributor] = [Contributor(name: "Erik Maximilian Martens", subtitle: R.string.localizable.project_owner())]
     
     //MARK: - Assets
     
@@ -36,7 +36,7 @@ class InfoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("about", comment: "")
+        navigationItem.title = R.string.localizable.about()
         
         tableView.delegate = self
         tableView.estimatedRowHeight = 44
@@ -116,13 +116,13 @@ class InfoTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return NSLocalizedString("resources", comment: "")
+            return R.string.localizable.resources()
         case 1:
-            return NSLocalizedString("contributors", comment: "")
+            return R.string.localizable.contributors()
         case 2:
             return nil
         case 3:
-            return NSLocalizedString("libraries", comment: "")
+            return R.string.localizable.libraries()
         case 4:
             return R.string.localizable.icons()
         default:
@@ -145,12 +145,12 @@ class InfoTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             if indexPath.row == 0 {
-                labelCell.contentLabel.text = NSLocalizedString("rate_version", comment: "")
+                labelCell.contentLabel.text = R.string.localizable.rate_version()
                 return labelCell
             } else {
-                buttonCell.configure(withTitle: NSLocalizedString("report_issue", comment: ""),
-                                     leftButtonTitle: NSLocalizedString("viaGitHub", comment: ""),
-                                     rightButtonTitle: NSLocalizedString("viaEmail", comment: ""),
+                buttonCell.configure(withTitle: R.string.localizable.report_issue(),
+                                     leftButtonTitle: R.string.localizable.viaGitHub(),
+                                     rightButtonTitle: R.string.localizable.viaEmail(),
                                      leftButtonHandler: { [unowned self] button in
                                         guard let url = URL(string: "https://github.com/erikmartens/NearbyWeather/issues") else {
                                             return
@@ -161,7 +161,7 @@ class InfoTableViewController: UITableViewController {
                 },
                                      rightButtonHandler: { [unowned self] button in
                                         let mailAddress = "erikmartens.developer@gmail.com"
-                                        let subject = "NearbyWeather - \(NSLocalizedString("report_issue", comment: ""))"
+                                        let subject = "NearbyWeather - \(R.string.localizable.report_issue())"
                                         let message = "Hey Erik, \n"
                                         self.sendMail(to: [mailAddress], withSubject: subject, withMessage: message)
                 })
@@ -174,10 +174,10 @@ class InfoTableViewController: UITableViewController {
             return subtitleCell
         case 2:
             if indexPath.row == 0 {
-                labelCell.contentLabel.text = NSLocalizedString("how_to_contribute", comment: "")
+                labelCell.contentLabel.text = R.string.localizable.how_to_contribute()
                 return labelCell
             } else {
-                labelCell.contentLabel.text = NSLocalizedString("source_code_via_github", comment: "")
+                labelCell.contentLabel.text = R.string.localizable.source_code_via_github()
                 return labelCell
             }
         case 3:
@@ -202,7 +202,7 @@ class InfoTableViewController: UITableViewController {
     }
     
     private func configureText() {
-        appTitleLabel.text = NSLocalizedString("app_title", comment: "")
+        appTitleLabel.text = R.string.localizable.app_title()
         
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "#UNDEFINED"
         let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "#UNDEFINED"

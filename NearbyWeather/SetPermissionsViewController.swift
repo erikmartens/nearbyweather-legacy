@@ -30,7 +30,7 @@ class SetPermissionsViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.setHidesBackButton(true, animated: false)
-        navigationItem.title = NSLocalizedString("location_access", comment: "")
+        navigationItem.title = R.string.localizable.location_access()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,9 +68,9 @@ class SetPermissionsViewController: UIViewController {
         
         descriptionLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
         descriptionLabel.textColor = .white
-        descriptionLabel.text! = NSLocalizedString("configure_location_permissions_description", comment: "")
+        descriptionLabel.text! = R.string.localizable.configure_location_permissions_description()
         
-        askPermissionsButton.setTitle(NSLocalizedString("configure", comment: "").uppercased(), for: .normal)
+        askPermissionsButton.setTitle(R.string.localizable.configure().uppercased(), for: .normal)
         askPermissionsButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
         askPermissionsButton.setTitleColor(.nearbyWeatherStandard, for: .highlighted)
         askPermissionsButton.layer.cornerRadius = 5.0

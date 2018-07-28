@@ -24,7 +24,7 @@ class SettingsInputTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("SettingsInputTVC_NavigationBarTitle_Mode_EnterAPIKey", comment: "")
+        navigationItem.title = NSLocalizedString("api_settings", comment: "")
         
         tableView.delegate = self
         inputTextField.delegate = self
@@ -55,11 +55,11 @@ class SettingsInputTableViewController: UITableViewController {
     // MARK: - TableViewDataSource
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return NSLocalizedString("InputSettingsTVC_SectionTitle_Mode_EnterAPIKey", comment: "")
+        return NSLocalizedString("enter_api_key", comment: "")
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return NSLocalizedString("InputSettingsTVC_SectionFooter_Mode_EnterAPIKey", comment: "")
+        return NSLocalizedString("api_key_length_description", comment: "")
     }
     
     

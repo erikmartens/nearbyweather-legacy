@@ -6,184 +6,92 @@
  Copyright © 2016 Erik Maximilian Martens. All rights reserved.
  */
 
-// MARK: - TabBar
-
 tab_weatherList = "List";
 tab_weatherMap = "Map";
 tab_settings = "Settings";
-
-
-// MARK: - WelcomeScreenViewController
-
-WelcomeScreenVC_NavigationBarTitle = "Welcome";
-
-WelcomeScreenVC_Description = "Please enter your Open Weather Map API key below. You can change this within the settings later.";
-WelcomeScreenVC_SaveButtonTitle = "Save";
-WelcomeScreenVC_GetInstructionsButtonTitle = "Don't have an API key?";
-
-
-// MARK: - SetPermissionsViewController
-
-SetPermissionsVC_NavigationBarTitle = "Location Access";
-
-SetPermissionsVC_Description = "In order to get weather data for nearby places, NearbyWeather requires access to your current location. You may use NearbyWeather without disclosing your coordinates, although this limits the app's functionality.";
-SetPermissionsVC_AskPermissionsButtonTitle = "Configure";
-
-
-// MARK: - NearbyLocationsTableViewController
-
-LocationsListTVC_EmptyListTitle = "No Weather Data";
-LocationsListTVC_EmptyListDescription = "Weather data could not be loaded. Make sure you are connected to the Internet.";
-
-LocationsListTVC_TableViewSectionHeader1 = "Weather in Bookmarked Locations";
-LocationsListTVC_TableViewSectionHeader2 = "Weather for Nearby Locations";
-
-LocationsListTVC_RefreshPullHandle = "Pull to refresh";
-LocationsListTVC_LastRefresh = "Last Refresh: %@";
-
-LocationsListTVC_LocationAlert_Message = "In order to provide weather data of nearby cities, your current location is required. You have denied NearbyWeather access to your location data. This can be changed within Settings. While your location is not determinable, sample coordinates will be used.";
-LocationsListTVC_LocationAlert_Action1 = "Dismiss";
-LocationsListTVC_LocationAlert_Action2 = "Settings";
-
-LocationsListTVC_BackButtonTitle = "Back";
-
-LocationsListTVC_AlertNoData = "Data could not be loaded. Ensure that you have a network connection and that your API key is correctly entered.";
-LocationsListTVC_UnknownError = "An unknown error occured while downloading weather data. Please try again later.";
-LocationsListTVC_HttpError = "An http error occurred while downloading weather data. Status code: %@";
-LocationsListTVC_RequestTimOutError = "An error occurred while downloading weather data. The request timed out.";
-LocationsListTVC_MalformedUrlError = "An error occurred while downloading weather data. The request-URL was malformed.";
-LocationsListTVC_UnreadableResult = "An error occurred while downloading weather data. The response could not be parsed.";
-LocationsListTVC_UnauthorizedApiKey = "An error occurred while downloading weather data. Your OpenWeatherMap API key is invalid.";
-LocationsListTVC_LocationUnavailable = "An error occurred while downloading weather data. Your location could not be determined.";
-LocationsListTVC_LocationDenied = "You have disabled access to your current location. Nearby locations cannot be determined.";
-
+welcome = "Welcome";
+welcome_api_key_description = "Please enter your Open Weather Map API key below. You can change this within the settings later.";
+save = "Save";
+get_api_key_description = "Don't have an API key?";
+location_access = "Location Access";
+configure_location_permissions_description = "In order to get weather data for nearby places, NearbyWeather requires access to your current location. You may use NearbyWeather without disclosing your coordinates, although this limits the app's functionality.";
+configure = "Configure";
+no_weather_data = "No Weather Data";
+no_data_description = "Weather data could not be loaded. Make sure you are connected to the Internet.";
+last_refresh_at = "Last Refresh: %@";
+unknown_error = "An unknown error occured while downloading weather data. Please try again later.";
+http_error = "An http error occurred while downloading weather data. Status code: %@";
+request_timeout_error = "An error occurred while downloading weather data. The request timed out.";
+malformed_url_error = "An error occurred while downloading weather data. The request-URL was malformed.";
+unreadable_result_error = "An error occurred while downloading weather data. The response could not be parsed.";
+unauthorized_api_key_error = "An error occurred while downloading weather data. Your OpenWeatherMap API key is invalid.";
+location_unavailable_error = "An error occurred while downloading weather data. Your location could not be determined.";
+location_denied_error = "You have disabled access to your current location. Nearby locations cannot be determined.";
 select_list_type = "Select list content";
 select_map_type = "Select map type";
-
-
-// MARK: - WeatherDetailViewController
-
-WeatherDetailVC_DaytimeDescription = "Day-Time";
-WeatherDetailVC_NighttimeDescription = "Night-Time";
-
-WeatherDetailVC_Sunrise = "Sunrise";
-WeatherDetailVC_Sunset = "Sunset";
-WeatherDetailVC_DaytimeExplanation = "based on device's local time";
-
-WeatherDetailVC_CloudCoverage = "Cloud Coverage";
-WeatherDetailVC_Humidity = "Humidity";
-WeatherDetailVC_Pressure = "Pressure";
-
-WeatherDetailVC_WindSpeed = "Wind Speed";
-WeatherDetailVC_WindDirection = "Wind Direction";
-
-WeatherDetailVC_Coordinates = "Coordinates";
-WeatherDetailVC_Distance = "Distance";
-
-
-// MARK: - NearbyLocationsMapViewController
-
+day-time = "Day-Time";
+night-time = "Night-Time";
+sunrise = "Sunrise";
+sunset = "Sunset";
+cloud_coverage = "Cloud Coverage";
+humidity = "Humidity";
+air_pressure = "Pressure";
+windspeed = "Wind Speed";
+wind_direction = "Wind Direction";
+coordinates = "Coordinates";
+distance = "Distance";
 map_type_standard = "Map";
 map_type_hybrid = "Hybrid";
 map_type_satellite = "Satellite";
-
-
-// MARK: - InfoTableViewController
-
-InfoTVC_NavigationItemTitle = "About";
-
-InfoTVC_TableViewSectionHeader1 = "Resources";
-InfoTVC_TableViewSectionHeader2 = "Contributors";
-InfoTVC_TableViewSectionHeader3 = "Libraries";
-
-InfoTVC_AppTitle = "NearbyWeather - Open Source Weather";
-
-InfoTVC_RateVersion = "Rate this Version";
-InfoTVC_ReportIssue = "Suggest a Feature | Report a Bug";
-InfoTVC_DeveloperNameSubtitle_0 = "Project Owner";
-InfoTVC_HowToContribute = "How to Contribute";
-InfoTVC_Source = "Source Code via GitHub";
-
-
-// MARK: - SettingsTableViewController
-
-SettingsTVC_BackButtonTitle = "Weather";
-
-SettingsTVC_NavigationBarTitle = "Settings";
-
-SettingsTVC_About = "About";
-
-SettingsTVC_SectionTitle_0 = "General";
-SettingsTVC_SectionTitle_1 = "OpenWeatherMap API";
-SettingsTVC_SectionTitle_2 = "Bookmarks";
-SettingsTVC_SectionTitle_3 = "Preferences";
-
-SettingsTVC_Results = "Results";
-SettingsTVC_RefreshOnAppStart = "Refresh on App Start";
-
-SettingsTVC_AmountOfResults = "Amount of Results";
-SettingsTVC_SortingOrientation = "Sorting Orientation";
-SettingsTVC_TemperatureUnit = "Temperature Unit";
-SettingsTVC_DistanceSpeedUnit = "Distance/Speed Unit";
-
-SettingsTVC_AddLocation = "Add a Location";
-SettingsTVC_ManageLocations = "Manage Locations";
-SettingTVC_Locations = "%d Locations";
-
-
-// MARK: - SettingsInputTableViewController
-
-SettingsInputTVC_NavigationBarTitle_Mode_EnterAPIKey = "Set API Key";
-InputSettingsTVC_SectionTitle_Mode_EnterAPIKey = "Enter API Key";
-InputSettingsTVC_SectionFooter_Mode_EnterAPIKey = "The API Key has a length of exactly 32 characters.";
-
-
-// MARK: - WeatherLocationManagementTableViewController
-
-LocationManagementTVC_NavigationBarTitle = "Manage Locations";
-
-
-// MARK:  - OpenWeatherMapCityFilterTableViewController
-
-OpenWeatherMapCityFilterTVC_NavigationBarTitle = "Add Location";
-OpenWeatherMapCityFilterTVC_SearchBarPlaceholder = "Search by Name";
-
+about = "About";
+resources = "Resources";
+contributors = "Contributors";
+libraries = "Libraries";
+app_title = "NearbyWeather - Open Source Weather";
+rate_version = "Rate this Version";
+report_issue = "Suggest a Feature | Report a Bug";
+project_owner = "Project Owner";
+how_to_contribute = "How to Contribute";
+source_code_via_github = "Source Code via GitHub";
+general = "General";
+openWeatherMap_api = "OpenWeatherMap API";
+bookmarks = "Bookmarks";
+preferences = "Preferences";
+refresh_on_app_start = "Refresh on App Start";
+amount_of_results = "Amount of Results";
+sorting_orientation = "Sorting Orientation";
+temperature_unit = "Temperature Unit";
+distance-speed_unit = "Distance/Speed Unit";
+add_location = "Add a Location";
+manage_locations = "Manage Locations";
+x_locations = "%d Locations";
+api_settings = "Set API Key";
+enter_api_key = "Enter API Key";
+api_key_length_description = "The API Key has a length of exactly 32 characters.";
+manage_locations = "Manage Locations";
+add_location = "Add Location";
+search_by_name = "Search by Name";
 focus_on_location = "Focus on Location";
-
-// MARK: - General
-
 icons = "Icons";
-
 bookmarked = "Bookmarked";
 nearby = "Nearby";
-
 apiKey = "API Key";
-
 sortByName = "By Name";
 sortByTemperature = "By Temperature";
 sortByDistance = "By Distance";
-
 metric = "Metric";
 imperial = "Imperial";
-
 results = "Results";
-
 cancel = "Cancel";
 reload = "Reload";
-
 viaEmail = "Mail";
 viaGitHub = "GitHub";
-
 kilometres_per_hour = "Kilometres per Hour";
 miles_per_hour = "Miles per Hour";
-
 kilometres = "Kilometres";
 miles = "Miles";
-
 kph = "km/h";
 mph = "mp/h";
-
 km = "km";
 mi = "mi";
-
 current_location = "Current Location";

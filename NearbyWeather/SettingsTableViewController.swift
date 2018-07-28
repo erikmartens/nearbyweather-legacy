@@ -15,7 +15,7 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("SettingsTVC_NavigationBarTitle", comment: "")
+        navigationItem.title = NSLocalizedString("tab_settings", comment: "")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,15 +62,15 @@ class SettingsTableViewController: UITableViewController {
             }
         case 4:
             if indexPath.row == 0 {
-                triggerOptionsAlert(forOptions: amountOfResultsOptions, title: NSLocalizedString("SettingsTVC_AmountOfResults", comment: ""))
+                triggerOptionsAlert(forOptions: amountOfResultsOptions, title: NSLocalizedString("amount_of_results", comment: ""))
             }
             if indexPath.row == 1 {
-                triggerOptionsAlert(forOptions: sortResultsOptions, title: NSLocalizedString("SettingsTVC_SortingOrientation", comment: ""))
+                triggerOptionsAlert(forOptions: sortResultsOptions, title: NSLocalizedString("sorting_orientation", comment: ""))
             }
             if indexPath.row == 2 {
-                triggerOptionsAlert(forOptions: temperatureUnitOptions, title: NSLocalizedString("SettingsTVC_TemperatureUnit", comment: ""))
+                triggerOptionsAlert(forOptions: temperatureUnitOptions, title: NSLocalizedString("temperature_unit", comment: ""))
             } else {
-                triggerOptionsAlert(forOptions: distanceSpeedUnitOptions, title: NSLocalizedString("SettingsTVC_DistanceSpeedUnit", comment: ""))
+                triggerOptionsAlert(forOptions: distanceSpeedUnitOptions, title: NSLocalizedString("distance-speed_unit", comment: ""))
             }
         default:
             break
@@ -80,15 +80,15 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return NSLocalizedString("SettingsTVC_SectionTitle_0", comment: "")
+            return NSLocalizedString("general", comment: "")
         case 1:
             return nil
         case 2:
-            return NSLocalizedString("SettingsTVC_SectionTitle_1", comment: "")
+            return NSLocalizedString("openWeatherMap_api", comment: "")
         case 3:
-            return NSLocalizedString("SettingsTVC_SectionTitle_2", comment: "")
+            return NSLocalizedString("bookmarks", comment: "")
         case 4:
-            return NSLocalizedString("SettingsTVC_SectionTitle_3", comment: "")
+            return NSLocalizedString("preferences", comment: "")
         default:
             return nil
         }
@@ -119,12 +119,12 @@ class SettingsTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-            cell.contentLabel.text = NSLocalizedString("SettingsTVC_About", comment: "")
+            cell.contentLabel.text = NSLocalizedString("about", comment: "")
             cell.accessoryType = .disclosureIndicator
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ToggleCell", for: indexPath) as! ToggleCell
-            cell.contentLabel.text = NSLocalizedString("SettingsTVC_RefreshOnAppStart", comment: "")
+            cell.contentLabel.text = NSLocalizedString("refresh_on_app_start", comment: "")
             cell.toggle.isOn = UserDefaults.standard.bool(forKey: kRefreshOnAppStartKey)
             cell.toggleSwitchHandler = { sender in
                 UserDefaults.standard.set(sender.isOn, forKey: kRefreshOnAppStartKey)
@@ -139,41 +139,41 @@ class SettingsTableViewController: UITableViewController {
         case 3:
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-                cell.contentLabel.text = NSLocalizedString("SettingsTVC_ManageLocations", comment: "")
+                cell.contentLabel.text = NSLocalizedString("manage_locations", comment: "")
                 
                 let entriesCount = WeatherDataManager.shared.bookmarkedLocations.count
                 let firstLocationEntryTitle = WeatherDataManager.shared.bookmarkedLocations[indexPath.row].name
                 
-                cell.selectionLabel.text = entriesCount == 1 ? firstLocationEntryTitle : String(format: NSLocalizedString("SettingTVC_Locations", comment: ""), entriesCount)
+                cell.selectionLabel.text = entriesCount == 1 ? firstLocationEntryTitle : String(format: NSLocalizedString("x_locations", comment: ""), entriesCount)
                 cell.accessoryType = .disclosureIndicator
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-                cell.contentLabel.text = NSLocalizedString("SettingsTVC_AddLocation", comment: "")
+                cell.contentLabel.text = NSLocalizedString("add_location", comment: "")
                 cell.accessoryType = .disclosureIndicator
                 return cell
             }
         case 4:
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-                cell.contentLabel.text = NSLocalizedString("SettingsTVC_AmountOfResults", comment: "")
+                cell.contentLabel.text = NSLocalizedString("amount_of_results", comment: "")
                 cell.selectionLabel.text = PreferencesManager.shared.amountOfResults.stringValue
                 return cell
             }
             if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-                cell.contentLabel.text = NSLocalizedString("SettingsTVC_SortingOrientation", comment: "")
+                cell.contentLabel.text = NSLocalizedString("sorting_orientation", comment: "")
                 cell.selectionLabel.text = PreferencesManager.shared.sortingOrientation.stringValue
                 return cell
             }
             if indexPath.row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-                cell.contentLabel.text = NSLocalizedString("SettingsTVC_TemperatureUnit", comment: "")
+                cell.contentLabel.text = NSLocalizedString("temperature_unit", comment: "")
                 cell.selectionLabel.text = PreferencesManager.shared.temperatureUnit.stringValue
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-                cell.contentLabel.text = NSLocalizedString("SettingsTVC_DistanceSpeedUnit", comment: "")
+                cell.contentLabel.text = NSLocalizedString("distance-speed_unit", comment: "")
                 cell.selectionLabel.text = PreferencesManager.shared.distanceSpeedUnit.stringValue
                 return cell
             }

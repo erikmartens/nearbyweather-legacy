@@ -118,8 +118,8 @@ class WeatherListViewController: UIViewController {
     
     private func configureWeatherDataUnavailableElements() {
         emptyListImageView.tintColor = .lightGray
-        emptyListTitleLabel.text = NSLocalizedString("LocationsListTVC_EmptyListTitle", comment: "")
-        emptyListDescriptionLabel.text = NSLocalizedString("LocationsListTVC_EmptyListDescription", comment: "")
+        emptyListTitleLabel.text = NSLocalizedString("no_weather_data", comment: "")
+        emptyListDescriptionLabel.text = NSLocalizedString("no_data_description", comment: "")
     }
     
     private func configureLastRefreshDate() {
@@ -128,7 +128,7 @@ class WeatherListViewController: UIViewController {
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .short
             let dateString = dateFormatter.string(from: lastRefreshDate)
-            let title = R.string.localizable.locationsListTVC_LastRefresh(dateString)
+            let title = R.string.localizable.last_refresh_at(dateString)
             refreshDateLabel.text = title
             refreshDateLabel.isHidden = false
         } else {

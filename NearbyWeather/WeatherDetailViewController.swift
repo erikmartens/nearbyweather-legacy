@@ -123,16 +123,16 @@ class WeatherDetailViewController: UIViewController {
             dateFormatter.timeStyle = .short
             
             let isDayTime = ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true // can never be nil here
-            let description = isDayTime ? NSLocalizedString("WeatherDetailVC_DaytimeDescription", comment: "") : NSLocalizedString("WeatherDetailVC_NighttimeDescription", comment: "")
+            let description = isDayTime ? NSLocalizedString("day-time", comment: "") : NSLocalizedString("night-time", comment: "")
             let localTime = dateFormatter.string(from: Date())
             timeLabel.text = "\(description), \(localTime)"
             
             sunriseImageView.tintColor = .darkGray
-            sunriseNoteLabel.text = "\(NSLocalizedString("WeatherDetailVC_Sunrise", comment: "")):"
+            sunriseNoteLabel.text = "\(NSLocalizedString("sunrise", comment: "")):"
             sunriseLabel.text = dateFormatter.string(from: sunriseDate)
             
             sunsetImageView.tintColor = .darkGray
-            sunsetNoteLabel.text = "\(NSLocalizedString("WeatherDetailVC_Sunset", comment: "")):"
+            sunsetNoteLabel.text = "\(NSLocalizedString("sunset", comment: "")):"
             sunsetLabel.text = dateFormatter.string(from: sunsetDate)
         } else {
             daytimeStackView.isHidden = true
@@ -140,30 +140,30 @@ class WeatherDetailViewController: UIViewController {
         }
         
         cloudCoverImageView.tintColor = .darkGray
-        cloudCoverNoteLabel.text = "\(NSLocalizedString("WeatherDetailVC_CloudCoverage", comment: "")):"
+        cloudCoverNoteLabel.text = "\(NSLocalizedString("cloud_coverage", comment: "")):"
         cloudCoverLabel.text = "\(weatherDTO.cloudCoverage.coverage)%"
         humidityImageView.tintColor = .darkGray
-        humidityNoteLabel.text = "\(NSLocalizedString("WeatherDetailVC_Humidity", comment: "")):"
+        humidityNoteLabel.text = "\(NSLocalizedString("humidity", comment: "")):"
         humidityLabel.text = "\(weatherDTO.atmosphericInformation.humidity)%"
         pressureImageView.tintColor = .darkGray
-        pressureNoteLabel.text = "\(NSLocalizedString("WeatherDetailVC_Pressure", comment: "")):"
+        pressureNoteLabel.text = "\(NSLocalizedString("air_pressure", comment: "")):"
         pressureLabel.text = "\(weatherDTO.atmosphericInformation.pressurePsi) hpa"
         
         windSpeedImageView.tintColor = .darkGray
-        windSpeedNoteLabel.text = "\(NSLocalizedString("WeatherDetailVC_WindSpeed", comment: "")):"
+        windSpeedNoteLabel.text = "\(NSLocalizedString("windspeed", comment: "")):"
         let windspeedDescriptor = ConversionService.windspeedDescriptor(forDistanceSpeedUnit: PreferencesManager.shared.distanceSpeedUnit, forWindspeed: weatherDTO.windInformation.windspeed)
         windSpeedLabel.text = windspeedDescriptor
         if let windDirection = weatherDTO.windInformation.degrees {
             windDirectionImageView.transform = CGAffineTransform(rotationAngle: CGFloat(windDirection)*0.0174532925199) // convert to radians
             windDirectionImageView.tintColor = .darkGray
-            windDirectionNoteLabel.text = " \(NSLocalizedString("WeatherDetailVC_WindDirection", comment: "")):"
+            windDirectionNoteLabel.text = " \(NSLocalizedString("wind_direction", comment: "")):"
             windDirectionLabel.text = ConversionService.windDirectionDescriptor(forWindDirection: windDirection)
         } else {
             windDirectionStackView.isHidden = true
         }
         
         coordinatesImageView.tintColor = .darkGray
-        coordinatesNoteLabel.text = "\(NSLocalizedString("WeatherDetailVC_Coordinates", comment: "")):"
+        coordinatesNoteLabel.text = "\(NSLocalizedString("coordinates", comment: "")):"
         coordinatesLabel.text = "\(weatherDTO.coordinates.latitude), \(weatherDTO.coordinates.longitude)"
         if LocationService.shared.locationPermissionsGranted, let userLocation = LocationService.shared.location {
             let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
@@ -173,7 +173,7 @@ class WeatherDetailViewController: UIViewController {
             let distanceString = ConversionService.distanceDescriptor(forDistanceSpeedUnit: distanceSpeedUnit, forDistanceInMetres: distanceInMetres)
             
             distanceImageView.tintColor = .darkGray
-            distanceNoteLabel.text = "\(NSLocalizedString("WeatherDetailVC_Distance", comment: "")):"
+            distanceNoteLabel.text = "\(NSLocalizedString("distance", comment: "")):"
             distanceLabel.text = distanceString
         } else {
             distanceStackView.isHidden = true

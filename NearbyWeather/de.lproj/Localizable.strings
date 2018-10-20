@@ -82,6 +82,7 @@ sortByDistance = "Nach Distanz";
 metric = "Metrisch";
 imperial = "Zöllig";
 results = "Ergebnisse";
+ok = "OK";
 cancel = "Abbrechen";
 reload = "Aktualisieren";
 viaEmail = "Email";

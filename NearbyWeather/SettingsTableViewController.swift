@@ -10,6 +10,10 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
     
+    // MARK: - Properties
+    
+    private var pickerView: PickerAlertViewController<Int>?
+    
     // MARK: - ViewController LifeCycle
     
     override func viewDidLoad() {
@@ -53,12 +57,26 @@ class SettingsTableViewController: UITableViewController {
                 
                 navigationItem.removeTextFromBackBarButton()
                 navigationController?.pushViewController(destinationViewController, animated: true)
-            } else {
+            } else if indexPath.row == 1 {
                 let storyboard = UIStoryboard(name: "Settings", bundle: nil)
                 let destinationViewController = storyboard.instantiateViewController(withIdentifier: "OWMCityFilterTableViewController") as! WeatherLocationSelectionTableViewController
                 
                 navigationItem.removeTextFromBackBarButton()
                 navigationController?.pushViewController(destinationViewController, animated: true)
+            } else {
+                var choices = [PickerAlertViewController<Int>.Choice(id: -1, title: "None")]
+                choices.append(contentsOf: WeatherDataManager.shared.bookmarkedLocations.map { PickerAlertViewController<Int>.Choice(id: $0.identifier, title: $0.name) })
+                let selectedCityId = UserDefaults.standard.value(forKey: kPreferredBookmarkCityIdKey) as? Int
+                let pickerAlertViewController = PickerAlertViewController(title: R.string.localizable.preffered_bookmark(), choices: choices, selectedChoiceId: selectedCityId) { [weak self] selectedCityId in
+                    if selectedCityId == -1 {
+                        UserDefaults.standard.removeObject(forKey: kPreferredBookmarkCityIdKey)
+                    } else {
+                        UserDefaults.standard.set(selectedCityId, forKey: kPreferredBookmarkCityIdKey)
+                    }
+                    self?.tableView.reloadData()
+                }
+                self.pickerView = pickerAlertViewController
+                pickerAlertViewController.present(by: self)
             }
         case 4:
             if indexPath.row == 0 {
@@ -107,7 +125,7 @@ class SettingsTableViewController: UITableViewController {
         case 2:
             return 1
         case 3:
-            return 2
+            return 3
         case 4:
             return 4
         default:
@@ -147,10 +165,20 @@ class SettingsTableViewController: UITableViewController {
                 cell.selectionLabel.text = entriesCount == 1 ? firstLocationEntryTitle : R.string.localizable.x_locations(entriesCount)
                 cell.accessoryType = .disclosureIndicator
                 return cell
-            } else {
+            } else if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
                 cell.contentLabel.text = R.string.localizable.add_location()
                 cell.accessoryType = .disclosureIndicator
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+                cell.contentLabel.text = R.string.localizable.preffered_bookmark()
+                if let preferredBookmarkCityId = UserDefaults.standard.value(forKey: kPreferredBookmarkCityIdKey) as? Int {
+                    let bookmark = WeatherDataManager.shared.bookmarkedLocations.first { $0.identifier == preferredBookmarkCityId }
+                    cell.selectionLabel.text = bookmark?.name
+                } else {
+                    cell.selectionLabel.text = nil
+                }
                 return cell
             }
         case 4:

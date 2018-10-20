@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D58B4756E69A26CBBB8002F /* Pods_NearbyWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01FDEE48840B6DE40D19CA4 /* Pods_NearbyWeather.framework */; };
 		482F50CF0642651072B0552E /* Pods_NearbyWeatherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9117E5FC9606EF89375077 /* Pods_NearbyWeatherTests.framework */; };
+		86830390217B9B6100B7122E /* PickerAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8683038F217B9B6100B7122E /* PickerAlertViewController.swift */; };
 		F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */; };
 		F204B7801DF2EFA3000F4371 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F204B77E1DF2EFA3000F4371 /* Main.storyboard */; };
 		F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F204B7811DF2EFA3000F4371 /* Assets.xcassets */; };
@@ -83,6 +84,7 @@
 /* Begin PBXFileReference section */
 		20E2DFB16875223CFBEA36EF /* Pods-NearbyWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearbyWeather/Pods-NearbyWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		2DB36716201A47922EC83643 /* Pods-NearbyWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearbyWeather/Pods-NearbyWeather.release.xcconfig"; sourceTree = "<group>"; };
+		8683038F217B9B6100B7122E /* PickerAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerAlertViewController.swift; sourceTree = "<group>"; };
 		AC9117E5FC9606EF89375077 /* Pods_NearbyWeatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearbyWeatherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B25B5E79CF3A6FC3B3E60F51 /* Pods-NearbyWeatherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeatherTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearbyWeatherTests/Pods-NearbyWeatherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E01FDEE48840B6DE40D19CA4 /* Pods_NearbyWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearbyWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -298,6 +300,7 @@
 				F28CA5382016A1BA00209397 /* NearbyLocationsMapViewController.swift */,
 				F28CA54020279EE300209397 /* WeatherDetailViewController.swift */,
 				F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */,
+				8683038F217B9B6100B7122E /* PickerAlertViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -706,6 +709,7 @@
 				F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */,
 				F2B8EA061EA2893C00704E90 /* WelcomeScreenViewController.swift in Sources */,
 				F28CA53F2026285000209397 /* UserDefaultsKeys.swift in Sources */,
+				86830390217B9B6100B7122E /* PickerAlertViewController.swift in Sources */,
 				F2B8EA001EA11BA800704E90 /* WeatherDataDTOs.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,

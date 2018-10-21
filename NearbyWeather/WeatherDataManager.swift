@@ -39,6 +39,11 @@ struct WeatherDataManagerStoredContentsWrapper: Codable {
     var nearbyWeatherDataObject: BulkWeatherDataContainer?
 }
 
+enum UpdateStatus {
+    case success
+    case failure
+}
+
 class WeatherDataManager {
     
     // MARK: - Public Assets
@@ -113,11 +118,11 @@ class WeatherDataManager {
         shared = WeatherDataManager.loadService() ?? WeatherDataManager(bookmarkedLocations: [kDefaultBookmarkedLocation])
     }
     
-    public func update(withCompletionHandler completionHandler: (() -> ())?) {
+    public func update(withCompletionHandler completionHandler: ((UpdateStatus) -> ())?) {
         let fetchWeatherDataBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.fetchWeatherDataQueue", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
         
         guard NetworkingService.shared.reachabilityStatus == .connected else {
-            completionHandler?()
+            completionHandler?(.failure)
             return
         }
         
@@ -143,7 +148,7 @@ class WeatherDataManager {
             
             let waitResult = dispatchGroup.wait(timeout: .now() + 60.0)
             if waitResult == .timedOut {
-                completionHandler?() // todo: notify user
+                completionHandler?(.failure) // todo: notify user
                 return
             }
             
@@ -166,8 +171,58 @@ class WeatherDataManager {
             DispatchQueue.main.async {
                 UserDefaults.standard.set(Date(), forKey: kWeatherDataLastRefreshDateKey)
                 NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
-                BadgeService.shared.updateBadge()
-                completionHandler?()
+                BadgeService.shared.updateBadge() {
+                    completionHandler?(.success)
+                }
+            }
+        }
+    }
+    
+    public func updateBookmarks(withCompletionHandler completionHandler: ((UpdateStatus) -> ())?) {
+        let fetchWeatherDataBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.fetchWeatherDataQueue", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
+        
+        guard NetworkingService.shared.reachabilityStatus == .connected else {
+            completionHandler?(.failure)
+            return
+        }
+        
+        fetchWeatherDataBackgroundQueue.async {
+            let dispatchGroup = DispatchGroup()
+            
+            var bookmarkednWeatherDataObjects = [WeatherDataContainer]()
+            
+            self.bookmarkedLocations.forEach { location in
+                dispatchGroup.enter()
+                NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
+                    bookmarkednWeatherDataObjects.append(weatherDataContainer)
+                    dispatchGroup.leave()
+                })
+            }
+            
+            let waitResult = dispatchGroup.wait(timeout: .now() + 60.0)
+            if waitResult == .timedOut {
+                completionHandler?(.failure) // todo: notify user
+                return
+            }
+            
+            // do not publish refresh if not data was loaded
+            if bookmarkednWeatherDataObjects.count == 0 {
+                return
+            }
+            
+            // only override previous record if there is any new data
+            if bookmarkednWeatherDataObjects.count != 0 {
+                self.bookmarkedWeatherDataObjects = bookmarkednWeatherDataObjects
+                self.sortBookmarkedLocationWeatherData()
+            }
+            
+            WeatherDataManager.storeService()
+            DispatchQueue.main.async {
+                UserDefaults.standard.set(Date(), forKey: kWeatherDataLastRefreshDateKey)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
+                BadgeService.shared.updateBadge() {
+                    completionHandler?(.success)
+                }
             }
         }
     }
@@ -186,7 +241,6 @@ class WeatherDataManager {
         }
         return nil
     }
-    
     
     // MARK: - Private Helper Methods
     

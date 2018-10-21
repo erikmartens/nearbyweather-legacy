@@ -154,7 +154,7 @@ class WeatherListViewController: UIViewController {
     
     @objc private func updateWeatherData() {
         refreshControl.beginRefreshing()
-        WeatherDataManager.shared.update(withCompletionHandler: {
+        WeatherDataManager.shared.update(withCompletionHandler: { _ in
             DispatchQueue.main.async {
                 self.refreshControl.endRefreshing()
                 self.configureButtons()

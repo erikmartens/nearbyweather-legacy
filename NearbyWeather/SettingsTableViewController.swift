@@ -73,7 +73,7 @@ class SettingsTableViewController: UITableViewController {
                     } else {
                         UserDefaults.standard.set(selectedCityId, forKey: kPreferredBookmarkCityIdKey)
                     }
-                    BadgeService.shared.updateBadge()
+                    BadgeService.shared.updateBadge(withCompletionHandler: nil)
                     self?.tableView.reloadData()
                 }
                 self.pickerView = pickerAlertViewController
@@ -182,7 +182,7 @@ class SettingsTableViewController: UITableViewController {
                     if sender.isOn {
                         PermissionsManager.shared.checkNotificationsPermissions { approved in
                             if approved {
-                                UserDefaults.standard.set(true, forKey: kShowTempOnIconKey)
+                                BadgeService.shared.setBadgeService(enabled: true)
                                 tableView.insertRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)
                             } else {
                                 sender.setOn(false, animated: true)
@@ -190,8 +190,7 @@ class SettingsTableViewController: UITableViewController {
                             }
                         }
                     } else {
-                        UserDefaults.standard.set(false, forKey: kShowTempOnIconKey)
-                        BadgeService.shared.updateBadge()
+                        BadgeService.shared.setBadgeService(enabled: false)
                         tableView.deleteRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)
                     }
                 }
@@ -303,7 +302,7 @@ class SettingsTableViewController: UITableViewController {
                     PreferencesManager.shared.sortingOrientation = option as! SortingOrientation
                 case is TemperatureUnit:
                     PreferencesManager.shared.temperatureUnit = option as! TemperatureUnit
-                    BadgeService.shared.updateBadge()
+                    BadgeService.shared.updateBadge(withCompletionHandler: nil)
                 case is DistanceSpeedUnit:
                     PreferencesManager.shared.distanceSpeedUnit = option as! DistanceSpeedUnit
                 default:

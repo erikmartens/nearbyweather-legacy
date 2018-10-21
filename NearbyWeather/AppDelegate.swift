@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PreferencesManager.instantiateSharedInstance()
         WeatherLocationService.instantiateSharedInstance()
         WeatherDataManager.instantiateSharedInstance()
-        BadgeService.instantiateSharedInstance()
         PermissionsManager.instantiateSharedInstance()
+        BadgeService.instantiateSharedInstance()
         
         /* Notifications Permissions */
         if UserDefaults.standard.bool(forKey: kShowTempOnIconKey) {
@@ -101,6 +101,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
         PermissionsManager.shared.didRegisterNotificationSettings(notificationSettings)
+    }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        BadgeService.shared.performBackgroundBadgeUpdate(withCompletionHandler: completionHandler)
     }
     
     // MARK: - Private Helpers

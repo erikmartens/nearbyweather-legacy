@@ -102,3 +102,6 @@ none = "None";
 notifications_disabled = "Notifications Disabled";
 enable_notifications_alert_text = "Your need to enable notifications to show temperature on app icon.";
 settings = "Settings";
+app_icon_temperature_sing_updated = "App icon temperature sign updated";
+temperature_below_zero = "Temperature in %@ is now below zero";
+temperature_above_zero = "Temperature in %@ is now above zero";

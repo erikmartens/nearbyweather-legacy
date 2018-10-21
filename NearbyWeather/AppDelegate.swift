@@ -20,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PreferencesManager.instantiateSharedInstance()
         WeatherLocationService.instantiateSharedInstance()
         WeatherDataManager.instantiateSharedInstance()
+        BadgeService.instantiateSharedInstance()
+        PermissionsManager.instantiateSharedInstance()
+        
+        /* Notifications Permissions */
+        if UserDefaults.standard.bool(forKey: kShowTempOnIconKey) {
+            UIApplication.shared.registerForRemoteNotifications()
+        }
         
         /* UITabBar Appearance */
         
@@ -80,6 +87,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         refreshWeatherDataIfNeeded()
     }
     
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        PermissionsManager.shared.didRegisterForRemoteNotifications(success: true)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        PermissionsManager.shared.didRegisterForRemoteNotifications(success: false)
+    }
+    
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+        PermissionsManager.shared.didRegisterNotificationSettings(notificationSettings)
+    }
     
     // MARK: - Private Helpers
     

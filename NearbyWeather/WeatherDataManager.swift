@@ -74,6 +74,15 @@ class WeatherDataManager {
             WeatherDataManager.storeService()
         }
     }
+    public var preferredBookmarkData: WeatherInformationDTO? {
+        guard
+            let bookmarkId = UserDefaults.standard.value(forKey: kPreferredBookmarkCityIdKey) as? Int,
+            let preferredWeather = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first(where: { $0.locationId == bookmarkId })?.weatherInformationDTO
+        else {
+            return nil
+        }
+        return preferredWeather
+    }
     public private(set) var bookmarkedWeatherDataObjects: [WeatherDataContainer]?
     public private(set) var nearbyWeatherDataObject: BulkWeatherDataContainer?
     
@@ -157,6 +166,7 @@ class WeatherDataManager {
             DispatchQueue.main.async {
                 UserDefaults.standard.set(Date(), forKey: kWeatherDataLastRefreshDateKey)
                 NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
+                BadgeService.shared.updateBadge()
                 completionHandler?()
             }
         }

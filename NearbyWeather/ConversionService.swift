@@ -59,6 +59,21 @@ class ConversionService {
         }
     }
     
+    public static func temperatureIntValue(forTemperatureUnit temperatureUnit: TemperatureUnit, fromRawTemperature rawTemperature: Double) -> Int? {
+        let adjustedTemp: Double
+        switch temperatureUnit.value {
+        case .celsius:
+            adjustedTemp = rawTemperature - 273.15
+        case . fahrenheit:
+            adjustedTemp = rawTemperature * (9/5) - 459.67
+        case .kelvin:
+            adjustedTemp = rawTemperature
+        }
+        
+        guard !adjustedTemp.isNaN && adjustedTemp.isFinite else { return nil }
+        return Int(adjustedTemp.rounded())
+    }
+    
     public static func temperatureDescriptor(forTemperatureUnit temperatureUnit: TemperatureUnit, fromRawTemperature rawTemperature: Double) -> String {
         switch temperatureUnit.value {
         case .celsius:

@@ -63,7 +63,7 @@ class SettingsTableViewController: UITableViewController {
                 
                 navigationItem.removeTextFromBackBarButton()
                 navigationController?.pushViewController(destinationViewController, animated: true)
-            } else {
+            } else if indexPath.row == 3 {
                 var choices = [PickerAlertViewController<Int>.Choice(id: -1, title: "None")]
                 choices.append(contentsOf: WeatherDataManager.shared.bookmarkedLocations.map { PickerAlertViewController<Int>.Choice(id: $0.identifier, title: $0.name) })
                 let selectedCityId = UserDefaults.standard.value(forKey: kPreferredBookmarkCityIdKey) as? Int
@@ -73,6 +73,7 @@ class SettingsTableViewController: UITableViewController {
                     } else {
                         UserDefaults.standard.set(selectedCityId, forKey: kPreferredBookmarkCityIdKey)
                     }
+                    BadgeService.shared.updateBadge()
                     self?.tableView.reloadData()
                 }
                 self.pickerView = pickerAlertViewController
@@ -125,6 +126,9 @@ class SettingsTableViewController: UITableViewController {
         case 2:
             return 1
         case 3:
+            if BadgeService.shared.areBadgesEnabled {
+                return 4
+            }
             return 3
         case 4:
             return 4
@@ -169,6 +173,28 @@ class SettingsTableViewController: UITableViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
                 cell.contentLabel.text = R.string.localizable.add_location()
                 cell.accessoryType = .disclosureIndicator
+                return cell
+            } else if indexPath.row == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ToggleCell", for: indexPath) as! ToggleCell
+                cell.contentLabel.text = R.string.localizable.show_temp_on_icon()
+                cell.toggle.isOn = BadgeService.shared.areBadgesEnabled
+                cell.toggleSwitchHandler = { [weak self] sender in
+                    if sender.isOn {
+                        PermissionsManager.shared.checkBadgePermissions() { approved in
+                            if approved {
+                                UserDefaults.standard.set(true, forKey: kShowTempOnIconKey)
+                                tableView.insertRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)
+                            } else {
+                                sender.setOn(false, animated: true)
+                                self?.showNotificationsSettinsAlert()
+                            }
+                        }
+                    } else {
+                        UserDefaults.standard.set(false, forKey: kShowTempOnIconKey)
+                        BadgeService.shared.updateBadge()
+                        tableView.deleteRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)
+                    }
+                }
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
@@ -293,5 +319,27 @@ class SettingsTableViewController: UITableViewController {
         optionsAlert.addAction(cancelAction)
         
         present(optionsAlert, animated: true, completion: nil)
+    }
+    
+    private func showNotificationsSettinsAlert() {
+        let alertController = UIAlertController(title: R.string.localizable.notifications_disabled(), message: R.string.localizable.enable_notifications_alert_text(), preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: R.string.localizable.settings(), style: .default) { (_) -> Void in
+            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                return
+            }
+            
+            guard UIApplication.shared.canOpenURL(settingsUrl) else { return }
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(settingsUrl as URL)
+            }
+        }
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel)
+        
+        alertController.addAction(settingsAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

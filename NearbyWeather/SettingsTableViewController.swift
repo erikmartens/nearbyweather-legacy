@@ -180,7 +180,7 @@ class SettingsTableViewController: UITableViewController {
                 cell.toggle.isOn = BadgeService.shared.areBadgesEnabled
                 cell.toggleSwitchHandler = { [weak self] sender in
                     if sender.isOn {
-                        PermissionsManager.shared.checkBadgePermissions() { approved in
+                        PermissionsManager.shared.checkNotificationsPermissions { approved in
                             if approved {
                                 UserDefaults.standard.set(true, forKey: kShowTempOnIconKey)
                                 tableView.insertRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)

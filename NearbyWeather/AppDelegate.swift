@@ -25,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         /* Notifications Permissions */
         if UserDefaults.standard.bool(forKey: kShowTempOnIconKey) {
+            if #available(iOS 10.0, *) {
+                PermissionsManager.shared.areNotificationsApproved { _ in }
+            }
             UIApplication.shared.registerForRemoteNotifications()
         }
         
@@ -85,6 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         refreshWeatherDataIfNeeded()
+        PermissionsManager.shared.areNotificationsApproved { _ in }
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

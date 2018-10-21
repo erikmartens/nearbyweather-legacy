@@ -303,6 +303,7 @@ class SettingsTableViewController: UITableViewController {
                     PreferencesManager.shared.sortingOrientation = option as! SortingOrientation
                 case is TemperatureUnit:
                     PreferencesManager.shared.temperatureUnit = option as! TemperatureUnit
+                    BadgeService.shared.updateBadge()
                 case is DistanceSpeedUnit:
                     PreferencesManager.shared.distanceSpeedUnit = option as! DistanceSpeedUnit
                 default:

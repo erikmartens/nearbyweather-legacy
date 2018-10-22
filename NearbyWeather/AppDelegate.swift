@@ -13,6 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var splashScreenWindow: UIWindow?
+    
+    private var backgroundTaskId: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         NetworkingService.instantiateSharedInstance()
@@ -104,7 +106,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        BadgeService.shared.performBackgroundBadgeUpdate(withCompletionHandler: completionHandler)
+        self.backgroundTaskId = application.beginBackgroundTask { [weak self] in
+            self?.endBackgroundTask()
+        }
+        BadgeService.shared.performBackgroundBadgeUpdate { [weak self] result in
+            completionHandler(result)
+            self?.endBackgroundTask()
+        }
+    }
+    
+    private func endBackgroundTask() {
+        UIApplication.shared.endBackgroundTask(self.backgroundTaskId)
+        self.backgroundTaskId = UIBackgroundTaskInvalid
     }
     
     // MARK: - Private Helpers

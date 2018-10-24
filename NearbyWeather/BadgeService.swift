@@ -142,7 +142,7 @@ final class BadgeService {
     
     private func setBackgroundFetch(enabled: Bool) {
         if enabled {
-            UIApplication.shared.setMinimumBackgroundFetchInterval(3600) // fetch every hour
+            UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         } else {
             UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
         }

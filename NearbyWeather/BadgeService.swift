@@ -93,6 +93,12 @@ final class BadgeService {
                 } else if lastTemperature > 0 && temperature < 0 {
                     sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .minus, city: weatherData.cityName))
                 }
+                guard #available(iOS 10.3, *), UIApplication.shared.supportsAlternateIcons else { return }
+                if temperature >= 0 {
+                    UIApplication.shared.setAlternateIconName("plus", completionHandler: nil)
+                } else {
+                    UIApplication.shared.setAlternateIconName("minus", completionHandler: nil)
+                }
             }
         } else {
             clearAppIcon()
@@ -101,6 +107,8 @@ final class BadgeService {
     
     private func clearAppIcon() {
         UIApplication.shared.applicationIconBadgeNumber = 0
+        guard #available(iOS 10.3, *), UIApplication.shared.supportsAlternateIcons else { return }
+        UIApplication.shared.setAlternateIconName(nil, completionHandler: nil)
     }
     
     private func sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle) {

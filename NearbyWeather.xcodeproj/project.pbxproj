@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		1D58B4756E69A26CBBB8002F /* Pods_NearbyWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01FDEE48840B6DE40D19CA4 /* Pods_NearbyWeather.framework */; };
 		482F50CF0642651072B0552E /* Pods_NearbyWeatherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9117E5FC9606EF89375077 /* Pods_NearbyWeatherTests.framework */; };
+		861168542180EC17004DAA50 /* icon-plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 861168522180EC17004DAA50 /* icon-plus@3x.png */; };
+		861168552180EC17004DAA50 /* icon-plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 861168532180EC17004DAA50 /* icon-plus@2x.png */; };
+		861168582180EC21004DAA50 /* icon-minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 861168562180EC21004DAA50 /* icon-minus@2x.png */; };
+		861168592180EC21004DAA50 /* icon-minus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 861168572180EC21004DAA50 /* icon-minus@3x.png */; };
 		86830390217B9B6100B7122E /* PickerAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8683038F217B9B6100B7122E /* PickerAlertViewController.swift */; };
 		86830392217BBA5D00B7122E /* BadgeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86830391217BBA5D00B7122E /* BadgeService.swift */; };
 		86830394217BBAE400B7122E /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86830393217BBAE400B7122E /* PermissionsManager.swift */; };
@@ -86,6 +90,10 @@
 /* Begin PBXFileReference section */
 		20E2DFB16875223CFBEA36EF /* Pods-NearbyWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearbyWeather/Pods-NearbyWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		2DB36716201A47922EC83643 /* Pods-NearbyWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearbyWeather/Pods-NearbyWeather.release.xcconfig"; sourceTree = "<group>"; };
+		861168522180EC17004DAA50 /* icon-plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus@3x.png"; sourceTree = "<group>"; };
+		861168532180EC17004DAA50 /* icon-plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus@2x.png"; sourceTree = "<group>"; };
+		861168562180EC21004DAA50 /* icon-minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-minus@2x.png"; sourceTree = "<group>"; };
+		861168572180EC21004DAA50 /* icon-minus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-minus@3x.png"; sourceTree = "<group>"; };
 		8683038F217B9B6100B7122E /* PickerAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerAlertViewController.swift; sourceTree = "<group>"; };
 		86830391217BBA5D00B7122E /* BadgeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeService.swift; sourceTree = "<group>"; };
 		86830393217BBAE400B7122E /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
@@ -205,6 +213,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		861168512180EC04004DAA50 /* Alternate App Icons */ = {
+			isa = PBXGroup;
+			children = (
+				861168562180EC21004DAA50 /* icon-minus@2x.png */,
+				861168572180EC21004DAA50 /* icon-minus@3x.png */,
+				861168532180EC17004DAA50 /* icon-plus@2x.png */,
+				861168522180EC17004DAA50 /* icon-plus@3x.png */,
+			);
+			path = "Alternate App Icons";
+			sourceTree = "<group>";
+		};
 		F204B76E1DF2EFA3000F4371 = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +249,7 @@
 		F204B7791DF2EFA3000F4371 /* NearbyWeather */ = {
 			isa = PBXGroup;
 			children = (
+				861168512180EC04004DAA50 /* Alternate App Icons */,
 				86830395217BC28E00B7122E /* NearbyWeather.entitlements */,
 				F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */,
 				F204B7861DF2EFA3000F4371 /* Info.plist */,
@@ -532,11 +552,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				861168542180EC17004DAA50 /* icon-plus@3x.png in Resources */,
+				861168552180EC17004DAA50 /* icon-plus@2x.png in Resources */,
 				F26A6D6020FB70DD0033BC49 /* Details.storyboard in Resources */,
 				F204B7851DF2EFA3000F4371 /* LaunchScreen.storyboard in Resources */,
+				861168582180EC21004DAA50 /* icon-minus@2x.png in Resources */,
 				F26A6D5920FB687C0033BC49 /* List.storyboard in Resources */,
 				F204B7B01DF2F1BC000F4371 /* Localizable.strings in Resources */,
 				F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */,
+				861168592180EC21004DAA50 /* icon-minus@3x.png in Resources */,
 				F28DA85F203B999400879E6C /* Settings.storyboard in Resources */,
 				F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */,
 				F26A6D6220FB70F50033BC49 /* Map.storyboard in Resources */,

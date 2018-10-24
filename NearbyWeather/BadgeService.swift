@@ -52,6 +52,7 @@ final class BadgeService {
     
     public func updateBadge(withCompletionHandler completionHandler: (() -> ())?) {
         guard UserDefaults.standard.bool(forKey: kShowTempOnIconKey) else {
+            clearAppIcon()
             completionHandler?()
             return
         }
@@ -94,8 +95,12 @@ final class BadgeService {
                 }
             }
         } else {
-            UIApplication.shared.applicationIconBadgeNumber = 0
+            clearAppIcon()
         }
+    }
+    
+    private func clearAppIcon() {
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
     private func sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle) {

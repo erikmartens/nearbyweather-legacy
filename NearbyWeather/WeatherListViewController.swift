@@ -10,11 +10,10 @@ import UIKit
 import MapKit
 import RainyRefreshControl
 
-enum ListType {
+enum ListType: CaseIterable {
     case bookmarked
     case nearby
     
-    static let cases: [ListType] = [.bookmarked, .nearby]
     static let titles: [ListType: String] = [.bookmarked: R.string.localizable.bookmarked(),
                                              .nearby: R.string.localizable.nearby()]
 }
@@ -190,7 +189,7 @@ class WeatherListViewController: UIViewController {
     private func triggerListTypeAlert() {
         let optionsAlert = UIAlertController(title: R.string.localizable.select_list_type().capitalized, message: nil, preferredStyle: .alert)
         
-        ListType.cases.forEach { listTypeCase in
+        ListType.allCases.forEach { listTypeCase in
             let action = UIAlertAction(title: ListType.titles[listTypeCase], style: .default, handler: { _ in
                 self.listType = listTypeCase
                 DispatchQueue.main.async {

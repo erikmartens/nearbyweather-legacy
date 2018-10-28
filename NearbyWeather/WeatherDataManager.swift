@@ -85,7 +85,7 @@ class WeatherDataManager {
     private init(bookmarkedLocations: [WeatherStationDTO]) {
         self.bookmarkedLocations = bookmarkedLocations
         
-        locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [unowned self] notification in
+        locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [unowned self] notification in
             self.discardLocationBasedWeatherDataIfNeeded()
         })
         sortingOrientationChangedObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: kSortingOrientationPreferenceChanged), object: nil, queue: nil, using: { [unowned self] notification in

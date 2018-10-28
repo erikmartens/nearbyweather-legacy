@@ -47,7 +47,6 @@ class WeatherDataManager {
     
     public var hasDisplayableData: Bool {
         
-        
         return bookmarkedWeatherDataObjects?.first { $0.errorDataDTO != nil } != nil
             || bookmarkedWeatherDataObjects?.first { $0.weatherInformationDTO != nil } != nil
             || nearbyWeatherDataObject?.errorDataDTO != nil
@@ -118,12 +117,16 @@ class WeatherDataManager {
             var bookmarkednWeatherDataObjects = [WeatherDataContainer]()
             var nearbyWeatherDataObject: BulkWeatherDataContainer?
             
-            self.bookmarkedLocations.forEach { location in
-                dispatchGroup.enter()
-                NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
-                    bookmarkednWeatherDataObjects.append(weatherDataContainer)
-                    dispatchGroup.leave()
-                })
+            if self.bookmarkedLocations.isEmpty {
+                self.bookmarkedWeatherDataObjects = []
+            } else {
+                self.bookmarkedLocations.forEach { location in
+                    dispatchGroup.enter()
+                    NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
+                        bookmarkednWeatherDataObjects.append(weatherDataContainer)
+                        dispatchGroup.leave()
+                    })
+                }
             }
             
             dispatchGroup.enter()

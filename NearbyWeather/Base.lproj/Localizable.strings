@@ -95,3 +95,6 @@ mph = "mp/h";
 km = "km";
 mi = "mi";
 current_location = "Current Location";
+delete_last_bookmark_title = "Deleting Final Bookmark";
+delete_last_bookmark_message = "You cannot delete your last bookmarked location. Add another bookmark, before deleting this one.";
+dismiss = "Dismiss";

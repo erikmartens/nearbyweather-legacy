@@ -27,7 +27,7 @@ class WeatherLocationService {
     
     private init() {
         let sqliteFilePath = Bundle.main.path(forResource: "locationsSQLite", ofType: "sqlite")! // crash app if not found, cannot run without db
-        self.databaseQueue = FMDatabaseQueue(path: sqliteFilePath)
+        self.databaseQueue = FMDatabaseQueue(path: sqliteFilePath)! // crash app if init fails, cannot run without db
     }
     
     // MARK: - Public Properties & Methods

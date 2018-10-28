@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var splashScreenWindow: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         NetworkingService.instantiateSharedInstance()
         LocationService.instantiateSharedInstance()
         PreferencesManager.instantiateSharedInstance()
@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let splashScreenWindow = UIWindow(frame: window!.bounds)
         let welcomeNav = R.storyboard.welcome().instantiateInitialViewController() as? WelcomeNavigationController
         welcomeNav?.welcomeNavigationDelegate = self
-        splashScreenWindow.windowLevel = UIWindowLevelAlert
+        splashScreenWindow.windowLevel = UIWindow.Level.alert
         
         splashScreenWindow.rootViewController = welcomeNav
         self.splashScreenWindow = splashScreenWindow

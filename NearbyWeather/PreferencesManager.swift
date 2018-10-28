@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol PreferencesOption {
     associatedtype WrappedEnumType
@@ -213,7 +214,7 @@ class PreferencesManager {
         self.distanceSpeedUnit = windspeedUnit
         self.sortingOrientation = sortingOrientation
         
-        locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [unowned self] notification in
+        locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [unowned self] notification in
             self.reconfigureSortingPreferenceIfNeeded()
         })
     }

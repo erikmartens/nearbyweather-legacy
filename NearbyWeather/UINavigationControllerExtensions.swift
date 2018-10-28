@@ -36,13 +36,13 @@ fileprivate class DynamicTarget {
 }
 
 fileprivate extension UIBarButtonItem {
-    convenience init(title: String?, style: UIBarButtonItemStyle, handler: @escaping ((UIBarButtonItem) -> ())) {
+    convenience init(title: String?, style: UIBarButtonItem.Style, handler: @escaping ((UIBarButtonItem) -> ())) {
         let dynamicTarget = DynamicTarget(closure: handler)
         self.init(title: title, style: style, target: dynamicTarget, action: #selector(DynamicTarget.invokeClosure(_:)))
         objc_setAssociatedObject(self, String(format: "[%d]", arc4random()), dynamicTarget, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
     
-    convenience init(image: UIImage?, style: UIBarButtonItemStyle, handler: @escaping ((UIBarButtonItem) -> ())) {
+    convenience init(image: UIImage?, style: UIBarButtonItem.Style, handler: @escaping ((UIBarButtonItem) -> ())) {
         let dynamicTarget = DynamicTarget(closure: handler)
         self.init(image: image, style: style, target: dynamicTarget, action: #selector(DynamicTarget.invokeClosure(_:)))
         objc_setAssociatedObject(self, String(format: "[%d]", arc4random()), dynamicTarget, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)

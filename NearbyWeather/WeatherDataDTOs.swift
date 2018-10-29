@@ -16,7 +16,7 @@ import CoreLocation
  */
 
 
-public struct MultiWeatherInformationDTO: Codable {
+public struct WeatherInformationArrayWrapper: Codable {
     var list: [WeatherInformationDTO]
     
     enum CodingKeys: String, CodingKey {

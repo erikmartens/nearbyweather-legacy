@@ -233,7 +233,7 @@ class WeatherDataManager {
     /* Internal Storage Helpers */
     
     private static func loadService() -> WeatherDataManager? {
-        guard let weatherDataManagerStoredContents = DataStorageService.retrieveJson(fromFileWithName: kWeatherDataManagerStoredContentsFileName, andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self, fromStorageLocation: .documents) else {
+        guard let weatherDataManagerStoredContents = DataStorageService.retrieveJsonFromFile(with: kWeatherDataManagerStoredContentsFileName, andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self, fromStorageLocation: .documents) else {
             return nil
         }
         
@@ -254,7 +254,7 @@ class WeatherDataManager {
             let weatherDataManagerStoredContents = WeatherDataManagerStoredContentsWrapper(bookmarkedLocations: WeatherDataManager.shared.bookmarkedLocations,
                                                                                            bookmarkedWeatherDataObjects: WeatherDataManager.shared.bookmarkedWeatherDataObjects,
                                                                                            nearbyWeatherDataObject: WeatherDataManager.shared.nearbyWeatherDataObject)
-            DataStorageService.storeJson(forCodable: weatherDataManagerStoredContents, inFileWithName: kWeatherDataManagerStoredContentsFileName, toStorageLocation: .documents)
+            DataStorageService.storeJson(for: weatherDataManagerStoredContents, inFileWithName: kWeatherDataManagerStoredContentsFileName, toStorageLocation: .documents)
             dispatchSemaphore.signal()
         }
     }

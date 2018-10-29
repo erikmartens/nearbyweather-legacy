@@ -35,7 +35,7 @@ class SettingsTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-            let destinationViewController = storyboard.instantiateViewController(withIdentifier: "InfoTableViewController") as! InfoTableViewController
+            let destinationViewController = storyboard.instantiateViewController(withIdentifier: "InfoTableViewController") as! AboutAppTableViewController
             navigationItem.removeTextFromBackBarButton()
             navigationController?.pushViewController(destinationViewController, animated: true)
         case 1:

@@ -10,19 +10,24 @@ import UIKit
 import SafariServices
 import MessageUI
 
-class InfoTableViewController: UITableViewController {
+class AboutAppTableViewController: UITableViewController {
     
-    struct CocoaPodMeta { var name: String; var urlString: String }
-    private static let cocoaPods: [CocoaPodMeta] = [CocoaPodMeta(name: "Alamofire", urlString: "https://github.com/Alamofire/Alamofire"),
-                                                    CocoaPodMeta(name: "APTimeZones", urlString: "https://github.com/Alterplay/APTimeZones"),
-                                                    CocoaPodMeta(name: "FMDB", urlString: "https://github.com/ccgus/fmdb"),
-                                                    CocoaPodMeta(name: "PKHUD", urlString: "https://github.com/pkluz/PKHUD"),
-                                                    CocoaPodMeta(name: "RainyRefreshControl", urlString: "https://github.com/Onix-Systems/RainyRefreshControl"),
-                                                    CocoaPodMeta(name: "R.swift", urlString: "https://github.com/mac-cain13/R.swift"),
-                                                    CocoaPodMeta(name: "TextFieldCounter", urlString: "https://github.com/serralvo/TextFieldCounter")]
+    private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO] = {
+        return DataStorageService.retrieveJsonFromFile(with: "ThirdPartyLibraries",
+                                                       andDecodeAsType: ThirdPartyLibraryArrayWrapper.self,
+                                                       fromStorageLocation: .bundle)?
+            .elements
+            .sorted { $0.name.lowercased() < $1.name.lowercased() } ?? [ThirdPartyLibraryDTO]()
+        
+    }()
     
-    struct Contributor { var name: String; var subtitle: String }
-    private static let contributors: [Contributor] = [Contributor(name: "Erik Maximilian Martens", subtitle: R.string.localizable.project_owner())]
+    private lazy var contributors: [DevelopmentContributorDTO] = {
+        return DataStorageService.retrieveJsonFromFile(with: "DevelopmentContributors",
+                                                       andDecodeAsType: DevelopmentContributorArrayWrapper.self,
+                                                       fromStorageLocation: .bundle)?
+            .elements
+            .sorted { $0.lastName.lowercased() < $1.lastName.lowercased() } ?? [DevelopmentContributorDTO]()
+    }()
     
     //MARK: - Assets
     
@@ -68,8 +73,8 @@ class InfoTableViewController: UITableViewController {
         if indexPath.section == 0 && indexPath.row == 1 {
             return
         }
-        if indexPath.section == 1 && indexPath.row == 0 {
-            urlStringValue = "http://www.erikmartens.de/contact.html"
+        if indexPath.section == 1 {
+            urlStringValue = contributors[indexPath.row].urlString
         }
         if indexPath.section == 2 && indexPath.row == 0 {
             urlStringValue = "https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md"
@@ -78,7 +83,7 @@ class InfoTableViewController: UITableViewController {
             urlStringValue = "https://github.com/erikmartens/NearbyWeather"
         }
         if indexPath.section == 3 {
-            urlStringValue = InfoTableViewController.cocoaPods[indexPath.row].urlString
+            urlStringValue = thirdPartyLibraries[indexPath.row].urlString
         }
         if indexPath.section == 4 && indexPath.row == 0 {
             urlStringValue = "https://www.icons8.com"
@@ -101,11 +106,11 @@ class InfoTableViewController: UITableViewController {
         case 0:
             return 2
         case 1:
-            return 1
+            return contributors.count
         case 2:
             return 2
         case 3:
-            return InfoTableViewController.cocoaPods.count
+            return thirdPartyLibraries.count
         case 4:
             return 1
         default:
@@ -168,9 +173,9 @@ class InfoTableViewController: UITableViewController {
                 return buttonCell
             }
         case 1:
-            let contributor = InfoTableViewController.contributors[indexPath.row]
-            subtitleCell.contentLabel.text = contributor.name
-            subtitleCell.subtitleLabel.text = contributor.subtitle
+            let contributor = contributors[indexPath.row]
+            subtitleCell.contentLabel.text = "\(contributor.firstName) \(contributor.lastName)"
+            subtitleCell.subtitleLabel.text = contributor.contributionDescription
             return subtitleCell
         case 2:
             if indexPath.row == 0 {
@@ -181,8 +186,7 @@ class InfoTableViewController: UITableViewController {
                 return labelCell
             }
         case 3:
-            let pod = InfoTableViewController.cocoaPods[indexPath.row]
-            labelCell.contentLabel.text = pod.name
+            labelCell.contentLabel.text = thirdPartyLibraries[indexPath.row].name
             return labelCell
         case 4:
             labelCell.contentLabel.text = "Icons8"
@@ -225,7 +229,7 @@ class InfoTableViewController: UITableViewController {
     }
 }
 
-extension InfoTableViewController: MFMailComposeViewControllerDelegate {
+extension AboutAppTableViewController: MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)

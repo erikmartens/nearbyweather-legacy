@@ -12,20 +12,21 @@ import MessageUI
 
 class AboutAppTableViewController: UITableViewController {
     
-    struct CocoaPodMeta { var name: String; var urlString: String }
-    private static let cocoaPods: [CocoaPodMeta] = [CocoaPodMeta(name: "Alamofire", urlString: "https://github.com/Alamofire/Alamofire"),
-                                                    CocoaPodMeta(name: "APTimeZones", urlString: "https://github.com/Alterplay/APTimeZones"),
-                                                    CocoaPodMeta(name: "FMDB", urlString: "https://github.com/ccgus/fmdb"),
-                                                    CocoaPodMeta(name: "PKHUD", urlString: "https://github.com/pkluz/PKHUD"),
-                                                    CocoaPodMeta(name: "RainyRefreshControl", urlString: "https://github.com/Onix-Systems/RainyRefreshControl"),
-                                                    CocoaPodMeta(name: "R.swift", urlString: "https://github.com/mac-cain13/R.swift"),
-                                                    CocoaPodMeta(name: "TextFieldCounter", urlString: "https://github.com/serralvo/TextFieldCounter")]
+    private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO] = {
+        return DataStorageService.retrieveJsonFromFile(with: "ThirdPartyLibraries",
+                                                       andDecodeAsType: ThirdPartyLibraryArrayWrapper.self,
+                                                       fromStorageLocation: .bundle)?
+            .elements
+            .sorted { $0.name.lowercased() < $1.name.lowercased() } ?? [ThirdPartyLibraryDTO]()
+        
+    }()
     
     private lazy var contributors: [DevelopmentContributorDTO] = {
         return DataStorageService.retrieveJsonFromFile(with: "DevelopmentContributors",
                                                        andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                        fromStorageLocation: .bundle)?
-            .elements ?? [DevelopmentContributorDTO]()
+            .elements
+            .sorted { $0.lastName.lowercased() < $1.lastName.lowercased() } ?? [DevelopmentContributorDTO]()
     }()
     
     //MARK: - Assets
@@ -82,7 +83,7 @@ class AboutAppTableViewController: UITableViewController {
             urlStringValue = "https://github.com/erikmartens/NearbyWeather"
         }
         if indexPath.section == 3 {
-            urlStringValue = AboutAppTableViewController.cocoaPods[indexPath.row].urlString
+            urlStringValue = thirdPartyLibraries[indexPath.row].urlString
         }
         if indexPath.section == 4 && indexPath.row == 0 {
             urlStringValue = "https://www.icons8.com"
@@ -109,7 +110,7 @@ class AboutAppTableViewController: UITableViewController {
         case 2:
             return 2
         case 3:
-            return AboutAppTableViewController.cocoaPods.count
+            return thirdPartyLibraries.count
         case 4:
             return 1
         default:
@@ -185,8 +186,7 @@ class AboutAppTableViewController: UITableViewController {
                 return labelCell
             }
         case 3:
-            let pod = AboutAppTableViewController.cocoaPods[indexPath.row]
-            labelCell.contentLabel.text = pod.name
+            labelCell.contentLabel.text = thirdPartyLibraries[indexPath.row].name
             return labelCell
         case 4:
             labelCell.contentLabel.text = "Icons8"

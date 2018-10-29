@@ -152,7 +152,7 @@ class NetworkingService {
                 let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .httpError), httpStatusCode: httpStatusCode)
                 return BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil)
             }
-            let multiWeatherData = try JSONDecoder().decode(MultiWeatherInformationDTO.self, from: data)
+            let multiWeatherData = try JSONDecoder().decode(WeatherInformationArrayWrapper.self, from: data)
             return BulkWeatherDataContainer(errorDataDTO: nil, weatherInformationDTOs: multiWeatherData.list)
         } catch {
             print("💥 NetworkingService: Error while extracting multi-location-data json: \(error.localizedDescription)")

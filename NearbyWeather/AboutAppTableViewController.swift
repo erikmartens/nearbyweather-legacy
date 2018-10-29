@@ -10,7 +10,7 @@ import UIKit
 import SafariServices
 import MessageUI
 
-class InfoTableViewController: UITableViewController {
+class AboutAppTableViewController: UITableViewController {
     
     struct CocoaPodMeta { var name: String; var urlString: String }
     private static let cocoaPods: [CocoaPodMeta] = [CocoaPodMeta(name: "Alamofire", urlString: "https://github.com/Alamofire/Alamofire"),
@@ -21,8 +21,12 @@ class InfoTableViewController: UITableViewController {
                                                     CocoaPodMeta(name: "R.swift", urlString: "https://github.com/mac-cain13/R.swift"),
                                                     CocoaPodMeta(name: "TextFieldCounter", urlString: "https://github.com/serralvo/TextFieldCounter")]
     
-    struct Contributor { var name: String; var subtitle: String }
-    private static let contributors: [Contributor] = [Contributor(name: "Erik Maximilian Martens", subtitle: R.string.localizable.project_owner())]
+    private lazy var contributors: [DevelopmentContributorDTO] = {
+        return DataStorageService.retrieveJsonFromFile(with: "DevelopmentContributors",
+                                                       andDecodeAsType: DevelopmentContributorArrayWrapper.self,
+                                                       fromStorageLocation: .bundle)?
+            .elements ?? [DevelopmentContributorDTO]()
+    }()
     
     //MARK: - Assets
     
@@ -68,8 +72,8 @@ class InfoTableViewController: UITableViewController {
         if indexPath.section == 0 && indexPath.row == 1 {
             return
         }
-        if indexPath.section == 1 && indexPath.row == 0 {
-            urlStringValue = "http://www.erikmartens.de/contact.html"
+        if indexPath.section == 1 {
+            urlStringValue = contributors[indexPath.row].urlString
         }
         if indexPath.section == 2 && indexPath.row == 0 {
             urlStringValue = "https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md"
@@ -78,7 +82,7 @@ class InfoTableViewController: UITableViewController {
             urlStringValue = "https://github.com/erikmartens/NearbyWeather"
         }
         if indexPath.section == 3 {
-            urlStringValue = InfoTableViewController.cocoaPods[indexPath.row].urlString
+            urlStringValue = AboutAppTableViewController.cocoaPods[indexPath.row].urlString
         }
         if indexPath.section == 4 && indexPath.row == 0 {
             urlStringValue = "https://www.icons8.com"
@@ -101,11 +105,11 @@ class InfoTableViewController: UITableViewController {
         case 0:
             return 2
         case 1:
-            return 1
+            return contributors.count
         case 2:
             return 2
         case 3:
-            return InfoTableViewController.cocoaPods.count
+            return AboutAppTableViewController.cocoaPods.count
         case 4:
             return 1
         default:
@@ -168,9 +172,9 @@ class InfoTableViewController: UITableViewController {
                 return buttonCell
             }
         case 1:
-            let contributor = InfoTableViewController.contributors[indexPath.row]
-            subtitleCell.contentLabel.text = contributor.name
-            subtitleCell.subtitleLabel.text = contributor.subtitle
+            let contributor = contributors[indexPath.row]
+            subtitleCell.contentLabel.text = "\(contributor.firstName) \(contributor.lastName)"
+            subtitleCell.subtitleLabel.text = contributor.contributionDescription
             return subtitleCell
         case 2:
             if indexPath.row == 0 {
@@ -181,7 +185,7 @@ class InfoTableViewController: UITableViewController {
                 return labelCell
             }
         case 3:
-            let pod = InfoTableViewController.cocoaPods[indexPath.row]
+            let pod = AboutAppTableViewController.cocoaPods[indexPath.row]
             labelCell.contentLabel.text = pod.name
             return labelCell
         case 4:
@@ -225,7 +229,7 @@ class InfoTableViewController: UITableViewController {
     }
 }
 
-extension InfoTableViewController: MFMailComposeViewControllerDelegate {
+extension AboutAppTableViewController: MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)

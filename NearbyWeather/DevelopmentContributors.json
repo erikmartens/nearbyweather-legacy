@@ -1,0 +1,14 @@
+{
+	"elements": 
+	[{
+		"firstName": "Erik Maximilian",
+		"lastName": "Martens",
+		"contributionDescription": "Project Owner",
+		"urlString": "http://www.erikmartens.de/contact.html"
+	}, {
+		"firstName": "Ryan",
+		"lastName": "Rosello",
+		"contributionDescription": "Minor Bugfixes",
+		"urlString": "https://github.com/roselloryan"
+	}]
+}

@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3g-si-AGs">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3g-si-AGs">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,19 +10,19 @@
             <objects>
                 <tableViewController storyboardIdentifier="SettingsTableViewController" id="KTn-Zy-K5w" userLabel="SettingsTableViewController" customClass="SettingsTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="jap-OX-yKq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" id="m9z-n6-UXF" customClass="LabelCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m9z-n6-UXF" id="8eF-u2-EOP">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZHU-Vt-q3e" userLabel="contentLabel">
-                                            <rect key="frame" x="20" y="5" width="160" height="34"/>
+                                            <rect key="frame" x="20" y="5" width="272.5" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="ZYe-jf-Cq1"/>
                                             </constraints>
@@ -36,7 +31,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rp5-b4-SSR" userLabel="contentLabel">
-                                            <rect key="frame" x="195" y="5" width="160" height="34.5"/>
+                                            <rect key="frame" x="307.5" y="5" width="272.5" height="34.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="85o-ga-s52"/>
                                             </constraints>
@@ -72,14 +67,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ToggleCell" id="ylj-UF-1bR" userLabel="ToggleCell" customClass="ToggleCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="99.5" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ylj-UF-1bR" id="YbA-MU-LWC">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pwm-IZ-u68" userLabel="contentLabel">
-                                            <rect key="frame" x="20" y="5" width="276" height="34"/>
+                                            <rect key="frame" x="20" y="5" width="501" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="7Ol-dV-LaT"/>
                                             </constraints>
@@ -88,7 +83,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="16A-eF-Lxn">
-                                            <rect key="frame" x="311" y="6" width="51" height="31"/>
+                                            <rect key="frame" x="536" y="6.5" width="51" height="31"/>
                                             <connections>
                                                 <action selector="didToggleSwitch:" destination="ylj-UF-1bR" eventType="valueChanged" id="iKT-0s-tlH"/>
                                             </connections>
@@ -133,24 +128,24 @@
         <!--InfoTVC-->
         <scene sceneID="50s-1l-Sb3">
             <objects>
-                <tableViewController storyboardIdentifier="InfoTableViewController" title="InfoTVC" id="6CL-qo-nYf" customClass="InfoTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="InfoTableViewController" title="InfoTVC" id="6CL-qo-nYf" customClass="AboutAppTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="P5R-3P-pjW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Yn8-Nm-aMC">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="145"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="145"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="MN6-fF-Sw8">
-                                    <rect key="frame" x="0.0" y="25" width="375" height="120"/>
+                                    <rect key="frame" x="0.0" y="25" width="600" height="120"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7g-Rh-fY5">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nearbyweather_webicon" translatesAutoresizingMaskIntoConstraints="NO" id="XgB-88-xmm">
-                                                    <rect key="frame" x="150" y="0.0" width="75" height="75"/>
+                                                    <rect key="frame" x="262.5" y="0.0" width="75" height="75"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="XgB-88-xmm" secondAttribute="height" multiplier="1:1" id="Ibl-gM-PGY"/>
                                                         <constraint firstAttribute="height" constant="75" id="Mif-yh-EST"/>
@@ -166,7 +161,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NearbyWeather - Open Source Weather" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9J-VU-b7Q" userLabel="appTitleLabel">
-                                            <rect key="frame" x="0.0" y="80" width="375" height="25"/>
+                                            <rect key="frame" x="0.0" y="80" width="600" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="U0M-hT-6UX"/>
                                             </constraints>
@@ -175,7 +170,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.2 Build #6" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TA7-FU-AFJ" userLabel="appVersionLabel">
-                                            <rect key="frame" x="0.0" y="105" width="375" height="15"/>
+                                            <rect key="frame" x="0.0" y="105" width="600" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="47f-cW-e7k"/>
                                             </constraints>
@@ -196,14 +191,14 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="LabelCell" id="MSA-F5-h6F" customClass="LabelCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="200.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="200.5" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MSA-F5-h6F" id="YHW-W9-oem">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="562" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate this Version" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iru-fp-2uP" userLabel="developerNameLabel">
-                                            <rect key="frame" x="15" y="5" width="311" height="34.5"/>
+                                            <rect key="frame" x="15" y="5" width="532" height="34.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="zil-pY-YYQ"/>
                                             </constraints>
@@ -224,17 +219,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ButtonCell" rowHeight="87" id="q5L-wT-bVj" customClass="ButtonCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="244.5" width="375" height="87"/>
+                                <rect key="frame" x="0.0" y="244.5" width="600" height="87"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q5L-wT-bVj" id="OjS-E4-BTh">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="86.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DWJ-Ga-dGe">
-                                            <rect key="frame" x="15" y="5" width="345" height="71.5"/>
+                                            <rect key="frame" x="15" y="5" width="570" height="71.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sq-VR-mDP" userLabel="contentLabel">
-                                                    <rect key="frame" x="0.0" y="0.0" width="345" height="36.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="570" height="36.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="MoR-Pz-SnG"/>
                                                     </constraints>
@@ -243,17 +238,17 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="x7E-V1-C4U">
-                                                    <rect key="frame" x="0.0" y="41.5" width="345" height="30"/>
+                                                    <rect key="frame" x="0.0" y="41.5" width="570" height="30"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GlZ-8l-vze">
-                                                            <rect key="frame" x="0.0" y="0.0" width="165" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="277.5" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="dr6-LW-pvx"/>
                                                             </constraints>
                                                             <state key="normal" title="Button"/>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="unM-HH-mrp">
-                                                            <rect key="frame" x="180" y="0.0" width="165" height="30"/>
+                                                            <rect key="frame" x="292.5" y="0.0" width="277.5" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="ab7-AM-M3S"/>
                                                             </constraints>
@@ -281,17 +276,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubtitleCell" rowHeight="63" id="Jwc-aZ-eDY" customClass="SubtitleCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="331.5" width="375" height="63"/>
+                                <rect key="frame" x="0.0" y="331.5" width="600" height="63"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jwc-aZ-eDY" id="5hK-Pz-WxF">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="62.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="62.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="B1X-cW-bLZ">
-                                            <rect key="frame" x="15" y="5" width="345" height="53.5"/>
+                                            <rect key="frame" x="15" y="5" width="570" height="53.5"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-Uk-BCa" userLabel="contentLabel">
-                                                    <rect key="frame" x="0.0" y="0.0" width="345" height="33.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-Uk-BCa" userLabel="contentLabel">
+                                                    <rect key="frame" x="0.0" y="0.0" width="570" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="Xwl-Rp-nwt"/>
                                                     </constraints>
@@ -299,8 +294,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAA-ud-lZw">
-                                                    <rect key="frame" x="0.0" y="33.5" width="345" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAA-ud-lZw">
+                                                    <rect key="frame" x="0.0" y="33.5" width="570" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="i6j-bv-eu0"/>
                                                     </constraints>
@@ -344,19 +339,19 @@
             <objects>
                 <tableViewController storyboardIdentifier="OWMCityFilterTableViewController" id="WjD-7R-KJ3" customClass="WeatherLocationSelectionTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="MAG-9s-TA7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OWMCityCell" id="eqH-wQ-jP5" userLabel="OWMCityCell" customClass="LocationWeatherDataCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eqH-wQ-jP5" id="1T5-CD-shU">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gh6-Fx-KC5" userLabel="contentLabel">
-                                            <rect key="frame" x="20" y="5" width="340" height="34"/>
+                                            <rect key="frame" x="20" y="5" width="565" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="M9v-yp-0uj"/>
                                             </constraints>
@@ -403,19 +398,19 @@
             <objects>
                 <tableViewController storyboardIdentifier="WeatherLocationManagementTableViewController" id="D9q-ne-Adf" customClass="WeatherLocationManagementTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jbp-zj-XsR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OWMCityCell" id="oO9-fB-e2M" userLabel="OWMCityCell" customClass="LocationWeatherDataCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oO9-fB-e2M" id="1ui-vp-C1H">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhg-65-mM4" userLabel="contentLabel">
-                                            <rect key="frame" x="20" y="5" width="340" height="34"/>
+                                            <rect key="frame" x="20" y="5" width="565" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="6wn-x2-Uuq"/>
                                             </constraints>
@@ -461,21 +456,21 @@
             <objects>
                 <tableViewController storyboardIdentifier="SettingsInputTVC" title="SettingsInputTableViewController" id="Cx9-7a-dZR" userLabel="SettingsInputTableViewController" customClass="SettingsInputTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="ZTm-Dp-qsA">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Header Title" id="g5H-xP-JkQ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="H9f-hz-jmJ">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H9f-hz-jmJ" id="mjT-Kq-TRS">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="H9f-hz-jmJ" id="mjT-Kq-TRS">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N6B-Nl-r3M" userLabel="eventTitleTextField" customClass="TextFieldCounter" customModule="TextFieldCounter">
-                                                    <rect key="frame" x="15" y="5" width="345" height="34.5"/>
+                                                    <rect key="frame" x="15" y="5.5" width="570" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="kgx-9s-bOW">
                                                             <variation key="heightClass=regular-widthClass=compact" constant="34"/>

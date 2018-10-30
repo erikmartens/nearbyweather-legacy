@@ -80,9 +80,9 @@ class WeatherDataManager {
         }
     }
     public var preferredBookmarkData: WeatherInformationDTO? {
-        let prefferedBookmark = PreferencesManager.shared.prefferedBookmark.value
+        let preferredBookmark = PreferencesManager.shared.preferredBookmark.value
         guard
-            case .city(let city) = prefferedBookmark,
+            case .city(let city) = preferredBookmark,
             let preferredWeather = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first(where: { $0.locationId == city.id })?.weatherInformationDTO
         else {
             return nil

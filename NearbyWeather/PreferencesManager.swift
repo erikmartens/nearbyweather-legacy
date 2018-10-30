@@ -21,7 +21,7 @@ public struct LightCityStruct: Codable {
     let title: String
 }
 
-public enum PrefferedBookmarkWrappedEnum: Codable, Equatable {
+public enum PreferredBookmarkWrappedEnum: Codable, Equatable {
     case none
     case city(LightCityStruct)
     
@@ -55,19 +55,19 @@ public enum PrefferedBookmarkWrappedEnum: Codable, Equatable {
     
     // Equatable
     
-    public static func == (lhs: PrefferedBookmarkWrappedEnum, rhs: PrefferedBookmarkWrappedEnum) -> Bool {
+    public static func == (lhs: PreferredBookmarkWrappedEnum, rhs: PreferredBookmarkWrappedEnum) -> Bool {
         if case .none = lhs, case .none = rhs { return true }
         if case let .city(lCity) = lhs, case let .city(rCity) = rhs, lCity.id == rCity.id { return true }
         return false
     }
 }
 
-public class PrefferedBookmark: Codable, PreferencesOption {
-    public typealias WrappedEnumType = PrefferedBookmarkWrappedEnum
+public class PreferredBookmark: Codable, PreferencesOption {
+    public typealias WrappedEnumType = PreferredBookmarkWrappedEnum
     
-    public var value: PrefferedBookmarkWrappedEnum
+    public var value: PreferredBookmarkWrappedEnum
     
-    required public init(value: PrefferedBookmarkWrappedEnum) {
+    required public init(value: PreferredBookmarkWrappedEnum) {
         self.value = value
     }
     
@@ -231,7 +231,7 @@ public class AmountOfResults: Codable, PreferencesOption {
 fileprivate let kPreferencesManagerStoredContentsFileName = "PreferencesManagerStoredContents"
 
 struct PreferencesManagerStoredContentsWrapper: Codable {
-    var prefferedBookmark: PrefferedBookmark
+    var preferredBookmark: PreferredBookmark
     var amountOfResults: AmountOfResults
     var temperatureUnit: TemperatureUnit
     var windspeedUnit: DistanceSpeedUnit
@@ -247,7 +247,7 @@ class PreferencesManager {
     
     // MARK: - Properties
     
-    public var prefferedBookmark: PrefferedBookmark {
+    public var preferredBookmark: PreferredBookmark {
         didSet {
             BadgeService.shared.updateBadge(withCompletionHandler: nil)
             PreferencesManager.storeService()
@@ -283,8 +283,8 @@ class PreferencesManager {
     
     // MARK: - Initialization
     
-    private init(prefferedBookmark: PrefferedBookmark, amountOfResults: AmountOfResults, temperatureUnit: TemperatureUnit, windspeedUnit: DistanceSpeedUnit, sortingOrientation: SortingOrientation) {
-        self.prefferedBookmark = prefferedBookmark
+    private init(preferredBookmark: PreferredBookmark, amountOfResults: AmountOfResults, temperatureUnit: TemperatureUnit, windspeedUnit: DistanceSpeedUnit, sortingOrientation: SortingOrientation) {
+        self.preferredBookmark = preferredBookmark
         self.amountOfResults = amountOfResults
         self.temperatureUnit = temperatureUnit
         self.distanceSpeedUnit = windspeedUnit
@@ -303,7 +303,7 @@ class PreferencesManager {
     // MARK: - Public Properties & Methods
     
     public static func instantiateSharedInstance() {
-        shared = PreferencesManager.loadService() ?? PreferencesManager(prefferedBookmark: PrefferedBookmark(value: .none), amountOfResults: AmountOfResults(value: .ten), temperatureUnit: TemperatureUnit(value: .celsius), windspeedUnit: DistanceSpeedUnit(value: .kilometres), sortingOrientation: SortingOrientation(value: .name))
+        shared = PreferencesManager.loadService() ?? PreferencesManager(preferredBookmark: PreferredBookmark(value: .none), amountOfResults: AmountOfResults(value: .ten), temperatureUnit: TemperatureUnit(value: .celsius), windspeedUnit: DistanceSpeedUnit(value: .kilometres), sortingOrientation: SortingOrientation(value: .name))
     }
     
     
@@ -325,7 +325,7 @@ class PreferencesManager {
             return nil
         }
         
-        let preferencesManager = PreferencesManager(prefferedBookmark: preferencesManagerStoredContentsWrapper.prefferedBookmark,
+        let preferencesManager = PreferencesManager(preferredBookmark: preferencesManagerStoredContentsWrapper.preferredBookmark,
                                                     amountOfResults: preferencesManagerStoredContentsWrapper.amountOfResults,
                                                     temperatureUnit: preferencesManagerStoredContentsWrapper.temperatureUnit,
                                                     windspeedUnit: preferencesManagerStoredContentsWrapper.windspeedUnit,
@@ -341,7 +341,7 @@ class PreferencesManager {
         
         dispatchSemaphore.wait()
         preferencesManagerBackgroundQueue.async {
-            let preferencesManagerStoredContentsWrapper = PreferencesManagerStoredContentsWrapper(prefferedBookmark: PreferencesManager.shared.prefferedBookmark,
+            let preferencesManagerStoredContentsWrapper = PreferencesManagerStoredContentsWrapper(preferredBookmark: PreferencesManager.shared.preferredBookmark,
                                                                                                   amountOfResults: PreferencesManager.shared.amountOfResults,
                                                                                                   temperatureUnit: PreferencesManager.shared.temperatureUnit,
                                                                                                   windspeedUnit: PreferencesManager.shared.distanceSpeedUnit,

@@ -80,9 +80,10 @@ class WeatherDataManager {
         }
     }
     public var preferredBookmarkData: WeatherInformationDTO? {
+        let prefferedBookmark = PreferencesManager.shared.prefferedBookmark.value
         guard
-            let bookmarkId = UserDefaults.standard.value(forKey: kPreferredBookmarkCityIdKey) as? Int,
-            let preferredWeather = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first(where: { $0.locationId == bookmarkId })?.weatherInformationDTO
+            case .city(let city) = prefferedBookmark,
+            let preferredWeather = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first(where: { $0.locationId == city.id })?.weatherInformationDTO
         else {
             return nil
         }
@@ -129,13 +130,13 @@ class WeatherDataManager {
         fetchWeatherDataBackgroundQueue.async {
             let dispatchGroup = DispatchGroup()
             
-            var bookmarkednWeatherDataObjects = [WeatherDataContainer]()
+            var bookmarkedWeatherDataObjects = [WeatherDataContainer]()
             var nearbyWeatherDataObject: BulkWeatherDataContainer?
             
             self.bookmarkedLocations.forEach { location in
                 dispatchGroup.enter()
                 NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
-                    bookmarkednWeatherDataObjects.append(weatherDataContainer)
+                    bookmarkedWeatherDataObjects.append(weatherDataContainer)
                     dispatchGroup.leave()
                 })
             }
@@ -153,13 +154,13 @@ class WeatherDataManager {
             }
             
             // do not publish refresh if not data was loaded
-            if bookmarkednWeatherDataObjects.count == 0 && nearbyWeatherDataObject == nil {
+            if bookmarkedWeatherDataObjects.count == 0 && nearbyWeatherDataObject == nil {
                 return
             }
             
             // only override previous record if there is any new data
-            if bookmarkednWeatherDataObjects.count != 0 {
-                self.bookmarkedWeatherDataObjects = bookmarkednWeatherDataObjects
+            if bookmarkedWeatherDataObjects.count != 0 {
+                self.bookmarkedWeatherDataObjects = bookmarkedWeatherDataObjects
                 self.sortBookmarkedLocationWeatherData()
             }
             if nearbyWeatherDataObject != nil {
@@ -189,12 +190,12 @@ class WeatherDataManager {
         fetchWeatherDataBackgroundQueue.async {
             let dispatchGroup = DispatchGroup()
             
-            var bookmarkednWeatherDataObjects = [WeatherDataContainer]()
+            var bookmarkedWeatherDataObjects = [WeatherDataContainer]()
             
             self.bookmarkedLocations.forEach { location in
                 dispatchGroup.enter()
                 NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
-                    bookmarkednWeatherDataObjects.append(weatherDataContainer)
+                    bookmarkedWeatherDataObjects.append(weatherDataContainer)
                     dispatchGroup.leave()
                 })
             }
@@ -206,13 +207,13 @@ class WeatherDataManager {
             }
             
             // do not publish refresh if not data was loaded
-            if bookmarkednWeatherDataObjects.count == 0 {
+            if bookmarkedWeatherDataObjects.count == 0 {
                 return
             }
             
             // only override previous record if there is any new data
-            if bookmarkednWeatherDataObjects.count != 0 {
-                self.bookmarkedWeatherDataObjects = bookmarkednWeatherDataObjects
+            if bookmarkedWeatherDataObjects.count != 0 {
+                self.bookmarkedWeatherDataObjects = bookmarkedWeatherDataObjects
                 self.sortBookmarkedLocationWeatherData()
             }
             

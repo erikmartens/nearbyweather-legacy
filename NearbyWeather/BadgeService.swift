@@ -29,40 +29,39 @@ final class BadgeService {
     
     // MARK: - Methods
     
-    public var areBadgesEnabled: Bool {
-        return UserDefaults.standard.bool(forKey: kShowTempOnIconKey) && PermissionsManager.shared.areNotificationsApproved
+    public func areBadgesEnabled(with completion: @escaping (Bool) -> ()) {
+        guard UserDefaults.standard.bool(forKey: kShowTemperatureOnAppIconKey) else {
+            completion(false)
+            return
+        }
+        PermissionsManager.shared.requestNotificationPermissions(with: completion)
     }
     
     public static func instantiateSharedInstance() {
         shared = BadgeService()
         
-        if UserDefaults.standard.bool(forKey: kShowTempOnIconKey) {
+        if UserDefaults.standard.bool(forKey: kShowTemperatureOnAppIconKey) {
             shared.setBackgroundFetch(enabled: true)
         }
     }
     
     public func setBadgeService(enabled: Bool) {
-        if enabled {
-            UserDefaults.standard.set(true, forKey: kShowTempOnIconKey)
-        } else {
-            UserDefaults.standard.set(false, forKey: kShowTempOnIconKey)
-        }
+        UserDefaults.standard.set(enabled, forKey: kShowTemperatureOnAppIconKey)
         BadgeService.shared.updateBadge(withCompletionHandler: nil)
     }
     
     public func updateBadge(withCompletionHandler completionHandler: (() -> ())?) {
-        guard UserDefaults.standard.bool(forKey: kShowTempOnIconKey) else {
+        guard UserDefaults.standard.bool(forKey: kShowTemperatureOnAppIconKey) else {
             clearAppIcon()
             completionHandler?()
             return
         }
-        if #available(iOS 10, *) {
-            PermissionsManager.shared.areNotificationsApproved { [weak self] areApproved in
-                self?.performBadgeUpdate()
-                completionHandler?()
+        PermissionsManager.shared.requestNotificationPermissions { [weak self] approved in
+            guard approved else {
+                self?.clearAppIcon()
+                return
             }
-        } else if PermissionsManager.shared.areNotificationsApproved {
-            performBadgeUpdate()
+            self?.performBadgeUpdate()
             completionHandler?()
         }
     }
@@ -81,83 +80,62 @@ final class BadgeService {
     // MARK: - Helpers
     
     private func performBadgeUpdate() {
-        if let weatherData = WeatherDataManager.shared.preferredBookmarkData {
-            let temperatureUnit = PreferencesManager.shared.temperatureUnit
-            let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin
-            let temperature = ConversionService.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
-            if let temperature = temperature {
-                let lastTemperature = UIApplication.shared.applicationIconBadgeNumber
-                UIApplication.shared.applicationIconBadgeNumber = temperature
-                if lastTemperature < 0 && temperature > 0 {
-                    sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .plus, city: weatherData.cityName))
-                } else if lastTemperature > 0 && temperature < 0 {
-                    sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .minus, city: weatherData.cityName))
-                }
-                guard #available(iOS 10.3, *), UIApplication.shared.supportsAlternateIcons else { return }
-                if temperature >= 0 {
-                    UIApplication.shared.setAlternateIconName("plus", completionHandler: nil)
-                } else {
-                    UIApplication.shared.setAlternateIconName("minus", completionHandler: nil)
-                }
-            }
-        } else {
+        guard let weatherData = WeatherDataManager.shared.preferredBookmarkData else {
             clearAppIcon()
+            return
+        }
+        
+        let temperatureUnit = PreferencesManager.shared.temperatureUnit
+        let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin
+        guard let temperature = ConversionService.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin) else { return }
+        let lastTemperature = UIApplication.shared.applicationIconBadgeNumber
+        UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
+        if lastTemperature < 0 && temperature > 0 {
+            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .plus, city: weatherData.cityName))
+        } else if lastTemperature > 0 && temperature < 0 {
+            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .minus, city: weatherData.cityName))
         }
     }
     
     private func clearAppIcon() {
         UIApplication.shared.applicationIconBadgeNumber = 0
-        guard #available(iOS 10.3, *), UIApplication.shared.supportsAlternateIcons else { return }
-        UIApplication.shared.setAlternateIconName(nil, completionHandler: nil)
     }
     
     private func sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle) {
         if #available(iOS 10, *) {
-            sendNewAPITemperatureSignChangeNotification(bundle: bundle)
+            let content = UNMutableNotificationContent()
+            content.title = R.string.localizable.app_icon_temperature_sing_updated()
+            switch bundle.sign {
+            case .plus:
+                content.body = R.string.localizable.temperature_above_zero(bundle.city)
+            case .minus:
+                content.body = R.string.localizable.temperature_below_zero(bundle.city)
+            }
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
+            let request = UNNotificationRequest(identifier: "TemperatureSignNotification", content: content, trigger: trigger)
+            
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
         } else {
-            sendOldAPITemperatureSignChangeNotification(bundle: bundle)
+            let localNotification = UILocalNotification()
+            localNotification.fireDate = Date(timeIntervalSinceNow: 2.0)
+            localNotification.alertTitle = R.string.localizable.app_icon_temperature_sing_updated()
+            switch bundle.sign {
+            case .plus:
+                localNotification.alertBody = R.string.localizable.temperature_above_zero(bundle.city)
+            case .minus:
+                localNotification.alertBody = R.string.localizable.temperature_below_zero(bundle.city)
+            }
+            localNotification.timeZone = TimeZone.current
+            
+            UIApplication.shared.scheduleLocalNotification(localNotification)
         }
-    }
-    
-    private func sendOldAPITemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle) {
-        let localNotification = UILocalNotification()
-        localNotification.fireDate = Date(timeIntervalSinceNow: 2.0)
-        localNotification.alertTitle = R.string.localizable.app_icon_temperature_sing_updated()
-        switch bundle.sign {
-        case .plus:
-            localNotification.alertBody = R.string.localizable.temperature_above_zero(bundle.city)
-        case .minus:
-            localNotification.alertBody = R.string.localizable.temperature_below_zero(bundle.city)
-        }
-        localNotification.timeZone = TimeZone.current
-        
-        UIApplication.shared.scheduleLocalNotification(localNotification)
-    }
-    
-    private func sendNewAPITemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle) {
-        guard #available(iOS 10.0, *) else {
-            sendOldAPITemperatureSignChangeNotification(bundle: bundle)
-            return
-        }
-        let content = UNMutableNotificationContent()
-        content.title = R.string.localizable.app_icon_temperature_sing_updated()
-        switch bundle.sign {
-        case .plus:
-            content.body = R.string.localizable.temperature_above_zero(bundle.city)
-        case .minus:
-            content.body = R.string.localizable.temperature_below_zero(bundle.city)
-        }
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
-        let request = UNNotificationRequest(identifier: "TemperatureSignNotification", content: content, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
     
     private func setBackgroundFetch(enabled: Bool) {
-        if enabled {
-            UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
-        } else {
+        guard enabled else {
             UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+            return
         }
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
     }
 }

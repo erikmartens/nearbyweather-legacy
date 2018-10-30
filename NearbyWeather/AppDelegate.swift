@@ -25,14 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PermissionsManager.instantiateSharedInstance()
         BadgeService.instantiateSharedInstance()
         
-        /* Notifications Permissions */
-        if UserDefaults.standard.bool(forKey: kShowTempOnIconKey) {
-            if #available(iOS 10.0, *) {
-                PermissionsManager.shared.areNotificationsApproved { _ in }
-            }
-            UIApplication.shared.registerForRemoteNotifications()
-        }
-        
         /* UITabBar Appearance */
         
         UITabBar.appearance().backgroundColor = .white
@@ -90,15 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         refreshWeatherDataIfNeeded()
-        PermissionsManager.shared.areNotificationsApproved { _ in }
-    }
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        PermissionsManager.shared.didRegisterForRemoteNotifications(success: true)
-    }
-    
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        PermissionsManager.shared.didRegisterForRemoteNotifications(success: false)
     }
     
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
@@ -115,11 +98,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    private func endBackgroundTask() {
-        UIApplication.shared.endBackgroundTask(self.backgroundTaskId)
-        self.backgroundTaskId = UIBackgroundTaskInvalid
-    }
-    
     // MARK: - Private Helpers
     
     private func refreshWeatherDataIfNeeded() {
@@ -129,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func showSplashScreenIfNeeded() {
+    private func showSplashScreenIfNeeded() {
         let splashScreenWindow = UIWindow(frame: window!.bounds)
         let welcomeNav = R.storyboard.welcome().instantiateInitialViewController() as? WelcomeNavigationController
         welcomeNav?.welcomeNavigationDelegate = self
@@ -138,6 +116,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         splashScreenWindow.rootViewController = welcomeNav
         self.splashScreenWindow = splashScreenWindow
         self.splashScreenWindow?.makeKeyAndVisible()
+    }
+    
+    private func endBackgroundTask() {
+        UIApplication.shared.endBackgroundTask(self.backgroundTaskId)
+        self.backgroundTaskId = UIBackgroundTaskInvalid
     }
 }
 

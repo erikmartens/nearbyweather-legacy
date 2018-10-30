@@ -12,7 +12,7 @@ class SettingsTableViewController: UITableViewController {
     
     // MARK: - Properties
     
-    private var pickerView: PickerAlertViewController<Int>?
+    private var showPrefferedBookmarkRow = false
     
     // MARK: - ViewController LifeCycle
     
@@ -24,6 +24,11 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        BadgeService.shared.areBadgesEnabled { [weak self] enabled in
+            self?.showPrefferedBookmarkRow = enabled
+            self?.tableView.reloadData()
+        }
         
         navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
         navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
@@ -64,20 +69,10 @@ class SettingsTableViewController: UITableViewController {
                 navigationItem.removeTextFromBackBarButton()
                 navigationController?.pushViewController(destinationViewController, animated: true)
             } else if indexPath.row == 3 {
-                var choices = [PickerAlertViewController<Int>.Choice(id: -1, title: "None")]
-                choices.append(contentsOf: WeatherDataManager.shared.bookmarkedLocations.map { PickerAlertViewController<Int>.Choice(id: $0.identifier, title: $0.name) })
-                let selectedCityId = UserDefaults.standard.value(forKey: kPreferredBookmarkCityIdKey) as? Int
-                let pickerAlertViewController = PickerAlertViewController(title: R.string.localizable.preffered_bookmark(), choices: choices, selectedChoiceId: selectedCityId) { [weak self] selectedCityId in
-                    if selectedCityId == -1 {
-                        UserDefaults.standard.removeObject(forKey: kPreferredBookmarkCityIdKey)
-                    } else {
-                        UserDefaults.standard.set(selectedCityId, forKey: kPreferredBookmarkCityIdKey)
-                    }
-                    BadgeService.shared.updateBadge(withCompletionHandler: nil)
-                    self?.tableView.reloadData()
-                }
-                self.pickerView = pickerAlertViewController
-                pickerAlertViewController.present(by: self)
+                var choices = [PrefferedBookmark(value: .none)]
+                let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map { PrefferedBookmark(value: PrefferedBookmarkWrappedEnum.city(LightCityStruct(id: $0.identifier, title: $0.name))) }
+                choices.append(contentsOf: bookmarksChoices)
+                triggerOptionsAlert(forOptions: choices, title: R.string.localizable.preffered_bookmark())
             }
         case 4:
             if indexPath.row == 0 {
@@ -126,10 +121,7 @@ class SettingsTableViewController: UITableViewController {
         case 2:
             return 1
         case 3:
-            if BadgeService.shared.areBadgesEnabled {
-                return 4
-            }
-            return 3
+            return showPrefferedBookmarkRow ? 4 : 3
         case 4:
             return 4
         default:
@@ -162,12 +154,15 @@ class SettingsTableViewController: UITableViewController {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
                 cell.contentLabel.text = R.string.localizable.manage_locations()
+                cell.accessoryType = .disclosureIndicator
+                
+                guard let firstLocationEntryTitle = WeatherDataManager.shared.bookmarkedLocations.first?.name else {
+                    cell.selectionLabel.text = nil
+                    return cell
+                }
                 
                 let entriesCount = WeatherDataManager.shared.bookmarkedLocations.count
-                let firstLocationEntryTitle = WeatherDataManager.shared.bookmarkedLocations[indexPath.row].name
-                
                 cell.selectionLabel.text = entriesCount == 1 ? firstLocationEntryTitle : R.string.localizable.x_locations(entriesCount)
-                cell.accessoryType = .disclosureIndicator
                 return cell
             } else if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
@@ -177,33 +172,44 @@ class SettingsTableViewController: UITableViewController {
             } else if indexPath.row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ToggleCell", for: indexPath) as! ToggleCell
                 cell.contentLabel.text = R.string.localizable.show_temp_on_icon()
-                cell.toggle.isOn = BadgeService.shared.areBadgesEnabled
-                cell.toggleSwitchHandler = { [weak self] sender in
-                    if sender.isOn {
-                        PermissionsManager.shared.checkNotificationsPermissions { approved in
-                            if approved {
-                                BadgeService.shared.setBadgeService(enabled: true)
-                                tableView.insertRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)
-                            } else {
-                                sender.setOn(false, animated: true)
-                                self?.showNotificationsSettinsAlert()
-                            }
-                        }
-                    } else {
+                BadgeService.shared.areBadgesEnabled { enabled in
+                    cell.toggle.isOn = enabled
+                }
+                cell.toggleSwitchHandler = { [unowned self] sender in
+                    guard sender.isOn else {
+                        self.showPrefferedBookmarkRow = false
                         BadgeService.shared.setBadgeService(enabled: false)
                         tableView.deleteRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)
+                        return
+                    }
+                    
+                    PermissionsManager.shared.requestNotificationPermissions() { [weak self] approved in
+                        guard approved else {
+                            sender.setOn(false, animated: true)
+                            self?.showNotificationsSettingsAlert()
+                            return
+                        }
+                        
+                        self?.showPrefferedBookmarkRow = true
+                        BadgeService.shared.setBadgeService(enabled: true)
+                        tableView.insertRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)
                     }
                 }
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
                 cell.contentLabel.text = R.string.localizable.preffered_bookmark()
-                if let preferredBookmarkCityId = UserDefaults.standard.value(forKey: kPreferredBookmarkCityIdKey) as? Int {
-                    let bookmark = WeatherDataManager.shared.bookmarkedLocations.first { $0.identifier == preferredBookmarkCityId }
-                    cell.selectionLabel.text = bookmark?.name
-                } else {
-                    cell.selectionLabel.text = nil
+                cell.selectionLabel.text = nil
+                let prefferedBookmark = PreferencesManager.shared.prefferedBookmark.value
+                guard case .city(let city) = prefferedBookmark else {
+                    return cell
                 }
+                
+                guard let bookmark = WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == city.id }) else {
+                    PreferencesManager.shared.prefferedBookmark = PrefferedBookmark(value: .none)
+                    return cell
+                }
+                cell.selectionLabel.text = bookmark.name
                 return cell
             }
         case 4:
@@ -270,6 +276,10 @@ class SettingsTableViewController: UITableViewController {
         options.forEach { option in
             var actionIsSelected = false
             switch option {
+            case is PrefferedBookmark:
+                if PreferencesManager.shared.prefferedBookmark.value == (option as! PrefferedBookmark).value {
+                    actionIsSelected = true
+                }
             case is AmountOfResults:
                 if PreferencesManager.shared.amountOfResults.value == (option as! AmountOfResults).value {
                     actionIsSelected = true
@@ -296,13 +306,14 @@ class SettingsTableViewController: UITableViewController {
             
             let action = UIAlertAction(title: option.stringValue, style: .default, handler: { paramAction in
                 switch option {
+                case is PrefferedBookmark:
+                    PreferencesManager.shared.prefferedBookmark = option as! PrefferedBookmark
                 case is AmountOfResults:
                     PreferencesManager.shared.amountOfResults = option as! AmountOfResults
                 case is SortingOrientation:
                     PreferencesManager.shared.sortingOrientation = option as! SortingOrientation
                 case is TemperatureUnit:
                     PreferencesManager.shared.temperatureUnit = option as! TemperatureUnit
-                    BadgeService.shared.updateBadge(withCompletionHandler: nil)
                 case is DistanceSpeedUnit:
                     PreferencesManager.shared.distanceSpeedUnit = option as! DistanceSpeedUnit
                 default:
@@ -321,19 +332,19 @@ class SettingsTableViewController: UITableViewController {
         present(optionsAlert, animated: true, completion: nil)
     }
     
-    private func showNotificationsSettinsAlert() {
+    private func showNotificationsSettingsAlert() {
         let alertController = UIAlertController(title: R.string.localizable.notifications_disabled(), message: R.string.localizable.enable_notifications_alert_text(), preferredStyle: .alert)
         
         let settingsAction = UIAlertAction(title: R.string.localizable.settings(), style: .default) { (_) -> Void in
-            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
-                return
+            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString),
+                UIApplication.shared.canOpenURL(settingsUrl) else {
+                    return
             }
             
-            guard UIApplication.shared.canOpenURL(settingsUrl) else { return }
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(settingsUrl, completionHandler: nil)
             } else {
-                UIApplication.shared.openURL(settingsUrl as URL)
+                UIApplication.shared.openURL(settingsUrl)
             }
         }
         let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel)

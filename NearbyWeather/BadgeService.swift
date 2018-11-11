@@ -16,10 +16,20 @@ final class BadgeService {
     private enum TemperatureSign {
         case plus
         case minus
+        
+        var stringValue: String {
+            switch self {
+            case .plus:
+                return R.string.localizable.plus()
+            case .minus:
+                return R.string.localizable.minus()
+            }
+        }
     }
     
     private struct TemperatureSignNotificationBundle {
         let sign: TemperatureSign
+        let unit: TemperatureUnit
         let temperature: Int
         let cityName: String
     }
@@ -81,9 +91,9 @@ final class BadgeService {
         let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
         UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
         if previousTemperatureValue < 0 && temperature > 0 {
-            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .plus, temperature: temperature, cityName: weatherData.cityName))
+            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
         } else if previousTemperatureValue > 0 && temperature < 0 {
-            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .minus, temperature: temperature, cityName: weatherData.cityName))
+            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
         }
     }
     
@@ -92,31 +102,21 @@ final class BadgeService {
     }
     
     private func sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle) {
+        let notificationBody = R.string.localizable.temperature_notification(bundle.cityName, "\(bundle.sign.stringValue) \(bundle.temperature)\(bundle.unit.abbreviation)")
+        
         if #available(iOS 10, *) {
             let content = UNMutableNotificationContent()
             content.title = R.string.localizable.app_icon_temperature_sing_updated()
-            switch bundle.sign {
-            case .plus:
-                content.body = R.string.localizable.temperature_above_zero(bundle.cityName, "\(bundle.temperature)")
-            case .minus:
-                content.body = R.string.localizable.temperature_below_zero(bundle.cityName, "\(bundle.temperature)")
-            }
+            content.body = notificationBody
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
             let request = UNNotificationRequest(identifier: "TemperatureSignNotification", content: content, trigger: trigger)
-            
             UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
         } else {
             let localNotification = UILocalNotification()
             localNotification.fireDate = Date(timeIntervalSinceNow: 2.0)
             localNotification.alertTitle = R.string.localizable.app_icon_temperature_sing_updated()
-            switch bundle.sign {
-            case .plus:
-                localNotification.alertBody = R.string.localizable.temperature_above_zero(bundle.cityName, "\(bundle.temperature)")
-            case .minus:
-                localNotification.alertBody = R.string.localizable.temperature_below_zero(bundle.cityName, "\(bundle.temperature)")
-            }
+            localNotification.alertBody = notificationBody
             localNotification.timeZone = TimeZone.current
-            
             UIApplication.shared.scheduleLocalNotification(localNotification)
         }
     }

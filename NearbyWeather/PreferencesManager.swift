@@ -98,6 +98,14 @@ public class TemperatureUnit: Codable, PreferencesOption {
         case .kelvin: return "Kelvin"
         }
     }
+    
+    public var abbreviation: String {
+        switch value {
+        case .celsius: return "°C"
+        case .fahrenheit: return "°F"
+        case .kelvin: return "K"
+        }
+    }
 }
 
 public enum DistanceSpeedUnitWrappedEnum: Int, Codable {

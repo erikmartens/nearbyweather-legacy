@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol PreferencesOption {
-    associatedtype WrappedEnumType
-    var value: WrappedEnumType { get set }
-    init(value: WrappedEnumType)
+    associatedtype PreferencesOptionType
+    var value: PreferencesOptionType { get set }
+    init(value: PreferencesOptionType)
     init?(rawValue: Int)
     var stringValue: String { get }
 }
@@ -41,7 +42,7 @@ public enum SortingOrientationWrappedEnum: Int, Codable {
 }
 
 public class SortingOrientation: Codable, PreferencesOption {
-    public typealias WrappedEnumType = SortingOrientationWrappedEnum
+    public typealias PreferencesOptionType = SortingOrientationWrappedEnum
     
     static let count = 3
     
@@ -74,7 +75,7 @@ public enum TemperatureUnitWrappedEnum: Int, Codable {
 }
 
 public class TemperatureUnit: Codable, PreferencesOption {
-    public typealias WrappedEnumType = TemperatureUnitWrappedEnum
+    public typealias PreferencesOptionType = TemperatureUnitWrappedEnum
     
     static let count = 3
     
@@ -114,7 +115,7 @@ public enum DistanceSpeedUnitWrappedEnum: Int, Codable {
 }
 
 public class DistanceSpeedUnit: Codable, PreferencesOption {
-    public typealias WrappedEnumType = DistanceSpeedUnitWrappedEnum
+    public typealias PreferencesOptionType = DistanceSpeedUnitWrappedEnum
     
     static let count = 2
     
@@ -148,7 +149,7 @@ public enum AmountOfResultsWrappedEnum: Int, Codable {
 }
 
 public class AmountOfResults: Codable, PreferencesOption {
-    public typealias WrappedEnumType = AmountOfResultsWrappedEnum
+    public typealias PreferencesOptionType = AmountOfResultsWrappedEnum
     
     static let count = 5
     
@@ -248,7 +249,7 @@ class PreferencesManager {
         self.distanceSpeedUnit = windspeedUnit
         self.sortingOrientation = sortingOrientation
         
-        locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [unowned self] notification in
+        locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [unowned self] notification in
             self.reconfigureSortingPreferenceIfNeeded()
         })
     }
@@ -279,7 +280,7 @@ class PreferencesManager {
     /* Internal Storage Helpers */
     
     private static func loadService() -> PreferencesManager? {
-        guard let preferencesManagerStoredContentsWrapper = DataStorageService.retrieveJson(fromFileWithName: kPreferencesManagerStoredContentsFileName, andDecodeAsType: PreferencesManagerStoredContentsWrapper.self, fromStorageLocation: .applicationSupport) else {
+        guard let preferencesManagerStoredContentsWrapper = DataStorageService.retrieveJsonFromFile(with: kPreferencesManagerStoredContentsFileName, andDecodeAsType: PreferencesManagerStoredContentsWrapper.self, fromStorageLocation: .applicationSupport) else {
             return nil
         }
         
@@ -304,7 +305,7 @@ class PreferencesManager {
                                                                                                   temperatureUnit: PreferencesManager.shared.temperatureUnit,
                                                                                                   windspeedUnit: PreferencesManager.shared.distanceSpeedUnit,
                                                                                                   sortingOrientation: PreferencesManager.shared.sortingOrientation)
-            DataStorageService.storeJson(forCodable: preferencesManagerStoredContentsWrapper, inFileWithName: kPreferencesManagerStoredContentsFileName, toStorageLocation: .applicationSupport)
+            DataStorageService.storeJson(for: preferencesManagerStoredContentsWrapper, inFileWithName: kPreferencesManagerStoredContentsFileName, toStorageLocation: .applicationSupport)
             dispatchSemaphore.signal()
         }
     }

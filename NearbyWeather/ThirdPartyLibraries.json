@@ -1,0 +1,25 @@
+{
+	"elements": 
+	[{
+		"name": "Alamofire",
+		"urlString": "https://github.com/Alamofire/Alamofire"
+	}, {
+		"name": "APTimeZones",
+		"urlString": "https://github.com/Alterplay/APTimeZones"
+	}, {
+		"name": "FMDB",
+		"urlString": "https://github.com/ccgus/fmdb"
+	}, {
+		"name": "PKHUD",
+		"urlString": "https://github.com/pkluz/PKHUD"
+	}, {
+		"name": "RainyRefreshControl",
+		"urlString": "https://github.com/Onix-Systems/RainyRefreshControl"
+	}, {
+		"name": "R.swift",
+		"urlString": "https://github.com/mac-cain13/R.swift"
+	}, {
+		"name": "TextFieldCounter",
+		"urlString": "https://github.com/serralvo/TextFieldCounter"
+	}]
+}

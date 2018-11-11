@@ -10,14 +10,17 @@ import UIKit
 
 class WeatherLocationManagementTableViewController: UITableViewController {
     
+    // MARK: - Computed Properties
+    
+    private var editingEnabled: Bool {
+        return WeatherDataManager.shared.bookmarkedLocations.count > 1
+    }
+    
     // MARK: - ViewController LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.title = R.string.localizable.manage_locations()
-        
-        self.tableView.isEditing = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,7 +29,7 @@ class WeatherLocationManagementTableViewController: UITableViewController {
         navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
         navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
         
-        tableView.reloadData()
+        tableView.isEditing = true
     }
     
     // MARK: - TableViewDelegate
@@ -58,7 +61,7 @@ class WeatherLocationManagementTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -73,10 +76,18 @@ class WeatherLocationManagementTableViewController: UITableViewController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            WeatherDataManager.shared.bookmarkedLocations.remove(at: indexPath.row)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        defer {
             tableView.reloadData()
+        }
+        
+        if editingStyle == .delete {
+            guard editingEnabled else {
+                presentLastBookmarkDeletionAlert()
+                return
+            }
+            WeatherDataManager.shared.bookmarkedLocations.remove(at: indexPath.row)
         }
     }
     
@@ -89,5 +100,16 @@ class WeatherLocationManagementTableViewController: UITableViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         tableView.reloadData()
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func presentLastBookmarkDeletionAlert() {
+        let alert = UIAlertController(title: R.string.localizable.delete_last_bookmark_title().capitalized, message: R.string.localizable.delete_last_bookmark_message(), preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: R.string.localizable.dismiss(), style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }

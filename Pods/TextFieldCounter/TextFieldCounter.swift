@@ -15,7 +15,18 @@ open class TextFieldCounter: UITextField, UITextFieldDelegate {
     
     weak var counterDelegate: TextFieldCounterDelegate?
     
-    // MARK: IBInspectable: Limits and behaviors
+    // MARK: -
+    private weak var _delegate: UITextFieldDelegate?
+    open override var delegate: UITextFieldDelegate? {
+        set {
+            self._delegate = newValue
+        }
+        get {
+            return self._delegate
+        }
+    }
+    
+    // MARK: - IBInspectable: Limits and behaviors
     
     @IBInspectable public dynamic var animate : Bool = true
     @IBInspectable public dynamic var ascending : Bool = true
@@ -29,7 +40,7 @@ open class TextFieldCounter: UITextField, UITextFieldDelegate {
     @IBInspectable public dynamic var counterColor : UIColor = .lightGray
     @IBInspectable public dynamic var limitColor: UIColor = .red
     
-    // MARK: Enumerations and Constants
+    // MARK: - Enumerations and Constants
     
     enum AnimationType {
         case basic
@@ -39,7 +50,7 @@ open class TextFieldCounter: UITextField, UITextFieldDelegate {
     
     static let defaultLength = 30
     
-    // MARK: Init
+    // MARK: - Init
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -53,7 +64,7 @@ open class TextFieldCounter: UITextField, UITextFieldDelegate {
         rightViewMode = .whileEditing
     }
     
-    // MARK: Public Methods
+    // MARK: - Public Methods
     
     /**
      Initializes a new beautiful *TextFieldCounter*.
@@ -151,9 +162,9 @@ open class TextFieldCounter: UITextField, UITextFieldDelegate {
         if let textFieldText = textField.text {
             
             if !string.isEmpty {
-                textFieldCharactersCount = textFieldText.characters.count + string.characters.count - range.length
+                textFieldCharactersCount = textFieldText.count + string.count - range.length
             } else {
-                textFieldCharactersCount = textFieldText.characters.count - range.length
+                textFieldCharactersCount = textFieldText.count - range.length
             }
         }
         
@@ -233,6 +244,24 @@ open class TextFieldCounter: UITextField, UITextFieldDelegate {
         checkIfNeedsCallDidReachMaxLengthDelegate(count: charactersCount)
         
         return shouldChange
+    }
+    
+    // MARK: - UITextFieldDelegate Forwarding
+
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        delegate?.textFieldDidBeginEditing?(self)
+    }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.textFieldDidEndEditing?(self)
+    }
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return delegate?.textFieldShouldReturn?(self) ?? true
+    }
+    
+    public func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        return delegate?.textFieldShouldClear?(self) ?? true
     }
     
 }

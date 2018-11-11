@@ -28,34 +28,39 @@ class AlertCell: UITableViewCell {
         timer?.invalidate()
     }
     
-    func configureWithErrorDataDTO(_ errorDataDTO: ErrorDataDTO?) {
+    func configure(with errorMessage: String) {
         backgroundColorView.layer.cornerRadius = 5.0
         backgroundColorView.layer.backgroundColor = UIColor.black.cgColor
         
-        if let errorDataDTO = errorDataDTO {
-            switch errorDataDTO.errorType.value {
-            case .httpError:
-                let errorCode = errorDataDTO.httpStatusCode ?? -1
-                noticeLabel.text = R.string.localizable.http_error("\(errorCode)")
-            case .requestTimOutError:
-                noticeLabel.text = R.string.localizable.request_timeout_error()
-            case .malformedUrlError:
-                noticeLabel.text = R.string.localizable.malformed_url_error()
-            case .unparsableResponseError:
-                noticeLabel.text = R.string.localizable.unreadable_result_error()
-            case .jsonSerializationError:
-                noticeLabel.text = R.string.localizable.unreadable_result_error()
-            case .unrecognizedApiKeyError:
-                noticeLabel.text = R.string.localizable.unauthorized_api_key_error()
-            case .locationUnavailableError:
-                noticeLabel.text = R.string.localizable.location_unavailable_error()
-            case .locationAccessDenied:
-               noticeLabel.text =  R.string.localizable.location_denied_error()
-            }
-        } else {
-            noticeLabel.text = R.string.localizable.unknown_error()
-        }
+        noticeLabel.text = errorMessage
+        
         startAnimationTimer()
+    }
+    
+    func configureWithErrorDataDTO(_ errorDataDTO: ErrorDataDTO?) {
+        guard let errorDataDTO = errorDataDTO else {
+            configure(with: R.string.localizable.unknown_error())
+            return
+        }
+        switch errorDataDTO.errorType.value {
+        case .httpError:
+            let errorCode = errorDataDTO.httpStatusCode ?? -1
+            configure(with: R.string.localizable.http_error("\(errorCode)"))
+        case .requestTimOutError:
+            configure(with: R.string.localizable.request_timeout_error())
+        case .malformedUrlError:
+            configure(with: R.string.localizable.malformed_url_error())
+        case .unparsableResponseError:
+            configure(with: R.string.localizable.unreadable_result_error())
+        case .jsonSerializationError:
+            configure(with: R.string.localizable.unreadable_result_error())
+        case .unrecognizedApiKeyError:
+            configure(with: R.string.localizable.unauthorized_api_key_error())
+        case .locationUnavailableError:
+            configure(with: R.string.localizable.location_unavailable_error())
+        case .locationAccessDenied:
+            configure(with: R.string.localizable.location_denied_error())
+        }
     }
     
     private func startAnimationTimer() {

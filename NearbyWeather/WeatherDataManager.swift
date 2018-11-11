@@ -52,7 +52,6 @@ class WeatherDataManager {
     
     public var hasDisplayableData: Bool {
         
-        
         return bookmarkedWeatherDataObjects?.first { $0.errorDataDTO != nil } != nil
             || bookmarkedWeatherDataObjects?.first { $0.weatherInformationDTO != nil } != nil
             || nearbyWeatherDataObject?.errorDataDTO != nil
@@ -94,7 +93,7 @@ class WeatherDataManager {
     private init(bookmarkedLocations: [WeatherStationDTO]) {
         self.bookmarkedLocations = bookmarkedLocations
         
-        locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [unowned self] notification in
+        locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [unowned self] notification in
             self.discardLocationBasedWeatherDataIfNeeded()
         })
         sortingOrientationChangedObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: kSortingOrientationPreferenceChanged), object: nil, queue: nil, using: { [unowned self] notification in
@@ -127,12 +126,16 @@ class WeatherDataManager {
             var bookmarkedWeatherDataObjects = [WeatherDataContainer]()
             var nearbyWeatherDataObject: BulkWeatherDataContainer?
             
-            self.bookmarkedLocations.forEach { location in
-                dispatchGroup.enter()
-                NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
-                    bookmarkedWeatherDataObjects.append(weatherDataContainer)
-                    dispatchGroup.leave()
-                })
+            if self.bookmarkedLocations.isEmpty {
+                self.bookmarkedWeatherDataObjects = []
+            } else {
+                self.bookmarkedLocations.forEach { location in
+                    dispatchGroup.enter()
+                    NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
+                        bookmarkednWeatherDataObjects.append(weatherDataContainer)
+                        dispatchGroup.leave()
+                    })
+                }
             }
             
             dispatchGroup.enter()
@@ -285,7 +288,7 @@ class WeatherDataManager {
     /* Internal Storage Helpers */
     
     private static func loadService() -> WeatherDataManager? {
-        guard let weatherDataManagerStoredContents = DataStorageService.retrieveJson(fromFileWithName: kWeatherDataManagerStoredContentsFileName, andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self, fromStorageLocation: .documents) else {
+        guard let weatherDataManagerStoredContents = DataStorageService.retrieveJsonFromFile(with: kWeatherDataManagerStoredContentsFileName, andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self, fromStorageLocation: .documents) else {
             return nil
         }
         
@@ -306,7 +309,7 @@ class WeatherDataManager {
             let weatherDataManagerStoredContents = WeatherDataManagerStoredContentsWrapper(bookmarkedLocations: WeatherDataManager.shared.bookmarkedLocations,
                                                                                            bookmarkedWeatherDataObjects: WeatherDataManager.shared.bookmarkedWeatherDataObjects,
                                                                                            nearbyWeatherDataObject: WeatherDataManager.shared.nearbyWeatherDataObject)
-            DataStorageService.storeJson(forCodable: weatherDataManagerStoredContents, inFileWithName: kWeatherDataManagerStoredContentsFileName, toStorageLocation: .documents)
+            DataStorageService.storeJson(for: weatherDataManagerStoredContents, inFileWithName: kWeatherDataManagerStoredContentsFileName, toStorageLocation: .documents)
             dispatchSemaphore.signal()
         }
     }

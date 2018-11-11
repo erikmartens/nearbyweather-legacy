@@ -10,11 +10,10 @@ import UIKit
 import MapKit
 import RainyRefreshControl
 
-enum ListType {
+enum ListType: CaseIterable {
     case bookmarked
     case nearby
     
-    static let cases: [ListType] = [.bookmarked, .nearby]
     static let titles: [ListType: String] = [.bookmarked: R.string.localizable.bookmarked(),
                                              .nearby: R.string.localizable.nearby()]
 }
@@ -98,7 +97,7 @@ class WeatherListViewController: UIViewController {
         tableView.addSubview(refreshControl)
         tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
         
-        emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData
+        emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData && !WeatherDataManager.shared.bookmarkedLocations.isEmpty
         
         separatoLineViewHeightConstraint.constant = 1/UIScreen.main.scale
     }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
@@ -123,17 +122,17 @@ class WeatherListViewController: UIViewController {
     }
     
     private func configureLastRefreshDate() {
-        if let lastRefreshDate = UserDefaults.standard.object(forKey: kWeatherDataLastRefreshDateKey) as? Date {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .short
-            let dateString = dateFormatter.string(from: lastRefreshDate)
-            let title = R.string.localizable.last_refresh_at(dateString)
-            refreshDateLabel.text = title
-            refreshDateLabel.isHidden = false
-        } else {
+        guard let lastRefreshDate = UserDefaults.standard.object(forKey: kWeatherDataLastRefreshDateKey) as? Date else {
             refreshDateLabel.isHidden = true
+            return
         }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        let dateString = dateFormatter.string(from: lastRefreshDate)
+        let title = R.string.localizable.last_refresh_at(dateString)
+        refreshDateLabel.text = title
+        refreshDateLabel.isHidden = false
     }
     
     private func configureButtons() {
@@ -190,7 +189,7 @@ class WeatherListViewController: UIViewController {
     private func triggerListTypeAlert() {
         let optionsAlert = UIAlertController(title: R.string.localizable.select_list_type().capitalized, message: nil, preferredStyle: .alert)
         
-        ListType.cases.forEach { listTypeCase in
+        ListType.allCases.forEach { listTypeCase in
             let action = UIAlertAction(title: ListType.titles[listTypeCase], style: .default, handler: { _ in
                 self.listType = listTypeCase
                 DispatchQueue.main.async {
@@ -212,7 +211,7 @@ class WeatherListViewController: UIViewController {
 extension WeatherListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -227,33 +226,23 @@ extension WeatherListViewController: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if !WeatherDataManager.shared.hasDisplayableData {
-            return 0
-        }
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !WeatherDataManager.shared.hasDisplayableData {
-            return 0
-        }
-        if WeatherDataManager.shared.apiKeyUnauthorized {
+        guard !WeatherDataManager.shared.apiKeyUnauthorized else {
             return 1
         }
         switch listType {
         case .bookmarked:
-            if WeatherDataManager.shared.bookmarkedWeatherDataObjects == nil {
-                return 0
-            }
-            return WeatherDataManager.shared.bookmarkedWeatherDataObjects?.count ?? 1
+            let numberOfRows = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.count ?? 1
+            return numberOfRows > 0 ? numberOfRows : 1
         case .nearby:
-            if !LocationService.shared.locationPermissionsGranted {
+            guard LocationService.shared.locationPermissionsGranted else {
                 return 1
             }
-            if WeatherDataManager.shared.nearbyWeatherDataObject == nil {
-                return 0
-            }
-            return WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.count ?? 1
+            let numberOfRows = WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.count ?? 1
+            return numberOfRows > 0 ? numberOfRows : 1
         }
     }
     
@@ -274,7 +263,12 @@ extension WeatherListViewController: UITableViewDataSource {
         
         switch listType {
         case .bookmarked:
-            guard let weatherDTO = WeatherDataManager.shared.bookmarkedWeatherDataObjects?[indexPath.row].weatherInformationDTO else {
+            guard let bookmarkedWeatherDataObjects = WeatherDataManager.shared.bookmarkedWeatherDataObjects,
+                !bookmarkedWeatherDataObjects.isEmpty else {
+                    alertCell.configure(with: R.string.localizable.empty_bookmarks_message())
+                    return alertCell
+            }
+            guard let weatherDTO = bookmarkedWeatherDataObjects[indexPath.row].weatherInformationDTO else {
                     alertCell.configureWithErrorDataDTO(WeatherDataManager.shared.bookmarkedWeatherDataObjects?[indexPath.row].errorDataDTO)
                     return alertCell
             }
@@ -286,7 +280,11 @@ extension WeatherListViewController: UITableViewDataSource {
                 alertCell.configureWithErrorDataDTO(errorDataDTO)
                 return alertCell
             }
-            guard let weatherDTO = WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?[indexPath.row] else {
+            guard let nearbyWeatherDataObject = WeatherDataManager.shared.nearbyWeatherDataObject else {
+                alertCell.configure(with: R.string.localizable.empty_nearby_locations_message())
+                return alertCell
+            }
+            guard let weatherDTO = nearbyWeatherDataObject.weatherInformationDTOs?[indexPath.row] else {
                 alertCell.configureWithErrorDataDTO(WeatherDataManager.shared.nearbyWeatherDataObject?.errorDataDTO)
                 return alertCell
             }
@@ -299,11 +297,9 @@ extension WeatherListViewController: UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell,
-            let weatherDataIdentifier = selectedCell.weatherDataIdentifier else {
+            let weatherDataIdentifier = selectedCell.weatherDataIdentifier,
+            let weatherDTO = WeatherDataManager.shared.weatherDTO(forIdentifier: weatherDataIdentifier) else {
                 return
-        }
-        guard let weatherDTO = WeatherDataManager.shared.weatherDTO(forIdentifier: weatherDataIdentifier) else {
-            return
         }
         let destinationViewController = WeatherDetailViewController.instantiateFromStoryBoard(withTitle: weatherDTO.cityName, weatherDTO: weatherDTO)
         let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)

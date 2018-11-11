@@ -35,7 +35,7 @@ class SettingsTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-            let destinationViewController = storyboard.instantiateViewController(withIdentifier: "InfoTableViewController") as! InfoTableViewController
+            let destinationViewController = storyboard.instantiateViewController(withIdentifier: "InfoTableViewController") as! AboutAppTableViewController
             navigationItem.removeTextFromBackBarButton()
             navigationController?.pushViewController(destinationViewController, animated: true)
         case 1:
@@ -48,9 +48,12 @@ class SettingsTableViewController: UITableViewController {
             navigationController?.pushViewController(destinationViewController, animated: true)
         case 3:
             if indexPath.row == 0 {
+                guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
+                    break
+                }
                 let storyboard = UIStoryboard(name: "Settings", bundle: nil)
                 let destinationViewController = storyboard.instantiateViewController(withIdentifier: "WeatherLocationManagementTableViewController") as! WeatherLocationManagementTableViewController
-                
+            
                 navigationItem.removeTextFromBackBarButton()
                 navigationController?.pushViewController(destinationViewController, animated: true)
             } else if indexPath.row == 1 {
@@ -145,15 +148,24 @@ class SettingsTableViewController: UITableViewController {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
                 cell.contentLabel.text = R.string.localizable.manage_locations()
-                cell.accessoryType = .disclosureIndicator
-                
-                guard let firstLocationEntryTitle = WeatherDataManager.shared.bookmarkedLocations.first?.name else {
-                    cell.selectionLabel.text = nil
-                    return cell
-                }
                 
                 let entriesCount = WeatherDataManager.shared.bookmarkedLocations.count
-                cell.selectionLabel.text = entriesCount == 1 ? firstLocationEntryTitle : R.string.localizable.x_locations(entriesCount)
+                let cellLabelTitle: String
+                switch entriesCount {
+                case 0:
+                    cellLabelTitle = R.string.localizable.empty_bookmarks()
+                    cell.accessoryType = .none
+                    cell.selectionStyle = .none
+                case 1:
+                    cellLabelTitle = WeatherDataManager.shared.bookmarkedLocations[indexPath.row].name
+                    cell.accessoryType = .disclosureIndicator
+                    cell.selectionStyle = .default
+                default:
+                    cellLabelTitle = "\(entriesCount)"
+                    cell.accessoryType = .disclosureIndicator
+                    cell.selectionStyle = .default
+                }
+                cell.selectionLabel.text = cellLabelTitle
                 return cell
             } else if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
@@ -212,19 +224,18 @@ class SettingsTableViewController: UITableViewController {
                 cell.contentLabel.text = R.string.localizable.temperature_unit()
                 cell.selectionLabel.text = PreferencesManager.shared.temperatureUnit.stringValue
                 return cell
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-                cell.contentLabel.text = R.string.localizable.distanceSpeed_unit()
-                cell.selectionLabel.text = PreferencesManager.shared.distanceSpeedUnit.stringValue
-                return cell
             }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+            cell.contentLabel.text = R.string.localizable.distanceSpeed_unit()
+            cell.selectionLabel.text = PreferencesManager.shared.distanceSpeedUnit.stringValue
+            return cell
         default:
             return UITableViewCell()
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     

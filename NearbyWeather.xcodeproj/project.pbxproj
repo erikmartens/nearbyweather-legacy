@@ -21,6 +21,10 @@
 		F204B7BD1DF35610000F4371 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204B7BC1DF35610000F4371 /* SettingsTableViewController.swift */; };
 		F22F99552034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22F99542034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift */; };
 		F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F22F99562037676B00B7CB6B /* locationsSQLite.sqlite */; };
+		F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25A396E2187A6DA0054BC7A /* DevelopmentContributorDTO.swift */; };
+		F25A39712187AA5A0054BC7A /* DevelopmentContributors.json in Resources */ = {isa = PBXBuildFile; fileRef = F25A39702187AA5A0054BC7A /* DevelopmentContributors.json */; };
+		F25A39732187B1B00054BC7A /* ThirdPartyLibraryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25A39722187B1B00054BC7A /* ThirdPartyLibraryDTO.swift */; };
+		F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */ = {isa = PBXBuildFile; fileRef = F25A39742187B3F80054BC7A /* ThirdPartyLibraries.json */; };
 		F260C4431F9D4883000D2BC0 /* UINavigationControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260C4421F9D4883000D2BC0 /* UINavigationControllerExtensions.swift */; };
 		F26699581E9AD0F100498F99 /* WeatherDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699571E9AD0F100498F99 /* WeatherDataManager.swift */; };
 		F266995A1E9ADBC300498F99 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699591E9ADBC300498F99 /* LocationService.swift */; };
@@ -58,7 +62,7 @@
 		F2B8EA041EA286F000704E90 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2B8EA031EA286F000704E90 /* Welcome.storyboard */; };
 		F2B8EA061EA2893C00704E90 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA051EA2893C00704E90 /* WelcomeScreenViewController.swift */; };
 		F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */; };
-		F2B8EA0E1EA37BE800704E90 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA0D1EA37BE800704E90 /* InfoTableViewController.swift */; };
+		F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */; };
 		F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2B1DF2004171500C810EF /* DataStorageService.swift */; };
 		F2FE3EFF20027EB400EBC429 /* WeatherStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */; };
 		F2FE3F01200285B100EBC429 /* WeatherLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3F00200285B100EBC429 /* WeatherLocationService.swift */; };
@@ -111,6 +115,10 @@
 		F204B7BC1DF35610000F4371 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		F22F99542034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationMapAnnotationView.swift; sourceTree = "<group>"; };
 		F22F99562037676B00B7CB6B /* locationsSQLite.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = locationsSQLite.sqlite; sourceTree = "<group>"; };
+		F25A396E2187A6DA0054BC7A /* DevelopmentContributorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentContributorDTO.swift; sourceTree = "<group>"; };
+		F25A39702187AA5A0054BC7A /* DevelopmentContributors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DevelopmentContributors.json; sourceTree = "<group>"; };
+		F25A39722187B1B00054BC7A /* ThirdPartyLibraryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyLibraryDTO.swift; sourceTree = "<group>"; };
+		F25A39742187B3F80054BC7A /* ThirdPartyLibraries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ThirdPartyLibraries.json; sourceTree = "<group>"; };
 		F260C4421F9D4883000D2BC0 /* UINavigationControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationControllerExtensions.swift; sourceTree = "<group>"; };
 		F26699571E9AD0F100498F99 /* WeatherDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
 		F26699591E9ADBC300498F99 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -149,7 +157,7 @@
 		F2B8EA031EA286F000704E90 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
 		F2B8EA051EA2893C00704E90 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
 		F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewController.swift; sourceTree = "<group>"; };
-		F2B8EA0D1EA37BE800704E90 /* InfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
+		F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppTableViewController.swift; sourceTree = "<group>"; };
 		F2D2B1DF2004171500C810EF /* DataStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageService.swift; sourceTree = "<group>"; };
 		F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationDTO.swift; sourceTree = "<group>"; };
 		F2FE3F00200285B100EBC429 /* WeatherLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationService.swift; sourceTree = "<group>"; };
@@ -236,7 +244,7 @@
 				F28CA547202CE83700209397 /* Services */,
 				F266995C1E9AE23900498F99 /* Model */,
 				F266995B1E9AE22800498F99 /* View */,
-				F266995D1E9AE25D00498F99 /* Controller */,
+				F266995D1E9AE25D00498F99 /* ViewController */,
 				F260C4451F9D4D50000D2BC0 /* Miscellaneous */,
 			);
 			path = NearbyWeather;
@@ -291,14 +299,14 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		F266995D1E9AE25D00498F99 /* Controller */ = {
+		F266995D1E9AE25D00498F99 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				F26A6D6320FB7C9C0033BC49 /* WelcomeNavigationController.swift */,
 				F2B8EA051EA2893C00704E90 /* WelcomeScreenViewController.swift */,
 				F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */,
 				F28CE9671F9A9893008319C4 /* WeatherListViewController.swift */,
-				F2B8EA0D1EA37BE800704E90 /* InfoTableViewController.swift */,
+				F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */,
 				F204B7BC1DF35610000F4371 /* SettingsTableViewController.swift */,
 				F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */,
 				F2FE3F022002972800EBC429 /* WeatherLocationSelectionTableViewController.swift */,
@@ -306,7 +314,7 @@
 				F28CA54020279EE300209397 /* WeatherDetailViewController.swift */,
 				F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */,
 			);
-			name = Controller;
+			name = ViewController;
 			sourceTree = "<group>";
 		};
 		F26A6D5C20FB6E520033BC49 /* External */ = {
@@ -371,6 +379,8 @@
 			children = (
 				F2B8E9FF1EA11BA800704E90 /* WeatherDataDTOs.swift */,
 				F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */,
+				F25A396E2187A6DA0054BC7A /* DevelopmentContributorDTO.swift */,
+				F25A39722187B1B00054BC7A /* ThirdPartyLibraryDTO.swift */,
 			);
 			name = "Data Transfer Objects";
 			sourceTree = "<group>";
@@ -396,6 +406,8 @@
 				F204B7B21DF2F1BC000F4371 /* Localizable.strings */,
 				F283D2751DF393B2001B879D /* InfoPlist.strings */,
 				F22F99562037676B00B7CB6B /* locationsSQLite.sqlite */,
+				F25A39702187AA5A0054BC7A /* DevelopmentContributors.json */,
+				F25A39742187B3F80054BC7A /* ThirdPartyLibraries.json */,
 			);
 			name = "Bootsrapped Data";
 			sourceTree = "<group>";
@@ -413,7 +425,6 @@
 				F204B7741DF2EFA3000F4371 /* Frameworks */,
 				F204B7751DF2EFA3000F4371 /* Resources */,
 				6D7C7244C920F897332ED643 /* [CP] Embed Pods Frameworks */,
-				BC0D6EB841A9AA9661CCB253 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -433,7 +444,6 @@
 				F204B7881DF2EFA3000F4371 /* Frameworks */,
 				F204B7891DF2EFA3000F4371 /* Resources */,
 				26446B92C2EA65EFE3DDA6EA /* [CP] Embed Pods Frameworks */,
-				5896FCF85230350E1A5C01D1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -476,7 +486,7 @@
 					F204B7761DF2EFA3000F4371 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = VDPU24L36V;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -490,14 +500,14 @@
 					F204B78A1DF2EFA3000F4371 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = VDPU24L36V;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = F204B7761DF2EFA3000F4371;
 					};
 					F204B7951DF2EFA3000F4371 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = VDPU24L36V;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = F204B7761DF2EFA3000F4371;
 					};
@@ -536,8 +546,10 @@
 				F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */,
 				F28DA85F203B999400879E6C /* Settings.storyboard in Resources */,
 				F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */,
+				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
 				F26A6D6220FB70F50033BC49 /* Map.storyboard in Resources */,
 				F204B7801DF2EFA3000F4371 /* Main.storyboard in Resources */,
+				F25A39712187AA5A0054BC7A /* DevelopmentContributors.json in Resources */,
 				F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */,
 				F2B8EA041EA286F000704E90 /* Welcome.storyboard in Resources */,
 			);
@@ -608,21 +620,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearbyWeatherTests/Pods-NearbyWeatherTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5896FCF85230350E1A5C01D1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearbyWeatherTests/Pods-NearbyWeatherTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6D7C7244C920F897332ED643 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -651,21 +648,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearbyWeather/Pods-NearbyWeather-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BC0D6EB841A9AA9661CCB253 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearbyWeather/Pods-NearbyWeather-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DC96885CEFD4386B3B81705D /* [CP] Check Pods Manifest.lock */ = {
@@ -698,7 +680,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"";
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -719,6 +701,7 @@
 				F2A5CAA62005762A0071BFFB /* ConversionService.swift in Sources */,
 				F2FE3F01200285B100EBC429 /* WeatherLocationService.swift in Sources */,
 				F266995A1E9ADBC300498F99 /* LocationService.swift in Sources */,
+				F25A39732187B1B00054BC7A /* ThirdPartyLibraryDTO.swift in Sources */,
 				F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */,
 				F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */,
 				F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */,
@@ -727,7 +710,7 @@
 				F2B8EA001EA11BA800704E90 /* WeatherDataDTOs.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
-				F2B8EA0E1EA37BE800704E90 /* InfoTableViewController.swift in Sources */,
+				F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */,
 				F204B7BD1DF35610000F4371 /* SettingsTableViewController.swift in Sources */,
 				F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */,
 				F28CA5392016A1BA00209397 /* NearbyLocationsMapViewController.swift in Sources */,
@@ -740,6 +723,7 @@
 				F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */,
 				F2A5CAA8200587DE0071BFFB /* LocationWeatherDataCell.swift in Sources */,
 				F2B8EA021EA121CC00704E90 /* AlertCell.swift in Sources */,
+				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,
 				F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */,
 				F274FC37202D005800049144 /* NotificationCenterKeys.swift in Sources */,
 				F28CE9661F96B537008319C4 /* UINavigationBarExtensions.swift in Sources */,
@@ -949,8 +933,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -966,8 +949,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -982,8 +964,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeatherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NearbyWeather.app/NearbyWeather";
 			};
 			name = Debug;
@@ -999,8 +980,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeatherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NearbyWeather.app/NearbyWeather";
 			};
 			name = Release;
@@ -1014,8 +994,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeatherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = NearbyWeather;
 			};
 			name = Debug;
@@ -1029,8 +1008,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeatherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = NearbyWeather;
 			};
 			name = Release;

@@ -208,8 +208,10 @@ class WeatherDataManager {
             
             if let bookmarkIdx = self.bookmarkedWeatherDataObjects?.firstIndex(where: { $0.locationId == unwrappedPreferredBookmarkWeatherData.locationId }) {
                 self.bookmarkedWeatherDataObjects?[bookmarkIdx] = unwrappedPreferredBookmarkWeatherData
-                self.sortBookmarkedLocationWeatherData()
+            } else {
+                self.bookmarkedWeatherDataObjects?.append(unwrappedPreferredBookmarkWeatherData)
             }
+            self.sortBookmarkedLocationWeatherData()
             
             WeatherDataManager.storeService()
             DispatchQueue.main.async {

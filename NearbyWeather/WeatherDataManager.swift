@@ -132,7 +132,7 @@ class WeatherDataManager {
                 self.bookmarkedLocations.forEach { location in
                     dispatchGroup.enter()
                     NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
-                        bookmarkednWeatherDataObjects.append(weatherDataContainer)
+                        bookmarkedWeatherDataObjects.append(weatherDataContainer)
                         dispatchGroup.leave()
                     })
                 }

@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var splashScreenWindow: UIWindow?
     
-    private var backgroundTaskId: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
+    private var backgroundTaskId: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         NetworkingService.instantiateSharedInstance()
@@ -127,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func endBackgroundTask() {
         UIApplication.shared.endBackgroundTask(self.backgroundTaskId)
-        self.backgroundTaskId = UIBackgroundTaskInvalid
+        self.backgroundTaskId = UIBackgroundTaskIdentifier.invalid
     }
 }
 

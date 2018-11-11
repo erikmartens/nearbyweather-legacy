@@ -329,7 +329,7 @@ class SettingsTableViewController: UITableViewController {
         let alertController = UIAlertController(title: R.string.localizable.notifications_disabled(), message: R.string.localizable.enable_notifications_alert_text(), preferredStyle: .alert)
         
         let settingsAction = UIAlertAction(title: R.string.localizable.settings(), style: .default) { (_) -> Void in
-            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString),
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString),
                 UIApplication.shared.canOpenURL(settingsUrl) else {
                     return
             }

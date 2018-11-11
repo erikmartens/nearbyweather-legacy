@@ -16,70 +16,20 @@ public protocol PreferencesOption {
     var stringValue: String { get }
 }
 
-public struct LightCityStruct: Codable {
-    let id: Int
-    let title: String
-}
-
-public enum PreferredBookmarkWrappedEnum: Codable, Equatable {
-    case none
-    case city(LightCityStruct)
-    
-    // Codable
-    
-    enum CodingKeys: CodingKey {
-        case none
-        case city
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch self {
-        case .none:
-            try container.encode(-1, forKey: .none)
-        case .city(let city):
-            try container.encode(city, forKey: .city)
-        }
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            _ = try container.decode(Int.self, forKey: .none)
-            self = .none
-        } catch {
-            let cityValue = try container.decode(LightCityStruct.self, forKey: .city)
-            self = .city(cityValue)
-        }
-    }
-    
-    // Equatable
-    
-    public static func == (lhs: PreferredBookmarkWrappedEnum, rhs: PreferredBookmarkWrappedEnum) -> Bool {
-        if case .none = lhs, case .none = rhs { return true }
-        if case let .city(lCity) = lhs, case let .city(rCity) = rhs, lCity.id == rCity.id { return true }
-        return false
-    }
-}
-
 public class PreferredBookmark: Codable, PreferencesOption {
-    public typealias WrappedEnumType = PreferredBookmarkWrappedEnum
+    public typealias WrappedEnumType = Int?
     
-    public var value: PreferredBookmarkWrappedEnum
+    public var value: Int?
     
-    required public init(value: PreferredBookmarkWrappedEnum) {
+    required public init(value: Int?) {
         self.value = value
     }
     
     convenience required public init?(rawValue: Int) { return nil }
     
     public var stringValue: String {
-        switch value {
-        case .none:
-            return R.string.localizable.none()
-        case .city(let city):
-            return city.title
-        }
+        let bookmarkedLocation = WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == value })
+        return bookmarkedLocation?.name ?? R.string.localizable.none()
     }
 }
 

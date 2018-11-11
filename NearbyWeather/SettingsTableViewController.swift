@@ -10,10 +10,6 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
     
-    // MARK: - Properties
-    
-    private var showPreferredBookmarkRow = false
-    
     // MARK: - ViewController LifeCycle
     
     override func viewDidLoad() {
@@ -24,11 +20,6 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        BadgeService.shared.areBadgesEnabled { [weak self] enabled in
-            self?.showPreferredBookmarkRow = enabled
-            self?.tableView.reloadData()
-        }
         
         navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
         navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
@@ -68,9 +59,9 @@ class SettingsTableViewController: UITableViewController {
                 
                 navigationItem.removeTextFromBackBarButton()
                 navigationController?.pushViewController(destinationViewController, animated: true)
-            } else if indexPath.row == 3 {
+            } else if indexPath.row == 2 {
                 var choices = [PreferredBookmark(value: .none)]
-                let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map { PreferredBookmark(value: PreferredBookmarkWrappedEnum.city(LightCityStruct(id: $0.identifier, title: $0.name))) }
+                let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map { PreferredBookmark(value: $0.identifier) }
                 choices.append(contentsOf: bookmarksChoices)
                 triggerOptionsAlert(forOptions: choices, title: R.string.localizable.preferred_bookmark())
             }
@@ -121,7 +112,7 @@ class SettingsTableViewController: UITableViewController {
         case 2:
             return 1
         case 3:
-            return showPreferredBookmarkRow ? 4 : 3
+            return 4
         case 4:
             return 4
         default:
@@ -170,16 +161,25 @@ class SettingsTableViewController: UITableViewController {
                 cell.accessoryType = .disclosureIndicator
                 return cell
             } else if indexPath.row == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+                cell.contentLabel.text = R.string.localizable.preferred_bookmark()
+                cell.selectionLabel.text = nil
+                guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
+                    WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
+                        PreferencesManager.shared.preferredBookmark = PreferredBookmark(value: nil)
+                        return cell
+                }
+                cell.selectionLabel.text = PreferencesManager.shared.preferredBookmark.stringValue
+                return cell
+            } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ToggleCell", for: indexPath) as! ToggleCell
                 cell.contentLabel.text = R.string.localizable.show_temp_on_icon()
-                BadgeService.shared.areBadgesEnabled { enabled in
+                BadgeService.shared.isAppIconBadgeNotificationEnabled { enabled in
                     cell.toggle.isOn = enabled
                 }
                 cell.toggleSwitchHandler = { [unowned self] sender in
                     guard sender.isOn else {
-                        self.showPreferredBookmarkRow = false
-                        BadgeService.shared.setBadgeService(enabled: false)
-                        tableView.deleteRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)
+                        BadgeService.shared.setBadgeServiceEnabled(false)
                         return
                     }
                     
@@ -189,27 +189,9 @@ class SettingsTableViewController: UITableViewController {
                             self?.showNotificationsSettingsAlert()
                             return
                         }
-                        
-                        self?.showPreferredBookmarkRow = true
-                        BadgeService.shared.setBadgeService(enabled: true)
-                        tableView.insertRows(at: [IndexPath(row: 3, section: 3)], with: .automatic)
+                        BadgeService.shared.setBadgeServiceEnabled(true)
                     }
                 }
-                return cell
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-                cell.contentLabel.text = R.string.localizable.preferred_bookmark()
-                cell.selectionLabel.text = nil
-                let preferredBookmark = PreferencesManager.shared.preferredBookmark.value
-                guard case .city(let city) = preferredBookmark else {
-                    return cell
-                }
-                
-                guard let bookmark = WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == city.id }) else {
-                    PreferencesManager.shared.preferredBookmark = PreferredBookmark(value: .none)
-                    return cell
-                }
-                cell.selectionLabel.text = bookmark.name
                 return cell
             }
         case 4:

@@ -25,12 +25,12 @@ final class PermissionsManager {
     
     // MARK: - Interface
     
-    public func requestNotificationPermissions(with completion: @escaping ((Bool) -> ())) {
+    public func requestNotificationPermissions(with completionHandler: @escaping ((Bool) -> ())) {
         if #available(iOS 10, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
                 DispatchQueue.main.async {
                     guard error == nil, granted else {
-                        completion(false)
+                        completionHandler(false)
                         return
                     }
                     
@@ -38,10 +38,10 @@ final class PermissionsManager {
                         DispatchQueue.main.async {
                             switch settings.authorizationStatus {
                             case .authorized, .provisional:
-                                let areApproved = settings.badgeSetting == .enabled && settings.alertSetting == .enabled
-                                completion(areApproved)
+                                let approved = settings.badgeSetting == .enabled && settings.alertSetting == .enabled
+                                completionHandler(approved)
                             case .notDetermined, .denied:
-                                completion(false)
+                                completionHandler(false)
                             }
                         }
                     }
@@ -51,11 +51,11 @@ final class PermissionsManager {
             guard let settings = UIApplication.shared.currentUserNotificationSettings,
                 settings.types.contains(UIUserNotificationType.badge),
                 settings.types.contains(UIUserNotificationType.alert) else {
-                    notificationPermissionsRequestCompletion = completion
+                    notificationPermissionsRequestCompletion = completionHandler
                     UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge, .alert, .sound], categories: nil))
                     return
             }
-            completion(true)
+            completionHandler(true)
         }
     }
     

@@ -20,7 +20,8 @@ final class BadgeService {
     
     private struct TemperatureSignNotificationBundle {
         let sign: TemperatureSign
-        let city: String
+        let temperature: Int
+        let cityName: String
     }
     
     // MARK: - Properties
@@ -29,29 +30,29 @@ final class BadgeService {
     
     // MARK: - Methods
     
-    public func areBadgesEnabled(with completion: @escaping (Bool) -> ()) {
-        guard UserDefaults.standard.bool(forKey: kShowTemperatureOnAppIconKey) else {
-            completion(false)
+    public func isAppIconBadgeNotificationEnabled(with completionHandler: @escaping (Bool) -> ()) {
+        guard UserDefaults.standard.bool(forKey: kIsTemperatureOnAppIconEnabledKey) else {
+            completionHandler(false)
             return
         }
-        PermissionsManager.shared.requestNotificationPermissions(with: completion)
+        PermissionsManager.shared.requestNotificationPermissions(with: completionHandler)
     }
     
     public static func instantiateSharedInstance() {
         shared = BadgeService()
         
-        if UserDefaults.standard.bool(forKey: kShowTemperatureOnAppIconKey) {
-            shared.setBackgroundFetch(enabled: true)
+        if UserDefaults.standard.bool(forKey: kIsTemperatureOnAppIconEnabledKey) {
+            shared.setBackgroundFetchEnabled(true)
         }
     }
     
-    public func setBadgeService(enabled: Bool) {
-        UserDefaults.standard.set(enabled, forKey: kShowTemperatureOnAppIconKey)
+    public func setBadgeServiceEnabled(_ enabled: Bool) {
+        UserDefaults.standard.set(enabled, forKey: kIsTemperatureOnAppIconEnabledKey)
         BadgeService.shared.updateBadge(withCompletionHandler: nil)
     }
     
     public func updateBadge(withCompletionHandler completionHandler: (() -> ())?) {
-        guard UserDefaults.standard.bool(forKey: kShowTemperatureOnAppIconKey) else {
+        guard UserDefaults.standard.bool(forKey: kIsTemperatureOnAppIconEnabledKey) else {
             clearAppIcon()
             completionHandler?()
             return
@@ -66,17 +67,6 @@ final class BadgeService {
         }
     }
     
-    public func performBackgroundBadgeUpdate(withCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        WeatherDataManager.shared.updateBookmarks { result in
-            switch result {
-            case .success:
-                completionHandler(.newData)
-            case .failure:
-                completionHandler(.failed)
-            }
-        }
-    }
-    
     // MARK: - Helpers
     
     private func performBadgeUpdate() {
@@ -88,12 +78,12 @@ final class BadgeService {
         let temperatureUnit = PreferencesManager.shared.temperatureUnit
         let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin
         guard let temperature = ConversionService.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin) else { return }
-        let lastTemperature = UIApplication.shared.applicationIconBadgeNumber
+        let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
         UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
-        if lastTemperature < 0 && temperature > 0 {
-            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .plus, city: weatherData.cityName))
-        } else if lastTemperature > 0 && temperature < 0 {
-            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .minus, city: weatherData.cityName))
+        if previousTemperatureValue < 0 && temperature > 0 {
+            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .plus, temperature: temperature, cityName: weatherData.cityName))
+        } else if previousTemperatureValue > 0 && temperature < 0 {
+            sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .minus, temperature: temperature, cityName: weatherData.cityName))
         }
     }
     
@@ -107,9 +97,9 @@ final class BadgeService {
             content.title = R.string.localizable.app_icon_temperature_sing_updated()
             switch bundle.sign {
             case .plus:
-                content.body = R.string.localizable.temperature_above_zero(bundle.city)
+                content.body = R.string.localizable.temperature_above_zero(bundle.cityName, "\(bundle.temperature)")
             case .minus:
-                content.body = R.string.localizable.temperature_below_zero(bundle.city)
+                content.body = R.string.localizable.temperature_below_zero(bundle.cityName, "\(bundle.temperature)")
             }
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
             let request = UNNotificationRequest(identifier: "TemperatureSignNotification", content: content, trigger: trigger)
@@ -121,9 +111,9 @@ final class BadgeService {
             localNotification.alertTitle = R.string.localizable.app_icon_temperature_sing_updated()
             switch bundle.sign {
             case .plus:
-                localNotification.alertBody = R.string.localizable.temperature_above_zero(bundle.city)
+                localNotification.alertBody = R.string.localizable.temperature_above_zero(bundle.cityName, "\(bundle.temperature)")
             case .minus:
-                localNotification.alertBody = R.string.localizable.temperature_below_zero(bundle.city)
+                localNotification.alertBody = R.string.localizable.temperature_below_zero(bundle.cityName, "\(bundle.temperature)")
             }
             localNotification.timeZone = TimeZone.current
             
@@ -131,7 +121,7 @@ final class BadgeService {
         }
     }
     
-    private func setBackgroundFetch(enabled: Bool) {
+    private func setBackgroundFetchEnabled(_ enabled: Bool) {
         guard enabled else {
             UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
             return

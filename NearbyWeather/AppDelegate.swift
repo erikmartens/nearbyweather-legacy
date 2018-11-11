@@ -92,8 +92,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.backgroundTaskId = application.beginBackgroundTask { [weak self] in
             self?.endBackgroundTask()
         }
-        BadgeService.shared.performBackgroundBadgeUpdate { [weak self] result in
-            completionHandler(result)
+        
+        WeatherDataManager.shared.updatePreferredBookmark { [weak self] result in
+            switch result {
+            case .success:
+                completionHandler(.newData)
+                
+            case .failure:
+                completionHandler(.failed)
+            }
             self?.endBackgroundTask()
         }
     }

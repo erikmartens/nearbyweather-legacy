@@ -245,21 +245,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		023BADEE31F6B3F9A7AA8087CC809A5C /* TextFieldCounter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TextFieldCounter.framework; path = TextFieldCounter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		023BADEE31F6B3F9A7AA8087CC809A5C /* TextFieldCounter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextFieldCounter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		029F1BC4BD8EDAFBFF08619E0B905593 /* R.swift.Library.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = R.swift.Library.modulemap; sourceTree = "<group>"; };
 		03D2CE9C336D71FEF41F73F7B8AA666C /* HUD.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HUD.swift; path = PKHUD/HUD.swift; sourceTree = "<group>"; };
 		05F9E5F8018027C77AA91BB46682F543 /* PKHUDProgressView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PKHUDProgressView.swift; path = PKHUD/PKHUDProgressView.swift; sourceTree = "<group>"; };
 		071B3727720548FB729EAC0F33686609 /* TypedStoryboardSegueInfo+UIStoryboardSegue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "TypedStoryboardSegueInfo+UIStoryboardSegue.swift"; path = "Library/UIKit/TypedStoryboardSegueInfo+UIStoryboardSegue.swift"; sourceTree = "<group>"; };
-		08427E3F46D836C695D5F66A674612F3 /* Rswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Rswift.framework; path = R.swift.Library.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08427E3F46D836C695D5F66A674612F3 /* Rswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rswift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0980C4A638909113D401F53155C15C0E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B2410ECC1F6FE03F1CA229253BB334E /* SessionDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionDelegate.swift; path = Source/SessionDelegate.swift; sourceTree = "<group>"; };
 		0BCDCEDF7BFF6697FD8F343CD3E52217 /* Notifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Source/Notifications.swift; sourceTree = "<group>"; };
 		0C170677128B6F77BB33940167FD9E36 /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
-		0D166EA44894C360856F38797601CA7D /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D166EA44894C360856F38797601CA7D /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		10E9D220832FC40F819D8BB07003E6FD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		1199BB1B60DBA8EEC913CC16E1890A8F /* Pods-NearbyWeather-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NearbyWeather-frameworks.sh"; sourceTree = "<group>"; };
 		124E4BAFE9A3DF376BE4D476CDB09A5D /* TaskDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskDelegate.swift; path = Source/TaskDelegate.swift; sourceTree = "<group>"; };
-		13288B85A18F9416FA3BF189A230D7F7 /* Pods_NearbyWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NearbyWeather.framework; path = "Pods-NearbyWeather.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13288B85A18F9416FA3BF189A230D7F7 /* Pods_NearbyWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearbyWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		132F00BFC638BE82D1753E8FF3ADF7D3 /* RainyRefreshControl.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = RainyRefreshControl.modulemap; sourceTree = "<group>"; };
 		1338D5F7A050E3C4C4EADE2392658912 /* Pods-NearbyWeather.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NearbyWeather.modulemap"; sourceTree = "<group>"; };
 		14877037D92DFF6A7E4FD8117982D59B /* UIImage+ImageResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+ImageResource.swift"; path = "Library/UIKit/UIImage+ImageResource.swift"; sourceTree = "<group>"; };
@@ -275,11 +275,11 @@
 		239624F4B5632F71C5FAC695A08CA1D8 /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
 		23D27E0117C71B663127CE520CF8078C /* PKHUDRotatingImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PKHUDRotatingImageView.swift; path = PKHUD/PKHUDRotatingImageView.swift; sourceTree = "<group>"; };
 		279C8999AE01B1D914AE3EC5445F5A09 /* StringResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StringResource.swift; path = Library/Core/StringResource.swift; sourceTree = "<group>"; };
-		29B2B459648BC29161DFF359CA8BB4CF /* APTimeZones.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = APTimeZones.framework; path = APTimeZones.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29B2B459648BC29161DFF359CA8BB4CF /* APTimeZones.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = APTimeZones.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29F5B0D9D939EFBB5B9C4E879B13E333 /* PKHUDWideBaseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PKHUDWideBaseView.swift; path = PKHUD/PKHUDWideBaseView.swift; sourceTree = "<group>"; };
 		2A8C0E4756E21A7DD382A5A54C1E199E /* CLLocation+APTimeZones.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "CLLocation+APTimeZones.m"; path = "APTimeZones/Categories/CLLocation+APTimeZones.m"; sourceTree = "<group>"; };
 		2CA812395E91E9F14C144EE338DCA361 /* UINib+NibResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UINib+NibResource.swift"; path = "Library/UIKit/UINib+NibResource.swift"; sourceTree = "<group>"; };
-		2FAE1463203CA1A8D134DCDB8A92F53B /* RainyRefreshControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = RainyRefreshControl.framework; path = RainyRefreshControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FAE1463203CA1A8D134DCDB8A92F53B /* RainyRefreshControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RainyRefreshControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BB08E3320EA98F46E445DEE19B541A /* FMDB.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FMDB.modulemap; sourceTree = "<group>"; };
 		31C375FB2BB03C055112FF22E68E1A47 /* ResourceBundle-RainyRefreshControl-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-RainyRefreshControl-Info.plist"; sourceTree = "<group>"; };
 		335978DCF3F57FCB1654940B80D2AA61 /* rain.sks */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.sks; name = rain.sks; path = Sources/Assets/rain.sks; sourceTree = "<group>"; };
@@ -316,14 +316,14 @@
 		59A1DADB0A38DEF302EAE6F9FDCC315F /* CLPlacemark+APTimeZones.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "CLPlacemark+APTimeZones.h"; path = "APTimeZones/Categories/CLPlacemark+APTimeZones.h"; sourceTree = "<group>"; };
 		59DDB40935A785F36418DB08F1C9D6F6 /* UIColor+ColorResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIColor+ColorResource.swift"; path = "Library/UIKit/UIColor+ColorResource.swift"; sourceTree = "<group>"; };
 		5A2D30A239761C32EF7073BBB7489858 /* FMDatabase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = src/fmdb/FMDatabase.m; sourceTree = "<group>"; };
-		5A9D65E8910ECD251C488C779F3667DB /* PKHUDResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PKHUDResources.bundle; path = "PKHUD-PKHUDResources.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A9D65E8910ECD251C488C779F3667DB /* PKHUDResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PKHUDResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		627AA1561494D21FAC31804D8F8CB799 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request.swift; sourceTree = "<group>"; };
 		62AEAFABA7741A2243AB29DAE87BEE6A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63D3AEFED7A28712EE531C0E78A9B5CF /* RainyRefreshControl-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RainyRefreshControl-prefix.pch"; sourceTree = "<group>"; };
 		65DB39CA39253794030301F22944B837 /* Pods-NearbyWeather-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NearbyWeather-acknowledgements.markdown"; sourceTree = "<group>"; };
 		6B2713CA8B0475993B0AC49DF88EDD3A /* FrameView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FrameView.swift; path = PKHUD/FrameView.swift; sourceTree = "<group>"; };
 		6B6D02BFCD68AA426331E0F2854C1F10 /* UITableView+ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UITableView+ReuseIdentifierProtocol.swift"; path = "Library/UIKit/UITableView+ReuseIdentifierProtocol.swift"; sourceTree = "<group>"; };
-		70FCA1409DC8760624ED46FEA92863D5 /* Pods_NearbyWeatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NearbyWeatherTests.framework; path = "Pods-NearbyWeatherTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		70FCA1409DC8760624ED46FEA92863D5 /* Pods_NearbyWeatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearbyWeatherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		724276253F46B97CE8ED8017458ACD6B /* DispatchQueue+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Alamofire.swift"; path = "Source/DispatchQueue+Alamofire.swift"; sourceTree = "<group>"; };
 		726ABCABC09E1A42C3B1E023B3FDAD20 /* FMDB.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FMDB.xcconfig; sourceTree = "<group>"; };
 		753BCF4818360EBBE25D2B276EE71547 /* UICollectionView+ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UICollectionView+ReuseIdentifierProtocol.swift"; path = "Library/UIKit/UICollectionView+ReuseIdentifierProtocol.swift"; sourceTree = "<group>"; };
@@ -333,11 +333,11 @@
 		7C16B9A7576CCE3D53C0F5429116D8B2 /* Identifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Identifier.swift; path = Library/Core/Identifier.swift; sourceTree = "<group>"; };
 		7E872AD30AD012385C7D74D4021AC965 /* Pods-NearbyWeatherTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NearbyWeatherTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		803E1D551128D9206AA94BA4738B707F /* Pods-NearbyWeatherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NearbyWeatherTests.debug.xcconfig"; sourceTree = "<group>"; };
-		81CCCED2A54BF1F5D694C0BA11D47ADC /* RainyRefreshControl.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = RainyRefreshControl.bundle; path = "RainyRefreshControl-RainyRefreshControl.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81CCCED2A54BF1F5D694C0BA11D47ADC /* RainyRefreshControl.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RainyRefreshControl.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		82250E0F037085A44E079AA1759B1654 /* Pods-NearbyWeather-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NearbyWeather-acknowledgements.plist"; sourceTree = "<group>"; };
 		8392EBD9CB68181A794A9904DBF002BD /* StoryboardResourceWithInitialController+UIKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "StoryboardResourceWithInitialController+UIKit.swift"; path = "Library/UIKit/StoryboardResourceWithInitialController+UIKit.swift"; sourceTree = "<group>"; };
 		846F7B57EDF8FEB104BB856E53ADBF52 /* UIViewController+NibResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIViewController+NibResource.swift"; path = "Library/UIKit/UIViewController+NibResource.swift"; sourceTree = "<group>"; };
-		86D0CCFAC5E0321CF1E5D0D561B43671 /* FMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FMDB.framework; path = FMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		86D0CCFAC5E0321CF1E5D0D561B43671 /* FMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D37F4215E42CF310DE0C02707A06B2 /* Alamofire-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-prefix.pch"; sourceTree = "<group>"; };
 		8A830EF86FE334A7C0078D71B967DD70 /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Source/Response.swift; sourceTree = "<group>"; };
 		8B393663C1EF1AF002E8BCA2CE765F7E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -346,7 +346,7 @@
 		90C9A802B76C9085FC92FC263EB740B6 /* RainScene.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RainScene.swift; path = Sources/RainScene.swift; sourceTree = "<group>"; };
 		930FBDF2A9FB30B62247420637C7EB49 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabaseQueue.h; path = src/fmdb/FMDatabaseQueue.h; sourceTree = "<group>"; };
 		938A6F25ECBEBEA15F89062571A94ECF /* FMDB.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDB.h; path = src/fmdb/FMDB.h; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		93AF7D0B3847999FAE09F10B028DB7C5 /* TextFieldCounter-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TextFieldCounter-umbrella.h"; sourceTree = "<group>"; };
 		94B4E275DCEBB7FBC4284C1ABCC48872 /* UIStoryboard+StoryboardResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIStoryboard+StoryboardResource.swift"; path = "Library/UIKit/UIStoryboard+StoryboardResource.swift"; sourceTree = "<group>"; };
 		94F5A09A416644A64EA3A3715FEE9A39 /* Pods-NearbyWeatherTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NearbyWeatherTests-frameworks.sh"; sourceTree = "<group>"; };
@@ -355,7 +355,7 @@
 		994B995F2D09E5F6B2C2A9E6B87E1508 /* Validatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Validatable.swift; path = Library/Core/Validatable.swift; sourceTree = "<group>"; };
 		9B373FA4D238B5B741DAD4307B3EDFF8 /* Bundle+FileResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Bundle+FileResource.swift"; path = "Library/Foundation/Bundle+FileResource.swift"; sourceTree = "<group>"; };
 		A0A8D278B06ADE270017F62669827891 /* TextFieldCounter-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TextFieldCounter-prefix.pch"; sourceTree = "<group>"; };
-		A3C6879475B09970A127D5452FA9E3E7 /* timezonesDB.json */ = {isa = PBXFileReference; includeInIndex = 1; name = timezonesDB.json; path = APTimeZones/timezonesDB.json; sourceTree = "<group>"; };
+		A3C6879475B09970A127D5452FA9E3E7 /* timezonesDB.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = timezonesDB.json; path = APTimeZones/timezonesDB.json; sourceTree = "<group>"; };
 		A4ADC8FD5E79516E2BF13E3A0504F765 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A538CBEC82E6539A9ACA21062F68A48F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5B07344B824AE082675BDBAF2AC5A0E /* StoryboardResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StoryboardResource.swift; path = Library/Core/StoryboardResource.swift; sourceTree = "<group>"; };
@@ -395,7 +395,7 @@
 		DE6422435D103EB4AD737E232EE48387 /* Pods-NearbyWeatherTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NearbyWeatherTests-umbrella.h"; sourceTree = "<group>"; };
 		E0948D37BFA259347835161469EFD66C /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PKHUD/Images.xcassets; sourceTree = "<group>"; };
 		E0FDAA25C4AB2DB62104734E3037D388 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		E1B6B84793E3246CF74C3C9B4C0A2BF0 /* PKHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PKHUD.framework; path = PKHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B6B84793E3246CF74C3C9B4C0A2BF0 /* PKHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PKHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3133D03EC6C9168BC2A2A6CF1FAF0E8 /* PKHUDErrorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PKHUDErrorView.swift; path = PKHUD/PKHUDErrorView.swift; sourceTree = "<group>"; };
 		E792553099073A9B36570F86A6A96A4B /* UIViewController+StoryboardSegueIdentifierProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIViewController+StoryboardSegueIdentifierProtocol.swift"; path = "Library/UIKit/UIViewController+StoryboardSegueIdentifierProtocol.swift"; sourceTree = "<group>"; };
 		E7C5B3EEDC8B089CD031009312097467 /* APTimeZones.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = APTimeZones.modulemap; sourceTree = "<group>"; };
@@ -531,7 +531,6 @@
 				C528F7DC4651B9349B1EFA434916C069 /* TextFieldCounter.swift */,
 				93E62529B89C02B2E0EBB325F917C458 /* Support Files */,
 			);
-			name = TextFieldCounter;
 			path = TextFieldCounter;
 			sourceTree = "<group>";
 		};
@@ -555,7 +554,6 @@
 				1BA15A10C91AE46B72D6145EA71C1AA6 /* Resources */,
 				21219A6BE9E3F75582EFEB0CD0188843 /* Support Files */,
 			);
-			name = APTimeZones;
 			path = APTimeZones;
 			sourceTree = "<group>";
 		};
@@ -582,7 +580,6 @@
 				4E13D369055A083DFF0A6E5544F974BC /* Resources */,
 				AF2A840A408726EB2AF9A5AC2C7C299A /* Support Files */,
 			);
-			name = PKHUD;
 			path = PKHUD;
 			sourceTree = "<group>";
 		};
@@ -642,7 +639,6 @@
 				994B995F2D09E5F6B2C2A9E6B87E1508 /* Validatable.swift */,
 				43D5DBFDD0A6EB41D9DF7EE451C6B669 /* Support Files */,
 			);
-			name = R.swift.Library;
 			path = R.swift.Library;
 			sourceTree = "<group>";
 		};
@@ -736,7 +732,6 @@
 				5EA851726CF458763097A76D22E5573D /* standard */,
 				33CC81F374DE752F861F4DD43BBD3193 /* Support Files */,
 			);
-			name = FMDB;
 			path = FMDB;
 			sourceTree = "<group>";
 		};
@@ -770,7 +765,6 @@
 				88F72F26AB4690C9625DA452B33CF876 /* Resources */,
 				3EC63D102873338A23BB0A630BAED70C /* Support Files */,
 			);
-			name = RainyRefreshControl;
 			path = RainyRefreshControl;
 			sourceTree = "<group>";
 		};
@@ -825,7 +819,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = R.swift;
 			path = R.swift;
 			sourceTree = "<group>";
 		};
@@ -865,7 +858,6 @@
 				D421FB22FC687637CFF3CC79B8A9C8C4 /* Validation.swift */,
 				C9390394FF2927622468E8A2E14A2294 /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -1214,12 +1206,30 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					0422742DF5CC42F97485A5A4607BBEE9 = {
+						LastSwiftMigration = 1020;
+					};
+					2FC5FE49489987938D37328FA22970B0 = {
+						LastSwiftMigration = 1020;
+					};
+					C27896B661437D7240C4F55D1E5E3922 = {
+						LastSwiftMigration = 1020;
+					};
+					E76458C58C9140B6A16D60547E68E80C = {
+						LastSwiftMigration = 1020;
+					};
+					F5EC1C06B9F0BF8F06F62C9BD8CE4DF5 = {
+						LastSwiftMigration = 1020;
+					};
+				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
@@ -1632,7 +1642,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1680,7 +1690,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1711,7 +1721,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1805,8 +1815,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};
@@ -1982,7 +1991,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2062,7 +2071,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2192,7 +2201,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2224,7 +2233,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -2255,7 +2264,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -2286,7 +2295,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -2351,7 +2360,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

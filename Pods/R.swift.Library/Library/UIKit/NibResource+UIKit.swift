@@ -20,6 +20,6 @@ public extension NibResourceType {
    - returns: An array containing the top-level objects from the NIB
    */
   public func instantiate(withOwner ownerOrNil: Any?, options optionsOrNil: [AnyHashable : Any]? = [:]) -> [Any] {
-    return UINib(resource: self).instantiate(withOwner: ownerOrNil, options: optionsOrNil)
+    return UINib(resource: self).instantiate(withOwner: ownerOrNil, options: optionsOrNil as! [UINib.OptionsKey : Any])
   }
 }

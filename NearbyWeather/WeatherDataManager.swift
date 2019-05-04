@@ -93,8 +93,12 @@ class WeatherDataManager {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(locationAuthorizationObserver as Any, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(sortingOrientationChangedObserver as Any, name: Notification.Name(rawValue: kSortingOrientationPreferenceChanged), object: nil)
+        if let locationAuthorizationObserver = locationAuthorizationObserver {
+            NotificationCenter.default.removeObserver(locationAuthorizationObserver, name: UIApplication.didBecomeActiveNotification, object: nil)
+        }
+        if let sortingOrientationChangedObserver = sortingOrientationChangedObserver {
+            NotificationCenter.default.removeObserver(sortingOrientationChangedObserver, name: Notification.Name(rawValue: kSortingOrientationPreferenceChanged), object: nil)
+        }
     }
     
     

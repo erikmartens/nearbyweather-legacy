@@ -6,6 +6,7 @@
  Copyright © 2019 Pierre-Yves Lapersonne. All rights reserved.
  */
 
+locale_tag="fr";
 tab_weatherList = "Liste";
 tab_weatherMap = "Carte";
 tab_settings = "Réglages";
@@ -19,7 +20,7 @@ configure = "Configurer";
 no_weather_data = "Pas de données météorologiques";
 no_data_description = "Les données météorologiques n'ont pas pu être chargées. Assurez-vous d'avoir une connexion Internet fonctionnelle.";
 last_refresh_at = "Dernière mise à jour : %@";
-unknown_error = "Une errer inconnue est arrivée pendant le téléchargement des données. Merci d'essayer à nouveau plus tard.";
+unknown_error = "Une erreur inconnue est arrivée pendant le téléchargement des données. Merci d'essayer à nouveau plus tard.";
 http_error = "Une erreur HTTP est survenue pendant le téléchargement des données météorologiques. Code de status : %@";
 request_timeout_error = "Une erreur est survenue pendant le téléchargement des données météorologiques. La requête n'a pas eu de réponse dans le temps imparti.";
 malformed_url_error = "Une erreur est survenue pendant le téléchargement des données météorologiques. L'URL de la requête était mal formée.";
@@ -31,15 +32,15 @@ select_list_type = "Sélection de la liste à afficher";
 select_map_type = "Sélection du type de carte";
 day-time = "Journée";
 night-time = "Nuit";
-sunrise = "Lever de Soleil";
-sunset = "Coucher de Soleil";
-cloud_coverage = "Couverture nuageuse";
-humidity = "Humidité";
-air_pressure = "Pression";
-windspeed = "Vitesse du vent";
-wind_direction = "Sens du vent";
-coordinates = "Coordonnées";
-distance = "Distance";
+sunrise = "Lever de Soleil ";
+sunset = "Coucher de Soleil ";
+cloud_coverage = "Couverture nuageuse ";
+humidity = "Humidité ";
+air_pressure = "Pression ";
+windspeed = "Vitesse du vent " ;
+wind_direction = "Sens du vent ";
+coordinates = "Coordonnées ";
+distance = "Distance ";
 map_type_standard = "Carte";
 map_type_hybrid = "Hybride";
 map_type_satellite = "Satellite";

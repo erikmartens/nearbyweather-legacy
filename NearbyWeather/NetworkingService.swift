@@ -69,11 +69,13 @@ class NetworkingService {
     public func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> ())) {
         let session = URLSession.shared
         
+        let localeTag = NSLocalizedString("locale_tag", comment: "")
         guard let apiKey = UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey),
-            let requestURL = URL(string: "\(kOpenWeatherSingleLocationBaseURL)?APPID=\(apiKey)&id=\(identifier)") else {
+            let requestURL = URL(string: "\(kOpenWeatherSingleLocationBaseURL)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)") else {
                 let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
                 return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
         }
+        print(requestURL)
         
         let request = URLRequest(url: requestURL)
         let dataTask = session.dataTask(with: request, completionHandler: { data, response, error in

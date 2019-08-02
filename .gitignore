@@ -2,6 +2,9 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+## Items to ignore
+NearbyWeather/Info.plist.ori
+
 ## Build generated
 build/
 DerivedData/

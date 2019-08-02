@@ -4,6 +4,7 @@
 
 ## Items to ignore
 NearbyWeather/Info.plist.ori
+NearbyWeather.xcodeproj/project.pbxproj.ori
 
 ## Build generated
 build/

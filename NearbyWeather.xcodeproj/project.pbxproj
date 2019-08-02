@@ -87,6 +87,10 @@
 /* Begin PBXFileReference section */
 		20E2DFB16875223CFBEA36EF /* Pods-NearbyWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearbyWeather/Pods-NearbyWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		2DB36716201A47922EC83643 /* Pods-NearbyWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearbyWeather/Pods-NearbyWeather.release.xcconfig"; sourceTree = "<group>"; };
+		5142D45C22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		5142D45D22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		5142D45E22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5142D45F22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AC9117E5FC9606EF89375077 /* Pods_NearbyWeatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearbyWeatherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B25B5E79CF3A6FC3B3E60F51 /* Pods-NearbyWeatherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeatherTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearbyWeatherTests/Pods-NearbyWeatherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E01FDEE48840B6DE40D19CA4 /* Pods_NearbyWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearbyWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -506,6 +510,7 @@
 				en,
 				Base,
 				de,
+				fr,
 			);
 			mainGroup = F204B76E1DF2EFA3000F4371;
 			productRefGroup = F204B7781DF2EFA3000F4371 /* Products */;
@@ -757,6 +762,7 @@
 			children = (
 				F204B77F1DF2EFA3000F4371 /* Base */,
 				F204B7AC1DF2F19A000F4371 /* de */,
+				5142D45D22F45DC2000E6B06 /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -766,6 +772,7 @@
 			children = (
 				F204B7841DF2EFA3000F4371 /* Base */,
 				F204B7AD1DF2F19A000F4371 /* de */,
+				5142D45C22F45DC2000E6B06 /* fr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -775,6 +782,7 @@
 			children = (
 				F204B7B11DF2F1BC000F4371 /* Base */,
 				F204B7B31DF2F1BD000F4371 /* de */,
+				5142D45E22F45DC2000E6B06 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -784,6 +792,7 @@
 			children = (
 				F283D2741DF393B2001B879D /* Base */,
 				F283D2761DF393B3001B879D /* de */,
+				5142D45F22F45DC2000E6B06 /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

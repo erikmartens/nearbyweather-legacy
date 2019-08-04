@@ -93,7 +93,12 @@ class WeatherDataManager {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(locationAuthorizationObserver)
+        if let locationAuthorizationObserver = locationAuthorizationObserver {
+            NotificationCenter.default.removeObserver(locationAuthorizationObserver, name: UIApplication.didBecomeActiveNotification, object: nil)
+        }
+        if let sortingOrientationChangedObserver = sortingOrientationChangedObserver {
+            NotificationCenter.default.removeObserver(sortingOrientationChangedObserver, name: Notification.Name(rawValue: kSortingOrientationPreferenceChanged), object: nil)
+        }
     }
     
     
@@ -188,8 +193,8 @@ class WeatherDataManager {
         result = bookmarkedWeatherDataObjects?.sorted { weatherDataObject0, weatherDataObject1 in
             guard let correspondingLocation0 = bookmarkedLocations.first(where: { return weatherDataObject0.locationId == $0.identifier }),
                 let correspondingLocation1 = bookmarkedLocations.first(where: { return weatherDataObject1.locationId == $0.identifier }),
-                let index0 = bookmarkedLocations.index(of: correspondingLocation0),
-                let index1 = bookmarkedLocations.index(of: correspondingLocation1) else {
+                let index0 = bookmarkedLocations.firstIndex(of: correspondingLocation0),
+                let index1 = bookmarkedLocations.firstIndex(of: correspondingLocation1) else {
                     return false
             }
             return index0 < index1

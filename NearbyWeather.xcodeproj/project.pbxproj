@@ -445,21 +445,21 @@
 				TargetAttributes = {
 					F204B7761DF2EFA3000F4371 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = MG2LSJNJB6;
-						LastSwiftMigration = 1000;
+						DevelopmentTeam = VDPU24L36V;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					F204B78A1DF2EFA3000F4371 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = VDPU24L36V;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = F204B7761DF2EFA3000F4371;
 					};
 					F204B7951DF2EFA3000F4371 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = VDPU24L36V;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = F204B7761DF2EFA3000F4371;
 					};
@@ -793,7 +793,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -807,7 +807,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -821,7 +821,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeatherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NearbyWeather.app/NearbyWeather";
 			};
 			name = Debug;
@@ -836,7 +836,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeatherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NearbyWeather.app/NearbyWeather";
 			};
 			name = Release;
@@ -850,7 +850,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeatherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = NearbyWeather;
 			};
 			name = Debug;
@@ -864,7 +864,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeatherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = NearbyWeather;
 			};
 			name = Release;

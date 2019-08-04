@@ -4,11 +4,26 @@
 		"firstName": "Erik Maximilian",
 		"lastName": "Martens",
 		"contributionDescription": "Project Owner",
-		"urlString": "http://www.erikmartens.de/contact.html"
+		"urlString": "https://www.linkedin.com/in/erik-maximilian-martens-212280a1/"
 	}, {
 		"firstName": "Ryan",
 		"lastName": "Rosello",
 		"contributionDescription": "Minor Bugfixes",
 		"urlString": "https://github.com/roselloryan"
+	}, {
+		"firstName": "M.",
+		"lastName": "Bohling",
+		"contributionDescription": "Swift 5.0 Conversions, Remove Warnings",
+		"urlString": "https://github.com/mbohling"
+	}, {
+		"firstName": "Nischal",
+		"lastName": "Hada",
+		"contributionDescription": "Gitignored CocoaPods Files in Repository",
+		"urlString": "https://github.com/hadanischal"
+	}, {
+		"firstName": "Pierre-Yves",
+		"lastName": "Lapersonne",
+		"contributionDescription": "French Localization, Various Cleanups",
+		"urlString": "https://github.com/pylapp"
 	}]
 }

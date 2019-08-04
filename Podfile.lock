@@ -12,13 +12,13 @@ PODS:
   - TextFieldCounter (1.0.2)
 
 DEPENDENCIES:
-  - Alamofire
+  - Alamofire (~> 4.8.2)
   - APTimeZones (from `https://github.com/Alterplay/APTimeZones.git`, commit `9ffd147`, branch `master`)
-  - FMDB
-  - PKHUD
-  - R.swift
-  - RainyRefreshControl
-  - TextFieldCounter
+  - FMDB (~> 2.7.5)
+  - PKHUD (~> 5.3.0)
+  - R.swift (= 5.0.3)
+  - RainyRefreshControl (~> 0.4.0)
+  - TextFieldCounter (~> 1.0.2)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -51,6 +51,6 @@ SPEC CHECKSUMS:
   RainyRefreshControl: de2236ad2f46d6cfb22bf029e0067b48cdcb2925
   TextFieldCounter: b2abbcc1181fe7d5194acb2a0fb6becee841c6e0
 
-PODFILE CHECKSUM: e24d5d53543e87577d9fb05d40a8aba617d6241f
+PODFILE CHECKSUM: 7b8c6785c253a747c3b9a7afe7774a2bb2d9dca7
 
 COCOAPODS: 1.5.3

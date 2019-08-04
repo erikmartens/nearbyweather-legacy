@@ -5,7 +5,7 @@
 <h1 align="center">NearbyWeather - Open Source Weather</h1>
 
 <p align="center">
-<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-4.1-orange.svg?style=flat" alt="Swift"/></a>
+<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat" alt="Swift"/></a>
 <img src="https://img.shields.io/badge/Platform-iOS%209.0+-lightgrey.svg" alt="Platform: iOS">
 <img src="https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat" alt="License: MIT">
 <a href="https://twitter.com/erik_martens"><img src="https://img.shields.io/badge/Twitter-@erik_martens-blue.svg" alt="Twitter: @erik_martens"/></a>
@@ -53,6 +53,10 @@ It therefore otherwise refrains from advanced concepts. The architecture is kept
 
 ## Support and Open Source
 Support is provided at the given support link, including instructions to get started with the app. The app's source code is open source. You can download and contribute via GitHub. To learn more about the project, visit the support website.
+
+## Getting Started
+In order to get started, fork the project and clone it to your local machine. In order to open the project and in oder to run it, you will need to have the latest Apple developer tools installed, namely Xcode. For libraries this app uses the dependency manager [Cocoa Pods](https://cocoapods.org). Pods are not checked into the repository, so you will have run `pod install` after cloning.
+
 
 ## Future Developments
 - [Release 2.1](https://github.com/erikmartens/NearbyWeather/projects/2)

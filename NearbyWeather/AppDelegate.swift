@@ -84,10 +84,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         refreshWeatherDataIfNeeded()
     }
     
-    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
-        PermissionsManager.shared.didRegisterNotificationSettings(notificationSettings)
-    }
-    
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         self.backgroundTaskId = application.beginBackgroundTask { [weak self] in
             self?.endBackgroundTask()

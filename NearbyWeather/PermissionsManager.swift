@@ -58,14 +58,4 @@ final class PermissionsManager {
             completionHandler(true)
         }
     }
-    
-    public func didRegisterNotificationSettings(_ settings: UIUserNotificationSettings) {
-        callBadgePermissionsCompletion(withSuccess: settings.types.contains(UIUserNotificationType.badge))
-    }
-    
-    private func callBadgePermissionsCompletion(withSuccess success: Bool) {
-        guard let completion = notificationPermissionsRequestCompletion else { return }
-        self.notificationPermissionsRequestCompletion = nil
-        completion(success)
-    }
 }

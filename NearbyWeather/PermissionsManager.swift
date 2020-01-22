@@ -15,7 +15,6 @@ final class PermissionsManager {
     // MARK: - Properties
 
     public static var shared: PermissionsManager!
-    private var notificationPermissionsRequestCompletion: ((Bool) -> ())?
 
     // MARK: - Instantiation
 
@@ -51,7 +50,6 @@ final class PermissionsManager {
             guard let settings = UIApplication.shared.currentUserNotificationSettings,
                 settings.types.contains(UIUserNotificationType.badge),
                 settings.types.contains(UIUserNotificationType.alert) else {
-                    notificationPermissionsRequestCompletion = completionHandler
                     UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge, .alert, .sound], categories: nil))
                     return
             }

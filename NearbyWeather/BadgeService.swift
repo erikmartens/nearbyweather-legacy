@@ -102,21 +102,12 @@ final class BadgeService {
   private func sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle) {
     let notificationBody = R.string.localizable.temperature_notification(bundle.cityName, "\(bundle.sign.stringValue) \(bundle.temperature)\(bundle.unit.abbreviation)")
     
-    if #available(iOS 10, *) {
-      let content = UNMutableNotificationContent()
-      content.title = R.string.localizable.app_icon_temperature_sing_updated()
-      content.body = notificationBody
-      let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
-      let request = UNNotificationRequest(identifier: "TemperatureSignNotification", content: content, trigger: trigger)
-      UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-    } else {
-      let localNotification = UILocalNotification()
-      localNotification.fireDate = Date(timeIntervalSinceNow: 2.0)
-      localNotification.alertTitle = R.string.localizable.app_icon_temperature_sing_updated()
-      localNotification.alertBody = notificationBody
-      localNotification.timeZone = TimeZone.current
-      UIApplication.shared.scheduleLocalNotification(localNotification)
-    }
+    let content = UNMutableNotificationContent()
+    content.title = R.string.localizable.app_icon_temperature_sing_updated()
+    content.body = notificationBody
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
+    let request = UNNotificationRequest(identifier: "TemperatureSignNotification", content: content, trigger: trigger)
+    UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
   }
   
   private func setBackgroundFetchEnabled(_ enabled: Bool) {

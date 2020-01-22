@@ -333,12 +333,7 @@ class SettingsTableViewController: UITableViewController {
         UIApplication.shared.canOpenURL(settingsUrl) else {
           return
       }
-      
-      if #available(iOS 10.0, *) {
-        UIApplication.shared.open(settingsUrl, completionHandler: nil)
-      } else {
-        UIApplication.shared.openURL(settingsUrl)
-      }
+      UIApplication.shared.open(settingsUrl, completionHandler: nil)
     }
     let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel)
     

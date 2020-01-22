@@ -6,13 +6,13 @@ inhibit_all_warnings!
 use_frameworks!
 
 def nearbyweather_pods
-    pod 'PKHUD', '~> 5.0'
-    pod 'RainyRefreshControl', '~> 0.4'
-    pod 'TextFieldCounter', :git => 'https://github.com/serralvo/TextFieldCounter.git', :branch => 'master', :commit => '4a746ad'
-    pod 'Alamofire', '~> 4.6'
+    pod 'PKHUD', '~> 5.3.0'
+    pod 'RainyRefreshControl', '~> 0.4.0'
+    pod 'TextFieldCounter', '~> 1.0.2'
+    pod 'Alamofire', '~> 4.8.2'
     pod 'APTimeZones', :git => 'https://github.com/Alterplay/APTimeZones.git', :branch => 'master', :commit => '9ffd147'
-    pod 'FMDB', '~> 2.6'
-    pod 'R.swift', '~> 4.0.0'
+    pod 'FMDB', '~> 2.7.5'
+    pod 'R.swift', '5.0.3'
 end
 
 target 'NearbyWeather' do

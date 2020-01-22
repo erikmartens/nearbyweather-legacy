@@ -6,6 +6,7 @@
  Copyright © 2016 Erik Maximilian Martens. All rights reserved.
  */
 
+locale_tag="en";
 tab_weatherList = "List";
 tab_weatherMap = "Map";
 tab_settings = "Settings";

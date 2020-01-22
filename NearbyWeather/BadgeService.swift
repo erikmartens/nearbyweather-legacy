@@ -56,7 +56,7 @@ final class BadgeService {
         }
     }
     
-    public func setBadgeServiceEnabled(_ enabled: Bool) {
+    public func setTemperatureOnAppIconEnabled(_ enabled: Bool) {
         UserDefaults.standard.set(enabled, forKey: kIsTemperatureOnAppIconEnabledKey)
         BadgeService.shared.updateBadge()
     }

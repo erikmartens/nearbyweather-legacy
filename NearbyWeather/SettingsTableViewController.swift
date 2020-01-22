@@ -191,7 +191,7 @@ class SettingsTableViewController: UITableViewController {
                 }
                 cell.toggleSwitchHandler = { [unowned self] sender in
                     guard sender.isOn else {
-                        BadgeService.shared.setBadgeServiceEnabled(false)
+                        BadgeService.shared.setTemperatureOnAppIconEnabled(false)
                         return
                     }
                     
@@ -201,7 +201,7 @@ class SettingsTableViewController: UITableViewController {
                             self?.showNotificationsSettingsAlert()
                             return
                         }
-                        BadgeService.shared.setBadgeServiceEnabled(true)
+                        BadgeService.shared.setTemperatureOnAppIconEnabled(true)
                     }
                 }
                 return cell

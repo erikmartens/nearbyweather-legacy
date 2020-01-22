@@ -11,20 +11,20 @@ import UIKit
 import UserNotifications
 
 final class PermissionsManager {
-    
+
     // MARK: - Properties
-    
+
     public static var shared: PermissionsManager!
     private var notificationPermissionsRequestCompletion: ((Bool) -> ())?
-    
+
     // MARK: - Instantiation
-    
+
     public static func instantiateSharedInstance() {
         shared = PermissionsManager()
     }
-    
+
     // MARK: - Interface
-    
+
     public func requestNotificationPermissions(with completionHandler: @escaping ((Bool) -> ())) {
         if #available(iOS 10, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
@@ -33,7 +33,7 @@ final class PermissionsManager {
                         completionHandler(false)
                         return
                     }
-                    
+
                     UNUserNotificationCenter.current().getNotificationSettings { settings in
                         DispatchQueue.main.async {
                             switch settings.authorizationStatus {

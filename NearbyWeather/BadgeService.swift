@@ -58,13 +58,12 @@ final class BadgeService {
     
     public func setBadgeServiceEnabled(_ enabled: Bool) {
         UserDefaults.standard.set(enabled, forKey: kIsTemperatureOnAppIconEnabledKey)
-        BadgeService.shared.updateBadge(withCompletionHandler: nil)
+        BadgeService.shared.updateBadge()
     }
     
-    public func updateBadge(withCompletionHandler completionHandler: (() -> ())?) {
+    public func updateBadge() {
         guard UserDefaults.standard.bool(forKey: kIsTemperatureOnAppIconEnabledKey) else {
             clearAppIcon()
-            completionHandler?()
             return
         }
         PermissionsManager.shared.requestNotificationPermissions { [weak self] approved in
@@ -73,7 +72,6 @@ final class BadgeService {
                 return
             }
             self?.performBadgeUpdate()
-            completionHandler?()
         }
     }
     

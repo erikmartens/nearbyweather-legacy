@@ -174,9 +174,8 @@ class WeatherDataManager {
             DispatchQueue.main.async {
                 UserDefaults.standard.set(Date(), forKey: kWeatherDataLastRefreshDateKey)
                 NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
-                BadgeService.shared.updateBadge() {
-                    completionHandler?(.success)
-                }
+                BadgeService.shared.updateBadge()
+              completionHandler?(.success)
             }
         }
     }
@@ -221,9 +220,8 @@ class WeatherDataManager {
             WeatherDataManager.storeService()
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
-                BadgeService.shared.updateBadge() {
-                    completionHandler(.success)
-                }
+                BadgeService.shared.updateBadge()
+                completionHandler(.success)
             }
         }
     }

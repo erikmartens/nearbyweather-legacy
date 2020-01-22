@@ -208,7 +208,7 @@ class PreferencesManager {
     
     public var preferredBookmark: PreferredBookmark {
         didSet {
-            BadgeService.shared.updateBadge(withCompletionHandler: nil)
+            BadgeService.shared.updateBadge()
             PreferencesManager.storeService()
         }
     }
@@ -220,7 +220,7 @@ class PreferencesManager {
     }
     public var temperatureUnit: TemperatureUnit {
         didSet {
-            BadgeService.shared.updateBadge(withCompletionHandler: nil)
+            BadgeService.shared.updateBadge()
             PreferencesManager.storeService()
         }
     }

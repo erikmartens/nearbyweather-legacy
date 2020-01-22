@@ -211,8 +211,8 @@ class WeatherDataManager {
                 return
             }
             
-            if let bookmarkIdx = self.bookmarkedWeatherDataObjects?.firstIndex(where: { $0.locationId == unwrappedPreferredBookmarkWeatherData.locationId }) {
-                self.bookmarkedWeatherDataObjects?[bookmarkIdx] = unwrappedPreferredBookmarkWeatherData
+            if let bookmarkIndex = self.bookmarkedWeatherDataObjects?.firstIndex(where: { $0.locationId == unwrappedPreferredBookmarkWeatherData.locationId }) {
+                self.bookmarkedWeatherDataObjects?[bookmarkIndex] = unwrappedPreferredBookmarkWeatherData
             } else {
                 self.bookmarkedWeatherDataObjects?.append(unwrappedPreferredBookmarkWeatherData)
             }

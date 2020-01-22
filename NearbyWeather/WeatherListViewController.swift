@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import RainyRefreshControl
 
 enum ListType: CaseIterable {
   case bookmarked
@@ -22,7 +21,7 @@ class WeatherListViewController: UIViewController {
   
   // MARK: - Properties
   
-  private var refreshControl = RainyRefreshControl()
+  private var refreshControl = UIRefreshControl()
   
   private var listType: ListType = .bookmarked
   

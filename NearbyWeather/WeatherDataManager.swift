@@ -39,6 +39,11 @@ struct WeatherDataManagerStoredContentsWrapper: Codable {
     var nearbyWeatherDataObject: BulkWeatherDataContainer?
 }
 
+enum UpdateStatus {
+    case success
+    case failure
+}
+
 class WeatherDataManager {
     
     // MARK: - Public Assets
@@ -72,6 +77,10 @@ class WeatherDataManager {
             sortBookmarkedLocationWeatherData()
             WeatherDataManager.storeService()
         }
+    }
+    public var preferredBookmarkData: WeatherInformationDTO? {
+        let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value
+        return WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first(where: { $0.locationId == preferredBookmarkId })?.weatherInformationDTO
     }
     public private(set) var bookmarkedWeatherDataObjects: [WeatherDataContainer]?
     public private(set) var nearbyWeatherDataObject: BulkWeatherDataContainer?
@@ -108,18 +117,18 @@ class WeatherDataManager {
         shared = WeatherDataManager.loadService() ?? WeatherDataManager(bookmarkedLocations: [kDefaultBookmarkedLocation])
     }
     
-    public func update(withCompletionHandler completionHandler: (() -> ())?) {
+    public func update(withCompletionHandler completionHandler: ((UpdateStatus) -> ())?) {
         let fetchWeatherDataBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.fetchWeatherDataQueue", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
         
         guard NetworkingService.shared.reachabilityStatus == .connected else {
-            completionHandler?()
+            completionHandler?(.failure)
             return
         }
         
         fetchWeatherDataBackgroundQueue.async {
             let dispatchGroup = DispatchGroup()
             
-            var bookmarkednWeatherDataObjects = [WeatherDataContainer]()
+            var bookmarkedWeatherDataObjects = [WeatherDataContainer]()
             var nearbyWeatherDataObject: BulkWeatherDataContainer?
             
             if self.bookmarkedLocations.isEmpty {
@@ -128,7 +137,7 @@ class WeatherDataManager {
                 self.bookmarkedLocations.forEach { location in
                     dispatchGroup.enter()
                     NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
-                        bookmarkednWeatherDataObjects.append(weatherDataContainer)
+                        bookmarkedWeatherDataObjects.append(weatherDataContainer)
                         dispatchGroup.leave()
                     })
                 }
@@ -142,18 +151,18 @@ class WeatherDataManager {
             
             let waitResult = dispatchGroup.wait(timeout: .now() + 60.0)
             if waitResult == .timedOut {
-                completionHandler?() // todo: notify user
+                completionHandler?(.failure) // todo: notify user
                 return
             }
             
             // do not publish refresh if not data was loaded
-            if bookmarkednWeatherDataObjects.count == 0 && nearbyWeatherDataObject == nil {
+            if bookmarkedWeatherDataObjects.count == 0 && nearbyWeatherDataObject == nil {
                 return
             }
             
             // only override previous record if there is any new data
-            if bookmarkednWeatherDataObjects.count != 0 {
-                self.bookmarkedWeatherDataObjects = bookmarkednWeatherDataObjects
+            if bookmarkedWeatherDataObjects.count != 0 {
+                self.bookmarkedWeatherDataObjects = bookmarkedWeatherDataObjects
                 self.sortBookmarkedLocationWeatherData()
             }
             if nearbyWeatherDataObject != nil {
@@ -165,7 +174,54 @@ class WeatherDataManager {
             DispatchQueue.main.async {
                 UserDefaults.standard.set(Date(), forKey: kWeatherDataLastRefreshDateKey)
                 NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
-                completionHandler?()
+                BadgeService.shared.updateBadge()
+              completionHandler?(.success)
+            }
+        }
+    }
+    
+    public func updatePreferredBookmark(withCompletionHandler completionHandler: @escaping ((UpdateStatus) -> ())) {
+        guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
+            NetworkingService.shared.reachabilityStatus == .connected else {
+                completionHandler(.failure)
+                return
+        }
+        
+        let fetchWeatherDataBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.fetchWeatherDataQueue", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
+        
+        fetchWeatherDataBackgroundQueue.async {
+            let dispatchGroup = DispatchGroup()
+            
+            var preferredBookmarkWeatherData: WeatherDataContainer?
+            dispatchGroup.enter()
+            NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: preferredBookmarkId, completionHandler: { weatherDataContainer in
+                preferredBookmarkWeatherData = weatherDataContainer
+                dispatchGroup.leave()
+            })
+            
+            let waitResult = dispatchGroup.wait(timeout: .now() + 60.0)
+            if waitResult == .timedOut {
+                completionHandler(.failure)
+                return
+            }
+            
+            guard let unwrappedPreferredBookmarkWeatherData = preferredBookmarkWeatherData else {
+                completionHandler(.failure)
+                return
+            }
+            
+            if let bookmarkIndex = self.bookmarkedWeatherDataObjects?.firstIndex(where: { $0.locationId == unwrappedPreferredBookmarkWeatherData.locationId }) {
+                self.bookmarkedWeatherDataObjects?[bookmarkIndex] = unwrappedPreferredBookmarkWeatherData
+            } else {
+                self.bookmarkedWeatherDataObjects?.append(unwrappedPreferredBookmarkWeatherData)
+            }
+            self.sortBookmarkedLocationWeatherData()
+            
+            WeatherDataManager.storeService()
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
+                BadgeService.shared.updateBadge()
+                completionHandler(.success)
             }
         }
     }
@@ -184,7 +240,6 @@ class WeatherDataManager {
         }
         return nil
     }
-    
     
     // MARK: - Private Helper Methods
     

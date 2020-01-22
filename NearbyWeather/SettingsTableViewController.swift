@@ -47,22 +47,27 @@ class SettingsTableViewController: UITableViewController {
             navigationItem.removeTextFromBackBarButton()
             navigationController?.pushViewController(destinationViewController, animated: true)
         case 3:
-            guard indexPath.row == 0 else {
+            if indexPath.row == 0 {
+                guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
+                    break
+                }
+                let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+                let destinationViewController = storyboard.instantiateViewController(withIdentifier: "WeatherLocationManagementTableViewController") as! WeatherLocationManagementTableViewController
+            
+                navigationItem.removeTextFromBackBarButton()
+                navigationController?.pushViewController(destinationViewController, animated: true)
+            } else if indexPath.row == 1 {
                 let storyboard = UIStoryboard(name: "Settings", bundle: nil)
                 let destinationViewController = storyboard.instantiateViewController(withIdentifier: "OWMCityFilterTableViewController") as! WeatherLocationSelectionTableViewController
                 
                 navigationItem.removeTextFromBackBarButton()
                 navigationController?.pushViewController(destinationViewController, animated: true)
-                break
+            } else if indexPath.row == 2 {
+                var choices = [PreferredBookmark(value: .none)]
+                let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map { PreferredBookmark(value: $0.identifier) }
+                choices.append(contentsOf: bookmarksChoices)
+                triggerOptionsAlert(forOptions: choices, title: R.string.localizable.preferred_bookmark())
             }
-            guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
-                break
-            }
-            let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-            let destinationViewController = storyboard.instantiateViewController(withIdentifier: "WeatherLocationManagementTableViewController") as! WeatherLocationManagementTableViewController
-            
-            navigationItem.removeTextFromBackBarButton()
-            navigationController?.pushViewController(destinationViewController, animated: true)
         case 4:
             if indexPath.row == 0 {
                 triggerOptionsAlert(forOptions: amountOfResultsOptions, title: R.string.localizable.amount_of_results())
@@ -110,7 +115,7 @@ class SettingsTableViewController: UITableViewController {
         case 2:
             return 1
         case 3:
-            return 2
+            return 4
         case 4:
             return 4
         default:
@@ -162,11 +167,45 @@ class SettingsTableViewController: UITableViewController {
                 }
                 cell.selectionLabel.text = cellLabelTitle
                 return cell
+            } else if indexPath.row == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+                cell.contentLabel.text = R.string.localizable.add_location()
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            } else if indexPath.row == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+                cell.contentLabel.text = R.string.localizable.preferred_bookmark()
+                cell.selectionLabel.text = nil
+                guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
+                    WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
+                        PreferencesManager.shared.preferredBookmark = PreferredBookmark(value: nil)
+                        return cell
+                }
+                cell.selectionLabel.text = PreferencesManager.shared.preferredBookmark.stringValue
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ToggleCell", for: indexPath) as! ToggleCell
+                cell.contentLabel.text = R.string.localizable.show_temp_on_icon()
+                BadgeService.shared.isAppIconBadgeNotificationEnabled { enabled in
+                    cell.toggle.isOn = enabled
+                }
+                cell.toggleSwitchHandler = { [unowned self] sender in
+                    guard sender.isOn else {
+                        BadgeService.shared.setTemperatureOnAppIconEnabled(false)
+                        return
+                    }
+                    
+                    PermissionsManager.shared.requestNotificationPermissions() { [weak self] approved in
+                        guard approved else {
+                            sender.setOn(false, animated: true)
+                            self?.showNotificationsSettingsAlert()
+                            return
+                        }
+                        BadgeService.shared.setTemperatureOnAppIconEnabled(true)
+                    }
+                }
+                return cell
             }
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-            cell.contentLabel.text = R.string.localizable.add_location()
-            cell.accessoryType = .disclosureIndicator
-            return cell
         case 4:
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
@@ -230,6 +269,10 @@ class SettingsTableViewController: UITableViewController {
         options.forEach { option in
             var actionIsSelected = false
             switch option {
+            case is PreferredBookmark:
+                if PreferencesManager.shared.preferredBookmark.value == (option as! PreferredBookmark).value {
+                    actionIsSelected = true
+                }
             case is AmountOfResults:
                 if PreferencesManager.shared.amountOfResults.value == (option as! AmountOfResults).value {
                     actionIsSelected = true
@@ -256,6 +299,8 @@ class SettingsTableViewController: UITableViewController {
             
             let action = UIAlertAction(title: option.stringValue, style: .default, handler: { paramAction in
                 switch option {
+                case is PreferredBookmark:
+                    PreferencesManager.shared.preferredBookmark = option as! PreferredBookmark
                 case is AmountOfResults:
                     PreferencesManager.shared.amountOfResults = option as! AmountOfResults
                 case is SortingOrientation:
@@ -278,5 +323,27 @@ class SettingsTableViewController: UITableViewController {
         optionsAlert.addAction(cancelAction)
         
         present(optionsAlert, animated: true, completion: nil)
+    }
+    
+    private func showNotificationsSettingsAlert() {
+        let alertController = UIAlertController(title: R.string.localizable.notifications_disabled(), message: R.string.localizable.enable_notifications_alert_text(), preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: R.string.localizable.settings(), style: .default) { (_) -> Void in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString),
+                UIApplication.shared.canOpenURL(settingsUrl) else {
+                    return
+            }
+            
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(settingsUrl)
+            }
+        }
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel)
+        
+        alertController.addAction(settingsAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

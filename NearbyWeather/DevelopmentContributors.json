@@ -25,5 +25,10 @@
 		"lastName": "Lapersonne",
 		"contributionDescription": "French Localization, Various Cleanups",
 		"urlString": "https://github.com/pylapp"
-	}]
+	}, {
+    "firstName": "Lukáš",
+    "lastName": "Prokein",
+    "contributionDescription": "Temperature-Badge on App Icon",
+    "urlString": "https://github.com/lprokein"
+  }]
 }

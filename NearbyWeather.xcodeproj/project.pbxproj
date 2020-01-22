@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86830392217BBA5D00B7122E /* BadgeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86830391217BBA5D00B7122E /* BadgeService.swift */; };
+		86830394217BBAE400B7122E /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86830393217BBAE400B7122E /* PermissionsManager.swift */; };
 		3657F3FCFEDFC03E349CDCE5 /* Pods_NearbyWeatherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B13460D3F2EE7FED52F0499 /* Pods_NearbyWeatherTests.framework */; };
 		E99F89364168E7FA13EA4996 /* Pods_NearbyWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BFD104B007215674D8E7D /* Pods_NearbyWeather.framework */; };
 		F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */; };
@@ -85,6 +87,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+    86830391217BBA5D00B7122E /* BadgeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeService.swift; sourceTree = "<group>"; };
+		86830393217BBAE400B7122E /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
+		86830395217BC28E00B7122E /* NearbyWeather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NearbyWeather.entitlements; sourceTree = "<group>"; };
 		0DE12178C1263859459E30CA /* Pods-NearbyWeatherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeatherTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearbyWeatherTests/Pods-NearbyWeatherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		105BFD104B007215674D8E7D /* Pods_NearbyWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearbyWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B13460D3F2EE7FED52F0499 /* Pods_NearbyWeatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearbyWeatherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,6 +231,7 @@
 		F204B7791DF2EFA3000F4371 /* NearbyWeather */ = {
 			isa = PBXGroup;
 			children = (
+				86830395217BC28E00B7122E /* NearbyWeather.entitlements */,
 				F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */,
 				F204B7861DF2EFA3000F4371 /* Info.plist */,
 				F26A6D5C20FB6E520033BC49 /* External */,
@@ -265,6 +271,7 @@
 				F2B8E9FE1EA11B8100704E90 /* Data Transfer Objects */,
 				F28CA53E2026285000209397 /* UserDefaultsKeys.swift */,
 				F274FC36202D005800049144 /* NotificationCenterKeys.swift */,
+				86830393217BBAE400B7122E /* PermissionsManager.swift */,
 			);
 			name = Miscellaneous;
 			sourceTree = "<group>";
@@ -330,6 +337,7 @@
 				F2D2B1DF2004171500C810EF /* DataStorageService.swift */,
 				F2A5CAA52005762A0071BFFB /* ConversionService.swift */,
 				F274FC38202F9A9300049144 /* NetworkingService.swift */,
+				86830391217BBA5D00B7122E /* BadgeService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -484,6 +492,14 @@
 						DevelopmentTeam = VDPU24L36V;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					F204B78A1DF2EFA3000F4371 = {
 						CreatedOnToolsVersion = 8.1;
@@ -703,6 +719,8 @@
 				F26699581E9AD0F100498F99 /* WeatherDataManager.swift in Sources */,
 				F2FE3EFF20027EB400EBC429 /* WeatherStationDTO.swift in Sources */,
 				F22F99552034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift in Sources */,
+				86830392217BBA5D00B7122E /* BadgeService.swift in Sources */,
+				86830394217BBAE400B7122E /* PermissionsManager.swift in Sources */,
 				F2A5CAA62005762A0071BFFB /* ConversionService.swift in Sources */,
 				F2FE3F01200285B100EBC429 /* WeatherLocationService.swift in Sources */,
 				F266995A1E9ADBC300498F99 /* LocationService.swift in Sources */,
@@ -936,6 +954,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = VDPU24L36V;
+				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -951,6 +970,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = VDPU24L36V;
+				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

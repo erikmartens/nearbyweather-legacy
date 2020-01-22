@@ -8,8 +8,7 @@ PODS:
   - R.swift (5.0.3):
     - R.swift.Library (~> 5.0.0)
   - R.swift.Library (5.0.1)
-  - RainyRefreshControl (0.4.0)
-  - TextFieldCounter (1.0.2)
+  - TextFieldCounter (1.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.8.2)
@@ -17,17 +16,16 @@ DEPENDENCIES:
   - FMDB (~> 2.7.5)
   - PKHUD (~> 5.3.0)
   - R.swift (= 5.0.3)
-  - RainyRefreshControl (~> 0.4.0)
-  - TextFieldCounter (~> 1.0.2)
+  - TextFieldCounter (~> 1.1.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - FMDB
     - PKHUD
     - R.swift
     - R.swift.Library
-    - RainyRefreshControl
+  trunk:
     - TextFieldCounter
 
 EXTERNAL SOURCES:
@@ -48,9 +46,8 @@ SPEC CHECKSUMS:
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   R.swift: f5a87643b91ea569d23d6afb3eee9c743edde239
   R.swift.Library: cfe85d569d9bae6cb262922db130e7c3a7a5fad1
-  RainyRefreshControl: de2236ad2f46d6cfb22bf029e0067b48cdcb2925
-  TextFieldCounter: b2abbcc1181fe7d5194acb2a0fb6becee841c6e0
+  TextFieldCounter: 0f20630c8fe6f02b657bd883674829edfc40d845
 
-PODFILE CHECKSUM: 7b8c6785c253a747c3b9a7afe7774a2bb2d9dca7
+PODFILE CHECKSUM: 06728e40cb2016627212d897afce5e9364ff8d68
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.3

@@ -10,53 +10,53 @@ import Foundation
 import FMDB
 
 struct WeatherStationDTO: Codable, Equatable {
-    
-    static func ==(lhs: WeatherStationDTO, rhs: WeatherStationDTO) -> Bool {
-        return lhs.identifier == rhs.identifier
+  
+  static func ==(lhs: WeatherStationDTO, rhs: WeatherStationDTO) -> Bool {
+    return lhs.identifier == rhs.identifier
+  }
+  
+  var identifier: Int
+  var name: String
+  var country: String
+  var coordinates: Coordinates
+  
+  enum CodingKeys: String, CodingKey {
+    case identifier = "id"
+    case name
+    case country
+    case coordinates = "coord"
+  }
+  
+  init(identifier: Int, name: String, country: String, coordinates: Coordinates) {
+    self.identifier = identifier
+    self.name = name
+    self.country = country
+    self.coordinates = coordinates
+  }
+  
+  init?(from resultSet: FMResultSet) {
+    guard let id = resultSet.string(forColumn: "id"),
+      let identifier = Int(id),
+      let name = resultSet.string(forColumn: "name"),
+      let country = resultSet.string(forColumn: "country") else {
+        return nil
     }
+    let latitude = resultSet.double(forColumn: "latitude")
+    let longitude = resultSet.double(forColumn: "longitude")
     
-    var identifier: Int
-    var name: String
-    var country: String
-    var coordinates: Coordinates
-
-    enum CodingKeys: String, CodingKey {
-        case identifier = "id"
-        case name
-        case country
-        case coordinates = "coord"
-    }
-    
-    init(identifier: Int, name: String, country: String, coordinates: Coordinates) {
-        self.identifier = identifier
-        self.name = name
-        self.country = country
-        self.coordinates = coordinates
-    }
-    
-    init?(from resultSet: FMResultSet) {
-        guard let id = resultSet.string(forColumn: "id"),
-            let identifier = Int(id),
-            let name = resultSet.string(forColumn: "name"),
-            let country = resultSet.string(forColumn: "country") else {
-                return nil
-        }
-        let latitude = resultSet.double(forColumn: "latitude")
-        let longitude = resultSet.double(forColumn: "longitude")
-        
-        self.identifier = identifier
-        self.name = name
-        self.country = country
-        self.coordinates = Coordinates(latitude: latitude, longitude: longitude)
-    }
+    self.identifier = identifier
+    self.name = name
+    self.country = country
+    self.coordinates = Coordinates(latitude: latitude, longitude: longitude)
+  }
 }
 
 struct Coordinates: Codable {
-    var latitude: Double
-    var longitude: Double
-    
-    enum CodingKeys: String, CodingKey {
-        case latitude = "lat"
-        case longitude = "lon"
-    }
+  var latitude: Double
+  var longitude: Double
+  
+  enum CodingKeys: String, CodingKey {
+    case latitude = "lat"
+    case longitude = "lon"
+  }
 }

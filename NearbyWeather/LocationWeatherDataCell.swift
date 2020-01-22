@@ -9,5 +9,5 @@
 import UIKit
 
 class LocationWeatherDataCell: UITableViewCell {
-    @IBOutlet weak var contentLabel: UILabel!
+  @IBOutlet weak var contentLabel: UILabel!
 }

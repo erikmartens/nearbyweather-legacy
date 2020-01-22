@@ -9,12 +9,12 @@
 import Foundation
 
 struct DevelopmentContributorArrayWrapper: Codable {
-    var elements: [DevelopmentContributorDTO]
+  var elements: [DevelopmentContributorDTO]
 }
 
 struct DevelopmentContributorDTO: Codable {
-    var firstName: String
-    var lastName: String
-    var contributionDescription: String?
-    var urlString: String
+  var firstName: String
+  var lastName: String
+  var contributionDescription: String?
+  var urlString: String
 }

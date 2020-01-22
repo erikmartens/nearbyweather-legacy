@@ -9,10 +9,10 @@
 import UIKit
 
 protocol WelcomeNavigationDelegate: class {
-    func dismissSplashScreen()
+  func dismissSplashScreen()
 }
 
 class WelcomeNavigationController: UINavigationController {
-    
-    weak var welcomeNavigationDelegate: WelcomeNavigationDelegate?
+  
+  weak var welcomeNavigationDelegate: WelcomeNavigationDelegate?
 }

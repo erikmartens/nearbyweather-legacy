@@ -21,3 +21,15 @@ end
 target 'NearbyWeatherTests' do
   nearbyweather_pods
 end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      next if config.name.downcase.include? 'debug'
+      config.build_settings['ENABLE_BITCODE'] = 'YES'
+      cflags = config.build_settings['OTHER_CFLAGS'] || ['$(inherited)']
+      cflags << '-fembed-bitcode'
+      config.build_settings['OTHER_CFLAGS'] = cflags
+    end
+  end
+end

@@ -24,12 +24,10 @@ class NetworkingService {
   
   public static var shared: NetworkingService!
   
-  
   // MARK: - Properties
   
   private let reachabilityManager: NetworkReachabilityManager?
   public private(set) var reachabilityStatus: ReachabilityStatus
-  
   
   // MARK: - Initialization
   
@@ -43,7 +41,6 @@ class NetworkingService {
   deinit {
     reachabilityManager?.stopListening()
   }
-  
   
   // MARK: - Private Methods
   
@@ -59,14 +56,13 @@ class NetworkingService {
     reachabilityManager?.startListening()
   }
   
-  
   // MARK: - Public Methods
   
   public static func instantiateSharedInstance() {
     shared = NetworkingService()
   }
   
-  public func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> ())) {
+  public func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
     let session = URLSession.shared
     
     let localeTag = NSLocalizedString("locale_tag", comment: "")
@@ -78,7 +74,7 @@ class NetworkingService {
     
     let request = URLRequest(url: requestURL)
     let dataTask = session.dataTask(with: request, completionHandler: { data, response, error in
-      guard let receivedData = data, let _ = response, error == nil else {
+      guard let receivedData = data, response != nil, error == nil else {
         let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .httpError), httpStatusCode: (response as? HTTPURLResponse)?.statusCode)
         return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
       }
@@ -101,7 +97,7 @@ class NetworkingService {
     }
     let request = URLRequest(url: requestURL)
     let dataTask = session.dataTask(with: request, completionHandler: { data, response, error in
-      guard let receivedData = data, let _ = response, error == nil else {
+      guard let receivedData = data, response != nil, error == nil else {
         let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .httpError), httpStatusCode: (response as? HTTPURLResponse)?.statusCode)
         return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
       }
@@ -109,7 +105,6 @@ class NetworkingService {
     })
     dataTask.resume()
   }
-  
   
   // MARK: - Private Helpers
   

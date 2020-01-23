@@ -18,14 +18,12 @@ class LocationService: CLLocationManager, CLLocationManagerDelegate {
   public var currentLongitude: Double?
   public var authorizationStatus: CLAuthorizationStatus
   
-  
   // MARK: - Intialization
   
   private override init() {
     authorizationStatus = CLLocationManager.authorizationStatus()
     super.init()
   }
-  
   
   // MARK: - Public Methods
   
@@ -48,7 +46,6 @@ class LocationService: CLLocationManager, CLLocationManagerDelegate {
     }
     return nil
   }
-  
   
   // MARK: - Delegate Methods
   

@@ -56,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     tabbar?.viewControllers = [weatherListNav!, mapNav!, settingsNav!]
     
-    
     if UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey) == nil {
       showSplashScreenIfNeeded()
     } else {

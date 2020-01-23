@@ -15,7 +15,6 @@ import CoreLocation
  * This DTO therefore does not exactly mirror the server response
  */
 
-
 public struct WeatherInformationArrayWrapper: Codable {
   var list: [WeatherInformationDTO]
   

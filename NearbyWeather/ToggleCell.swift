@@ -18,7 +18,7 @@ class ToggleCell: UITableViewCell {
     toggleSwitchHandler = nil
   }
   
-  var toggleSwitchHandler: ((UISwitch)->())?
+  var toggleSwitchHandler: ((UISwitch) -> Void)?
   
   @IBAction func didToggleSwitch(_ sender: UISwitch) {
     toggleSwitchHandler?(sender)

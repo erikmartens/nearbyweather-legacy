@@ -11,7 +11,7 @@ import FMDB
 
 struct WeatherStationDTO: Codable, Equatable {
   
-  static func ==(lhs: WeatherStationDTO, rhs: WeatherStationDTO) -> Bool {
+  static func == (lhs: WeatherStationDTO, rhs: WeatherStationDTO) -> Bool {
     return lhs.identifier == rhs.identifier
   }
   

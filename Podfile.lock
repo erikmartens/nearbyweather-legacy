@@ -8,6 +8,7 @@ PODS:
   - R.swift (5.0.3):
     - R.swift.Library (~> 5.0.0)
   - R.swift.Library (5.0.1)
+  - SwiftLint (0.38.2)
   - TextFieldCounter (1.1.0)
 
 DEPENDENCIES:
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - FMDB (~> 2.7.5)
   - PKHUD (~> 5.3.0)
   - R.swift (= 5.0.3)
+  - SwiftLint (~> 0.38.2)
   - TextFieldCounter (~> 1.1.0)
 
 SPEC REPOS:
@@ -26,6 +28,7 @@ SPEC REPOS:
     - R.swift
     - R.swift.Library
   trunk:
+    - SwiftLint
     - TextFieldCounter
 
 EXTERNAL SOURCES:
@@ -46,8 +49,9 @@ SPEC CHECKSUMS:
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   R.swift: f5a87643b91ea569d23d6afb3eee9c743edde239
   R.swift.Library: cfe85d569d9bae6cb262922db130e7c3a7a5fad1
+  SwiftLint: 8f5d2f903e1c9bcbc832fd16771e80a263ac6cbb
   TextFieldCounter: 0f20630c8fe6f02b657bd883674829edfc40d845
 
-PODFILE CHECKSUM: 06728e40cb2016627212d897afce5e9364ff8d68
+PODFILE CHECKSUM: 87adc7134df8375ca5abbe458a594a1c5a41a95d
 
 COCOAPODS: 1.8.3

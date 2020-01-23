@@ -195,7 +195,7 @@ class SettingsTableViewController: UITableViewController {
             return
           }
           
-          PermissionsManager.shared.requestNotificationPermissions() { [weak self] approved in
+          PermissionsManager.shared.requestNotificationPermissions { [weak self] approved in
             guard approved else {
               sender.setOn(false, animated: true)
               self?.showNotificationsSettingsAlert()
@@ -237,7 +237,6 @@ class SettingsTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return UITableView.automaticDimension
   }
-  
   
   // MARK: - Private Helpers
   
@@ -297,7 +296,7 @@ class SettingsTableViewController: UITableViewController {
         return
       }
       
-      let action = UIAlertAction(title: option.stringValue, style: .default, handler: { paramAction in
+      let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
         switch option {
         case is PreferredBookmark:
           PreferencesManager.shared.preferredBookmark = option as! PreferredBookmark

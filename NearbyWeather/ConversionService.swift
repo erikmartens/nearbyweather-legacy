@@ -77,29 +77,29 @@ class ConversionService {
   public static func temperatureDescriptor(forTemperatureUnit temperatureUnit: TemperatureUnit, fromRawTemperature rawTemperature: Double) -> String {
     switch temperatureUnit.value {
     case .celsius:
-      return "\(String(format:"%.02f", rawTemperature - 273.15))°C"
+      return "\(String(format: "%.02f", rawTemperature - 273.15))°C"
     case . fahrenheit:
-      return "\(String(format:"%.02f", rawTemperature * (9/5) - 459.67))°F"
+      return "\(String(format: "%.02f", rawTemperature * (9/5) - 459.67))°F"
     case .kelvin:
-      return "\(String(format:"%.02f", rawTemperature))°K"
+      return "\(String(format: "%.02f", rawTemperature))°K"
     }
   }
   
   public static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forWindspeed windspeed: Double) -> String {
     switch distanceSpeedUnit.value {
     case .kilometres:
-      return "\(String(format:"%.02f", windspeed)) \(R.string.localizable.kph())"
+      return "\(String(format: "%.02f", windspeed)) \(R.string.localizable.kph())"
     case .miles:
-      return "\(String(format:"%.02f", windspeed / 1.609344)) \(R.string.localizable.mph())"
+      return "\(String(format: "%.02f", windspeed / 1.609344)) \(R.string.localizable.mph())"
     }
   }
   
   public static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forDistanceInMetres distance: Double) -> String {
     switch distanceSpeedUnit.value {
     case .kilometres:
-      return "\(String(format:"%.02f", distance/1000)) \(R.string.localizable.km())"
+      return "\(String(format: "%.02f", distance/1000)) \(R.string.localizable.km())"
     case .miles:
-      return "\(String(format:"%.02f", distance/1609.344)) \(R.string.localizable.mi())"
+      return "\(String(format: "%.02f", distance/1609.344)) \(R.string.localizable.mi())"
     }
   }
   

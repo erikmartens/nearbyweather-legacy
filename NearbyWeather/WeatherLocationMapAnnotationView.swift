@@ -45,8 +45,7 @@ class WeatherLocationMapAnnotationView: MKAnnotationView {
   }
   
   private var gestureRecognizer = UITapGestureRecognizer()
-  private var tapHandler: ((UITapGestureRecognizer)->())?
-  
+  private var tapHandler: ((UITapGestureRecognizer) -> Void)?
   
   // MARK: - Overrides
   
@@ -60,16 +59,15 @@ class WeatherLocationMapAnnotationView: MKAnnotationView {
     removeGestureRecognizer(gestureRecognizer)
   }
   
-  override func draw(_ rect: CGRect){
+  override func draw(_ rect: CGRect) {
     super.draw(rect)
     drawAnnotationView()
   }
   
-  
   // MARK: - Public Functions
   
   // gets called before draw
-  func configure(withTitle title: String, subtitle: String, fillColor: UIColor, tapHandler: ((UITapGestureRecognizer)->())?) {
+  func configure(withTitle title: String, subtitle: String, fillColor: UIColor, tapHandler: ((UITapGestureRecognizer) -> Void)?) {
     self.title = title
     self.subtitle = subtitle
     self.fillColor = fillColor
@@ -82,7 +80,6 @@ class WeatherLocationMapAnnotationView: MKAnnotationView {
     
     backgroundColor = .clear
   }
-  
   
   // MARK: - Private Helpers
   
@@ -99,7 +96,6 @@ class WeatherLocationMapAnnotationView: MKAnnotationView {
     circleLayer.strokeColor = UIColor.white.cgColor
     circleLayer.lineWidth = kBorderWidth/2
     layer.addSublayer(circleLayer)
-    
     
     let speechBubbleLayer = CAShapeLayer()
     speechBubbleLayer.path = bubblePath(forContentSize: CGSize(width: kWidth, height: kHeight)).cgPath

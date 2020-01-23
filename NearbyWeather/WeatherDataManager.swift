@@ -10,7 +10,6 @@ import Foundation
 import MapKit
 import Alamofire
 
-
 /// This value type represents single location data.
 /// Each WeatherInformationDTO is fetched indvidually and therefore needs its own
 /// associated ErrorDataDTO. This is because each download may fail on it's own
@@ -31,7 +30,7 @@ struct BulkWeatherDataContainer: Codable {
 
 let kDefaultBookmarkedLocation = WeatherStationDTO(identifier: 5341145, name: "Cupertino", country: "US", coordinates: Coordinates(latitude: 37.323002, longitude: -122.032181))
 
-fileprivate let kWeatherDataManagerStoredContentsFileName = "WeatherDataManagerStoredContents"
+private let kWeatherDataManagerStoredContentsFileName = "WeatherDataManagerStoredContents"
 
 struct WeatherDataManagerStoredContentsWrapper: Codable {
   var bookmarkedLocations: [WeatherStationDTO]
@@ -68,7 +67,6 @@ class WeatherDataManager {
       || nearbyWeatherDataObject?.errorDataDTO?.httpStatusCode == 401
   }
   
-  
   // MARK: - Properties
   
   public var bookmarkedLocations: [WeatherStationDTO] {
@@ -93,10 +91,10 @@ class WeatherDataManager {
   private init(bookmarkedLocations: [WeatherStationDTO]) {
     self.bookmarkedLocations = bookmarkedLocations
     
-    locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [unowned self] notification in
+    locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [unowned self] _ in
       self.discardLocationBasedWeatherDataIfNeeded()
     })
-    sortingOrientationChangedObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: kSortingOrientationPreferenceChanged), object: nil, queue: nil, using: { [unowned self] notification in
+    sortingOrientationChangedObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: kSortingOrientationPreferenceChanged), object: nil, queue: nil, using: { [unowned self] _ in
       self.sortNearbyLocationWeatherData()
     })
   }
@@ -110,14 +108,13 @@ class WeatherDataManager {
     }
   }
   
-  
   // MARK: - Public Properties & Methods
   
   public static func instantiateSharedInstance() {
     shared = WeatherDataManager.loadService() ?? WeatherDataManager(bookmarkedLocations: [kDefaultBookmarkedLocation])
   }
   
-  public func update(withCompletionHandler completionHandler: ((UpdateStatus) -> ())?) {
+  public func update(withCompletionHandler completionHandler: ((UpdateStatus) -> Void)?) {
     let fetchWeatherDataBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.fetchWeatherDataQueue", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
     
     guard NetworkingService.shared.reachabilityStatus == .connected else {
@@ -156,12 +153,12 @@ class WeatherDataManager {
       }
       
       // do not publish refresh if not data was loaded
-      if bookmarkedWeatherDataObjects.count == 0 && nearbyWeatherDataObject == nil {
+      if bookmarkedWeatherDataObjects.isEmpty && nearbyWeatherDataObject == nil {
         return
       }
       
       // only override previous record if there is any new data
-      if bookmarkedWeatherDataObjects.count != 0 {
+      if !bookmarkedWeatherDataObjects.isEmpty {
         self.bookmarkedWeatherDataObjects = bookmarkedWeatherDataObjects
         self.sortBookmarkedLocationWeatherData()
       }
@@ -180,7 +177,7 @@ class WeatherDataManager {
     }
   }
   
-  public func updatePreferredBookmark(withCompletionHandler completionHandler: @escaping ((UpdateStatus) -> ())) {
+  public func updatePreferredBookmark(withCompletionHandler completionHandler: @escaping ((UpdateStatus) -> Void)) {
     guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
       NetworkingService.shared.reachabilityStatus == .connected else {
         completionHandler(.failure)

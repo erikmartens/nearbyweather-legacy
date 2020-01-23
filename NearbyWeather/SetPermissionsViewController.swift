@@ -14,7 +14,6 @@ class SetPermissionsViewController: UIViewController {
   
   private var timer: Timer?
   
-  
   // MARK: - Outlets
   
   @IBOutlet weak var bubbleView: UIView!
@@ -22,7 +21,6 @@ class SetPermissionsViewController: UIViewController {
   
   @IBOutlet weak var descriptionLabel: UILabel!
   @IBOutlet weak var askPermissionsButton: UIButton!
-  
   
   // MARK: - Override Functions
   
@@ -56,7 +54,6 @@ class SetPermissionsViewController: UIViewController {
     NotificationCenter.default.removeObserver(self)
   }
   
-  
   // MARK: - Helper Functions
   
   func configure() {
@@ -87,11 +84,9 @@ class SetPermissionsViewController: UIViewController {
     warningImageView.animatePulse(withAnimationDelegate: self)
   }
   
-  // TODO:
   @objc func launchApp() {
     (navigationController as? WelcomeNavigationController)?.welcomeNavigationDelegate?.dismissSplashScreen()
   }
-  
   
   // MARK: - Button Interaction
   

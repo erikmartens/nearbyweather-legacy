@@ -25,7 +25,6 @@ class WeatherListViewController: UIViewController {
   
   private var listType: ListType = .bookmarked
   
-  
   // MARK: - Outlets
   
   @IBOutlet weak var tableView: UITableView!
@@ -38,7 +37,6 @@ class WeatherListViewController: UIViewController {
   @IBOutlet weak var emptyListDescriptionLabel: UILabel!
   
   @IBOutlet weak var reloadButton: UIButton!
-  
   
   // MARK: - ViewController Lifecycle
   
@@ -79,7 +77,6 @@ class WeatherListViewController: UIViewController {
     NotificationCenter.default.removeObserver(self)
   }
   
-  
   // MARK: - Private Helpers
   
   private func configure() {
@@ -99,7 +96,7 @@ class WeatherListViewController: UIViewController {
     emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData && !WeatherDataManager.shared.bookmarkedLocations.isEmpty
     
     separatoLineViewHeightConstraint.constant = 1/UIScreen.main.scale
-  }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+  }
   
   @objc private func reconfigureOnWeatherDataServiceDidUpdate() {
     configureLastRefreshDate()
@@ -164,7 +161,6 @@ class WeatherListViewController: UIViewController {
   @objc private func reloadTableView(_ notification: Notification) {
     tableView.reloadData()
   }
-  
   
   // MARK: - Button Interaction
   

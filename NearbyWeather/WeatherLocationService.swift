@@ -15,13 +15,11 @@ class WeatherLocationService {
   
   public static var shared: WeatherLocationService!
   
-  
   // MARK: - Private Assets
   
   private let openWeatherMapCityServiceBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.openWeatherMapCityService", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
   
   fileprivate let databaseQueue: FMDatabaseQueue
-  
   
   // MARK: - Initialization
   
@@ -36,9 +34,9 @@ class WeatherLocationService {
     shared = WeatherLocationService()
   }
   
-  public func locations(forSearchString searchString: String, completionHandler: @escaping (([WeatherStationDTO]?)->())) {
+  public func locations(forSearchString searchString: String, completionHandler: @escaping (([WeatherStationDTO]?) -> Void)) {
     
-    if searchString.count == 0 || searchString == "" { return completionHandler(nil) }
+    if searchString.isEmpty || searchString == "" { return completionHandler(nil) }
     
     openWeatherMapCityServiceBackgroundQueue.async {
       self.databaseQueue.inDatabase { database in

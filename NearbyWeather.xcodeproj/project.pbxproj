@@ -278,9 +278,7 @@
 				F28CA5422027AE9B00209397 /* Custom Objects */,
 				F28CE9611F96B202008319C4 /* Extensions */,
 				F2B8E9FE1EA11B8100704E90 /* Data Transfer Objects */,
-				F28CA53E2026285000209397 /* UserDefaultsKeys.swift */,
-				F274FC36202D005800049144 /* NotificationCenterKeys.swift */,
-				86830393217BBAE400B7122E /* PermissionsManager.swift */,
+				F2E7237523DA5120001189F5 /* Keys */,
 			);
 			name = Miscellaneous;
 			sourceTree = "<group>";
@@ -347,6 +345,7 @@
 				F2A5CAA52005762A0071BFFB /* ConversionService.swift */,
 				F274FC38202F9A9300049144 /* NetworkingService.swift */,
 				86830391217BBA5D00B7122E /* BadgeService.swift */,
+				86830393217BBAE400B7122E /* PermissionsManager.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -401,6 +400,15 @@
 				F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */,
 			);
 			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		F2E7237523DA5120001189F5 /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				F28CA53E2026285000209397 /* UserDefaultsKeys.swift */,
+				F274FC36202D005800049144 /* NotificationCenterKeys.swift */,
+			);
+			name = Keys;
 			sourceTree = "<group>";
 		};
 		F2FE3EFB20027DE600EBC429 /* Bootsrapped Data */ = {
@@ -687,7 +695,7 @@
 			);
 			name = "R.Swift Generate File";
 			outputPaths = (
-				"$SRCROOT/R.generated.swift",
+				$SRCROOT/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

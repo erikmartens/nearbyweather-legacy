@@ -64,4 +64,3 @@ In order to get started, fork the project and clone it to your local machine. In
 - Integrate [Fastlane](https://fastlane.tools)
 - Integrate XCTests and [Travis](https://travis-ci.org)
 - Integrate [Fabric](https://get.fabric.io)
-- Integrate [Swift Lint](https://github.com/realm/SwiftLint)

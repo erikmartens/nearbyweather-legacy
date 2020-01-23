@@ -18,7 +18,6 @@ class SettingsInputTableViewController: UITableViewController {
   
   @IBOutlet weak var inputTextField: TextFieldCounter!
   
-  
   // MARK: - ViewController Life Cycle
   
   override func viewDidLoad() {
@@ -51,7 +50,6 @@ class SettingsInputTableViewController: UITableViewController {
     validateAndSave()
   }
   
-  
   // MARK: - TableViewDataSource
   
   override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -62,13 +60,11 @@ class SettingsInputTableViewController: UITableViewController {
     return R.string.localizable.api_key_length_description()
   }
   
-  
   // MARK: - ScrollViewDelegate
   
   override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     inputTextField.resignFirstResponder()
   }
-  
   
   // MARK: - Private Helpers
   

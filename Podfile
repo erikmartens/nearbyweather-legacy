@@ -11,6 +11,8 @@ def nearbyweather_pods
     pod 'Alamofire', '~> 4.8.2'
     pod 'APTimeZones', :git => 'https://github.com/Alterplay/APTimeZones.git', :branch => 'master', :commit => '9ffd147'
     pod 'FMDB', '~> 2.7.5'
+
+    pod 'SwiftLint', '~> 0.38.2'
     pod 'R.swift', '5.0.3'
 end
 

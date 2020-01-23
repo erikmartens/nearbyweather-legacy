@@ -16,7 +16,7 @@ enum StorageLocationType {
 
 class DataStorageService {    
   
-  // MARK: -  Public Functions
+  // MARK: - Public Functions
   
   static func storeJson<T: Encodable>(for codable: T, inFileWithName fileName: String, toStorageLocation location: StorageLocationType) {
     guard let destinationDirectoryURL = directoryURL(for: location) else {
@@ -63,7 +63,6 @@ class DataStorageService {
       return nil
     }
   }
-  
   
   // MARK: - Private Functions
   

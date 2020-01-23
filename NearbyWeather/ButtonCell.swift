@@ -14,8 +14,8 @@ class ButtonCell: UITableViewCell {
   @IBOutlet weak var leftButton: UIButton!
   @IBOutlet weak var rightButton: UIButton!
   
-  private var leftButtonHandler: ((UIButton) -> ())?
-  private var rightButtonHandler: ((UIButton) -> ())?
+  private var leftButtonHandler: ((UIButton) -> Void)?
+  private var rightButtonHandler: ((UIButton) -> Void)?
   
   @objc private func leftButtonPressed(_ sender: UIButton) {
     leftButtonHandler?(sender)
@@ -35,7 +35,7 @@ class ButtonCell: UITableViewCell {
     rightButton.removeTarget(self, action: #selector(ButtonCell.rightButtonPressed(_:)), for: .touchUpInside)
   }
   
-  public func configure(withTitle title: String, leftButtonTitle: String, rightButtonTitle: String, leftButtonHandler: @escaping ((UIButton) -> ()), rightButtonHandler: @escaping ((UIButton) -> ())) {
+  public func configure(withTitle title: String, leftButtonTitle: String, rightButtonTitle: String, leftButtonHandler: @escaping ((UIButton) -> Void), rightButtonHandler: @escaping ((UIButton) -> Void)) {
     
     contentLabel.text = title
     

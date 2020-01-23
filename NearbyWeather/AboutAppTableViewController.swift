@@ -29,14 +29,12 @@ class AboutAppTableViewController: UITableViewController {
       .sorted { $0.lastName.lowercased() < $1.lastName.lowercased() } ?? [DevelopmentContributorDTO]()
   }()
   
-  //MARK: - Assets
+  // MARK: - Assets
   
   @IBOutlet weak var appTitleLabel: UILabel!
   @IBOutlet weak var appVersionLabel: UILabel!
   
-  
-  
-  //MARK: - ViewController Life Cycle
+  // MARK: - ViewController Life Cycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -53,7 +51,6 @@ class AboutAppTableViewController: UITableViewController {
     configure()
     tableView.reloadData() // in case of preferred content size change
   }
-  
   
   // MARK: - TableView Delegate
   
@@ -93,7 +90,6 @@ class AboutAppTableViewController: UITableViewController {
     }
     presentSafariViewController(for: url)
   }
-  
   
   // MARK: - TableView Data Source
   
@@ -156,7 +152,7 @@ class AboutAppTableViewController: UITableViewController {
         buttonCell.configure(withTitle: R.string.localizable.report_issue(),
                              leftButtonTitle: R.string.localizable.viaGitHub(),
                              rightButtonTitle: R.string.localizable.viaEmail(),
-                             leftButtonHandler: { [unowned self] button in
+                             leftButtonHandler: { [unowned self] _ in
                               guard let url = URL(string: "https://github.com/erikmartens/NearbyWeather/issues") else {
                                 return
                               }
@@ -164,7 +160,7 @@ class AboutAppTableViewController: UITableViewController {
                                 self.presentSafariViewController(for: url)
                               }
           },
-                             rightButtonHandler: { [unowned self] button in
+                             rightButtonHandler: { [unowned self] _ in
                               let mailAddress = "erikmartens.developer@gmail.com"
                               let subject = "NearbyWeather - \(R.string.localizable.report_issue())"
                               let message = "Hey Erik, \n"
@@ -195,7 +191,6 @@ class AboutAppTableViewController: UITableViewController {
       return UITableViewCell()
     }
   }
-  
   
   // MARK: - Private Helpers
   

@@ -25,7 +25,7 @@ extension UIView {
   func animatePulse(withAnimationDelegate delegate: CAAnimationDelegate) {
     let animation = CABasicAnimation(keyPath: "transform.scale")
     animation.delegate = delegate
-    animation.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeIn)
+    animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
     animation.duration = 0.25
     animation.toValue = 1.5
     animation.repeatCount = 2.0

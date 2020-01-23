@@ -34,7 +34,6 @@ public class PreferredBookmark: Codable, PreferencesOption {
   }
 }
 
-
 public enum SortingOrientationWrappedEnum: Int, Codable {
   case name
   case temperature
@@ -187,7 +186,7 @@ public class AmountOfResults: Codable, PreferencesOption {
   }
 }
 
-fileprivate let kPreferencesManagerStoredContentsFileName = "PreferencesManagerStoredContents"
+private let kPreferencesManagerStoredContentsFileName = "PreferencesManagerStoredContents"
 
 struct PreferencesManagerStoredContentsWrapper: Codable {
   var preferredBookmark: PreferredBookmark
@@ -202,7 +201,6 @@ class PreferencesManager {
   // MARK: - Public Assets
   
   public static var shared: PreferencesManager!
-  
   
   // MARK: - Properties
   
@@ -239,7 +237,6 @@ class PreferencesManager {
   
   private var locationAuthorizationObserver: NSObjectProtocol!
   
-  
   // MARK: - Initialization
   
   private init(preferredBookmark: PreferredBookmark, amountOfResults: AmountOfResults, temperatureUnit: TemperatureUnit, windspeedUnit: DistanceSpeedUnit, sortingOrientation: SortingOrientation) {
@@ -249,7 +246,7 @@ class PreferencesManager {
     self.distanceSpeedUnit = windspeedUnit
     self.sortingOrientation = sortingOrientation
     
-    locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [unowned self] notification in
+    locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [unowned self] _ in
       self.reconfigureSortingPreferenceIfNeeded()
     })
   }
@@ -258,13 +255,11 @@ class PreferencesManager {
     NotificationCenter.default.removeObserver(self)
   }
   
-  
   // MARK: - Public Properties & Methods
   
   public static func instantiateSharedInstance() {
     shared = PreferencesManager.loadService() ?? PreferencesManager(preferredBookmark: PreferredBookmark(value: .none), amountOfResults: AmountOfResults(value: .ten), temperatureUnit: TemperatureUnit(value: .celsius), windspeedUnit: DistanceSpeedUnit(value: .kilometres), sortingOrientation: SortingOrientation(value: .name))
   }
-  
   
   // MARK: - Private Helper Methods
   

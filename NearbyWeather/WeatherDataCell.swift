@@ -31,7 +31,6 @@ class WeatherDataCell: UITableViewCell {
   func configureWithWeatherDTO(_ weatherDTO: WeatherInformationDTO) {
     let bubbleColor: UIColor = ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true ? .nearbyWeatherStandard : .nearbyWeatherNight // default to blue colored cells
     
-    
     weatherDataIdentifier = weatherDTO.cityID
     
     backgroundColorView.layer.cornerRadius = 5.0

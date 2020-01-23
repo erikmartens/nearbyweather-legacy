@@ -10,7 +10,6 @@ import UIKit
 import MapKit
 import SafariServices
 import APTimeZones
-import MapKit
 
 class WeatherDetailViewController: UIViewController {
   
@@ -20,7 +19,6 @@ class WeatherDetailViewController: UIViewController {
     viewController.weatherDTO = weatherDTO
     return viewController
   }
-  
   
   // MARK: - Properties
   
@@ -74,7 +72,6 @@ class WeatherDetailViewController: UIViewController {
   
   @IBOutlet var separatorLineHeightConstraints: [NSLayoutConstraint]!
   
-  
   // MARK: - ViewController Lifecycle
   
   override func viewDidLoad() {
@@ -91,7 +88,6 @@ class WeatherDetailViewController: UIViewController {
     
     configure()
   }
-  
   
   // MARK: - Private Helpers
   
@@ -191,7 +187,6 @@ class WeatherDetailViewController: UIViewController {
     let region = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
     mapView.setRegion(region, animated: false)
   }
-  
   
   // MARK: - IBActions
   

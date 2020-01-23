@@ -24,7 +24,7 @@ final class PermissionsManager {
   
   // MARK: - Interface
   
-  public func requestNotificationPermissions(with completionHandler: @escaping ((Bool) -> ())) {
+  public func requestNotificationPermissions(with completionHandler: @escaping ((Bool) -> Void)) {
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
       DispatchQueue.main.async {
         guard error == nil, granted else {

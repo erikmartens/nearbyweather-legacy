@@ -20,14 +20,12 @@ class NearbyLocationsMapViewController: UIViewController {
   @IBOutlet weak var changeMapTypeButton: UIBarButtonItem!
   @IBOutlet weak var focusLocationButton: UIBarButtonItem!
   
-  
   /* Properties */
   
   var weatherLocationMapAnnotations: [WeatherLocationMapAnnotation]!
   
   private var selectedBookmarkedLocation: WeatherInformationDTO?
   private var previousRegion: MKCoordinateRegion?
-  
   
   // MARK: - ViewController Lifecycle
   
@@ -47,7 +45,6 @@ class NearbyLocationsMapViewController: UIViewController {
     prepareMapAnnotations()
     focusOnAvailableLocation()
   }
-  
   
   // MARK: - Private Helpers
   
@@ -107,7 +104,7 @@ class NearbyLocationsMapViewController: UIViewController {
     }
     
     bookmarkedWeatherDataObjects.forEach { weatherInformationDTO in
-      let action = UIAlertAction(title: weatherInformationDTO.cityName, style: .default, handler: { paramAction in
+      let action = UIAlertAction(title: weatherInformationDTO.cityName, style: .default, handler: { _ in
         self.selectedBookmarkedLocation = weatherInformationDTO
         DispatchQueue.main.async {
           self.focusMapOnSelectedBookmarkedLocation()
@@ -184,7 +181,7 @@ extension NearbyLocationsMapViewController: MKMapViewDelegate {
       viewForCurrentAnnotation = WeatherLocationMapAnnotationView(frame: kMapAnnotationViewInitialFrame)
     }
     viewForCurrentAnnotation?.annotation = annotation
-    viewForCurrentAnnotation?.configure(withTitle: annotation.title ?? "<Not Set>", subtitle: annotation.subtitle ?? "<Not Set>", fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight, tapHandler: { [unowned self] sender in
+    viewForCurrentAnnotation?.configure(withTitle: annotation.title ?? "<Not Set>", subtitle: annotation.subtitle ?? "<Not Set>", fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight, tapHandler: { [unowned self] _ in
       guard let weatherDTO = WeatherDataManager.shared.weatherDTO(forIdentifier: annotation.locationId) else {
         return
       }

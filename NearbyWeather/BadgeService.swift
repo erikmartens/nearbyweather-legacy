@@ -40,7 +40,7 @@ final class BadgeService {
   
   // MARK: - Methods
   
-  public func isAppIconBadgeNotificationEnabled(with completionHandler: @escaping (Bool) -> ()) {
+  public func isAppIconBadgeNotificationEnabled(with completionHandler: @escaping (Bool) -> Void) {
     guard UserDefaults.standard.bool(forKey: kIsTemperatureOnAppIconEnabledKey) else {
       completionHandler(false)
       return

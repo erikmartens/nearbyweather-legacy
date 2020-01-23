@@ -432,6 +432,7 @@
 			buildConfigurationList = F204B79F1DF2EFA3000F4371 /* Build configuration list for PBXNativeTarget "NearbyWeather" */;
 			buildPhases = (
 				9BB9B0FC6D1A2F368B752E65 /* [CP] Check Pods Manifest.lock */,
+				F2E7237623DA5228001189F5 /* Run SwiftLint */,
 				F26A6D5B20FB6DFA0033BC49 /* R.Swift Generate File */,
 				F204B7731DF2EFA3000F4371 /* Sources */,
 				F204B7741DF2EFA3000F4371 /* Frameworks */,
@@ -700,6 +701,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
+		};
+		F2E7237623DA5228001189F5 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

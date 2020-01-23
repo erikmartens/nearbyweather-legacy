@@ -16,7 +16,6 @@ class WelcomeScreenViewController: UIViewController {
   
   private var timer: Timer?
   
-  
   // MARK: - Outlets
   
   @IBOutlet weak var bubbleView: UIView!
@@ -26,7 +25,6 @@ class WelcomeScreenViewController: UIViewController {
   @IBOutlet weak var inputTextField: TextFieldCounter!
   @IBOutlet weak var saveButton: UIButton!
   @IBOutlet weak var getInstructionsButtons: UIButton!
-  
   
   // MARK: - Override Functions
   
@@ -97,7 +95,6 @@ class WelcomeScreenViewController: UIViewController {
     warningImageView.animatePulse(withAnimationDelegate: self)
   }
   
-  
   // MARK: - TextField Interaction
   
   @IBAction func inputTextFieldEditingChanged(_ sender: TextFieldCounter) {
@@ -119,7 +116,6 @@ class WelcomeScreenViewController: UIViewController {
     saveButton.isEnabled = true
     inputTextField.textColor = .nearbyWeatherStandard
   }
-  
   
   // MARK: - Button Interaction
   

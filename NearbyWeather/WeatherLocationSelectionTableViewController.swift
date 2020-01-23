@@ -16,7 +16,6 @@ class WeatherLocationSelectionTableViewController: UITableViewController {
   private let searchController = UISearchController(searchResultsController: nil)
   private var filteredCities = [WeatherStationDTO]()
   
-  
   // MARK: - ViewController Life Cycle
   
   override func viewDidLoad() {
@@ -52,7 +51,6 @@ class WeatherLocationSelectionTableViewController: UITableViewController {
     }
   }
   
-  
   // MARK: - TableViewDataSource
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -68,7 +66,6 @@ class WeatherLocationSelectionTableViewController: UITableViewController {
     cell.contentLabel.text = "\(filteredCities[indexPath.row].name), \(filteredCities[indexPath.row].country)"
     return cell
   }
-  
   
   // MARK: - TableViewDelegate
   

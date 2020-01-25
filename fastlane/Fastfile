@@ -1,0 +1,77 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+# fastlane set_version version_number:2.0.0
+lane :set_version  do |options|
+  	new_version_nr = increment_version_number(version_number: options[:version_number])
+end
+
+lane :bump_build do
+  	build_nr = increment_build_number
+end
+
+# fastlane set_build build_number:123"
+lane :set_build  do |options|
+  	increment_build_number(build_number: options[:build_number])
+end
+
+# fastlane testflight_beta changelog: \"Notes to testers\""
+lane :testflight_beta do
+  # TODO upload dyms to crashlytics once set up
+  	upload_to_testflight(
+  		ipa: "./build/NearbyWeather.ipa",
+    	skip_submission: true,
+    	notify_external_testers: false,
+    	changelog: options[:changelog],
+    	skip_waiting_for_build_processing: true
+    )
+end
+
+lane :prepare_release do
+  	update_bootstrap_weatherstations
+  	bump_build
+end
+
+lane :release do
+  	clear_derived_data
+  # TODO upload dyms to crashlytics once set up
+  	deliver(
+    	ipa: "./build/NearbyWeather.ipa",
+    	submit_for_review: false,
+    	skip_screenshots: true,
+    	skip_metadata: true
+    )
+end
+
+lane :upload_meta_data do
+	deliver(
+    	submit_for_review: false,
+		skip_metadata: false,
+		skip_screenshots: true,
+		skip_binary_upload: true
+	)
+end
+
+lane :read_code_signing do
+  sync_code_signing(type: "development", readonly: true)
+  sync_code_signing(type: "adhoc", readonly: true)
+  sync_code_signing(type: "appstore", readonly: true)
+end
+
+lane :update_bootstrap_weatherstations do
+  	system "sh ../Scripts/generateLocationSQLiteDatabase.sh"
+end

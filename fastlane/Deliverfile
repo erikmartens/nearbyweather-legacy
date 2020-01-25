@@ -1,0 +1,9 @@
+app_review_information(
+  first_name: "Erik Maximilian",
+  last_name: "Martens",
+  email_address: "erikmartens.developer@gmail.com",
+)
+
+
+submit_for_review false
+skip_screenshots true

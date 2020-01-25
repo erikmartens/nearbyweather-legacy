@@ -61,6 +61,5 @@ In order to get started, fork the project and clone it to your local machine. In
 ## Future Developments
 - [Release 2.1](https://github.com/erikmartens/NearbyWeather/projects/2)
 - [Release 2.2](https://github.com/erikmartens/NearbyWeather/projects/1)
-- Integrate [Fastlane](https://fastlane.tools)
 - Integrate XCTests and [Travis](https://travis-ci.org)
 - Integrate [Fabric](https://get.fabric.io)

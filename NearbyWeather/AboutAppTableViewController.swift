@@ -196,7 +196,6 @@ class AboutAppTableViewController: UITableViewController {
   
   private func configure() {
     navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
-    navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
     configureText()
   }
   

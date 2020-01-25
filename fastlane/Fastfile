@@ -17,49 +17,52 @@ default_platform(:ios)
 
 # fastlane set_version version_number:2.0.0
 lane :set_version  do |options|
-  	new_version_nr = increment_version_number(version_number: options[:version_number])
+  new_version_nr = increment_version_number(version_number: options[:version_number])
 end
 
 lane :bump_build do
-  	build_nr = increment_build_number
+  build_nr = increment_build_number
 end
 
 # fastlane set_build build_number:123"
 lane :set_build  do |options|
-  	increment_build_number(build_number: options[:build_number])
+  increment_build_number(build_number: options[:build_number])
 end
 
-# fastlane testflight_beta changelog: \"Notes to testers\""
-lane :testflight_beta do
+# fastlane testflight_beta changelog: "Notes to testers"
+lane :testflight_beta do |options|
+  clear_derived_data
+  build_app
   # TODO upload dyms to crashlytics once set up
-  	upload_to_testflight(
-  		ipa: "./build/NearbyWeather.ipa",
-    	skip_submission: true,
-    	notify_external_testers: false,
-    	changelog: options[:changelog],
-    	skip_waiting_for_build_processing: true
-    )
+  upload_to_testflight(
+  	ipa: "./build/NearbyWeather.ipa",
+    skip_submission: true,
+    notify_external_testers: false,
+    changelog: options[:changelog],
+    skip_waiting_for_build_processing: true
+  )
 end
 
 lane :prepare_release do
-  	update_bootstrap_weatherstations
-  	bump_build
+  update_bootstrap_weatherstations
+  bump_build
 end
 
 lane :release do
-  	clear_derived_data
+  clear_derived_data
+  build_app
   # TODO upload dyms to crashlytics once set up
-  	deliver(
-    	ipa: "./build/NearbyWeather.ipa",
-    	submit_for_review: false,
-    	skip_screenshots: true,
-    	skip_metadata: true
-    )
+  deliver(
+    ipa: "./build/NearbyWeather.ipa",
+    submit_for_review: false,
+    skip_screenshots: true,
+    skip_metadata: true
+  )
 end
 
 lane :upload_meta_data do
 	deliver(
-    	submit_for_review: false,
+    submit_for_review: false,
 		skip_metadata: false,
 		skip_screenshots: true,
 		skip_binary_upload: true

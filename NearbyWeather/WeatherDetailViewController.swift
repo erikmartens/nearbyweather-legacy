@@ -94,7 +94,6 @@ class WeatherDetailViewController: UIViewController {
   private func configure() {
     let barTintColor: UIColor = ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true ? .nearbyWeatherStandard : .nearbyWeatherNight
     navigationController?.navigationBar.styleStandard(withBarTintColor: barTintColor, isTransluscent: false, animated: true)
-    navigationController?.navigationBar.addDropShadow(offSet: CGSize(width: 0, height: 1), radius: 10)
     
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }
     

@@ -30,6 +30,36 @@ fastlane bump_build
 fastlane set_build
 ```
 
+### testflight_beta
+```
+fastlane testflight_beta
+```
+
+### prepare_release
+```
+fastlane prepare_release
+```
+
+### release
+```
+fastlane release
+```
+
+### upload_meta_data
+```
+fastlane upload_meta_data
+```
+
+### read_code_signing
+```
+fastlane read_code_signing
+```
+
+### update_bootstrap_weatherstations
+```
+fastlane update_bootstrap_weatherstations
+```
+
 
 ----
 

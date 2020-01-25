@@ -1,0 +1,4 @@
+output_directory("./build")
+
+export_xcargs "-allowProvisioningUpdates"
+# export_method "development"

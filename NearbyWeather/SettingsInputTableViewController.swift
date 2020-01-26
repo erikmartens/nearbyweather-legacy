@@ -69,7 +69,7 @@ class SettingsInputTableViewController: UITableViewController {
   // MARK: - Private Helpers
   
   private func configure() {
-    navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
+    navigationController?.navigationBar.styleStandard()
     
     inputTextField.animate = true
     inputTextField.ascending = true

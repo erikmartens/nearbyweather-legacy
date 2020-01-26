@@ -92,8 +92,9 @@ class WeatherDetailViewController: UIViewController {
   // MARK: - Private Helpers
   
   private func configure() {
-    let barTintColor: UIColor = ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true ? .nearbyWeatherStandard : .nearbyWeatherNight
-    navigationController?.navigationBar.styleStandard(withBarTintColor: barTintColor, isTransluscent: false, animated: true)
+    navigationController?.navigationBar.style(withBarTintColor:
+      ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true ? .nearbyWeatherStandard : .nearbyWeatherNight
+    )
     
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }
     

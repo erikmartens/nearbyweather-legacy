@@ -10,12 +10,21 @@ import UIKit
 
 extension UINavigationBar {
   
-  func styleStandard(withBarTintColor barTintColor: UIColor, isTransluscent: Bool, animated: Bool) {
-    isTranslucent = isTransluscent
+  func styleStandard() {
+    isTranslucent = false
+    
+    barTintColor = .white
+    tintColor = .black
+    titleTextAttributes = [.foregroundColor: UIColor.black]
+    barStyle = .default
+  }
+  
+  func style(withBarTintColor barTintColor: UIColor) {
+    isTranslucent = false
     
     self.barTintColor = barTintColor
     tintColor = .white
     titleTextAttributes = [.foregroundColor: UIColor.white]
-    barStyle = .black
+    barStyle = .default
   }
 }

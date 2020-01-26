@@ -82,7 +82,7 @@ class WeatherListViewController: UIViewController {
   private func configure() {
     navigationItem.title = navigationItem.title?.capitalized
     
-    navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
+    navigationController?.navigationBar.styleStandard()
     
     configureLastRefreshDate()
     configureButtons()

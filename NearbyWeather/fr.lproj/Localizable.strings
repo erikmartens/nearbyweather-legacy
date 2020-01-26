@@ -113,3 +113,4 @@ app_icon_temperature_sign_updated = "Le signe de température de l'icône de l'a
 temperature_notification = "La température en %@ est maintenant %@";
 plus = "signe plus";
 minus = "moins";
+get_started_with_openweathermap = "Configurer l'accès à OpenWeatherMap";

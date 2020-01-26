@@ -57,7 +57,7 @@ class SetPermissionsViewController: UIViewController {
   // MARK: - Helper Functions
   
   func configure() {
-    navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
+    navigationController?.navigationBar.styleStandard()
     
     bubbleView.layer.cornerRadius = 10
     bubbleView.backgroundColor = .black

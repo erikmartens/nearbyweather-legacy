@@ -21,8 +21,16 @@ class AboutAppTableViewController: UITableViewController {
     
   }()
   
+  private lazy var owner: [DevelopmentContributorDTO] = {
+    return DataStorageService.retrieveJsonFromFile(with: "ProjectOwner",
+                                                   andDecodeAsType: DevelopmentContributorArrayWrapper.self,
+                                                   fromStorageLocation: .bundle)?
+      .elements
+      .sorted { $0.lastName.lowercased() < $1.lastName.lowercased() } ?? [DevelopmentContributorDTO]()
+  }()
+  
   private lazy var contributors: [DevelopmentContributorDTO] = {
-    return DataStorageService.retrieveJsonFromFile(with: "DevelopmentContributors",
+    return DataStorageService.retrieveJsonFromFile(with: "ProjectContributors",
                                                    andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -64,25 +72,28 @@ class AboutAppTableViewController: UITableViewController {
     var urlStringValue: String?
     if indexPath.section == 0 && indexPath.row == 0 {
       let urlString = "https://itunes.apple.com/app/id1227313069?action=write-review&mt=8"
-      UIApplication.shared.openURL(URL(string: urlString)!)
+      UIApplication.shared.open(URL(string: urlString)!, completionHandler: nil)
       return
     }
     if indexPath.section == 0 && indexPath.row == 1 {
       return
     }
-    if indexPath.section == 1 {
-      urlStringValue = contributors[indexPath.row].urlString
-    }
-    if indexPath.section == 2 && indexPath.row == 0 {
+    if indexPath.section == 1 && indexPath.row == 0 {
       urlStringValue = "https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md"
     }
-    if indexPath.section == 2 && indexPath.row == 1 {
+    if indexPath.section == 1 && indexPath.row == 1 {
       urlStringValue = "https://github.com/erikmartens/NearbyWeather"
     }
+    if indexPath.section == 2 {
+      urlStringValue = owner[indexPath.row].urlString
+    }
     if indexPath.section == 3 {
+      urlStringValue = contributors[indexPath.row].urlString
+    }
+    if indexPath.section == 4 {
       urlStringValue = thirdPartyLibraries[indexPath.row].urlString
     }
-    if indexPath.section == 4 && indexPath.row == 0 {
+    if indexPath.section == 5 && indexPath.row == 0 {
       urlStringValue = "https://www.icons8.com"
     }
     guard let urlString = urlStringValue, let url = URL(string: urlString) else {
@@ -94,7 +105,7 @@ class AboutAppTableViewController: UITableViewController {
   // MARK: - TableView Data Source
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 5
+    return 6
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,12 +113,14 @@ class AboutAppTableViewController: UITableViewController {
     case 0:
       return 2
     case 1:
-      return contributors.count
-    case 2:
       return 2
+    case 2:
+      return owner.count
     case 3:
-      return thirdPartyLibraries.count
+      return contributors.count
     case 4:
+      return thirdPartyLibraries.count
+    case 5:
       return 1
     default:
       return 0
@@ -123,8 +136,10 @@ class AboutAppTableViewController: UITableViewController {
     case 2:
       return nil
     case 3:
-      return R.string.localizable.libraries()
+      return nil
     case 4:
+      return R.string.localizable.libraries()
+    case 5:
       return R.string.localizable.icons()
     default:
       return nil
@@ -169,11 +184,6 @@ class AboutAppTableViewController: UITableViewController {
         return buttonCell
       }
     case 1:
-      let contributor = contributors[indexPath.row]
-      subtitleCell.contentLabel.text = "\(contributor.firstName) \(contributor.lastName)"
-      subtitleCell.subtitleLabel.text = contributor.contributionDescription
-      return subtitleCell
-    case 2:
       if indexPath.row == 0 {
         labelCell.contentLabel.text = R.string.localizable.how_to_contribute()
         return labelCell
@@ -181,10 +191,20 @@ class AboutAppTableViewController: UITableViewController {
         labelCell.contentLabel.text = R.string.localizable.source_code_via_github()
         return labelCell
       }
+    case 2:
+      let contributor = owner[indexPath.row]
+      subtitleCell.contentLabel.text = "\(contributor.firstName) \(contributor.lastName)"
+      subtitleCell.subtitleLabel.text = contributor.contributionDescription
+      return subtitleCell
     case 3:
+      let contributor = contributors[indexPath.row]
+      subtitleCell.contentLabel.text = "\(contributor.firstName) \(contributor.lastName)"
+      subtitleCell.subtitleLabel.text = contributor.contributionDescription
+      return subtitleCell
+    case 4:
       labelCell.contentLabel.text = thirdPartyLibraries[indexPath.row].name
       return labelCell
-    case 4:
+    case 5:
       labelCell.contentLabel.text = "Icons8"
       return labelCell
     default:
@@ -195,7 +215,7 @@ class AboutAppTableViewController: UITableViewController {
   // MARK: - Private Helpers
   
   private func configure() {
-    navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
+    navigationController?.navigationBar.styleStandard()
     configureText()
   }
   

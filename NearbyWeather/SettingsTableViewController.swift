@@ -21,7 +21,7 @@ class SettingsTableViewController: UITableViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
+    navigationController?.navigationBar.styleStandard()
     
     tableView.reloadData()
   }
@@ -40,11 +40,18 @@ class SettingsTableViewController: UITableViewController {
     case 1:
       break
     case 2:
-      let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-      let destinationViewController = storyboard.instantiateViewController(withIdentifier: "SettingsInputTVC") as! SettingsInputTableViewController
-      
-      navigationItem.removeTextFromBackBarButton()
-      navigationController?.pushViewController(destinationViewController, animated: true)
+      if indexPath.row == 0 {
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "SettingsInputTVC") as! SettingsInputTableViewController
+        
+        navigationItem.removeTextFromBackBarButton()
+        navigationController?.pushViewController(destinationViewController, animated: true)
+        return
+      }
+      guard let url = URL(string: "https://openweathermap.org/appid") else {
+        return
+      }
+      navigationController?.presentSafariViewController(for: url)
     case 3:
       if indexPath.row == 0 {
         guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
@@ -61,13 +68,15 @@ class SettingsTableViewController: UITableViewController {
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)
-      } else if indexPath.row == 2 {
+      }
+    case 4:
+      if indexPath.row == 1 {
         var choices = [PreferredBookmark(value: .none)]
         let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map { PreferredBookmark(value: $0.identifier) }
         choices.append(contentsOf: bookmarksChoices)
         triggerOptionsAlert(forOptions: choices, title: R.string.localizable.preferred_bookmark())
       }
-    case 4:
+    case 5:
       if indexPath.row == 0 {
         triggerOptionsAlert(forOptions: amountOfResultsOptions, title: R.string.localizable.amount_of_results())
       }
@@ -95,6 +104,8 @@ class SettingsTableViewController: UITableViewController {
     case 3:
       return R.string.localizable.bookmarks()
     case 4:
+      return nil
+    case 5:
       return R.string.localizable.preferences()
     default:
       return nil
@@ -102,7 +113,7 @@ class SettingsTableViewController: UITableViewController {
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 5
+    return 6
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -112,10 +123,12 @@ class SettingsTableViewController: UITableViewController {
     case 1:
       return 1
     case 2:
-      return 1
+      return 2
     case 3:
-      return 4
+      return 2
     case 4:
+      return 2
+    case 5:
       return 4
     default:
       return 0
@@ -125,12 +138,12 @@ class SettingsTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch indexPath.section {
     case 0:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
       cell.contentLabel.text = R.string.localizable.about()
       cell.accessoryType = .disclosureIndicator
       return cell
     case 1:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "ToggleCell", for: indexPath) as! ToggleCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
       cell.contentLabel.text = R.string.localizable.refresh_on_app_start()
       cell.toggle.isOn = UserDefaults.standard.bool(forKey: kRefreshOnAppStartKey)
       cell.toggleSwitchHandler = { sender in
@@ -138,14 +151,20 @@ class SettingsTableViewController: UITableViewController {
       }
       return cell
     case 2:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-      cell.contentLabel.text = R.string.localizable.apiKey()
-      cell.selectionLabel.text = UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey) as? String
+      if indexPath.row == 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+        cell.contentLabel.text = R.string.localizable.apiKey()
+        cell.selectionLabel.text = UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey) as? String
+        cell.accessoryType = .disclosureIndicator
+        return cell
+      }
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
+      cell.contentLabel.text = R.string.localizable.get_started_with_openweathermap()
       cell.accessoryType = .disclosureIndicator
       return cell
     case 3:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
         cell.contentLabel.text = R.string.localizable.manage_locations()
         
         let entriesCount = WeatherDataManager.shared.bookmarkedLocations.count
@@ -166,24 +185,14 @@ class SettingsTableViewController: UITableViewController {
         }
         cell.selectionLabel.text = cellLabelTitle
         return cell
-      } else if indexPath.row == 1 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-        cell.contentLabel.text = R.string.localizable.add_location()
-        cell.accessoryType = .disclosureIndicator
-        return cell
-      } else if indexPath.row == 2 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-        cell.contentLabel.text = R.string.localizable.preferred_bookmark()
-        cell.selectionLabel.text = nil
-        guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
-          WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
-            PreferencesManager.shared.preferredBookmark = PreferredBookmark(value: nil)
-            return cell
-        }
-        cell.selectionLabel.text = PreferencesManager.shared.preferredBookmark.stringValue
-        return cell
-      } else {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToggleCell", for: indexPath) as! ToggleCell
+      }
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
+      cell.contentLabel.text = R.string.localizable.add_location()
+      cell.accessoryType = .disclosureIndicator
+      return cell
+    case 4:
+      if indexPath.row == 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
         cell.contentLabel.text = R.string.localizable.show_temp_on_icon()
         BadgeService.shared.isAppIconBadgeNotificationEnabled { enabled in
           cell.toggle.isOn = enabled
@@ -205,26 +214,36 @@ class SettingsTableViewController: UITableViewController {
         }
         return cell
       }
-    case 4:
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+      cell.contentLabel.text = R.string.localizable.preferred_bookmark()
+      cell.selectionLabel.text = nil
+      guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
+        WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
+          PreferencesManager.shared.preferredBookmark = PreferredBookmark(value: nil)
+          return cell
+      }
+      cell.selectionLabel.text = PreferencesManager.shared.preferredBookmark.stringValue
+      return cell
+    case 5:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
         cell.contentLabel.text = R.string.localizable.amount_of_results()
         cell.selectionLabel.text = PreferencesManager.shared.amountOfResults.stringValue
         return cell
       }
       if indexPath.row == 1 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
         cell.contentLabel.text = R.string.localizable.sorting_orientation()
         cell.selectionLabel.text = PreferencesManager.shared.sortingOrientation.stringValue
         return cell
       }
       if indexPath.row == 2 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
         cell.contentLabel.text = R.string.localizable.temperature_unit()
         cell.selectionLabel.text = PreferencesManager.shared.temperatureUnit.stringValue
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
       cell.contentLabel.text = R.string.localizable.distanceSpeed_unit()
       cell.selectionLabel.text = PreferencesManager.shared.distanceSpeedUnit.stringValue
       return cell

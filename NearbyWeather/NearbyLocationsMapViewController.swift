@@ -66,7 +66,7 @@ class NearbyLocationsMapViewController: UIViewController {
   }
   
   private func configure() {
-    navigationController?.navigationBar.styleStandard(withBarTintColor: .nearbyWeatherStandard, isTransluscent: false, animated: true)
+    navigationController?.navigationBar.styleStandard()
   }
   
   private func triggerMapTypeAlert() {

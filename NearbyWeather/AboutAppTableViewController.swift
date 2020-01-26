@@ -64,7 +64,7 @@ class AboutAppTableViewController: UITableViewController {
     var urlStringValue: String?
     if indexPath.section == 0 && indexPath.row == 0 {
       let urlString = "https://itunes.apple.com/app/id1227313069?action=write-review&mt=8"
-      UIApplication.shared.openURL(URL(string: urlString)!)
+      UIApplication.shared.open(URL(string: urlString)!, completionHandler: nil)
       return
     }
     if indexPath.section == 0 && indexPath.row == 1 {

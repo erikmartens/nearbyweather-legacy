@@ -61,13 +61,15 @@ class SettingsTableViewController: UITableViewController {
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)
-      } else if indexPath.row == 2 {
+      }
+    case 4:
+      if indexPath.row == 1 {
         var choices = [PreferredBookmark(value: .none)]
         let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map { PreferredBookmark(value: $0.identifier) }
         choices.append(contentsOf: bookmarksChoices)
         triggerOptionsAlert(forOptions: choices, title: R.string.localizable.preferred_bookmark())
       }
-    case 4:
+    case 5:
       if indexPath.row == 0 {
         triggerOptionsAlert(forOptions: amountOfResultsOptions, title: R.string.localizable.amount_of_results())
       }
@@ -95,6 +97,8 @@ class SettingsTableViewController: UITableViewController {
     case 3:
       return R.string.localizable.bookmarks()
     case 4:
+      return nil
+    case 5:
       return R.string.localizable.preferences()
     default:
       return nil
@@ -102,7 +106,7 @@ class SettingsTableViewController: UITableViewController {
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 5
+    return 6
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -114,8 +118,10 @@ class SettingsTableViewController: UITableViewController {
     case 2:
       return 1
     case 3:
-      return 4
+      return 2
     case 4:
+      return 2
+    case 5:
       return 4
     default:
       return 0
@@ -166,23 +172,13 @@ class SettingsTableViewController: UITableViewController {
         }
         cell.selectionLabel.text = cellLabelTitle
         return cell
-      } else if indexPath.row == 1 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-        cell.contentLabel.text = R.string.localizable.add_location()
-        cell.accessoryType = .disclosureIndicator
-        return cell
-      } else if indexPath.row == 2 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-        cell.contentLabel.text = R.string.localizable.preferred_bookmark()
-        cell.selectionLabel.text = nil
-        guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
-          WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
-            PreferencesManager.shared.preferredBookmark = PreferredBookmark(value: nil)
-            return cell
-        }
-        cell.selectionLabel.text = PreferencesManager.shared.preferredBookmark.stringValue
-        return cell
-      } else {
+      }
+      let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+      cell.contentLabel.text = R.string.localizable.add_location()
+      cell.accessoryType = .disclosureIndicator
+      return cell
+    case 4:
+      if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToggleCell", for: indexPath) as! ToggleCell
         cell.contentLabel.text = R.string.localizable.show_temp_on_icon()
         BadgeService.shared.isAppIconBadgeNotificationEnabled { enabled in
@@ -205,7 +201,17 @@ class SettingsTableViewController: UITableViewController {
         }
         return cell
       }
-    case 4:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
+      cell.contentLabel.text = R.string.localizable.preferred_bookmark()
+      cell.selectionLabel.text = nil
+      guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
+        WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
+          PreferencesManager.shared.preferredBookmark = PreferredBookmark(value: nil)
+          return cell
+      }
+      cell.selectionLabel.text = PreferencesManager.shared.preferredBookmark.stringValue
+      return cell
+    case 5:
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
         cell.contentLabel.text = R.string.localizable.amount_of_results()

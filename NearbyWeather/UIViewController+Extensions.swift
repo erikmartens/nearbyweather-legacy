@@ -14,7 +14,11 @@ extension UIViewController {
   func presentSafariViewController(for url: URL) {
     let safariController = SFSafariViewController(url: url)
     safariController.preferredControlTintColor = .nearbyWeatherStandard
-    safariController.modalPresentationStyle = .overFullScreen
+    if #available(iOS 13, *) {
+      safariController.modalPresentationStyle = .automatic
+    } else {
+      safariController.modalPresentationStyle = .overFullScreen
+    }
     present(safariController, animated: true, completion: nil)
   }
 }

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ebN-Ea-30y">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ebN-Ea-30y">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dCD-Pk-ElR" userLabel="EmptyListOverlay">
-                                <rect key="frame" x="0.0" y="208" width="375" height="252"/>
+                                <rect key="frame" x="0.0" y="207.5" width="375" height="252.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3QA-Rm-ulS">
                                         <rect key="frame" x="20" y="0.0" width="335" height="252.5"/>
@@ -181,14 +178,14 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="107.5" height="25"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Temperature" translatesAutoresizingMaskIntoConstraints="NO" id="zmn-yU-eK6">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="24.5" height="25"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="15" height="25"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="zmn-yU-eK6" secondAttribute="height" multiplier="1:1" id="pTD-50-Y5e"/>
                                                                                 <constraint firstAttribute="width" constant="15" id="u05-3e-aXh"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYI-AZ-hKl" userLabel="temperatureLabel">
-                                                                            <rect key="frame" x="29.5" y="0.0" width="78" height="25"/>
+                                                                            <rect key="frame" x="20" y="0.0" width="87.5" height="25"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -199,13 +196,13 @@
                                                                     <rect key="frame" x="117.5" y="0.0" width="107.5" height="25"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CloudCover" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbR-an-D7L" userLabel="cloudCoverLabel">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="78" height="25"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="87.5" height="25"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CloudCoverFilled" translatesAutoresizingMaskIntoConstraints="NO" id="mpy-5k-mxM">
-                                                                            <rect key="frame" x="83" y="0.0" width="24.5" height="25"/>
+                                                                            <rect key="frame" x="92.5" y="0.0" width="15" height="25"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="mpy-5k-mxM" secondAttribute="height" multiplier="1:1" id="XeD-Nx-5G2"/>
                                                                                 <constraint firstAttribute="width" constant="15" id="g8U-Da-4EM"/>
@@ -222,14 +219,14 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="107.5" height="25"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HumidityFilled" translatesAutoresizingMaskIntoConstraints="NO" id="A7m-hK-bh2">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="15" height="25"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="A7m-hK-bh2" secondAttribute="height" multiplier="1:1" id="Gzr-Iw-5Oa"/>
                                                                                 <constraint firstAttribute="width" constant="15" id="sEX-X6-r7o"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZo-jD-qjT" userLabel="humidityLabel">
-                                                                            <rect key="frame" x="30" y="0.0" width="77.5" height="25"/>
+                                                                            <rect key="frame" x="20" y="0.0" width="87.5" height="25"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -240,13 +237,13 @@
                                                                     <rect key="frame" x="117.5" y="0.0" width="107.5" height="25"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Windspeed" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AhK-mX-EIC" userLabel="windspeedLabel">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="77.5" height="25"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="87.5" height="25"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WindSpeed" translatesAutoresizingMaskIntoConstraints="NO" id="Rhj-fn-2ml">
-                                                                            <rect key="frame" x="82.5" y="0.0" width="25" height="25"/>
+                                                                            <rect key="frame" x="92.5" y="0.0" width="15" height="25"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="Rhj-fn-2ml" secondAttribute="height" multiplier="1:1" id="4ZP-sJ-pqg"/>
                                                                                 <constraint firstAttribute="width" constant="15" id="tQx-3v-lnF"/>
@@ -401,7 +398,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ebN-Ea-30y" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ewj-vT-6gh">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -415,7 +412,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CloudCoverFilled" width="37" height="37"/>
+        <image name="CloudCoverFilled" width="37.5" height="37.5"/>
         <image name="ExclamationMark" width="25" height="25"/>
         <image name="HumidityFilled" width="25" height="25"/>
         <image name="OpenWeatherMapLogo" width="207" height="20"/>

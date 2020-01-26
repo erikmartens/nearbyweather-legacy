@@ -113,3 +113,4 @@ app_icon_temperature_sign_updated = "App icon temperature sign updated";
 temperature_notification = "Temperature in %@ is now %@";
 plus = "plus";
 minus = "minus";
+get_started_with_openweathermap = "Get Started with OpenWeatherMap";

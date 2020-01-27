@@ -3,7 +3,11 @@
 	[{
 		"firstName": "Erik Maximilian",
 		"lastName": "Martens",
-		"contributionDescription": "Project Owner",
+    "contributionDescription": {
+      "en": "Product Owner",
+      "de": "Product Owner",
+      "fr": "Responsable de Produit"
+    },
 		"urlString": "https://www.linkedin.com/in/erik-maximilian-martens-212280a1/"
 	}]
 }

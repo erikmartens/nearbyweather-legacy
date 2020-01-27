@@ -15,6 +15,12 @@ struct DevelopmentContributorArrayWrapper: Codable {
 struct DevelopmentContributorDTO: Codable {
   var firstName: String
   var lastName: String
-  var contributionDescription: String?
+  var contributionDescription: [String: String]
   var urlString: String
+  
+  var localizedContributionDescription: String? {
+    return contributionDescription
+      .first { $0.key == Locale.current.regionCode?.lowercased() ?? "en" }?
+      .value
+  }
 }

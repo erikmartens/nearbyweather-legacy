@@ -3,27 +3,47 @@
 	[{
 		"firstName": "Ryan",
 		"lastName": "Rosello",
-		"contributionDescription": "Minor Bugfixes",
+    "contributionDescription": {
+      "en": "Minor Bugfixes",
+      "de": "Kleinere Fehlerbehebungen",
+      "fr": "Corrections de bugs mineurs"
+    },
 		"urlString": "https://github.com/roselloryan"
 	}, {
 		"firstName": "M.",
 		"lastName": "Bohling",
-		"contributionDescription": "Swift 5.0 Conversions, Remove Warnings",
+    "contributionDescription": {
+      "en": "Swift 5.0 Conversion, Removed Compiler-Warnings",
+      "de": "Konvertierung zu Swift 5.0, Beseitigung von Compiler-Warnungen",
+      "fr": "Conversion en Swift 5.0, Éliminer les avertissements du compilateur"
+    },
 		"urlString": "https://github.com/mbohling"
 	}, {
 		"firstName": "Nischal",
 		"lastName": "Hada",
-		"contributionDescription": "Gitignored CocoaPods Files in Repository",
+    "contributionDescription": {
+      "en": "Git-ignored CocoaPods Files in Repository",
+      "de": "CocoaPods zu Git-Ignore-Liste hinzugefügt",
+      "fr": "CocoaPods ajouté à la liste des ignorés de Git"
+    },
 		"urlString": "https://github.com/hadanischal"
 	}, {
 		"firstName": "Pierre-Yves",
 		"lastName": "Lapersonne",
-		"contributionDescription": "French Localization, Various Cleanups",
+    "contributionDescription": {
+      "en": "French Localization, Various Cleanups",
+      "de": "Französische Übersetzung, verschiedene Code-Bereinigungen",
+      "fr": "Traduction française, divers nettoyages de code"
+    },
 		"urlString": "https://github.com/pylapp"
 	}, {
     "firstName": "Lukáš",
     "lastName": "Prokein",
-    "contributionDescription": "Temperature-Badge on App Icon",
+    "contributionDescription": {
+      "en": "Temperature-Badge on App Icon",
+      "de": "Termperatur als Benachrichtigung auf dem App-Icon",
+      "fr": "Température sous forme de notification sur l'icône de l'application"
+    },
     "urlString": "https://github.com/lprokein"
   }]
 }

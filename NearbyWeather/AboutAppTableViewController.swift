@@ -164,23 +164,25 @@ class AboutAppTableViewController: UITableViewController {
         labelCell.contentLabel.text = R.string.localizable.rate_version()
         return labelCell
       } else {
-        buttonCell.configure(withTitle: R.string.localizable.report_issue(),
-                             leftButtonTitle: R.string.localizable.viaGitHub(),
-                             rightButtonTitle: R.string.localizable.viaEmail(),
-                             leftButtonHandler: { [unowned self] _ in
-                              guard let url = URL(string: "https://github.com/erikmartens/NearbyWeather/issues") else {
-                                return
-                              }
-                              DispatchQueue.main.async {
-                                self.presentSafariViewController(for: url)
-                              }
+        buttonCell.configure(
+          withTitle: R.string.localizable.report_issue(),
+          leftButtonTitle: R.string.localizable.viaGitHub(),
+          rightButtonTitle: R.string.localizable.viaEmail(),
+          leftButtonHandler: { [weak self] _ in
+            guard let url = URL(string: "https://github.com/erikmartens/NearbyWeather/issues") else {
+              return
+            }
+            DispatchQueue.main.async {
+              self?.presentSafariViewController(for: url)
+            }
           },
-                             rightButtonHandler: { [unowned self] _ in
-                              let mailAddress = "erikmartens.developer@gmail.com"
-                              let subject = "NearbyWeather - \(R.string.localizable.report_issue())"
-                              let message = "Hey Erik, \n"
-                              self.sendMail(to: [mailAddress], withSubject: subject, withMessage: message)
-        })
+          rightButtonHandler: { [weak self] _ in
+            let mailAddress = "erikmartens.developer@gmail.com"
+            let subject = "NearbyWeather - \(R.string.localizable.report_issue())"
+            let message = "Hey Erik, \n"
+            self?.sendMail(to: [mailAddress], withSubject: subject, withMessage: message)
+          }
+        )
         return buttonCell
       }
     case 1:
@@ -194,12 +196,12 @@ class AboutAppTableViewController: UITableViewController {
     case 2:
       let contributor = owner[indexPath.row]
       subtitleCell.contentLabel.text = "\(contributor.firstName) \(contributor.lastName)"
-      subtitleCell.subtitleLabel.text = contributor.contributionDescription
+      subtitleCell.subtitleLabel.text = contributor.localizedContributionDescription
       return subtitleCell
     case 3:
       let contributor = contributors[indexPath.row]
       subtitleCell.contentLabel.text = "\(contributor.firstName) \(contributor.lastName)"
-      subtitleCell.subtitleLabel.text = contributor.contributionDescription
+      subtitleCell.subtitleLabel.text = contributor.localizedContributionDescription
       return subtitleCell
     case 4:
       labelCell.contentLabel.text = thirdPartyLibraries[indexPath.row].name

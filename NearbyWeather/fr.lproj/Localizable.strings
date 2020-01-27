@@ -114,3 +114,4 @@ temperature_notification = "La température en %@ est maintenant %@";
 plus = "signe plus";
 minus = "moins";
 get_started_with_openweathermap = "Configurer l'accès à OpenWeatherMap";
+privacy_policy = "Politique de confidentialité";

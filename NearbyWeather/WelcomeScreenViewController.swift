@@ -120,7 +120,7 @@ class WelcomeScreenViewController: UIViewController {
   
   @IBAction func didTapSaveButton(_ sender: UIButton) {
     inputTextField.resignFirstResponder()
-    UserDefaults.standard.set(inputTextField.text, forKey: kNearbyWeatherApiKeyKey)
+    UserDefaults.standard.set(inputTextField.text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
     
     let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
     let destinationViewController = storyboard.instantiateViewController(withIdentifier: "SetPermissionsVC") as! SetPermissionsViewController
@@ -130,10 +130,7 @@ class WelcomeScreenViewController: UIViewController {
   }
   
   @IBAction func didTapGetInstructionsButton(_ sender: UIButton) {
-    guard let url = URL(string: "https://openweathermap.org/appid") else {
-      return
-    }
-    presentSafariViewController(for: url)
+    presentSafariViewController(for: Constants.Urls.kOpenWeatherMapInstructionsUrl)
   }
 }
 

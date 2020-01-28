@@ -69,21 +69,20 @@ class AboutAppTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    if indexPath.section == 0 && indexPath.row == 0,
-      let url = URL(string: "https://itunes.apple.com/app/id1227313069?action=write-review&mt=8") {
-      UIApplication.shared.open(url, completionHandler: nil)
+    if indexPath.section == 0 && indexPath.row == 0 {
+      UIApplication.shared.open(Constants.Urls.kAppStoreRatingDeepLinkUrl, completionHandler: nil)
       return
     }
     
     var urlStringValue: String?
     if indexPath.section == 1 {
-      urlStringValue = "https://erikmartens.weebly.com/nearbyweather-privacy-policy.html"
+      urlStringValue = Constants.Urls.kPrivacyPolicyUrl.absoluteString
     }
     if indexPath.section == 2 && indexPath.row == 0 {
-      urlStringValue = "https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md"
+      urlStringValue = Constants.Urls.kGitHubProjectContributionGuidelinesUrl.absoluteString
     }
     if indexPath.section == 2 && indexPath.row == 1 {
-      urlStringValue = "https://github.com/erikmartens/NearbyWeather"
+      urlStringValue = Constants.Urls.kGitHubProjectMainPageUrl.absoluteString
     }
     if indexPath.section == 3 {
       urlStringValue = owner[indexPath.row].urlString
@@ -95,7 +94,7 @@ class AboutAppTableViewController: UITableViewController {
       urlStringValue = thirdPartyLibraries[indexPath.row].urlString
     }
     if indexPath.section == 6 && indexPath.row == 0 {
-      urlStringValue = "https://www.icons8.com"
+      urlStringValue = Constants.Urls.kIconsEightUrl.absoluteString
     }
     guard let urlString = urlStringValue, let url = URL(string: urlString) else {
       return
@@ -174,11 +173,8 @@ class AboutAppTableViewController: UITableViewController {
           leftButtonTitle: R.string.localizable.viaGitHub(),
           rightButtonTitle: R.string.localizable.viaEmail(),
           leftButtonHandler: { [weak self] _ in
-            guard let url = URL(string: "https://github.com/erikmartens/NearbyWeather/issues") else {
-              return
-            }
             DispatchQueue.main.async {
-              self?.presentSafariViewController(for: url)
+              self?.presentSafariViewController(for: Constants.Urls.kGitHubProjectIssues)
             }
           },
           rightButtonHandler: { [weak self] _ in

@@ -27,7 +27,7 @@ class SettingsInputTableViewController: UITableViewController {
     
     tableView.delegate = self
     inputTextField.delegate = self
-    inputTextField.text = UserDefaults.standard.string(forKey: kNearbyWeatherApiKeyKey)
+    inputTextField.text = UserDefaults.standard.string(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -85,10 +85,10 @@ class SettingsInputTableViewController: UITableViewController {
     
     inputTextField.resignFirstResponder()
     
-    if let currentApiKey = UserDefaults.standard.string(forKey: kNearbyWeatherApiKeyKey), text == currentApiKey {
+    if let currentApiKey = UserDefaults.standard.string(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey), text == currentApiKey {
       return true // saving is unnecessary as there was no change
     }
-    UserDefaults.standard.set(text, forKey: kNearbyWeatherApiKeyKey)
+    UserDefaults.standard.set(text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
     HUD.flash(.success, delay: 1.0)
     WeatherDataManager.shared.update(withCompletionHandler: nil)
     return true

@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     tabbar?.viewControllers = [weatherListNav!, mapNav!, settingsNav!]
     
-    if UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey) == nil {
+    if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) == nil {
       showSplashScreenIfNeeded()
     } else {
       LocationService.shared.requestWhenInUseAuthorization()
@@ -88,8 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   // MARK: - Private Helpers
   
   private func refreshWeatherDataIfNeeded() {
-    if UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey) != nil,
-      UserDefaults.standard.bool(forKey: kRefreshOnAppStartKey) == true {
+    if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil,
+      UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true {
       WeatherDataManager.shared.update(withCompletionHandler: nil)
     }
   }

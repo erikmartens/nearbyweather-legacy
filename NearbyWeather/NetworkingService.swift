@@ -48,7 +48,7 @@ class NetworkingService {
       case .notReachable: self.reachabilityStatus = .disconnected
       case .reachable(.ethernetOrWiFi), .reachable(.wwan): self.reachabilityStatus = .connected
       }
-      NotificationCenter.default.post(name: Notification.Name(rawValue: kNetworkReachabilityChanged), object: self)
+      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged), object: self)
     }
     reachabilityManager?.startListening()
   }
@@ -63,8 +63,8 @@ class NetworkingService {
     let session = URLSession.shared
     
     let localeTag = NSLocalizedString("locale_tag", comment: "")
-    guard let apiKey = UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey),
-      let requestURL = URL(string: "\(Constants.Url.kOpenWeatherSingleLocationBaseUrl.absoluteString)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)") else {
+    guard let apiKey = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey),
+      let requestURL = URL(string: "\(Constants.Urls.kOpenWeatherSingleLocationBaseUrl.absoluteString)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)") else {
         let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
         return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
     }
@@ -87,9 +87,9 @@ class NetworkingService {
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .locationUnavailableError), httpStatusCode: nil)
       return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
     }
-    guard let apiKey = UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey),
+    guard let apiKey = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey),
       let requestURL = URL(
-        string: "\(Constants.Url.kOpenWeatherMultiLocationBaseUrl.absoluteString)?APPID=\(apiKey)&lat=\(currentLatitude)&lon=\(currentLongitude)&cnt=\(PreferencesManager.shared.amountOfResults.integerValue)"
+        string: "\(Constants.Urls.kOpenWeatherMultiLocationBaseUrl.absoluteString)?APPID=\(apiKey)&lat=\(currentLatitude)&lon=\(currentLongitude)&cnt=\(PreferencesManager.shared.amountOfResults.integerValue)"
       ) else {
         let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
         return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))

@@ -53,18 +53,24 @@ class WeatherListViewController: UIViewController {
     configure()
     tableView.reloadData()
     
-    NotificationCenter.default.addObserver(self, selector: #selector(WeatherListViewController.reconfigureOnWeatherDataServiceDidUpdate), name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: nil)
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(WeatherListViewController.reconfigureOnWeatherDataServiceDidUpdate),
+                                           name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
+                                           object: nil)
     
     if !WeatherDataManager.shared.hasDisplayableData {
-      NotificationCenter.default.addObserver(self, selector: #selector(WeatherListViewController.reconfigureOnNetworkDidBecomeAvailable), name: Notification.Name(rawValue: kNetworkReachabilityChanged), object: nil)
+      NotificationCenter.default.addObserver(self,
+                                             selector: #selector(WeatherListViewController.reconfigureOnNetworkDidBecomeAvailable),
+                                             name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
+                                             object: nil)
     }
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    if UserDefaults.standard.value(forKey: kIsInitialLaunch) == nil {
-      UserDefaults.standard.set(false, forKey: kIsInitialLaunch)
+    if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kIsInitialLaunch) == nil {
+      UserDefaults.standard.set(false, forKey: Constants.Keys.UserDefaults.kIsInitialLaunch)
       updateWeatherData()
     }
   }
@@ -117,7 +123,7 @@ class WeatherListViewController: UIViewController {
   }
   
   private func configureLastRefreshDate() {
-    guard let lastRefreshDate = UserDefaults.standard.object(forKey: kWeatherDataLastRefreshDateKey) as? Date else {
+    guard let lastRefreshDate = UserDefaults.standard.object(forKey: Constants.Keys.UserDefaults.kWeatherDataLastRefreshDateKey) as? Date else {
       refreshDateLabel.isHidden = true
       return
     }
@@ -172,7 +178,7 @@ class WeatherListViewController: UIViewController {
   }
   
   @IBAction func openWeatherMapButtonPressed(_ sender: UIButton) {
-    presentSafariViewController(for: Constants.Url.kOpenWeatherMapUrl)
+    presentSafariViewController(for: Constants.Urls.kOpenWeatherMapUrl)
   }
   
   // MARK: - Helpers

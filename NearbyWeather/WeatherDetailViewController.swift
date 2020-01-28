@@ -192,7 +192,7 @@ class WeatherDetailViewController: UIViewController {
   
   @IBAction func openWeatherMapButtonPressed(_ sender: UIButton) {
     presentSafariViewController(for:
-      Constants.Url.kOpenWeatherMapCityDetailsUrl(forCityWithName: weatherDTO.cityName)
+      Constants.Urls.kOpenWeatherMapCityDetailsUrl(forCityWithName: weatherDTO.cityName)
     )
   }
 }

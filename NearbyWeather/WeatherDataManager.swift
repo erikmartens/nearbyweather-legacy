@@ -94,7 +94,7 @@ class WeatherDataManager {
     locationAuthorizationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [unowned self] _ in
       self.discardLocationBasedWeatherDataIfNeeded()
     })
-    sortingOrientationChangedObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: kSortingOrientationPreferenceChanged), object: nil, queue: nil, using: { [unowned self] _ in
+    sortingOrientationChangedObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged), object: nil, queue: nil, using: { [unowned self] _ in
       self.sortNearbyLocationWeatherData()
     })
   }
@@ -104,7 +104,7 @@ class WeatherDataManager {
       NotificationCenter.default.removeObserver(locationAuthorizationObserver, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     if let sortingOrientationChangedObserver = sortingOrientationChangedObserver {
-      NotificationCenter.default.removeObserver(sortingOrientationChangedObserver, name: Notification.Name(rawValue: kSortingOrientationPreferenceChanged), object: nil)
+      NotificationCenter.default.removeObserver(sortingOrientationChangedObserver, name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged), object: nil)
     }
   }
   
@@ -169,8 +169,8 @@ class WeatherDataManager {
       
       WeatherDataManager.storeService()
       DispatchQueue.main.async {
-        UserDefaults.standard.set(Date(), forKey: kWeatherDataLastRefreshDateKey)
-        NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
+        UserDefaults.standard.set(Date(), forKey: Constants.Keys.UserDefaults.kWeatherDataLastRefreshDateKey)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: self)
         BadgeService.shared.updateBadge()
         completionHandler?(.success)
       }
@@ -216,7 +216,7 @@ class WeatherDataManager {
       
       WeatherDataManager.storeService()
       DispatchQueue.main.async {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: self)
         BadgeService.shared.updateBadge()
         completionHandler(.success)
       }
@@ -283,7 +283,7 @@ class WeatherDataManager {
     if !LocationService.shared.locationPermissionsGranted {
       nearbyWeatherDataObject = nil
       WeatherDataManager.storeService()
-      NotificationCenter.default.post(name: Notification.Name(rawValue: kWeatherServiceDidUpdate), object: self)
+      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: self)
     }
   }
   

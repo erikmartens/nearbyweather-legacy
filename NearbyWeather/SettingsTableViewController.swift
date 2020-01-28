@@ -48,7 +48,7 @@ class SettingsTableViewController: UITableViewController {
         navigationController?.pushViewController(destinationViewController, animated: true)
         return
       }
-      navigationController?.presentSafariViewController(for: Constants.Url.kOpenWeatherMapInstructionsUrl)
+      navigationController?.presentSafariViewController(for: Constants.Urls.kOpenWeatherMapInstructionsUrl)
     case 3:
       if indexPath.row == 0 {
         guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
@@ -142,16 +142,16 @@ class SettingsTableViewController: UITableViewController {
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
       cell.contentLabel.text = R.string.localizable.refresh_on_app_start()
-      cell.toggle.isOn = UserDefaults.standard.bool(forKey: kRefreshOnAppStartKey)
+      cell.toggle.isOn = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
       cell.toggleSwitchHandler = { sender in
-        UserDefaults.standard.set(sender.isOn, forKey: kRefreshOnAppStartKey)
+        UserDefaults.standard.set(sender.isOn, forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
       }
       return cell
     case 2:
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
         cell.contentLabel.text = R.string.localizable.apiKey()
-        cell.selectionLabel.text = UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey) as? String
+        cell.selectionLabel.text = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
         cell.accessoryType = .disclosureIndicator
         return cell
       }

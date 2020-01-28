@@ -70,19 +70,19 @@ class AboutAppTableViewController: UITableViewController {
     tableView.deselectRow(at: indexPath, animated: true)
     
     if indexPath.section == 0 && indexPath.row == 0 {
-      UIApplication.shared.open(Constants.Url.kAppStoreRatingDeepLinkUrl, completionHandler: nil)
+      UIApplication.shared.open(Constants.Urls.kAppStoreRatingDeepLinkUrl, completionHandler: nil)
       return
     }
     
     var urlStringValue: String?
     if indexPath.section == 1 {
-      urlStringValue = Constants.Url.kPrivacyPolicyUrl.absoluteString
+      urlStringValue = Constants.Urls.kPrivacyPolicyUrl.absoluteString
     }
     if indexPath.section == 2 && indexPath.row == 0 {
-      urlStringValue = Constants.Url.kGitHubProjectContributionGuidelinesUrl.absoluteString
+      urlStringValue = Constants.Urls.kGitHubProjectContributionGuidelinesUrl.absoluteString
     }
     if indexPath.section == 2 && indexPath.row == 1 {
-      urlStringValue = Constants.Url.kGitHubProjectMainPageUrl.absoluteString
+      urlStringValue = Constants.Urls.kGitHubProjectMainPageUrl.absoluteString
     }
     if indexPath.section == 3 {
       urlStringValue = owner[indexPath.row].urlString
@@ -94,7 +94,7 @@ class AboutAppTableViewController: UITableViewController {
       urlStringValue = thirdPartyLibraries[indexPath.row].urlString
     }
     if indexPath.section == 6 && indexPath.row == 0 {
-      urlStringValue = Constants.Url.kIconsEightUrl.absoluteString
+      urlStringValue = Constants.Urls.kIconsEightUrl.absoluteString
     }
     guard let urlString = urlStringValue, let url = URL(string: urlString) else {
       return
@@ -174,7 +174,7 @@ class AboutAppTableViewController: UITableViewController {
           rightButtonTitle: R.string.localizable.viaEmail(),
           leftButtonHandler: { [weak self] _ in
             DispatchQueue.main.async {
-              self?.presentSafariViewController(for: Constants.Url.kGitHubProjectIssues)
+              self?.presentSafariViewController(for: Constants.Urls.kGitHubProjectIssues)
             }
           },
           rightButtonHandler: { [weak self] _ in

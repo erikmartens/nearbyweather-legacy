@@ -50,7 +50,7 @@ class WeatherLocationService {
         do {
           queryResult = try database.executeQuery(query, values: nil)
         } catch {
-          print(error.localizedDescription)
+          printDebugMessage(string: error.localizedDescription)
           return completionHandler(nil)
         }
         

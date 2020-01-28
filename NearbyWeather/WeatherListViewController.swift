@@ -172,10 +172,7 @@ class WeatherListViewController: UIViewController {
   }
   
   @IBAction func openWeatherMapButtonPressed(_ sender: UIButton) {
-    guard let url = URL(string: "https://openweathermap.org") else {
-      return
-    }
-    presentSafariViewController(for: url)
+    presentSafariViewController(for: Constants.Url.kOpenWeatherMapUrl)
   }
   
   // MARK: - Helpers

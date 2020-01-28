@@ -191,10 +191,9 @@ class WeatherDetailViewController: UIViewController {
   // MARK: - IBActions
   
   @IBAction func openWeatherMapButtonPressed(_ sender: UIButton) {
-    guard let url = URL(string: "https://openweathermap.org/find?q=\(weatherDTO.cityName)") else {
-      return
-    }
-    presentSafariViewController(for: url)
+    presentSafariViewController(for:
+      Constants.Url.kOpenWeatherMapCityDetailsUrl(forCityWithName: weatherDTO.cityName)
+    )
   }
 }
 

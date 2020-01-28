@@ -130,10 +130,7 @@ class WelcomeScreenViewController: UIViewController {
   }
   
   @IBAction func didTapGetInstructionsButton(_ sender: UIButton) {
-    guard let url = URL(string: "https://openweathermap.org/appid") else {
-      return
-    }
-    presentSafariViewController(for: url)
+    presentSafariViewController(for: Constants.Url.kOpenWeatherMapInstructionsUrl)
   }
 }
 

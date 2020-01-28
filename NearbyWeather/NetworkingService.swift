@@ -15,9 +15,6 @@ enum ReachabilityStatus {
   case connected
 }
 
-private let kOpenWeatherSingleLocationBaseURL = "http://api.openweathermap.org/data/2.5/weather"
-private let kOpenWeatherMultiLocationBaseURL = "http://api.openweathermap.org/data/2.5/find"
-
 class NetworkingService {
   
   // MARK: - Public Assets
@@ -67,7 +64,7 @@ class NetworkingService {
     
     let localeTag = NSLocalizedString("locale_tag", comment: "")
     guard let apiKey = UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey),
-      let requestURL = URL(string: "\(kOpenWeatherSingleLocationBaseURL)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)") else {
+      let requestURL = URL(string: "\(Constants.Url.kOpenWeatherSingleLocationBaseUrl.absoluteString)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)") else {
         let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
         return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
     }
@@ -91,7 +88,9 @@ class NetworkingService {
       return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
     }
     guard let apiKey = UserDefaults.standard.value(forKey: kNearbyWeatherApiKeyKey),
-      let requestURL = URL(string: "\(kOpenWeatherMultiLocationBaseURL)?APPID=\(apiKey)&lat=\(currentLatitude)&lon=\(currentLongitude)&cnt=\(PreferencesManager.shared.amountOfResults.integerValue)") else {
+      let requestURL = URL(
+        string: "\(Constants.Url.kOpenWeatherMultiLocationBaseUrl.absoluteString)?APPID=\(apiKey)&lat=\(currentLatitude)&lon=\(currentLongitude)&cnt=\(PreferencesManager.shared.amountOfResults.integerValue)"
+      ) else {
         let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
         return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
     }

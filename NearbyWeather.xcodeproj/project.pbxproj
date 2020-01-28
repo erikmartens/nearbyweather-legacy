@@ -66,6 +66,8 @@
 		F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2B1DF2004171500C810EF /* DataStorageService.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
+		F2E7237D23E0EA38001189F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237C23E0EA38001189F5 /* Constants.swift */; };
+		F2E7237F23E0EA65001189F5 /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237E23E0EA65001189F5 /* Constants+URLs.swift */; };
 		F2FE3EFF20027EB400EBC429 /* WeatherStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */; };
 		F2FE3F01200285B100EBC429 /* WeatherLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3F00200285B100EBC429 /* WeatherLocationService.swift */; };
 		F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3F022002972800EBC429 /* WeatherLocationSelectionTableViewController.swift */; };
@@ -166,6 +168,8 @@
 		F2D2B1DF2004171500C810EF /* DataStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageService.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
+		F2E7237C23E0EA38001189F5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F2E7237E23E0EA65001189F5 /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Constants+URLs.swift"; path = "/Users/erikmartens/Code/NearbyWeather/NearbyWeather/Constants+URLs.swift"; sourceTree = "<absolute>"; };
 		F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationDTO.swift; sourceTree = "<group>"; };
 		F2FE3F00200285B100EBC429 /* WeatherLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationService.swift; sourceTree = "<group>"; };
 		F2FE3F022002972800EBC429 /* WeatherLocationSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationSelectionTableViewController.swift; sourceTree = "<group>"; };
@@ -253,7 +257,7 @@
 				F266995C1E9AE23900498F99 /* Model */,
 				F266995B1E9AE22800498F99 /* View */,
 				F266995D1E9AE25D00498F99 /* ViewController */,
-				F260C4451F9D4D50000D2BC0 /* Miscellaneous */,
+				F260C4451F9D4D50000D2BC0 /* Commons */,
 			);
 			path = NearbyWeather;
 			sourceTree = "<group>";
@@ -276,15 +280,16 @@
 			path = NearbyWeatherUITests;
 			sourceTree = "<group>";
 		};
-		F260C4451F9D4D50000D2BC0 /* Miscellaneous */ = {
+		F260C4451F9D4D50000D2BC0 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
-				F28CA5422027AE9B00209397 /* Custom Objects */,
+				F2E7237B23E0EA22001189F5 /* Constants */,
 				F28CE9611F96B202008319C4 /* Extensions */,
+				F28CA5422027AE9B00209397 /* Custom Objects */,
 				F2B8E9FE1EA11B8100704E90 /* Data Transfer Objects */,
 				F2E7237523DA5120001189F5 /* Keys */,
 			);
-			name = Miscellaneous;
+			name = Commons;
 			sourceTree = "<group>";
 		};
 		F266995B1E9AE22800498F99 /* View */ = {
@@ -414,6 +419,15 @@
 				F274FC36202D005800049144 /* NotificationCenterKeys.swift */,
 			);
 			name = Keys;
+			sourceTree = "<group>";
+		};
+		F2E7237B23E0EA22001189F5 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				F2E7237C23E0EA38001189F5 /* Constants.swift */,
+				F2E7237E23E0EA65001189F5 /* Constants+URLs.swift */,
+			);
+			name = Constants;
 			sourceTree = "<group>";
 		};
 		F2FE3EFB20027DE600EBC429 /* Bootsrapped Data */ = {
@@ -755,6 +769,7 @@
 				F2B8EA001EA11BA800704E90 /* WeatherDataDTOs.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
+				F2E7237F23E0EA65001189F5 /* Constants+URLs.swift in Sources */,
 				F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */,
 				F204B7BD1DF35610000F4371 /* SettingsTableViewController.swift in Sources */,
 				F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */,
@@ -769,6 +784,7 @@
 				F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */,
 				F2A5CAA8200587DE0071BFFB /* LocationWeatherDataCell.swift in Sources */,
 				F2B8EA021EA121CC00704E90 /* AlertCell.swift in Sources */,
+				F2E7237D23E0EA38001189F5 /* Constants.swift in Sources */,
 				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,
 				F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */,
 				F274FC37202D005800049144 /* NotificationCenterKeys.swift in Sources */,

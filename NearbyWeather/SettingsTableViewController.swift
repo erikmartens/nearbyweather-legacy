@@ -48,10 +48,7 @@ class SettingsTableViewController: UITableViewController {
         navigationController?.pushViewController(destinationViewController, animated: true)
         return
       }
-      guard let url = URL(string: "https://openweathermap.org/appid") else {
-        return
-      }
-      navigationController?.presentSafariViewController(for: url)
+      navigationController?.presentSafariViewController(for: Constants.Url.kOpenWeatherMapInstructionsUrl)
     case 3:
       if indexPath.row == 0 {
         guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {

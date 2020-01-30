@@ -122,9 +122,7 @@ class WelcomeScreenViewController: UIViewController {
     inputTextField.resignFirstResponder()
     UserDefaults.standard.set(inputTextField.text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
     
-    let storyboard = UIStoryboard(name: "Welcome", bundle: nil)
-    let destinationViewController = storyboard.instantiateViewController(withIdentifier: "SetPermissionsVC") as! SetPermissionsViewController
-    
+    let destinationViewController = R.storyboard.welcome.setPermissionsVC()!
     navigationController?.pushViewController(destinationViewController, animated: true)
     
   }

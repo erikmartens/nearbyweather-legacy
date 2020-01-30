@@ -33,16 +33,14 @@ class SettingsTableViewController: UITableViewController {
     
     switch indexPath.section {
     case 0:
-      let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-      let destinationViewController = storyboard.instantiateViewController(withIdentifier: "InfoTableViewController") as! AboutAppTableViewController
+      let destinationViewController = R.storyboard.settings.infoTableViewController()!
       navigationItem.removeTextFromBackBarButton()
       navigationController?.pushViewController(destinationViewController, animated: true)
     case 1:
       break
     case 2:
       if indexPath.row == 0 {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "SettingsInputTVC") as! SettingsInputTableViewController
+        let destinationViewController = R.storyboard.settings.settingsInputTVC()!
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)
@@ -54,14 +52,12 @@ class SettingsTableViewController: UITableViewController {
         guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
           break
         }
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "WeatherLocationManagementTableViewController") as! WeatherLocationManagementTableViewController
+        let destinationViewController = R.storyboard.settings.weatherLocationManagementTableViewController()!
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)
       } else if indexPath.row == 1 {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "OWMCityFilterTableViewController") as! WeatherLocationSelectionTableViewController
+        let destinationViewController = R.storyboard.settings.owmCityFilterTableViewController()!
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)

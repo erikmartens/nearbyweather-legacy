@@ -14,7 +14,7 @@ import APTimeZones
 class WeatherDetailViewController: UIViewController {
   
   static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailViewController {
-    let viewController = UIStoryboard(name: "Details", bundle: .main).instantiateViewController(withIdentifier: "WeatherDetailViewController") as! WeatherDetailViewController
+    let viewController = R.storyboard.details.weatherDetailViewController()!
     viewController.titleString = title
     viewController.weatherDTO = weatherDTO
     return viewController

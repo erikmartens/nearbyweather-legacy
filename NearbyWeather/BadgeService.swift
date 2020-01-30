@@ -27,7 +27,7 @@ final class BadgeService {
     }
   }
   
-  private struct TemperatureSignNotificationBundle {
+  private struct AppIconBadgeTemperatureContent {
     let sign: TemperatureSign
     let unit: TemperatureUnit
     let temperature: Int
@@ -89,9 +89,9 @@ final class BadgeService {
     let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
     UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
     if previousTemperatureValue < 0 && temperature > 0 {
-      sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
+      sendTemperatureSignChangeNotification(content: AppIconBadgeTemperatureContent(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
     } else if previousTemperatureValue > 0 && temperature < 0 {
-      sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
+      sendTemperatureSignChangeNotification(content: AppIconBadgeTemperatureContent(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
     }
   }
   
@@ -99,8 +99,8 @@ final class BadgeService {
     UIApplication.shared.applicationIconBadgeNumber = 0
   }
   
-  private func sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle) {
-    let notificationBody = R.string.localizable.temperature_notification(bundle.cityName, "\(bundle.sign.stringValue) \(bundle.temperature)\(bundle.unit.abbreviation)")
+  private func sendTemperatureSignChangeNotification(content: AppIconBadgeTemperatureContent) {
+    let notificationBody = R.string.localizable.temperature_notification(content.cityName, "\(content.sign.stringValue) \(content.temperature)\(content.unit.abbreviation)")
     
     let content = UNMutableNotificationContent()
     content.title = R.string.localizable.app_icon_temperature_sign_updated()

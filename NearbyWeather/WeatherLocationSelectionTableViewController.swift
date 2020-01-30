@@ -61,7 +61,7 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "OWMCityCell", for: indexPath) as! LocationWeatherDataCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.owmCityCell.identifier, for: indexPath) as! LocationWeatherDataCell
     cell.contentLabel.text = "\(filteredCities[indexPath.row].name), \(filteredCities[indexPath.row].country)"
     return cell
   }

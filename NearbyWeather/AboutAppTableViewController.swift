@@ -151,9 +151,9 @@ final class AboutAppTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let labelCell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelCell
-    let subtitleCell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath) as! SubtitleCell
-    let buttonCell = tableView.dequeueReusableCell(withIdentifier: "ButtonCell", for: indexPath) as! ButtonCell
+    let labelCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+    let subtitleCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell
+    let buttonCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.buttonCell.identifier, for: indexPath) as! ButtonCell
     
     [labelCell, subtitleCell].forEach {
       $0.selectionStyle = .default

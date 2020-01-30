@@ -205,7 +205,7 @@ extension WeatherDetailViewController: MKMapViewDelegate {
     }
     
     var viewForCurrentAnnotation: WeatherLocationMapAnnotationView?
-    if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: kMapAnnotationViewIdentifier) as? WeatherLocationMapAnnotationView {
+    if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier:  Constants.Keys.MapAnnotation.kMapAnnotationViewIdentifier) as? WeatherLocationMapAnnotationView {
       viewForCurrentAnnotation = dequeuedAnnotationView
     } else {
       viewForCurrentAnnotation = WeatherLocationMapAnnotationView(frame: kMapAnnotationViewInitialFrame)

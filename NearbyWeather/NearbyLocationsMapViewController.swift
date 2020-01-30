@@ -109,7 +109,7 @@ class NearbyLocationsMapViewController: UIViewController {
           self.focusMapOnSelectedBookmarkedLocation()
         }
       })
-      action.setValue(UIImage(named: "LocateFavoriteActiveIcon"), forKey: "image")
+      action.setValue(R.image.locateFavoriteActiveIcon(), forKey: "image")
       optionsAlert.addAction(action)
     }
     
@@ -118,7 +118,7 @@ class NearbyLocationsMapViewController: UIViewController {
         self.focusMapOnUserLocation()
       }
     })
-    currentLocationAction.setValue(UIImage(named: "LocateUserActiveIcon"), forKey: "image")
+    currentLocationAction.setValue(R.image.locateUserActiveIcon(), forKey: "image")
     optionsAlert.addAction(currentLocationAction)
     
     let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)

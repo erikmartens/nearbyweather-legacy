@@ -11,9 +11,7 @@ import UIKit
 extension UINavigationController {
   
   func addVerticalCloseButton(withCompletionHandler handler: (() -> Void)?) {
-    let verticalArrow = UIImage(named: "VerticalCloseButton")
-    
-    let closeButton = UIBarButtonItem(image: verticalArrow, style: .plain) { [unowned self] _ in
+    let closeButton = UIBarButtonItem(image: R.image.verticalCloseButton(), style: .plain) { [unowned self] _ in
       self.topViewController?.view.endEditing(true)
       self.presentingViewController?.dismiss(animated: true) {
         handler?()

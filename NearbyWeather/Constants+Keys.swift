@@ -54,3 +54,10 @@ extension Constants.Keys {
     static let kPreferencesManagerStoredContentsFileName = "PreferencesManagerStoredContents"
   }
 }
+
+extension Constants.Keys {
+  
+  enum MapAnnotation {
+    static let kMapAnnotationViewIdentifier = "de.erikmaximilianmartens.nearbyWeather.WeatherLocationMapAnnotationView"
+  }
+}

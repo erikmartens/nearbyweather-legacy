@@ -9,7 +9,6 @@
 import Foundation
 import MapKit
 
-public let kMapAnnotationViewIdentifier = "de.erikmaximilianmartens.nearbyWeather.WeatherLocationMapAnnotationView"
 public let kMapAnnotationViewInitialFrame = CGRect(x: 0, y: 0, width: kWidth, height: kHeight)
 
 private let kMargin: CGFloat = 4
@@ -50,7 +49,7 @@ final class WeatherLocationMapAnnotationView: MKAnnotationView {
   // MARK: - Overrides
   
   override var reuseIdentifier: String? {
-    return kMapAnnotationViewIdentifier
+    return Constants.Keys.MapAnnotation.kMapAnnotationViewIdentifier
   }
   
   override func prepareForReuse() {

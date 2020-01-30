@@ -67,7 +67,7 @@ public class SortingOrientation: Codable, PreferencesOption {
   }
 }
 
-public enum TemperatureUnitWrappedEnum: Int, Codable {
+public enum TemperatureUnitWrappedEnum: Int, Codable, CaseIterable {
   case celsius
   case fahrenheit
   case kelvin
@@ -76,7 +76,9 @@ public enum TemperatureUnitWrappedEnum: Int, Codable {
 public class TemperatureUnit: Codable, PreferencesOption {
   public typealias PreferencesOptionType = TemperatureUnitWrappedEnum
   
-  static let count = 3
+  private lazy var count: Int = {
+    return TemperatureUnitWrappedEnum.allCases.count
+  }()
   
   public var value: TemperatureUnitWrappedEnum
   
@@ -187,8 +189,6 @@ public class AmountOfResults: Codable, PreferencesOption {
   }
 }
 
-private let kPreferencesManagerStoredContentsFileName = "PreferencesManagerStoredContents"
-
 struct PreferencesManagerStoredContentsWrapper: Codable {
   var preferredBookmark: PreferredBookmark
   var amountOfResults: AmountOfResults
@@ -284,17 +284,21 @@ final class PreferencesManager {
   /* Internal Storage Helpers */
   
   private static func loadService() -> PreferencesManager? {
-    guard let preferencesManagerStoredContentsWrapper = DataStorageService.retrieveJsonFromFile(with: kPreferencesManagerStoredContentsFileName, andDecodeAsType: PreferencesManagerStoredContentsWrapper.self, fromStorageLocation: .applicationSupport) else {
-      return nil
+    guard let preferencesManagerStoredContentsWrapper = DataStorageService.retrieveJsonFromFile(
+      with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
+      andDecodeAsType: PreferencesManagerStoredContentsWrapper.self,
+      fromStorageLocation: .applicationSupport
+      ) else {
+        return nil
     }
     
-    let preferencesManager = PreferencesManager(preferredBookmark: preferencesManagerStoredContentsWrapper.preferredBookmark,
-                                                amountOfResults: preferencesManagerStoredContentsWrapper.amountOfResults,
-                                                temperatureUnit: preferencesManagerStoredContentsWrapper.temperatureUnit,
-                                                windspeedUnit: preferencesManagerStoredContentsWrapper.windspeedUnit,
-                                                sortingOrientation: preferencesManagerStoredContentsWrapper.sortingOrientation)
-    
-    return preferencesManager
+    return PreferencesManager(
+      preferredBookmark: preferencesManagerStoredContentsWrapper.preferredBookmark,
+      amountOfResults: preferencesManagerStoredContentsWrapper.amountOfResults,
+      temperatureUnit: preferencesManagerStoredContentsWrapper.temperatureUnit,
+      windspeedUnit: preferencesManagerStoredContentsWrapper.windspeedUnit,
+      sortingOrientation: preferencesManagerStoredContentsWrapper.sortingOrientation
+    )
   }
   
   private static func storeService() {
@@ -302,12 +306,16 @@ final class PreferencesManager {
     
     dispatchSemaphore.wait()
     preferencesManagerBackgroundQueue.async {
-      let preferencesManagerStoredContentsWrapper = PreferencesManagerStoredContentsWrapper(preferredBookmark: PreferencesManager.shared.preferredBookmark,
-                                                                                            amountOfResults: PreferencesManager.shared.amountOfResults,
-                                                                                            temperatureUnit: PreferencesManager.shared.temperatureUnit,
-                                                                                            windspeedUnit: PreferencesManager.shared.distanceSpeedUnit,
-                                                                                            sortingOrientation: PreferencesManager.shared.sortingOrientation)
-      DataStorageService.storeJson(for: preferencesManagerStoredContentsWrapper, inFileWithName: kPreferencesManagerStoredContentsFileName, toStorageLocation: .applicationSupport)
+      let preferencesManagerStoredContentsWrapper = PreferencesManagerStoredContentsWrapper(
+        preferredBookmark: PreferencesManager.shared.preferredBookmark,
+        amountOfResults: PreferencesManager.shared.amountOfResults,
+        temperatureUnit: PreferencesManager.shared.temperatureUnit,
+        windspeedUnit: PreferencesManager.shared.distanceSpeedUnit,
+        sortingOrientation: PreferencesManager.shared.sortingOrientation
+      )
+      DataStorageService.storeJson(for: preferencesManagerStoredContentsWrapper,
+                                   inFileWithName: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
+                                   toStorageLocation: .applicationSupport)
       dispatchSemaphore.signal()
     }
   }

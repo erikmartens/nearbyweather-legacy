@@ -28,13 +28,6 @@ struct BulkWeatherDataContainer: Codable {
   var weatherInformationDTOs: [WeatherInformationDTO]?
 }
 
-let kDefaultBookmarkedLocation = WeatherStationDTO(identifier: 5341145,
-                                                   name: "Cupertino",
-                                                   country: "US",
-                                                   coordinates: Coordinates(latitude: 37.323002, longitude: -122.032181))
-
-private let kWeatherDataManagerStoredContentsFileName = "WeatherDataManagerStoredContents"
-
 struct WeatherDataManagerStoredContentsWrapper: Codable {
   var bookmarkedLocations: [WeatherStationDTO]
   var bookmarkedWeatherDataObjects: [WeatherDataContainer]?
@@ -46,7 +39,7 @@ enum UpdateStatus {
   case failure
 }
 
-class WeatherDataManager {
+final class WeatherDataManager {
   
   private lazy var fetchWeatherDataBackgroundQueue: DispatchQueue = {
     return DispatchQueue(label: Constants.Labels.DispatchQueues.kFetchWeatherDataBackgroundQueue,
@@ -130,7 +123,7 @@ class WeatherDataManager {
   // MARK: - Public Properties & Methods
   
   public static func instantiateSharedInstance() {
-    shared = WeatherDataManager.loadService() ?? WeatherDataManager(bookmarkedLocations: [kDefaultBookmarkedLocation])
+    shared = WeatherDataManager.loadService() ?? WeatherDataManager(bookmarkedLocations: [Constants.Mocks.WeatherStationDTOs.kDefaultBookmarkedLocation])
   }
   
   public func update(withCompletionHandler completionHandler: ((UpdateStatus) -> Void)?) {
@@ -305,7 +298,11 @@ class WeatherDataManager {
   /* Internal Storage Helpers */
   
   private static func loadService() -> WeatherDataManager? {
-    guard let weatherDataManagerStoredContents = DataStorageService.retrieveJsonFromFile(with: kWeatherDataManagerStoredContentsFileName, andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self, fromStorageLocation: .documents) else {
+    guard let weatherDataManagerStoredContents = DataStorageService.retrieveJsonFromFile(
+      with: Constants.Keys.Storage.kWeatherDataManagerStoredContentsFileName,
+      andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self,
+      fromStorageLocation: .documents
+      ) else {
       return nil
     }
     
@@ -327,7 +324,7 @@ class WeatherDataManager {
         nearbyWeatherDataObject: WeatherDataManager.shared.nearbyWeatherDataObject
       )
       DataStorageService.storeJson(for: weatherDataManagerStoredContents,
-                                   inFileWithName: kWeatherDataManagerStoredContentsFileName,
+                                   inFileWithName: Constants.Keys.Storage.kWeatherDataManagerStoredContentsFileName,
                                    toStorageLocation: .documents)
       dispatchSemaphore.signal()
     }

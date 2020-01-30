@@ -46,3 +46,11 @@ extension Constants.Keys {
     static let kImage = "image"
   }
 }
+
+extension Constants.Keys {
+  
+  enum Storage {
+    static let kWeatherDataManagerStoredContentsFileName = "WeatherDataManagerStoredContents"
+    static let kPreferencesManagerStoredContentsFileName = "PreferencesManagerStoredContents"
+  }
+}

@@ -8,9 +8,9 @@
 
 import Foundation
 
-func printDebugMessage(string: String) {
+func printDebugMessage(domain: String, message: String) {
   guard !BuildEnvironment.isReleaseEvironment() else {
     return
   }
-  print("💥  \(string)")
+  print("💥 \(domain) : \(message)")
 }

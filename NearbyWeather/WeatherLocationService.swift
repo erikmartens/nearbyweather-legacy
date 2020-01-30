@@ -24,7 +24,7 @@ class WeatherLocationService {
   // MARK: - Initialization
   
   private init() {
-    let sqliteFilePath = Bundle.main.path(forResource: "locationsSQLite", ofType: "sqlite")! // crash app if not found, cannot run without db
+    let sqliteFilePath = R.file.locationsSQLiteSqlite()!.path // crash app if not found, cannot run without db
     self.databaseQueue = FMDatabaseQueue(path: sqliteFilePath)! // crash app if init fails, cannot run without db
   }
   
@@ -50,7 +50,8 @@ class WeatherLocationService {
         do {
           queryResult = try database.executeQuery(query, values: nil)
         } catch {
-          printDebugMessage(string: error.localizedDescription)
+          printDebugMessage(domain: String(describing: self),
+                            message: error.localizedDescription)
           return completionHandler(nil)
         }
         

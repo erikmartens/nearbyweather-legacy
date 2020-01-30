@@ -125,7 +125,8 @@ class NetworkingService {
       let weatherInformationDTO = try JSONDecoder().decode(WeatherInformationDTO.self, from: data)
       return WeatherDataContainer(locationId: identifier, errorDataDTO: nil, weatherInformationDTO: weatherInformationDTO)
     } catch {
-      printDebugMessage(string: "NetworkingService: Error while extracting single-location-data json: \(error.localizedDescription)")
+      printDebugMessage(domain: String(describing: self),
+                        message: "Error while extracting single-location-data json: \(error.localizedDescription)")
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil)
     }
@@ -150,7 +151,8 @@ class NetworkingService {
       let multiWeatherData = try JSONDecoder().decode(WeatherInformationArrayWrapper.self, from: data)
       return BulkWeatherDataContainer(errorDataDTO: nil, weatherInformationDTOs: multiWeatherData.list)
     } catch {
-      printDebugMessage(string: "NetworkingService: Error while extracting multi-location-data json: \(error.localizedDescription)")
+      printDebugMessage(domain: String(describing: self),
+                        message: "NetworkingService: Error while extracting multi-location-data json: \(error.localizedDescription)")
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil)
     }

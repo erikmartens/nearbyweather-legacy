@@ -10,7 +10,7 @@ import UIKit
 import SafariServices
 import MessageUI
 
-class AboutAppTableViewController: UITableViewController {
+final class AboutAppTableViewController: UITableViewController {
   
   private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO] = {
     return DataStorageService.retrieveJsonFromFile(with: "ThirdPartyLibraries",

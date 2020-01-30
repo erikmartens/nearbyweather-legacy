@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public protocol PreferencesOption {
+protocol PreferencesOption {
   associatedtype PreferencesOptionType
   var value: PreferencesOptionType { get set }
   init(value: PreferencesOptionType)
@@ -17,50 +17,50 @@ public protocol PreferencesOption {
   var stringValue: String { get }
 }
 
-public class PreferredBookmark: Codable, PreferencesOption {
-  public typealias WrappedEnumType = Int?
+class PreferredBookmark: Codable, PreferencesOption {
+  typealias WrappedEnumType = Int?
   
-  public var value: Int?
+  var value: Int?
   
-  required public init(value: Int?) {
+  required  init(value: Int?) {
     self.value = value
   }
   
-  convenience required public init?(rawValue: Int) { return nil }
+  convenience required  init?(rawValue: Int) { return nil }
   
-  public var stringValue: String {
+  var stringValue: String {
     let bookmarkedLocation = WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == value })
     return bookmarkedLocation?.name ?? R.string.localizable.none()
   }
 }
 
-public enum SortingOrientationWrappedEnum: Int, CaseIterable, Codable {
+enum SortingOrientationWrappedEnum: Int, CaseIterable, Codable {
   case name
   case temperature
   case distance
 }
 
-public class SortingOrientation: Codable, PreferencesOption {
-  public typealias PreferencesOptionType = SortingOrientationWrappedEnum
+class SortingOrientation: Codable, PreferencesOption {
+  typealias PreferencesOptionType = SortingOrientationWrappedEnum
   
   private lazy var count = {
     return SortingOrientationWrappedEnum.allCases.count
   }
   
-  public var value: SortingOrientationWrappedEnum
+  var value: SortingOrientationWrappedEnum
   
-  required public init(value: SortingOrientationWrappedEnum) {
+  required  init(value: SortingOrientationWrappedEnum) {
     self.value = value
   }
   
-  convenience required public init?(rawValue: Int) {
+  convenience required  init?(rawValue: Int) {
     guard let value = SortingOrientationWrappedEnum(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)
   }
   
-  public var stringValue: String {
+  var stringValue: String {
     switch value {
     case .name: return R.string.localizable.sortByName()
     case .temperature: return R.string.localizable.sortByTemperature()
@@ -69,33 +69,33 @@ public class SortingOrientation: Codable, PreferencesOption {
   }
 }
 
-public enum TemperatureUnitWrappedEnum: Int, CaseIterable, Codable {
+enum TemperatureUnitWrappedEnum: Int, CaseIterable, Codable {
   case celsius
   case fahrenheit
   case kelvin
 }
 
-public class TemperatureUnit: Codable, PreferencesOption {
-  public typealias PreferencesOptionType = TemperatureUnitWrappedEnum
+class TemperatureUnit: Codable, PreferencesOption {
+  typealias PreferencesOptionType = TemperatureUnitWrappedEnum
   
   private lazy var count: Int = {
     return TemperatureUnitWrappedEnum.allCases.count
   }()
   
-  public var value: TemperatureUnitWrappedEnum
+  var value: TemperatureUnitWrappedEnum
   
-  public required init(value: TemperatureUnitWrappedEnum) {
+  required init(value: TemperatureUnitWrappedEnum) {
     self.value = value
   }
   
-  public required convenience init?(rawValue: Int) {
+  required convenience init?(rawValue: Int) {
     guard let value = TemperatureUnitWrappedEnum(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)
   }
   
-  public var stringValue: String {
+  var stringValue: String {
     switch value {
     case .celsius: return Constants.Values.TemperatureName.kCelsius
     case .fahrenheit: return Constants.Values.TemperatureName.kFahrenheit
@@ -103,7 +103,7 @@ public class TemperatureUnit: Codable, PreferencesOption {
     }
   }
   
-  public var abbreviation: String {
+  var abbreviation: String {
     switch value {
     case .celsius: return Constants.Values.TemperatureUnit.kCelsius
     case .fahrenheit: return Constants.Values.TemperatureUnit.kFahrenheit
@@ -112,32 +112,32 @@ public class TemperatureUnit: Codable, PreferencesOption {
   }
 }
 
-public enum DistanceSpeedUnitWrappedEnum: Int, CaseIterable, Codable {
+enum DistanceSpeedUnitWrappedEnum: Int, CaseIterable, Codable {
   case kilometres
   case miles
 }
 
-public class DistanceSpeedUnit: Codable, PreferencesOption {
-  public typealias PreferencesOptionType = DistanceSpeedUnitWrappedEnum
+class DistanceSpeedUnit: Codable, PreferencesOption {
+  typealias PreferencesOptionType = DistanceSpeedUnitWrappedEnum
   
   private lazy var count = {
     return DistanceSpeedUnitWrappedEnum.allCases.count
   }()
   
-  public var value: DistanceSpeedUnitWrappedEnum
+  var value: DistanceSpeedUnitWrappedEnum
   
-  public required init(value: DistanceSpeedUnitWrappedEnum) {
+  required init(value: DistanceSpeedUnitWrappedEnum) {
     self.value = value
   }
   
-  public required convenience init?(rawValue: Int) {
+  required convenience init?(rawValue: Int) {
     guard let value = DistanceSpeedUnitWrappedEnum(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)
   }
   
-  public var stringValue: String {
+  var stringValue: String {
     switch value {
     case .kilometres: return "\(R.string.localizable.metric())"
     case .miles: return "\(R.string.localizable.imperial())"
@@ -145,7 +145,7 @@ public class DistanceSpeedUnit: Codable, PreferencesOption {
   }
 }
 
-public enum AmountOfResultsWrappedEnum: Int, CaseIterable, Codable {
+enum AmountOfResultsWrappedEnum: Int, CaseIterable, Codable {
   case ten
   case twenty
   case thirty
@@ -153,28 +153,28 @@ public enum AmountOfResultsWrappedEnum: Int, CaseIterable, Codable {
   case fifty
 }
 
-public class AmountOfResults: Codable, PreferencesOption {
+class AmountOfResults: Codable, PreferencesOption {
   
-  public typealias PreferencesOptionType = AmountOfResultsWrappedEnum
+  typealias PreferencesOptionType = AmountOfResultsWrappedEnum
   
   private lazy var count = {
     return AmountOfResultsWrappedEnum.allCases.count
   }()
   
-  public var value: AmountOfResultsWrappedEnum
+  var value: AmountOfResultsWrappedEnum
   
-  public required init(value: AmountOfResultsWrappedEnum) {
+  required init(value: AmountOfResultsWrappedEnum) {
     self.value = value
   }
   
-  public required convenience init?(rawValue: Int) {
+  required convenience init?(rawValue: Int) {
     guard let value = AmountOfResultsWrappedEnum(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)
   }
   
-  public var stringValue: String {
+  var stringValue: String {
     switch value {
     case .ten: return "\(10) \(R.string.localizable.results())"
     case .twenty: return "\(20) \(R.string.localizable.results())"
@@ -184,7 +184,7 @@ public class AmountOfResults: Codable, PreferencesOption {
     }
   }
   
-  public var integerValue: Int {
+  var integerValue: Int {
     switch value {
     case .ten: return 10
     case .twenty: return 20
@@ -215,35 +215,35 @@ final class PreferencesManager {
   
   // MARK: - Public Assets
   
-  public static var shared: PreferencesManager!
+  static var shared: PreferencesManager!
   
   // MARK: - Properties
   
-  public var preferredBookmark: PreferredBookmark {
+  var preferredBookmark: PreferredBookmark {
     didSet {
       BadgeService.shared.updateBadge()
       PreferencesManager.storeService()
     }
   }
-  public var amountOfResults: AmountOfResults {
+  var amountOfResults: AmountOfResults {
     didSet {
       WeatherDataManager.shared.update(withCompletionHandler: nil)
       PreferencesManager.storeService()
     }
   }
-  public var temperatureUnit: TemperatureUnit {
+  var temperatureUnit: TemperatureUnit {
     didSet {
       BadgeService.shared.updateBadge()
       PreferencesManager.storeService()
     }
   }
-  public var distanceSpeedUnit: DistanceSpeedUnit {
+  var distanceSpeedUnit: DistanceSpeedUnit {
     didSet {
       PreferencesManager.storeService()
     }
   }
   
-  public var sortingOrientation: SortingOrientation {
+  var sortingOrientation: SortingOrientation {
     didSet {
       NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged), object: self)
       PreferencesManager.storeService()
@@ -272,7 +272,7 @@ final class PreferencesManager {
   
   // MARK: - Public Properties & Methods
   
-  public static func instantiateSharedInstance() {
+  static func instantiateSharedInstance() {
     shared = PreferencesManager.loadService() ?? PreferencesManager(preferredBookmark: PreferredBookmark(value: .none),
                                                                     amountOfResults: AmountOfResults(value: .ten),
                                                                     temperatureUnit: TemperatureUnit(value: .celsius),

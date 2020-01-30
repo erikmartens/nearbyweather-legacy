@@ -10,9 +10,9 @@ import Foundation
 import MapKit
 import APTimeZones
 
-class ConversionService {
+final class ConversionService {
   
-  public static func weatherConditionSymbol(fromWeathercode: Int) -> String {
+  static func weatherConditionSymbol(fromWeathercode: Int) -> String {
     switch fromWeathercode {
     case let x where (x >= 200 && x <= 202) || (x >= 230 && x <= 232):
       return "⛈"
@@ -59,7 +59,7 @@ class ConversionService {
     }
   }
   
-  public static func temperatureIntValue(forTemperatureUnit temperatureUnit: TemperatureUnit, fromRawTemperature rawTemperature: Double) -> Int? {
+  static func temperatureIntValue(forTemperatureUnit temperatureUnit: TemperatureUnit, fromRawTemperature rawTemperature: Double) -> Int? {
     let adjustedTemp: Double
     switch temperatureUnit.value {
     case .celsius:
@@ -74,7 +74,7 @@ class ConversionService {
     return Int(adjustedTemp.rounded())
   }
   
-  public static func temperatureDescriptor(forTemperatureUnit temperatureUnit: TemperatureUnit, fromRawTemperature rawTemperature: Double) -> String {
+  static func temperatureDescriptor(forTemperatureUnit temperatureUnit: TemperatureUnit, fromRawTemperature rawTemperature: Double) -> String {
     switch temperatureUnit.value {
     case .celsius:
       return "\(String(format: "%.02f", rawTemperature - 273.15))°C"
@@ -85,7 +85,7 @@ class ConversionService {
     }
   }
   
-  public static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forWindspeed windspeed: Double) -> String {
+  static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forWindspeed windspeed: Double) -> String {
     switch distanceSpeedUnit.value {
     case .kilometres:
       return "\(String(format: "%.02f", windspeed)) \(R.string.localizable.kph())"
@@ -94,7 +94,7 @@ class ConversionService {
     }
   }
   
-  public static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forDistanceInMetres distance: Double) -> String {
+  static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forDistanceInMetres distance: Double) -> String {
     switch distanceSpeedUnit.value {
     case .kilometres:
       return "\(String(format: "%.02f", distance/1000)) \(R.string.localizable.km())"
@@ -103,11 +103,11 @@ class ConversionService {
     }
   }
   
-  public static func windDirectionDescriptor(forWindDirection degrees: Double) -> String {
+  static func windDirectionDescriptor(forWindDirection degrees: Double) -> String {
     return String(format: "%.02f", degrees) + "°"
   }
   
-  public static func isDayTime(forWeatherDTO weatherDTO: WeatherInformationDTO?) -> Bool? {
+  static func isDayTime(forWeatherDTO weatherDTO: WeatherInformationDTO?) -> Bool? {
     
     guard let weatherDTO = weatherDTO,
       let sunrise =  weatherDTO.daytimeInformation?.sunrise,

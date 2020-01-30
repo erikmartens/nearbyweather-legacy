@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class NearbyLocationsMapViewController: UIViewController {
+final class NearbyLocationsMapViewController: UIViewController {
   
   // MARK: - Assets
   

@@ -43,10 +43,10 @@ final class WeatherDataManager {
   
   private lazy var fetchWeatherDataBackgroundQueue: DispatchQueue = {
     return DispatchQueue(label: Constants.Labels.DispatchQueues.kFetchWeatherDataBackgroundQueue,
-      qos: .userInitiated,
-      attributes: [.concurrent],
-      autoreleaseFrequency: .inherit,
-      target: nil)
+                         qos: .userInitiated,
+                         attributes: [.concurrent],
+                         autoreleaseFrequency: .inherit,
+                         target: nil)
   }()
   
   private static let weatherServiceBackgroundQueue = DispatchQueue(
@@ -59,9 +59,9 @@ final class WeatherDataManager {
   
   // MARK: - Public Assets
   
-  public static var shared: WeatherDataManager!
+  static var shared: WeatherDataManager!
   
-  public var hasDisplayableData: Bool {
+  var hasDisplayableData: Bool {
     
     return bookmarkedWeatherDataObjects?.first { $0.errorDataDTO != nil } != nil
       || bookmarkedWeatherDataObjects?.first { $0.weatherInformationDTO != nil } != nil
@@ -69,31 +69,31 @@ final class WeatherDataManager {
       || nearbyWeatherDataObject?.weatherInformationDTOs != nil
   }
   
-  public var hasDisplayableWeatherData: Bool {
+  var hasDisplayableWeatherData: Bool {
     return bookmarkedWeatherDataObjects?.first { $0.weatherInformationDTO != nil } != nil
       || nearbyWeatherDataObject?.weatherInformationDTOs != nil
   }
   
-  public var apiKeyUnauthorized: Bool {
+  var apiKeyUnauthorized: Bool {
     return ((bookmarkedWeatherDataObjects?.first { $0.errorDataDTO?.httpStatusCode == 401 }) != nil)
       || nearbyWeatherDataObject?.errorDataDTO?.httpStatusCode == 401
   }
   
   // MARK: - Properties
   
-  public var bookmarkedLocations: [WeatherStationDTO] {
+  var bookmarkedLocations: [WeatherStationDTO] {
     didSet {
       update(withCompletionHandler: nil)
       sortBookmarkedLocationWeatherData()
       WeatherDataManager.storeService()
     }
   }
-  public var preferredBookmarkData: WeatherInformationDTO? {
+  var preferredBookmarkData: WeatherInformationDTO? {
     let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value
     return WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first(where: { $0.locationId == preferredBookmarkId })?.weatherInformationDTO
   }
-  public private(set) var bookmarkedWeatherDataObjects: [WeatherDataContainer]?
-  public private(set) var nearbyWeatherDataObject: BulkWeatherDataContainer?
+  private(set) var bookmarkedWeatherDataObjects: [WeatherDataContainer]?
+  private(set) var nearbyWeatherDataObject: BulkWeatherDataContainer?
   
   private var locationAuthorizationObserver: NSObjectProtocol!
   private var sortingOrientationChangedObserver: NSObjectProtocol!
@@ -122,11 +122,11 @@ final class WeatherDataManager {
   
   // MARK: - Public Properties & Methods
   
-  public static func instantiateSharedInstance() {
+  static func instantiateSharedInstance() {
     shared = WeatherDataManager.loadService() ?? WeatherDataManager(bookmarkedLocations: [Constants.Mocks.WeatherStationDTOs.kDefaultBookmarkedLocation])
   }
   
-  public func update(withCompletionHandler completionHandler: ((UpdateStatus) -> Void)?) {
+  func update(withCompletionHandler completionHandler: ((UpdateStatus) -> Void)?) {
     guard NetworkingService.shared.reachabilityStatus == .connected else {
       completionHandler?(.failure)
       return
@@ -187,7 +187,7 @@ final class WeatherDataManager {
     }
   }
   
-  public func updatePreferredBookmark(withCompletionHandler completionHandler: @escaping ((UpdateStatus) -> Void)) {
+  func updatePreferredBookmark(withCompletionHandler completionHandler: @escaping ((UpdateStatus) -> Void)) {
     guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
       NetworkingService.shared.reachabilityStatus == .connected else {
         completionHandler(.failure)
@@ -231,7 +231,7 @@ final class WeatherDataManager {
     }
   }
   
-  public func weatherDTO(forIdentifier identifier: Int) -> WeatherInformationDTO? {
+  func weatherDTO(forIdentifier identifier: Int) -> WeatherInformationDTO? {
     if let bookmarkedLocationMatch = bookmarkedWeatherDataObjects?.first(where: {
       return $0.weatherInformationDTO?.cityID == identifier
     }), let weatherDTO = bookmarkedLocationMatch.weatherInformationDTO {
@@ -303,7 +303,7 @@ final class WeatherDataManager {
       andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self,
       fromStorageLocation: .documents
       ) else {
-      return nil
+        return nil
     }
     
     let weatherService = WeatherDataManager(bookmarkedLocations: weatherDataManagerStoredContents.bookmarkedLocations)

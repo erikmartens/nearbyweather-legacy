@@ -10,7 +10,7 @@ import UIKit
 import SafariServices
 import TextFieldCounter
 
-class WelcomeScreenViewController: UIViewController {
+final class WelcomeScreenViewController: UIViewController {
   
   // MARK: - Properties
   

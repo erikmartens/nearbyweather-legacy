@@ -36,11 +36,11 @@ final class BadgeService {
   
   // MARK: - Properties
   
-  public static var shared: BadgeService!
+  static var shared: BadgeService!
   
   // MARK: - Methods
   
-  public func isAppIconBadgeNotificationEnabled(with completionHandler: @escaping (Bool) -> Void) {
+  func isAppIconBadgeNotificationEnabled(with completionHandler: @escaping (Bool) -> Void) {
     guard UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) else {
       completionHandler(false)
       return
@@ -48,7 +48,7 @@ final class BadgeService {
     PermissionsManager.shared.requestNotificationPermissions(with: completionHandler)
   }
   
-  public static func instantiateSharedInstance() {
+  static func instantiateSharedInstance() {
     shared = BadgeService()
     
     if UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) {
@@ -56,12 +56,12 @@ final class BadgeService {
     }
   }
   
-  public func setTemperatureOnAppIconEnabled(_ enabled: Bool) {
+  func setTemperatureOnAppIconEnabled(_ enabled: Bool) {
     UserDefaults.standard.set(enabled, forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey)
     BadgeService.shared.updateBadge()
   }
   
-  public func updateBadge() {
+  func updateBadge() {
     guard UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) else {
       clearAppIcon()
       return

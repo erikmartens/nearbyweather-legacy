@@ -11,7 +11,7 @@ import MapKit
 import SafariServices
 import APTimeZones
 
-class WeatherDetailViewController: UIViewController {
+final class WeatherDetailViewController: UIViewController {
   
   static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailViewController {
     let viewController = R.storyboard.details.weatherDetailViewController()!

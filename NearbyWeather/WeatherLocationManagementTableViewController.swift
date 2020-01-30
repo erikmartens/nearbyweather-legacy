@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherLocationManagementTableViewController: UITableViewController {
+final class WeatherLocationManagementTableViewController: UITableViewController {
   
   // MARK: - Computed Properties
   

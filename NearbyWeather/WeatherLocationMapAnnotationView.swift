@@ -19,7 +19,7 @@ private let kTriangleHeight: CGFloat = 10
 private let kRadius: CGFloat = 10
 private let kBorderWidth: CGFloat = 4
 
-class WeatherLocationMapAnnotationView: MKAnnotationView {
+final class WeatherLocationMapAnnotationView: MKAnnotationView {
   
   // MARK: - Properties
   

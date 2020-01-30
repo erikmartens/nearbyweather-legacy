@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
+final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
   let title: String?
   let subtitle: String?
   let isDayTime: Bool?

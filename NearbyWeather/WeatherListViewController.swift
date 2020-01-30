@@ -17,7 +17,7 @@ enum ListType: CaseIterable {
                                            .nearby: R.string.localizable.nearby()]
 }
 
-class WeatherListViewController: UIViewController {
+final class WeatherListViewController: UIViewController {
   
   // MARK: - Properties
   

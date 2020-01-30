@@ -9,7 +9,7 @@
 import UIKit
 import PKHUD
 
-class WeatherLocationSelectionTableViewController: UITableViewController {
+final class WeatherLocationSelectionTableViewController: UITableViewController {
   
   // MARK: - Properties
   

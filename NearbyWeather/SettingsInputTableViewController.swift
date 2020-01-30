@@ -10,7 +10,7 @@ import UIKit
 import TextFieldCounter
 import PKHUD
 
-class SettingsInputTableViewController: UITableViewController {
+final class SettingsInputTableViewController: UITableViewController {
   
   // MARK: - Assets
   

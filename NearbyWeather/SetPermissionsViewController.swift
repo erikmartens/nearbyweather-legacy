@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetPermissionsViewController: UIViewController {
+final class SetPermissionsViewController: UIViewController {
   
   // MARK: - Properties
   
@@ -36,10 +36,12 @@ class SetPermissionsViewController: UIViewController {
     
     configure()
     
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(SetPermissionsViewController.launchApp),
-                                           name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
-                                           object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(SetPermissionsViewController.launchApp),
+      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
+      object: nil
+    )
   }
   
   override func viewDidAppear(_ animated: Bool) {

@@ -19,12 +19,12 @@ final class NetworkingService {
   
   // MARK: - Public Assets
   
-  public static var shared: NetworkingService!
+  static var shared: NetworkingService!
   
   // MARK: - Properties
   
   private let reachabilityManager: NetworkReachabilityManager?
-  public private(set) var reachabilityStatus: ReachabilityStatus
+  private(set) var reachabilityStatus: ReachabilityStatus
   
   // MARK: - Initialization
   
@@ -55,11 +55,11 @@ final class NetworkingService {
   
   // MARK: - Public Methods
   
-  public static func instantiateSharedInstance() {
+  static func instantiateSharedInstance() {
     shared = NetworkingService()
   }
   
-  public func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
+  func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
     let session = URLSession.shared
     
     let localeTag = Locale.current.regionCode?.lowercased() ?? "en"
@@ -80,7 +80,7 @@ final class NetworkingService {
     dataTask.resume()
   }
   
-  public func fetchBulkWeatherInformation(completionHandler: @escaping (BulkWeatherDataContainer) -> Void) {
+  func fetchBulkWeatherInformation(completionHandler: @escaping (BulkWeatherDataContainer) -> Void) {
     let session = URLSession.shared
     
     guard let currentLatitude = LocationService.shared.currentLatitude, let currentLongitude = LocationService.shared.currentLongitude else {

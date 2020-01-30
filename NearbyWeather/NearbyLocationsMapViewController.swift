@@ -109,7 +109,7 @@ class NearbyLocationsMapViewController: UIViewController {
           self.focusMapOnSelectedBookmarkedLocation()
         }
       })
-      action.setValue(R.image.locateFavoriteActiveIcon(), forKey: "image")
+      action.setValue(R.image.locateFavoriteActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
       optionsAlert.addAction(action)
     }
     
@@ -118,7 +118,7 @@ class NearbyLocationsMapViewController: UIViewController {
         self.focusMapOnUserLocation()
       }
     })
-    currentLocationAction.setValue(R.image.locateUserActiveIcon(), forKey: "image")
+    currentLocationAction.setValue(R.image.locateUserActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
     optionsAlert.addAction(currentLocationAction)
     
     let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
@@ -180,17 +180,22 @@ extension NearbyLocationsMapViewController: MKMapViewDelegate {
       viewForCurrentAnnotation = WeatherLocationMapAnnotationView(frame: kMapAnnotationViewInitialFrame)
     }
     viewForCurrentAnnotation?.annotation = annotation
-    viewForCurrentAnnotation?.configure(withTitle: annotation.title ?? "<Not Set>", subtitle: annotation.subtitle ?? "<Not Set>", fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight, tapHandler: { [unowned self] _ in
-      guard let weatherDTO = WeatherDataManager.shared.weatherDTO(forIdentifier: annotation.locationId) else {
-        return
+    viewForCurrentAnnotation?.configure(
+      withTitle: annotation.title ?? Constants.Messages.kNotSet,
+      subtitle: annotation.subtitle ?? Constants.Messages.kNotSet,
+      fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight,
+      tapHandler: { [unowned self] _ in
+        guard let weatherDTO = WeatherDataManager.shared.weatherDTO(forIdentifier: annotation.locationId) else {
+          return
+        }
+        self.previousRegion = mapView.region
+        
+        let destinationViewController = WeatherDetailViewController.instantiateFromStoryBoard(withTitle: weatherDTO.cityName, weatherDTO: weatherDTO)
+        let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
+        destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
+        self.navigationController?.present(destinationNavigationController, animated: true, completion: nil)
       }
-      self.previousRegion = mapView.region
-      
-      let destinationViewController = WeatherDetailViewController.instantiateFromStoryBoard(withTitle: weatherDTO.cityName, weatherDTO: weatherDTO)
-      let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
-      destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
-      self.navigationController?.present(destinationNavigationController, animated: true, completion: nil)
-    })
+    )
     return viewForCurrentAnnotation
   }
 }

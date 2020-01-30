@@ -39,3 +39,10 @@ extension Constants.Keys {
     static let kAppIconTemeperatureNotification = "AppIconTemeperatureNotification"
   }
 }
+
+extension Constants.Keys {
+  
+  enum KeyValueBindings {
+    static let kImage = "image"
+  }
+}

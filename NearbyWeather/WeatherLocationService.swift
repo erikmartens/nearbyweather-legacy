@@ -17,7 +17,13 @@ class WeatherLocationService {
   
   // MARK: - Private Assets
   
-  private let openWeatherMapCityServiceBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.openWeatherMapCityService", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
+  private lazy var openWeatherMapCityServiceBackgroundQueue: DispatchQueue = {
+    return DispatchQueue(label: Constants.Labels.DispatchQueues.kOpenWeatherMapCityServiceBackgroundQueue,
+                         qos: .userInitiated,
+                         attributes: [.concurrent],
+                         autoreleaseFrequency: .inherit,
+                         target: nil)
+  }()
   
   fileprivate let databaseQueue: FMDatabaseQueue
   

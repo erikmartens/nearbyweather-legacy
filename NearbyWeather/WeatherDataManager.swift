@@ -28,7 +28,10 @@ struct BulkWeatherDataContainer: Codable {
   var weatherInformationDTOs: [WeatherInformationDTO]?
 }
 
-let kDefaultBookmarkedLocation = WeatherStationDTO(identifier: 5341145, name: "Cupertino", country: "US", coordinates: Coordinates(latitude: 37.323002, longitude: -122.032181))
+let kDefaultBookmarkedLocation = WeatherStationDTO(identifier: 5341145,
+                                                   name: "Cupertino",
+                                                   country: "US",
+                                                   coordinates: Coordinates(latitude: 37.323002, longitude: -122.032181))
 
 private let kWeatherDataManagerStoredContentsFileName = "WeatherDataManagerStoredContents"
 
@@ -44,6 +47,22 @@ enum UpdateStatus {
 }
 
 class WeatherDataManager {
+  
+  private lazy var fetchWeatherDataBackgroundQueue: DispatchQueue = {
+    return DispatchQueue(label: Constants.Labels.DispatchQueues.kFetchWeatherDataBackgroundQueue,
+      qos: .userInitiated,
+      attributes: [.concurrent],
+      autoreleaseFrequency: .inherit,
+      target: nil)
+  }()
+  
+  private static let weatherServiceBackgroundQueue = DispatchQueue(
+    label: Constants.Labels.DispatchQueues.kWeatherServiceBackgroundQueue,
+    qos: .utility,
+    attributes: [.concurrent],
+    autoreleaseFrequency: .inherit,
+    target: nil
+  )
   
   // MARK: - Public Assets
   
@@ -115,8 +134,6 @@ class WeatherDataManager {
   }
   
   public func update(withCompletionHandler completionHandler: ((UpdateStatus) -> Void)?) {
-    let fetchWeatherDataBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.fetchWeatherDataQueue", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
-    
     guard NetworkingService.shared.reachabilityStatus == .connected else {
       completionHandler?(.failure)
       return
@@ -183,8 +200,6 @@ class WeatherDataManager {
         completionHandler(.failure)
         return
     }
-    
-    let fetchWeatherDataBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.fetchWeatherDataQueue", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
     
     fetchWeatherDataBackgroundQueue.async {
       let dispatchGroup = DispatchGroup()
@@ -302,16 +317,18 @@ class WeatherDataManager {
   }
   
   private static func storeService() {
-    let weatherServiceBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.weatherDataManagerBackgroundQueue", qos: .utility, attributes: [DispatchQueue.Attributes.concurrent], autoreleaseFrequency: .inherit, target: nil)
-    
     let dispatchSemaphore = DispatchSemaphore(value: 1)
     
     dispatchSemaphore.wait()
     weatherServiceBackgroundQueue.async {
-      let weatherDataManagerStoredContents = WeatherDataManagerStoredContentsWrapper(bookmarkedLocations: WeatherDataManager.shared.bookmarkedLocations,
-                                                                                     bookmarkedWeatherDataObjects: WeatherDataManager.shared.bookmarkedWeatherDataObjects,
-                                                                                     nearbyWeatherDataObject: WeatherDataManager.shared.nearbyWeatherDataObject)
-      DataStorageService.storeJson(for: weatherDataManagerStoredContents, inFileWithName: kWeatherDataManagerStoredContentsFileName, toStorageLocation: .documents)
+      let weatherDataManagerStoredContents = WeatherDataManagerStoredContentsWrapper(
+        bookmarkedLocations: WeatherDataManager.shared.bookmarkedLocations,
+        bookmarkedWeatherDataObjects: WeatherDataManager.shared.bookmarkedWeatherDataObjects,
+        nearbyWeatherDataObject: WeatherDataManager.shared.nearbyWeatherDataObject
+      )
+      DataStorageService.storeJson(for: weatherDataManagerStoredContents,
+                                   inFileWithName: kWeatherDataManagerStoredContentsFileName,
+                                   toStorageLocation: .documents)
       dispatchSemaphore.signal()
     }
   }

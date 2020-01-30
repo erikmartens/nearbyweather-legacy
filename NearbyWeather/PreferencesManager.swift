@@ -148,6 +148,7 @@ public enum AmountOfResultsWrappedEnum: Int, Codable {
 }
 
 public class AmountOfResults: Codable, PreferencesOption {
+  
   public typealias PreferencesOptionType = AmountOfResultsWrappedEnum
   
   static let count = 5
@@ -196,7 +197,15 @@ struct PreferencesManagerStoredContentsWrapper: Codable {
   var sortingOrientation: SortingOrientation
 }
 
-class PreferencesManager {
+final class PreferencesManager {
+  
+  private static let preferencesManagerBackgroundQueue = DispatchQueue(
+    label: Constants.Labels.DispatchQueues.kPreferencesManagerBackgroundQueue,
+    qos: .utility,
+    attributes: [.concurrent],
+    autoreleaseFrequency: .inherit,
+    target: nil
+  )
   
   // MARK: - Public Assets
   
@@ -289,8 +298,6 @@ class PreferencesManager {
   }
   
   private static func storeService() {
-    let preferencesManagerBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.preferencesManagerBackgroundQueue", qos: .utility, attributes: [DispatchQueue.Attributes.concurrent], autoreleaseFrequency: .inherit, target: nil)
-    
     let dispatchSemaphore = DispatchSemaphore(value: 1)
     
     dispatchSemaphore.wait()

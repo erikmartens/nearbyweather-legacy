@@ -14,17 +14,17 @@ final class PermissionsManager {
   
   // MARK: - Properties
   
-  public static var shared: PermissionsManager!
+  static var shared: PermissionsManager!
   
   // MARK: - Instantiation
   
-  public static func instantiateSharedInstance() {
+  static func instantiateSharedInstance() {
     shared = PermissionsManager()
   }
   
   // MARK: - Interface
   
-  public func requestNotificationPermissions(with completionHandler: @escaping ((Bool) -> Void)) {
+  func requestNotificationPermissions(with completionHandler: @escaping ((Bool) -> Void)) {
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
       DispatchQueue.main.async {
         guard error == nil, granted else {

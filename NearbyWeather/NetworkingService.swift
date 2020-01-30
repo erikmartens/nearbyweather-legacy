@@ -15,16 +15,16 @@ enum ReachabilityStatus {
   case connected
 }
 
-class NetworkingService {
+final class NetworkingService {
   
   // MARK: - Public Assets
   
-  public static var shared: NetworkingService!
+  static var shared: NetworkingService!
   
   // MARK: - Properties
   
   private let reachabilityManager: NetworkReachabilityManager?
-  public private(set) var reachabilityStatus: ReachabilityStatus
+  private(set) var reachabilityStatus: ReachabilityStatus
   
   // MARK: - Initialization
   
@@ -55,14 +55,14 @@ class NetworkingService {
   
   // MARK: - Public Methods
   
-  public static func instantiateSharedInstance() {
+  static func instantiateSharedInstance() {
     shared = NetworkingService()
   }
   
-  public func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
+  func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
     let session = URLSession.shared
     
-    let localeTag = NSLocalizedString("locale_tag", comment: "")
+    let localeTag = Locale.current.regionCode?.lowercased() ?? "en"
     guard let apiKey = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey),
       let requestURL = URL(string: "\(Constants.Urls.kOpenWeatherSingleLocationBaseUrl.absoluteString)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)") else {
         let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
@@ -80,7 +80,7 @@ class NetworkingService {
     dataTask.resume()
   }
   
-  public func fetchBulkWeatherInformation(completionHandler: @escaping (BulkWeatherDataContainer) -> Void) {
+  func fetchBulkWeatherInformation(completionHandler: @escaping (BulkWeatherDataContainer) -> Void) {
     let session = URLSession.shared
     
     guard let currentLatitude = LocationService.shared.currentLatitude, let currentLongitude = LocationService.shared.currentLongitude else {
@@ -125,7 +125,8 @@ class NetworkingService {
       let weatherInformationDTO = try JSONDecoder().decode(WeatherInformationDTO.self, from: data)
       return WeatherDataContainer(locationId: identifier, errorDataDTO: nil, weatherInformationDTO: weatherInformationDTO)
     } catch {
-      print("💥 NetworkingService: Error while extracting single-location-data json: \(error.localizedDescription)")
+      printDebugMessage(domain: String(describing: self),
+                        message: "Error while extracting single-location-data json: \(error.localizedDescription)")
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil)
     }
@@ -150,7 +151,8 @@ class NetworkingService {
       let multiWeatherData = try JSONDecoder().decode(WeatherInformationArrayWrapper.self, from: data)
       return BulkWeatherDataContainer(errorDataDTO: nil, weatherInformationDTOs: multiWeatherData.list)
     } catch {
-      print("💥 NetworkingService: Error while extracting multi-location-data json: \(error.localizedDescription)")
+      printDebugMessage(domain: String(describing: self),
+                        message: "NetworkingService: Error while extracting multi-location-data json: \(error.localizedDescription)")
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil)
     }

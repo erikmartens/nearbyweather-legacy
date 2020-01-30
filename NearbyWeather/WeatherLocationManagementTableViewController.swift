@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherLocationManagementTableViewController: UITableViewController {
+final class WeatherLocationManagementTableViewController: UITableViewController {
   
   // MARK: - Computed Properties
   
@@ -49,7 +49,7 @@ class WeatherLocationManagementTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch indexPath.section {
     case 0:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "OWMCityCell", for: indexPath) as! LocationWeatherDataCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.owmCityCell.identifier, for: indexPath) as! LocationWeatherDataCell
       let location = WeatherDataManager.shared.bookmarkedLocations[indexPath.row]
       cell.contentLabel.text = "\(location.name), \(location.country)"
       cell.selectionStyle = .none

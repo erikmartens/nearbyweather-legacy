@@ -32,3 +32,32 @@ extension Constants.Keys {
     static let kSortingOrientationPreferenceChanged = "de.erikmaximilianmartens.nearbyWeather.sortingOrientationPreferenceChanged"
   }
 }
+
+extension Constants.Keys {
+  
+  enum NotificationIdentifiers {
+    static let kAppIconTemeperatureNotification = "AppIconTemeperatureNotification"
+  }
+}
+
+extension Constants.Keys {
+  
+  enum KeyValueBindings {
+    static let kImage = "image"
+  }
+}
+
+extension Constants.Keys {
+  
+  enum Storage {
+    static let kWeatherDataManagerStoredContentsFileName = "WeatherDataManagerStoredContents"
+    static let kPreferencesManagerStoredContentsFileName = "PreferencesManagerStoredContents"
+  }
+}
+
+extension Constants.Keys {
+  
+  enum MapAnnotation {
+    static let kMapAnnotationViewIdentifier = "de.erikmaximilianmartens.nearbyWeather.WeatherLocationMapAnnotationView"
+  }
+}

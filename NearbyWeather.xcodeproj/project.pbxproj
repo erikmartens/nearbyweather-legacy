@@ -67,6 +67,12 @@
 		F2E7237D23E0EA38001189F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237C23E0EA38001189F5 /* Constants.swift */; };
 		F2E7237F23E0EA65001189F5 /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237E23E0EA65001189F5 /* Constants+URLs.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
+		F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */; };
+		F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1823E0FBEB00B4D2EB /* GlobalFunctions.swift */; };
+		F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */; };
+		F2F7BA1D23E373DD00B4D2EB /* Constants+Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1C23E373DD00B4D2EB /* Constants+Labels.swift */; };
+		F2F7BA1F23E3792F00B4D2EB /* Constants+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1E23E3792F00B4D2EB /* Constants+Mocks.swift */; };
+		F2F7BA2123E37A9C00B4D2EB /* Constants+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA2023E37A9C00B4D2EB /* Constants+Values.swift */; };
 		F2FE3EFF20027EB400EBC429 /* WeatherStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */; };
 		F2FE3F01200285B100EBC429 /* WeatherLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3F00200285B100EBC429 /* WeatherLocationService.swift */; };
 		F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3F022002972800EBC429 /* WeatherLocationSelectionTableViewController.swift */; };
@@ -168,6 +174,14 @@
 		F2E7237C23E0EA38001189F5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F2E7237E23E0EA65001189F5 /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Constants+URLs.swift"; path = "/Users/erikmartens/Code/NearbyWeather/NearbyWeather/Constants+URLs.swift"; sourceTree = "<absolute>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
+		F2F7BA1423E0FB2D00B4D2EB /* NearbyWeather-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearbyWeather-Bridging-Header.h"; sourceTree = "<group>"; };
+		F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuildEnvironment.m; sourceTree = "<group>"; };
+		F2F7BA1723E0FB4A00B4D2EB /* BuildEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuildEnvironment.h; sourceTree = "<group>"; };
+		F2F7BA1823E0FBEB00B4D2EB /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
+		F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Messages.swift"; sourceTree = "<group>"; };
+		F2F7BA1C23E373DD00B4D2EB /* Constants+Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Labels.swift"; sourceTree = "<group>"; };
+		F2F7BA1E23E3792F00B4D2EB /* Constants+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Mocks.swift"; sourceTree = "<group>"; };
+		F2F7BA2023E37A9C00B4D2EB /* Constants+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Values.swift"; sourceTree = "<group>"; };
 		F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationDTO.swift; sourceTree = "<group>"; };
 		F2FE3F00200285B100EBC429 /* WeatherLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationService.swift; sourceTree = "<group>"; };
 		F2FE3F022002972800EBC429 /* WeatherLocationSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationSelectionTableViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +261,9 @@
 			isa = PBXGroup;
 			children = (
 				86830395217BC28E00B7122E /* NearbyWeather.entitlements */,
+				F2F7BA1423E0FB2D00B4D2EB /* NearbyWeather-Bridging-Header.h */,
+				F2F7BA1723E0FB4A00B4D2EB /* BuildEnvironment.h */,
+				F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */,
 				F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */,
 				F204B7861DF2EFA3000F4371 /* Info.plist */,
 				F26A6D5C20FB6E520033BC49 /* External */,
@@ -281,6 +298,7 @@
 		F260C4451F9D4D50000D2BC0 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				F2F7BA1823E0FBEB00B4D2EB /* GlobalFunctions.swift */,
 				F2E7237B23E0EA22001189F5 /* Constants */,
 				F28CE9611F96B202008319C4 /* Extensions */,
 				F28CA5422027AE9B00209397 /* Custom Objects */,
@@ -415,6 +433,10 @@
 				F2E7237C23E0EA38001189F5 /* Constants.swift */,
 				F2E7237E23E0EA65001189F5 /* Constants+URLs.swift */,
 				F2E7238023E0F044001189F5 /* Constants+Keys.swift */,
+				F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */,
+				F2F7BA1C23E373DD00B4D2EB /* Constants+Labels.swift */,
+				F2F7BA1E23E3792F00B4D2EB /* Constants+Mocks.swift */,
+				F2F7BA2023E37A9C00B4D2EB /* Constants+Values.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -508,7 +530,7 @@
 					F204B7761DF2EFA3000F4371 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = VDPU24L36V;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -740,11 +762,14 @@
 				F26A6D6420FB7C9C0033BC49 /* WelcomeNavigationController.swift in Sources */,
 				F274FC3B2030ED5A00049144 /* PreferencesManager.swift in Sources */,
 				F283D26E1DF39095001B879D /* LabelCell.swift in Sources */,
+				F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */,
 				F28CA5442027AEB500209397 /* WeatherLocationMapAnnotation.swift in Sources */,
+				F2F7BA1F23E3792F00B4D2EB /* Constants+Mocks.swift in Sources */,
 				F26699581E9AD0F100498F99 /* WeatherDataManager.swift in Sources */,
 				F2FE3EFF20027EB400EBC429 /* WeatherStationDTO.swift in Sources */,
 				F22F99552034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift in Sources */,
 				86830392217BBA5D00B7122E /* BadgeService.swift in Sources */,
+				F2F7BA2123E37A9C00B4D2EB /* Constants+Values.swift in Sources */,
 				86830394217BBAE400B7122E /* PermissionsManager.swift in Sources */,
 				F2A5CAA62005762A0071BFFB /* ConversionService.swift in Sources */,
 				F2FE3F01200285B100EBC429 /* WeatherLocationService.swift in Sources */,
@@ -759,10 +784,13 @@
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
 				F2E7237F23E0EA65001189F5 /* Constants+URLs.swift in Sources */,
 				F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */,
+				F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */,
+				F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */,
 				F204B7BD1DF35610000F4371 /* SettingsTableViewController.swift in Sources */,
 				F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */,
 				F28CA5392016A1BA00209397 /* NearbyLocationsMapViewController.swift in Sources */,
 				F28CE9681F9A9893008319C4 /* WeatherListViewController.swift in Sources */,
+				F2F7BA1D23E373DD00B4D2EB /* Constants+Labels.swift in Sources */,
 				F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */,
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIViewExtensions.swift in Sources */,
@@ -982,6 +1010,7 @@
 			baseConfigurationReference = 86B86D7A56B4C14974785282 /* Pods-NearbyWeather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Erik Maximilian Martens (C929JV4AQN)";
 				CODE_SIGN_STYLE = Manual;
@@ -994,6 +1023,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development de.erikmaximilianmartens.NearbyWeather";
+				SWIFT_OBJC_BRIDGING_HEADER = "NearbyWeather/NearbyWeather-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1004,6 +1035,7 @@
 			baseConfigurationReference = E8CA978255B14F0FB5D6423C /* Pods-NearbyWeather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Erik Maximilian Martens (VDPU24L36V)";
 				CODE_SIGN_STYLE = Manual;
@@ -1016,6 +1048,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore de.erikmaximilianmartens.NearbyWeather";
+				SWIFT_OBJC_BRIDGING_HEADER = "NearbyWeather/NearbyWeather-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

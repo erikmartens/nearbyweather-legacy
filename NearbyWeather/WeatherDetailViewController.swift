@@ -11,10 +11,10 @@ import MapKit
 import SafariServices
 import APTimeZones
 
-class WeatherDetailViewController: UIViewController {
+final class WeatherDetailViewController: UIViewController {
   
   static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailViewController {
-    let viewController = UIStoryboard(name: "Details", bundle: .main).instantiateViewController(withIdentifier: "WeatherDetailViewController") as! WeatherDetailViewController
+    let viewController = R.storyboard.details.weatherDetailViewController()!
     viewController.titleString = title
     viewController.weatherDTO = weatherDTO
     return viewController
@@ -205,14 +205,18 @@ extension WeatherDetailViewController: MKMapViewDelegate {
     }
     
     var viewForCurrentAnnotation: WeatherLocationMapAnnotationView?
-    if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: kMapAnnotationViewIdentifier) as? WeatherLocationMapAnnotationView {
+    if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier:  Constants.Keys.MapAnnotation.kMapAnnotationViewIdentifier) as? WeatherLocationMapAnnotationView {
       viewForCurrentAnnotation = dequeuedAnnotationView
     } else {
       viewForCurrentAnnotation = WeatherLocationMapAnnotationView(frame: kMapAnnotationViewInitialFrame)
     }
     viewForCurrentAnnotation?.annotation = annotation
-    viewForCurrentAnnotation?.configure(withTitle: annotation.title ?? "<Not Set>", subtitle: annotation.subtitle ?? "<Not Set>", fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight, tapHandler: nil)
-    
+    viewForCurrentAnnotation?.configure(
+      withTitle: annotation.title ?? Constants.Messages.kNotSet,
+      subtitle: annotation.subtitle ?? Constants.Messages.kNotSet,
+      fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight,
+      tapHandler: nil
+    )
     return viewForCurrentAnnotation
   }
 }

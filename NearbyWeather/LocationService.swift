@@ -8,15 +8,15 @@
 
 import CoreLocation
 
-class LocationService: CLLocationManager, CLLocationManagerDelegate {
+final class LocationService: CLLocationManager, CLLocationManagerDelegate {
   
   // MARK: - Public Assets
   
-  public static var shared: LocationService!
+  static var shared: LocationService!
   
-  public var currentLatitude: Double?
-  public var currentLongitude: Double?
-  public var authorizationStatus: CLAuthorizationStatus
+  var currentLatitude: Double?
+  var currentLongitude: Double?
+  var authorizationStatus: CLAuthorizationStatus
   
   // MARK: - Intialization
   
@@ -27,7 +27,7 @@ class LocationService: CLLocationManager, CLLocationManagerDelegate {
   
   // MARK: - Public Methods
   
-  public static func instantiateSharedInstance() {
+  static func instantiateSharedInstance() {
     // initialize with example data
     shared = LocationService()
     

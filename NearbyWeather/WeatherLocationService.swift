@@ -9,32 +9,38 @@
 import Foundation
 import FMDB
 
-class WeatherLocationService {
+final class WeatherLocationService {
   
   // MARK: - Public Assets
   
-  public static var shared: WeatherLocationService!
+  static var shared: WeatherLocationService!
   
   // MARK: - Private Assets
   
-  private let openWeatherMapCityServiceBackgroundQueue = DispatchQueue(label: "de.erikmaximilianmartens.nearbyWeather.openWeatherMapCityService", qos: .userInitiated, attributes: [.concurrent], autoreleaseFrequency: .inherit, target: nil)
+  private lazy var openWeatherMapCityServiceBackgroundQueue: DispatchQueue = {
+    return DispatchQueue(label: Constants.Labels.DispatchQueues.kOpenWeatherMapCityServiceBackgroundQueue,
+                         qos: .userInitiated,
+                         attributes: [.concurrent],
+                         autoreleaseFrequency: .inherit,
+                         target: nil)
+  }()
   
   fileprivate let databaseQueue: FMDatabaseQueue
   
   // MARK: - Initialization
   
   private init() {
-    let sqliteFilePath = Bundle.main.path(forResource: "locationsSQLite", ofType: "sqlite")! // crash app if not found, cannot run without db
+    let sqliteFilePath = R.file.locationsSQLiteSqlite()!.path // crash app if not found, cannot run without db
     self.databaseQueue = FMDatabaseQueue(path: sqliteFilePath)! // crash app if init fails, cannot run without db
   }
   
   // MARK: - Public Properties & Methods
   
-  public static func instantiateSharedInstance() {
+  static func instantiateSharedInstance() {
     shared = WeatherLocationService()
   }
   
-  public func locations(forSearchString searchString: String, completionHandler: @escaping (([WeatherStationDTO]?) -> Void)) {
+  func locations(forSearchString searchString: String, completionHandler: @escaping (([WeatherStationDTO]?) -> Void)) {
     
     if searchString.isEmpty || searchString == "" { return completionHandler(nil) }
     
@@ -50,7 +56,8 @@ class WeatherLocationService {
         do {
           queryResult = try database.executeQuery(query, values: nil)
         } catch {
-          print(error.localizedDescription)
+          printDebugMessage(domain: String(describing: self),
+                            message: error.localizedDescription)
           return completionHandler(nil)
         }
         

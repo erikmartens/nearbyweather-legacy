@@ -27,7 +27,7 @@ final class BadgeService {
     }
   }
   
-  private struct TemperatureSignNotificationBundle {
+  private struct AppIconBadgeTemperatureContent {
     let sign: TemperatureSign
     let unit: TemperatureUnit
     let temperature: Int
@@ -36,11 +36,11 @@ final class BadgeService {
   
   // MARK: - Properties
   
-  public static var shared: BadgeService!
+  static var shared: BadgeService!
   
   // MARK: - Methods
   
-  public func isAppIconBadgeNotificationEnabled(with completionHandler: @escaping (Bool) -> Void) {
+  func isAppIconBadgeNotificationEnabled(with completionHandler: @escaping (Bool) -> Void) {
     guard UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) else {
       completionHandler(false)
       return
@@ -48,7 +48,7 @@ final class BadgeService {
     PermissionsManager.shared.requestNotificationPermissions(with: completionHandler)
   }
   
-  public static func instantiateSharedInstance() {
+  static func instantiateSharedInstance() {
     shared = BadgeService()
     
     if UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) {
@@ -56,12 +56,12 @@ final class BadgeService {
     }
   }
   
-  public func setTemperatureOnAppIconEnabled(_ enabled: Bool) {
+  func setTemperatureOnAppIconEnabled(_ enabled: Bool) {
     UserDefaults.standard.set(enabled, forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey)
     BadgeService.shared.updateBadge()
   }
   
-  public func updateBadge() {
+  func updateBadge() {
     guard UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) else {
       clearAppIcon()
       return
@@ -89,9 +89,9 @@ final class BadgeService {
     let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
     UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
     if previousTemperatureValue < 0 && temperature > 0 {
-      sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
+      sendTemperatureSignChangeNotification(content: AppIconBadgeTemperatureContent(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
     } else if previousTemperatureValue > 0 && temperature < 0 {
-      sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
+      sendTemperatureSignChangeNotification(content: AppIconBadgeTemperatureContent(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
     }
   }
   
@@ -99,14 +99,16 @@ final class BadgeService {
     UIApplication.shared.applicationIconBadgeNumber = 0
   }
   
-  private func sendTemperatureSignChangeNotification(bundle: TemperatureSignNotificationBundle) {
-    let notificationBody = R.string.localizable.temperature_notification(bundle.cityName, "\(bundle.sign.stringValue) \(bundle.temperature)\(bundle.unit.abbreviation)")
+  private func sendTemperatureSignChangeNotification(content: AppIconBadgeTemperatureContent) {
+    let notificationBody = R.string.localizable.temperature_notification(content.cityName, "\(content.sign.stringValue) \(content.temperature)\(content.unit.abbreviation)")
     
     let content = UNMutableNotificationContent()
     content.title = R.string.localizable.app_icon_temperature_sign_updated()
     content.body = notificationBody
     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
-    let request = UNNotificationRequest(identifier: "TemperatureSignNotification", content: content, trigger: trigger)
+    let request = UNNotificationRequest(identifier: Constants.Keys.NotificationIdentifiers.kAppIconTemeperatureNotification,
+                                        content: content,
+                                        trigger: trigger)
     UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
   }
   

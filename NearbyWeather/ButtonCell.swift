@@ -35,7 +35,7 @@ class ButtonCell: UITableViewCell {
     rightButton.removeTarget(self, action: #selector(ButtonCell.rightButtonPressed(_:)), for: .touchUpInside)
   }
   
-  public func configure(withTitle title: String, leftButtonTitle: String, rightButtonTitle: String, leftButtonHandler: @escaping ((UIButton) -> Void), rightButtonHandler: @escaping ((UIButton) -> Void)) {
+  func configure(withTitle title: String, leftButtonTitle: String, rightButtonTitle: String, leftButtonHandler: @escaping ((UIButton) -> Void), rightButtonHandler: @escaping ((UIButton) -> Void)) {
     
     contentLabel.text = title
     

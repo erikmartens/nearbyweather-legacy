@@ -14,20 +14,22 @@ enum StorageLocationType {
   case applicationSupport
 }
 
-class DataStorageService {    
+final class DataStorageService {    
   
   // MARK: - Public Functions
   
   static func storeJson<T: Encodable>(for codable: T, inFileWithName fileName: String, toStorageLocation location: StorageLocationType) {
     guard let destinationDirectoryURL = directoryURL(for: location) else {
-      print("💥 DataStorageService: Could not construct directory url.")
+      printDebugMessage(domain: String(describing: self),
+                        message: "Could not construct directory url.")
       return
     }
     if !FileManager.default.fileExists(atPath: destinationDirectoryURL.path, isDirectory: nil) {
       do {
         try FileManager.default.createDirectory(at: destinationDirectoryURL, withIntermediateDirectories: true, attributes: nil)
       } catch {
-        print("💥 DataStorageService: Error while creating directory \(destinationDirectoryURL.path). Error-Description: \(error.localizedDescription)")
+        printDebugMessage(domain: String(describing: self),
+                          message: "Error while creating directory \(destinationDirectoryURL.path). Error-Description: \(error.localizedDescription)")
         return
       }
     }
@@ -38,20 +40,23 @@ class DataStorageService {
       let data = try JSONEncoder().encode(codable)
       try data.write(to: filePathUrl)
     } catch let error {
-      print("💥 DataStorageService: Error while writing data to \(filePathUrl.path). Error-Description: \(error.localizedDescription)")
+      printDebugMessage(domain: String(describing: self),
+                        message: "Error while writing data to \(filePathUrl.path). Error-Description: \(error.localizedDescription)")
     }
   }
   
   static func retrieveJsonFromFile<T: Decodable>(with fileName: String, andDecodeAsType type: T.Type, fromStorageLocation location: StorageLocationType) -> T? {
     guard let fileBaseURL = directoryURL(for: location, fileName: fileName, fileExtension: "json") else {
-      print("💥 DataStorageService: Could not construct directory url.")
+      printDebugMessage(domain: String(describing: self),
+                        message: "Could not construct directory url.")
       return nil
     }
     let fileExtension = "json"
     let filePathUrl = fileBaseURL.appendingPathComponent(fileName).appendingPathExtension(fileExtension)
     
     if !FileManager.default.fileExists(atPath: filePathUrl.path) {
-      print("💥 DataStorageService: File at path \(filePathUrl.path) does not exist!")
+      printDebugMessage(domain: String(describing: self),
+                        message: "File at path \(filePathUrl.path) does not exist!")
       return nil
     }
     do {
@@ -59,7 +64,8 @@ class DataStorageService {
       let model = try JSONDecoder().decode(type, from: data)
       return model
     } catch let error {
-      print("💥 DataStorageService: Error while retrieving data from \(filePathUrl.path). Error-Description: \(error.localizedDescription)")
+      printDebugMessage(domain: String(describing: self),
+                        message: "DataStorageService: Error while retrieving data from \(filePathUrl.path). Error-Description: \(error.localizedDescription)")
       return nil
     }
   }

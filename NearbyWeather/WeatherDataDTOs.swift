@@ -15,7 +15,7 @@ import CoreLocation
  * This DTO therefore does not exactly mirror the server response
  */
 
-public struct WeatherInformationArrayWrapper: Codable {
+struct WeatherInformationArrayWrapper: Codable {
   var list: [WeatherInformationDTO]
   
   enum CodingKeys: String, CodingKey {
@@ -23,7 +23,7 @@ public struct WeatherInformationArrayWrapper: Codable {
   }
 }
 
-public struct WeatherInformationDTO: Codable {
+struct WeatherInformationDTO: Codable {
   
   struct Coordinates: Codable {
     var latitude: Double
@@ -121,7 +121,7 @@ public struct WeatherInformationDTO: Codable {
     case daytimeInformation = "sys"
   }
   
-  public init(from decoder: Decoder) throws {
+  init(from decoder: Decoder) throws {
     let values = try decoder.container(keyedBy: CodingKeys.self)
     
     self.cityID = try values.decode(Int.self, forKey: .cityID)
@@ -143,7 +143,7 @@ public struct WeatherInformationDTO: Codable {
   }
 }
 
-public class ErrorType: Codable {
+class ErrorType: Codable {
   
   static let count = 5
   
@@ -172,7 +172,7 @@ public class ErrorType: Codable {
   }
 }
 
-public struct ErrorDataDTO: Codable {
+struct ErrorDataDTO: Codable {
   var errorType: ErrorType
   var httpStatusCode: Int?
 }

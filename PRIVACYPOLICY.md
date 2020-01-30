@@ -1,6 +1,6 @@
 # NearbyWeather - Privacy Policy
 
-__Last updated: 26 January, 2020__
+__Last updated: 30 January, 2020__
 
 ---
 

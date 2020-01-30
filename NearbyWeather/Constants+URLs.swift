@@ -15,7 +15,7 @@ extension Constants {
     static let kGitHubProjectMainPageUrl =  URL(string: "https://github.com/erikmartens/NearbyWeather")!
     static let kGitHubProjectContributionGuidelinesUrl = URL(string: "https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md")!
     static let kGitHubProjectIssues = URL(string: "https://github.com/erikmartens/NearbyWeather/issues")!
-    static let kPrivacyPolicyUrl = URL(string: "https://erikmartens.weebly.com/nearbyweather-privacy-policy.html")!
+    static let kPrivacyPolicyUrl = URL(string: "https://github.com/erikmartens/NearbyWeather/blob/master/PRIVACYPOLICY.md")!
     static let kOpenWeatherSingleLocationBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/weather")!
     static let kOpenWeatherMultiLocationBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/find")!
     static let kOpenWeatherMapUrl = URL(string: "https://openweathermap.org")!

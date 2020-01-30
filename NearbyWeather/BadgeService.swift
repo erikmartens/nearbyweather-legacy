@@ -106,7 +106,9 @@ final class BadgeService {
     content.title = R.string.localizable.app_icon_temperature_sign_updated()
     content.body = notificationBody
     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
-    let request = UNNotificationRequest(identifier: "TemperatureSignNotification", content: content, trigger: trigger)
+    let request = UNNotificationRequest(identifier: Constants.Keys.NotificationIdentifiers.kAppIconTemeperatureNotification,
+                                        content: content,
+                                        trigger: trigger)
     UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
   }
   

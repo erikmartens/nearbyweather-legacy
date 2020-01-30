@@ -32,3 +32,10 @@ extension Constants.Keys {
     static let kSortingOrientationPreferenceChanged = "de.erikmaximilianmartens.nearbyWeather.sortingOrientationPreferenceChanged"
   }
 }
+
+extension Constants.Keys {
+  
+  enum NotificationIdentifiers {
+    static let kAppIconTemeperatureNotification = "AppIconTemeperatureNotification"
+  }
+}

@@ -6,7 +6,6 @@
  Copyright © 2019 Pierre-Yves Lapersonne. All rights reserved.
  */
 
-locale_tag="fr";
 tab_weatherList = "Liste";
 tab_weatherMap = "Carte";
 tab_settings = "Réglages";

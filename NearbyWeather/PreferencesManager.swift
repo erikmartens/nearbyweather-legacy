@@ -34,7 +34,7 @@ public class PreferredBookmark: Codable, PreferencesOption {
   }
 }
 
-public enum SortingOrientationWrappedEnum: Int, Codable {
+public enum SortingOrientationWrappedEnum: Int, CaseIterable, Codable {
   case name
   case temperature
   case distance
@@ -43,7 +43,9 @@ public enum SortingOrientationWrappedEnum: Int, Codable {
 public class SortingOrientation: Codable, PreferencesOption {
   public typealias PreferencesOptionType = SortingOrientationWrappedEnum
   
-  static let count = 3
+  private lazy var count = {
+    return SortingOrientationWrappedEnum.allCases.count
+  }
   
   public var value: SortingOrientationWrappedEnum
   
@@ -67,7 +69,7 @@ public class SortingOrientation: Codable, PreferencesOption {
   }
 }
 
-public enum TemperatureUnitWrappedEnum: Int, Codable, CaseIterable {
+public enum TemperatureUnitWrappedEnum: Int, CaseIterable, Codable {
   case celsius
   case fahrenheit
   case kelvin
@@ -95,22 +97,22 @@ public class TemperatureUnit: Codable, PreferencesOption {
   
   public var stringValue: String {
     switch value {
-    case .celsius: return "Celsius"
-    case .fahrenheit: return "Fahrenheit"
-    case .kelvin: return "Kelvin"
+    case .celsius: return Constants.Values.TemperatureName.kCelsius
+    case .fahrenheit: return Constants.Values.TemperatureName.kFahrenheit
+    case .kelvin: return Constants.Values.TemperatureName.kKelvin
     }
   }
   
   public var abbreviation: String {
     switch value {
-    case .celsius: return "°C"
-    case .fahrenheit: return "°F"
-    case .kelvin: return "K"
+    case .celsius: return Constants.Values.TemperatureUnit.kCelsius
+    case .fahrenheit: return Constants.Values.TemperatureUnit.kFahrenheit
+    case .kelvin: return Constants.Values.TemperatureUnit.kKelvin
     }
   }
 }
 
-public enum DistanceSpeedUnitWrappedEnum: Int, Codable {
+public enum DistanceSpeedUnitWrappedEnum: Int, CaseIterable, Codable {
   case kilometres
   case miles
 }
@@ -118,7 +120,9 @@ public enum DistanceSpeedUnitWrappedEnum: Int, Codable {
 public class DistanceSpeedUnit: Codable, PreferencesOption {
   public typealias PreferencesOptionType = DistanceSpeedUnitWrappedEnum
   
-  static let count = 2
+  private lazy var count = {
+    return DistanceSpeedUnitWrappedEnum.allCases.count
+  }()
   
   public var value: DistanceSpeedUnitWrappedEnum
   
@@ -141,7 +145,7 @@ public class DistanceSpeedUnit: Codable, PreferencesOption {
   }
 }
 
-public enum AmountOfResultsWrappedEnum: Int, Codable {
+public enum AmountOfResultsWrappedEnum: Int, CaseIterable, Codable {
   case ten
   case twenty
   case thirty
@@ -153,7 +157,9 @@ public class AmountOfResults: Codable, PreferencesOption {
   
   public typealias PreferencesOptionType = AmountOfResultsWrappedEnum
   
-  static let count = 5
+  private lazy var count = {
+    return AmountOfResultsWrappedEnum.allCases.count
+  }()
   
   public var value: AmountOfResultsWrappedEnum
   
@@ -267,7 +273,11 @@ final class PreferencesManager {
   // MARK: - Public Properties & Methods
   
   public static func instantiateSharedInstance() {
-    shared = PreferencesManager.loadService() ?? PreferencesManager(preferredBookmark: PreferredBookmark(value: .none), amountOfResults: AmountOfResults(value: .ten), temperatureUnit: TemperatureUnit(value: .celsius), windspeedUnit: DistanceSpeedUnit(value: .kilometres), sortingOrientation: SortingOrientation(value: .name))
+    shared = PreferencesManager.loadService() ?? PreferencesManager(preferredBookmark: PreferredBookmark(value: .none),
+                                                                    amountOfResults: AmountOfResults(value: .ten),
+                                                                    temperatureUnit: TemperatureUnit(value: .celsius),
+                                                                    windspeedUnit: DistanceSpeedUnit(value: .kilometres),
+                                                                    sortingOrientation: SortingOrientation(value: .name))
   }
   
   // MARK: - Private Helper Methods

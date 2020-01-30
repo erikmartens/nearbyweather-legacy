@@ -15,7 +15,7 @@ enum ReachabilityStatus {
   case connected
 }
 
-class NetworkingService {
+final class NetworkingService {
   
   // MARK: - Public Assets
   

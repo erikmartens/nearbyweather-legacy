@@ -52,8 +52,8 @@ final class AboutAppTableViewController: UITableViewController {
     tableView.delegate = self
     tableView.estimatedRowHeight = 44
     
-    tableView.register(UINib(nibName: R.nib.dualLabelCell.name, bundle: R.nib.dualLabelCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.dualLabelCell.identifier)
+    tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
     
     tableView.register(UINib(nibName: R.nib.subtitleCell.name, bundle: R.nib.subtitleCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.subtitleCell.identifier)
@@ -160,11 +160,11 @@ final class AboutAppTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let labelCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
+    let singleLabelCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
     let subtitleCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell
     let buttonCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.buttonCell.identifier, for: indexPath) as! ButtonCell
     
-    [labelCell, subtitleCell].forEach {
+    [singleLabelCell, subtitleCell].forEach {
       $0.selectionStyle = .default
       $0.accessoryType = .disclosureIndicator
     }
@@ -174,37 +174,36 @@ final class AboutAppTableViewController: UITableViewController {
     switch indexPath.section {
     case 0:
       if indexPath.row == 0 {
-        labelCell.contentLabel.text = R.string.localizable.rate_version()
-        return labelCell
-      } else {
-        buttonCell.configure(
-          withTitle: R.string.localizable.report_issue(),
-          leftButtonTitle: R.string.localizable.viaGitHub(),
-          rightButtonTitle: R.string.localizable.viaEmail(),
-          leftButtonHandler: { [weak self] _ in
-            DispatchQueue.main.async {
-              self?.presentSafariViewController(for: Constants.Urls.kGitHubProjectIssuesUrl)
-            }
-          },
-          rightButtonHandler: { [weak self] _ in
-            let mailAddress = "erikmartens.developer@gmail.com"
-            let subject = "NearbyWeather - \(R.string.localizable.report_issue())"
-            let message = "Hey Erik, \n"
-            self?.sendMail(to: [mailAddress], withSubject: subject, withMessage: message)
-          }
-        )
-        return buttonCell
+        singleLabelCell.contentLabel.text = R.string.localizable.rate_version()
+        return singleLabelCell
       }
+      buttonCell.configure(
+        withTitle: R.string.localizable.report_issue(),
+        leftButtonTitle: R.string.localizable.viaGitHub(),
+        rightButtonTitle: R.string.localizable.viaEmail(),
+        leftButtonHandler: { [weak self] _ in
+          DispatchQueue.main.async {
+            self?.presentSafariViewController(for: Constants.Urls.kGitHubProjectIssuesUrl)
+          }
+        },
+        rightButtonHandler: { [weak self] _ in
+          let mailAddress = "erikmartens.developer@gmail.com"
+          let subject = "NearbyWeather - \(R.string.localizable.report_issue())"
+          let message = "Hey Erik, \n"
+          self?.sendMail(to: [mailAddress], withSubject: subject, withMessage: message)
+        }
+      )
+      return buttonCell
     case 1:
-      labelCell.contentLabel.text = R.string.localizable.privacy_policy()
-      return labelCell
+      singleLabelCell.contentLabel.text = R.string.localizable.privacy_policy()
+      return singleLabelCell
     case 2:
       if indexPath.row == 0 {
-        labelCell.contentLabel.text = R.string.localizable.how_to_contribute()
-        return labelCell
+        singleLabelCell.contentLabel.text = R.string.localizable.how_to_contribute()
+        return singleLabelCell
       } else {
-        labelCell.contentLabel.text = R.string.localizable.source_code_via_github()
-        return labelCell
+        singleLabelCell.contentLabel.text = R.string.localizable.source_code_via_github()
+        return singleLabelCell
       }
     case 3:
       let contributor = owner[indexPath.row]
@@ -217,11 +216,11 @@ final class AboutAppTableViewController: UITableViewController {
       subtitleCell.subtitleLabel.text = contributor.localizedContributionDescription
       return subtitleCell
     case 5:
-      labelCell.contentLabel.text = thirdPartyLibraries[indexPath.row].name
-      return labelCell
+      singleLabelCell.contentLabel.text = thirdPartyLibraries[indexPath.row].name
+      return singleLabelCell
     case 6:
-      labelCell.contentLabel.text = "Icons8"
-      return labelCell
+      singleLabelCell.contentLabel.text = "Icons8"
+      return singleLabelCell
     default:
       return UITableViewCell()
     }

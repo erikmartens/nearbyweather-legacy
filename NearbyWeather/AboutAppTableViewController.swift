@@ -51,6 +51,9 @@ final class AboutAppTableViewController: UITableViewController {
     
     tableView.delegate = self
     tableView.estimatedRowHeight = 44
+    
+    tableView.register(UINib(nibName: R.nib.labelCell.name, bundle: R.nib.labelCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.labelCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {

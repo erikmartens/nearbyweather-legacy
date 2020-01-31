@@ -16,6 +16,9 @@ final class SettingsTableViewController: UITableViewController {
     super.viewDidLoad()
     
     navigationItem.title = R.string.localizable.tab_settings()
+    
+    tableView.register(UINib(nibName: R.nib.labelCell.name, bundle: R.nib.labelCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.labelCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {

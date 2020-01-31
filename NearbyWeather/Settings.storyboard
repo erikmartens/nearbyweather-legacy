@@ -16,60 +16,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" id="m9z-n6-UXF" customClass="LabelCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m9z-n6-UXF" id="8eF-u2-EOP">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZHU-Vt-q3e" userLabel="contentLabel">
-                                            <rect key="frame" x="20" y="5" width="179.5" height="35"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="ZYe-jf-Cq1"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rp5-b4-SSR" userLabel="contentLabel">
-                                            <rect key="frame" x="214.5" y="5" width="179.5" height="35"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="85o-ga-s52"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="Rp5-b4-SSR" secondAttribute="trailing" constant="20" id="CW3-cP-lGS"/>
-                                        <constraint firstItem="Rp5-b4-SSR" firstAttribute="top" secondItem="8eF-u2-EOP" secondAttribute="top" constant="5" id="DgE-QY-t9x"/>
-                                        <constraint firstItem="ZHU-Vt-q3e" firstAttribute="width" secondItem="Rp5-b4-SSR" secondAttribute="width" id="JTg-C2-MlG"/>
-                                        <constraint firstAttribute="bottom" secondItem="Rp5-b4-SSR" secondAttribute="bottom" constant="4" id="ROh-fn-xaO"/>
-                                        <constraint firstItem="Rp5-b4-SSR" firstAttribute="leading" secondItem="ZHU-Vt-q3e" secondAttribute="trailing" constant="15" id="Scw-0O-8Rk"/>
-                                        <constraint firstAttribute="bottom" secondItem="ZHU-Vt-q3e" secondAttribute="bottom" constant="4" id="cKX-YJ-eRw"/>
-                                        <constraint firstItem="ZHU-Vt-q3e" firstAttribute="leading" secondItem="8eF-u2-EOP" secondAttribute="leading" constant="20" id="gc7-Kj-jgM"/>
-                                        <constraint firstItem="ZHU-Vt-q3e" firstAttribute="top" secondItem="8eF-u2-EOP" secondAttribute="top" constant="5" id="xiW-0t-OdD"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="cKX-YJ-eRw"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="constraints">
-                                            <include reference="cKX-YJ-eRw"/>
-                                        </mask>
-                                    </variation>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="contentLabel" destination="ZHU-Vt-q3e" id="uwp-nB-Uag"/>
-                                    <outlet property="selectionLabel" destination="Rp5-b4-SSR" id="SlB-9b-ob4"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SingleLabelCell" id="Oo0-ob-QS8" userLabel="ToggleCell" customClass="SingleLabelCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="99.5" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Oo0-ob-QS8" id="mbw-E6-OL8">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -107,7 +55,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ToggleCell" id="ylj-UF-1bR" userLabel="ToggleCell" customClass="ToggleCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="143.5" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="99.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ylj-UF-1bR" id="YbA-MU-LWC">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -233,36 +181,8 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="LabelCell" id="MSA-F5-h6F" customClass="LabelCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="200.5" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MSA-F5-h6F" id="YHW-W9-oem">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate this Version" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iru-fp-2uP" userLabel="developerNameLabel">
-                                            <rect key="frame" x="15" y="5" width="353" height="35"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="zil-pY-YYQ"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Iru-fp-2uP" firstAttribute="top" secondItem="YHW-W9-oem" secondAttribute="top" constant="5" id="Lwr-ji-jcV"/>
-                                        <constraint firstAttribute="trailing" secondItem="Iru-fp-2uP" secondAttribute="trailing" constant="15" id="Wx0-Ar-stJ"/>
-                                        <constraint firstAttribute="bottom" secondItem="Iru-fp-2uP" secondAttribute="bottom" constant="4" id="eVt-Uc-Rnr"/>
-                                        <constraint firstItem="Iru-fp-2uP" firstAttribute="leading" secondItem="YHW-W9-oem" secondAttribute="leading" constant="15" id="fJF-oo-qZ5"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="contentLabel" destination="Iru-fp-2uP" id="J8m-JQ-4QQ"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ButtonCell" rowHeight="87" id="q5L-wT-bVj" customClass="ButtonCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="244.5" width="414" height="87"/>
+                                <rect key="frame" x="0.0" y="200.5" width="414" height="87"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q5L-wT-bVj" id="OjS-E4-BTh">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="87"/>
@@ -319,7 +239,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubtitleCell" rowHeight="63" id="Jwc-aZ-eDY" customClass="SubtitleCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="331.5" width="414" height="63"/>
+                                <rect key="frame" x="0.0" y="287.5" width="414" height="63"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jwc-aZ-eDY" id="5hK-Pz-WxF">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>

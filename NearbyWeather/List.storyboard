@@ -94,7 +94,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="vHU-c0-y50">
-                                    <rect key="frame" x="0.0" y="133.5" width="375" height="61"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="61"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ujx-CJ-GVk">
@@ -150,73 +150,6 @@
                                         <constraint firstAttribute="trailing" secondItem="Ujx-CJ-GVk" secondAttribute="trailing" constant="16" id="muS-kT-eyR"/>
                                     </constraints>
                                 </view>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlertCell" rowHeight="60" id="W9s-LN-bfC" userLabel="AlertCell" customClass="AlertCell" customModule="NearbyWeather" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="60"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W9s-LN-bfC" id="xj6-FQ-qcR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuc-1A-iPV" userLabel="backgroundColorView">
-                                                    <rect key="frame" x="20" y="0.0" width="335" height="60"/>
-                                                    <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="7T6-bY-wrH">
-                                                            <rect key="frame" x="15" y="15" width="305" height="30"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2t7-Mp-rul">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="30"/>
-                                                                    <subviews>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ExclamationMark" translatesAutoresizingMaskIntoConstraints="NO" id="O2J-Lx-1AT">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="25" id="2SW-Y1-XaE"/>
-                                                                                <constraint firstAttribute="width" constant="25" id="S8W-VQ-EBp"/>
-                                                                            </constraints>
-                                                                        </imageView>
-                                                                    </subviews>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                                    <constraints>
-                                                                        <constraint firstItem="O2J-Lx-1AT" firstAttribute="top" secondItem="2t7-Mp-rul" secondAttribute="top" id="34q-X2-WNP"/>
-                                                                        <constraint firstAttribute="width" secondItem="O2J-Lx-1AT" secondAttribute="width" id="X6v-RQ-chY"/>
-                                                                        <constraint firstItem="O2J-Lx-1AT" firstAttribute="centerX" secondItem="2t7-Mp-rul" secondAttribute="centerX" id="scd-Iq-4CL"/>
-                                                                    </constraints>
-                                                                </view>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alert" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7X4-im-Zdm" userLabel="noticeLabel">
-                                                                    <rect key="frame" x="40" y="0.0" width="265" height="30"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstItem="2t7-Mp-rul" firstAttribute="height" secondItem="7X4-im-Zdm" secondAttribute="height" id="uxZ-4o-349"/>
-                                                            </constraints>
-                                                        </stackView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="7T6-bY-wrH" secondAttribute="bottom" constant="15" id="1hL-PS-VF4"/>
-                                                        <constraint firstItem="7T6-bY-wrH" firstAttribute="top" secondItem="zuc-1A-iPV" secondAttribute="top" constant="15" id="5zJ-7l-Ih7"/>
-                                                        <constraint firstItem="7T6-bY-wrH" firstAttribute="leading" secondItem="zuc-1A-iPV" secondAttribute="leading" constant="15" id="I5c-gq-xw9"/>
-                                                        <constraint firstAttribute="trailing" secondItem="7T6-bY-wrH" secondAttribute="trailing" constant="15" id="MzW-Gv-l7C"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="zuc-1A-iPV" firstAttribute="leading" secondItem="xj6-FQ-qcR" secondAttribute="leading" constant="20" id="MAz-uL-qhp"/>
-                                                <constraint firstAttribute="bottom" secondItem="zuc-1A-iPV" secondAttribute="bottom" id="c1D-nC-yJO"/>
-                                                <constraint firstItem="zuc-1A-iPV" firstAttribute="top" secondItem="xj6-FQ-qcR" secondAttribute="top" id="exJ-lT-tQb"/>
-                                                <constraint firstAttribute="trailing" secondItem="zuc-1A-iPV" secondAttribute="trailing" constant="20" id="gW4-3U-e7D"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="backgroundColorView" destination="zuc-1A-iPV" id="Qog-m6-hlF"/>
-                                            <outlet property="noticeLabel" destination="7X4-im-Zdm" id="PGy-bK-iXd"/>
-                                            <outlet property="warningImageView" destination="2t7-Mp-rul" id="PNM-Jo-CCY"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                                 <sections/>
                             </tableView>
                         </subviews>
@@ -270,7 +203,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ExclamationMark" width="25" height="25"/>
         <image name="OpenWeatherMapLogo" width="207" height="20"/>
         <image name="SadCloud" width="150" height="103"/>
     </resources>

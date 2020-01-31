@@ -48,6 +48,9 @@ final class WeatherListViewController: UIViewController {
     
     tableView.register(UINib(nibName: R.nib.weatherDataCell.name, bundle: .main),
                        forCellReuseIdentifier: R.reuseIdentifier.weatherDataCell.identifier)
+    
+    tableView.register(UINib(nibName: R.nib.alertCell.name, bundle: .main),
+                       forCellReuseIdentifier: R.reuseIdentifier.alertCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {

@@ -14,7 +14,7 @@ extension Constants {
     static let kAppStoreRatingDeepLinkUrl = URL(string: "https://itunes.apple.com/app/id1227313069?action=write-review&mt=8")!
     static let kGitHubProjectMainPageUrl =  URL(string: "https://github.com/erikmartens/NearbyWeather")!
     static let kGitHubProjectContributionGuidelinesUrl = URL(string: "https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md")!
-    static let kGitHubProjectIssues = URL(string: "https://github.com/erikmartens/NearbyWeather/issues")!
+    static let kGitHubProjectIssuesUrl = URL(string: "https://github.com/erikmartens/NearbyWeather/issues")!
     static let kPrivacyPolicyUrl = URL(string: "https://github.com/erikmartens/NearbyWeather/blob/master/PRIVACYPOLICY.md")!
     static let kOpenWeatherSingleLocationBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/weather")!
     static let kOpenWeatherMultiLocationBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/find")!

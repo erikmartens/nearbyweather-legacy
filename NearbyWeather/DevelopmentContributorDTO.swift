@@ -20,7 +20,7 @@ struct DevelopmentContributorDTO: Codable {
   
   var localizedContributionDescription: String? {
     return contributionDescription
-      .first { $0.key == Locale.current.regionCode?.lowercased() ?? "en" }?
+      .first { $0.key == Locale.current.languageCode?.lowercased() ?? "en" }?
       .value
   }
 }

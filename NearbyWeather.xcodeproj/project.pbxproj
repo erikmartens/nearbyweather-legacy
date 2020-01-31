@@ -61,9 +61,9 @@
 		F2B8EA061EA2893C00704E90 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA051EA2893C00704E90 /* WelcomeScreenViewController.swift */; };
 		F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */; };
 		F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */; };
-		F2C1E70723E4C20800E4C180 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C1E70623E4C20800E4C180 /* Constants.swift */; };
 		F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2B1DF2004171500C810EF /* DataStorageService.swift */; };
 		F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */; };
+		F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEADB23E4CF7900CD513B /* Constants.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -168,9 +168,9 @@
 		F2B8EA051EA2893C00704E90 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
 		F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewController.swift; sourceTree = "<group>"; };
 		F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppTableViewController.swift; sourceTree = "<group>"; };
-		F2C1E70623E4C20800E4C180 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../../../.Trash/Constants.swift; sourceTree = "<group>"; };
 		F2D2B1DF2004171500C810EF /* DataStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageService.swift; sourceTree = "<group>"; };
 		F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+URLs.swift"; sourceTree = "<group>"; };
+		F2DBEADB23E4CF7900CD513B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -430,7 +430,7 @@
 		F2E7237B23E0EA22001189F5 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				F2C1E70623E4C20800E4C180 /* Constants.swift */,
+				F2DBEADB23E4CF7900CD513B /* Constants.swift */,
 				F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */,
 				F2E7238023E0F044001189F5 /* Constants+Keys.swift */,
 				F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */,
@@ -794,7 +794,7 @@
 				F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */,
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIViewExtensions.swift in Sources */,
-				F2C1E70723E4C20800E4C180 /* Constants.swift in Sources */,
+				F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */,
 				F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationControllerExtensions.swift in Sources */,
 				F2A5CAAC200D51870071BFFB /* UINavigationItemExtensions.swift in Sources */,

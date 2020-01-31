@@ -52,8 +52,8 @@ final class AboutAppTableViewController: UITableViewController {
     tableView.delegate = self
     tableView.estimatedRowHeight = 44
     
-    tableView.register(UINib(nibName: R.nib.labelCell.name, bundle: R.nib.labelCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.labelCell.identifier)
+    tableView.register(UINib(nibName: R.nib.dualLabelCell.name, bundle: R.nib.dualLabelCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.dualLabelCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -154,7 +154,7 @@ final class AboutAppTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let labelCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+    let labelCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
     let subtitleCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell
     let buttonCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.buttonCell.identifier, for: indexPath) as! ButtonCell
     

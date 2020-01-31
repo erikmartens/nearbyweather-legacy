@@ -55,6 +55,9 @@ final class AboutAppTableViewController: UITableViewController {
     tableView.register(UINib(nibName: R.nib.dualLabelCell.name, bundle: R.nib.dualLabelCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.dualLabelCell.identifier)
     
+    tableView.register(UINib(nibName: R.nib.subtitleCell.name, bundle: R.nib.subtitleCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.subtitleCell.identifier)
+    
     tableView.register(UINib(nibName: R.nib.buttonCell.name, bundle: R.nib.buttonCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.buttonCell.identifier)
   }

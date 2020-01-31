@@ -69,6 +69,7 @@
 		F2DBEAE423E4D9D200CD513B /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */; };
 		F2DBEAE623E4DC6A00CD513B /* ToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */; };
 		F2DBEAE823E4DD0900CD513B /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE723E4DD0900CD513B /* ButtonCell.xib */; };
+		F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -181,6 +182,7 @@
 		F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
 		F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToggleCell.xib; sourceTree = "<group>"; };
 		F2DBEAE723E4DD0900CD513B /* ButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
+		F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubtitleCell.xib; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				F2DBEAE723E4DD0900CD513B /* ButtonCell.xib */,
 				F273254B2032051F00A1DBD1 /* ButtonCell.swift */,
 				F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */,
+				F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
 				F26A6D6220FB70F50033BC49 /* Map.storyboard in Resources */,
 				F204B7801DF2EFA3000F4371 /* Main.storyboard in Resources */,
+				F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */,
 				F25A39712187AA5A0054BC7A /* ProjectContributors.json in Resources */,
 				F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */,
 				F2B8EA041EA286F000704E90 /* Welcome.storyboard in Resources */,

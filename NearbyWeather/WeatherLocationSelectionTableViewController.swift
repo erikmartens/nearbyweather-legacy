@@ -26,6 +26,9 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
     tableView.delegate = self
     searchController.delegate = self
     
+    tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
+    
     searchController.searchResultsUpdater = self
     searchController.searchBar.placeholder = R.string.localizable.search_by_name()
     searchController.hidesNavigationBarDuringPresentation = false
@@ -61,7 +64,7 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.owmCityCell.identifier, for: indexPath) as! LocationWeatherDataCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
     cell.contentLabel.text = "\(filteredCities[indexPath.row].name), \(filteredCities[indexPath.row].country)"
     return cell
   }

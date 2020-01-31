@@ -267,46 +267,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OWMCityCell" id="eqH-wQ-jP5" userLabel="OWMCityCell" customClass="LocationWeatherDataCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eqH-wQ-jP5" id="1T5-CD-shU">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gh6-Fx-KC5" userLabel="contentLabel">
-                                            <rect key="frame" x="20" y="5" width="379" height="34.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="M9v-yp-0uj"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Gh6-Fx-KC5" firstAttribute="top" secondItem="1T5-CD-shU" secondAttribute="top" constant="5" id="7cK-Ta-adV"/>
-                                        <constraint firstAttribute="bottom" secondItem="Gh6-Fx-KC5" secondAttribute="bottom" constant="4" id="PtY-SB-7r2"/>
-                                        <constraint firstAttribute="trailing" secondItem="Gh6-Fx-KC5" secondAttribute="trailing" constant="15" id="hYB-HC-jon"/>
-                                        <constraint firstItem="Gh6-Fx-KC5" firstAttribute="leading" secondItem="1T5-CD-shU" secondAttribute="leading" constant="20" id="i2d-zb-ilK"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="PtY-SB-7r2"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="constraints">
-                                            <include reference="PtY-SB-7r2"/>
-                                        </mask>
-                                    </variation>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="contentLabel" destination="Gh6-Fx-KC5" id="g77-WE-yNJ"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
                         <sections/>
                         <connections>
                             <outlet property="dataSource" destination="WjD-7R-KJ3" id="hnj-YT-ALo"/>
@@ -326,46 +286,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OWMCityCell" id="oO9-fB-e2M" userLabel="OWMCityCell" customClass="LocationWeatherDataCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oO9-fB-e2M" id="1ui-vp-C1H">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhg-65-mM4" userLabel="contentLabel">
-                                            <rect key="frame" x="20" y="5" width="379" height="34.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="6wn-x2-Uuq"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="dhg-65-mM4" secondAttribute="trailing" constant="15" id="6y0-yy-49i"/>
-                                        <constraint firstItem="dhg-65-mM4" firstAttribute="leading" secondItem="1ui-vp-C1H" secondAttribute="leading" constant="20" id="FQT-WR-Q1K"/>
-                                        <constraint firstItem="dhg-65-mM4" firstAttribute="top" secondItem="1ui-vp-C1H" secondAttribute="top" constant="5" id="P77-Xb-QJ4"/>
-                                        <constraint firstAttribute="bottom" secondItem="dhg-65-mM4" secondAttribute="bottom" constant="4" id="Pfn-27-2Hc"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="Pfn-27-2Hc"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="constraints">
-                                            <include reference="Pfn-27-2Hc"/>
-                                        </mask>
-                                    </variation>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="contentLabel" destination="dhg-65-mM4" id="fTp-hK-Qbj"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="D9q-ne-Adf" id="SFm-iL-kXx"/>
                             <outlet property="delegate" destination="D9q-ne-Adf" id="DN1-ck-Nbe"/>

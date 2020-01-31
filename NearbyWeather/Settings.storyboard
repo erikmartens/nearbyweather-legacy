@@ -86,25 +86,6 @@
             </objects>
             <point key="canvasLocation" x="3286" y="2096"/>
         </scene>
-        <!--Weather Location Selection Table View Controller-->
-        <scene sceneID="Q95-SA-U2L">
-            <objects>
-                <tableViewController storyboardIdentifier="OWMCityFilterTableViewController" id="WjD-7R-KJ3" customClass="WeatherLocationSelectionTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="MAG-9s-TA7">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="WjD-7R-KJ3" id="hnj-YT-ALo"/>
-                            <outlet property="delegate" destination="WjD-7R-KJ3" id="w8u-dH-WK7"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WSi-Wd-oaP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4224.8000000000002" y="651.72413793103453"/>
-        </scene>
         <!--SettingsInputTableViewController-->
         <scene sceneID="7CC-tz-Fn4">
             <objects>

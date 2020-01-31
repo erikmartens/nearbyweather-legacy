@@ -66,7 +66,7 @@ final class SettingsTableViewController: UITableViewController {
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)
       } else if indexPath.row == 1 {
-        let destinationViewController = R.storyboard.settings.owmCityFilterTableViewController()!
+        let destinationViewController = WeatherLocationSelectionTableViewController(style: .grouped)
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)

@@ -235,10 +235,7 @@ final class AboutAppTableViewController: UITableViewController {
   
   private func configureText() {
     appTitleLabel.text = R.string.localizable.app_title()
-    
-    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "#UNDEFINED"
-    let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "#UNDEFINED"
-    appVersionLabel.text = "Version \(appVersion) Build #\(appBuild)"
+    appVersionLabel.text = Constants.Values.AppVersion.kVersionBuildString
   }
   
   private func sendMail(to recipients: [String], withSubject subject: String, withMessage message: String) {

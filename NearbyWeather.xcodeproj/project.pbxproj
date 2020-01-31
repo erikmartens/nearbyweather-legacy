@@ -67,6 +67,7 @@
 		F2DBEADE23E4D46700CD513B /* WeatherDataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEADD23E4D46700CD513B /* WeatherDataCell.xib */; };
 		F2DBEAE023E4D66100CD513B /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEADF23E4D66100CD513B /* AlertCell.xib */; };
 		F2DBEAE223E4D71700CD513B /* DualLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE123E4D71700CD513B /* DualLabelCell.xib */; };
+		F2DBEAE423E4D9D200CD513B /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -177,6 +178,7 @@
 		F2DBEADD23E4D46700CD513B /* WeatherDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherDataCell.xib; sourceTree = "<group>"; };
 		F2DBEADF23E4D66100CD513B /* AlertCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
 		F2DBEAE123E4D71700CD513B /* DualLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DualLabelCell.xib; sourceTree = "<group>"; };
+		F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				F27AFDEB1DF4C089003957EB /* WeatherDataCell.swift */,
 				F2DBEAE123E4D71700CD513B /* DualLabelCell.xib */,
 				F283D26D1DF39095001B879D /* DualLabelCell.swift */,
+				F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */,
 				F2E7237923DE2857001189F5 /* SingleLabelCell.swift */,
 				F2A5CAA7200587DE0071BFFB /* LocationWeatherDataCell.swift */,
 				F28CA53C202622C200209397 /* ToggleCell.swift */,
@@ -593,6 +596,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2DBEAE423E4D9D200CD513B /* SingleLabelCell.xib in Resources */,
 				F26A6D6020FB70DD0033BC49 /* Details.storyboard in Resources */,
 				F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */,
 				F204B7851DF2EFA3000F4371 /* LaunchScreen.storyboard in Resources */,

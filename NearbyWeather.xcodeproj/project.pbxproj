@@ -64,6 +64,7 @@
 		F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2B1DF2004171500C810EF /* DataStorageService.swift */; };
 		F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */; };
 		F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEADB23E4CF7900CD513B /* Constants.swift */; };
+		F2DBEADE23E4D46700CD513B /* WeatherDataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEADD23E4D46700CD513B /* WeatherDataCell.xib */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -171,6 +172,7 @@
 		F2D2B1DF2004171500C810EF /* DataStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageService.swift; sourceTree = "<group>"; };
 		F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+URLs.swift"; sourceTree = "<group>"; };
 		F2DBEADB23E4CF7900CD513B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F2DBEADD23E4D46700CD513B /* WeatherDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherDataCell.xib; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 		F2B8EA0C1EA2DDD700704E90 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				F2DBEADD23E4D46700CD513B /* WeatherDataCell.xib */,
 				F27AFDEB1DF4C089003957EB /* WeatherDataCell.swift */,
 				F283D26D1DF39095001B879D /* LabelCell.swift */,
 				F2E7237923DE2857001189F5 /* SingleLabelCell.swift */,
@@ -592,6 +595,7 @@
 				F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */,
 				F28DA85F203B999400879E6C /* Settings.storyboard in Resources */,
 				F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */,
+				F2DBEADE23E4D46700CD513B /* WeatherDataCell.xib in Resources */,
 				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
 				F26A6D6220FB70F50033BC49 /* Map.storyboard in Resources */,
 				F204B7801DF2EFA3000F4371 /* Main.storyboard in Resources */,

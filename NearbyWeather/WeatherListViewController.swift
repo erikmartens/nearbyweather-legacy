@@ -45,6 +45,9 @@ final class WeatherListViewController: UIViewController {
     
     tableView.delegate = self
     tableView.dataSource = self
+    
+    tableView.register(UINib(nibName: R.nib.weatherDataCell.name, bundle: .main),
+                       forCellReuseIdentifier: R.reuseIdentifier.weatherDataCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {

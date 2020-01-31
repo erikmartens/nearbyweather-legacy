@@ -22,6 +22,9 @@ final class SettingsTableViewController: UITableViewController {
     
     tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
+    
+    tableView.register(UINib(nibName: R.nib.toggleCell.name, bundle: R.nib.toggleCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.toggleCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {

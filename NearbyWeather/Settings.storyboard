@@ -15,58 +15,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ToggleCell" id="ylj-UF-1bR" userLabel="ToggleCell" customClass="ToggleCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ylj-UF-1bR" id="YbA-MU-LWC">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pwm-IZ-u68" userLabel="contentLabel">
-                                            <rect key="frame" x="20" y="5" width="315" height="35"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="7Ol-dV-LaT"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="16A-eF-Lxn">
-                                            <rect key="frame" x="350" y="6.5" width="51" height="31"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="49" id="wcx-rY-w3Q"/>
-                                            </constraints>
-                                            <connections>
-                                                <action selector="didToggleSwitch:" destination="ylj-UF-1bR" eventType="valueChanged" id="iKT-0s-tlH"/>
-                                            </connections>
-                                        </switch>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="16A-eF-Lxn" firstAttribute="centerY" secondItem="YbA-MU-LWC" secondAttribute="centerY" id="16E-FM-eVs"/>
-                                        <constraint firstItem="Pwm-IZ-u68" firstAttribute="top" secondItem="YbA-MU-LWC" secondAttribute="top" constant="5" id="5vx-Uw-EIA"/>
-                                        <constraint firstAttribute="bottom" secondItem="Pwm-IZ-u68" secondAttribute="bottom" constant="4" id="ZzZ-Cg-e2K"/>
-                                        <constraint firstItem="16A-eF-Lxn" firstAttribute="leading" secondItem="Pwm-IZ-u68" secondAttribute="trailing" constant="15" id="gH8-oE-YvC"/>
-                                        <constraint firstItem="Pwm-IZ-u68" firstAttribute="leading" secondItem="YbA-MU-LWC" secondAttribute="leading" constant="20" id="kCf-B5-P0d"/>
-                                        <constraint firstAttribute="trailing" secondItem="16A-eF-Lxn" secondAttribute="trailing" constant="15" id="tTP-rp-YVw"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="ZzZ-Cg-e2K"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="constraints">
-                                            <include reference="ZzZ-Cg-e2K"/>
-                                        </mask>
-                                    </variation>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="contentLabel" destination="Pwm-IZ-u68" id="o42-7q-Bor"/>
-                                    <outlet property="toggle" destination="16A-eF-Lxn" id="nYe-tG-5P1"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="KTn-Zy-K5w" id="Pqg-fm-rpA"/>
                             <outlet property="delegate" destination="KTn-Zy-K5w" id="3xS-nS-HP4"/>

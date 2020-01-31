@@ -13,7 +13,7 @@ import MessageUI
 final class AboutAppTableViewController: UITableViewController {
   
   private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO] = {
-    return DataStorageService.retrieveJsonFromFile(with: "ThirdPartyLibraries",
+    return DataStorageService.retrieveJsonFromFile(with: R.file.thirdPartyLibrariesJson.name,
                                                    andDecodeAsType: ThirdPartyLibraryArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -22,7 +22,7 @@ final class AboutAppTableViewController: UITableViewController {
   }()
   
   private lazy var owner: [DevelopmentContributorDTO] = {
-    return DataStorageService.retrieveJsonFromFile(with: "ProjectOwner",
+    return DataStorageService.retrieveJsonFromFile(with: R.file.projectOwnerJson.name,
                                                    andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -30,7 +30,7 @@ final class AboutAppTableViewController: UITableViewController {
   }()
   
   private lazy var contributors: [DevelopmentContributorDTO] = {
-    return DataStorageService.retrieveJsonFromFile(with: "ProjectContributors",
+    return DataStorageService.retrieveJsonFromFile(with: R.file.projectContributorsJson.name,
                                                    andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements

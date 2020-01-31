@@ -61,10 +61,10 @@
 		F2B8EA061EA2893C00704E90 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA051EA2893C00704E90 /* WelcomeScreenViewController.swift */; };
 		F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */; };
 		F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */; };
+		F2C1E70723E4C20800E4C180 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C1E70623E4C20800E4C180 /* Constants.swift */; };
 		F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2B1DF2004171500C810EF /* DataStorageService.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
-		F2E7237F23E0EA65001189F5 /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237E23E0EA65001189F5 /* Constants+URLs.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
 		F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */; };
 		F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1823E0FBEB00B4D2EB /* GlobalFunctions.swift */; };
@@ -167,10 +167,10 @@
 		F2B8EA051EA2893C00704E90 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
 		F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewController.swift; sourceTree = "<group>"; };
 		F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppTableViewController.swift; sourceTree = "<group>"; };
+		F2C1E70623E4C20800E4C180 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../../../.Trash/Constants.swift; sourceTree = "<group>"; };
 		F2D2B1DF2004171500C810EF /* DataStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageService.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
-		F2E7237E23E0EA65001189F5 /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Constants+URLs.swift"; path = "/Users/erikmartens/Code/NearbyWeather/NearbyWeather/Constants+URLs.swift"; sourceTree = "<absolute>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
 		F2F7BA1423E0FB2D00B4D2EB /* NearbyWeather-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearbyWeather-Bridging-Header.h"; sourceTree = "<group>"; };
 		F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuildEnvironment.m; sourceTree = "<group>"; };
@@ -428,7 +428,7 @@
 		F2E7237B23E0EA22001189F5 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				F2E7237E23E0EA65001189F5 /* Constants+URLs.swift */,
+				F2C1E70623E4C20800E4C180 /* Constants.swift */,
 				F2E7238023E0F044001189F5 /* Constants+Keys.swift */,
 				F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */,
 				F2F7BA1C23E373DD00B4D2EB /* Constants+Labels.swift */,
@@ -779,7 +779,6 @@
 				F2B8EA001EA11BA800704E90 /* WeatherDataDTOs.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
-				F2E7237F23E0EA65001189F5 /* Constants+URLs.swift in Sources */,
 				F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */,
 				F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */,
 				F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */,
@@ -791,6 +790,7 @@
 				F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */,
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIViewExtensions.swift in Sources */,
+				F2C1E70723E4C20800E4C180 /* Constants.swift in Sources */,
 				F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationControllerExtensions.swift in Sources */,
 				F2A5CAAC200D51870071BFFB /* UINavigationItemExtensions.swift in Sources */,

@@ -54,6 +54,9 @@ final class AboutAppTableViewController: UITableViewController {
     
     tableView.register(UINib(nibName: R.nib.dualLabelCell.name, bundle: R.nib.dualLabelCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.dualLabelCell.identifier)
+    
+    tableView.register(UINib(nibName: R.nib.buttonCell.name, bundle: R.nib.buttonCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.buttonCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -238,7 +241,7 @@ final class AboutAppTableViewController: UITableViewController {
   
   private func sendMail(to recipients: [String], withSubject subject: String, withMessage message: String) {
     guard MFMailComposeViewController.canSendMail() else {
-      return
+      return // TODO: tell user needs to set up a mail account
     }
     
     let mailController = MFMailComposeViewController()

@@ -91,65 +91,8 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ButtonCell" rowHeight="87" id="q5L-wT-bVj" customClass="ButtonCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="200.5" width="414" height="87"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q5L-wT-bVj" id="OjS-E4-BTh">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="87"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DWJ-Ga-dGe">
-                                            <rect key="frame" x="15" y="5" width="384" height="72"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sq-VR-mDP" userLabel="contentLabel">
-                                                    <rect key="frame" x="0.0" y="0.0" width="384" height="37"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="MoR-Pz-SnG"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="x7E-V1-C4U">
-                                                    <rect key="frame" x="0.0" y="42" width="384" height="30"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GlZ-8l-vze">
-                                                            <rect key="frame" x="0.0" y="0.0" width="184.5" height="30"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="dr6-LW-pvx"/>
-                                                            </constraints>
-                                                            <state key="normal" title="Button"/>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="unM-HH-mrp">
-                                                            <rect key="frame" x="199.5" y="0.0" width="184.5" height="30"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="ab7-AM-M3S"/>
-                                                            </constraints>
-                                                            <state key="normal" title="Button"/>
-                                                        </button>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="GlZ-8l-vze" firstAttribute="width" secondItem="unM-HH-mrp" secondAttribute="width" id="S72-lb-e5V"/>
-                                                    </constraints>
-                                                </stackView>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="DWJ-Ga-dGe" firstAttribute="top" secondItem="OjS-E4-BTh" secondAttribute="top" constant="5" id="3EA-OQ-vO0"/>
-                                        <constraint firstItem="DWJ-Ga-dGe" firstAttribute="leading" secondItem="OjS-E4-BTh" secondAttribute="leading" constant="15" id="4SW-7H-rUz"/>
-                                        <constraint firstAttribute="bottom" secondItem="DWJ-Ga-dGe" secondAttribute="bottom" constant="10" id="Ehj-LP-G0Y"/>
-                                        <constraint firstAttribute="trailing" secondItem="DWJ-Ga-dGe" secondAttribute="trailing" constant="15" id="chi-BJ-ifM"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="contentLabel" destination="7Sq-VR-mDP" id="LiC-IZ-yg8"/>
-                                    <outlet property="leftButton" destination="GlZ-8l-vze" id="CO5-6C-9Ua"/>
-                                    <outlet property="rightButton" destination="unM-HH-mrp" id="rz4-yI-W8c"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubtitleCell" rowHeight="63" id="Jwc-aZ-eDY" customClass="SubtitleCell" customModule="NearbyWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="287.5" width="414" height="63"/>
+                                <rect key="frame" x="0.0" y="200.5" width="414" height="63"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jwc-aZ-eDY" id="5hK-Pz-WxF">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>

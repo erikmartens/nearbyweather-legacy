@@ -68,6 +68,7 @@
 		F2DBEAE223E4D71700CD513B /* DualLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE123E4D71700CD513B /* DualLabelCell.xib */; };
 		F2DBEAE423E4D9D200CD513B /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */; };
 		F2DBEAE623E4DC6A00CD513B /* ToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */; };
+		F2DBEAE823E4DD0900CD513B /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE723E4DD0900CD513B /* ButtonCell.xib */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -179,6 +180,7 @@
 		F2DBEAE123E4D71700CD513B /* DualLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DualLabelCell.xib; sourceTree = "<group>"; };
 		F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
 		F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToggleCell.xib; sourceTree = "<group>"; };
+		F2DBEAE723E4DD0900CD513B /* ButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				F2E7237923DE2857001189F5 /* SingleLabelCell.swift */,
 				F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */,
 				F28CA53C202622C200209397 /* ToggleCell.swift */,
+				F2DBEAE723E4DD0900CD513B /* ButtonCell.xib */,
 				F273254B2032051F00A1DBD1 /* ButtonCell.swift */,
 				F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */,
 			);
@@ -603,6 +606,7 @@
 				F204B7851DF2EFA3000F4371 /* LaunchScreen.storyboard in Resources */,
 				F26A6D5920FB687C0033BC49 /* List.storyboard in Resources */,
 				F204B7B01DF2F1BC000F4371 /* Localizable.strings in Resources */,
+				F2DBEAE823E4DD0900CD513B /* ButtonCell.xib in Resources */,
 				F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */,
 				F2DBEAE223E4D71700CD513B /* DualLabelCell.xib in Resources */,
 				F2DBEAE023E4D66100CD513B /* AlertCell.xib in Resources */,

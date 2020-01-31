@@ -61,7 +61,7 @@ final class SettingsTableViewController: UITableViewController {
         guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
           break
         }
-        let destinationViewController = R.storyboard.settings.weatherLocationManagementTableViewController()!
+        let destinationViewController = WeatherLocationManagementTableViewController(style: .grouped)
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)

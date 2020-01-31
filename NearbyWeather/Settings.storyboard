@@ -105,24 +105,6 @@
             </objects>
             <point key="canvasLocation" x="4224.8000000000002" y="651.72413793103453"/>
         </scene>
-        <!--Weather Location Management Table View Controller-->
-        <scene sceneID="UpR-3y-toF">
-            <objects>
-                <tableViewController storyboardIdentifier="WeatherLocationManagementTableViewController" id="D9q-ne-Adf" customClass="WeatherLocationManagementTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jbp-zj-XsR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="D9q-ne-Adf" id="SFm-iL-kXx"/>
-                            <outlet property="delegate" destination="D9q-ne-Adf" id="DN1-ck-Nbe"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wMX-rL-rbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4968.8000000000002" y="651.72413793103453"/>
-        </scene>
         <!--SettingsInputTableViewController-->
         <scene sceneID="7CC-tz-Fn4">
             <objects>

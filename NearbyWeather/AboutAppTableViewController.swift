@@ -174,7 +174,7 @@ final class AboutAppTableViewController: UITableViewController {
           rightButtonTitle: R.string.localizable.viaEmail(),
           leftButtonHandler: { [weak self] _ in
             DispatchQueue.main.async {
-              self?.presentSafariViewController(for: Constants.Urls.kGitHubProjectIssues)
+              self?.presentSafariViewController(for: Constants.Urls.kGitHubProjectIssuesUrl)
             }
           },
           rightButtonHandler: { [weak self] _ in

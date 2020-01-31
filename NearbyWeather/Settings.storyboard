@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3g-si-AGs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -7,25 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--SettingsTableViewController-->
-        <scene sceneID="ZVC-yB-9JL">
-            <objects>
-                <tableViewController storyboardIdentifier="SettingsTableViewController" id="KTn-Zy-K5w" userLabel="SettingsTableViewController" customClass="SettingsTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="jap-OX-yKq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="KTn-Zy-K5w" id="Pqg-fm-rpA"/>
-                            <outlet property="delegate" destination="KTn-Zy-K5w" id="3xS-nS-HP4"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="5I1-n1-Sgs"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ypx-Nl-yPb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3420" y="1010.6446776611695"/>
-        </scene>
         <!--InfoTVC-->
         <scene sceneID="50s-1l-Sb3">
             <objects>
@@ -194,24 +175,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="La3-Wx-Np3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4224.8000000000002" y="1367.7661169415294"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="6Eh-oU-jN3">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="F3g-si-AGs" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uQb-Lx-V5j">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="KTn-Zy-K5w" kind="relationship" relationship="rootViewController" id="wub-hL-NAO"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="w3W-y1-GD6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2480.8000000000002" y="1010.6446776611695"/>
         </scene>
     </scenes>
     <resources>

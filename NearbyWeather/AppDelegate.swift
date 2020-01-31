@@ -48,13 +48,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     map?.tabBarItem.image = R.image.tabbar_map_ios11()
     
     /* Settings Controller */
-    let settingsNav = R.storyboard.settings().instantiateInitialViewController()
-    let settings = (settingsNav as? UINavigationController)?.viewControllers.first as? SettingsTableViewController
-    settings?.title = R.string.localizable.tab_settings().uppercased()
-    settings?.tabBarItem.selectedImage = R.image.tabbar_settings_ios11()
-    settings?.tabBarItem.image = R.image.tabbar_settings_ios11()
+    let settingsViewController = SettingsTableViewController(style: .grouped)
+    let settingsNavigationController = UINavigationController(rootViewController: settingsViewController)
+    settingsViewController.title = R.string.localizable.tab_settings().uppercased()
+    settingsViewController.tabBarItem.selectedImage = R.image.tabbar_settings_ios11()
+    settingsViewController.tabBarItem.image = R.image.tabbar_settings_ios11()
     
-    tabbar?.viewControllers = [weatherListNav!, mapNav!, settingsNav!]
+    tabbar?.viewControllers = [weatherListNav!, mapNav!, settingsNavigationController]
     
     if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) == nil {
       showSplashScreenIfNeeded()

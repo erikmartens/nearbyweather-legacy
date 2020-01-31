@@ -16,6 +16,15 @@ final class SettingsTableViewController: UITableViewController {
     super.viewDidLoad()
     
     navigationItem.title = R.string.localizable.tab_settings()
+    
+    tableView.register(UINib(nibName: R.nib.dualLabelCell.name, bundle: R.nib.dualLabelCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.dualLabelCell.identifier)
+    
+    tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
+    
+    tableView.register(UINib(nibName: R.nib.toggleCell.name, bundle: R.nib.toggleCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.toggleCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -52,12 +61,12 @@ final class SettingsTableViewController: UITableViewController {
         guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
           break
         }
-        let destinationViewController = R.storyboard.settings.weatherLocationManagementTableViewController()!
+        let destinationViewController = WeatherLocationManagementTableViewController(style: .grouped)
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)
       } else if indexPath.row == 1 {
-        let destinationViewController = R.storyboard.settings.owmCityFilterTableViewController()!
+        let destinationViewController = WeatherLocationSelectionTableViewController(style: .grouped)
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)
@@ -131,7 +140,7 @@ final class SettingsTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch indexPath.section {
     case 0:
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
       cell.contentLabel.text = R.string.localizable.about()
       cell.accessoryType = .disclosureIndicator
       return cell
@@ -145,7 +154,7 @@ final class SettingsTableViewController: UITableViewController {
       return cell
     case 2:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.apiKey()
         cell.selectionLabel.text = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
         cell.accessoryType = .disclosureIndicator
@@ -157,7 +166,7 @@ final class SettingsTableViewController: UITableViewController {
       return cell
     case 3:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.manage_locations()
         
         let entriesCount = WeatherDataManager.shared.bookmarkedLocations.count
@@ -207,7 +216,7 @@ final class SettingsTableViewController: UITableViewController {
         }
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
       cell.contentLabel.text = R.string.localizable.preferred_bookmark()
       cell.selectionLabel.text = nil
       guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
@@ -219,24 +228,24 @@ final class SettingsTableViewController: UITableViewController {
       return cell
     case 5:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.amount_of_results()
         cell.selectionLabel.text = PreferencesManager.shared.amountOfResults.stringValue
         return cell
       }
       if indexPath.row == 1 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.sorting_orientation()
         cell.selectionLabel.text = PreferencesManager.shared.sortingOrientation.stringValue
         return cell
       }
       if indexPath.row == 2 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.temperature_unit()
         cell.selectionLabel.text = PreferencesManager.shared.temperatureUnit.stringValue
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.labelCell.identifier, for: indexPath) as! LabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
       cell.contentLabel.text = R.string.localizable.distanceSpeed_unit()
       cell.selectionLabel.text = PreferencesManager.shared.distanceSpeedUnit.stringValue
       return cell

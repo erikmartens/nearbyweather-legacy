@@ -14,6 +14,15 @@ extension Constants {
 
 extension Constants.Values {
   
+  enum AppVersion {
+    static let kVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? Constants.Messages.kUndefined
+    static let kBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? Constants.Messages.kUndefined
+    static let kVersionBuildString = "Version \(kVersion) Build #\(kBuild)"
+  }
+}
+
+extension Constants.Values {
+  
   enum TemperatureName {
     static let kCelsius = "Celsius"
     static let kFahrenheit = "Fahrenheit"

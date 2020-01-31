@@ -13,5 +13,6 @@ extension Constants {
   enum Messages {
     static let kNotSet = "<not set>"
     static let kNil = "<nil>"
+    static let kUndefined = "<undefined>"
   }
 }

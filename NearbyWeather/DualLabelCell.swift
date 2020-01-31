@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LabelCell: UITableViewCell {
+class DualLabelCell: UITableViewCell {
   
   @IBOutlet weak var contentLabel: UILabel!
   @IBOutlet weak var selectionLabel: UILabel!

@@ -20,7 +20,11 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     navigationItem.title = R.string.localizable.manage_locations()
+    
+    tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +53,7 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch indexPath.section {
     case 0:
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.owmCityCell.identifier, for: indexPath) as! LocationWeatherDataCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
       let location = WeatherDataManager.shared.bookmarkedLocations[indexPath.row]
       cell.contentLabel.text = "\(location.name), \(location.country)"
       cell.selectionStyle = .none

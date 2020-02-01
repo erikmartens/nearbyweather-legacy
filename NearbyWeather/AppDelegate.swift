@@ -34,18 +34,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let tabbar = self.window?.rootViewController as? UITabBarController
     
     /* Weather List Controller */
-    let weatherListNav = R.storyboard.list().instantiateInitialViewController()
-    let weatherList = (weatherListNav as? UINavigationController)?.viewControllers.first as? WeatherListViewController
-    weatherList?.title = R.string.localizable.tab_weatherList().uppercased()
-    weatherList?.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
-    weatherList?.tabBarItem.image = R.image.tabbar_list_ios11()
+    let weatherListViewController = R.storyboard.list.weatherListViewController()!
+    let weatherListNavigationController = UINavigationController(rootViewController: weatherListViewController)
+    weatherListViewController.title = R.string.localizable.tab_weatherList().uppercased()
+    weatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
+    weatherListViewController.tabBarItem.image = R.image.tabbar_list_ios11()
     
     /* Map Controller */
-    let mapNav = R.storyboard.map().instantiateInitialViewController()
-    let map = (mapNav as? UINavigationController)?.viewControllers.first as? NearbyLocationsMapViewController
-    map?.title = R.string.localizable.tab_weatherMap().uppercased()
-    map?.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
-    map?.tabBarItem.image = R.image.tabbar_map_ios11()
+    let mapViewController = R.storyboard.map.nearbyLocationsMapViewController()!
+    let mapNavigationController = UINavigationController(rootViewController: mapViewController)
+    mapViewController.title = R.string.localizable.tab_weatherMap().uppercased()
+    mapViewController.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
+    mapViewController.tabBarItem.image = R.image.tabbar_map_ios11()
     
     /* Settings Controller */
     let settingsViewController = SettingsTableViewController(style: .grouped)
@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     settingsViewController.tabBarItem.selectedImage = R.image.tabbar_settings_ios11()
     settingsViewController.tabBarItem.image = R.image.tabbar_settings_ios11()
     
-    tabbar?.viewControllers = [weatherListNav!, mapNav!, settingsNavigationController]
+    tabbar?.viewControllers = [weatherListNavigationController, mapNavigationController, settingsNavigationController]
     
     if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) == nil {
       showSplashScreenIfNeeded()
@@ -109,6 +109,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIApplication.shared.endBackgroundTask(self.backgroundTaskId)
     self.backgroundTaskId = UIBackgroundTaskIdentifier.invalid
   }
+}
+
+extension AppDelegate {
+  
 }
 
 extension AppDelegate: WelcomeNavigationDelegate {

@@ -17,13 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   private var backgroundTaskId: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    NetworkingService.instantiateSharedInstance()
-    LocationService.instantiateSharedInstance()
-    PreferencesManager.instantiateSharedInstance()
-    WeatherLocationService.instantiateSharedInstance()
-    WeatherDataManager.instantiateSharedInstance()
-    PermissionsManager.instantiateSharedInstance()
-    BadgeService.instantiateSharedInstance()
+    instantiateServices()
     
     /* UITabBar Appearance */
     
@@ -111,8 +105,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
+// MARK: - Private Helper Functions
+
 extension AppDelegate {
   
+  private func instantiateServices() {
+    NetworkingService.instantiateSharedInstance()
+    LocationService.instantiateSharedInstance()
+    PreferencesManager.instantiateSharedInstance()
+    WeatherLocationService.instantiateSharedInstance()
+    WeatherDataManager.instantiateSharedInstance()
+    PermissionsManager.instantiateSharedInstance()
+    BadgeService.instantiateSharedInstance()
+  }
 }
 
 extension AppDelegate: WelcomeNavigationDelegate {

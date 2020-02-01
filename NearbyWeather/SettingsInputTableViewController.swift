@@ -11,8 +11,6 @@ import PKHUD
 
 final class SettingsInputTableViewController: UITableViewController {
   
-  // MARK: - Assets
-  
   // MARK: - ViewController Life Cycle
   
   override func viewDidLoad() {

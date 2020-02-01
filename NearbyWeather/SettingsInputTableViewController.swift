@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import TextFieldCounter
 import PKHUD
 
 final class SettingsInputTableViewController: UITableViewController {

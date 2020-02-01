@@ -411,8 +411,8 @@
 				F2B8EA031EA286F000704E90 /* Welcome.storyboard */,
 				F26A6D5820FB687C0033BC49 /* List.storyboard */,
 				F26A6D6120FB70F50033BC49 /* Map.storyboard */,
-				F26A6D5F20FB70DD0033BC49 /* Details.storyboard */,
 				F28DA85E203B999400879E6C /* Settings.storyboard */,
+				F26A6D5F20FB70DD0033BC49 /* Details.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";

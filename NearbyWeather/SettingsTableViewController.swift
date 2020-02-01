@@ -49,7 +49,7 @@ final class SettingsTableViewController: UITableViewController {
       break
     case 2:
       if indexPath.row == 0 {
-        let destinationViewController = R.storyboard.settings.settingsInputTVC()!
+        let destinationViewController = SettingsInputTableViewController(style: .grouped)
         
         navigationItem.removeTextFromBackBarButton()
         navigationController?.pushViewController(destinationViewController, animated: true)

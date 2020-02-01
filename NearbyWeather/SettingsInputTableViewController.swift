@@ -14,10 +14,6 @@ final class SettingsInputTableViewController: UITableViewController {
   
   // MARK: - Assets
   
-  /* Outlets */
-  
-  @IBOutlet weak var inputTextField: TextFieldCounter!
-  
   // MARK: - ViewController Life Cycle
   
   override func viewDidLoad() {
@@ -26,14 +22,14 @@ final class SettingsInputTableViewController: UITableViewController {
     navigationItem.title = R.string.localizable.api_settings()
     
     tableView.delegate = self
-    inputTextField.delegate = self
-    inputTextField.text = UserDefaults.standard.string(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
+    tableView.register(UINib(nibName: R.nib.textInputCell.name, bundle: R.nib.textInputCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.textInputCell.identifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    configure()
+    navigationController?.navigationBar.styleStandard()
     
     tableView.reloadData()
   }
@@ -41,7 +37,7 @@ final class SettingsInputTableViewController: UITableViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    inputTextField.becomeFirstResponder()
+    (tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextInputCell)?.inputTextField.becomeFirstResponder()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -60,30 +56,44 @@ final class SettingsInputTableViewController: UITableViewController {
     return R.string.localizable.api_key_length_description()
   }
   
+  override func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 1
+  }
+  
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.textInputCell.identifier) as! TextInputCell
+    cell.inputTextField.delegate = self
+    cell.inputTextField.text = UserDefaults.standard.string(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
+    
+    cell.inputTextField.animate = true
+    cell.inputTextField.ascending = true
+    cell.inputTextField.maxLength = 32
+    cell.inputTextField.counterColor = cell.inputTextField.textColor ?? .black
+    cell.inputTextField.limitColor = .nearbyWeatherStandard
+    
+    return cell
+  }
+  
   // MARK: - ScrollViewDelegate
   
   override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    inputTextField.resignFirstResponder()
+    (tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextInputCell)?.inputTextField.resignFirstResponder()
   }
   
   // MARK: - Private Helpers
   
-  private func configure() {
-    navigationController?.navigationBar.styleStandard()
-    
-    inputTextField.animate = true
-    inputTextField.ascending = true
-    inputTextField.maxLength = 32
-    inputTextField.counterColor = inputTextField.textColor ?? .black
-    inputTextField.limitColor = .nearbyWeatherStandard
-  }
-  
   @discardableResult fileprivate func validateAndSave() -> Bool {
-    guard let text = inputTextField.text, text.count == 32  else {
-      return false
+    guard let text = (tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextInputCell)?.inputTextField.text,
+      text.count == 32
+      else {
+        return false
     }
     
-    inputTextField.resignFirstResponder()
+    (tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextInputCell)?.inputTextField.resignFirstResponder()
     
     if let currentApiKey = UserDefaults.standard.string(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey), text == currentApiKey {
       return true // saving is unnecessary as there was no change

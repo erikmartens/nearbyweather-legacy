@@ -70,6 +70,8 @@
 		F2DBEAE623E4DC6A00CD513B /* ToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */; };
 		F2DBEAE823E4DD0900CD513B /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE723E4DD0900CD513B /* ButtonCell.xib */; };
 		F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */; };
+		F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF023E5F98200CD513B /* TextInputCell.swift */; };
+		F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -183,6 +185,8 @@
 		F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToggleCell.xib; sourceTree = "<group>"; };
 		F2DBEAE723E4DD0900CD513B /* ButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
 		F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubtitleCell.xib; sourceTree = "<group>"; };
+		F2DBEAF023E5F98200CD513B /* TextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
+		F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextInputCell.xib; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -439,8 +443,10 @@
 				F28CA53C202622C200209397 /* ToggleCell.swift */,
 				F2DBEAE723E4DD0900CD513B /* ButtonCell.xib */,
 				F273254B2032051F00A1DBD1 /* ButtonCell.swift */,
-				F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */,
 				F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */,
+				F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */,
+				F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */,
+				F2DBEAF023E5F98200CD513B /* TextInputCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -615,6 +621,7 @@
 				F2DBEAE023E4D66100CD513B /* AlertCell.xib in Resources */,
 				F28DA85F203B999400879E6C /* Settings.storyboard in Resources */,
 				F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */,
+				F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */,
 				F2DBEADE23E4D46700CD513B /* WeatherDataCell.xib in Resources */,
 				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
 				F26A6D6220FB70F50033BC49 /* Map.storyboard in Resources */,
@@ -828,6 +835,7 @@
 				F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */,
 				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,
 				F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */,
+				F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */,
 				F28CE9661F96B537008319C4 /* UINavigationBarExtensions.swift in Sources */,
 				F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */,
 				F274FC39202F9A9300049144 /* NetworkingService.swift in Sources */,

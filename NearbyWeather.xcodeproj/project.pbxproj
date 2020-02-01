@@ -32,7 +32,6 @@
 		F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26A6D5D20FB6E610033BC49 /* R.generated.swift */; };
 		F26A6D6020FB70DD0033BC49 /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F26A6D5F20FB70DD0033BC49 /* Details.storyboard */; };
 		F26A6D6220FB70F50033BC49 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F26A6D6120FB70F50033BC49 /* Map.storyboard */; };
-		F26A6D6420FB7C9C0033BC49 /* WelcomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26A6D6320FB7C9C0033BC49 /* WelcomeNavigationController.swift */; };
 		F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254B2032051F00A1DBD1 /* ButtonCell.swift */; };
 		F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */; };
 		F274FC39202F9A9300049144 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC38202F9A9300049144 /* NetworkingService.swift */; };
@@ -72,6 +71,9 @@
 		F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */; };
 		F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF023E5F98200CD513B /* TextInputCell.swift */; };
 		F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */; };
+		F2DBEAF623E601F000CD513B /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF523E601F000CD513B /* MainCoordinator.swift */; };
+		F2DBEAF823E6054900CD513B /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF723E6054900CD513B /* Coordinator.swift */; };
+		F2DBEAFA23E6357C00CD513B /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -146,7 +148,6 @@
 		F26A6D5D20FB6E610033BC49 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		F26A6D5F20FB70DD0033BC49 /* Details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		F26A6D6120FB70F50033BC49 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
-		F26A6D6320FB7C9C0033BC49 /* WelcomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeNavigationController.swift; sourceTree = "<group>"; };
 		F273254B2032051F00A1DBD1 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		F274FC38202F9A9300049144 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
@@ -187,6 +188,9 @@
 		F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubtitleCell.xib; sourceTree = "<group>"; };
 		F2DBEAF023E5F98200CD513B /* TextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextInputCell.xib; sourceTree = "<group>"; };
+		F2DBEAF523E601F000CD513B /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		F2DBEAF723E6054900CD513B /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCoordinator.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -284,6 +288,7 @@
 				F204B7861DF2EFA3000F4371 /* Info.plist */,
 				F26A6D5C20FB6E520033BC49 /* External */,
 				F2FE3EFB20027DE600EBC429 /* Bootsrapped Data */,
+				F2DBEAF423E601B600CD513B /* Routing */,
 				F28CA547202CE83700209397 /* Services */,
 				F266995C1E9AE23900498F99 /* Model */,
 				F266995B1E9AE22800498F99 /* View */,
@@ -344,7 +349,6 @@
 		F266995D1E9AE25D00498F99 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				F26A6D6320FB7C9C0033BC49 /* WelcomeNavigationController.swift */,
 				F2B8EA051EA2893C00704E90 /* WelcomeScreenViewController.swift */,
 				F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */,
 				F28CE9671F9A9893008319C4 /* WeatherListViewController.swift */,
@@ -449,6 +453,16 @@
 				F2DBEAF023E5F98200CD513B /* TextInputCell.swift */,
 			);
 			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		F2DBEAF423E601B600CD513B /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				F2DBEAF723E6054900CD513B /* Coordinator.swift */,
+				F2DBEAF523E601F000CD513B /* MainCoordinator.swift */,
+				F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */,
+			);
+			name = Routing;
 			sourceTree = "<group>";
 		};
 		F2E7237B23E0EA22001189F5 /* Constants */ = {
@@ -791,7 +805,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F26A6D6420FB7C9C0033BC49 /* WelcomeNavigationController.swift in Sources */,
 				F274FC3B2030ED5A00049144 /* PreferencesManager.swift in Sources */,
 				F283D26E1DF39095001B879D /* DualLabelCell.swift in Sources */,
 				F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */,
@@ -827,10 +840,12 @@
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIViewExtensions.swift in Sources */,
 				F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */,
+				F2DBEAF623E601F000CD513B /* MainCoordinator.swift in Sources */,
 				F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationControllerExtensions.swift in Sources */,
 				F2A5CAAC200D51870071BFFB /* UINavigationItemExtensions.swift in Sources */,
 				F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */,
+				F2DBEAFA23E6357C00CD513B /* WelcomeCoordinator.swift in Sources */,
 				F2B8EA021EA121CC00704E90 /* AlertCell.swift in Sources */,
 				F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */,
 				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,
@@ -840,6 +855,7 @@
 				F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */,
 				F274FC39202F9A9300049144 /* NetworkingService.swift in Sources */,
 				F28CE9641F96B290008319C4 /* UIColor+BrandColors.swift in Sources */,
+				F2DBEAF823E6054900CD513B /* Coordinator.swift in Sources */,
 				F28DA8612042258500879E6C /* WeatherLocationManagementTableViewController.swift in Sources */,
 				F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */,
 			);

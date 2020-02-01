@@ -89,7 +89,11 @@ final class SetPermissionsViewController: UIViewController {
   }
   
   @objc func launchApp() {
-    (navigationController as? WelcomeNavigationController)?.welcomeNavigationDelegate?.dismissSplashScreen()
+    NotificationCenter.default.post(
+      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWelcomeCoordinatorExeceuteRoutingStep),
+      object: self,
+      userInfo: [Constants.Keys.AppCoordinator.kStep: WelcomeCoordinatorStep.dismiss.rawValue]
+    )
   }
   
   // MARK: - Button Interaction

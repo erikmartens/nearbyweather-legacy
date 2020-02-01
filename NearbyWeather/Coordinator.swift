@@ -1,5 +1,5 @@
 //
-//  TextInputCell.swift
+//  File.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 01.02.20.
@@ -7,8 +7,10 @@
 //
 
 import UIKit
-import TextFieldCounter
 
-final class TextInputCell: UITableViewCell {
-  @IBOutlet weak var inputTextField: TextFieldCounter!
+protocol Step {}
+
+protocol Coordinator {
+  var rootViewController: UIViewController { get }
+  func navigateToStep(_ step: Step) -> Coordinator?
 }

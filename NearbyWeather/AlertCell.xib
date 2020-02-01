@@ -34,6 +34,7 @@
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="T0y-4D-suR" firstAttribute="centerX" secondItem="W00-9h-i7Q" secondAttribute="centerX" id="I0J-c6-MrA"/>
                                             <constraint firstItem="T0y-4D-suR" firstAttribute="top" secondItem="W00-9h-i7Q" secondAttribute="top" id="Xi1-yO-foz"/>

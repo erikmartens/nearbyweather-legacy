@@ -86,59 +86,6 @@
             </objects>
             <point key="canvasLocation" x="3286" y="2096"/>
         </scene>
-        <!--SettingsInputTableViewController-->
-        <scene sceneID="7CC-tz-Fn4">
-            <objects>
-                <tableViewController storyboardIdentifier="SettingsInputTVC" title="SettingsInputTableViewController" id="Cx9-7a-dZR" userLabel="SettingsInputTableViewController" customClass="SettingsInputTableViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="ZTm-Dp-qsA">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections>
-                            <tableViewSection headerTitle="Header Title" id="g5H-xP-JkQ">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="H9f-hz-jmJ">
-                                        <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H9f-hz-jmJ" id="mjT-Kq-TRS">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N6B-Nl-r3M" userLabel="eventTitleTextField" customClass="TextFieldCounter" customModule="TextFieldCounter">
-                                                    <rect key="frame" x="15" y="5" width="384" height="35"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="kgx-9s-bOW">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="34"/>
-                                                        </constraint>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="N6B-Nl-r3M" secondAttribute="bottom" constant="4" id="8BR-S1-C5K"/>
-                                                <constraint firstItem="N6B-Nl-r3M" firstAttribute="top" secondItem="mjT-Kq-TRS" secondAttribute="top" constant="5" id="WSV-BT-7Nd"/>
-                                                <constraint firstItem="N6B-Nl-r3M" firstAttribute="leading" secondItem="mjT-Kq-TRS" secondAttribute="leading" constant="15" id="l15-NL-dl4"/>
-                                                <constraint firstAttribute="trailing" secondItem="N6B-Nl-r3M" secondAttribute="trailing" constant="15" id="qDx-mx-HOD"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="Cx9-7a-dZR" id="OX9-QN-h0T"/>
-                            <outlet property="delegate" destination="Cx9-7a-dZR" id="n6E-uN-VMW"/>
-                        </connections>
-                    </tableView>
-                    <connections>
-                        <outlet property="inputTextField" destination="N6B-Nl-r3M" id="Sgs-C4-gij"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="La3-Wx-Np3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4224.8000000000002" y="1367.7661169415294"/>
-        </scene>
     </scenes>
     <resources>
         <image name="nearbyweather_webicon" width="150" height="150"/>

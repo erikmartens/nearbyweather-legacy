@@ -18,5 +18,8 @@
 	}, {
 		"name": "TextFieldCounter",
 		"urlString": "https://github.com/serralvo/TextFieldCounter"
-	}]
+	}, {
+    "name": "SwiftLint",
+    "urlString": "https://github.com/realm/SwiftLint"
+  }]
 }

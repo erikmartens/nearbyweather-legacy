@@ -17,20 +17,23 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8Y-g1-Feg" userLabel="backgroundColorView">
-                        <rect key="frame" x="50" y="10" width="295" height="75"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <rect key="frame" x="50" y="10" width="295" height="105"/>
+                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="e3O-5P-V2i">
-                        <rect key="frame" x="110" y="15" width="225" height="65"/>
+                        <rect key="frame" x="110" y="15" width="225" height="95"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CityName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="87i-Oq-8rl" userLabel="cityNameLabel">
-                                <rect key="frame" x="0.0" y="0.0" width="225" height="15"/>
+                                <rect key="frame" x="0.0" y="0.0" width="225" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="0Qk-M4-Wy4"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qpK-zc-nVz">
-                                <rect key="frame" x="0.0" y="25" width="225" height="15"/>
+                                <rect key="frame" x="0.0" y="55" width="225" height="15"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2Cj-kY-Bab">
                                         <rect key="frame" x="0.0" y="0.0" width="107.5" height="15"/>
@@ -71,7 +74,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EFy-iw-J3u">
-                                <rect key="frame" x="0.0" y="50" width="225" height="15"/>
+                                <rect key="frame" x="0.0" y="80" width="225" height="15"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ngp-pt-jEm">
                                         <rect key="frame" x="0.0" y="0.0" width="107.5" height="15"/>
@@ -113,8 +116,8 @@
                             </stackView>
                         </subviews>
                     </stackView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZD-ht-H16" userLabel="weatherConditionLabel">
-                        <rect key="frame" x="20" y="7.5" width="80" height="80"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="☀️" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZD-ht-H16" userLabel="weatherConditionLabel">
+                        <rect key="frame" x="20" y="22.5" width="80" height="80"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="iZD-ht-H16" secondAttribute="height" multiplier="1:1" id="ds5-Zd-UPk"/>
                             <constraint firstAttribute="width" constant="80" id="fKR-Gm-lRb"/>

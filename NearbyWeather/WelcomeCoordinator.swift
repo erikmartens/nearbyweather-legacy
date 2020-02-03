@@ -77,7 +77,7 @@ final class WelcomeCoordinator: Coordinator {
   
   // MARK: - Navigation Helper Functions
 
-extension WelcomeCoordinator {
+private extension WelcomeCoordinator {
   
   private func summonWelcomeWindow() -> Coordinator? {
    

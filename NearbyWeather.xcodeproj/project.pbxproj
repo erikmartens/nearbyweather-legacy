@@ -291,7 +291,7 @@
 				F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */,
 				F204B7861DF2EFA3000F4371 /* Info.plist */,
 				F26A6D5C20FB6E520033BC49 /* External */,
-				F2FE3EFB20027DE600EBC429 /* Bootsrapped Data */,
+				F2FE3EFB20027DE600EBC429 /* Bundle Files */,
 				F28CA547202CE83700209397 /* Services */,
 				F266995C1E9AE23900498F99 /* Model */,
 				F2DBEAF423E601B600CD513B /* Routing */,
@@ -549,7 +549,7 @@
 			name = Constants;
 			sourceTree = "<group>";
 		};
-		F2FE3EFB20027DE600EBC429 /* Bootsrapped Data */ = {
+		F2FE3EFB20027DE600EBC429 /* Bundle Files */ = {
 			isa = PBXGroup;
 			children = (
 				F204B7811DF2EFA3000F4371 /* Assets.xcassets */,
@@ -560,7 +560,7 @@
 				F2E7237723DE064D001189F5 /* ProjectOwner.json */,
 				F25A39742187B3F80054BC7A /* ThirdPartyLibraries.json */,
 			);
-			name = "Bootsrapped Data";
+			name = "Bundle Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

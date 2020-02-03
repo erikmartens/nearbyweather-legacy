@@ -73,7 +73,7 @@ final class MainCoordinator: Coordinator {
 
 // MARK: - Navigation Helper Functions
 
-extension MainCoordinator {
+private extension MainCoordinator {
   
   func summonMainTabbarController() -> Coordinator? {
     let root = rootViewController as? UITabBarController

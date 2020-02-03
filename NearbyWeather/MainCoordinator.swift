@@ -79,14 +79,14 @@ extension MainCoordinator {
     let root = rootViewController as? UITabBarController
     
     /* Weather List Controller */
-    let weatherListViewController = R.storyboard.list.weatherListViewController()!
+    let weatherListViewController = R.storyboard.weatherList.weatherListViewController()!
     let weatherListNavigationController = UINavigationController(rootViewController: weatherListViewController)
     weatherListViewController.title = R.string.localizable.tab_weatherList().uppercased()
     weatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
     weatherListViewController.tabBarItem.image = R.image.tabbar_list_ios11()
     
     /* Map Controller */
-    let mapViewController = R.storyboard.map.nearbyLocationsMapViewController()!
+    let mapViewController = R.storyboard.weatherMap.nearbyLocationsMapViewController()!
     let mapNavigationController = UINavigationController(rootViewController: mapViewController)
     mapViewController.title = R.string.localizable.tab_weatherMap().uppercased()
     mapViewController.tabBarItem.selectedImage = R.image.tabbar_map_ios11()

@@ -49,10 +49,6 @@ final class WelcomeCoordinator: Coordinator {
     )
   }
   
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
-  
   // MARK: - Navigation
   
   @objc func didReceiveStep(_ notification: Notification) {

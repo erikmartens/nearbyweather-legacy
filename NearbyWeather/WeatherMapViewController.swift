@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-final class NearbyLocationsMapViewController: UIViewController {
+final class WeatherMapViewController: UIViewController {
   
   // MARK: - Assets
   
@@ -166,7 +166,7 @@ final class NearbyLocationsMapViewController: UIViewController {
   }
 }
 
-extension NearbyLocationsMapViewController: MKMapViewDelegate {
+extension WeatherMapViewController: MKMapViewDelegate {
   
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     guard let annotation = annotation as? WeatherLocationMapAnnotation else {
@@ -190,7 +190,7 @@ extension NearbyLocationsMapViewController: MKMapViewDelegate {
         }
         self.previousRegion = mapView.region
         
-        let destinationViewController = WeatherDetailViewController.instantiateFromStoryBoard(withTitle: weatherDTO.cityName, weatherDTO: weatherDTO)
+        let destinationViewController = WeatherDetailsViewController.instantiateFromStoryBoard(withTitle: weatherDTO.cityName, weatherDTO: weatherDTO)
         let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
         destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
         self.navigationController?.present(destinationNavigationController, animated: true, completion: nil)

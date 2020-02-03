@@ -11,10 +11,10 @@ import MapKit
 import SafariServices
 import APTimeZones
 
-final class WeatherDetailViewController: UIViewController {
+final class WeatherDetailsViewController: UIViewController {
   
-  static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailViewController {
-    let viewController = R.storyboard.details.weatherDetailViewController()!
+  static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailsViewController {
+    let viewController = R.storyboard.weatherDetails.weatherDetailViewController()!
     viewController.titleString = title
     viewController.weatherDTO = weatherDTO
     return viewController
@@ -197,7 +197,7 @@ final class WeatherDetailViewController: UIViewController {
   }
 }
 
-extension WeatherDetailViewController: MKMapViewDelegate {
+extension WeatherDetailsViewController: MKMapViewDelegate {
   
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     guard let annotation = annotation as? WeatherLocationMapAnnotation else {

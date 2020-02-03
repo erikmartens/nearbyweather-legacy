@@ -42,7 +42,7 @@ final class SettingsTableViewController: UITableViewController {
     
     switch indexPath.section {
     case 0:
-      let destinationViewController = R.storyboard.settings.infoTableViewController()!
+      let destinationViewController = R.storyboard.aboutApp.infoTableViewController()!
       navigationItem.removeTextFromBackBarButton()
       navigationController?.pushViewController(destinationViewController, animated: true)
     case 1:

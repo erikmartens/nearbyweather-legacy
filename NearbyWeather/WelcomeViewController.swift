@@ -10,7 +10,7 @@ import UIKit
 import SafariServices
 import TextFieldCounter
 
-final class WelcomeScreenViewController: UIViewController {
+final class WelcomeViewController: UIViewController {
   
   // MARK: - Properties
   
@@ -86,7 +86,7 @@ final class WelcomeScreenViewController: UIViewController {
   }
   
   fileprivate func startAnimationTimer() {
-    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: (#selector(WelcomeScreenViewController.animatePulse)), userInfo: nil, repeats: false)
+    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: (#selector(WelcomeViewController.animatePulse)), userInfo: nil, repeats: false)
   }
   
   @objc private func animatePulse() {
@@ -122,7 +122,7 @@ final class WelcomeScreenViewController: UIViewController {
     inputTextField.resignFirstResponder()
     UserDefaults.standard.set(inputTextField.text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
     
-    let destinationViewController = R.storyboard.welcome.setPermissionsVC()!
+    let destinationViewController = R.storyboard.setPermissions.setPermissionsVC()!
     navigationController?.pushViewController(destinationViewController, animated: true)
     
   }
@@ -132,7 +132,7 @@ final class WelcomeScreenViewController: UIViewController {
   }
 }
 
-extension WelcomeScreenViewController: CAAnimationDelegate {
+extension WelcomeViewController: CAAnimationDelegate {
   
   func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
     startAnimationTimer()

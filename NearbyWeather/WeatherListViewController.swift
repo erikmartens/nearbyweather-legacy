@@ -304,7 +304,7 @@ extension WeatherListViewController: UITableViewDataSource {
       let weatherDTO = WeatherDataManager.shared.weatherDTO(forIdentifier: weatherDataIdentifier) else {
         return
     }
-    let destinationViewController = WeatherDetailViewController.instantiateFromStoryBoard(withTitle: weatherDTO.cityName, weatherDTO: weatherDTO)
+    let destinationViewController = WeatherDetailsViewController.instantiateFromStoryBoard(withTitle: weatherDTO.cityName, weatherDTO: weatherDTO)
     let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
     destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
     navigationController?.present(destinationNavigationController, animated: true, completion: nil)

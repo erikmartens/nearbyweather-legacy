@@ -17,15 +17,17 @@ final class MainCoordinator: Coordinator {
   
   // MARK: - Common Properties
   
-  lazy var rootViewController: UIViewController = {
+  override var rootViewController: UIViewController {
+    return root
+  }
+  
+  private lazy var root: UITabBarController = {
     let tabbar = UITabBarController()
     tabbar.tabBar.backgroundColor = .white
     tabbar.tabBar.barTintColor = .white
     tabbar.tabBar.tintColor = .nearbyWeatherStandard
     return tabbar
   }()
-  
-  var childCoordinators = [Coordinator]()
   
   // MARK: - Properties
   
@@ -34,6 +36,8 @@ final class MainCoordinator: Coordinator {
   // MARK: - Initialization
   
   init(appDelegate: AppDelegateProtocol) {
+    super.init(parentCoordinator: nil)
+    
     self.appDelegate = appDelegate
     
     NotificationCenter.default.addObserver(
@@ -44,10 +48,6 @@ final class MainCoordinator: Coordinator {
     )
   }
   
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
-  
   // MARK: - Navigation
   
   @objc func didReceiveStep(_ notification: Notification) {
@@ -56,17 +56,15 @@ final class MainCoordinator: Coordinator {
       let step = MainCoordinatorStep(rawValue: stepString) else {
         return
     }
-    _ = navigateToStep(step)
+    let childCoordinator = executeRoutingStep(step)
+    childCoordinators.appendSafe(childCoordinator)
   }
   
-  func navigateToStep(_ step: Step) -> Coordinator? {
+  override func executeRoutingStep(_ step: Step) -> Coordinator? {
     guard let step = step as? MainCoordinatorStep else { return nil }
-    
     switch step {
     case .initial:
-      summonMainTabbarController()
-      return nil
-      return nil
+      return summonMainTabbarController()
     case .none:
       return nil
     }
@@ -77,7 +75,7 @@ final class MainCoordinator: Coordinator {
 
 extension MainCoordinator {
   
-  func summonMainTabbarController() {
+  func summonMainTabbarController() -> Coordinator? {
     let root = rootViewController as? UITabBarController
     
     /* Weather List Controller */
@@ -107,5 +105,7 @@ extension MainCoordinator {
     window.rootViewController = root
     window.makeKeyAndVisible()
     appDelegate?.window = window
+    
+    return nil
   }
 }

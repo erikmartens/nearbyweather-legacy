@@ -10,7 +10,30 @@ import UIKit
 
 protocol Step {}
 
-protocol Coordinator {
+protocol CoordinatorProtocol {
+  var parentCoordinator: Coordinator? { get }
+  var childCoordinators: [Coordinator] { get }
   var rootViewController: UIViewController { get }
-  func navigateToStep(_ step: Step) -> Coordinator?
+  func executeRoutingStep(_ step: Step) -> Coordinator?
+}
+
+class Coordinator: CoordinatorProtocol {
+
+  var parentCoordinator: Coordinator?
+  var childCoordinators: [Coordinator]
+  
+  var rootViewController: UIViewController {
+    return UINavigationController()
+  }
+  
+  init(parentCoordinator: Coordinator?) {
+    self.parentCoordinator = parentCoordinator
+    self.childCoordinators = []
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
+  func executeRoutingStep(_ step: Step) -> Coordinator? { return nil }
 }

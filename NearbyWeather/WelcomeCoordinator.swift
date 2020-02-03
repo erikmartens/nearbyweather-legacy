@@ -18,15 +18,17 @@ final class WelcomeCoordinator: Coordinator {
   
   // MARK: - Common Properties
   
-  lazy var rootViewController: UIViewController = {
+  override var rootViewController: UIViewController {
+    return root
+  }
+  
+  private lazy var root: UINavigationController = {
     let navigationController = UINavigationController()
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
     navigationController.navigationBar.tintColor = .nearbyWeatherStandard
     return navigationController
   }()
-  
-  var childCoordinators = [Coordinator]()
   
   // MARK: - Properties
   
@@ -35,6 +37,8 @@ final class WelcomeCoordinator: Coordinator {
   // MARK: - Initialization
   
   init(appDelegate: AppDelegateProtocol) {
+    super.init(parentCoordinator: nil)
+    
     self.appDelegate = appDelegate
     
     NotificationCenter.default.addObserver(
@@ -57,19 +61,18 @@ final class WelcomeCoordinator: Coordinator {
       let step = WelcomeCoordinatorStep(rawValue: stepString) else {
         return
     }
-    _ = navigateToStep(step)
+    let childCoordinator = executeRoutingStep(step)
+    childCoordinators.appendSafe(childCoordinator)
   }
   
-  func navigateToStep(_ step: Step) -> Coordinator? {
+  override func executeRoutingStep(_ step: Step) -> Coordinator? {
     guard let step = step as? WelcomeCoordinatorStep else { return nil }
     
     switch step {
     case .initial:
-      summonWelcomeWindow()
-      return nil
+      return summonWelcomeWindow()
     case .dismiss:
-      dismissWelcomeWindow()
-      return nil
+      return dismissWelcomeWindow()
     case .none:
       return nil
     }
@@ -80,7 +83,7 @@ final class WelcomeCoordinator: Coordinator {
 
 extension WelcomeCoordinator {
   
-  private func summonWelcomeWindow() {
+  private func summonWelcomeWindow() -> Coordinator? {
    
     let welcomeViewController = R.storyboard.welcome.welcomeScreenViewController()!
     let root = rootViewController as? UINavigationController
@@ -92,16 +95,21 @@ extension WelcomeCoordinator {
     splashScreenWindow.makeKeyAndVisible()
     
     appDelegate?.splashScreenWindow = splashScreenWindow
+    
+    return nil
   }
   
-  private func dismissWelcomeWindow() {
-    UIView.animate(withDuration: 0.2, animations: { [weak self] in
-      self?.appDelegate?.splashScreenWindow?.alpha = 0
-      self?.appDelegate?.splashScreenWindow?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-      }, completion: { [weak self] _ in
-        self?.appDelegate?.splashScreenWindow?.resignKey()
-        self?.appDelegate?.splashScreenWindow = nil
-        self?.appDelegate?.window?.makeKeyAndVisible()
+  private func dismissWelcomeWindow() -> Coordinator? {
+    UIView.animate(withDuration: 0.2,
+                   animations: { [weak self] in
+                    self?.appDelegate?.splashScreenWindow?.alpha = 0
+                    self?.appDelegate?.splashScreenWindow?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+      },
+                   completion: { [weak self] _ in
+                    self?.appDelegate?.splashScreenWindow?.resignKey()
+                    self?.appDelegate?.splashScreenWindow = nil
+                    self?.appDelegate?.window?.makeKeyAndVisible()
     })
+    return nil
   }
 }

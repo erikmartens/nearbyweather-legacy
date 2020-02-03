@@ -31,14 +31,14 @@ final class MainCoordinator: Coordinator {
   
   // MARK: - Properties
   
-  weak var appDelegate: AppDelegateProtocol?
+  weak var windowManager: WindowManager?
   
   // MARK: - Initialization
   
-  init(appDelegate: AppDelegateProtocol) {
+  init(windowManager: WindowManager) {
     super.init(parentCoordinator: nil)
     
-    self.appDelegate = appDelegate
+    self.windowManager = windowManager
     
     NotificationCenter.default.addObserver(
       self,
@@ -104,7 +104,7 @@ private extension MainCoordinator {
     let window = UIWindow(frame: UIScreen.main.bounds)
     window.rootViewController = root
     window.makeKeyAndVisible()
-    appDelegate?.window = window
+    windowManager?.window = window
     
     return nil
   }

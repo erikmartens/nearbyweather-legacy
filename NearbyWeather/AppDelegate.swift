@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol AppDelegateProtocol: class {
+protocol WindowManager: class {
   var window: UIWindow? { get set }
   var splashScreenWindow: UIWindow? { get set }
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, AppDelegateProtocol {
+class AppDelegate: UIResponder, UIApplicationDelegate, WindowManager {
   
   private var mainCoordinator: MainCoordinator?
   private var welcomeCoordinator: WelcomeCoordinator?
@@ -67,7 +67,7 @@ extension AppDelegate {
   }
   
   private func instantiateApplicationUserInterface() {
-    mainCoordinator = MainCoordinator(appDelegate: self)
+    mainCoordinator = MainCoordinator(windowManager: self)
     
     NotificationCenter.default.post(
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kMainCoordinatorExeceuteRoutingStep),
@@ -76,7 +76,7 @@ extension AppDelegate {
     )
     
     if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) == nil {
-      welcomeCoordinator = WelcomeCoordinator(appDelegate: self)
+      welcomeCoordinator = WelcomeCoordinator(windowManager: self)
       
       NotificationCenter.default.post(
         name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWelcomeCoordinatorExeceuteRoutingStep),

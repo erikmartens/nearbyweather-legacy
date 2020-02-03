@@ -32,14 +32,14 @@ final class WelcomeCoordinator: Coordinator {
   
   // MARK: - Properties
   
-  weak var appDelegate: AppDelegateProtocol?
+  weak var windowManager: WindowManager?
 
   // MARK: - Initialization
   
-  init(appDelegate: AppDelegateProtocol) {
+  init(windowManager: WindowManager) {
     super.init(parentCoordinator: nil)
     
-    self.appDelegate = appDelegate
+    self.windowManager = windowManager
     
     NotificationCenter.default.addObserver(
       self,
@@ -90,7 +90,7 @@ private extension WelcomeCoordinator {
     splashScreenWindow.windowLevel = UIWindow.Level.alert
     splashScreenWindow.makeKeyAndVisible()
     
-    appDelegate?.splashScreenWindow = splashScreenWindow
+    windowManager?.splashScreenWindow = splashScreenWindow
     
     return nil
   }
@@ -98,13 +98,13 @@ private extension WelcomeCoordinator {
   private func dismissWelcomeWindow() -> Coordinator? {
     UIView.animate(withDuration: 0.2,
                    animations: { [weak self] in
-                    self?.appDelegate?.splashScreenWindow?.alpha = 0
-                    self?.appDelegate?.splashScreenWindow?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                    self?.windowManager?.splashScreenWindow?.alpha = 0
+                    self?.windowManager?.splashScreenWindow?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
       },
                    completion: { [weak self] _ in
-                    self?.appDelegate?.splashScreenWindow?.resignKey()
-                    self?.appDelegate?.splashScreenWindow = nil
-                    self?.appDelegate?.window?.makeKeyAndVisible()
+                    self?.windowManager?.splashScreenWindow?.resignKey()
+                    self?.windowManager?.splashScreenWindow = nil
+                    self?.windowManager?.window?.makeKeyAndVisible()
     })
     return nil
   }

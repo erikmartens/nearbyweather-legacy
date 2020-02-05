@@ -76,6 +76,8 @@
 		F2DBEB0823E8DDF600CD513B /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0723E8DDF600CD513B /* Welcome.storyboard */; };
 		F2DBEB0B23E8DE0E00CD513B /* SetPermissions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0A23E8DE0E00CD513B /* SetPermissions.storyboard */; };
 		F2DBEB0F23E8E0B200CD513B /* AboutApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0E23E8E0B200CD513B /* AboutApp.storyboard */; };
+		F2DBEB1423EA1F4D00CD513B /* WeatherDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1323EA1F4C00CD513B /* WeatherDetailCoordinator.swift */; };
+		F2DBEB1623EA1FD200CD513B /* WeatherListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1523EA1FD100CD513B /* WeatherListCoordinator.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -195,6 +197,8 @@
 		F2DBEB0723E8DDF600CD513B /* Welcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
 		F2DBEB0A23E8DE0E00CD513B /* SetPermissions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SetPermissions.storyboard; sourceTree = "<group>"; };
 		F2DBEB0E23E8E0B200CD513B /* AboutApp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AboutApp.storyboard; sourceTree = "<group>"; };
+		F2DBEB1323EA1F4C00CD513B /* WeatherDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailCoordinator.swift; sourceTree = "<group>"; };
+		F2DBEB1523EA1FD100CD513B /* WeatherListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListCoordinator.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -426,6 +430,8 @@
 				F2DBEAF723E6054900CD513B /* Coordinator.swift */,
 				F2DBEAF523E601F000CD513B /* MainCoordinator.swift */,
 				F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */,
+				F2DBEB1523EA1FD100CD513B /* WeatherListCoordinator.swift */,
+				F2DBEB1323EA1F4C00CD513B /* WeatherDetailCoordinator.swift */,
 			);
 			name = Routing;
 			sourceTree = "<group>";
@@ -898,6 +904,7 @@
 				F2B8EA061EA2893C00704E90 /* WelcomeViewController.swift in Sources */,
 				F2B8EA001EA11BA800704E90 /* WeatherDataDTOs.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
+				F2DBEB1423EA1F4D00CD513B /* WeatherDetailCoordinator.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
 				F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */,
 				F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */,
@@ -930,6 +937,7 @@
 				F2DBEAF823E6054900CD513B /* Coordinator.swift in Sources */,
 				F28DA8612042258500879E6C /* WeatherLocationManagementTableViewController.swift in Sources */,
 				F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */,
+				F2DBEB1623EA1FD200CD513B /* WeatherListCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

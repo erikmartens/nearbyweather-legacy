@@ -8,7 +8,11 @@
 
 import UIKit
 
-enum WelcomeCoordinatorStep: String, Step {
+enum WelcomeCoordinatorStep: StepProtocol {
+  static var identifier: String {
+    return "WelcomeCoordinatorStep"
+  }
+  
   case initial
   case dismiss
   case none
@@ -37,40 +41,25 @@ final class WelcomeCoordinator: Coordinator {
   // MARK: - Initialization
   
   init(windowManager: WindowManager) {
-    super.init(parentCoordinator: nil)
-    
+    super.init(parentCoordinator: nil, type: WelcomeCoordinatorStep.self)
     self.windowManager = windowManager
-    
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(Self.didReceiveStep),
-      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWelcomeCoordinatorExeceuteRoutingStep),
-      object: nil
-    )
   }
   
   // MARK: - Navigation
   
-  @objc func didReceiveStep(_ notification: Notification) {
-    guard let userInfo = notification.userInfo as? [String: String],
-      let stepString = userInfo[Constants.Keys.AppCoordinator.kStep],
-      let step = WelcomeCoordinatorStep(rawValue: stepString) else {
-        return
-    }
-    let childCoordinator = executeRoutingStep(step)
-    childCoordinators.appendSafe(childCoordinator)
+  @objc override func didReceiveStep(_ notification: Notification) {
+    super.didReceiveStep(notification, type: WelcomeCoordinatorStep.self)
   }
   
-  override func executeRoutingStep(_ step: Step) -> Coordinator? {
-    guard let step = step as? WelcomeCoordinatorStep else { return nil }
-    
+  override func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void) {
+    guard let step = step as? WelcomeCoordinatorStep else { return }
     switch step {
     case .initial:
-      return summonWelcomeWindow()
+      summonWelcomeWindow(nextCoordinatorReceiver: receiver)
     case .dismiss:
-      return dismissWelcomeWindow()
+      dismissWelcomeWindow(nextCoordinatorReceiver: receiver)
     case .none:
-      return nil
+      break
     }
   }
 }
@@ -79,7 +68,7 @@ final class WelcomeCoordinator: Coordinator {
 
 private extension WelcomeCoordinator {
   
-  private func summonWelcomeWindow() -> Coordinator? {
+  private func summonWelcomeWindow(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
    
     let welcomeViewController = R.storyboard.welcome.welcomeScreenViewController()!
     let root = rootViewController as? UINavigationController
@@ -91,11 +80,9 @@ private extension WelcomeCoordinator {
     splashScreenWindow.makeKeyAndVisible()
     
     windowManager?.splashScreenWindow = splashScreenWindow
-    
-    return nil
   }
   
-  private func dismissWelcomeWindow() -> Coordinator? {
+  private func dismissWelcomeWindow(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
     UIView.animate(withDuration: 0.2,
                    animations: { [weak self] in
                     self?.windowManager?.splashScreenWindow?.alpha = 0
@@ -106,6 +93,5 @@ private extension WelcomeCoordinator {
                     self?.windowManager?.splashScreenWindow = nil
                     self?.windowManager?.window?.makeKeyAndVisible()
     })
-    return nil
   }
 }

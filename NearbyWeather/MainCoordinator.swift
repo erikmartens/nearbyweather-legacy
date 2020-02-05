@@ -8,7 +8,11 @@
 
 import UIKit
 
-enum MainCoordinatorStep: String, Step {
+enum MainCoordinatorStep: StepProtocol {
+  static var identifier: String {
+    "MainCoordinatorStep"
+  }
+  
   case initial
   case none
 }
@@ -36,37 +40,23 @@ final class MainCoordinator: Coordinator {
   // MARK: - Initialization
   
   init(windowManager: WindowManager) {
-    super.init(parentCoordinator: nil)
-    
+    super.init(parentCoordinator: nil, type: MainCoordinatorStep.self)
     self.windowManager = windowManager
-    
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(Self.didReceiveStep),
-      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kMainCoordinatorExeceuteRoutingStep),
-      object: nil
-    )
   }
   
   // MARK: - Navigation
   
-  @objc func didReceiveStep(_ notification: Notification) {
-    guard let userInfo = notification.userInfo as? [String: String],
-      let stepString = userInfo[Constants.Keys.AppCoordinator.kStep],
-      let step = MainCoordinatorStep(rawValue: stepString) else {
-        return
-    }
-    let childCoordinator = executeRoutingStep(step)
-    childCoordinators.appendSafe(childCoordinator)
+  @objc override func didReceiveStep(_ notification: Notification) {
+    super.didReceiveStep(notification, type: MainCoordinatorStep.self)
   }
   
-  override func executeRoutingStep(_ step: Step) -> Coordinator? {
-    guard let step = step as? MainCoordinatorStep else { return nil }
+  override func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void) {
+    guard let step = step as? MainCoordinatorStep else { return }
     switch step {
     case .initial:
-      return summonMainTabbarController()
+      summonMainTabbarController(nextCoordinatorReceiver: receiver)
     case .none:
-      return nil
+      break
     }
   }
 }
@@ -75,7 +65,7 @@ final class MainCoordinator: Coordinator {
 
 private extension MainCoordinator {
   
-  func summonMainTabbarController() -> Coordinator? {
+  func summonMainTabbarController(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
     let root = rootViewController as? UITabBarController
     
     /* Weather List Controller */
@@ -105,7 +95,5 @@ private extension MainCoordinator {
     window.rootViewController = root
     window.makeKeyAndVisible()
     windowManager?.window = window
-    
-    return nil
   }
 }

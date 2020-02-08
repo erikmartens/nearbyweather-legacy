@@ -188,7 +188,9 @@ extension WeatherMapViewController: MKMapViewDelegate {
       fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight,
       tapHandler: { [weak self] _ in
         self?.previousRegion = mapView.region
-        self?.stepper?.routeToWeatherDetails(for: annotation.locationId)
+        self?.stepper?.requestRouting(toStep:
+          WeatherMapStep.weatherDetails(identifier: annotation.locationId)
+        )
       }
     )
     return viewForCurrentAnnotation

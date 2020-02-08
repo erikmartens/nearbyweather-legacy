@@ -12,13 +12,7 @@ class WeatherListStepper: Stepper {}
 
 extension WeatherListStepper {
   
-  func routeToWeatherDetails(for identifier: Int?) {
-    let step = WeatherListStep.weatherDetails(identifier: identifier)
-    super.emitStep(step, type: WeatherListStep.self)
-  }
-  
-  func dismissWeatherDetails() {
-    let step = WeatherDetailStep.dismiss
-    super.emitStep(step, type: WeatherDetailStep.self)
+  func requestRouting(toStep step: WeatherListStep) {
+    emitStep(step, type: WeatherListStep.self)
   }
 }

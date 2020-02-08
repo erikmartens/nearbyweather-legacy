@@ -89,7 +89,7 @@ private extension WeatherDetailCoordinator {
     destinationViewController.stepper = stepper
     
     destinationViewController.addBarButton(atPosition: .left) { [weak self] in
-      self?.stepper.emitStep(WeatherDetailStep.dismiss, type: WeatherDetailStep.self)
+      self?.stepper.requestRouting(toStep: .dismiss)
     }
     
     let root = rootViewController as? UINavigationController

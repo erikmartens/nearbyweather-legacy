@@ -306,6 +306,8 @@ extension WeatherListViewController: UITableViewDataSource {
     tableView.deselectRow(at: indexPath, animated: true)
     
     let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell
-    stepper?.routeToWeatherDetails(for: selectedCell?.weatherDataIdentifier)
+    stepper?.requestRouting(toStep:
+      WeatherListStep.weatherDetails(identifier: selectedCell?.weatherDataIdentifier)
+    )
   }
 }

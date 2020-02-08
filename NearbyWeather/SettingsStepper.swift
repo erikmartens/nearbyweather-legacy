@@ -12,19 +12,7 @@ class SettingsStepper: Stepper {}
 
 extension SettingsStepper {
   
-  func routeToAboutApp() {
-    super.emitStep(SettingsStep.about, type: SettingsStep.self)
-  }
-  
-  func routeToApiKeyEdit() {
-    super.emitStep(SettingsStep.apiKeyEdit, type: SettingsStep.self)
-  }
-  
-  func routeToManageLocations() {
-    super.emitStep(SettingsStep.manageLocations, type: SettingsStep.self)
-  }
-  
-  func routeToAddLocation() {
-    super.emitStep(SettingsStep.addLocation, type: SettingsStep.self)
+  func requestRouting(toStep step: SettingsStep) {
+    emitStep(step, type: SettingsStep.self)
   }
 }

@@ -12,4 +12,7 @@ class WeatherDetailStepper: Stepper {}
 
 extension WeatherDetailStepper {
   
+  func requestRouting(toStep step: WeatherDetailStep) {
+    emitStep(step, type: WeatherDetailStep.self)
+  }
 }

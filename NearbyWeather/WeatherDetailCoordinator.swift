@@ -18,7 +18,7 @@ class WeatherDetailCoordinator: Coordinator {
   
   // MARK: - Required Properties
   
-  private static var root: UINavigationController = {
+  private static var _rootViewController: UINavigationController = {
     let navigationController = UINavigationController()
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
@@ -26,29 +26,17 @@ class WeatherDetailCoordinator: Coordinator {
     return navigationController
   }()
   
-  override var initialStep: StepProtocol {
-    return WeatherDetailStep.initial(identifier: weatherDetailIdentifier)
-  }
-  
-  override var associatedStepperIdentifier: String {
-    return WeatherDetailStep.identifier
-  }
-  
-  // MARK: - Additional Properties
-  
-  private let weatherDetailIdentifier: Int?
-  
-  private lazy var stepper: WeatherDetailStepper = {
-    WeatherDetailStepper(coordinator: self, type: WeatherListStep.self)
-  }()
-  
   // MARK: - Initialization
   
   init(parentCoordinator: Coordinator?, weatherDetailIdentifier: Int?) {
-    self.weatherDetailIdentifier = weatherDetailIdentifier
+    let initialStep = InitialStep(
+      identifier: WeatherDetailStep.identifier,
+      step: WeatherDetailStep.initial(identifier: weatherDetailIdentifier)
+    )
     
     super.init(
-      rootViewController: Self.root,
+      rootViewController: Self._rootViewController,
+      stepper: WeatherDetailStepper(initialStep: initialStep, type: WeatherListStep.self),
       parentCoordinator: parentCoordinator,
       type: WeatherDetailStep.self
     )
@@ -86,14 +74,14 @@ private extension WeatherDetailCoordinator {
       withTitle: weatherDTO.cityName,
       weatherDTO: weatherDTO
     )
-    destinationViewController.stepper = stepper
+    destinationViewController.stepper = stepper as? WeatherDetailStepper
     
     destinationViewController.addBarButton(atPosition: .left) { [weak self] in
-      self?.stepper.requestRouting(toStep: .dismiss)
+      (self?.stepper as? WeatherDetailStepper)?.requestRouting(toStep: .dismiss)
     }
     
     let root = rootViewController as? UINavigationController
-//    root?.delegate = self
+    //    root?.delegate = self
     root?.setViewControllers([destinationViewController], animated: false)
     
     coordinatorReceiver(.none)

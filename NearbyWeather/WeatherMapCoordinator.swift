@@ -18,7 +18,7 @@ class WeatherMapCoordinator: Coordinator {
   
   // MARK: - Required Properties
   
-  private static var root: UINavigationController = {
+  private static var _rootViewController: UINavigationController = {
     let navigationController = UINavigationController()
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
@@ -26,25 +26,20 @@ class WeatherMapCoordinator: Coordinator {
     return navigationController
   }()
   
-  override var initialStep: StepProtocol {
-    return WeatherMapStep.initial
-  }
-  
-  override var associatedStepperIdentifier: String {
-    return WeatherMapStep.identifier
-  }
-  
-  // MARK: - Additional Properties
-  
-  private lazy var stepper: WeatherMapStepper = {
-    WeatherMapStepper(coordinator: self, type: WeatherMapStep.self)
+  private static var _stepper: WeatherMapStepper = {
+    let initialStep = InitialStep(
+      identifier: WeatherMapStep.identifier,
+      step: WeatherMapStep.initial
+    )
+    return WeatherMapStepper(initialStep: initialStep, type: WeatherMapStep.self)
   }()
   
   // MARK: - Initialization
   
   init(parentCoordinator: Coordinator?) {
     super.init(
-      rootViewController: Self.root,
+      rootViewController: Self._rootViewController,
+      stepper: Self._stepper,
       parentCoordinator: parentCoordinator,
       type: WeatherMapStep.self
     )
@@ -75,7 +70,7 @@ private extension WeatherMapCoordinator {
   func summonWeatherMapController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     let mapViewController = R.storyboard.weatherMap.nearbyLocationsMapViewController()!
     mapViewController.title = R.string.localizable.tab_weatherMap()
-    mapViewController.stepper = stepper
+    mapViewController.stepper = stepper as? WeatherMapStepper
     
     mapViewController.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
     mapViewController.tabBarItem.image = R.image.tabbar_map_ios11()

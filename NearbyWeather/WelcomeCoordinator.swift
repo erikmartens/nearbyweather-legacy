@@ -18,7 +18,7 @@ final class WelcomeCoordinator: Coordinator {
   
   // MARK: - Required Properties
   
-  private static var root: UINavigationController = {
+  private static var _rootViewController: UINavigationController = {
     let navigationController = UINavigationController()
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
@@ -26,13 +26,13 @@ final class WelcomeCoordinator: Coordinator {
     return navigationController
   }()
   
-  override var initialStep: StepProtocol {
-    return WelcomeCoordinatorStep.initial
-  }
-  
-  override var associatedStepperIdentifier: String {
-    return WelcomeCoordinatorStep.identifier
-  }
+  private static var _stepper: WelcomeStepper = {
+    let initialStep = InitialStep(
+      identifier: WelcomeCoordinatorStep.identifier,
+      step: WelcomeCoordinatorStep.initial
+    )
+    return WelcomeStepper(initialStep: initialStep, type: WelcomeCoordinatorStep.self)
+  }()
   
   // MARK: - Additional Properties
   
@@ -44,7 +44,8 @@ final class WelcomeCoordinator: Coordinator {
     self.windowManager = windowManager
     
     super.init(
-      rootViewController: Self.root,
+      rootViewController: Self._rootViewController,
+      stepper: Self._stepper,
       parentCoordinator: parentCoordinator,
       type: WelcomeCoordinatorStep.self
     )

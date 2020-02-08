@@ -17,7 +17,7 @@ final class MainCoordinator: Coordinator {
   
   // MARK: - Required Properties
   
-  private static var root: UITabBarController = {
+  private static var _rootViewController: UITabBarController = {
     let tabbar = UITabBarController()
     tabbar.tabBar.backgroundColor = .white
     tabbar.tabBar.barTintColor = .white
@@ -25,13 +25,13 @@ final class MainCoordinator: Coordinator {
     return tabbar
   }()
   
-  override var initialStep: StepProtocol {
-    return MainCoordinatorStep.initial
-  }
-  
-  override var associatedStepperIdentifier: String {
-    return MainCoordinatorStep.identifier
-  }
+  private static var _stepper: MainStepper = {
+    let initialStep = InitialStep(
+      identifier: MainCoordinatorStep.identifier,
+      step: MainCoordinatorStep.initial
+    )
+    return MainStepper(initialStep: initialStep, type: MainCoordinatorStep.self)
+  }()
   
   // MARK: - Additional Properties
   
@@ -43,7 +43,8 @@ final class MainCoordinator: Coordinator {
     self.windowManager = windowManager
     
     super.init(
-      rootViewController: Self.root,
+      rootViewController: Self._rootViewController,
+      stepper: Self._stepper,
       parentCoordinator: parentCoordinator,
       type: MainCoordinatorStep.self
     )

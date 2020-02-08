@@ -12,17 +12,32 @@ protocol StepperProtocol {
   var coordinator: Coordinator? { get }
 }
 
+struct InitialStep {
+  let identifier: String
+  let step: StepProtocol
+}
+
 class Stepper {
   
-  weak var coordinator: Coordinator?
+  // MARK: - Properties
+  
+  let initialStep: InitialStep
 
   // MARK: - Initialization
   
-  init<T: StepProtocol>(coordinator: Coordinator?, type: T.Type) {
-    self.coordinator = coordinator
+  init<T: StepProtocol>(initialStep: InitialStep, type: T.Type) {
+    self.initialStep = initialStep
   }
   
   // MARK: - Functions
+  
+  func emitInitialStep() {
+    NotificationCenter.default.post(
+      name: Notification.Name(rawValue: initialStep.identifier),
+      object: self,
+      userInfo: [Constants.Keys.AppCoordinator.kStep: initialStep.step]
+    )
+  }
   
   func emitStep<T: StepProtocol>(_ step: T, type: T.Type) {
     NotificationCenter.default.post(

@@ -18,7 +18,7 @@ class WeatherListCoordinator: Coordinator {
   
   // MARK: - Required Properties
   
-  private static var root: UINavigationController = {
+  private static var _rootViewController: UINavigationController = {
     let navigationController = UINavigationController()
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
@@ -26,25 +26,20 @@ class WeatherListCoordinator: Coordinator {
     return navigationController
   }()
   
-  override var initialStep: StepProtocol {
-    return WeatherListStep.initial
-  }
-  
-  override var associatedStepperIdentifier: String {
-    return WeatherListStep.identifier
-  }
-  
-  // MARK: - Additional Properties
-  
-  private lazy var stepper: WeatherListStepper = {
-     WeatherListStepper(coordinator: self, type: WeatherListStep.self)
+  private static var _stepper: WeatherListStepper = {
+    let initalStep = InitialStep(
+      identifier: WeatherListStep.identifier,
+      step: WeatherListStep.initial
+    )
+    return WeatherListStepper(initialStep: initalStep, type: WeatherListStep.self)
   }()
   
   // MARK: - Initialization
   
   init(parentCoordinator: Coordinator?) {
     super.init(
-      rootViewController: Self.root,
+      rootViewController: Self._rootViewController,
+      stepper: Self._stepper,
       parentCoordinator: parentCoordinator,
       type: WeatherListStep.self
     )
@@ -74,7 +69,7 @@ private extension WeatherListCoordinator {
   
   func summonWeatherListController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     let weatherListViewController = R.storyboard.weatherList.weatherListViewController()!
-    weatherListViewController.stepper = stepper
+    weatherListViewController.stepper = stepper as? WeatherListStepper
     
     weatherListViewController.title = R.string.localizable.tab_weatherList()
     weatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()

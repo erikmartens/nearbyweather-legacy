@@ -86,6 +86,8 @@
 		F2DBEB2323EF2EE300CD513B /* WeatherDetailStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2223EF2EE300CD513B /* WeatherDetailStepper.swift */; };
 		F2DBEB2523EF31D700CD513B /* WeatherMapStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2423EF31D700CD513B /* WeatherMapStepper.swift */; };
 		F2DBEB2723EF35A700CD513B /* SettingsStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2623EF35A700CD513B /* SettingsStepper.swift */; };
+		F2DBEB2923EF4C6F00CD513B /* WelcomeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2823EF4C6F00CD513B /* WelcomeStepper.swift */; };
+		F2DBEB2B23EF4D2A00CD513B /* MainStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2A23EF4D2A00CD513B /* MainStepper.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -215,6 +217,8 @@
 		F2DBEB2223EF2EE300CD513B /* WeatherDetailStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailStepper.swift; sourceTree = "<group>"; };
 		F2DBEB2423EF31D700CD513B /* WeatherMapStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapStepper.swift; sourceTree = "<group>"; };
 		F2DBEB2623EF35A700CD513B /* SettingsStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStepper.swift; sourceTree = "<group>"; };
+		F2DBEB2823EF4C6F00CD513B /* WelcomeStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeStepper.swift; sourceTree = "<group>"; };
+		F2DBEB2A23EF4D2A00CD513B /* MainStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStepper.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -445,7 +449,9 @@
 			children = (
 				F2DBEB1723EB720100CD513B /* Root Files */,
 				F2DBEAF523E601F000CD513B /* MainCoordinator.swift */,
+				F2DBEB2A23EF4D2A00CD513B /* MainStepper.swift */,
 				F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */,
+				F2DBEB2823EF4C6F00CD513B /* WelcomeStepper.swift */,
 				F2DBEB1523EA1FD100CD513B /* WeatherListCoordinator.swift */,
 				F2DBEB2023EF108D00CD513B /* WeatherListStepper.swift */,
 				F2DBEB1323EA1F4C00CD513B /* WeatherDetailCoordinator.swift */,
@@ -925,6 +931,7 @@
 				F22F99552034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift in Sources */,
 				86830392217BBA5D00B7122E /* BadgeService.swift in Sources */,
 				F2F7BA2123E37A9C00B4D2EB /* Constants+Values.swift in Sources */,
+				F2DBEB2923EF4C6F00CD513B /* WelcomeStepper.swift in Sources */,
 				86830394217BBAE400B7122E /* PermissionsManager.swift in Sources */,
 				F2A5CAA62005762A0071BFFB /* ConversionService.swift in Sources */,
 				F2FE3F01200285B100EBC429 /* WeatherLocationService.swift in Sources */,
@@ -955,6 +962,7 @@
 				F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */,
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */,
+				F2DBEB2B23EF4D2A00CD513B /* MainStepper.swift in Sources */,
 				F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */,
 				F2DBEB1D23EF042A00CD513B /* WeatherMapCoordinator.swift in Sources */,
 				F2DBEAF623E601F000CD513B /* MainCoordinator.swift in Sources */,

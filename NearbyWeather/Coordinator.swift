@@ -22,8 +22,7 @@ protocol CoordinatorProtocol {
   var parentCoordinator: Coordinator? { get }
   var childCoordinators: [Coordinator] { get }
   var rootViewController: UIViewController { get }
-  var initialStep: StepProtocol { get }
-  var associatedStepperIdentifier: String { get }
+  var stepper: Stepper { get }
   func didReceiveStep(_ notification: Notification)
   func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void)
 }
@@ -33,25 +32,19 @@ class Coordinator: CoordinatorProtocol {
   // MARK: - Properties
   
   let rootViewController: UIViewController
+  let stepper: Stepper
   weak var parentCoordinator: Coordinator?
   var childCoordinators: [Coordinator]
   
-  var identifier: String {
-    return String(describing: self)
-  }
-  
-  var initialStep: StepProtocol {
-    return Step.none
-  }
-  
-  var associatedStepperIdentifier: String {
-    return Step.identifier
-  }
+  lazy var identifier: String = {
+    return UUID().uuidString
+  }()
   
   // MARK: - Initialization
   
-  init<T: StepProtocol>(rootViewController: UIViewController, parentCoordinator: Coordinator?, type: T.Type) {
+  init<T: StepProtocol>(rootViewController: UIViewController, stepper: Stepper, parentCoordinator: Coordinator?, type: T.Type) {
     self.rootViewController = rootViewController
+    self.stepper = stepper
     self.parentCoordinator = parentCoordinator
     self.childCoordinators = []
     
@@ -85,10 +78,10 @@ class Coordinator: CoordinatorProtocol {
         break
       case let .single(coordinator):
         self.childCoordinators.append(coordinator)
-        self.postInitialStep(for: coordinator)
+        coordinator.stepper.emitInitialStep()
       case let .multiple(coordinators):
         self.childCoordinators.append(contentsOf: coordinators)
-        coordinators.forEach(self.postInitialStep)
+        coordinators.forEach { $0.stepper.emitInitialStep() }
       case let .destroy(coordinator):
         self.childCoordinators.removeAll(where: { $0 == coordinator })
       }
@@ -98,20 +91,6 @@ class Coordinator: CoordinatorProtocol {
   /// The next step is expected to pass the following coordinator after having completed the internal setup process
   /// if such a coordinator is required for subseqent coordination.
   func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {}
-}
-
-// MARK: - Private Helper Functions
-
-private extension Coordinator {
-  
-  // TODO: delegate to own stepper
-  func postInitialStep(for coordinator: Coordinator) {
-    NotificationCenter.default.post(
-      name: Notification.Name(rawValue: coordinator.associatedStepperIdentifier),
-      object: self,
-      userInfo: [Constants.Keys.AppCoordinator.kStep: coordinator.initialStep]
-    )
-  }
 }
 
 extension Coordinator: Equatable {

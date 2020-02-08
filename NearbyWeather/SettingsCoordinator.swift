@@ -11,6 +11,7 @@ import UIKit
 enum SettingsStep: StepProtocol {
   case initial
   case about
+  case apiKeyEdit
   case none
 }
 
@@ -63,6 +64,8 @@ class SettingsCoordinator: Coordinator {
       summonSettingsController(passNextChildCoordinatorTo: coordinatorReceiver)
     case .about:
       summonAboutController(passNextChildCoordinatorTo: coordinatorReceiver)
+    case .apiKeyEdit:
+      summonApiKeyEditController(passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
     }
@@ -91,6 +94,17 @@ private extension SettingsCoordinator {
     
     let root = rootViewController as? UINavigationController
     root?.pushViewController(aboutController, animated: true)
+    
+    coordinatorReceiver(.none)
+  }
+  
+  func summonApiKeyEditController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
+    let apiKeyEditController = SettingsInputTableViewController(style: .grouped)
+    apiKeyEditController.navigationItem.title = R.string.localizable.api_settings()
+    apiKeyEditController.stepper = stepper
+    
+    let root = rootViewController as? UINavigationController
+    root?.pushViewController(apiKeyEditController, animated: true)
     
     coordinatorReceiver(.none)
   }

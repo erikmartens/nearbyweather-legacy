@@ -15,4 +15,8 @@ extension SettingsStepper {
   func routeToAboutApp() {
     super.emitStep(SettingsStep.about, type: SettingsStep.self)
   }
+  
+  func routeToApiKeyEdit() {
+    super.emitStep(SettingsStep.apiKeyEdit, type: SettingsStep.self)
+  }
 }

@@ -11,12 +11,14 @@ import PKHUD
 
 final class SettingsInputTableViewController: UITableViewController {
   
+  // MARK: - Routing
+  
+  weak var stepper: SettingsStepper?
+  
   // MARK: - ViewController Life Cycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    navigationItem.title = R.string.localizable.api_settings()
     
     tableView.delegate = self
     tableView.register(UINib(nibName: R.nib.textInputCell.name, bundle: R.nib.textInputCell.bundle),

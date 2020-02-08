@@ -30,8 +30,6 @@ extension Constants.Keys {
     static let kLocationAuthorizationUpdated = "de.erikmaximilianmartens.nearbyWeather.locationAuthorizationUpdated"
     static let kNetworkReachabilityChanged = "de.erikmaximilianmartens.nearbyWeather.networkReachabilityChanged"
     static let kSortingOrientationPreferenceChanged = "de.erikmaximilianmartens.nearbyWeather.sortingOrientationPreferenceChanged"
-    static let kMainCoordinatorExeceuteRoutingStep = "de.erikmaximilianmartens.nearbyWeather.mainCoordinatorExeceuteRoutingStep"
-    static let kWelcomeCoordinatorExeceuteRoutingStep = "de.erikmaximilianmartens.nearbyWeather.welcomeCoordinatorExeceuteRoutingStep"
   }
 }
 

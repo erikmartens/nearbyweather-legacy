@@ -37,7 +37,11 @@ final class AboutAppTableViewController: UITableViewController {
       .sorted { $0.lastName.lowercased() < $1.lastName.lowercased() } ?? [DevelopmentContributorDTO]()
   }()
   
-  // MARK: - Assets
+  // MARK: - Routing
+  
+  weak var stepper: SettingsStepper?
+  
+  // MARK: - IBOutlets
   
   @IBOutlet weak var appTitleLabel: UILabel!
   @IBOutlet weak var appVersionLabel: UILabel!
@@ -46,8 +50,6 @@ final class AboutAppTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    navigationItem.title = R.string.localizable.about()
     
     tableView.delegate = self
     tableView.estimatedRowHeight = 44

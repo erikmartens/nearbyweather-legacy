@@ -9,18 +9,20 @@
 import UIKit
 import MapKit
 
-final class NearbyLocationsMapViewController: UIViewController {
+final class WeatherMapViewController: UIViewController {
   
-  // MARK: - Assets
+  // MARK: - Routing
   
-  /* Outlets */
+  weak var stepper: WeatherMapStepper?
+  
+  // MARK: - IBOutlets
   
   @IBOutlet weak var mapView: MKMapView!
   
   @IBOutlet weak var changeMapTypeButton: UIBarButtonItem!
   @IBOutlet weak var focusLocationButton: UIBarButtonItem!
   
-  /* Properties */
+  // MARK: - Properties
   
   var weatherLocationMapAnnotations: [WeatherLocationMapAnnotation]!
   
@@ -166,7 +168,7 @@ final class NearbyLocationsMapViewController: UIViewController {
   }
 }
 
-extension NearbyLocationsMapViewController: MKMapViewDelegate {
+extension WeatherMapViewController: MKMapViewDelegate {
   
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     guard let annotation = annotation as? WeatherLocationMapAnnotation else {
@@ -184,16 +186,11 @@ extension NearbyLocationsMapViewController: MKMapViewDelegate {
       withTitle: annotation.title ?? Constants.Messages.kNotSet,
       subtitle: annotation.subtitle ?? Constants.Messages.kNotSet,
       fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight,
-      tapHandler: { [unowned self] _ in
-        guard let weatherDTO = WeatherDataManager.shared.weatherDTO(forIdentifier: annotation.locationId) else {
-          return
-        }
-        self.previousRegion = mapView.region
-        
-        let destinationViewController = WeatherDetailViewController.instantiateFromStoryBoard(withTitle: weatherDTO.cityName, weatherDTO: weatherDTO)
-        let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
-        destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
-        self.navigationController?.present(destinationNavigationController, animated: true, completion: nil)
+      tapHandler: { [weak self] _ in
+        self?.previousRegion = mapView.region
+        self?.stepper?.requestRouting(toStep:
+          WeatherMapStep.weatherDetails(identifier: annotation.locationId)
+        )
       }
     )
     return viewForCurrentAnnotation

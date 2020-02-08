@@ -8,16 +8,26 @@
 
 import UIKit
 
-extension UINavigationController {
+extension UIViewController {
   
-  func addVerticalCloseButton(withCompletionHandler handler: (() -> Void)?) {
+  func addBarButton(atPosition position: UIBarButtonItem.Position, touchupInsideHandler handler: @escaping (() -> Void)) {
     let closeButton = UIBarButtonItem(image: R.image.verticalCloseButton(), style: .plain) { [unowned self] _ in
-      self.topViewController?.view.endEditing(true)
-      self.presentingViewController?.dismiss(animated: true) {
-        handler?()
-      }
+      self.view.endEditing(true)
+      handler()
     }
-    self.viewControllers.first?.navigationItem.leftBarButtonItem = closeButton
+    switch position {
+    case .left:
+      navigationItem.leftBarButtonItem = closeButton
+    case .right:
+      navigationItem.rightBarButtonItem = closeButton
+    }
+  }
+}
+
+extension UIBarButtonItem {
+  enum Position {
+    case left
+    case right
   }
 }
 

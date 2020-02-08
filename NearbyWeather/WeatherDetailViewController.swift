@@ -14,11 +14,15 @@ import APTimeZones
 final class WeatherDetailViewController: UIViewController {
   
   static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailViewController {
-    let viewController = R.storyboard.details.weatherDetailViewController()!
+    let viewController = R.storyboard.weatherDetails.weatherDetailViewController()!
     viewController.titleString = title
     viewController.weatherDTO = weatherDTO
     return viewController
   }
+  
+  // MARK: - Routing
+  
+  weak var stepper: WeatherDetailStepper?
   
   // MARK: - Properties
   
@@ -93,7 +97,7 @@ final class WeatherDetailViewController: UIViewController {
   
   private func configure() {
     navigationController?.navigationBar.style(withBarTintColor:
-      ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true ? .nearbyWeatherStandard : .nearbyWeatherNight
+      (ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight
     )
     
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }

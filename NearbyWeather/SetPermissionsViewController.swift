@@ -55,7 +55,9 @@ final class SetPermissionsViewController: UIViewController {
     
     warningImageView.layer.removeAllAnimations()
     timer?.invalidate()
-    
+  }
+  
+  deinit {
     NotificationCenter.default.removeObserver(self)
   }
   
@@ -90,9 +92,9 @@ final class SetPermissionsViewController: UIViewController {
   
   @objc func launchApp() {
     NotificationCenter.default.post(
-      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWelcomeCoordinatorExeceuteRoutingStep),
+      name: Notification.Name(rawValue: WelcomeCoordinatorStep.identifier),
       object: self,
-      userInfo: [Constants.Keys.AppCoordinator.kStep: WelcomeCoordinatorStep.dismiss.rawValue]
+      userInfo: [Constants.Keys.AppCoordinator.kStep: WelcomeCoordinatorStep.dismiss]
     )
   }
   

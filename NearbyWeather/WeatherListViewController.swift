@@ -19,6 +19,10 @@ enum ListType: CaseIterable {
 
 final class WeatherListViewController: UIViewController {
   
+  // MARK: - Routing
+  
+  weak var stepper: WeatherListStepper?
+  
   // MARK: - Properties
   
   private var refreshControl = UIRefreshControl()
@@ -85,7 +89,9 @@ final class WeatherListViewController: UIViewController {
     super.viewWillDisappear(animated)
     
     refreshControl.endRefreshing()
-    
+  }
+  
+  deinit {
     NotificationCenter.default.removeObserver(self)
   }
   
@@ -299,14 +305,9 @@ extension WeatherListViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    guard let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell,
-      let weatherDataIdentifier = selectedCell.weatherDataIdentifier,
-      let weatherDTO = WeatherDataManager.shared.weatherDTO(forIdentifier: weatherDataIdentifier) else {
-        return
-    }
-    let destinationViewController = WeatherDetailViewController.instantiateFromStoryBoard(withTitle: weatherDTO.cityName, weatherDTO: weatherDTO)
-    let destinationNavigationController = UINavigationController(rootViewController: destinationViewController)
-    destinationNavigationController.addVerticalCloseButton(withCompletionHandler: nil)
-    navigationController?.present(destinationNavigationController, animated: true, completion: nil)
+    let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell
+    stepper?.requestRouting(toStep:
+      WeatherListStep.weatherDetails(identifier: selectedCell?.weatherDataIdentifier)
+    )
   }
 }

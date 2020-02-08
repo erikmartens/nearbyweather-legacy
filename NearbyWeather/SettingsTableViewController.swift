@@ -10,6 +10,10 @@ import UIKit
 
 final class SettingsTableViewController: UITableViewController {
   
+  // MARK: - Routing
+  
+  weak var stepper: SettingsStepper?
+  
   // MARK: - ViewController LifeCycle
   
   override func viewDidLoad() {
@@ -42,34 +46,20 @@ final class SettingsTableViewController: UITableViewController {
     
     switch indexPath.section {
     case 0:
-      let destinationViewController = R.storyboard.settings.infoTableViewController()!
-      navigationItem.removeTextFromBackBarButton()
-      navigationController?.pushViewController(destinationViewController, animated: true)
+      stepper?.requestRouting(toStep: .about)
     case 1:
       break
     case 2:
       if indexPath.row == 0 {
-        let destinationViewController = SettingsInputTableViewController(style: .grouped)
-        
-        navigationItem.removeTextFromBackBarButton()
-        navigationController?.pushViewController(destinationViewController, animated: true)
+        stepper?.requestRouting(toStep: .apiKeyEdit)
         return
       }
       navigationController?.presentSafariViewController(for: Constants.Urls.kOpenWeatherMapInstructionsUrl)
     case 3:
       if indexPath.row == 0 {
-        guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
-          break
-        }
-        let destinationViewController = WeatherLocationManagementTableViewController(style: .grouped)
-        
-        navigationItem.removeTextFromBackBarButton()
-        navigationController?.pushViewController(destinationViewController, animated: true)
+        stepper?.requestRouting(toStep: .manageLocations)
       } else if indexPath.row == 1 {
-        let destinationViewController = WeatherLocationSelectionTableViewController(style: .grouped)
-        
-        navigationItem.removeTextFromBackBarButton()
-        navigationController?.pushViewController(destinationViewController, animated: true)
+        stepper?.requestRouting(toStep: .addLocation)
       }
     case 4:
       if indexPath.row == 1 {

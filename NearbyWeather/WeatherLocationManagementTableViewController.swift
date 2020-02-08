@@ -10,7 +10,11 @@ import UIKit
 
 final class WeatherLocationManagementTableViewController: UITableViewController {
   
-  // MARK: - Computed Properties
+  // MARK: - Routing
+  
+  weak var stepper: SettingsStepper?
+  
+  // MARK: - Properties
   
   private var editingEnabled: Bool {
     return WeatherDataManager.shared.bookmarkedLocations.count > 1
@@ -20,8 +24,6 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    navigationItem.title = R.string.localizable.manage_locations()
     
     tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)

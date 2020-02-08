@@ -17,7 +17,7 @@ final class MainCoordinator: Coordinator {
   
   // MARK: - Required Properties
   
-  private lazy var root: UITabBarController = {
+  private static var root: UITabBarController = {
     let tabbar = UITabBarController()
     tabbar.tabBar.backgroundColor = .white
     tabbar.tabBar.barTintColor = .white
@@ -32,10 +32,8 @@ final class MainCoordinator: Coordinator {
   // MARK: - Initialization
   
   init(windowManager: WindowManager) {
-    super.init(parentCoordinator: nil, type: MainCoordinatorStep.self)
+    super.init(rootViewController: Self.root, parentCoordinator: nil, type: MainCoordinatorStep.self)
     self.windowManager = windowManager
-    
-    super.setRoot(viewController: root)
   }
   
   // MARK: - Navigation

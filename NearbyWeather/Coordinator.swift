@@ -28,24 +28,14 @@ class Coordinator: CoordinatorProtocol {
   
   // MARK: - Properties
   
+  let rootViewController: UIViewController
   weak var parentCoordinator: Coordinator?
   var childCoordinators: [Coordinator]
   
-  private var _root: UIViewController?
-  func setRoot(viewController: UIViewController) {
-    _root = viewController
-  }
-  
-  var rootViewController: UIViewController {
-    guard let root = _root else {
-      fatalError("root is not implemented")
-    }
-    return root
-  }
-  
   // MARK: - Initialization
   
-  init<T: StepProtocol>(parentCoordinator: Coordinator?, type: T.Type) {
+  init<T: StepProtocol>(rootViewController: UIViewController, parentCoordinator: Coordinator?, type: T.Type) {
+    self.rootViewController = rootViewController
     self.parentCoordinator = parentCoordinator
     self.childCoordinators = []
     

@@ -18,7 +18,7 @@ final class WelcomeCoordinator: Coordinator {
   
   // MARK: - Required Properties
   
-  private lazy var root: UINavigationController = {
+  private static var root: UINavigationController = {
     let navigationController = UINavigationController()
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
@@ -33,10 +33,8 @@ final class WelcomeCoordinator: Coordinator {
   // MARK: - Initialization
   
   init(windowManager: WindowManager) {
-    super.init(parentCoordinator: nil, type: WelcomeCoordinatorStep.self)
+    super.init(rootViewController: Self.root, parentCoordinator: nil, type: WelcomeCoordinatorStep.self)
     self.windowManager = windowManager
-    
-    super.setRoot(viewController: root)
   }
   
   // MARK: - Navigation

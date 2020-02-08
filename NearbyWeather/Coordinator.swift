@@ -83,7 +83,7 @@ class Coordinator: CoordinatorProtocol {
         self.childCoordinators.append(contentsOf: coordinators)
         coordinators.forEach { $0.stepper.emitInitialStep() }
       case let .destroy(coordinator):
-        self.childCoordinators.removeAll(where: { $0 == coordinator })
+        self.parentCoordinator?.childCoordinators.removeAll(where: { $0 == coordinator })
       }
     }
   }

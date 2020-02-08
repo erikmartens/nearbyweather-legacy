@@ -38,6 +38,10 @@ class WeatherDetailCoordinator: Coordinator {
   
   private let weatherDetailIdentifier: Int?
   
+  private lazy var stepper: WeatherDetailStepper = {
+    WeatherDetailStepper(coordinator: self, type: WeatherListStep.self)
+  }()
+  
   // MARK: - Initialization
   
   init(parentCoordinator: Coordinator?, weatherDetailIdentifier: Int?) {
@@ -82,8 +86,14 @@ private extension WeatherDetailCoordinator {
       withTitle: weatherDTO.cityName,
       weatherDTO: weatherDTO
     )
+    destinationViewController.stepper = stepper
+    
+    destinationViewController.addBarButton(atPosition: .left) { [weak self] in
+      self?.stepper.emitStep(WeatherDetailStep.dismiss, type: WeatherDetailStep.self)
+    }
     
     let root = rootViewController as? UINavigationController
+//    root?.delegate = self
     root?.setViewControllers([destinationViewController], animated: false)
     
     coordinatorReceiver(.none)
@@ -95,3 +105,9 @@ private extension WeatherDetailCoordinator {
     })
   }
 }
+
+//extension WeatherDetailCoordinator: UINavigationControllerDelegate {
+//  func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+//
+//  }
+//}

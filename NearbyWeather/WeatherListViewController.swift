@@ -21,7 +21,7 @@ final class WeatherListViewController: UIViewController {
   
   // MARK: - Routing
   
-  var stepper: WeatherListStepper?
+  weak var stepper: WeatherListStepper?
   
   // MARK: - Properties
   

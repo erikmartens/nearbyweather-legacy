@@ -34,6 +34,12 @@ class WeatherListCoordinator: Coordinator {
     return WeatherListStep.identifier
   }
   
+  // MARK: - Additional Properties
+  
+  private lazy var stepper: WeatherListStepper = {
+     WeatherListStepper(coordinator: self, type: WeatherListStep.self)
+  }()
+  
   // MARK: - Initialization
   
   init(parentCoordinator: Coordinator?) {
@@ -68,7 +74,7 @@ private extension WeatherListCoordinator {
   
   func summonWeatherListController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     let weatherListViewController = R.storyboard.weatherList.weatherListViewController()!
-    weatherListViewController.stepper = WeatherListStepper(coordinator: self, type: WeatherListStep.self)
+    weatherListViewController.stepper = stepper
     
     weatherListViewController.title = R.string.localizable.tab_weatherList()
     weatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
@@ -82,24 +88,10 @@ private extension WeatherListCoordinator {
   
   func summonWeatherDetailsController(weatherDetailIdentifier: Int?, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
     let weatherDetailCoordinator = WeatherDetailCoordinator(parentCoordinator: self, weatherDetailIdentifier: weatherDetailIdentifier)
-    
-//    let closeButton = UIBarButtonItem(
-//      image: R.image.verticalCloseButton(),
-//      style: .plain,
-//      target: self,
-//      action: #selector(dismissWeatherDetailFlow)
-//    )
 
-    guard let nextRoot = weatherDetailCoordinator.rootViewController as? UINavigationController else {
-      return
-    }
-//    nextRoot.navigationItem.leftBarButtonItem = closeButton
+    guard let nextRoot = weatherDetailCoordinator.rootViewController as? UINavigationController else { return }
     rootViewController.present(nextRoot, animated: true)
-    coordinatorReceiver(.single(weatherDetailCoordinator))
     
+    coordinatorReceiver(.single(weatherDetailCoordinator))
   }
-  
-//  @objc private func dismissWeatherDetailFlow() {
-//
-//  }
 }

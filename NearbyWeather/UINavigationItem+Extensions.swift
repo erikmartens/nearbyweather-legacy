@@ -6,7 +6,7 @@
 //  Copyright © 2018 Erik Maximilian Martens. All rights reserved.
 //
 
-import UIKit
+import UIKit.UINavigationItem
 
 extension UINavigationItem {
   

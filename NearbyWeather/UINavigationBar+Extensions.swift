@@ -1,12 +1,12 @@
 //
-//  UINavigationBarExtensions.swift
+//  UINavigationBar+Extensions.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 18.10.17.
 //  Copyright © 2017 Erik Maximilian Martens. All rights reserved.
 //
 
-import UIKit
+import UIKit.UINavigationController
 
 extension UINavigationBar {
   

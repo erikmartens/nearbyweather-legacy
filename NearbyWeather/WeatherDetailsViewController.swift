@@ -20,6 +20,10 @@ final class WeatherDetailsViewController: UIViewController {
     return viewController
   }
   
+  // MARK: - Routing
+  
+  weak var stepper: WeatherDetailStepper?
+  
   // MARK: - Properties
   
   /* Injected */

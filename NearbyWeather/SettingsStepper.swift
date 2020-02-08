@@ -19,4 +19,12 @@ extension SettingsStepper {
   func routeToApiKeyEdit() {
     super.emitStep(SettingsStep.apiKeyEdit, type: SettingsStep.self)
   }
+  
+  func routeToManageLocations() {
+    super.emitStep(SettingsStep.manageLocations, type: SettingsStep.self)
+  }
+  
+  func routeToAddLocation() {
+    super.emitStep(SettingsStep.addLocation, type: SettingsStep.self)
+  }
 }

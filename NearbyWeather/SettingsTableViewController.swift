@@ -60,18 +60,9 @@ final class SettingsTableViewController: UITableViewController {
       navigationController?.presentSafariViewController(for: Constants.Urls.kOpenWeatherMapInstructionsUrl)
     case 3:
       if indexPath.row == 0 {
-        guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else {
-          break
-        }
-        let destinationViewController = WeatherLocationManagementTableViewController(style: .grouped)
-        
-        navigationItem.removeTextFromBackBarButton()
-        navigationController?.pushViewController(destinationViewController, animated: true)
+        stepper?.routeToManageLocations()
       } else if indexPath.row == 1 {
-        let destinationViewController = WeatherLocationSelectionTableViewController(style: .grouped)
-        
-        navigationItem.removeTextFromBackBarButton()
-        navigationController?.pushViewController(destinationViewController, animated: true)
+        stepper?.routeToAddLocation()
       }
     case 4:
       if indexPath.row == 1 {

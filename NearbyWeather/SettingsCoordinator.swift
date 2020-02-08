@@ -12,6 +12,8 @@ enum SettingsStep: StepProtocol {
   case initial
   case about
   case apiKeyEdit
+  case manageLocations
+  case addLocation
   case none
 }
 
@@ -66,6 +68,10 @@ class SettingsCoordinator: Coordinator {
       summonAboutController(passNextChildCoordinatorTo: coordinatorReceiver)
     case .apiKeyEdit:
       summonApiKeyEditController(passNextChildCoordinatorTo: coordinatorReceiver)
+    case .manageLocations:
+      summonManageLocationsController(passNextChildCoordinatorTo: coordinatorReceiver)
+    case .addLocation:
+      summonAddLocationController(passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
     }
@@ -105,6 +111,29 @@ private extension SettingsCoordinator {
     
     let root = rootViewController as? UINavigationController
     root?.pushViewController(apiKeyEditController, animated: true)
+    
+    coordinatorReceiver(.none)
+  }
+  
+  func summonManageLocationsController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
+    guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else { return }
+    let locationManagementController = WeatherLocationManagementTableViewController(style: .grouped)
+    locationManagementController.navigationItem.title = R.string.localizable.manage_locations()
+    locationManagementController.stepper = stepper
+    
+    let root = rootViewController as? UINavigationController
+    root?.pushViewController(locationManagementController, animated: true)
+    
+    coordinatorReceiver(.none)
+  }
+  
+  func summonAddLocationController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
+    let addLocationController = WeatherLocationSelectionTableViewController(style: .grouped)
+    addLocationController.navigationItem.title = R.string.localizable.add_location()
+    addLocationController.stepper = stepper
+    
+    let root = rootViewController as? UINavigationController
+    root?.pushViewController(addLocationController, animated: true)
     
     coordinatorReceiver(.none)
   }

@@ -11,6 +11,10 @@ import PKHUD
 
 final class WeatherLocationSelectionTableViewController: UITableViewController {
   
+  // MARK: - Routing
+  
+  weak var stepper: SettingsStepper?
+  
   // MARK: - Properties
   
   private let searchController = UISearchController(searchResultsController: nil)
@@ -20,8 +24,6 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    navigationItem.title = R.string.localizable.add_location()
     
     tableView.delegate = self
     searchController.delegate = self

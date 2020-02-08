@@ -26,14 +26,26 @@ final class WelcomeCoordinator: Coordinator {
     return navigationController
   }()
   
+  override var initialStep: StepProtocol {
+    return WelcomeCoordinatorStep.initial
+  }
+  
+  override var associatedStepperIdentifier: String {
+    return WelcomeCoordinatorStep.identifier
+  }
+  
   // MARK: - Additional Properties
   
   weak var windowManager: WindowManager?
 
   // MARK: - Initialization
   
-  init(windowManager: WindowManager) {
-    super.init(rootViewController: Self.root, parentCoordinator: nil, type: WelcomeCoordinatorStep.self)
+  init(parentCoordinator: Coordinator?, windowManager: WindowManager) {
+    super.init(
+      rootViewController: Self.root,
+      parentCoordinator: parentCoordinator,
+      type: WelcomeCoordinatorStep.self
+    )
     self.windowManager = windowManager
   }
   

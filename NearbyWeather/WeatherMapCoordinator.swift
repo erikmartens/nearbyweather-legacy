@@ -1,20 +1,20 @@
 //
-//  WeatherListCoordinator.swift
+//  WeatherMapCoordinator.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 04.02.20.
+//  Created by Erik Maximilian Martens on 08.02.20.
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
 import UIKit
 
-enum WeatherListStep: StepProtocol {
+enum WeatherMapStep: StepProtocol {
   case initial
   case weatherDetails
   case none
 }
 
-class WeatherListCoordinator: Coordinator {
+class WeatherMapCoordinator: Coordinator {
   
   // MARK: - Required Properties
   
@@ -27,11 +27,11 @@ class WeatherListCoordinator: Coordinator {
   }()
   
   override var initialStep: StepProtocol {
-    return WeatherListStep.initial
+    return WeatherMapStep.initial
   }
   
   override var associatedStepperIdentifier: String {
-    return WeatherListStep.identifier
+    return WeatherMapStep.identifier
   }
   
   // MARK: - Initialization
@@ -40,39 +40,38 @@ class WeatherListCoordinator: Coordinator {
     super.init(
       rootViewController: Self.root,
       parentCoordinator: parentCoordinator,
-      type: WeatherListStep.self
+      type: WeatherMapStep.self
     )
   }
   
   // MARK: - Navigation
   
   @objc override func didReceiveStep(_ notification: Notification) {
-    super.didReceiveStep(notification, type: WeatherListStep.self)
+    super.didReceiveStep(notification, type: WeatherMapStep.self)
   }
   
   override func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void) {
-    guard let step = step as? WeatherListStep else { return }
+    guard let step = step as? WeatherMapStep else { return }
     switch step {
     case .initial:
-      summonWeatherListController(nextCoordinatorReceiver: receiver)
+      summonWeatherMapController(nextCoordinatorReceiver: receiver)
     case .weatherDetails:
-    break // TODO
+      break // TODO
     case .none:
       break
     }
   }
 }
 
-private extension WeatherListCoordinator {
+private extension WeatherMapCoordinator {
   
-  func summonWeatherListController(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
-    let weatherListViewController = R.storyboard.weatherList.weatherListViewController()!
-    weatherListViewController.title = R.string.localizable.tab_weatherList().uppercased()
+  func summonWeatherMapController(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
+    let mapViewController = R.storyboard.weatherMap.nearbyLocationsMapViewController()!
+    mapViewController.title = R.string.localizable.tab_weatherMap().uppercased()
     
-    weatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
-    weatherListViewController.tabBarItem.image = R.image.tabbar_list_ios11()
+    mapViewController.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
+    mapViewController.tabBarItem.image = R.image.tabbar_map_ios11()
     
-    (rootViewController as? UINavigationController)?.setViewControllers([weatherListViewController], animated: false)
+    (rootViewController as? UINavigationController)?.setViewControllers([mapViewController], animated: false)
   }
-  
 }

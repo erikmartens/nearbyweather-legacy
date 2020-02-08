@@ -80,6 +80,8 @@
 		F2DBEB1623EA1FD200CD513B /* WeatherListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1523EA1FD100CD513B /* WeatherListCoordinator.swift */; };
 		F2DBEB1923EB726E00CD513B /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1823EB726E00CD513B /* Stepper.swift */; };
 		F2DBEB1B23EEF92800CD513B /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1A23EEF92800CD513B /* Step.swift */; };
+		F2DBEB1D23EF042A00CD513B /* WeatherMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1C23EF042A00CD513B /* WeatherMapCoordinator.swift */; };
+		F2DBEB1F23EF071500CD513B /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1E23EF071500CD513B /* SettingsCoordinator.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -203,6 +205,8 @@
 		F2DBEB1523EA1FD100CD513B /* WeatherListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListCoordinator.swift; sourceTree = "<group>"; };
 		F2DBEB1823EB726E00CD513B /* Stepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
 		F2DBEB1A23EEF92800CD513B /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
+		F2DBEB1C23EF042A00CD513B /* WeatherMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapCoordinator.swift; sourceTree = "<group>"; };
+		F2DBEB1E23EF071500CD513B /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -436,6 +440,8 @@
 				F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */,
 				F2DBEB1523EA1FD100CD513B /* WeatherListCoordinator.swift */,
 				F2DBEB1323EA1F4C00CD513B /* WeatherDetailCoordinator.swift */,
+				F2DBEB1C23EF042A00CD513B /* WeatherMapCoordinator.swift */,
+				F2DBEB1E23EF071500CD513B /* SettingsCoordinator.swift */,
 			);
 			name = Routing;
 			sourceTree = "<group>";
@@ -921,6 +927,7 @@
 				F2DBEB1423EA1F4D00CD513B /* WeatherDetailCoordinator.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
 				F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */,
+				F2DBEB1F23EF071500CD513B /* SettingsCoordinator.swift in Sources */,
 				F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */,
 				F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */,
 				F204B7BD1DF35610000F4371 /* SettingsTableViewController.swift in Sources */,
@@ -933,6 +940,7 @@
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIViewExtensions.swift in Sources */,
 				F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */,
+				F2DBEB1D23EF042A00CD513B /* WeatherMapCoordinator.swift in Sources */,
 				F2DBEAF623E601F000CD513B /* MainCoordinator.swift in Sources */,
 				F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationControllerExtensions.swift in Sources */,

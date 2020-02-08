@@ -25,14 +25,26 @@ final class MainCoordinator: Coordinator {
     return tabbar
   }()
   
+  override var initialStep: StepProtocol {
+    return MainCoordinatorStep.initial
+  }
+  
+  override var associatedStepperIdentifier: String {
+    return MainCoordinatorStep.identifier
+  }
+  
   // MARK: - Additional Properties
   
   weak var windowManager: WindowManager?
   
   // MARK: - Initialization
   
-  init(windowManager: WindowManager) {
-    super.init(rootViewController: Self.root, parentCoordinator: nil, type: MainCoordinatorStep.self)
+  init(parentCoordinator: Coordinator?, windowManager: WindowManager) {
+    super.init(
+      rootViewController: Self.root,
+      parentCoordinator: parentCoordinator,
+      type: MainCoordinatorStep.self
+    )
     self.windowManager = windowManager
   }
   
@@ -60,32 +72,19 @@ private extension MainCoordinator {
   func summonMainTabbarController(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
     let root = rootViewController as? UITabBarController
     
-    /* Weather List Controller */
-    let weatherListViewController = R.storyboard.weatherList.weatherListViewController()!
-    let weatherListNavigationController = UINavigationController(rootViewController: weatherListViewController)
-    weatherListViewController.title = R.string.localizable.tab_weatherList().uppercased()
-    weatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
-    weatherListViewController.tabBarItem.image = R.image.tabbar_list_ios11()
-    
-    /* Map Controller */
-    let mapViewController = R.storyboard.weatherMap.nearbyLocationsMapViewController()!
-    let mapNavigationController = UINavigationController(rootViewController: mapViewController)
-    mapViewController.title = R.string.localizable.tab_weatherMap().uppercased()
-    mapViewController.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
-    mapViewController.tabBarItem.image = R.image.tabbar_map_ios11()
-    
-    /* Settings Controller */
-    let settingsViewController = SettingsTableViewController(style: .grouped)
-    let settingsNavigationController = UINavigationController(rootViewController: settingsViewController)
-    settingsViewController.title = R.string.localizable.tab_settings().uppercased()
-    settingsViewController.tabBarItem.selectedImage = R.image.tabbar_settings_ios11()
-    settingsViewController.tabBarItem.image = R.image.tabbar_settings_ios11()
-    
-    root?.viewControllers = [weatherListNavigationController, mapNavigationController, settingsNavigationController]
+    let weatherList = WeatherListCoordinator(parentCoordinator: self)
+    let weatherMap = WeatherMapCoordinator(parentCoordinator: self)
+    let settings = SettingsCoordinator(parentCoordinator: self)
+
+    root?.viewControllers = [weatherList.rootViewController, weatherMap.rootViewController, settings.rootViewController]
     
     let window = UIWindow(frame: UIScreen.main.bounds)
     window.rootViewController = root
     window.makeKeyAndVisible()
     windowManager?.window = window
+    
+    nextCoordinatorReceiver(
+      .multiple([weatherList, weatherMap, settings])
+    )
   }
 }

@@ -20,6 +20,8 @@ protocol CoordinatorProtocol {
   var parentCoordinator: Coordinator? { get }
   var childCoordinators: [Coordinator] { get }
   var rootViewController: UIViewController { get }
+  var initialStep: StepProtocol { get }
+  var associatedStepperIdentifier: String { get }
   func didReceiveStep(_ notification: Notification)
   func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void)
 }
@@ -31,6 +33,14 @@ class Coordinator: CoordinatorProtocol {
   let rootViewController: UIViewController
   weak var parentCoordinator: Coordinator?
   var childCoordinators: [Coordinator]
+  
+  var initialStep: StepProtocol {
+    return Step.none
+  }
+  
+  var associatedStepperIdentifier: String {
+    return Step.identifier
+  }
   
   // MARK: - Initialization
   
@@ -68,8 +78,10 @@ class Coordinator: CoordinatorProtocol {
         break
       case let .single(coordinator):
         self?.childCoordinators.append(coordinator)
+        self?.postInitialStep(for: coordinator)
       case let .multiple(coordinators):
         self?.childCoordinators.append(contentsOf: coordinators)
+        coordinators.forEach(postInitialStep)
       }
     }
   }
@@ -77,4 +89,17 @@ class Coordinator: CoordinatorProtocol {
   /// The next step is expected to pass the following coordinator after having completed the internal setup process
   /// if such a coordinator is required for subseqent coordination.
   func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void) {}
+}
+
+// MARK: - Private Helper Functions
+
+private extension Coordinator {
+  
+  func postInitialStep(for coordinator: Coordinator) {
+    NotificationCenter.default.post(
+      name: Notification.Name(rawValue: coordinator.associatedStepperIdentifier),
+      object: self,
+      userInfo: [Constants.Keys.AppCoordinator.kStep: coordinator.initialStep]
+    )
+  }
 }

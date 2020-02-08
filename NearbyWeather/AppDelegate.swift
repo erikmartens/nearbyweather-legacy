@@ -67,7 +67,7 @@ extension AppDelegate {
   }
   
   private func instantiateApplicationUserInterface() {
-    mainCoordinator = MainCoordinator(windowManager: self)
+    mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
     
     NotificationCenter.default.post(
       name: Notification.Name(rawValue: MainCoordinatorStep.identifier),
@@ -76,7 +76,7 @@ extension AppDelegate {
     )
     
     if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) == nil {
-      welcomeCoordinator = WelcomeCoordinator(windowManager: self)
+      welcomeCoordinator = WelcomeCoordinator(parentCoordinator: nil, windowManager: self)
       
       NotificationCenter.default.post(
         name: Notification.Name(rawValue: WelcomeCoordinatorStep.identifier),

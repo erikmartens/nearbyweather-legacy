@@ -15,11 +15,7 @@ enum MainCoordinatorStep: StepProtocol {
 
 final class MainCoordinator: Coordinator {
   
-  // MARK: - Common Properties
-  
-  override var rootViewController: UIViewController {
-    return root
-  }
+  // MARK: - Required Properties
   
   private lazy var root: UITabBarController = {
     let tabbar = UITabBarController()
@@ -29,7 +25,7 @@ final class MainCoordinator: Coordinator {
     return tabbar
   }()
   
-  // MARK: - Properties
+  // MARK: - Additional Properties
   
   weak var windowManager: WindowManager?
   
@@ -38,6 +34,8 @@ final class MainCoordinator: Coordinator {
   init(windowManager: WindowManager) {
     super.init(parentCoordinator: nil, type: MainCoordinatorStep.self)
     self.windowManager = windowManager
+    
+    super.setRoot(viewController: root)
   }
   
   // MARK: - Navigation

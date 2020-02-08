@@ -16,11 +16,7 @@ enum WelcomeCoordinatorStep: StepProtocol {
 
 final class WelcomeCoordinator: Coordinator {
   
-  // MARK: - Common Properties
-  
-  override var rootViewController: UIViewController {
-    return root
-  }
+  // MARK: - Required Properties
   
   private lazy var root: UINavigationController = {
     let navigationController = UINavigationController()
@@ -30,7 +26,7 @@ final class WelcomeCoordinator: Coordinator {
     return navigationController
   }()
   
-  // MARK: - Properties
+  // MARK: - Additional Properties
   
   weak var windowManager: WindowManager?
 
@@ -39,6 +35,8 @@ final class WelcomeCoordinator: Coordinator {
   init(windowManager: WindowManager) {
     super.init(parentCoordinator: nil, type: WelcomeCoordinatorStep.self)
     self.windowManager = windowManager
+    
+    super.setRoot(viewController: root)
   }
   
   // MARK: - Navigation

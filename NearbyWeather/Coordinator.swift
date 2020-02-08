@@ -31,8 +31,16 @@ class Coordinator: CoordinatorProtocol {
   weak var parentCoordinator: Coordinator?
   var childCoordinators: [Coordinator]
   
+  private var _root: UIViewController?
+  func setRoot(viewController: UIViewController) {
+    _root = viewController
+  }
+  
   var rootViewController: UIViewController {
-    return UINavigationController()
+    guard let root = _root else {
+      fatalError("root is not implemented")
+    }
+    return root
   }
   
   // MARK: - Initialization

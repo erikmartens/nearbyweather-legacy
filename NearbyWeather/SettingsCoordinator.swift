@@ -10,6 +10,7 @@ import UIKit
 
 enum SettingsStep: StepProtocol {
   case initial
+  case about
   case none
 }
 
@@ -33,6 +34,12 @@ class SettingsCoordinator: Coordinator {
     return SettingsStep.identifier
   }
   
+  // MARK: - Additional Properties
+  
+  private lazy var stepper: SettingsStepper = {
+    SettingsStepper(coordinator: self, type: SettingsStep.self)
+  }()
+  
   // MARK: - Initialization
   
   init(parentCoordinator: Coordinator?) {
@@ -54,6 +61,8 @@ class SettingsCoordinator: Coordinator {
     switch step {
     case .initial:
       summonSettingsController(passNextChildCoordinatorTo: coordinatorReceiver)
+    case .about:
+      summonAboutController(passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
     }
@@ -65,11 +74,23 @@ private extension SettingsCoordinator {
   func summonSettingsController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     let settingsViewController = SettingsTableViewController(style: .grouped)
     settingsViewController.title = R.string.localizable.tab_settings()
+    settingsViewController.stepper = stepper
     
     settingsViewController.tabBarItem.selectedImage = R.image.tabbar_settings_ios11()
     settingsViewController.tabBarItem.image = R.image.tabbar_settings_ios11()
 
     (rootViewController as? UINavigationController)?.setViewControllers([settingsViewController], animated: false)
+    
+    coordinatorReceiver(.none)
+  }
+  
+  func summonAboutController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
+    let aboutController = R.storyboard.aboutApp.infoTableViewController()!
+    aboutController.navigationItem.title = R.string.localizable.about()
+    aboutController.stepper = stepper
+    
+    let root = rootViewController as? UINavigationController
+    root?.pushViewController(aboutController, animated: true)
     
     coordinatorReceiver(.none)
   }

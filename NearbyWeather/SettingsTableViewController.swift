@@ -10,6 +10,10 @@ import UIKit
 
 final class SettingsTableViewController: UITableViewController {
   
+  // MARK: - Routing
+  
+  weak var stepper: SettingsStepper?
+  
   // MARK: - ViewController LifeCycle
   
   override func viewDidLoad() {
@@ -42,9 +46,7 @@ final class SettingsTableViewController: UITableViewController {
     
     switch indexPath.section {
     case 0:
-      let destinationViewController = R.storyboard.aboutApp.infoTableViewController()!
-      navigationItem.removeTextFromBackBarButton()
-      navigationController?.pushViewController(destinationViewController, animated: true)
+      stepper?.routeToAboutApp()
     case 1:
       break
     case 2:

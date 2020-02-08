@@ -85,6 +85,7 @@
 		F2DBEB2123EF108D00CD513B /* WeatherListStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2023EF108D00CD513B /* WeatherListStepper.swift */; };
 		F2DBEB2323EF2EE300CD513B /* WeatherDetailStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2223EF2EE300CD513B /* WeatherDetailStepper.swift */; };
 		F2DBEB2523EF31D700CD513B /* WeatherMapStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2423EF31D700CD513B /* WeatherMapStepper.swift */; };
+		F2DBEB2723EF35A700CD513B /* SettingsStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2623EF35A700CD513B /* SettingsStepper.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -213,6 +214,7 @@
 		F2DBEB2023EF108D00CD513B /* WeatherListStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListStepper.swift; sourceTree = "<group>"; };
 		F2DBEB2223EF2EE300CD513B /* WeatherDetailStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailStepper.swift; sourceTree = "<group>"; };
 		F2DBEB2423EF31D700CD513B /* WeatherMapStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapStepper.swift; sourceTree = "<group>"; };
+		F2DBEB2623EF35A700CD513B /* SettingsStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStepper.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -449,8 +451,9 @@
 				F2DBEB1323EA1F4C00CD513B /* WeatherDetailCoordinator.swift */,
 				F2DBEB2223EF2EE300CD513B /* WeatherDetailStepper.swift */,
 				F2DBEB1C23EF042A00CD513B /* WeatherMapCoordinator.swift */,
-				F2DBEB1E23EF071500CD513B /* SettingsCoordinator.swift */,
 				F2DBEB2423EF31D700CD513B /* WeatherMapStepper.swift */,
+				F2DBEB1E23EF071500CD513B /* SettingsCoordinator.swift */,
+				F2DBEB2623EF35A700CD513B /* SettingsStepper.swift */,
 			);
 			name = Routing;
 			sourceTree = "<group>";
@@ -947,6 +950,7 @@
 				F28CA5392016A1BA00209397 /* WeatherMapViewController.swift in Sources */,
 				F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */,
 				F28CE9681F9A9893008319C4 /* WeatherListViewController.swift in Sources */,
+				F2DBEB2723EF35A700CD513B /* SettingsStepper.swift in Sources */,
 				F2F7BA1D23E373DD00B4D2EB /* Constants+Labels.swift in Sources */,
 				F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */,
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,

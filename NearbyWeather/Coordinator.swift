@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Coordinator.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 01.02.20.
@@ -7,20 +7,6 @@
 //
 
 import UIKit
-
-// MARK: - Step
-
-protocol StepProtocol {
-  static var identifier: String { get }
-}
-
-enum Step: StepProtocol {
-  static var identifier: String {
-    return "Step"
-  }
-  
-  case none
-}
 
 // MARK: - Coordinator
 

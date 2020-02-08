@@ -8,11 +8,7 @@
 
 import UIKit
 
-enum WelcomeCoordinatorStep: StepProtocol {
-  static var identifier: String {
-    return "WelcomeCoordinatorStep"
-  }
-  
+enum WelcomeCoordinatorStep: StepProtocol {  
   case initial
   case dismiss
   case none

@@ -9,10 +9,6 @@
 import UIKit
 
 enum MainCoordinatorStep: StepProtocol {
-  static var identifier: String {
-    "MainCoordinatorStep"
-  }
-  
   case initial
   case none
 }

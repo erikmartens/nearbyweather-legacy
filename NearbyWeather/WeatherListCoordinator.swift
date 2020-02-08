@@ -8,10 +8,11 @@
 
 import Foundation
 
-//enum WeatherListStep: StepProtocol {
-//
-//}
-//
-//class WeatherListCoordinator: Coordinator {
-//
-//}
+enum WeatherListStep: StepProtocol {  
+  case initial
+  case none
+}
+
+class WeatherListCoordinator: Coordinator {
+
+}

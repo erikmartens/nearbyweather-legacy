@@ -50,11 +50,11 @@ class WeatherMapCoordinator: Coordinator {
     super.didReceiveStep(notification, type: WeatherMapStep.self)
   }
   
-  override func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void) {
+  override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
     guard let step = step as? WeatherMapStep else { return }
     switch step {
     case .initial:
-      summonWeatherMapController(nextCoordinatorReceiver: receiver)
+      summonWeatherMapController(passNextChildCoordinatorTo: coordinatorReceiver)
     case .weatherDetails:
       break // TODO
     case .none:
@@ -65,13 +65,15 @@ class WeatherMapCoordinator: Coordinator {
 
 private extension WeatherMapCoordinator {
   
-  func summonWeatherMapController(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
+  func summonWeatherMapController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     let mapViewController = R.storyboard.weatherMap.nearbyLocationsMapViewController()!
-    mapViewController.title = R.string.localizable.tab_weatherMap().uppercased()
+    mapViewController.title = R.string.localizable.tab_weatherMap()
     
     mapViewController.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
     mapViewController.tabBarItem.image = R.image.tabbar_map_ios11()
     
     (rootViewController as? UINavigationController)?.setViewControllers([mapViewController], animated: false)
+    
+    coordinatorReceiver(.none)
   }
 }

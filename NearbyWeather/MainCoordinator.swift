@@ -40,12 +40,13 @@ final class MainCoordinator: Coordinator {
   // MARK: - Initialization
   
   init(parentCoordinator: Coordinator?, windowManager: WindowManager) {
+    self.windowManager = windowManager
+    
     super.init(
       rootViewController: Self.root,
       parentCoordinator: parentCoordinator,
       type: MainCoordinatorStep.self
     )
-    self.windowManager = windowManager
   }
   
   // MARK: - Navigation
@@ -54,11 +55,11 @@ final class MainCoordinator: Coordinator {
     super.didReceiveStep(notification, type: MainCoordinatorStep.self)
   }
   
-  override func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void) {
+  override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
     guard let step = step as? MainCoordinatorStep else { return }
     switch step {
     case .initial:
-      summonMainTabbarController(nextCoordinatorReceiver: receiver)
+      summonMainTabbarController(passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
     }
@@ -69,7 +70,7 @@ final class MainCoordinator: Coordinator {
 
 private extension MainCoordinator {
   
-  func summonMainTabbarController(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
+  func summonMainTabbarController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     let root = rootViewController as? UITabBarController
     
     let weatherList = WeatherListCoordinator(parentCoordinator: self)
@@ -83,7 +84,7 @@ private extension MainCoordinator {
     window.makeKeyAndVisible()
     windowManager?.window = window
     
-    nextCoordinatorReceiver(
+    coordinatorReceiver(
       .multiple([weatherList, weatherMap, settings])
     )
   }

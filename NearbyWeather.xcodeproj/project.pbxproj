@@ -82,6 +82,7 @@
 		F2DBEB1B23EEF92800CD513B /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1A23EEF92800CD513B /* Step.swift */; };
 		F2DBEB1D23EF042A00CD513B /* WeatherMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1C23EF042A00CD513B /* WeatherMapCoordinator.swift */; };
 		F2DBEB1F23EF071500CD513B /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB1E23EF071500CD513B /* SettingsCoordinator.swift */; };
+		F2DBEB2123EF108D00CD513B /* WeatherListStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2023EF108D00CD513B /* WeatherListStepper.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -207,6 +208,7 @@
 		F2DBEB1A23EEF92800CD513B /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
 		F2DBEB1C23EF042A00CD513B /* WeatherMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapCoordinator.swift; sourceTree = "<group>"; };
 		F2DBEB1E23EF071500CD513B /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		F2DBEB2023EF108D00CD513B /* WeatherListStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListStepper.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				F2DBEAF523E601F000CD513B /* MainCoordinator.swift */,
 				F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */,
 				F2DBEB1523EA1FD100CD513B /* WeatherListCoordinator.swift */,
+				F2DBEB2023EF108D00CD513B /* WeatherListStepper.swift */,
 				F2DBEB1323EA1F4C00CD513B /* WeatherDetailCoordinator.swift */,
 				F2DBEB1C23EF042A00CD513B /* WeatherMapCoordinator.swift */,
 				F2DBEB1E23EF071500CD513B /* SettingsCoordinator.swift */,
@@ -930,6 +933,7 @@
 				F2DBEB1F23EF071500CD513B /* SettingsCoordinator.swift in Sources */,
 				F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */,
 				F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */,
+				F2DBEB2123EF108D00CD513B /* WeatherListStepper.swift in Sources */,
 				F204B7BD1DF35610000F4371 /* SettingsTableViewController.swift in Sources */,
 				F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */,
 				F28CA5392016A1BA00209397 /* WeatherMapViewController.swift in Sources */,

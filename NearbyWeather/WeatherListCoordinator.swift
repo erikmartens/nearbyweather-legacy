@@ -10,7 +10,7 @@ import UIKit
 
 enum WeatherListStep: StepProtocol {
   case initial
-  case weatherDetails
+  case weatherDetails(identifier: Int?)
   case none
 }
 
@@ -50,13 +50,14 @@ class WeatherListCoordinator: Coordinator {
     super.didReceiveStep(notification, type: WeatherListStep.self)
   }
   
-  override func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void) {
+  override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
     guard let step = step as? WeatherListStep else { return }
     switch step {
     case .initial:
-      summonWeatherListController(nextCoordinatorReceiver: receiver)
-    case .weatherDetails:
-    break // TODO
+      summonWeatherListController(passNextChildCoordinatorTo: coordinatorReceiver)
+    case let .weatherDetails(identifier):
+      summonWeatherDetailsController(weatherDetailIdentifier: identifier,
+                                     passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
     }
@@ -65,14 +66,40 @@ class WeatherListCoordinator: Coordinator {
 
 private extension WeatherListCoordinator {
   
-  func summonWeatherListController(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
+  func summonWeatherListController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     let weatherListViewController = R.storyboard.weatherList.weatherListViewController()!
-    weatherListViewController.title = R.string.localizable.tab_weatherList().uppercased()
+    weatherListViewController.stepper = WeatherListStepper(coordinator: self, type: WeatherListStep.self)
     
+    weatherListViewController.title = R.string.localizable.tab_weatherList()
     weatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
     weatherListViewController.tabBarItem.image = R.image.tabbar_list_ios11()
     
-    (rootViewController as? UINavigationController)?.setViewControllers([weatherListViewController], animated: false)
+    let root = rootViewController as? UINavigationController
+    root?.setViewControllers([weatherListViewController], animated: false)
+    
+    coordinatorReceiver(.none)
   }
   
+  func summonWeatherDetailsController(weatherDetailIdentifier: Int?, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
+    let weatherDetailCoordinator = WeatherDetailCoordinator(parentCoordinator: self, weatherDetailIdentifier: weatherDetailIdentifier)
+    
+//    let closeButton = UIBarButtonItem(
+//      image: R.image.verticalCloseButton(),
+//      style: .plain,
+//      target: self,
+//      action: #selector(dismissWeatherDetailFlow)
+//    )
+
+    guard let nextRoot = weatherDetailCoordinator.rootViewController as? UINavigationController else {
+      return
+    }
+//    nextRoot.navigationItem.leftBarButtonItem = closeButton
+    rootViewController.present(nextRoot, animated: true)
+    coordinatorReceiver(.single(weatherDetailCoordinator))
+    
+  }
+  
+//  @objc private func dismissWeatherDetailFlow() {
+//
+//  }
 }

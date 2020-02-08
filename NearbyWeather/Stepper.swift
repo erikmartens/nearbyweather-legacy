@@ -9,14 +9,18 @@
 import Foundation
 
 protocol StepperProtocol {
-
+  var coordinator: Coordinator? { get }
 }
 
 class Stepper {
+  
+  weak var coordinator: Coordinator?
 
   // MARK: - Initialization
   
-  init<T: StepProtocol>(type: T.Type) {}
+  init<T: StepProtocol>(coordinator: Coordinator?, type: T.Type) {
+    self.coordinator = coordinator
+  }
   
   // MARK: - Functions
   

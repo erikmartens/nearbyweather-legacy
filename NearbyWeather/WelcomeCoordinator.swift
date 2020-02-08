@@ -41,12 +41,13 @@ final class WelcomeCoordinator: Coordinator {
   // MARK: - Initialization
   
   init(parentCoordinator: Coordinator?, windowManager: WindowManager) {
+    self.windowManager = windowManager
+    
     super.init(
       rootViewController: Self.root,
       parentCoordinator: parentCoordinator,
       type: WelcomeCoordinatorStep.self
     )
-    self.windowManager = windowManager
   }
   
   // MARK: - Navigation
@@ -55,13 +56,13 @@ final class WelcomeCoordinator: Coordinator {
     super.didReceiveStep(notification, type: WelcomeCoordinatorStep.self)
   }
   
-  override func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void) {
+  override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
     guard let step = step as? WelcomeCoordinatorStep else { return }
     switch step {
     case .initial:
-      summonWelcomeWindow(nextCoordinatorReceiver: receiver)
+      summonWelcomeWindow(passNextChildCoordinatorTo: coordinatorReceiver)
     case .dismiss:
-      dismissWelcomeWindow(nextCoordinatorReceiver: receiver)
+      dismissWelcomeWindow(passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
     }
@@ -72,7 +73,7 @@ final class WelcomeCoordinator: Coordinator {
 
 private extension WelcomeCoordinator {
   
-  private func summonWelcomeWindow(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
+  private func summonWelcomeWindow(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
    
     let welcomeViewController = R.storyboard.welcome.welcomeScreenViewController()!
     let root = rootViewController as? UINavigationController
@@ -84,9 +85,11 @@ private extension WelcomeCoordinator {
     splashScreenWindow.makeKeyAndVisible()
     
     windowManager?.splashScreenWindow = splashScreenWindow
+    
+    coordinatorReceiver(.none)
   }
   
-  private func dismissWelcomeWindow(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
+  private func dismissWelcomeWindow(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     UIView.animate(withDuration: 0.2,
                    animations: { [weak self] in
                     self?.windowManager?.splashScreenWindow?.alpha = 0
@@ -97,5 +100,7 @@ private extension WelcomeCoordinator {
                     self?.windowManager?.splashScreenWindow = nil
                     self?.windowManager?.window?.makeKeyAndVisible()
     })
+    
+    coordinatorReceiver(.destroy(self))
   }
 }

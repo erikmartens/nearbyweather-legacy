@@ -13,7 +13,6 @@ enum SettingsStep: StepProtocol {
   case none
 }
 
-
 class SettingsCoordinator: Coordinator {
   
   // MARK: - Required Properties
@@ -50,11 +49,11 @@ class SettingsCoordinator: Coordinator {
     super.didReceiveStep(notification, type: SettingsStep.self)
   }
   
-  override func executeRoutingStep(_ step: StepProtocol, nextCoordinatorReceiver receiver: (NextCoordinator) -> Void) {
+  override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
     guard let step = step as? SettingsStep else { return }
     switch step {
     case .initial:
-      summonSettingsController(nextCoordinatorReceiver: receiver)
+      summonSettingsController(passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
     }
@@ -63,13 +62,15 @@ class SettingsCoordinator: Coordinator {
 
 private extension SettingsCoordinator {
   
-  func summonSettingsController(nextCoordinatorReceiver: (NextCoordinator) -> Void) {
+  func summonSettingsController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     let settingsViewController = SettingsTableViewController(style: .grouped)
-    settingsViewController.title = R.string.localizable.tab_settings().uppercased()
+    settingsViewController.title = R.string.localizable.tab_settings()
     
     settingsViewController.tabBarItem.selectedImage = R.image.tabbar_settings_ios11()
     settingsViewController.tabBarItem.image = R.image.tabbar_settings_ios11()
 
     (rootViewController as? UINavigationController)?.setViewControllers([settingsViewController], animated: false)
+    
+    coordinatorReceiver(.none)
   }
 }

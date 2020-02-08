@@ -11,9 +11,9 @@ import MapKit
 import SafariServices
 import APTimeZones
 
-final class WeatherDetailsViewController: UIViewController {
+final class WeatherDetailViewController: UIViewController {
   
-  static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailsViewController {
+  static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailViewController {
     let viewController = R.storyboard.weatherDetails.weatherDetailViewController()!
     viewController.titleString = title
     viewController.weatherDTO = weatherDTO
@@ -97,7 +97,7 @@ final class WeatherDetailsViewController: UIViewController {
   
   private func configure() {
     navigationController?.navigationBar.style(withBarTintColor:
-      ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true ? .nearbyWeatherStandard : .nearbyWeatherNight
+      (ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight
     )
     
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }
@@ -201,7 +201,7 @@ final class WeatherDetailsViewController: UIViewController {
   }
 }
 
-extension WeatherDetailsViewController: MKMapViewDelegate {
+extension WeatherDetailViewController: MKMapViewDelegate {
   
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     guard let annotation = annotation as? WeatherLocationMapAnnotation else {

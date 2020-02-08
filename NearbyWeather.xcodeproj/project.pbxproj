@@ -40,7 +40,7 @@
 		F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F283D2751DF393B2001B879D /* InfoPlist.strings */; };
 		F28CA5392016A1BA00209397 /* WeatherMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA5382016A1BA00209397 /* WeatherMapViewController.swift */; };
 		F28CA53D202622C200209397 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA53C202622C200209397 /* ToggleCell.swift */; };
-		F28CA54120279EE300209397 /* WeatherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA54020279EE300209397 /* WeatherDetailsViewController.swift */; };
+		F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA54020279EE300209397 /* WeatherDetailViewController.swift */; };
 		F28CA5442027AEB500209397 /* WeatherLocationMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA5432027AEB500209397 /* WeatherLocationMapAnnotation.swift */; };
 		F28CE9641F96B290008319C4 /* UIColor+BrandColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9631F96B290008319C4 /* UIColor+BrandColors.swift */; };
 		F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */; };
@@ -171,7 +171,7 @@
 		F283D2761DF393B3001B879D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F28CA5382016A1BA00209397 /* WeatherMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapViewController.swift; sourceTree = "<group>"; };
 		F28CA53C202622C200209397 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
-		F28CA54020279EE300209397 /* WeatherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsViewController.swift; sourceTree = "<group>"; };
+		F28CA54020279EE300209397 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
 		F28CA5432027AEB500209397 /* WeatherLocationMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationMapAnnotation.swift; sourceTree = "<group>"; };
 		F28CE9631F96B290008319C4 /* UIColor+BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+BrandColors.swift"; sourceTree = "<group>"; };
 		F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extensions.swift"; sourceTree = "<group>"; };
@@ -531,7 +531,7 @@
 			isa = PBXGroup;
 			children = (
 				F26A6D5F20FB70DD0033BC49 /* WeatherDetails.storyboard */,
-				F28CA54020279EE300209397 /* WeatherDetailsViewController.swift */,
+				F28CA54020279EE300209397 /* WeatherDetailViewController.swift */,
 			);
 			name = WeatherDetailScene;
 			sourceTree = "<group>";
@@ -978,7 +978,7 @@
 				F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */,
 				F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */,
 				F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */,
-				F28CA54120279EE300209397 /* WeatherDetailsViewController.swift in Sources */,
+				F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */,
 				F274FC39202F9A9300049144 /* NetworkingService.swift in Sources */,
 				F28CE9641F96B290008319C4 /* UIColor+BrandColors.swift in Sources */,
 				F2DBEAF823E6054900CD513B /* Coordinator.swift in Sources */,

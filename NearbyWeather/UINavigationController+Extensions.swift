@@ -11,7 +11,6 @@ import UIKit
 extension UIViewController {
   
   func addBarButton(atPosition position: UIBarButtonItem.Position, touchupInsideHandler handler: @escaping (() -> Void)) {
-    
     let closeButton = UIBarButtonItem(image: R.image.verticalCloseButton(), style: .plain) { [unowned self] _ in
       self.view.endEditing(true)
       handler()

@@ -70,7 +70,7 @@ private extension WeatherDetailCoordinator {
         return
     }
     
-    let destinationViewController = WeatherDetailsViewController.instantiateFromStoryBoard(
+    let destinationViewController = WeatherDetailViewController.instantiateFromStoryBoard(
       withTitle: weatherDTO.cityName,
       weatherDTO: weatherDTO
     )

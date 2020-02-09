@@ -33,8 +33,8 @@ final class WeatherMapViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationController?.navigationBar.styleStandard()
     
-    navigationItem.title = navigationItem.title?.capitalized
     mapView.delegate = self
   }
   
@@ -43,7 +43,6 @@ final class WeatherMapViewController: UIViewController {
     
     selectedBookmarkedLocation = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first?.weatherInformationDTO
     
-    configure()
     prepareMapAnnotations()
     focusOnAvailableLocation()
   }
@@ -65,10 +64,6 @@ final class WeatherMapViewController: UIViewController {
     weatherLocationMapAnnotations.append(contentsOf: nearbyocationAnnotations ?? [WeatherLocationMapAnnotation]())
     
     mapView.addAnnotations(weatherLocationMapAnnotations)
-  }
-  
-  private func configure() {
-    navigationController?.navigationBar.styleStandard()
   }
   
   private func triggerMapTypeAlert() {

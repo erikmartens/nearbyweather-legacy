@@ -157,11 +157,11 @@ class DistanceSpeedUnit: Codable, PreferencesOption {
 }
 
 enum AmountOfResultsWrappedEnum: Int, CaseIterable, Codable {
-  case ten
-  case twenty
-  case thirty
-  case forty
-  case fifty
+  case ten = 10
+  case twenty = 20
+  case thirty = 30
+  case forty = 40
+  case fifty = 50
 }
 
 class AmountOfResults: Codable, PreferencesOption {
@@ -192,23 +192,11 @@ class AmountOfResults: Codable, PreferencesOption {
   }
   
   var stringValue: String {
-    switch value {
-    case .ten: return "\(10) \(R.string.localizable.results())"
-    case .twenty: return "\(20) \(R.string.localizable.results())"
-    case .thirty: return "\(30) \(R.string.localizable.results())"
-    case .forty: return "\(40) \(R.string.localizable.results())"
-    case .fifty: return "\(50) \(R.string.localizable.results())"
-    }
+    return "\(value.rawValue) \(R.string.localizable.results())"
   }
   
   var integerValue: Int {
-    switch value {
-    case .ten: return 10
-    case .twenty: return 20
-    case .thirty: return 30
-    case .forty: return 40
-    case .fifty: return 50
-    }
+    return value.rawValue
   }
 }
 

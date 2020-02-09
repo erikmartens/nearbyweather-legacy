@@ -44,6 +44,7 @@ extension Constants.Keys {
   
   enum KeyValueBindings {
     static let kImage = "image"
+    static let kChecked = "checked"
   }
 }
 
@@ -66,12 +67,5 @@ extension Constants.Keys {
   
   enum AppCoordinator {
     static let kStep = "de.erikmaximilianmartens.nearbyWeather.step"
-  }
-}
-
-extension Constants.Keys {
-  
-  enum KVOKeys {
-    static let kChecked = "checked"
   }
 }

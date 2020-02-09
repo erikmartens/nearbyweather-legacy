@@ -16,8 +16,9 @@ extension Factory {
     enum AlertControllerType {
       case weatherListType(currentListType: ListType, completionHandler: ((ListType) -> Void))
       case weatherMapType(currentMapType: MKMapType, completionHandler: ((MKMapType) -> Void))
+      case focusMapOnLocation(bookmarks: [WeatherInformationDTO], completionHandler: ((WeatherInformationDTO?) -> Void))
       case pushNotificationsDisabled
-      case dimissableNotice(title: String, message: String)
+      case dimissableNotice(title: String?, message: String?)
     }
     
     typealias InputType = AlertControllerType
@@ -30,7 +31,7 @@ extension Factory {
           let action = UIAlertAction(title: listType.title, style: .default, handler: { _ in
             completionHandler(listType)
           })
-          if listType == currentListType { action.setValue(true, forKey: Constants.Keys.KVOKeys.kChecked) }
+          if listType == currentListType { action.setValue(true, forKey: Constants.Keys.KeyValueBindings.kChecked) }
           return action
         }
         
@@ -44,12 +45,34 @@ extension Factory {
           let action = UIAlertAction(title: mapType.title, style: .default, handler: { _ in
             completionHandler(mapType)
           })
-          if mapType == currentMapType { action.setValue(true, forKey: Constants.Keys.KVOKeys.kChecked) }
+          if mapType == currentMapType { action.setValue(true, forKey: Constants.Keys.KeyValueBindings.kChecked) }
           return action
         }
         
         return UIAlertController(
           title: R.string.localizable.select_map_type().capitalized,
+          actions: actions,
+          canceable: true
+        )
+      case let .focusMapOnLocation(bookmarks, completionHandler):
+        var actions = bookmarks.map { bookmark -> UIAlertAction in
+          let action = UIAlertAction(title: bookmark.cityName, style: .default, handler: { _ in
+            completionHandler(bookmark)
+          })
+          action.setValue(R.image.locateFavoriteActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
+          return action
+        }
+        
+        let currentLocationAction = UIAlertAction(
+          title: R.string.localizable.current_location(),
+          style: .default,
+          handler: { _ in completionHandler(nil) }
+        )
+        actions.append(currentLocationAction)
+        currentLocationAction.setValue(R.image.locateUserActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
+        
+        return UIAlertController(
+          title: R.string.localizable.focus_on_location(),
           actions: actions,
           canceable: true
         )
@@ -73,7 +96,7 @@ extension Factory {
         return UIAlertController(
           title: title,
           message: message,
-          actions: [action],
+          actions: [action]
         )
       }
     }

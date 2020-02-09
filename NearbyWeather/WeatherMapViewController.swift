@@ -78,37 +78,26 @@ final class WeatherMapViewController: UIViewController {
   }
   
   private func triggerFocusOnLocationAlert() {
-    let optionsAlert: UIAlertController = UIAlertController(title: R.string.localizable.focus_on_location(), message: nil, preferredStyle: .alert)
-    
     guard let bookmarkedWeatherDataObjects = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.compactMap({
       return $0.weatherInformationDTO
     }) else {
       return
     }
     
-    bookmarkedWeatherDataObjects.forEach { weatherInformationDTO in
-      let action = UIAlertAction(title: weatherInformationDTO.cityName, style: .default, handler: { _ in
-        self.selectedBookmarkedLocation = weatherInformationDTO
-        DispatchQueue.main.async {
-          self.focusMapOnSelectedBookmarkedLocation()
-        }
+    let alert = Factory.AlertController.make(fromType:
+      .focusMapOnLocation(bookmarks: bookmarkedWeatherDataObjects,
+                          completionHandler: { [weak self] weatherInformationDTO in
+                            guard let weatherInformationDTO = weatherInformationDTO else {
+                              self?.focusMapOnUserLocation()
+                              return
+                            }
+                            self?.selectedBookmarkedLocation = weatherInformationDTO
+                            DispatchQueue.main.async {
+                              self?.focusMapOnSelectedBookmarkedLocation()
+                            }
       })
-      action.setValue(R.image.locateFavoriteActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
-      optionsAlert.addAction(action)
-    }
-    
-    let currentLocationAction = UIAlertAction(title: R.string.localizable.current_location(), style: .default, handler: { _ in
-      DispatchQueue.main.async {
-        self.focusMapOnUserLocation()
-      }
-    })
-    currentLocationAction.setValue(R.image.locateUserActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
-    optionsAlert.addAction(currentLocationAction)
-    
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
-    optionsAlert.addAction(cancelAction)
-    
-    present(optionsAlert, animated: true, completion: nil)
+    )
+    present(alert, animated: true, completion: nil)
   }
   
   private func focusMapOnUserLocation() {

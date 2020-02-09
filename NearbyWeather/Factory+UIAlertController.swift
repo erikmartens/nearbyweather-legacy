@@ -21,6 +21,7 @@ extension Factory {
       case preferredAmountOfResultsOptions(options: [AmountOfResults], completionHandler: ((Bool) -> Void))
       case preferredSortingOrientationOptions(options: [SortingOrientation], completionHandler: ((Bool) -> Void))
       case preferredTemperatureUnitOptions(options: [TemperatureUnit], completionHandler: ((Bool) -> Void))
+      case preferredSpeedUnitOptions(options: [DistanceSpeedUnit], completionHandler: ((Bool) -> Void))
       case pushNotificationsDisabled
       case dimissableNotice(title: String?, message: String?)
     }
@@ -62,6 +63,11 @@ extension Factory {
         )
       case let .preferredTemperatureUnitOptions(options, completionHandler):
         return preferredTemperatureUnitOptionsAlert(
+          options: options,
+          completionHandler: completionHandler
+        )
+      case let .preferredSpeedUnitOptions(options, completionHandler):
+        return preferredSpeedUnitOptionsAlert(
           options: options,
           completionHandler: completionHandler
         )
@@ -211,6 +217,26 @@ private extension Factory.AlertController {
     
     return UIAlertController(
       title: R.string.localizable.temperature_unit(),
+      actions: actions,
+      canceable: true
+    )
+  }
+  
+  static func preferredSpeedUnitOptionsAlert(options: [DistanceSpeedUnit], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+    let actions = options.map { option -> UIAlertAction in
+      let actionIsSelected = PreferencesManager.shared.distanceSpeedUnit.value == option.value
+      
+      let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
+        let previousOption = PreferencesManager.shared.distanceSpeedUnit
+        PreferencesManager.shared.distanceSpeedUnit = option
+        completionHandler(previousOption.value != option.value)
+      })
+      action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)
+      return action
+    }
+    
+    return UIAlertController(
+      title: R.string.localizable.distanceSpeed_unit(),
       actions: actions,
       canceable: true
     )

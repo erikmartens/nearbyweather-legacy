@@ -44,8 +44,6 @@ final class SettingsTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    var alert: UIAlertController?
-    
     switch indexPath.section {
     case 0:
       stepper?.requestRouting(toStep: .about)
@@ -65,61 +63,22 @@ final class SettingsTableViewController: UITableViewController {
       }
     case 4:
       if indexPath.row == 1 {
-        var options = [PreferredBookmark(value: .none)]
-        options.append(contentsOf:
-          WeatherDataManager.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmark.init)
-        )
-        alert = Factory.AlertController.make(fromType:
-          .preferredBookmarkOptions(options: options, completionHandler: { [weak self] optionChanged in
-            guard optionChanged else { return }
-            DispatchQueue.main.async {
-              self?.tableView.reloadData()
-            }
-          })
-        )
+        showOptionsAlert(withType: .preferredBookmark)
       }
     case 5:
       if indexPath.row == 0 {
-        alert = Factory.AlertController.make(fromType:
-          .preferredAmountOfResultsOptions(options: amountOfResultsOptions,
-                                           completionHandler: { [weak self] optionChanged in
-                                            guard optionChanged else { return }
-                                            DispatchQueue.main.async {
-                                              self?.tableView.reloadData()
-                                            }
-          })
-        )
+        showOptionsAlert(withType: .preferredAmountOfResults)
       }
       if indexPath.row == 1 {
-        alert = Factory.AlertController.make(fromType:
-          .preferredSortingOrientationOptions(options: sortResultsOptions,
-                                           completionHandler: { [weak self] optionChanged in
-                                            guard optionChanged else { return }
-                                            DispatchQueue.main.async {
-                                              self?.tableView.reloadData()
-                                            }
-          })
-        )
+        showOptionsAlert(withType: .preferredSortingOrientation)
       }
       if indexPath.row == 2 {
-        alert = Factory.AlertController.make(fromType:
-          .preferredTemperatureUnitOptions(options: temperatureUnitOptions,
-                                           completionHandler: { [weak self] optionChanged in
-                                            guard optionChanged else { return }
-                                            DispatchQueue.main.async {
-                                              self?.tableView.reloadData()
-                                            }
-          })
-        )
+        showOptionsAlert(withType: .preferredTemperatureUnit)
       } else {
-        triggerOptionsAlert(forOptions: distanceSpeedUnitOptions, title: R.string.localizable.distanceSpeed_unit())
+        showOptionsAlert(withType: .preferredDistanceSpeedUnit)
       }
     default:
       break
-    }
-    
-    if let alertController = alert {
-      present(alertController, animated: true, completion: nil)
     }
   }
   
@@ -300,7 +259,7 @@ final class SettingsTableViewController: UITableViewController {
                                         AmountOfResults(value: .forty),
                                         AmountOfResults(value: .fifty)]
   
-  private let sortResultsOptions = [SortingOrientation(value: .name),
+  private let sortingOrientationOptions = [SortingOrientation(value: .name),
                                     SortingOrientation(value: .temperature),
                                     SortingOrientation(value: .distance)]
   
@@ -311,69 +270,57 @@ final class SettingsTableViewController: UITableViewController {
   private let distanceSpeedUnitOptions = [DistanceSpeedUnit(value: .kilometres),
                                           DistanceSpeedUnit(value: .miles)]
   
-  private func triggerOptionsAlert<T: PreferencesOption>(forOptions options: [T], title: String) {
-    let optionsAlert: UIAlertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-    
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
-    
-    // force unwrap options below -> this should never fail, if it does the app should crash so we know
-    options.forEach { option in
-      var actionIsSelected = false
-      switch option {
-      case is PreferredBookmark:
-        if PreferencesManager.shared.preferredBookmark.value == (option as! PreferredBookmark).value {
-          actionIsSelected = true
-        }
-      case is AmountOfResults:
-        if PreferencesManager.shared.amountOfResults.value == (option as! AmountOfResults).value {
-          actionIsSelected = true
-        }
-      case is SortingOrientation:
-        if (option as! SortingOrientation).value == .distance
-          && !LocationService.shared.locationPermissionsGranted {
-          return
-        }
-        if PreferencesManager.shared.sortingOrientation.value == (option as! SortingOrientation).value {
-          actionIsSelected = true
-        }
-      case is TemperatureUnit:
-        if PreferencesManager.shared.temperatureUnit.value == (option as! TemperatureUnit).value {
-          actionIsSelected = true
-        }
-      case is DistanceSpeedUnit:
-        if PreferencesManager.shared.distanceSpeedUnit.value == (option as! DistanceSpeedUnit).value {
-          actionIsSelected = true
-        }
-      default:
-        return
+  enum OptionsAlertType {
+    case preferredBookmark
+    case preferredAmountOfResults
+    case preferredSortingOrientation
+    case preferredTemperatureUnit
+    case preferredDistanceSpeedUnit
+  }
+  
+  private func showOptionsAlert(withType type: OptionsAlertType) {
+    let completionHandler: (Bool) -> Void = { [weak self] optionChanged in
+      guard optionChanged else { return }
+      DispatchQueue.main.async {
+        self?.tableView.reloadData()
       }
-      
-      let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
-        switch option {
-        case is PreferredBookmark:
-          PreferencesManager.shared.preferredBookmark = option as! PreferredBookmark
-        case is AmountOfResults:
-          PreferencesManager.shared.amountOfResults = option as! AmountOfResults
-        case is SortingOrientation:
-          PreferencesManager.shared.sortingOrientation = option as! SortingOrientation
-        case is TemperatureUnit:
-          PreferencesManager.shared.temperatureUnit = option as! TemperatureUnit
-        case is DistanceSpeedUnit:
-          PreferencesManager.shared.distanceSpeedUnit = option as! DistanceSpeedUnit
-        default:
-          return
-        }
-        self.tableView.reloadData()
-      })
-      if actionIsSelected {
-        action.setValue(true, forKey: "checked")
-      }
-      optionsAlert.addAction(action)
     }
     
-    optionsAlert.addAction(cancelAction)
+    var alert: UIAlertController
     
-    present(optionsAlert, animated: true, completion: nil)
+    switch type {
+    case .preferredBookmark:
+      var options = [PreferredBookmark(value: .none)]
+      options.append(contentsOf:
+        WeatherDataManager.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmark.init)
+      )
+      alert = Factory.AlertController.make(fromType:
+        .preferredBookmarkOptions(options: options,
+                                  completionHandler: completionHandler)
+      )
+    case .preferredAmountOfResults:
+      alert = Factory.AlertController.make(fromType:
+        .preferredAmountOfResultsOptions(options: amountOfResultsOptions,
+                                         completionHandler: completionHandler)
+      )
+    case .preferredSortingOrientation:
+      alert = Factory.AlertController.make(fromType:
+        .preferredSortingOrientationOptions(options: sortingOrientationOptions,
+                                            completionHandler: completionHandler)
+      )
+    case .preferredTemperatureUnit:
+      alert = Factory.AlertController.make(fromType:
+        .preferredTemperatureUnitOptions(options: temperatureUnitOptions,
+                                         completionHandler: completionHandler)
+      )
+    case .preferredDistanceSpeedUnit:
+      alert = Factory.AlertController.make(fromType:
+        .preferredSpeedUnitOptions(options: distanceSpeedUnitOptions,
+                                   completionHandler: completionHandler)
+      )
+    }
+    
+    present(alert, animated: true, completion: nil)
   }
   
   private func showNotificationsSettingsAlert() {

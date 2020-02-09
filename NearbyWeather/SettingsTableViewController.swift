@@ -19,8 +19,6 @@ final class SettingsTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    navigationItem.title = R.string.localizable.tab_settings()
-    
     tableView.register(UINib(nibName: R.nib.dualLabelCell.name, bundle: R.nib.dualLabelCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.dualLabelCell.identifier)
     

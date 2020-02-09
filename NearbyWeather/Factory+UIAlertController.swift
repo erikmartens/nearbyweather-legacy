@@ -277,9 +277,7 @@ private extension UIAlertController {
     actions.forEach { addAction($0) }
     
     if canceable {
-      addAction(
-        UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
-      )
+      addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil))
     }
     
     view.tintColor = tintColor

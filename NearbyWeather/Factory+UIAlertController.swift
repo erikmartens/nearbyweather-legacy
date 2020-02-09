@@ -16,6 +16,8 @@ extension Factory {
     enum AlertControllerType {
       case weatherListType(currentListType: ListType, completionHandler: ((ListType) -> Void))
       case weatherMapType(currentMapType: MKMapType, completionHandler: ((MKMapType) -> Void))
+      case pushNotificationsDisabled
+      case dimissableNotice(title: String, message: String)
     }
     
     typealias InputType = AlertControllerType
@@ -31,6 +33,7 @@ extension Factory {
           if listType == currentListType { action.setValue(true, forKey: Constants.Keys.KVOKeys.kChecked) }
           return action
         }
+        
         return UIAlertController(
           title: R.string.localizable.select_list_type().capitalized,
           actions: actions,
@@ -49,6 +52,28 @@ extension Factory {
           title: R.string.localizable.select_map_type().capitalized,
           actions: actions,
           canceable: true
+        )
+      case .pushNotificationsDisabled:
+        let action = UIAlertAction(title: R.string.localizable.settings(), style: .default) { _ -> Void in
+          guard let settingsUrl = URL(string: UIApplication.openSettingsURLString),
+            UIApplication.shared.canOpenURL(settingsUrl) else {
+              return
+          }
+          UIApplication.shared.open(settingsUrl, completionHandler: nil)
+        }
+        
+        return UIAlertController(
+          title: R.string.localizable.notifications_disabled(),
+          message: R.string.localizable.enable_notifications_alert_text(),
+          actions: [action],
+          canceable: true
+        )
+      case let .dimissableNotice(title, message):
+        let action = UIAlertAction(title: R.string.localizable.dismiss(), style: .cancel, handler: nil)
+        return UIAlertController(
+          title: title,
+          message: message,
+          actions: [action],
         )
       }
     }

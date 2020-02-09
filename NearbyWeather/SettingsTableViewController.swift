@@ -335,19 +335,7 @@ final class SettingsTableViewController: UITableViewController {
   }
   
   private func showNotificationsSettingsAlert() {
-    let alertController = UIAlertController(title: R.string.localizable.notifications_disabled(), message: R.string.localizable.enable_notifications_alert_text(), preferredStyle: .alert)
-    
-    let settingsAction = UIAlertAction(title: R.string.localizable.settings(), style: .default) { _ -> Void in
-      guard let settingsUrl = URL(string: UIApplication.openSettingsURLString),
-        UIApplication.shared.canOpenURL(settingsUrl) else {
-          return
-      }
-      UIApplication.shared.open(settingsUrl, completionHandler: nil)
-    }
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel)
-    
-    alertController.addAction(settingsAction)
-    alertController.addAction(cancelAction)
-    present(alertController, animated: true, completion: nil)
+    let alert = Factory.AlertController.make(fromType: .pushNotificationsDisabled)
+    present(alert, animated: true, completion: nil)
   }
 }

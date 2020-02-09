@@ -68,3 +68,10 @@ extension Constants.Keys {
     static let kStep = "de.erikmaximilianmartens.nearbyWeather.step"
   }
 }
+
+extension Constants.Keys {
+  
+  enum KVOKeys {
+    static let kChecked = "checked"
+  }
+}

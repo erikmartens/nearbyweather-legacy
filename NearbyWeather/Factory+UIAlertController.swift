@@ -7,6 +7,7 @@
 //
 
 import UIKit.UIAlertController
+import MapKit
 
 extension Factory {
   
@@ -14,6 +15,7 @@ extension Factory {
     
     enum AlertControllerType {
       case weatherListType(currentListType: ListType, completionHandler: ((ListType) -> Void))
+      case weatherMapType(currentMapType: MKMapType, completionHandler: ((MKMapType) -> Void))
     }
     
     typealias InputType = AlertControllerType
@@ -26,11 +28,25 @@ extension Factory {
           let action = UIAlertAction(title: listType.title, style: .default, handler: { _ in
             completionHandler(listType)
           })
-          if listType == currentListType { action.setValue(true, forKey: "checked") }
+          if listType == currentListType { action.setValue(true, forKey: Constants.Keys.KVOKeys.kChecked) }
           return action
         }
         return UIAlertController(
           title: R.string.localizable.select_list_type().capitalized,
+          actions: actions,
+          canceable: true
+        )
+      case let .weatherMapType(currentMapType, completionHandler):
+        let actions = MKMapType.supportedCases.map { mapType -> UIAlertAction in
+          let action = UIAlertAction(title: mapType.title, style: .default, handler: { _ in
+            completionHandler(mapType)
+          })
+          if mapType == currentMapType { action.setValue(true, forKey: Constants.Keys.KVOKeys.kChecked) }
+          return action
+        }
+        
+        return UIAlertController(
+          title: R.string.localizable.select_map_type().capitalized,
           actions: actions,
           canceable: true
         )

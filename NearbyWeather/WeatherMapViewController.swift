@@ -67,27 +67,14 @@ final class WeatherMapViewController: UIViewController {
   }
   
   private func triggerMapTypeAlert() {
-    let mapTypes: [MKMapType] = [.standard, .satellite, .hybrid]
-    let mapTypeTitles: [MKMapType: String] = [.standard: R.string.localizable.map_type_standard(),
-                                              .satellite: R.string.localizable.map_type_satellite(),
-                                              .hybrid: R.string.localizable.map_type_hybrid()]
-    
-    let optionsAlert = UIAlertController(title: R.string.localizable.select_map_type().capitalized, message: nil, preferredStyle: .alert)
-    mapTypes.forEach { mapTypeCase in
-      let action = UIAlertAction(title: mapTypeTitles[mapTypeCase], style: .default, handler: { _ in
+    let alert = Factory.AlertController.make(fromType:
+      .weatherMapType(currentMapType: mapView.mapType, completionHandler: { [weak self] mapType in
         DispatchQueue.main.async {
-          self.mapView.mapType = mapTypeCase
+          self?.mapView.mapType = mapType
         }
       })
-      if mapTypeCase == self.mapView.mapType {
-        action.setValue(true, forKey: "checked")
-      }
-      optionsAlert.addAction(action)
-    }
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
-    optionsAlert.addAction(cancelAction)
-    
-    present(optionsAlert, animated: true, completion: nil)
+    )
+    present(alert, animated: true, completion: nil)
   }
   
   private func triggerFocusOnLocationAlert() {

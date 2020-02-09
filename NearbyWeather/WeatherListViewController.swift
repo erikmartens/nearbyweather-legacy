@@ -13,8 +13,18 @@ enum ListType: CaseIterable {
   case bookmarked
   case nearby
   
-  static let titles: [ListType: String] = [.bookmarked: R.string.localizable.bookmarked(),
-                                           .nearby: R.string.localizable.nearby()]
+  static var allCases: [ListType] {
+      return [.bookmarked, .nearby]
+  }
+  
+  var title: String {
+    switch self {
+    case .bookmarked:
+      return R.string.localizable.bookmarked()
+    case .nearby:
+      return R.string.localizable.nearby()
+    }
+  }
 }
 
 final class WeatherListViewController: UIViewController {
@@ -196,24 +206,15 @@ final class WeatherListViewController: UIViewController {
   // MARK: - Helpers
   
   private func triggerListTypeAlert() {
-    let optionsAlert = UIAlertController(title: R.string.localizable.select_list_type().capitalized, message: nil, preferredStyle: .alert)
-    
-    ListType.allCases.forEach { listTypeCase in
-      let action = UIAlertAction(title: ListType.titles[listTypeCase], style: .default, handler: { _ in
-        self.listType = listTypeCase
+    let alert = Factory.AlertController.make(fromType:
+      .weatherListType(currentListType: listType, completionHandler: { [weak self] selectedListType in
+        self?.listType = selectedListType
         DispatchQueue.main.async {
-          self.tableView.reloadData()
+          self?.tableView.reloadData()
         }
       })
-      if listTypeCase == self.listType {
-        action.setValue(true, forKey: "checked")
-      }
-      optionsAlert.addAction(action)
-    }
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
-    optionsAlert.addAction(cancelAction)
-    
-    present(optionsAlert, animated: true, completion: nil)
+    )
+    present(alert, animated: true, completion: nil)
   }
 }
 

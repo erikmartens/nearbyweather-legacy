@@ -90,6 +90,7 @@
 		F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2D23F0386B00CD513B /* Factory.swift */; };
 		F2DBEB3023F038BE00CD513B /* Constants+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */; };
 		F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */; };
+		F2DBEB3423F0427000CD513B /* Factory+UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB3323F0427000CD513B /* Factory+UIAlertController.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -223,6 +224,7 @@
 		F2DBEB2D23F0386B00CD513B /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Theme.swift"; sourceTree = "<group>"; };
 		F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SemanticInitializer.swift"; sourceTree = "<group>"; };
+		F2DBEB3323F0427000CD513B /* Factory+UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIAlertController.swift"; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				F2DBEB2D23F0386B00CD513B /* Factory.swift */,
+				F2DBEB3323F0427000CD513B /* Factory+UIAlertController.swift */,
 			);
 			name = Factory;
 			sourceTree = "<group>";
@@ -956,6 +959,7 @@
 				F2DBEB2523EF31D700CD513B /* WeatherMapStepper.swift in Sources */,
 				F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */,
 				F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */,
+				F2DBEB3423F0427000CD513B /* Factory+UIAlertController.swift in Sources */,
 				F2B8EA061EA2893C00704E90 /* WelcomeViewController.swift in Sources */,
 				F2B8EA001EA11BA800704E90 /* WeatherDataDTOs.swift in Sources */,
 				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,

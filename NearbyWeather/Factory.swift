@@ -8,4 +8,11 @@
 
 import Foundation
 
+protocol FactoryFunction {
+  associatedtype InputType
+  associatedtype ResultType
+  
+  static func make(fromType type: InputType) -> ResultType
+}
+
 enum Factory {}

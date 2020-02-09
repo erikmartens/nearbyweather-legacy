@@ -64,7 +64,9 @@ final class SettingsTableViewController: UITableViewController {
     case 4:
       if indexPath.row == 1 {
         var choices = [PreferredBookmark(value: .none)]
-        let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map { PreferredBookmark(value: $0.identifier) }
+        let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map {
+          PreferredBookmark(value: $0.identifier)
+        }
         choices.append(contentsOf: bookmarksChoices)
         triggerOptionsAlert(forOptions: choices, title: R.string.localizable.preferred_bookmark())
       }
@@ -250,7 +252,11 @@ final class SettingsTableViewController: UITableViewController {
   
   // MARK: - Private Helpers
   
-  private struct SettingsAlertOption<T: PreferencesOption> { var title: String; var value: Int; var preferenceType: T.Type }
+  private struct SettingsAlertOption<T: PreferencesOption> {
+    var title: String
+    var value: Int
+    var preferenceType: T.Type
+  }
   
   private let amountOfResultsOptions = [AmountOfResults(value: .ten),
                                         AmountOfResults(value: .twenty),

@@ -17,6 +17,7 @@ extension Factory {
       case weatherListType(currentListType: ListType, completionHandler: ((ListType) -> Void))
       case weatherMapType(currentMapType: MKMapType, completionHandler: ((MKMapType) -> Void))
       case focusMapOnLocation(bookmarks: [WeatherInformationDTO], completionHandler: ((WeatherInformationDTO?) -> Void))
+//      case preferredBookmarkOptionsAlert(options: [PreferredBookmark])
       case pushNotificationsDisabled
       case dimissableNotice(title: String?, message: String?)
     }
@@ -27,79 +28,114 @@ extension Factory {
     static func make(fromType type: InputType) -> ResultType {
       switch type {
       case let .weatherListType(currentListType, completionHandler):
-        let actions = ListType.allCases.map { listType -> UIAlertAction in
-          let action = UIAlertAction(title: listType.title, style: .default, handler: { _ in
-            completionHandler(listType)
-          })
-          if listType == currentListType { action.setValue(true, forKey: Constants.Keys.KeyValueBindings.kChecked) }
-          return action
-        }
-        
-        return UIAlertController(
-          title: R.string.localizable.select_list_type().capitalized,
-          actions: actions,
-          canceable: true
+        return weatherListTypeAlert(
+          currentListType: currentListType,
+          completionHandler: completionHandler
         )
       case let .weatherMapType(currentMapType, completionHandler):
-        let actions = MKMapType.supportedCases.map { mapType -> UIAlertAction in
-          let action = UIAlertAction(title: mapType.title, style: .default, handler: { _ in
-            completionHandler(mapType)
-          })
-          if mapType == currentMapType { action.setValue(true, forKey: Constants.Keys.KeyValueBindings.kChecked) }
-          return action
-        }
-        
-        return UIAlertController(
-          title: R.string.localizable.select_map_type().capitalized,
-          actions: actions,
-          canceable: true
+        return weatherMapTypeAlert(
+          currentMapType: currentMapType,
+          completionHandler: completionHandler
         )
       case let .focusMapOnLocation(bookmarks, completionHandler):
-        var actions = bookmarks.map { bookmark -> UIAlertAction in
-          let action = UIAlertAction(title: bookmark.cityName, style: .default, handler: { _ in
-            completionHandler(bookmark)
-          })
-          action.setValue(R.image.locateFavoriteActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
-          return action
-        }
-        
-        let currentLocationAction = UIAlertAction(
-          title: R.string.localizable.current_location(),
-          style: .default,
-          handler: { _ in completionHandler(nil) }
-        )
-        actions.append(currentLocationAction)
-        currentLocationAction.setValue(R.image.locateUserActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
-        
-        return UIAlertController(
-          title: R.string.localizable.focus_on_location(),
-          actions: actions,
-          canceable: true
+        return focusMapOnLocationAlert(
+          bookmarks: bookmarks,
+          completionHandler: completionHandler
         )
       case .pushNotificationsDisabled:
-        let action = UIAlertAction(title: R.string.localizable.settings(), style: .default) { _ -> Void in
-          guard let settingsUrl = URL(string: UIApplication.openSettingsURLString),
-            UIApplication.shared.canOpenURL(settingsUrl) else {
-              return
-          }
-          UIApplication.shared.open(settingsUrl, completionHandler: nil)
-        }
-        
-        return UIAlertController(
-          title: R.string.localizable.notifications_disabled(),
-          message: R.string.localizable.enable_notifications_alert_text(),
-          actions: [action],
-          canceable: true
-        )
+        return pushNotificationsDisabledAlert()
       case let .dimissableNotice(title, message):
-        let action = UIAlertAction(title: R.string.localizable.dismiss(), style: .cancel, handler: nil)
-        return UIAlertController(
+        return dimissableNoticeAlert(
           title: title,
-          message: message,
-          actions: [action]
+          message: message
         )
       }
     }
+  }
+}
+
+private extension Factory.AlertController {
+  
+  static func weatherListTypeAlert(currentListType: ListType, completionHandler: @escaping ((ListType) -> Void)) -> UIAlertController {
+    let actions = ListType.allCases.map { listType -> UIAlertAction in
+      let action = UIAlertAction(title: listType.title, style: .default, handler: { _ in
+        completionHandler(listType)
+      })
+      if listType == currentListType { action.setValue(true, forKey: Constants.Keys.KeyValueBindings.kChecked) }
+      return action
+    }
+    
+    return UIAlertController(
+      title: R.string.localizable.select_list_type().capitalized,
+      actions: actions,
+      canceable: true
+    )
+  }
+  
+  static func weatherMapTypeAlert(currentMapType: MKMapType, completionHandler: @escaping ((MKMapType) -> Void)) -> UIAlertController {
+    let actions = MKMapType.supportedCases.map { mapType -> UIAlertAction in
+      let action = UIAlertAction(title: mapType.title, style: .default, handler: { _ in
+        completionHandler(mapType)
+      })
+      if mapType == currentMapType { action.setValue(true, forKey: Constants.Keys.KeyValueBindings.kChecked) }
+      return action
+    }
+    
+    return UIAlertController(
+      title: R.string.localizable.select_map_type().capitalized,
+      actions: actions,
+      canceable: true
+    )
+  }
+  
+  static func focusMapOnLocationAlert(bookmarks: [WeatherInformationDTO], completionHandler: @escaping ((WeatherInformationDTO?) -> Void)) -> UIAlertController {
+    var actions = bookmarks.map { bookmark -> UIAlertAction in
+      let action = UIAlertAction(title: bookmark.cityName, style: .default, handler: { _ in
+        completionHandler(bookmark)
+      })
+      action.setValue(R.image.locateFavoriteActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
+      return action
+    }
+    
+    let currentLocationAction = UIAlertAction(
+      title: R.string.localizable.current_location(),
+      style: .default,
+      handler: { _ in completionHandler(nil) }
+    )
+    actions.append(currentLocationAction)
+    currentLocationAction.setValue(R.image.locateUserActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
+    
+    return UIAlertController(
+      title: R.string.localizable.focus_on_location(),
+      actions: actions,
+      canceable: true
+    )
+  }
+  
+  static func pushNotificationsDisabledAlert() -> UIAlertController {
+    let action = UIAlertAction(title: R.string.localizable.settings(), style: .default) { _ -> Void in
+      guard let settingsUrl = URL(string: UIApplication.openSettingsURLString),
+        UIApplication.shared.canOpenURL(settingsUrl) else {
+          return
+      }
+      UIApplication.shared.open(settingsUrl, completionHandler: nil)
+    }
+    
+    return UIAlertController(
+      title: R.string.localizable.notifications_disabled(),
+      message: R.string.localizable.enable_notifications_alert_text(),
+      actions: [action],
+      canceable: true
+    )
+  }
+  
+  static func dimissableNoticeAlert(title: String?, message: String?) -> UIAlertController {
+    let action = UIAlertAction(title: R.string.localizable.dismiss(), style: .cancel, handler: nil)
+    return UIAlertController(
+      title: title,
+      message: message,
+      actions: [action]
+    )
   }
 }
 

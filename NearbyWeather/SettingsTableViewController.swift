@@ -44,6 +44,8 @@ final class SettingsTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
+    var alert: UIAlertController?
+    
     switch indexPath.section {
     case 0:
       stepper?.requestRouting(toStep: .about)
@@ -63,16 +65,30 @@ final class SettingsTableViewController: UITableViewController {
       }
     case 4:
       if indexPath.row == 1 {
-        var choices = [PreferredBookmark(value: .none)]
-        let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map {
-          PreferredBookmark(value: $0.identifier)
-        }
-        choices.append(contentsOf: bookmarksChoices)
-        triggerOptionsAlert(forOptions: choices, title: R.string.localizable.preferred_bookmark())
+        var options = [PreferredBookmark(value: .none)]
+        options.append(contentsOf:
+          WeatherDataManager.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmark.init)
+        )
+        alert = Factory.AlertController.make(fromType:
+          .preferredBookmarkOptions(options: options, completionHandler: { [weak self] optionChanged in
+            guard optionChanged else { return }
+            DispatchQueue.main.async {
+              self?.tableView.reloadData()
+            }
+          })
+        )
       }
     case 5:
       if indexPath.row == 0 {
-        triggerOptionsAlert(forOptions: amountOfResultsOptions, title: R.string.localizable.amount_of_results())
+        alert = Factory.AlertController.make(fromType:
+          .preferredAmountOfResultsOptions(options: amountOfResultsOptions,
+                                           completionHandler: { [weak self] optionChanged in
+                                            guard optionChanged else { return }
+                                            DispatchQueue.main.async {
+                                              self?.tableView.reloadData()
+                                            }
+          })
+        )
       }
       if indexPath.row == 1 {
         triggerOptionsAlert(forOptions: sortResultsOptions, title: R.string.localizable.sorting_orientation())
@@ -84,6 +100,10 @@ final class SettingsTableViewController: UITableViewController {
       }
     default:
       break
+    }
+    
+    if let alertController = alert {
+      present(alertController, animated: true, completion: nil)
     }
   }
   

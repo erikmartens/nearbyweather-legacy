@@ -17,7 +17,8 @@ extension Factory {
       case weatherListType(currentListType: ListType, completionHandler: ((ListType) -> Void))
       case weatherMapType(currentMapType: MKMapType, completionHandler: ((MKMapType) -> Void))
       case focusMapOnLocation(bookmarks: [WeatherInformationDTO], completionHandler: ((WeatherInformationDTO?) -> Void))
-//      case preferredBookmarkOptionsAlert(options: [PreferredBookmark])
+      case preferredBookmarkOptions(options: [PreferredBookmark], completionHandler: ((Bool) -> Void))
+      case preferredAmountOfResultsOptions(options: [AmountOfResults], completionHandler: ((Bool) -> Void))
       case pushNotificationsDisabled
       case dimissableNotice(title: String?, message: String?)
     }
@@ -40,6 +41,16 @@ extension Factory {
       case let .focusMapOnLocation(bookmarks, completionHandler):
         return focusMapOnLocationAlert(
           bookmarks: bookmarks,
+          completionHandler: completionHandler
+        )
+      case let .preferredBookmarkOptions(options, completionHandler):
+        return preferredBookmarkOptionsAlert(
+          options: options,
+          completionHandler: completionHandler
+        )
+      case let .preferredAmountOfResultsOptions(options, completionHandler):
+        return preferredAmountOfResultsOptionsAlert(
+          options: options,
           completionHandler: completionHandler
         )
       case .pushNotificationsDisabled:
@@ -107,6 +118,47 @@ private extension Factory.AlertController {
     
     return UIAlertController(
       title: R.string.localizable.focus_on_location(),
+      actions: actions,
+      canceable: true
+    )
+  }
+  
+  static func preferredBookmarkOptionsAlert(options: [PreferredBookmark], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+    
+    let actions = options.map { option -> UIAlertAction in
+      let actionIsSelected = PreferencesManager.shared.preferredBookmark.value == option.value
+      
+      let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
+        let previousOption = PreferencesManager.shared.preferredBookmark
+        PreferencesManager.shared.preferredBookmark = option
+        completionHandler(previousOption.value != option.value)
+      })
+      action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)
+      return action
+    }
+    
+    return UIAlertController(
+      title: R.string.localizable.preferred_bookmark(),
+      actions: actions,
+      canceable: true
+    )
+  }
+  
+  static func preferredAmountOfResultsOptionsAlert(options: [AmountOfResults], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+    let actions = options.map { option -> UIAlertAction in
+      let actionIsSelected = PreferencesManager.shared.amountOfResults.value == option.value
+      
+      let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
+        let previousOption = PreferencesManager.shared.amountOfResults
+        PreferencesManager.shared.amountOfResults = option
+        completionHandler(previousOption.value != option.value)
+      })
+      action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)
+      return action
+    }
+    
+    return UIAlertController(
+      title: R.string.localizable.amount_of_results(),
       actions: actions,
       canceable: true
     )

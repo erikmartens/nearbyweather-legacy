@@ -22,11 +22,11 @@ class PreferredBookmark: Codable, PreferencesOption {
   
   var value: Int?
   
-  required  init(value: Int?) {
+  required init(value: Int?) {
     self.value = value
   }
   
-  convenience required  init?(rawValue: Int) { return nil }
+  convenience required init?(rawValue: Int) { return nil }
   
   var stringValue: String {
     let bookmarkedLocation = WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == value })

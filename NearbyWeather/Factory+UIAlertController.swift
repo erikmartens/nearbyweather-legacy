@@ -271,7 +271,7 @@ private extension Factory.AlertController {
 
 private extension UIAlertController {
   
-  convenience init(title: String? = nil, message: String? = nil, style: UIAlertController.Style = .alert, actions: [UIAlertAction] = [], tintColor: UIColor = .blue, canceable: Bool = false) {
+  convenience init(title: String? = nil, message: String? = nil, style: UIAlertController.Style = .alert, actions: [UIAlertAction] = [], tintColor: UIColor? = nil, canceable: Bool = false) {
     self.init(title: title, message: message, preferredStyle: style)
     
     actions.forEach { addAction($0) }
@@ -279,7 +279,6 @@ private extension UIAlertController {
     if canceable {
       addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil))
     }
-    
-    view.tintColor = tintColor
+    if let tintColor = tintColor { view.tintColor = tintColor }
   }
 }

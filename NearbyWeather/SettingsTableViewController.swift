@@ -247,30 +247,7 @@ final class SettingsTableViewController: UITableViewController {
   
   // MARK: - Private Helpers
   
-  private struct SettingsAlertOption<T: PreferencesOption> {
-    var title: String
-    var value: Int
-    var preferenceType: T.Type
-  }
-  
-  private let amountOfResultsOptions = [AmountOfResults(value: .ten),
-                                        AmountOfResults(value: .twenty),
-                                        AmountOfResults(value: .thirty),
-                                        AmountOfResults(value: .forty),
-                                        AmountOfResults(value: .fifty)]
-  
-  private let sortingOrientationOptions = [SortingOrientation(value: .name),
-                                    SortingOrientation(value: .temperature),
-                                    SortingOrientation(value: .distance)]
-  
-  private let temperatureUnitOptions = [TemperatureUnit(value: .celsius),
-                                        TemperatureUnit(value: .fahrenheit),
-                                        TemperatureUnit(value: .kelvin)]
-  
-  private let distanceSpeedUnitOptions = [DistanceSpeedUnit(value: .kilometres),
-                                          DistanceSpeedUnit(value: .miles)]
-  
-  enum OptionsAlertType {
+  private enum OptionsAlertType {
     case preferredBookmark
     case preferredAmountOfResults
     case preferredSortingOrientation
@@ -300,26 +277,25 @@ final class SettingsTableViewController: UITableViewController {
       )
     case .preferredAmountOfResults:
       alert = Factory.AlertController.make(fromType:
-        .preferredAmountOfResultsOptions(options: amountOfResultsOptions,
+        .preferredAmountOfResultsOptions(options: AmountOfResults.availableOptions,
                                          completionHandler: completionHandler)
       )
     case .preferredSortingOrientation:
       alert = Factory.AlertController.make(fromType:
-        .preferredSortingOrientationOptions(options: sortingOrientationOptions,
+        .preferredSortingOrientationOptions(options: SortingOrientation.availableOptions,
                                             completionHandler: completionHandler)
       )
     case .preferredTemperatureUnit:
       alert = Factory.AlertController.make(fromType:
-        .preferredTemperatureUnitOptions(options: temperatureUnitOptions,
+        .preferredTemperatureUnitOptions(options: TemperatureUnit.availableOptions,
                                          completionHandler: completionHandler)
       )
     case .preferredDistanceSpeedUnit:
       alert = Factory.AlertController.make(fromType:
-        .preferredSpeedUnitOptions(options: distanceSpeedUnitOptions,
+        .preferredSpeedUnitOptions(options: DistanceSpeedUnit.availableOptions,
                                    completionHandler: completionHandler)
       )
     }
-    
     present(alert, animated: true, completion: nil)
   }
   

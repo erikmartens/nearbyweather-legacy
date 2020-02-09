@@ -41,6 +41,10 @@ enum SortingOrientationWrappedEnum: Int, CaseIterable, Codable {
 }
 
 class SortingOrientation: Codable, PreferencesOption {
+  static let availableOptions = [SortingOrientation(value: .name),
+                                 SortingOrientation(value: .temperature),
+                                 SortingOrientation(value: .distance)]
+  
   typealias PreferencesOptionType = SortingOrientationWrappedEnum
   
   private lazy var count = {
@@ -76,6 +80,10 @@ enum TemperatureUnitWrappedEnum: Int, CaseIterable, Codable {
 }
 
 class TemperatureUnit: Codable, PreferencesOption {
+  static let availableOptions = [TemperatureUnit(value: .celsius),
+                                 TemperatureUnit(value: .fahrenheit),
+                                 TemperatureUnit(value: .kelvin)]
+  
   typealias PreferencesOptionType = TemperatureUnitWrappedEnum
   
   private lazy var count: Int = {
@@ -118,6 +126,9 @@ enum DistanceSpeedUnitWrappedEnum: Int, CaseIterable, Codable {
 }
 
 class DistanceSpeedUnit: Codable, PreferencesOption {
+  static let availableOptions = [DistanceSpeedUnit(value: .kilometres),
+                                 DistanceSpeedUnit(value: .miles)]
+  
   typealias PreferencesOptionType = DistanceSpeedUnitWrappedEnum
   
   private lazy var count = {
@@ -154,6 +165,12 @@ enum AmountOfResultsWrappedEnum: Int, CaseIterable, Codable {
 }
 
 class AmountOfResults: Codable, PreferencesOption {
+  
+  static let availableOptions = [AmountOfResults(value: .ten),
+                                 AmountOfResults(value: .twenty),
+                                 AmountOfResults(value: .thirty),
+                                 AmountOfResults(value: .forty),
+                                 AmountOfResults(value: .fifty)]
   
   typealias PreferencesOptionType = AmountOfResultsWrappedEnum
   

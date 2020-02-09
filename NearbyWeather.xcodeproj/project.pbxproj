@@ -42,7 +42,6 @@
 		F28CA53D202622C200209397 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA53C202622C200209397 /* ToggleCell.swift */; };
 		F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA54020279EE300209397 /* WeatherDetailViewController.swift */; };
 		F28CA5442027AEB500209397 /* WeatherLocationMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA5432027AEB500209397 /* WeatherLocationMapAnnotation.swift */; };
-		F28CE9641F96B290008319C4 /* UIColor+BrandColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9631F96B290008319C4 /* UIColor+BrandColors.swift */; };
 		F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */; };
 		F28CE9681F9A9893008319C4 /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9671F9A9893008319C4 /* WeatherListViewController.swift */; };
 		F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */; };
@@ -88,6 +87,9 @@
 		F2DBEB2723EF35A700CD513B /* SettingsStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2623EF35A700CD513B /* SettingsStepper.swift */; };
 		F2DBEB2923EF4C6F00CD513B /* WelcomeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2823EF4C6F00CD513B /* WelcomeStepper.swift */; };
 		F2DBEB2B23EF4D2A00CD513B /* MainStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2A23EF4D2A00CD513B /* MainStepper.swift */; };
+		F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2D23F0386B00CD513B /* Factory.swift */; };
+		F2DBEB3023F038BE00CD513B /* Constants+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */; };
+		F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -173,7 +175,6 @@
 		F28CA53C202622C200209397 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		F28CA54020279EE300209397 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
 		F28CA5432027AEB500209397 /* WeatherLocationMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationMapAnnotation.swift; sourceTree = "<group>"; };
-		F28CE9631F96B290008319C4 /* UIColor+BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+BrandColors.swift"; sourceTree = "<group>"; };
 		F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extensions.swift"; sourceTree = "<group>"; };
 		F28CE9671F9A9893008319C4 /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
 		F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -219,6 +220,9 @@
 		F2DBEB2623EF35A700CD513B /* SettingsStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStepper.swift; sourceTree = "<group>"; };
 		F2DBEB2823EF4C6F00CD513B /* WelcomeStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeStepper.swift; sourceTree = "<group>"; };
 		F2DBEB2A23EF4D2A00CD513B /* MainStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStepper.swift; sourceTree = "<group>"; };
+		F2DBEB2D23F0386B00CD513B /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
+		F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Theme.swift"; sourceTree = "<group>"; };
+		F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SemanticInitializer.swift"; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -348,6 +352,7 @@
 			children = (
 				F2F7BA1823E0FBEB00B4D2EB /* GlobalFunctions.swift */,
 				F2E7237B23E0EA22001189F5 /* Constants */,
+				F2DBEB2C23F0385300CD513B /* Factory */,
 				F28CE9611F96B202008319C4 /* Extensions */,
 				F2B8EA0C1EA2DDD700704E90 /* TableViewCells */,
 				F28CA5422027AE9B00209397 /* Custom Objects */,
@@ -399,13 +404,13 @@
 		F28CE9611F96B202008319C4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				F28CE9631F96B290008319C4 /* UIColor+BrandColors.swift */,
 				F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */,
 				F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */,
 				F260C4421F9D4883000D2BC0 /* UINavigationController+Extensions.swift */,
 				F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */,
 				F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */,
 				F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */,
+				F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -579,10 +584,19 @@
 			name = "Root Files";
 			sourceTree = "<group>";
 		};
+		F2DBEB2C23F0385300CD513B /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				F2DBEB2D23F0386B00CD513B /* Factory.swift */,
+			);
+			name = Factory;
+			sourceTree = "<group>";
+		};
 		F2E7237B23E0EA22001189F5 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
 				F2DBEADB23E4CF7900CD513B /* Constants.swift */,
+				F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */,
 				F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */,
 				F2E7238023E0F044001189F5 /* Constants+Keys.swift */,
 				F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */,
@@ -940,9 +954,11 @@
 				F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */,
 				F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */,
 				F2DBEB2523EF31D700CD513B /* WeatherMapStepper.swift in Sources */,
+				F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */,
 				F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */,
 				F2B8EA061EA2893C00704E90 /* WelcomeViewController.swift in Sources */,
 				F2B8EA001EA11BA800704E90 /* WeatherDataDTOs.swift in Sources */,
+				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F2DBEB1423EA1F4D00CD513B /* WeatherDetailCoordinator.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
@@ -966,6 +982,7 @@
 				F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */,
 				F2DBEB1D23EF042A00CD513B /* WeatherMapCoordinator.swift in Sources */,
 				F2DBEAF623E601F000CD513B /* MainCoordinator.swift in Sources */,
+				F2DBEB3023F038BE00CD513B /* Constants+Theme.swift in Sources */,
 				F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationController+Extensions.swift in Sources */,
 				F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */,
@@ -980,7 +997,6 @@
 				F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */,
 				F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */,
 				F274FC39202F9A9300049144 /* NetworkingService.swift in Sources */,
-				F28CE9641F96B290008319C4 /* UIColor+BrandColors.swift in Sources */,
 				F2DBEAF823E6054900CD513B /* Coordinator.swift in Sources */,
 				F28DA8612042258500879E6C /* WeatherLocationManagementTableViewController.swift in Sources */,
 				F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */,
@@ -1190,7 +1206,7 @@
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Erik Maximilian Martens (C929JV4AQN)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = VDPU24L36V;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1215,7 +1231,7 @@
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Erik Maximilian Martens (VDPU24L36V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = VDPU24L36V;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

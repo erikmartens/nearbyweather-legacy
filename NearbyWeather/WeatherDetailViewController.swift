@@ -97,7 +97,7 @@ final class WeatherDetailViewController: UIViewController {
   
   private func configure() {
     navigationController?.navigationBar.style(withBarTintColor:
-      (ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight
+      (ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight
     )
     
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }
@@ -218,7 +218,7 @@ extension WeatherDetailViewController: MKMapViewDelegate {
     viewForCurrentAnnotation?.configure(
       withTitle: annotation.title ?? Constants.Messages.kNotSet,
       subtitle: annotation.subtitle ?? Constants.Messages.kNotSet,
-      fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight,
+      fillColor: (annotation.isDayTime ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight,
       tapHandler: nil
     )
     return viewForCurrentAnnotation

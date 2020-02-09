@@ -50,7 +50,7 @@ class ButtonCell: UITableViewCell {
     
     [rightButton, leftButton].forEach {           
       $0?.layer.cornerRadius = 5.0
-      $0?.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor
+      $0?.layer.borderColor = Constants.Theme.BrandColors.standardDay.cgColor
       $0?.layer.borderWidth = 1.0
     }
   }

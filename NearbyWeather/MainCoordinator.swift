@@ -21,7 +21,7 @@ final class MainCoordinator: Coordinator {
     let tabbar = UITabBarController()
     tabbar.tabBar.backgroundColor = .white
     tabbar.tabBar.barTintColor = .white
-    tabbar.tabBar.tintColor = .nearbyWeatherStandard
+    tabbar.tabBar.tintColor = Constants.Theme.BrandColors.standardDay
     return tabbar
   }()
   

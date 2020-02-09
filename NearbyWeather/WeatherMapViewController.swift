@@ -185,7 +185,7 @@ extension WeatherMapViewController: MKMapViewDelegate {
     viewForCurrentAnnotation?.configure(
       withTitle: annotation.title ?? Constants.Messages.kNotSet,
       subtitle: annotation.subtitle ?? Constants.Messages.kNotSet,
-      fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight,
+      fillColor: (annotation.isDayTime ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight,
       tapHandler: { [weak self] _ in
         self?.previousRegion = mapView.region
         self?.stepper?.requestRouting(toStep:

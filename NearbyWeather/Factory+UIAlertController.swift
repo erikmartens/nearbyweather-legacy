@@ -19,6 +19,7 @@ extension Factory {
       case focusMapOnLocation(bookmarks: [WeatherInformationDTO], completionHandler: ((WeatherInformationDTO?) -> Void))
       case preferredBookmarkOptions(options: [PreferredBookmark], completionHandler: ((Bool) -> Void))
       case preferredAmountOfResultsOptions(options: [AmountOfResults], completionHandler: ((Bool) -> Void))
+      case preferredSortingOrientationOptions(options: [SortingOrientation], completionHandler: ((Bool) -> Void))
       case pushNotificationsDisabled
       case dimissableNotice(title: String?, message: String?)
     }
@@ -50,6 +51,11 @@ extension Factory {
         )
       case let .preferredAmountOfResultsOptions(options, completionHandler):
         return preferredAmountOfResultsOptionsAlert(
+          options: options,
+          completionHandler: completionHandler
+        )
+      case let .preferredSortingOrientationOptions(options, completionHandler):
+        return preferredSortingOrientationOptionsAlert(
           options: options,
           completionHandler: completionHandler
         )
@@ -159,6 +165,26 @@ private extension Factory.AlertController {
     
     return UIAlertController(
       title: R.string.localizable.amount_of_results(),
+      actions: actions,
+      canceable: true
+    )
+  }
+  
+  static func preferredSortingOrientationOptionsAlert(options: [SortingOrientation], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+    let actions = options.map { option -> UIAlertAction in
+      let actionIsSelected = PreferencesManager.shared.sortingOrientation.value == option.value
+      
+      let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
+        let previousOption = PreferencesManager.shared.sortingOrientation
+        PreferencesManager.shared.sortingOrientation = option
+        completionHandler(previousOption.value != option.value)
+      })
+      action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)
+      return action
+    }
+    
+    return UIAlertController(
+      title: R.string.localizable.sorting_orientation(),
       actions: actions,
       canceable: true
     )

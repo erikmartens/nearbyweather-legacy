@@ -91,7 +91,15 @@ final class SettingsTableViewController: UITableViewController {
         )
       }
       if indexPath.row == 1 {
-        triggerOptionsAlert(forOptions: sortResultsOptions, title: R.string.localizable.sorting_orientation())
+        alert = Factory.AlertController.make(fromType:
+          .preferredSortingOrientationOptions(options: sortResultsOptions,
+                                           completionHandler: { [weak self] optionChanged in
+                                            guard optionChanged else { return }
+                                            DispatchQueue.main.async {
+                                              self?.tableView.reloadData()
+                                            }
+          })
+        )
       }
       if indexPath.row == 2 {
         triggerOptionsAlert(forOptions: temperatureUnitOptions, title: R.string.localizable.temperature_unit())

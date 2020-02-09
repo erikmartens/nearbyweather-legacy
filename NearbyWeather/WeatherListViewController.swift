@@ -14,7 +14,7 @@ enum ListType: CaseIterable {
   case nearby
   
   static var allCases: [ListType] {
-      return [.bookmarked, .nearby]
+    return [.bookmarked, .nearby]
   }
   
   var title: String {
@@ -73,16 +73,20 @@ final class WeatherListViewController: UIViewController {
     configure()
     tableView.reloadData()
     
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(WeatherListViewController.reconfigureOnWeatherDataServiceDidUpdate),
-                                           name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
-                                           object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(WeatherListViewController.reconfigureOnWeatherDataServiceDidUpdate),
+      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
+      object: nil
+    )
     
     if !WeatherDataManager.shared.hasDisplayableData {
-      NotificationCenter.default.addObserver(self,
-                                             selector: #selector(WeatherListViewController.reconfigureOnNetworkDidBecomeAvailable),
-                                             name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
-                                             object: nil)
+      NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(WeatherListViewController.reconfigureOnNetworkDidBecomeAvailable),
+        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
+        object: nil
+      )
     }
   }
   
@@ -189,7 +193,7 @@ final class WeatherListViewController: UIViewController {
     tableView.reloadData()
   }
   
-  // MARK: - Button Interaction
+  // MARK: - IBActions
   
   @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     triggerListTypeAlert()
@@ -221,22 +225,22 @@ final class WeatherListViewController: UIViewController {
 extension WeatherListViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return UITableView.automaticDimension
+    UITableView.automaticDimension
   }
   
   func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    return CGFloat(100)
+    CGFloat(100)
   }
 }
 
 extension WeatherListViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return nil
+    nil
   }
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    1
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

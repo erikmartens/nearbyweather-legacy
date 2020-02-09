@@ -89,9 +89,9 @@ final class BadgeService {
     let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
     UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
     if previousTemperatureValue < 0 && temperature > 0 {
-      sendTemperatureSignChangeNotification(content: AppIconBadgeTemperatureContent(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
+      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
     } else if previousTemperatureValue > 0 && temperature < 0 {
-      sendTemperatureSignChangeNotification(content: AppIconBadgeTemperatureContent(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
+      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
     }
   }
   
@@ -99,11 +99,17 @@ final class BadgeService {
     UIApplication.shared.applicationIconBadgeNumber = 0
   }
   
-  private func sendTemperatureSignChangeNotification(content: AppIconBadgeTemperatureContent) {
-    let notificationBody = R.string.localizable.temperature_notification(content.cityName, "\(content.sign.stringValue) \(content.temperature)\(content.unit.abbreviation)")
+  private func sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent) {
+    let notificationBody = R.string.localizable.temperature_notification(inputContent.cityName, "\(inputContent.sign.stringValue) \(inputContent.temperature)\(inputContent.unit.abbreviation)")
     
     let content = UNMutableNotificationContent()
-    content.title = R.string.localizable.app_icon_temperature_sign_updated()
+    
+    switch inputContent.sign {
+    case .plus:
+      content.title = R.string.localizable.app_icon_temperature_sign_updated_above_zero()
+    case .minus:
+      content.title = R.string.localizable.app_icon_temperature_sign_updated_below_zero()
+    }
     content.body = notificationBody
     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
     let request = UNNotificationRequest(identifier: Constants.Keys.NotificationIdentifiers.kAppIconTemeperatureNotification,

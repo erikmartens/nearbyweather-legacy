@@ -68,21 +68,21 @@ final class WelcomeViewController: UIViewController {
     descriptionLabel.text! = R.string.localizable.welcome_api_key_description()
     
     inputTextField.counterColor = inputTextField.textColor ?? .black
-    inputTextField.limitColor = .nearbyWeatherStandard
+    inputTextField.limitColor = Constants.Theme.Interactables.standardTint
     inputTextField.textColor = .lightGray
     inputTextField.tintColor = .lightGray
     
     saveButton.setTitle(R.string.localizable.save().uppercased(), for: .normal)
-    saveButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
-    saveButton.setTitleColor(.nearbyWeatherStandard, for: .highlighted)
+    saveButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
+    saveButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .highlighted)
     saveButton.setTitleColor(.lightGray, for: .disabled)
     saveButton.layer.cornerRadius = 5.0
     saveButton.layer.borderColor = UIColor.lightGray.cgColor
     saveButton.layer.borderWidth = 1.0
     
     getInstructionsButtons.setTitle(R.string.localizable.get_api_key_description().uppercased(), for: .normal)
-    getInstructionsButtons.setTitleColor(.nearbyWeatherStandard, for: .normal)
-    getInstructionsButtons.setTitleColor(.nearbyWeatherStandard, for: .highlighted)
+    getInstructionsButtons.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
+    getInstructionsButtons.setTitleColor(Constants.Theme.Interactables.standardButton, for: .highlighted)
   }
   
   fileprivate func startAnimationTimer() {
@@ -99,7 +99,7 @@ final class WelcomeViewController: UIViewController {
   @IBAction func inputTextFieldEditingChanged(_ sender: TextFieldCounter) {
     checkValidTextFieldInput()
     if saveButton.isEnabled {
-      saveButton.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor
+      saveButton.layer.borderColor = Constants.Theme.Interactables.standardTint.cgColor
       return
     }
     saveButton.layer.borderColor = UIColor.lightGray.cgColor
@@ -113,7 +113,7 @@ final class WelcomeViewController: UIViewController {
         return
     }
     saveButton.isEnabled = true
-    inputTextField.textColor = .nearbyWeatherStandard
+    inputTextField.textColor = Constants.Theme.Interactables.standardTint
   }
   
   // MARK: - Button Interaction

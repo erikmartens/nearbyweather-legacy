@@ -22,7 +22,7 @@ final class WelcomeCoordinator: Coordinator {
     let navigationController = UINavigationController()
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
-    navigationController.navigationBar.tintColor = .nearbyWeatherStandard
+    navigationController.navigationBar.tintColor = Constants.Theme.BrandColors.standardDay
     return navigationController
   }()
   

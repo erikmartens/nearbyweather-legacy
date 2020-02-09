@@ -13,8 +13,18 @@ enum ListType: CaseIterable {
   case bookmarked
   case nearby
   
-  static let titles: [ListType: String] = [.bookmarked: R.string.localizable.bookmarked(),
-                                           .nearby: R.string.localizable.nearby()]
+  static var allCases: [ListType] {
+    return [.bookmarked, .nearby]
+  }
+  
+  var title: String {
+    switch self {
+    case .bookmarked:
+      return R.string.localizable.bookmarked()
+    case .nearby:
+      return R.string.localizable.nearby()
+    }
+  }
 }
 
 final class WeatherListViewController: UIViewController {
@@ -63,16 +73,20 @@ final class WeatherListViewController: UIViewController {
     configure()
     tableView.reloadData()
     
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(WeatherListViewController.reconfigureOnWeatherDataServiceDidUpdate),
-                                           name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
-                                           object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(WeatherListViewController.reconfigureOnWeatherDataServiceDidUpdate),
+      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
+      object: nil
+    )
     
     if !WeatherDataManager.shared.hasDisplayableData {
-      NotificationCenter.default.addObserver(self,
-                                             selector: #selector(WeatherListViewController.reconfigureOnNetworkDidBecomeAvailable),
-                                             name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
-                                             object: nil)
+      NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(WeatherListViewController.reconfigureOnNetworkDidBecomeAvailable),
+        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
+        object: nil
+      )
     }
   }
   
@@ -152,9 +166,9 @@ final class WeatherListViewController: UIViewController {
     reloadButton.isHidden = NetworkingService.shared.reachabilityStatus != .connected
     if !reloadButton.isHidden {
       reloadButton.setTitle(R.string.localizable.reload().uppercased(), for: .normal)
-      reloadButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
+      reloadButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
       reloadButton.layer.cornerRadius = 5.0
-      reloadButton.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor
+      reloadButton.layer.borderColor = Constants.Theme.Interactables.standardButton.cgColor
       reloadButton.layer.borderWidth = 1.0
     }
     if WeatherDataManager.shared.hasDisplayableData {
@@ -179,7 +193,7 @@ final class WeatherListViewController: UIViewController {
     tableView.reloadData()
   }
   
-  // MARK: - Button Interaction
+  // MARK: - IBActions
   
   @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     triggerListTypeAlert()
@@ -196,46 +210,37 @@ final class WeatherListViewController: UIViewController {
   // MARK: - Helpers
   
   private func triggerListTypeAlert() {
-    let optionsAlert = UIAlertController(title: R.string.localizable.select_list_type().capitalized, message: nil, preferredStyle: .alert)
-    
-    ListType.allCases.forEach { listTypeCase in
-      let action = UIAlertAction(title: ListType.titles[listTypeCase], style: .default, handler: { _ in
-        self.listType = listTypeCase
+    let alert = Factory.AlertController.make(fromType:
+      .weatherListType(currentListType: listType, completionHandler: { [weak self] selectedListType in
+        self?.listType = selectedListType
         DispatchQueue.main.async {
-          self.tableView.reloadData()
+          self?.tableView.reloadData()
         }
       })
-      if listTypeCase == self.listType {
-        action.setValue(true, forKey: "checked")
-      }
-      optionsAlert.addAction(action)
-    }
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
-    optionsAlert.addAction(cancelAction)
-    
-    present(optionsAlert, animated: true, completion: nil)
+    )
+    present(alert, animated: true, completion: nil)
   }
 }
 
 extension WeatherListViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return UITableView.automaticDimension
+    UITableView.automaticDimension
   }
   
   func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    return CGFloat(100)
+    CGFloat(100)
   }
 }
 
 extension WeatherListViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return nil
+    nil
   }
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    1
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

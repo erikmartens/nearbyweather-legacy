@@ -22,11 +22,11 @@ class PreferredBookmark: Codable, PreferencesOption {
   
   var value: Int?
   
-  required  init(value: Int?) {
+  required init(value: Int?) {
     self.value = value
   }
   
-  convenience required  init?(rawValue: Int) { return nil }
+  convenience required init?(rawValue: Int) { return nil }
   
   var stringValue: String {
     let bookmarkedLocation = WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == value })
@@ -41,6 +41,10 @@ enum SortingOrientationWrappedEnum: Int, CaseIterable, Codable {
 }
 
 class SortingOrientation: Codable, PreferencesOption {
+  static let availableOptions = [SortingOrientation(value: .name),
+                                 SortingOrientation(value: .temperature),
+                                 SortingOrientation(value: .distance)]
+  
   typealias PreferencesOptionType = SortingOrientationWrappedEnum
   
   private lazy var count = {
@@ -76,6 +80,10 @@ enum TemperatureUnitWrappedEnum: Int, CaseIterable, Codable {
 }
 
 class TemperatureUnit: Codable, PreferencesOption {
+  static let availableOptions = [TemperatureUnit(value: .celsius),
+                                 TemperatureUnit(value: .fahrenheit),
+                                 TemperatureUnit(value: .kelvin)]
+  
   typealias PreferencesOptionType = TemperatureUnitWrappedEnum
   
   private lazy var count: Int = {
@@ -118,6 +126,9 @@ enum DistanceSpeedUnitWrappedEnum: Int, CaseIterable, Codable {
 }
 
 class DistanceSpeedUnit: Codable, PreferencesOption {
+  static let availableOptions = [DistanceSpeedUnit(value: .kilometres),
+                                 DistanceSpeedUnit(value: .miles)]
+  
   typealias PreferencesOptionType = DistanceSpeedUnitWrappedEnum
   
   private lazy var count = {
@@ -146,14 +157,20 @@ class DistanceSpeedUnit: Codable, PreferencesOption {
 }
 
 enum AmountOfResultsWrappedEnum: Int, CaseIterable, Codable {
-  case ten
-  case twenty
-  case thirty
-  case forty
-  case fifty
+  case ten = 10
+  case twenty = 20
+  case thirty = 30
+  case forty = 40
+  case fifty = 50
 }
 
 class AmountOfResults: Codable, PreferencesOption {
+  
+  static let availableOptions = [AmountOfResults(value: .ten),
+                                 AmountOfResults(value: .twenty),
+                                 AmountOfResults(value: .thirty),
+                                 AmountOfResults(value: .forty),
+                                 AmountOfResults(value: .fifty)]
   
   typealias PreferencesOptionType = AmountOfResultsWrappedEnum
   
@@ -175,23 +192,11 @@ class AmountOfResults: Codable, PreferencesOption {
   }
   
   var stringValue: String {
-    switch value {
-    case .ten: return "\(10) \(R.string.localizable.results())"
-    case .twenty: return "\(20) \(R.string.localizable.results())"
-    case .thirty: return "\(30) \(R.string.localizable.results())"
-    case .forty: return "\(40) \(R.string.localizable.results())"
-    case .fifty: return "\(50) \(R.string.localizable.results())"
-    }
+    return "\(value.rawValue) \(R.string.localizable.results())"
   }
   
   var integerValue: Int {
-    switch value {
-    case .ten: return 10
-    case .twenty: return 20
-    case .thirty: return 30
-    case .forty: return 40
-    case .fifty: return 50
-    }
+    return value.rawValue
   }
 }
 

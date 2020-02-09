@@ -44,6 +44,7 @@ extension Constants.Keys {
   
   enum KeyValueBindings {
     static let kImage = "image"
+    static let kChecked = "checked"
   }
 }
 

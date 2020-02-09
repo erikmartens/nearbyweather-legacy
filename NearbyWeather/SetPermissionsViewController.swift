@@ -74,10 +74,10 @@ final class SetPermissionsViewController: UIViewController {
     descriptionLabel.text! = R.string.localizable.configure_location_permissions_description()
     
     askPermissionsButton.setTitle(R.string.localizable.configure().uppercased(), for: .normal)
-    askPermissionsButton.setTitleColor(.nearbyWeatherStandard, for: .normal)
-    askPermissionsButton.setTitleColor(.nearbyWeatherStandard, for: .highlighted)
+    askPermissionsButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
+    askPermissionsButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .highlighted)
     askPermissionsButton.layer.cornerRadius = 5.0
-    askPermissionsButton.layer.borderColor = UIColor.nearbyWeatherStandard.cgColor
+    askPermissionsButton.layer.borderColor = Constants.Theme.BrandColors.standardDay.cgColor
     askPermissionsButton.layer.borderWidth = 1.0
   }
   

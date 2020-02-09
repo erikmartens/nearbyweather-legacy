@@ -33,8 +33,8 @@ final class WeatherMapViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationController?.navigationBar.styleStandard()
     
-    navigationItem.title = navigationItem.title?.capitalized
     mapView.delegate = self
   }
   
@@ -43,7 +43,6 @@ final class WeatherMapViewController: UIViewController {
     
     selectedBookmarkedLocation = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first?.weatherInformationDTO
     
-    configure()
     prepareMapAnnotations()
     focusOnAvailableLocation()
   }
@@ -67,66 +66,38 @@ final class WeatherMapViewController: UIViewController {
     mapView.addAnnotations(weatherLocationMapAnnotations)
   }
   
-  private func configure() {
-    navigationController?.navigationBar.styleStandard()
-  }
-  
   private func triggerMapTypeAlert() {
-    let mapTypes: [MKMapType] = [.standard, .satellite, .hybrid]
-    let mapTypeTitles: [MKMapType: String] = [.standard: R.string.localizable.map_type_standard(),
-                                              .satellite: R.string.localizable.map_type_satellite(),
-                                              .hybrid: R.string.localizable.map_type_hybrid()]
-    
-    let optionsAlert = UIAlertController(title: R.string.localizable.select_map_type().capitalized, message: nil, preferredStyle: .alert)
-    mapTypes.forEach { mapTypeCase in
-      let action = UIAlertAction(title: mapTypeTitles[mapTypeCase], style: .default, handler: { _ in
+    let alert = Factory.AlertController.make(fromType:
+      .weatherMapType(currentMapType: mapView.mapType, completionHandler: { [weak self] mapType in
         DispatchQueue.main.async {
-          self.mapView.mapType = mapTypeCase
+          self?.mapView.mapType = mapType
         }
       })
-      if mapTypeCase == self.mapView.mapType {
-        action.setValue(true, forKey: "checked")
-      }
-      optionsAlert.addAction(action)
-    }
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
-    optionsAlert.addAction(cancelAction)
-    
-    present(optionsAlert, animated: true, completion: nil)
+    )
+    present(alert, animated: true, completion: nil)
   }
   
   private func triggerFocusOnLocationAlert() {
-    let optionsAlert: UIAlertController = UIAlertController(title: R.string.localizable.focus_on_location(), message: nil, preferredStyle: .alert)
-    
     guard let bookmarkedWeatherDataObjects = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.compactMap({
       return $0.weatherInformationDTO
     }) else {
       return
     }
     
-    bookmarkedWeatherDataObjects.forEach { weatherInformationDTO in
-      let action = UIAlertAction(title: weatherInformationDTO.cityName, style: .default, handler: { _ in
-        self.selectedBookmarkedLocation = weatherInformationDTO
-        DispatchQueue.main.async {
-          self.focusMapOnSelectedBookmarkedLocation()
-        }
+    let alert = Factory.AlertController.make(fromType:
+      .focusMapOnLocation(bookmarks: bookmarkedWeatherDataObjects,
+                          completionHandler: { [weak self] weatherInformationDTO in
+                            guard let weatherInformationDTO = weatherInformationDTO else {
+                              self?.focusMapOnUserLocation()
+                              return
+                            }
+                            self?.selectedBookmarkedLocation = weatherInformationDTO
+                            DispatchQueue.main.async {
+                              self?.focusMapOnSelectedBookmarkedLocation()
+                            }
       })
-      action.setValue(R.image.locateFavoriteActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
-      optionsAlert.addAction(action)
-    }
-    
-    let currentLocationAction = UIAlertAction(title: R.string.localizable.current_location(), style: .default, handler: { _ in
-      DispatchQueue.main.async {
-        self.focusMapOnUserLocation()
-      }
-    })
-    currentLocationAction.setValue(R.image.locateUserActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)
-    optionsAlert.addAction(currentLocationAction)
-    
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
-    optionsAlert.addAction(cancelAction)
-    
-    present(optionsAlert, animated: true, completion: nil)
+    )
+    present(alert, animated: true, completion: nil)
   }
   
   private func focusMapOnUserLocation() {
@@ -185,7 +156,7 @@ extension WeatherMapViewController: MKMapViewDelegate {
     viewForCurrentAnnotation?.configure(
       withTitle: annotation.title ?? Constants.Messages.kNotSet,
       subtitle: annotation.subtitle ?? Constants.Messages.kNotSet,
-      fillColor: (annotation.isDayTime ?? true) ? .nearbyWeatherStandard : .nearbyWeatherNight,
+      fillColor: (annotation.isDayTime ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight,
       tapHandler: { [weak self] _ in
         self?.previousRegion = mapView.region
         self?.stepper?.requestRouting(toStep:

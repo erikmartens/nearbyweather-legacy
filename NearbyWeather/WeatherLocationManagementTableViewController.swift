@@ -110,11 +110,10 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   // MARK: - Private Helpers
   
   private func presentLastBookmarkDeletionAlert() {
-    let alert = UIAlertController(title: R.string.localizable.delete_last_bookmark_title().capitalized, message: R.string.localizable.delete_last_bookmark_message(), preferredStyle: .alert)
-    
-    let cancelAction = UIAlertAction(title: R.string.localizable.dismiss(), style: .cancel, handler: nil)
-    alert.addAction(cancelAction)
-    
+    let alert = Factory.AlertController.make(fromType:
+      .dimissableNotice(title: R.string.localizable.delete_last_bookmark_title(),
+                        message: R.string.localizable.delete_last_bookmark_message())
+    )
     present(alert, animated: true, completion: nil)
   }
 }

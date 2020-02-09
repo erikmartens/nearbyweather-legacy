@@ -19,8 +19,6 @@ final class SettingsTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    navigationItem.title = R.string.localizable.tab_settings()
-    
     tableView.register(UINib(nibName: R.nib.dualLabelCell.name, bundle: R.nib.dualLabelCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.dualLabelCell.identifier)
     
@@ -63,22 +61,19 @@ final class SettingsTableViewController: UITableViewController {
       }
     case 4:
       if indexPath.row == 1 {
-        var choices = [PreferredBookmark(value: .none)]
-        let bookmarksChoices = WeatherDataManager.shared.bookmarkedLocations.map { PreferredBookmark(value: $0.identifier) }
-        choices.append(contentsOf: bookmarksChoices)
-        triggerOptionsAlert(forOptions: choices, title: R.string.localizable.preferred_bookmark())
+        showOptionsAlert(withType: .preferredBookmark)
       }
     case 5:
       if indexPath.row == 0 {
-        triggerOptionsAlert(forOptions: amountOfResultsOptions, title: R.string.localizable.amount_of_results())
+        showOptionsAlert(withType: .preferredAmountOfResults)
       }
       if indexPath.row == 1 {
-        triggerOptionsAlert(forOptions: sortResultsOptions, title: R.string.localizable.sorting_orientation())
+        showOptionsAlert(withType: .preferredSortingOrientation)
       }
       if indexPath.row == 2 {
-        triggerOptionsAlert(forOptions: temperatureUnitOptions, title: R.string.localizable.temperature_unit())
+        showOptionsAlert(withType: .preferredTemperatureUnit)
       } else {
-        triggerOptionsAlert(forOptions: distanceSpeedUnitOptions, title: R.string.localizable.distanceSpeed_unit())
+        showOptionsAlert(withType: .preferredDistanceSpeedUnit)
       }
     default:
       break
@@ -250,104 +245,60 @@ final class SettingsTableViewController: UITableViewController {
   
   // MARK: - Private Helpers
   
-  private struct SettingsAlertOption<T: PreferencesOption> { var title: String; var value: Int; var preferenceType: T.Type }
+  private enum OptionsAlertType {
+    case preferredBookmark
+    case preferredAmountOfResults
+    case preferredSortingOrientation
+    case preferredTemperatureUnit
+    case preferredDistanceSpeedUnit
+  }
   
-  private let amountOfResultsOptions = [AmountOfResults(value: .ten),
-                                        AmountOfResults(value: .twenty),
-                                        AmountOfResults(value: .thirty),
-                                        AmountOfResults(value: .forty),
-                                        AmountOfResults(value: .fifty)]
-  
-  private let sortResultsOptions = [SortingOrientation(value: .name),
-                                    SortingOrientation(value: .temperature),
-                                    SortingOrientation(value: .distance)]
-  
-  private let temperatureUnitOptions = [TemperatureUnit(value: .celsius),
-                                        TemperatureUnit(value: .fahrenheit),
-                                        TemperatureUnit(value: .kelvin)]
-  
-  private let distanceSpeedUnitOptions = [DistanceSpeedUnit(value: .kilometres),
-                                          DistanceSpeedUnit(value: .miles)]
-  
-  private func triggerOptionsAlert<T: PreferencesOption>(forOptions options: [T], title: String) {
-    let optionsAlert: UIAlertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-    
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
-    
-    // force unwrap options below -> this should never fail, if it does the app should crash so we know
-    options.forEach { option in
-      var actionIsSelected = false
-      switch option {
-      case is PreferredBookmark:
-        if PreferencesManager.shared.preferredBookmark.value == (option as! PreferredBookmark).value {
-          actionIsSelected = true
-        }
-      case is AmountOfResults:
-        if PreferencesManager.shared.amountOfResults.value == (option as! AmountOfResults).value {
-          actionIsSelected = true
-        }
-      case is SortingOrientation:
-        if (option as! SortingOrientation).value == .distance
-          && !LocationService.shared.locationPermissionsGranted {
-          return
-        }
-        if PreferencesManager.shared.sortingOrientation.value == (option as! SortingOrientation).value {
-          actionIsSelected = true
-        }
-      case is TemperatureUnit:
-        if PreferencesManager.shared.temperatureUnit.value == (option as! TemperatureUnit).value {
-          actionIsSelected = true
-        }
-      case is DistanceSpeedUnit:
-        if PreferencesManager.shared.distanceSpeedUnit.value == (option as! DistanceSpeedUnit).value {
-          actionIsSelected = true
-        }
-      default:
-        return
+  private func showOptionsAlert(withType type: OptionsAlertType) {
+    let completionHandler: (Bool) -> Void = { [weak self] optionChanged in
+      guard optionChanged else { return }
+      DispatchQueue.main.async {
+        self?.tableView.reloadData()
       }
-      
-      let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
-        switch option {
-        case is PreferredBookmark:
-          PreferencesManager.shared.preferredBookmark = option as! PreferredBookmark
-        case is AmountOfResults:
-          PreferencesManager.shared.amountOfResults = option as! AmountOfResults
-        case is SortingOrientation:
-          PreferencesManager.shared.sortingOrientation = option as! SortingOrientation
-        case is TemperatureUnit:
-          PreferencesManager.shared.temperatureUnit = option as! TemperatureUnit
-        case is DistanceSpeedUnit:
-          PreferencesManager.shared.distanceSpeedUnit = option as! DistanceSpeedUnit
-        default:
-          return
-        }
-        self.tableView.reloadData()
-      })
-      if actionIsSelected {
-        action.setValue(true, forKey: "checked")
-      }
-      optionsAlert.addAction(action)
     }
     
-    optionsAlert.addAction(cancelAction)
+    var alert: UIAlertController
     
-    present(optionsAlert, animated: true, completion: nil)
+    switch type {
+    case .preferredBookmark:
+      var options = [PreferredBookmark(value: .none)]
+      options.append(contentsOf:
+        WeatherDataManager.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmark.init)
+      )
+      alert = Factory.AlertController.make(fromType:
+        .preferredBookmarkOptions(options: options,
+                                  completionHandler: completionHandler)
+      )
+    case .preferredAmountOfResults:
+      alert = Factory.AlertController.make(fromType:
+        .preferredAmountOfResultsOptions(options: AmountOfResults.availableOptions,
+                                         completionHandler: completionHandler)
+      )
+    case .preferredSortingOrientation:
+      alert = Factory.AlertController.make(fromType:
+        .preferredSortingOrientationOptions(options: SortingOrientation.availableOptions,
+                                            completionHandler: completionHandler)
+      )
+    case .preferredTemperatureUnit:
+      alert = Factory.AlertController.make(fromType:
+        .preferredTemperatureUnitOptions(options: TemperatureUnit.availableOptions,
+                                         completionHandler: completionHandler)
+      )
+    case .preferredDistanceSpeedUnit:
+      alert = Factory.AlertController.make(fromType:
+        .preferredSpeedUnitOptions(options: DistanceSpeedUnit.availableOptions,
+                                   completionHandler: completionHandler)
+      )
+    }
+    present(alert, animated: true, completion: nil)
   }
   
   private func showNotificationsSettingsAlert() {
-    let alertController = UIAlertController(title: R.string.localizable.notifications_disabled(), message: R.string.localizable.enable_notifications_alert_text(), preferredStyle: .alert)
-    
-    let settingsAction = UIAlertAction(title: R.string.localizable.settings(), style: .default) { _ -> Void in
-      guard let settingsUrl = URL(string: UIApplication.openSettingsURLString),
-        UIApplication.shared.canOpenURL(settingsUrl) else {
-          return
-      }
-      UIApplication.shared.open(settingsUrl, completionHandler: nil)
-    }
-    let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel)
-    
-    alertController.addAction(settingsAction)
-    alertController.addAction(cancelAction)
-    present(alertController, animated: true, completion: nil)
+    let alert = Factory.AlertController.make(fromType: .pushNotificationsDisabled)
+    present(alert, animated: true, completion: nil)
   }
 }

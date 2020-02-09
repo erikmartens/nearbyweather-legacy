@@ -20,6 +20,7 @@ extension Factory {
       case preferredBookmarkOptions(options: [PreferredBookmark], completionHandler: ((Bool) -> Void))
       case preferredAmountOfResultsOptions(options: [AmountOfResults], completionHandler: ((Bool) -> Void))
       case preferredSortingOrientationOptions(options: [SortingOrientation], completionHandler: ((Bool) -> Void))
+      case preferredTemperatureUnitOptions(options: [TemperatureUnit], completionHandler: ((Bool) -> Void))
       case pushNotificationsDisabled
       case dimissableNotice(title: String?, message: String?)
     }
@@ -56,6 +57,11 @@ extension Factory {
         )
       case let .preferredSortingOrientationOptions(options, completionHandler):
         return preferredSortingOrientationOptionsAlert(
+          options: options,
+          completionHandler: completionHandler
+        )
+      case let .preferredTemperatureUnitOptions(options, completionHandler):
+        return preferredTemperatureUnitOptionsAlert(
           options: options,
           completionHandler: completionHandler
         )
@@ -185,6 +191,26 @@ private extension Factory.AlertController {
     
     return UIAlertController(
       title: R.string.localizable.sorting_orientation(),
+      actions: actions,
+      canceable: true
+    )
+  }
+  
+  static func preferredTemperatureUnitOptionsAlert(options: [TemperatureUnit], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+    let actions = options.map { option -> UIAlertAction in
+      let actionIsSelected = PreferencesManager.shared.temperatureUnit.value == option.value
+      
+      let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
+        let previousOption = PreferencesManager.shared.temperatureUnit
+        PreferencesManager.shared.temperatureUnit = option
+        completionHandler(previousOption.value != option.value)
+      })
+      action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)
+      return action
+    }
+    
+    return UIAlertController(
+      title: R.string.localizable.temperature_unit(),
       actions: actions,
       canceable: true
     )

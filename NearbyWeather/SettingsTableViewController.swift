@@ -102,7 +102,15 @@ final class SettingsTableViewController: UITableViewController {
         )
       }
       if indexPath.row == 2 {
-        triggerOptionsAlert(forOptions: temperatureUnitOptions, title: R.string.localizable.temperature_unit())
+        alert = Factory.AlertController.make(fromType:
+          .preferredTemperatureUnitOptions(options: temperatureUnitOptions,
+                                           completionHandler: { [weak self] optionChanged in
+                                            guard optionChanged else { return }
+                                            DispatchQueue.main.async {
+                                              self?.tableView.reloadData()
+                                            }
+          })
+        )
       } else {
         triggerOptionsAlert(forOptions: distanceSpeedUnitOptions, title: R.string.localizable.distanceSpeed_unit())
       }

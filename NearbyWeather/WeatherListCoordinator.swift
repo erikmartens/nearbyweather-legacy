@@ -14,7 +14,7 @@ enum WeatherListStep: StepProtocol {
   case none
 }
 
-class WeatherListCoordinator: Coordinator {
+final class WeatherListCoordinator: Coordinator {
   
   // MARK: - Required Properties
   

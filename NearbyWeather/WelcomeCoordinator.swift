@@ -8,10 +8,10 @@
 
 import UIKit
 
-enum WelcomeCoordinatorStep: StepProtocol {  
+enum WelcomeStep: StepProtocol {  
   case initial
-  case dismiss
-  case none
+  case setPermissions
+  case launchApp
 }
 
 final class WelcomeCoordinator: Coordinator {
@@ -28,44 +28,44 @@ final class WelcomeCoordinator: Coordinator {
   
   private static var _stepper: WelcomeStepper = {
     let initialStep = InitialStep(
-      identifier: WelcomeCoordinatorStep.identifier,
-      step: WelcomeCoordinatorStep.initial
+      identifier: WelcomeStep.identifier,
+      step: WelcomeStep.initial
     )
-    return WelcomeStepper(initialStep: initialStep, type: WelcomeCoordinatorStep.self)
+    return WelcomeStepper(initialStep: initialStep, type: WelcomeStep.self)
   }()
   
   // MARK: - Additional Properties
   
-  weak var windowManager: WindowManager?
+  weak var windowManager: WelcomeWindowManager?
 
   // MARK: - Initialization
   
-  init(parentCoordinator: Coordinator?, windowManager: WindowManager) {
+  init(parentCoordinator: Coordinator?, windowManager: WelcomeWindowManager) {
     self.windowManager = windowManager
     
     super.init(
       rootViewController: Self._rootViewController,
       stepper: Self._stepper,
       parentCoordinator: parentCoordinator,
-      type: WelcomeCoordinatorStep.self
+      type: WelcomeStep.self
     )
   }
   
   // MARK: - Navigation
   
   @objc override func didReceiveStep(_ notification: Notification) {
-    super.didReceiveStep(notification, type: WelcomeCoordinatorStep.self)
+    super.didReceiveStep(notification, type: WelcomeStep.self)
   }
   
   override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
-    guard let step = step as? WelcomeCoordinatorStep else { return }
+    guard let step = step as? WelcomeStep else { return }
     switch step {
     case .initial:
       summonWelcomeWindow(passNextChildCoordinatorTo: coordinatorReceiver)
-    case .dismiss:
+    case .setPermissions:
+      summonSetPermissions(passNextChildCoordinatorTo: coordinatorReceiver)
+    case .launchApp:
       dismissWelcomeWindow(passNextChildCoordinatorTo: coordinatorReceiver)
-    case .none:
-      break
     }
   }
 }
@@ -77,6 +77,9 @@ private extension WelcomeCoordinator {
   private func summonWelcomeWindow(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
    
     let welcomeViewController = R.storyboard.welcome.welcomeScreenViewController()!
+    welcomeViewController.navigationItem.title = R.string.localizable.welcome()
+    welcomeViewController.stepper = stepper as? WelcomeStepper
+    
     let root = rootViewController as? UINavigationController
     root?.setViewControllers([welcomeViewController], animated: false)
     
@@ -85,21 +88,30 @@ private extension WelcomeCoordinator {
     splashScreenWindow.windowLevel = UIWindow.Level.alert
     splashScreenWindow.makeKeyAndVisible()
     
-    windowManager?.splashScreenWindow = splashScreenWindow
+    windowManager?.welcomeWindow = splashScreenWindow
     
     coordinatorReceiver(.none)
+  }
+  
+  private func summonSetPermissions(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
+    let setPermissionsController = R.storyboard.setPermissions.setPermissionsVC()!
+    setPermissionsController.navigationItem.title = R.string.localizable.location_access()
+    setPermissionsController.stepper = stepper as? WelcomeStepper
+    
+    let root = rootViewController as? UINavigationController
+    root?.pushViewController(setPermissionsController, animated: true)
   }
   
   private func dismissWelcomeWindow(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     UIView.animate(withDuration: 0.2,
                    animations: { [weak self] in
-                    self?.windowManager?.splashScreenWindow?.alpha = 0
-                    self?.windowManager?.splashScreenWindow?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                    self?.windowManager?.welcomeWindow?.alpha = 0
+                    self?.windowManager?.welcomeWindow?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
       },
                    completion: { [weak self] _ in
-                    self?.windowManager?.splashScreenWindow?.resignKey()
-                    self?.windowManager?.splashScreenWindow = nil
-                    self?.windowManager?.window?.makeKeyAndVisible()
+                    self?.windowManager?.welcomeWindow?.resignKey()
+                    self?.windowManager?.welcomeWindow = nil
+                    self?.windowManager?.notifyForMainAppLaunch()
     })
     
     coordinatorReceiver(.destroy(self))

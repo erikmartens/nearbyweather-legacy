@@ -9,11 +9,11 @@
 import Foundation
 import FMDB
 
-final class WeatherLocationService {
+final class WeatherStationService {
   
   // MARK: - Public Assets
   
-  static var shared: WeatherLocationService!
+  static var shared: WeatherStationService!
   
   // MARK: - Private Assets
   
@@ -37,7 +37,7 @@ final class WeatherLocationService {
   // MARK: - Public Properties & Methods
   
   static func instantiateSharedInstance() {
-    shared = WeatherLocationService()
+    shared = WeatherStationService()
   }
   
   func locations(forSearchString searchString: String, completionHandler: @escaping (([WeatherStationDTO]?) -> Void)) {

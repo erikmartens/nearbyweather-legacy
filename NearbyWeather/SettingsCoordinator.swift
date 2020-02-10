@@ -17,7 +17,7 @@ enum SettingsStep: StepProtocol {
   case none
 }
 
-class SettingsCoordinator: Coordinator {
+final class SettingsCoordinator: Coordinator {
   
   // MARK: - Required Properties
   

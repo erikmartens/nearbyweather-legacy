@@ -9,22 +9,22 @@
 import Foundation
 import Alamofire
 
-enum ReachabilityStatus {
+enum NetworkingReachabilityStatus {
   case unknown
   case disconnected
   case connected
 }
 
-final class NetworkingService {
+final class WeatherNetworkingService {
   
   // MARK: - Public Assets
   
-  static var shared: NetworkingService!
+  static var shared: WeatherNetworkingService!
   
   // MARK: - Properties
   
   private let reachabilityManager: NetworkReachabilityManager?
-  private(set) var reachabilityStatus: ReachabilityStatus
+  private(set) var reachabilityStatus: NetworkingReachabilityStatus
   
   // MARK: - Initialization
   
@@ -56,7 +56,7 @@ final class NetworkingService {
   // MARK: - Public Methods
   
   static func instantiateSharedInstance() {
-    shared = NetworkingService()
+    shared = WeatherNetworkingService()
   }
   
   func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
@@ -83,7 +83,7 @@ final class NetworkingService {
   func fetchBulkWeatherInformation(completionHandler: @escaping (BulkWeatherDataContainer) -> Void) {
     let session = URLSession.shared
     
-    guard let currentLatitude = LocationService.shared.currentLatitude, let currentLongitude = LocationService.shared.currentLongitude else {
+    guard let currentLatitude = UserLocationService.shared.currentLatitude, let currentLongitude = UserLocationService.shared.currentLongitude else {
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .locationUnavailableError), httpStatusCode: nil)
       return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
     }

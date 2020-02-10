@@ -8,19 +8,23 @@
 
 import UIKit
 
-protocol WindowManager: class {
+protocol MainWindowManager: class {
   var window: UIWindow? { get set }
-  var splashScreenWindow: UIWindow? { get set }
+}
+
+protocol WelcomeWindowManager: class {
+  var welcomeWindow: UIWindow? { get set }
+  func notifyForMainAppLaunch()
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, WindowManager {
+class AppDelegate: UIResponder, UIApplicationDelegate, MainWindowManager, WelcomeWindowManager {
   
   private var mainCoordinator: MainCoordinator?
   private var welcomeCoordinator: WelcomeCoordinator?
   
   var window: UIWindow?
-  var splashScreenWindow: UIWindow?
+  var welcomeWindow: UIWindow?
   
   private var backgroundTaskId: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
   
@@ -50,6 +54,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WindowManager {
       self?.endBackgroundTask()
     }
   }
+  
+  func notifyForMainAppLaunch() {
+    loadMainWindow()
+  }
 }
 
 // MARK: - Private Helper Functions
@@ -57,33 +65,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WindowManager {
 extension AppDelegate {
   
   private func instantiateServices() {
-    NetworkingService.instantiateSharedInstance()
-    LocationService.instantiateSharedInstance()
+    WeatherNetworkingService.instantiateSharedInstance()
+    UserLocationService.instantiateSharedInstance()
     PreferencesManager.instantiateSharedInstance()
-    WeatherLocationService.instantiateSharedInstance()
+    WeatherStationService.instantiateSharedInstance()
     WeatherDataManager.instantiateSharedInstance()
-    PermissionsManager.instantiateSharedInstance()
+    PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()
   }
   
   private func instantiateApplicationUserInterface() {
-    mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
-    
-    NotificationCenter.default.post(
-      name: Notification.Name(rawValue: MainCoordinatorStep.identifier),
-      object: self,
-      userInfo: [Constants.Keys.AppCoordinator.kStep: MainCoordinatorStep.initial]
-    )
-    
-    if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) == nil {
-      welcomeCoordinator = WelcomeCoordinator(parentCoordinator: nil, windowManager: self)
-      
-      NotificationCenter.default.post(
-        name: Notification.Name(rawValue: WelcomeCoordinatorStep.identifier),
-        object: self,
-        userInfo: [Constants.Keys.AppCoordinator.kStep: WelcomeCoordinatorStep.initial]
-      )
+    guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil else {
+      loadWelcomeWindow()
+      return
     }
+    loadMainWindow()
+  }
+  
+  private func loadWelcomeWindow() {
+    welcomeCoordinator = WelcomeCoordinator(parentCoordinator: nil, windowManager: self)
+    (welcomeCoordinator?.stepper as? WelcomeStepper)?.requestRouting(toStep: .initial)
+  }
+  
+  private func loadMainWindow() {
+    mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
+    (mainCoordinator?.stepper as? MainStepper)?.requestRouting(toStep: .initial)
   }
   
   private func refreshWeatherDataIfNeeded() {

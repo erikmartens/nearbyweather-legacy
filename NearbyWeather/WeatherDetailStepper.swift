@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WeatherDetailStepper: Stepper {}
+final class WeatherDetailStepper: Stepper {}
 
 extension WeatherDetailStepper {
   

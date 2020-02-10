@@ -127,7 +127,7 @@ final class WeatherDataManager {
   }
   
   func update(withCompletionHandler completionHandler: ((UpdateStatus) -> Void)?) {
-    guard NetworkingService.shared.reachabilityStatus == .connected else {
+    guard WeatherNetworkingService.shared.reachabilityStatus == .connected else {
       completionHandler?(.failure)
       return
     }
@@ -143,7 +143,7 @@ final class WeatherDataManager {
       } else {
         self.bookmarkedLocations.forEach { location in
           dispatchGroup.enter()
-          NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
+          WeatherNetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: location.identifier, completionHandler: { weatherDataContainer in
             bookmarkedWeatherDataObjects.append(weatherDataContainer)
             dispatchGroup.leave()
           })
@@ -151,7 +151,7 @@ final class WeatherDataManager {
       }
       
       dispatchGroup.enter()
-      NetworkingService.shared.fetchBulkWeatherInformation(completionHandler: { weatherData in
+      WeatherNetworkingService.shared.fetchBulkWeatherInformation(completionHandler: { weatherData in
         nearbyWeatherDataObject = weatherData
         dispatchGroup.leave()
       })
@@ -189,7 +189,7 @@ final class WeatherDataManager {
   
   func updatePreferredBookmark(withCompletionHandler completionHandler: @escaping ((UpdateStatus) -> Void)) {
     guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
-      NetworkingService.shared.reachabilityStatus == .connected else {
+      WeatherNetworkingService.shared.reachabilityStatus == .connected else {
         completionHandler(.failure)
         return
     }
@@ -199,7 +199,7 @@ final class WeatherDataManager {
       
       var preferredBookmarkWeatherData: WeatherDataContainer?
       dispatchGroup.enter()
-      NetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: preferredBookmarkId, completionHandler: { weatherDataContainer in
+      WeatherNetworkingService.shared.fetchWeatherInformationForStation(withIdentifier: preferredBookmarkId, completionHandler: { weatherDataContainer in
         preferredBookmarkWeatherData = weatherDataContainer
         dispatchGroup.leave()
       })
@@ -271,8 +271,8 @@ final class WeatherDataManager {
     case .temperature:
       result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted { $0.atmosphericInformation.temperatureKelvin > $1.atmosphericInformation.temperatureKelvin }
     case .distance:
-      guard LocationService.shared.locationPermissionsGranted,
-        let currentLocation = LocationService.shared.currentLocation else {
+      guard UserLocationService.shared.locationPermissionsGranted,
+        let currentLocation = UserLocationService.shared.currentLocation else {
           return
       }
       result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted {
@@ -288,7 +288,7 @@ final class WeatherDataManager {
   /* NotificationCenter Notifications */
   
   @objc private func discardLocationBasedWeatherDataIfNeeded() {
-    if !LocationService.shared.locationPermissionsGranted {
+    if !UserLocationService.shared.locationPermissionsGranted {
       nearbyWeatherDataObject = nil
       WeatherDataManager.storeService()
       NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: self)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SettingsStepper: Stepper {}
+final class SettingsStepper: Stepper {}
 
 extension SettingsStepper {
   

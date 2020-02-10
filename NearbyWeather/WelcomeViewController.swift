@@ -12,6 +12,10 @@ import TextFieldCounter
 
 final class WelcomeViewController: UIViewController {
   
+  // MARK: - Routing
+  
+  weak var stepper: WelcomeStepper?
+  
   // MARK: - Properties
   
   private var timer: Timer?
@@ -27,12 +31,6 @@ final class WelcomeViewController: UIViewController {
   @IBOutlet weak var getInstructionsButtons: UIButton!
   
   // MARK: - Override Functions
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    navigationItem.title = R.string.localizable.welcome()
-  }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -122,9 +120,7 @@ final class WelcomeViewController: UIViewController {
     inputTextField.resignFirstResponder()
     UserDefaults.standard.set(inputTextField.text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
     
-    let destinationViewController = R.storyboard.setPermissions.setPermissionsVC()!
-    navigationController?.pushViewController(destinationViewController, animated: true)
-    
+    stepper?.requestRouting(toStep: .setPermissions)
   }
   
   @IBAction func didTapGetInstructionsButton(_ sender: UIButton) {

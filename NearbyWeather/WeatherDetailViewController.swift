@@ -165,7 +165,7 @@ final class WeatherDetailViewController: UIViewController {
     coordinatesImageView.tintColor = .darkGray
     coordinatesNoteLabel.text = "\(R.string.localizable.coordinates()):"
     coordinatesLabel.text = "\(weatherDTO.coordinates.latitude), \(weatherDTO.coordinates.longitude)"
-    if LocationService.shared.locationPermissionsGranted, let userLocation = LocationService.shared.location {
+    if UserLocationService.shared.locationPermissionsGranted, let userLocation = UserLocationService.shared.location {
       let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
       let distanceInMetres = location.distance(from: userLocation)
       

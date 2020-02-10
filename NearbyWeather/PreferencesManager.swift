@@ -290,7 +290,7 @@ final class PreferencesManager {
   /* NotificationCenter Notifications */
   
   @objc private func reconfigureSortingPreferenceIfNeeded() {
-    if !LocationService.shared.locationPermissionsGranted
+    if !UserLocationService.shared.locationPermissionsGranted
       && sortingOrientation.value == .distance {
       sortingOrientation.value = .name // set to default
     }

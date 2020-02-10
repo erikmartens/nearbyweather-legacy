@@ -394,13 +394,13 @@
 		F28CA547202CE83700209397 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				F26699591E9ADBC300498F99 /* UserLocationService.swift */,
-				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
-				F2D2B1DF2004171500C810EF /* DataStorageService.swift */,
-				F2A5CAA52005762A0071BFFB /* ConversionService.swift */,
-				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
 				86830391217BBA5D00B7122E /* BadgeService.swift */,
+				F2A5CAA52005762A0071BFFB /* ConversionService.swift */,
+				F2D2B1DF2004171500C810EF /* DataStorageService.swift */,
 				86830393217BBAE400B7122E /* PermissionsService.swift */,
+				F26699591E9ADBC300498F99 /* UserLocationService.swift */,
+				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
+				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";

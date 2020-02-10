@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-enum ReachabilityStatus {
+enum NetworkingReachabilityStatus {
   case unknown
   case disconnected
   case connected
@@ -24,7 +24,7 @@ final class WeatherNetworkingService {
   // MARK: - Properties
   
   private let reachabilityManager: NetworkReachabilityManager?
-  private(set) var reachabilityStatus: ReachabilityStatus
+  private(set) var reachabilityStatus: NetworkingReachabilityStatus
   
   // MARK: - Initialization
   

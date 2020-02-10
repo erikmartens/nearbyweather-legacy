@@ -10,8 +10,8 @@ import UIKit
 
 enum WelcomeCoordinatorStep: StepProtocol {  
   case initial
-  case dismiss
-  case none
+  case setPermissions
+  case launchApp
 }
 
 final class WelcomeCoordinator: Coordinator {
@@ -62,10 +62,10 @@ final class WelcomeCoordinator: Coordinator {
     switch step {
     case .initial:
       summonWelcomeWindow(passNextChildCoordinatorTo: coordinatorReceiver)
-    case .dismiss:
+    case .setPermissions:
+      summonSetPermissions(passNextChildCoordinatorTo: coordinatorReceiver)
+    case .launchApp:
       dismissWelcomeWindow(passNextChildCoordinatorTo: coordinatorReceiver)
-    case .none:
-      break
     }
   }
 }
@@ -77,6 +77,9 @@ private extension WelcomeCoordinator {
   private func summonWelcomeWindow(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
    
     let welcomeViewController = R.storyboard.welcome.welcomeScreenViewController()!
+    welcomeViewController.navigationItem.title = R.string.localizable.welcome()
+    welcomeViewController.stepper = stepper as? WelcomeStepper
+    
     let root = rootViewController as? UINavigationController
     root?.setViewControllers([welcomeViewController], animated: false)
     
@@ -88,6 +91,15 @@ private extension WelcomeCoordinator {
     windowManager?.splashScreenWindow = splashScreenWindow
     
     coordinatorReceiver(.none)
+  }
+  
+  private func summonSetPermissions(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
+    let setPermissionsController = R.storyboard.setPermissions.setPermissionsVC()!
+    setPermissionsController.navigationItem.title = R.string.localizable.location_access()
+    setPermissionsController.stepper = stepper as? WelcomeStepper
+    
+    let root = rootViewController as? UINavigationController
+    root?.pushViewController(setPermissionsController, animated: true)
   }
   
   private func dismissWelcomeWindow(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {

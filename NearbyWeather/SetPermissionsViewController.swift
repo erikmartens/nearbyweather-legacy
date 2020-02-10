@@ -10,6 +10,10 @@ import UIKit
 
 final class SetPermissionsViewController: UIViewController {
   
+  // MARK: - Routing
+  
+  weak var stepper: WelcomeStepper?
+  
   // MARK: - Properties
   
   private var timer: Timer?
@@ -23,13 +27,6 @@ final class SetPermissionsViewController: UIViewController {
   @IBOutlet weak var askPermissionsButton: UIButton!
   
   // MARK: - Override Functions
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    navigationItem.setHidesBackButton(true, animated: false)
-    navigationItem.title = R.string.localizable.location_access()
-  }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -91,12 +88,7 @@ final class SetPermissionsViewController: UIViewController {
   }
   
   @objc func launchApp() {
-    // TODO: via stepper
-    NotificationCenter.default.post(
-      name: Notification.Name(rawValue: WelcomeCoordinatorStep.identifier),
-      object: self,
-      userInfo: [Constants.Keys.AppCoordinator.kStep: WelcomeCoordinatorStep.dismiss]
-    )
+    stepper?.requestRouting(toStep: .launchApp)
   }
   
   // MARK: - Button Interaction

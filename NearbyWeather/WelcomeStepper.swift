@@ -9,3 +9,10 @@
 import Foundation
 
 class WelcomeStepper: Stepper {}
+
+extension WelcomeStepper {
+  
+  func requestRouting(toStep step: WelcomeCoordinatorStep) {
+    emitStep(step, type: WelcomeCoordinatorStep.self)
+  }
+}

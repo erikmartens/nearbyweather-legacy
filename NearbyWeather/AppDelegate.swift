@@ -56,9 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MainWindowManager, Welcom
   }
   
   func notifyForMainAppLaunch() {
-    mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
-    (mainCoordinator?.stepper as? MainStepper)?.requestRouting(toStep: .initial)
-    window?.makeKeyAndVisible()
+    loadMainWindow()
   }
 }
 
@@ -78,10 +76,18 @@ extension AppDelegate {
   
   private func instantiateApplicationUserInterface() {
     guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil else {
-      welcomeCoordinator = WelcomeCoordinator(parentCoordinator: nil, windowManager: self)
-      (welcomeCoordinator?.stepper as? WelcomeStepper)?.requestRouting(toStep: .initial)
+      loadWelcomeWindow()
       return
     }
+    loadMainWindow()
+  }
+  
+  private func loadWelcomeWindow() {
+    welcomeCoordinator = WelcomeCoordinator(parentCoordinator: nil, windowManager: self)
+    (welcomeCoordinator?.stepper as? WelcomeStepper)?.requestRouting(toStep: .initial)
+  }
+  
+  private func loadMainWindow() {
     mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
     (mainCoordinator?.stepper as? MainStepper)?.requestRouting(toStep: .initial)
   }

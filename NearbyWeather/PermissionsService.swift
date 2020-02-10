@@ -10,16 +10,16 @@ import Foundation
 import UIKit
 import UserNotifications
 
-final class PermissionsManager {
+final class PermissionsService {
   
   // MARK: - Properties
   
-  static var shared: PermissionsManager!
+  static var shared: PermissionsService!
   
   // MARK: - Instantiation
   
   static func instantiateSharedInstance() {
-    shared = PermissionsManager()
+    shared = PermissionsService()
   }
   
   // MARK: - Interface

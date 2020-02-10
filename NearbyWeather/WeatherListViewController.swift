@@ -122,9 +122,9 @@ final class WeatherListViewController: UIViewController {
     
     refreshControl.addTarget(self, action: #selector(WeatherListViewController.updateWeatherData), for: .valueChanged)
     tableView.addSubview(refreshControl)
-    tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
     
-    emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData && !WeatherDataManager.shared.bookmarkedLocations.isEmpty
+    tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
+    emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData
     
     separatoLineViewHeightConstraint.constant = 1/UIScreen.main.scale
   }
@@ -138,7 +138,7 @@ final class WeatherListViewController: UIViewController {
   
   @objc private func reconfigureOnNetworkDidBecomeAvailable() {
     UIView.animate(withDuration: 0.5) {
-      self.reloadButton.isHidden = NetworkingService.shared.reachabilityStatus != .connected
+      self.reloadButton.isHidden = WeatherNetworkingService.shared.reachabilityStatus != .connected
     }
   }
   
@@ -163,7 +163,7 @@ final class WeatherListViewController: UIViewController {
   }
   
   private func configureButtons() {
-    reloadButton.isHidden = NetworkingService.shared.reachabilityStatus != .connected
+    reloadButton.isHidden = WeatherNetworkingService.shared.reachabilityStatus != .connected
     if !reloadButton.isHidden {
       reloadButton.setTitle(R.string.localizable.reload().uppercased(), for: .normal)
       reloadButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
@@ -252,7 +252,7 @@ extension WeatherListViewController: UITableViewDataSource {
       let numberOfRows = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.count ?? 1
       return numberOfRows > 0 ? numberOfRows : 1
     case .nearby:
-      guard LocationService.shared.locationPermissionsGranted else {
+      guard UserLocationService.shared.locationPermissionsGranted else {
         return 1
       }
       let numberOfRows = WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.count ?? 1
@@ -289,7 +289,7 @@ extension WeatherListViewController: UITableViewDataSource {
       weatherCell.configureWithWeatherDTO(weatherDTO)
       return weatherCell
     case .nearby:
-      if !LocationService.shared.locationPermissionsGranted {
+      if !UserLocationService.shared.locationPermissionsGranted {
         let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .locationAccessDenied), httpStatusCode: nil)
         alertCell.configureWithErrorDataDTO(errorDataDTO)
         return alertCell

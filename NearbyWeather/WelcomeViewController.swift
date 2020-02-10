@@ -122,9 +122,9 @@ final class WelcomeViewController: UIViewController {
     inputTextField.resignFirstResponder()
     UserDefaults.standard.set(inputTextField.text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
     
+    // TODO: via stepper
     let destinationViewController = R.storyboard.setPermissions.setPermissionsVC()!
     navigationController?.pushViewController(destinationViewController, animated: true)
-    
   }
   
   @IBAction func didTapGetInstructionsButton(_ sender: UIButton) {

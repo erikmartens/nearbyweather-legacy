@@ -57,12 +57,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WindowManager {
 extension AppDelegate {
   
   private func instantiateServices() {
-    NetworkingService.instantiateSharedInstance()
-    LocationService.instantiateSharedInstance()
+    WeatherNetworkingService.instantiateSharedInstance()
+    UserLocationService.instantiateSharedInstance()
     PreferencesManager.instantiateSharedInstance()
-    WeatherLocationService.instantiateSharedInstance()
+    WeatherStationService.instantiateSharedInstance()
     WeatherDataManager.instantiateSharedInstance()
-    PermissionsManager.instantiateSharedInstance()
+    PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()
   }
   

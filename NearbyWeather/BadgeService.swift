@@ -45,7 +45,7 @@ final class BadgeService {
       completionHandler(false)
       return
     }
-    PermissionsManager.shared.requestNotificationPermissions(with: completionHandler)
+    PermissionsService.shared.requestNotificationPermissions(with: completionHandler)
   }
   
   static func instantiateSharedInstance() {
@@ -66,7 +66,7 @@ final class BadgeService {
       clearAppIcon()
       return
     }
-    PermissionsManager.shared.requestNotificationPermissions { [weak self] approved in
+    PermissionsService.shared.requestNotificationPermissions { [weak self] approved in
       guard approved else {
         self?.clearAppIcon()
         return

@@ -190,7 +190,7 @@ final class SettingsTableViewController: UITableViewController {
             return
           }
           
-          PermissionsManager.shared.requestNotificationPermissions { [weak self] approved in
+          PermissionsService.shared.requestNotificationPermissions { [weak self] approved in
             guard approved else {
               sender.setOn(false, animated: true)
               self?.showNotificationsSettingsAlert()

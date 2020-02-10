@@ -8,11 +8,11 @@
 
 import CoreLocation
 
-final class LocationService: CLLocationManager, CLLocationManagerDelegate {
+final class UserLocationService: CLLocationManager, CLLocationManagerDelegate {
   
   // MARK: - Public Assets
   
-  static var shared: LocationService!
+  static var shared: UserLocationService!
   
   var currentLatitude: Double?
   var currentLongitude: Double?
@@ -29,11 +29,11 @@ final class LocationService: CLLocationManager, CLLocationManagerDelegate {
   
   static func instantiateSharedInstance() {
     // initialize with example data
-    shared = LocationService()
+    shared = UserLocationService()
     
-    LocationService.shared.delegate = LocationService.shared
-    LocationService.shared.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-    LocationService.shared.startUpdatingLocation()
+    UserLocationService.shared.delegate = UserLocationService.shared
+    UserLocationService.shared.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+    UserLocationService.shared.startUpdatingLocation()
   }
   
   var locationPermissionsGranted: Bool {

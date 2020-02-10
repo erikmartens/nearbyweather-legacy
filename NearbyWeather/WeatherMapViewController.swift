@@ -101,7 +101,7 @@ final class WeatherMapViewController: UIViewController {
   }
   
   private func focusMapOnUserLocation() {
-    if LocationService.shared.locationPermissionsGranted, let currentLocation = LocationService.shared.currentLocation {
+    if UserLocationService.shared.locationPermissionsGranted, let currentLocation = UserLocationService.shared.currentLocation {
       let region = MKCoordinateRegion.init(center: currentLocation.coordinate, latitudinalMeters: 15000, longitudinalMeters: 15000)
       mapView.setRegion(region, animated: true)
     }
@@ -121,7 +121,7 @@ final class WeatherMapViewController: UIViewController {
       mapView.setRegion(previousRegion, animated: true)
       return
     }
-    guard LocationService.shared.locationPermissionsGranted, LocationService.shared.currentLocation != nil else {
+    guard UserLocationService.shared.locationPermissionsGranted, UserLocationService.shared.currentLocation != nil else {
       focusMapOnSelectedBookmarkedLocation()
       return
     }

@@ -91,6 +91,7 @@ final class SetPermissionsViewController: UIViewController {
   }
   
   @objc func launchApp() {
+    // TODO: via stepper
     NotificationCenter.default.post(
       name: Notification.Name(rawValue: WelcomeCoordinatorStep.identifier),
       object: self,
@@ -101,8 +102,8 @@ final class SetPermissionsViewController: UIViewController {
   // MARK: - Button Interaction
   
   @IBAction func didTapAskPermissionsButton(_ sender: UIButton) {
-    if LocationService.shared.authorizationStatus == .notDetermined {
-      LocationService.shared.requestWhenInUseAuthorization()
+    if UserLocationService.shared.authorizationStatus == .notDetermined {
+      UserLocationService.shared.requestWhenInUseAuthorization()
     } else {
       launchApp()
     }

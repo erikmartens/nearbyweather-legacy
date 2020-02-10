@@ -91,7 +91,7 @@ extension WeatherLocationSelectionTableViewController: UISearchResultsUpdating {
       tableView.reloadData()
       return
     }
-    WeatherLocationService.shared.locations(forSearchString: searchText, completionHandler: { [unowned self] weatherLocationDTOs in
+    WeatherStationService.shared.locations(forSearchString: searchText, completionHandler: { [unowned self] weatherLocationDTOs in
       if let weatherLocationDTOs = weatherLocationDTOs {
         self.filteredCities = weatherLocationDTOs
       }

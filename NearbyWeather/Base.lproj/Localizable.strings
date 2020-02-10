@@ -72,7 +72,6 @@ manage_locations = "Manage Bookmarks";
 add_location = "Add Bookmark";
 search_by_name = "Search by Name";
 focus_on_location = "Focus on Location";
-icons = "Icons";
 bookmarked = "Bookmarked";
 nearby = "Nearby";
 apiKey = "API Key";

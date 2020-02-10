@@ -20,7 +20,6 @@ extension Constants {
     static let kOpenWeatherMultiLocationBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/find")!
     static let kOpenWeatherMapUrl = URL(string: "https://openweathermap.org")!
     static let kOpenWeatherMapInstructionsUrl = URL(string: "https://openweathermap.org/appid")!
-    static let kIconsEightUrl = URL(string: "https://www.icons8.com")!
     
     static func kOpenWeatherMapCityDetailsUrl(forCityWithName name: String) -> URL {
       return URL(string: "https://openweathermap.org/find?q=\(name)")!

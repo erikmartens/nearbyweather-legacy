@@ -72,7 +72,6 @@ manage_locations = "Gérer les positions";
 add_location = "Ajouter une position";
 search_by_name = "Chercher par nom";
 focus_on_location = "Focus sur la position";
-icons = "Iconographie";
 bookmarked = "Favoris";
 nearby = "À proximité";
 apiKey = "Clé d'API";

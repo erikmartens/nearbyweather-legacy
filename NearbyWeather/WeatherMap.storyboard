@@ -33,7 +33,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="ba4-H7-WKH">
-                        <barButtonItem key="leftBarButtonItem" image="swap" id="H5s-gX-pXC">
+                        <barButtonItem key="leftBarButtonItem" image="MapType" id="H5s-gX-pXC">
                             <connections>
                                 <action selector="changeMapTypeButtonTapped:" destination="4pw-T6-fLw" id="ctj-XP-U7u"/>
                             </connections>
@@ -56,7 +56,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="MapType" width="25" height="25"/>
         <image name="marker" width="25" height="25"/>
-        <image name="swap" width="25" height="25"/>
     </resources>
 </document>

@@ -72,7 +72,6 @@ manage_locations = "Orte Verwalten";
 add_location = "Ort Hinzufügen";
 search_by_name = "Suche nach Namen";
 focus_on_location = "Ort Zentrieren";
-icons = "Icons";
 bookmarked = "Gespeicher";
 nearby = "In der Nähe";
 apiKey = "API Schlüssel";

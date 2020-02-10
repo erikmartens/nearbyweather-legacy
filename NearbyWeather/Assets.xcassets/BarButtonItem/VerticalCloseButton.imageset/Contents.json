@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "VerticalCloseButton.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "VerticalCloseButton@2x.png",
+      "filename" : "VerticalCloseButton-1.png",
       "scale" : "2x"
     },
     {

@@ -104,9 +104,6 @@ final class AboutAppTableViewController: UITableViewController {
     if indexPath.section == 5 {
       urlStringValue = thirdPartyLibraries[indexPath.row].urlString
     }
-    if indexPath.section == 6 && indexPath.row == 0 {
-      urlStringValue = Constants.Urls.kIconsEightUrl.absoluteString
-    }
     guard let urlString = urlStringValue, let url = URL(string: urlString) else {
       return
     }
@@ -116,7 +113,7 @@ final class AboutAppTableViewController: UITableViewController {
   // MARK: - TableView Data Source
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 7
+    return 6
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,8 +130,6 @@ final class AboutAppTableViewController: UITableViewController {
       return contributors.count
     case 5:
       return thirdPartyLibraries.count
-    case 6:
-      return 1
     default:
       return 0
     }
@@ -154,8 +149,6 @@ final class AboutAppTableViewController: UITableViewController {
       return nil
     case 5:
       return R.string.localizable.libraries()
-    case 6:
-      return R.string.localizable.icons()
     default:
       return nil
     }
@@ -219,9 +212,6 @@ final class AboutAppTableViewController: UITableViewController {
       return subtitleCell
     case 5:
       singleLabelCell.contentLabel.text = thirdPartyLibraries[indexPath.row].name
-      return singleLabelCell
-    case 6:
-      singleLabelCell.contentLabel.text = "Icons8"
       return singleLabelCell
     default:
       return UITableViewCell()

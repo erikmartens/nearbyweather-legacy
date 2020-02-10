@@ -8,19 +8,23 @@
 
 import UIKit
 
-protocol WindowManager: class {
+protocol MainWindowManager: class {
   var window: UIWindow? { get set }
-  var splashScreenWindow: UIWindow? { get set }
+}
+
+protocol WelcomeWindowManager: class {
+  var welcomeWindow: UIWindow? { get set }
+  func notifyForMainAppLaunch()
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, WindowManager {
+class AppDelegate: UIResponder, UIApplicationDelegate, MainWindowManager, WelcomeWindowManager {
   
   private var mainCoordinator: MainCoordinator?
   private var welcomeCoordinator: WelcomeCoordinator?
   
   var window: UIWindow?
-  var splashScreenWindow: UIWindow?
+  var welcomeWindow: UIWindow?
   
   private var backgroundTaskId: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
   
@@ -50,6 +54,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WindowManager {
       self?.endBackgroundTask()
     }
   }
+  
+  func notifyForMainAppLaunch() {
+    mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
+    (mainCoordinator?.stepper as? MainStepper)?.requestRouting(toStep: .initial)
+    window?.makeKeyAndVisible()
+  }
 }
 
 // MARK: - Private Helper Functions
@@ -67,23 +77,13 @@ extension AppDelegate {
   }
   
   private func instantiateApplicationUserInterface() {
-    mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
-    
-    NotificationCenter.default.post(
-      name: Notification.Name(rawValue: MainStep.identifier),
-      object: self,
-      userInfo: [Constants.Keys.AppCoordinator.kStep: MainStep.initial]
-    )
-    
-    if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) == nil {
+    guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil else {
       welcomeCoordinator = WelcomeCoordinator(parentCoordinator: nil, windowManager: self)
-      
-      NotificationCenter.default.post(
-        name: Notification.Name(rawValue: WelcomeStep.identifier),
-        object: self,
-        userInfo: [Constants.Keys.AppCoordinator.kStep: WelcomeStep.initial]
-      )
+      (welcomeCoordinator?.stepper as? WelcomeStepper)?.requestRouting(toStep: .initial)
+      return
     }
+    mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
+    (mainCoordinator?.stepper as? MainStepper)?.requestRouting(toStep: .initial)
   }
   
   private func refreshWeatherDataIfNeeded() {

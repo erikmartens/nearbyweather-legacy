@@ -94,11 +94,11 @@ final class SetPermissionsViewController: UIViewController {
   // MARK: - Button Interaction
   
   @IBAction func didTapAskPermissionsButton(_ sender: UIButton) {
-    if UserLocationService.shared.authorizationStatus == .notDetermined {
+    guard UserLocationService.shared.authorizationStatus != .notDetermined else {
       UserLocationService.shared.requestWhenInUseAuthorization()
-    } else {
-      launchApp()
+      return
     }
+    launchApp()
   }
 }
 

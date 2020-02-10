@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WelcomeStepper: Stepper {}
+final class WelcomeStepper: Stepper {}
 
 extension WelcomeStepper {
   

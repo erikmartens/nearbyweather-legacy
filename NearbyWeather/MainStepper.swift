@@ -8,4 +8,11 @@
 
 import Foundation
 
-class MainStepper: Stepper {}
+final class MainStepper: Stepper {}
+
+extension MainStepper {
+  
+  func requestRouting(toStep step: MainStep) {
+    emitStep(step, type: MainStep.self)
+  }
+}

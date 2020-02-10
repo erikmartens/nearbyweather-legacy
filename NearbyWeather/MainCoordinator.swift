@@ -35,11 +35,11 @@ final class MainCoordinator: Coordinator {
   
   // MARK: - Additional Properties
   
-  weak var windowManager: WindowManager?
+  weak var windowManager: MainWindowManager?
   
   // MARK: - Initialization
   
-  init(parentCoordinator: Coordinator?, windowManager: WindowManager) {
+  init(parentCoordinator: Coordinator?, windowManager: MainWindowManager) {
     self.windowManager = windowManager
     
     super.init(

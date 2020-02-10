@@ -457,7 +457,7 @@
 		F2DBEAF423E601B600CD513B /* Routing */ = {
 			isa = PBXGroup;
 			children = (
-				F2DBEB1723EB720100CD513B /* Root Files */,
+				F2DBEB1723EB720100CD513B /* Coordinator */,
 				F2DBEAF523E601F000CD513B /* MainCoordinator.swift */,
 				F2DBEB2A23EF4D2A00CD513B /* MainStepper.swift */,
 				F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */,
@@ -579,14 +579,14 @@
 			name = "Bookmarks Management Scene";
 			sourceTree = "<group>";
 		};
-		F2DBEB1723EB720100CD513B /* Root Files */ = {
+		F2DBEB1723EB720100CD513B /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				F2DBEB1A23EEF92800CD513B /* Step.swift */,
 				F2DBEB1823EB726E00CD513B /* Stepper.swift */,
 				F2DBEAF723E6054900CD513B /* Coordinator.swift */,
 			);
-			name = "Root Files";
+			name = Coordinator;
 			sourceTree = "<group>";
 		};
 		F2DBEB2C23F0385300CD513B /* Factory */ = {

@@ -70,18 +70,18 @@ extension AppDelegate {
     mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
     
     NotificationCenter.default.post(
-      name: Notification.Name(rawValue: MainCoordinatorStep.identifier),
+      name: Notification.Name(rawValue: MainStep.identifier),
       object: self,
-      userInfo: [Constants.Keys.AppCoordinator.kStep: MainCoordinatorStep.initial]
+      userInfo: [Constants.Keys.AppCoordinator.kStep: MainStep.initial]
     )
     
     if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) == nil {
       welcomeCoordinator = WelcomeCoordinator(parentCoordinator: nil, windowManager: self)
       
       NotificationCenter.default.post(
-        name: Notification.Name(rawValue: WelcomeCoordinatorStep.identifier),
+        name: Notification.Name(rawValue: WelcomeStep.identifier),
         object: self,
-        userInfo: [Constants.Keys.AppCoordinator.kStep: WelcomeCoordinatorStep.initial]
+        userInfo: [Constants.Keys.AppCoordinator.kStep: WelcomeStep.initial]
       )
     }
   }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum WelcomeCoordinatorStep: StepProtocol {  
+enum WelcomeStep: StepProtocol {  
   case initial
   case setPermissions
   case launchApp
@@ -28,10 +28,10 @@ final class WelcomeCoordinator: Coordinator {
   
   private static var _stepper: WelcomeStepper = {
     let initialStep = InitialStep(
-      identifier: WelcomeCoordinatorStep.identifier,
-      step: WelcomeCoordinatorStep.initial
+      identifier: WelcomeStep.identifier,
+      step: WelcomeStep.initial
     )
-    return WelcomeStepper(initialStep: initialStep, type: WelcomeCoordinatorStep.self)
+    return WelcomeStepper(initialStep: initialStep, type: WelcomeStep.self)
   }()
   
   // MARK: - Additional Properties
@@ -47,18 +47,18 @@ final class WelcomeCoordinator: Coordinator {
       rootViewController: Self._rootViewController,
       stepper: Self._stepper,
       parentCoordinator: parentCoordinator,
-      type: WelcomeCoordinatorStep.self
+      type: WelcomeStep.self
     )
   }
   
   // MARK: - Navigation
   
   @objc override func didReceiveStep(_ notification: Notification) {
-    super.didReceiveStep(notification, type: WelcomeCoordinatorStep.self)
+    super.didReceiveStep(notification, type: WelcomeStep.self)
   }
   
   override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
-    guard let step = step as? WelcomeCoordinatorStep else { return }
+    guard let step = step as? WelcomeStep else { return }
     switch step {
     case .initial:
       summonWelcomeWindow(passNextChildCoordinatorTo: coordinatorReceiver)

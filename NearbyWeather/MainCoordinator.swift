@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum MainCoordinatorStep: StepProtocol {
+enum MainStep: StepProtocol {
   case initial
   case none
 }
@@ -27,10 +27,10 @@ final class MainCoordinator: Coordinator {
   
   private static var _stepper: MainStepper = {
     let initialStep = InitialStep(
-      identifier: MainCoordinatorStep.identifier,
-      step: MainCoordinatorStep.initial
+      identifier: MainStep.identifier,
+      step: MainStep.initial
     )
-    return MainStepper(initialStep: initialStep, type: MainCoordinatorStep.self)
+    return MainStepper(initialStep: initialStep, type: MainStep.self)
   }()
   
   // MARK: - Additional Properties
@@ -46,18 +46,18 @@ final class MainCoordinator: Coordinator {
       rootViewController: Self._rootViewController,
       stepper: Self._stepper,
       parentCoordinator: parentCoordinator,
-      type: MainCoordinatorStep.self
+      type: MainStep.self
     )
   }
   
   // MARK: - Navigation
   
   @objc override func didReceiveStep(_ notification: Notification) {
-    super.didReceiveStep(notification, type: MainCoordinatorStep.self)
+    super.didReceiveStep(notification, type: MainStep.self)
   }
   
   override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
-    guard let step = step as? MainCoordinatorStep else { return }
+    guard let step = step as? MainStep else { return }
     switch step {
     case .initial:
       summonMainTabbarController(passNextChildCoordinatorTo: coordinatorReceiver)

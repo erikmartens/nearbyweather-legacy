@@ -12,7 +12,7 @@ class WelcomeStepper: Stepper {}
 
 extension WelcomeStepper {
   
-  func requestRouting(toStep step: WelcomeCoordinatorStep) {
-    emitStep(step, type: WelcomeCoordinatorStep.self)
+  func requestRouting(toStep step: WelcomeStep) {
+    emitStep(step, type: WelcomeStep.self)
   }
 }

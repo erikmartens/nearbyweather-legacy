@@ -482,7 +482,7 @@
 				F2DBEB0523E8DDD200CD513B /* Welcome Scene */,
 				F2DBEB0623E8DDDE00CD513B /* Set Permissions Scene */,
 				F2DBEAFE23E8D46200CD513B /* Weather List Scene */,
-				F2DBEB0C23E8DF6B00CD513B /* WeatherDetailScene */,
+				F2DBEB0C23E8DF6B00CD513B /* Weather Detail Scene */,
 				F2DBEAFF23E8D46E00CD513B /* Weather Map Scene */,
 				F2DBEB0023E8D47B00CD513B /* Settings Scene */,
 				F2DBEB0D23E8E05400CD513B /* About App Scene */,
@@ -537,13 +537,13 @@
 			name = "Set Permissions Scene";
 			sourceTree = "<group>";
 		};
-		F2DBEB0C23E8DF6B00CD513B /* WeatherDetailScene */ = {
+		F2DBEB0C23E8DF6B00CD513B /* Weather Detail Scene */ = {
 			isa = PBXGroup;
 			children = (
 				F26A6D5F20FB70DD0033BC49 /* WeatherDetails.storyboard */,
 				F28CA54020279EE300209397 /* WeatherDetailViewController.swift */,
 			);
-			name = WeatherDetailScene;
+			name = "Weather Detail Scene";
 			sourceTree = "<group>";
 		};
 		F2DBEB0D23E8E05400CD513B /* About App Scene */ = {

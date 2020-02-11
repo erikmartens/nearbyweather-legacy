@@ -59,7 +59,7 @@ final class WeatherNetworkingService {
     shared = WeatherNetworkingService()
   }
   
-  func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
+  func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {    
     let session = URLSession.shared
     
     let localeTag = Locale.current.languageCode?.lowercased() ?? "en"

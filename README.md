@@ -15,9 +15,8 @@
 <a href="https://itunes.apple.com/app/nearbyweather/id1227313069"><img src="Resources/app_store_badge.svg" alt="Download on the App Store"/></a>
 </p>
 
-|List View|Map View|Detail View|
-|:---:|:---:|:---:|
-![](https://i.imgur.com/Fba7ppE.png) | ![](https://i.imgur.com/fgPbJVx.png) | ![](https://i.imgur.com/MdQJiLj.png)
+<p align="center">
+<img src="Resources/screenshots.PNG" alt="NearbyWeather Screenshots">
 </p>
 
 ## About the App

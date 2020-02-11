@@ -17,6 +17,10 @@ enum NetworkingReachabilityStatus {
 
 final class WeatherNetworkingService {
   
+  private lazy var weatherFetchQueue: DispatchQueue = {
+    return DispatchQueue(label: Constants.Labels.DispatchQueues.kWeatherFetchQueue, qos: .userInitiated, attributes: [.concurrent])
+  }()
+  
   // MARK: - Public Assets
   
   static var shared: WeatherNetworkingService!
@@ -25,6 +29,10 @@ final class WeatherNetworkingService {
   
   private let reachabilityManager: NetworkReachabilityManager?
   private(set) var reachabilityStatus: NetworkingReachabilityStatus
+  
+  private var apiKey: String? {
+    UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
+  }
   
   // MARK: - Initialization
   
@@ -59,25 +67,36 @@ final class WeatherNetworkingService {
     shared = WeatherNetworkingService()
   }
   
-  func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {    
-    let session = URLSession.shared
+  func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
     
-    let localeTag = Locale.current.languageCode?.lowercased() ?? "en"
-    guard let apiKey = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey),
-      let requestURL = URL(string: "\(Constants.Urls.kOpenWeatherSingleLocationBaseUrl.absoluteString)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)") else {
-        let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
-        return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
+    guard let apiKey = self.apiKey else {
+        let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError),
+                                        httpStatusCode: nil)
+        return completionHandler(WeatherDataContainer(locationId: identifier,
+                                                      errorDataDTO: errorDataDTO,
+                                                      weatherInformationDTO: nil))
     }
     
-    let request = URLRequest(url: requestURL)
-    let dataTask = session.dataTask(with: request, completionHandler: { data, response, error in
-      guard let receivedData = data, response != nil, error == nil else {
-        let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .httpError), httpStatusCode: (response as? HTTPURLResponse)?.statusCode)
-        return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
-      }
-      completionHandler(self.extractWeatherInformation(receivedData, identifier: identifier))
-    })
-    dataTask.resume()
+    Alamofire
+      .request(
+        Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrls(with: apiKey, stationIdentifier: identifier),
+        method: .get,
+        parameters: nil,
+        encoding: JSONEncoding.default,
+        headers: nil
+      )
+      .responseData(queue: weatherFetchQueue) { [weak self] response in
+        guard let self = self,
+          let data = response.result.value,
+          response.result.error == nil else {
+            let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .httpError),
+                                            httpStatusCode: response.response?.statusCode)
+            return completionHandler(WeatherDataContainer(locationId: identifier,
+                                                          errorDataDTO: errorDataDTO,
+                                                          weatherInformationDTO: nil))
+        }
+        completionHandler(self.extractWeatherInformation(data, identifier: identifier))
+    }
   }
   
   func fetchBulkWeatherInformation(completionHandler: @escaping (BulkWeatherDataContainer) -> Void) {
@@ -87,7 +106,7 @@ final class WeatherNetworkingService {
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .locationUnavailableError), httpStatusCode: nil)
       return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
     }
-    guard let apiKey = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey),
+    guard let apiKey = self.apiKey,
       let requestURL = URL(
         string: "\(Constants.Urls.kOpenWeatherMultiLocationBaseUrl.absoluteString)?APPID=\(apiKey)&lat=\(currentLatitude)&lon=\(currentLongitude)&cnt=\(PreferencesManager.shared.amountOfResults.integerValue)"
       ) else {

@@ -24,5 +24,11 @@ extension Constants {
     static func kOpenWeatherMapCityDetailsUrl(forCityWithName name: String) -> URL {
       return URL(string: "https://openweathermap.org/find?q=\(name)")!
     }
+    
+    static func kOpenWeatherMapSingleStationtDataRequestUrls(with apiKey: String, stationIdentifier identifier: Int) -> URL {
+      let localeTag = Locale.current.languageCode?.lowercased() ?? "en"
+      let baseUrl = Constants.Urls.kOpenWeatherSingleLocationBaseUrl.absoluteString
+      return URL(string: "\(baseUrl)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)")!
+    }
   }
 }

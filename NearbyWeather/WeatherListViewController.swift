@@ -110,8 +110,6 @@ final class WeatherListViewController: UIViewController {
   // MARK: - Private Helpers
   
   private func configure() {
-    navigationItem.title = navigationItem.title?.capitalized
-    
     navigationController?.navigationBar.styleStandard()
     
     configureLastRefreshDate()
@@ -193,10 +191,6 @@ final class WeatherListViewController: UIViewController {
   
   @IBAction func didTapReloadButton(_ sender: UIButton) {
     updateWeatherData()
-  }
-  
-  @IBAction func openWeatherMapButtonPressed(_ sender: UIButton) {
-    presentSafariViewController(for: Constants.Urls.kOpenWeatherMapUrl)
   }
   
   // MARK: - Helpers

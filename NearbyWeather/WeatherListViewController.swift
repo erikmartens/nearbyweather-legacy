@@ -42,8 +42,6 @@ final class WeatherListViewController: UIViewController {
   // MARK: - Outlets
   
   @IBOutlet weak var tableView: UITableView!
-  @IBOutlet weak var separatoLineViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var refreshDateLabel: UILabel!
   
   @IBOutlet weak var emptyListOverlayContainerView: UIView!
   @IBOutlet weak var emptyListImageView: UIImageView!
@@ -120,13 +118,11 @@ final class WeatherListViewController: UIViewController {
     configureButtons()
     configureWeatherDataUnavailableElements()
     
-    refreshControl.addTarget(self, action: #selector(WeatherListViewController.updateWeatherData), for: .valueChanged)
-    tableView.addSubview(refreshControl)
+    refreshControl.addTarget(self, action: #selector(Self.updateWeatherData), for: .valueChanged)
+    tableView.refreshControl = refreshControl
     
     tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
     emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData
-    
-    separatoLineViewHeightConstraint.constant = 1/UIScreen.main.scale
   }
   
   @objc private func reconfigureOnWeatherDataServiceDidUpdate() {
@@ -150,16 +146,12 @@ final class WeatherListViewController: UIViewController {
   
   private func configureLastRefreshDate() {
     guard let lastRefreshDate = UserDefaults.standard.object(forKey: Constants.Keys.UserDefaults.kWeatherDataLastRefreshDateKey) as? Date else {
-      refreshDateLabel.isHidden = true
+      tableView.refreshControl?.attributedTitle = nil
       return
     }
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = .short
-    dateFormatter.timeStyle = .short
-    let dateString = dateFormatter.string(from: lastRefreshDate)
-    let title = R.string.localizable.last_refresh_at(dateString)
-    refreshDateLabel.text = title
-    refreshDateLabel.isHidden = false
+    tableView.refreshControl?.attributedTitle = NSAttributedString(string:
+      R.string.localizable.last_refresh_at(lastRefreshDate.shortDateTimeString)
+    )
   }
   
   private func configureButtons() {
@@ -261,7 +253,7 @@ extension WeatherListViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let weatherCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.weatherDataCell.identifier , for: indexPath) as! WeatherDataCell
+    let weatherCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.weatherDataCell.identifier, for: indexPath) as! WeatherDataCell
     let alertCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.alertCell.identifier, for: indexPath) as! AlertCell
     
     [weatherCell, alertCell].forEach {

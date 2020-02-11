@@ -250,7 +250,7 @@ final class PreferencesManager {
   
   var sortingOrientation: SortingOrientation {
     didSet {
-      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged), object: self)
+      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged), object: nil)
       PreferencesManager.storeService()
     }
   }

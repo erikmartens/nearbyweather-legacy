@@ -224,7 +224,7 @@ final class WeatherDataManager {
       
       WeatherDataManager.storeService()
       DispatchQueue.main.async {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: self)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: nil)
         BadgeService.shared.updateBadge()
         completionHandler(.success)
       }
@@ -291,7 +291,7 @@ final class WeatherDataManager {
     if !UserLocationService.shared.locationPermissionsGranted {
       nearbyWeatherDataObject = nil
       WeatherDataManager.storeService()
-      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: self)
+      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: nil)
     }
   }
   

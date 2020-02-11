@@ -19,5 +19,6 @@ extension Constants.Labels {
     static let kFetchWeatherDataBackgroundQueue = "de.erikmaximilianmartens.nearbyWeather.fetchWeatherDataQueue"
     static let kWeatherServiceBackgroundQueue = "de.erikmaximilianmartens.nearbyWeather.weatherDataManagerBackgroundQueue"
     static let kPreferencesManagerBackgroundQueue = "de.erikmaximilianmartens.nearbyWeather.preferencesManagerBackgroundQueue"
+    static let kWeatherFetchQueue = "de.erikmaximilianmartens.nearbyWeather.weatherFetchQueue"
   }
 }

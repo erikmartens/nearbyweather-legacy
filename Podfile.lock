@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.8.2)
+  - Alamofire (4.9.1)
   - APTimeZones (1.1)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
@@ -12,7 +12,7 @@ PODS:
   - TextFieldCounter (1.1.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.8.2)
+  - Alamofire
   - APTimeZones (from `https://github.com/Alterplay/APTimeZones.git`, commit `9ffd147`, branch `master`)
   - FMDB (~> 2.7.5)
   - PKHUD (~> 5.3.0)
@@ -22,12 +22,12 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - Alamofire
     - FMDB
     - PKHUD
     - R.swift
     - R.swift.Library
   trunk:
+    - Alamofire
     - SwiftLint
     - TextFieldCounter
 
@@ -43,7 +43,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Alterplay/APTimeZones.git
 
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   APTimeZones: ddb9aca50fff41d6313eb29d86d37b1edf9d2942
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
@@ -52,6 +52,6 @@ SPEC CHECKSUMS:
   SwiftLint: 8f5d2f903e1c9bcbc832fd16771e80a263ac6cbb
   TextFieldCounter: 0f20630c8fe6f02b657bd883674829edfc40d845
 
-PODFILE CHECKSUM: 87adc7134df8375ca5abbe458a594a1c5a41a95d
+PODFILE CHECKSUM: 7397e3e595df2a9b3d3fcfbd3c5aaf1aa1adef27
 
 COCOAPODS: 1.8.3

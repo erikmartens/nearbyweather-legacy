@@ -54,6 +54,7 @@
 		F2B8EA061EA2893C00704E90 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA051EA2893C00704E90 /* WelcomeViewController.swift */; };
 		F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */; };
 		F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */; };
+		F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14523F355370008B0F7 /* Date+String.swift */; };
 		F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2B1DF2004171500C810EF /* DataStorageService.swift */; };
 		F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */; };
 		F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEADB23E4CF7900CD513B /* Constants.swift */; };
@@ -189,6 +190,7 @@
 		F2B8EA051EA2893C00704E90 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewController.swift; sourceTree = "<group>"; };
 		F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppTableViewController.swift; sourceTree = "<group>"; };
+		F2C4E14523F355370008B0F7 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		F2D2B1DF2004171500C810EF /* DataStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageService.swift; sourceTree = "<group>"; };
 		F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+URLs.swift"; sourceTree = "<group>"; };
 		F2DBEADB23E4CF7900CD513B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */,
 				F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */,
 				F2DBEB3523F04E9D00CD513B /* MKMapType+AllCases.swift */,
+				F2C4E14523F355370008B0F7 /* Date+String.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -967,6 +970,7 @@
 				F2B8EA061EA2893C00704E90 /* WelcomeViewController.swift in Sources */,
 				F2B8EA001EA11BA800704E90 /* WeatherDataDTOs.swift in Sources */,
 				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,
+				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F2DBEB1423EA1F4D00CD513B /* WeatherDetailCoordinator.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,

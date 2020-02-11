@@ -18,7 +18,7 @@ enum NetworkingReachabilityStatus {
 final class WeatherNetworkingService {
   
   private lazy var weatherFetchQueue: DispatchQueue = {
-    return DispatchQueue(label: Constants.Labels.DispatchQueues.kWeatherFetchQueue, qos: .userInitiated, attributes: [.concurrent])
+    DispatchQueue(label: Constants.Labels.DispatchQueues.kWeatherFetchQueue, qos: .userInitiated, attributes: [.concurrent])
   }()
   
   // MARK: - Public Assets
@@ -37,8 +37,8 @@ final class WeatherNetworkingService {
   // MARK: - Initialization
   
   private init() {
-    self.reachabilityManager = NetworkReachabilityManager()
-    self.reachabilityStatus = .unknown
+    reachabilityManager = NetworkReachabilityManager()
+    reachabilityStatus = .unknown
     
     beginListeningNetworkReachability()
   }
@@ -50,13 +50,14 @@ final class WeatherNetworkingService {
   // MARK: - Private Methods
   
   func beginListeningNetworkReachability() {
-    reachabilityManager?.listener = { status in
+    reachabilityManager?.listener = { [weak self] status in
       switch status {
-      case .unknown: self.reachabilityStatus = .unknown
-      case .notReachable: self.reachabilityStatus = .disconnected
-      case .reachable(.ethernetOrWiFi), .reachable(.wwan): self.reachabilityStatus = .connected
+      case .unknown: self?.reachabilityStatus = .unknown
+      case .notReachable: self?.reachabilityStatus = .disconnected
+      case .reachable(.ethernetOrWiFi), .reachable(.wwan): self?.reachabilityStatus = .connected
       }
-      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged), object: self)
+      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
+                                      object: nil)
     }
     reachabilityManager?.startListening()
   }
@@ -70,110 +71,80 @@ final class WeatherNetworkingService {
   func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
     
     guard let apiKey = self.apiKey else {
-        let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError),
-                                        httpStatusCode: nil)
-        return completionHandler(WeatherDataContainer(locationId: identifier,
-                                                      errorDataDTO: errorDataDTO,
-                                                      weatherInformationDTO: nil))
+      let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
+      return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
     }
     
     Alamofire
       .request(
-        Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrls(with: apiKey, stationIdentifier: identifier),
+        Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier),
         method: .get,
         parameters: nil,
         encoding: JSONEncoding.default,
         headers: nil
-      )
+    )
       .responseData(queue: weatherFetchQueue) { [weak self] response in
         guard let self = self,
           let data = response.result.value,
           response.result.error == nil else {
-            let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .httpError),
-                                            httpStatusCode: response.response?.statusCode)
-            return completionHandler(WeatherDataContainer(locationId: identifier,
-                                                          errorDataDTO: errorDataDTO,
-                                                          weatherInformationDTO: nil))
+            let errorType = (response.response?.statusCode == 401) ? ErrorType(value: .unrecognizedApiKeyError) : ErrorType(value: .httpError)
+            let errorDataDTO = ErrorDataDTO(errorType: errorType, httpStatusCode: response.response?.statusCode)
+            return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
         }
         completionHandler(self.extractWeatherInformation(data, identifier: identifier))
     }
   }
   
   func fetchBulkWeatherInformation(completionHandler: @escaping (BulkWeatherDataContainer) -> Void) {
-    let session = URLSession.shared
-    
     guard let currentLatitude = UserLocationService.shared.currentLatitude, let currentLongitude = UserLocationService.shared.currentLongitude else {
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .locationUnavailableError), httpStatusCode: nil)
       return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
     }
-    guard let apiKey = self.apiKey,
-      let requestURL = URL(
-        string: "\(Constants.Urls.kOpenWeatherMultiLocationBaseUrl.absoluteString)?APPID=\(apiKey)&lat=\(currentLatitude)&lon=\(currentLongitude)&cnt=\(PreferencesManager.shared.amountOfResults.integerValue)"
-      ) else {
-        let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
-        return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
+    
+    guard let apiKey = self.apiKey else {
+      let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
+      return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
     }
-    let request = URLRequest(url: requestURL)
-    let dataTask = session.dataTask(with: request, completionHandler: { data, response, error in
-      guard let receivedData = data, response != nil, error == nil else {
-        let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .httpError), httpStatusCode: (response as? HTTPURLResponse)?.statusCode)
-        return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
-      }
-      completionHandler(self.extractBulkWeatherInformation(receivedData))
-    })
-    dataTask.resume()
+    
+    Alamofire
+      .request(
+        Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(with: apiKey, currentLatitude: currentLatitude, currentLongitude: currentLongitude),
+        method: .get,
+        parameters: nil,
+        encoding: JSONEncoding.default,
+        headers: nil
+    )
+      .responseData(queue: weatherFetchQueue) { [weak self] response in
+        guard let self = self,
+          let data = response.result.value,
+          response.result.error == nil else {
+            let errorType = (response.response?.statusCode == 401) ? ErrorType(value: .unrecognizedApiKeyError) : ErrorType(value: .httpError)
+            let errorDataDTO = ErrorDataDTO(errorType: errorType, httpStatusCode: response.response?.statusCode)
+            return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
+        }
+        completionHandler(self.extractBulkWeatherInformation(data))
+    }
   }
   
   // MARK: - Private Helpers
   
   private func extractWeatherInformation(_ data: Data, identifier: Int) -> WeatherDataContainer {
-    do {
-      guard let extractedData = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyHashable],
-        let httpStatusCode = extractedData["cod"] as? Int else {
-          let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .unparsableResponseError), httpStatusCode: nil)
-          return WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil)
-      }
-      guard httpStatusCode == 200 else {
-        if httpStatusCode == 401 {
-          let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .unrecognizedApiKeyError), httpStatusCode: httpStatusCode)
-          return WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil)
-        }
-        let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .httpError), httpStatusCode: httpStatusCode)
-        return WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil)
-      }
-      let weatherInformationDTO = try JSONDecoder().decode(WeatherInformationDTO.self, from: data)
-      return WeatherDataContainer(locationId: identifier, errorDataDTO: nil, weatherInformationDTO: weatherInformationDTO)
-    } catch {
+    guard let weatherInformationDTO = try? JSONDecoder().decode(WeatherInformationDTO.self, from: data) else {
       printDebugMessage(domain: String(describing: self),
-                        message: "Error while extracting single-location-data json: \(error.localizedDescription)")
+                        message: "NetworkingService: Error while decoding single-location-data to json")
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil)
     }
+    return WeatherDataContainer(locationId: identifier, errorDataDTO: nil, weatherInformationDTO: weatherInformationDTO)
   }
   
   private func extractBulkWeatherInformation(_ data: Data) -> BulkWeatherDataContainer {
-    do {
-      guard let extractedData = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyHashable],
-        let httpStatusCodeString = extractedData["cod"] as? String,
-        let httpStatusCode = Int(httpStatusCodeString) else {
-          let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .unparsableResponseError), httpStatusCode: nil)
-          return BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil)
-      }
-      guard httpStatusCode == 200 else {
-        if httpStatusCode == 401 {
-          let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .unrecognizedApiKeyError), httpStatusCode: httpStatusCode)
-          return BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil)
-        }
-        let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .httpError), httpStatusCode: httpStatusCode)
-        return BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil)
-      }
-      let multiWeatherData = try JSONDecoder().decode(WeatherInformationArrayWrapper.self, from: data)
-      return BulkWeatherDataContainer(errorDataDTO: nil, weatherInformationDTOs: multiWeatherData.list)
-    } catch {
+    guard let multiWeatherData = try? JSONDecoder().decode(WeatherInformationArrayWrapper.self, from: data) else {
       printDebugMessage(domain: String(describing: self),
-                        message: "NetworkingService: Error while extracting multi-location-data json: \(error.localizedDescription)")
+                        message: "NetworkingService: Error while decoding multi-location-data to json")
       let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil)
     }
+    return BulkWeatherDataContainer(errorDataDTO: nil, weatherInformationDTOs: multiWeatherData.list)
   }
 }

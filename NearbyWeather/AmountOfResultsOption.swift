@@ -16,7 +16,7 @@ enum AmountOfResultsValue: Int, CaseIterable, Codable {
   case fifty = 50
 }
 
-class AmountOfResultsOption: Codable, PreferencesOption {
+struct AmountOfResultsOption: Codable, PreferencesOption {
   
   static let availableOptions = [AmountOfResultsOption(value: .ten),
                                  AmountOfResultsOption(value: .twenty),
@@ -32,11 +32,11 @@ class AmountOfResultsOption: Codable, PreferencesOption {
   
   var value: AmountOfResultsValue
   
-  required init(value: AmountOfResultsValue) {
+  init(value: AmountOfResultsValue) {
     self.value = value
   }
   
-  required convenience init?(rawValue: Int) {
+ init?(rawValue: Int) {
     guard let value = AmountOfResultsValue(rawValue: rawValue) else {
       return nil
     }

@@ -73,7 +73,7 @@ final class WeatherListViewController: UIViewController {
     
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(WeatherListViewController.reconfigureOnWeatherDataServiceDidUpdate),
+      selector: #selector(Self.reconfigureOnWeatherDataServiceDidUpdate),
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
       object: nil
     )
@@ -81,7 +81,7 @@ final class WeatherListViewController: UIViewController {
     if !WeatherDataManager.shared.hasDisplayableData {
       NotificationCenter.default.addObserver(
         self,
-        selector: #selector(WeatherListViewController.reconfigureOnNetworkDidBecomeAvailable),
+        selector: #selector(Self.reconfigureOnNetworkDidBecomeAvailable),
         name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
         object: nil
       )
@@ -220,10 +220,6 @@ extension WeatherListViewController: UITableViewDelegate {
 }
 
 extension WeatherListViewController: UITableViewDataSource {
-  
-  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    nil
-  }
   
   func numberOfSections(in tableView: UITableView) -> Int {
     1

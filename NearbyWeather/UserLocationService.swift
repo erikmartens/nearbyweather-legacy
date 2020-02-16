@@ -55,7 +55,8 @@ final class UserLocationService: CLLocationManager, CLLocationManagerDelegate {
       self.currentLatitude = nil
       self.currentLongitude = nil
     }
-    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated), object: self)
+    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
+                                    object: nil)
   }
   
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

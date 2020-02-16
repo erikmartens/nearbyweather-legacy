@@ -26,6 +26,11 @@ final class SettingsCoordinator: Coordinator {
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
     navigationController.navigationBar.tintColor = Constants.Theme.BrandColors.standardDay
+    
+    navigationController.tabBarItem.selectedImage = R.image.tabbar_settings_ios11()
+    navigationController.tabBarItem.image = R.image.tabbar_settings_ios11()
+    navigationController.tabBarItem.title = R.string.localizable.tab_settings()
+    
     return navigationController
   }()
   
@@ -79,9 +84,6 @@ private extension SettingsCoordinator {
     let settingsViewController = SettingsTableViewController(style: .grouped)
     settingsViewController.title = R.string.localizable.tab_settings()
     settingsViewController.stepper = stepper as? SettingsStepper
-    
-    settingsViewController.tabBarItem.selectedImage = R.image.tabbar_settings_ios11()
-    settingsViewController.tabBarItem.image = R.image.tabbar_settings_ios11()
 
     (rootViewController as? UINavigationController)?.setViewControllers([settingsViewController], animated: false)
     

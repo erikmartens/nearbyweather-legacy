@@ -41,7 +41,9 @@ final class WeatherListViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationController?.navigationBar.isHidden = false
     
+    refreshControl = UIRefreshControl()
     tableView.separatorStyle = .none
     
     tableView.register(UINib(nibName: R.nib.weatherDataCell.name, bundle: R.nib.weatherDataCell.bundle),
@@ -233,6 +235,10 @@ extension WeatherListViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    guard WeatherDataManager.shared.hasDisplayableData else {
+      return
+    }
+    
     tableView.deselectRow(at: indexPath, animated: true)
     
     let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell

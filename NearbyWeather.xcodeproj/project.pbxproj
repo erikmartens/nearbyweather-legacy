@@ -462,8 +462,8 @@
 		F2C4E14723F98A260008B0F7 /* Empty Weather List Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F2C4E14823F98A4C0008B0F7 /* EmptyWeatherListViewController.swift */,
 				F2C4E14A23F98AA50008B0F7 /* EmptyWeatherList.storyboard */,
+				F2C4E14823F98A4C0008B0F7 /* EmptyWeatherListViewController.swift */,
 			);
 			name = "Empty Weather List Scene";
 			sourceTree = "<group>";

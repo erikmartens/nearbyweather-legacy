@@ -24,6 +24,11 @@ final class WeatherListCoordinator: Coordinator {
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
     navigationController.navigationBar.tintColor = Constants.Theme.BrandColors.standardDay
+    
+    navigationController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
+    navigationController.tabBarItem.image = R.image.tabbar_list_ios11()
+    navigationController.tabBarItem.title = R.string.localizable.tab_weatherList()
+    
     return navigationController
   }()
   
@@ -64,7 +69,6 @@ final class WeatherListCoordinator: Coordinator {
                                      passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
-    
     }
   }
 }
@@ -76,8 +80,6 @@ private extension WeatherListCoordinator {
     weatherListViewController.stepper = stepper as? WeatherListStepper
     
     weatherListViewController.title = R.string.localizable.tab_weatherList()
-    weatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
-    weatherListViewController.tabBarItem.image = R.image.tabbar_list_ios11()
     
     let root = rootViewController as? UINavigationController
     root?.setViewControllers([weatherListViewController], animated: false)
@@ -88,10 +90,8 @@ private extension WeatherListCoordinator {
   func summonEmptyWeatherListController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     let emptyWeatherListViewController = R.storyboard.emptyWeatherList.emptyWeatherListViewController()!
     emptyWeatherListViewController.stepper = stepper as? WeatherListStepper
-
+    
     emptyWeatherListViewController.title = R.string.localizable.tab_weatherList()
-    emptyWeatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
-    emptyWeatherListViewController.tabBarItem.image = R.image.tabbar_list_ios11()
 
     let root = rootViewController as? UINavigationController
     root?.setViewControllers([emptyWeatherListViewController], animated: false)

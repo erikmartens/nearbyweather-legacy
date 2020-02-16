@@ -9,27 +9,27 @@
     </dependencies>
     <scenes>
         <!--Empty Weather List View Controller-->
-        <scene sceneID="sXS-pz-1Ya">
+        <scene sceneID="3Q5-0S-Rlz">
             <objects>
-                <viewController storyboardIdentifier="EmptyWeatherListViewController" id="sqi-5z-9kC" customClass="EmptyWeatherListViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" hidden="YES" contentMode="scaleToFill" id="mjL-WU-vMQ" userLabel="EmptyListOverlay">
+                <viewController storyboardIdentifier="EmptyWeatherListViewController" id="oQI-Ws-w0h" customClass="EmptyWeatherListViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JUk-Fk-Ndh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="81U-mh-A2x">
-                                <rect key="frame" x="20" y="270.5" width="374" height="355.5"/>
+                                <rect key="frame" x="44" y="270.5" width="326" height="355.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="16z-Ir-uPX">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="206"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="326" height="206"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SadCloud" translatesAutoresizingMaskIntoConstraints="NO" id="7HE-1z-dTJ">
-                                                <rect key="frame" x="32.5" y="0.0" width="309" height="206"/>
+                                                <rect key="frame" x="8.5" y="0.0" width="309" height="206"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="7HE-1z-dTJ" secondAttribute="height" multiplier="3:2" id="Q2o-b9-VLq"/>
                                                 </constraints>
                                             </imageView>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="7HE-1z-dTJ" firstAttribute="centerX" secondItem="16z-Ir-uPX" secondAttribute="centerX" id="aB8-90-I7W"/>
                                             <constraint firstAttribute="bottom" secondItem="7HE-1z-dTJ" secondAttribute="bottom" id="ljK-kS-KFP"/>
@@ -37,36 +37,36 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hTn-iJ-lOi">
-                                        <rect key="frame" x="0.0" y="226" width="374" height="129.5"/>
+                                        <rect key="frame" x="0.0" y="226" width="326" height="129.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Weather Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctA-RN-4HD">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="326" height="20.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather data could not be loaded. Make sure you are connected to the Internet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SgX-01-F5k">
-                                                <rect key="frame" x="0.0" y="30.5" width="374" height="38"/>
+                                                <rect key="frame" x="0.0" y="30.5" width="326" height="38"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQG-k6-tht">
-                                                <rect key="frame" x="0.0" y="78.5" width="374" height="51"/>
+                                                <rect key="frame" x="0.0" y="78.5" width="326" height="51"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KD0-MZ-Gjp">
-                                                        <rect key="frame" x="112" y="15" width="150" height="36"/>
+                                                        <rect key="frame" x="88" y="15" width="150" height="36"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="36" id="k1H-2D-qzL"/>
                                                             <constraint firstAttribute="width" constant="150" id="lGV-wk-vnZ"/>
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <connections>
-                                                            <action selector="didTapReloadButton:" destination="sqi-5z-9kC" eventType="touchUpInside" id="il9-D3-6Fz"/>
+                                                            <action selector="didTapReloadButton:" destination="oQI-Ws-w0h" eventType="touchUpInside" id="Adj-aO-Y8s"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="KD0-MZ-Gjp" secondAttribute="bottom" id="TLZ-xO-trR"/>
                                                     <constraint firstItem="KD0-MZ-Gjp" firstAttribute="centerX" secondItem="hQG-k6-tht" secondAttribute="centerX" id="UfU-nA-p39"/>
@@ -74,31 +74,33 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="81U-mh-A2x" firstAttribute="centerY" secondItem="mjL-WU-vMQ" secondAttribute="centerY" id="20L-jB-D7V"/>
-                            <constraint firstItem="81U-mh-A2x" firstAttribute="leading" secondItem="mjL-WU-vMQ" secondAttribute="leading" constant="20" id="2kn-m8-HtA"/>
-                            <constraint firstItem="qUl-kH-YOx" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="81U-mh-A2x" secondAttribute="bottom" id="3Sg-gJ-5t5"/>
-                            <constraint firstItem="81U-mh-A2x" firstAttribute="top" relation="greaterThanOrEqual" secondItem="qUl-kH-YOx" secondAttribute="top" id="Gne-9v-sGP"/>
-                            <constraint firstAttribute="trailing" secondItem="81U-mh-A2x" secondAttribute="trailing" constant="20" id="HeD-kb-KK2"/>
-                            <constraint firstItem="81U-mh-A2x" firstAttribute="centerX" secondItem="mjL-WU-vMQ" secondAttribute="centerX" id="Ndd-uo-wpC"/>
+                            <constraint firstItem="odD-OZ-BqQ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="81U-mh-A2x" secondAttribute="bottom" id="6St-21-4SL"/>
+                            <constraint firstItem="81U-mh-A2x" firstAttribute="top" relation="greaterThanOrEqual" secondItem="odD-OZ-BqQ" secondAttribute="top" id="Ab5-IF-zuA"/>
+                            <constraint firstItem="81U-mh-A2x" firstAttribute="centerY" secondItem="JUk-Fk-Ndh" secondAttribute="centerY" id="J63-vg-LBp"/>
+                            <constraint firstItem="81U-mh-A2x" firstAttribute="leading" secondItem="JUk-Fk-Ndh" secondAttribute="leadingMargin" constant="24" id="K2m-tK-Jox"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="81U-mh-A2x" secondAttribute="trailing" constant="24" id="PYK-Od-dcw"/>
+                            <constraint firstItem="81U-mh-A2x" firstAttribute="centerX" secondItem="JUk-Fk-Ndh" secondAttribute="centerX" id="lWT-H3-2p6"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="qUl-kH-YOx"/>
+                        <viewLayoutGuide key="safeArea" id="odD-OZ-BqQ"/>
                     </view>
                     <connections>
-                        <outlet property="emptyListDescriptionLabel" destination="SgX-01-F5k" id="8H4-BX-t6T"/>
-                        <outlet property="emptyListImageView" destination="7HE-1z-dTJ" id="x6d-4W-Unx"/>
-                        <outlet property="emptyListTitleLabel" destination="ctA-RN-4HD" id="zXN-qO-7ek"/>
-                        <outlet property="reloadButton" destination="KD0-MZ-Gjp" id="2jJ-GX-z2u"/>
+                        <outlet property="emptyListDescriptionLabel" destination="SgX-01-F5k" id="cc0-lc-qRi"/>
+                        <outlet property="emptyListImageView" destination="7HE-1z-dTJ" id="1cm-aq-xLP"/>
+                        <outlet property="emptyListTitleLabel" destination="ctA-RN-4HD" id="oQu-Vh-bVS"/>
+                        <outlet property="reloadButton" destination="KD0-MZ-Gjp" id="hZg-rY-jRo"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tzV-xZ-bhG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ga-LZ-8fL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="105.79710144927537" y="95.758928571428569"/>
+            <point key="canvasLocation" x="-546" y="108"/>
         </scene>
     </scenes>
     <resources>

@@ -24,20 +24,23 @@ final class EmptyWeatherListViewController: UIViewController {
   
   // MARK: - ViewController Lifecycle
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    navigationController?.navigationBar.isHidden = true
+    
     configureWeatherDataUnavailableElements()
     configureButtons()
     
-    guard !WeatherDataManager.shared.hasDisplayableData else {
-     return
-    }
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(Self.reconfigureOnNetworkDidBecomeAvailable),
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
       object: nil
     )
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
   
   // MARK: - IBActions
@@ -62,12 +65,11 @@ final class EmptyWeatherListViewController: UIViewController {
   
   private func configureButtons() {
     reloadButton.isHidden = WeatherNetworkingService.shared.reachabilityStatus != .connected
-    if !reloadButton.isHidden {
-      reloadButton.setTitle(R.string.localizable.reload().uppercased(), for: .normal)
-      reloadButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
-      reloadButton.layer.cornerRadius = 5.0
-      reloadButton.layer.borderColor = Constants.Theme.Interactables.standardButton.cgColor
-      reloadButton.layer.borderWidth = 1.0
-    }
+    
+    reloadButton.setTitle(R.string.localizable.reload().uppercased(), for: .normal)
+    reloadButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
+    reloadButton.layer.cornerRadius = 5.0
+    reloadButton.layer.borderColor = Constants.Theme.Interactables.standardButton.cgColor
+    reloadButton.layer.borderWidth = 1.0
   }
 }

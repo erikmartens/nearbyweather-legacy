@@ -1,4 +1,9 @@
-## Contribution Guidelines and Terms
+# Contributing
+
+## Thank You!
+Thank you for considering to allocate some of your precious time to moving this project forward. Awesome to see you here! You don't have to be an expert to help us, every small tweak, crazy idea and/or bugreport is highly appreciated! In return you will receive valuable feedback and be listed as a contributor inside the app as it appears on the iOS App Store.
+
+## Guidelines and Terms
 When working with the NearbyWeather Project, please make sure that:
 
 - You are working with the latest publicly available versions of Xcode and Swift. If you do not observe this, you may run into compatibility issues, when cloning the project.

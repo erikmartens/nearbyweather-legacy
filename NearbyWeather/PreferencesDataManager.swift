@@ -17,6 +17,14 @@ struct PreferencesManagerStoredContentsWrapper: Codable {
   var sortingOrientation: SortingOrientationOption
 }
 
+protocol StoredPreferencesProvider {
+  var preferredBookmark: PreferredBookmarkOption { get set }
+  var amountOfResults: AmountOfResultsOption { get set }
+  var temperatureUnit: TemperatureUnitOption { get set }
+  var distanceSpeedUnit: DistanceVelocityUnitOption { get set }
+  var sortingOrientation: SortingOrientationOption { get set }
+}
+
 final class PreferencesDataManager {
   
   private static let preferencesManagerBackgroundQueue = DispatchQueue(
@@ -33,40 +41,6 @@ final class PreferencesDataManager {
   
   // MARK: - Properties
   
-  var preferredBookmark: PreferredBookmarkOption {
-    didSet {
-      BadgeService.shared.updateBadge()
-      PreferencesDataManager.storeService()
-    }
-  }
-  var amountOfResults: AmountOfResultsOption {
-    didSet {
-      WeatherDataManager.shared.update(withCompletionHandler: nil)
-      PreferencesDataManager.storeService()
-    }
-  }
-  var temperatureUnit: TemperatureUnitOption {
-    didSet {
-      BadgeService.shared.updateBadge()
-      PreferencesDataManager.storeService()
-    }
-  }
-  var distanceSpeedUnit: DistanceVelocityUnitOption {
-    didSet {
-      PreferencesDataManager.storeService()
-    }
-  }
-  
-  var sortingOrientation: SortingOrientationOption {
-    didSet {
-      NotificationCenter.default.post(
-        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged),
-        object: nil
-      )
-      PreferencesDataManager.storeService()
-    }
-  }
-  
   private var locationAuthorizationObserver: NSObjectProtocol!
   
   // MARK: - Initialization
@@ -77,13 +51,6 @@ final class PreferencesDataManager {
     self.temperatureUnit = temperatureUnit
     self.distanceSpeedUnit = windspeedUnit
     self.sortingOrientation = sortingOrientation
-    
-    locationAuthorizationObserver = NotificationCenter.default.addObserver(
-      forName: UIApplication.didBecomeActiveNotification,
-      object: nil, queue: nil, using: { [unowned self] _ in
-        self.reconfigureSortingPreferenceIfNeeded()
-      }
-    )
   }
   
   deinit {
@@ -93,28 +60,59 @@ final class PreferencesDataManager {
   // MARK: - Public Properties & Methods
   
   static func instantiateSharedInstance() {
-    shared = PreferencesDataManager.loadService() ?? PreferencesDataManager(preferredBookmark: PreferredBookmarkOption(value: .none),
-                                                                    amountOfResults: AmountOfResultsOption(value: .ten),
-                                                                    temperatureUnit: TemperatureUnitOption(value: .celsius),
-                                                                    windspeedUnit: DistanceVelocityUnitOption(value: .kilometres),
-                                                                    sortingOrientation: SortingOrientationOption(value: .name))
+    shared = PreferencesDataManager.loadData() ?? PreferencesDataManager(preferredBookmark: PreferredBookmarkOption(value: .none),
+                                                                         amountOfResults: AmountOfResultsOption(value: .ten),
+                                                                         temperatureUnit: TemperatureUnitOption(value: .celsius),
+                                                                         windspeedUnit: DistanceVelocityUnitOption(value: .kilometres),
+                                                                         sortingOrientation: SortingOrientationOption(value: .name))
   }
   
-  // MARK: - Private Helper Methods
+  // MARK: - Preferences
   
-  /* NotificationCenter Notifications */
+  var preferredBookmark: PreferredBookmarkOption {
+     didSet {
+       BadgeService.shared.updateBadge()
+       PreferencesDataManager.storeData()
+     }
+   }
+   
+   var amountOfResults: AmountOfResultsOption {
+     didSet {
+       WeatherDataManager.shared.update(withCompletionHandler: nil)
+       PreferencesDataManager.storeData()
+     }
+   }
+   
+   var temperatureUnit: TemperatureUnitOption {
+     didSet {
+       BadgeService.shared.updateBadge()
+       PreferencesDataManager.storeData()
+     }
+   }
+   
+   var distanceSpeedUnit: DistanceVelocityUnitOption {
+     didSet {
+       PreferencesDataManager.storeData()
+     }
+   }
+   
+   var sortingOrientation: SortingOrientationOption {
+     didSet {
+       NotificationCenter.default.post(
+         name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged),
+         object: nil
+       )
+       PreferencesDataManager.storeData()
+     }
+   }
+}
+
+extension PreferencesDataManager: DataStorageProtocol {
   
-  @objc private func reconfigureSortingPreferenceIfNeeded() {
-    if !UserLocationService.shared.locationPermissionsGranted
-      && sortingOrientation.value == .distance {
-      sortingOrientation.value = .name // set to default
-    }
-  }
+  typealias T = PreferencesDataManager
   
-  /* Internal Storage Helpers */
-  
-  private static func loadService() -> PreferencesDataManager? {
-    guard let preferencesManagerStoredContentsWrapper = DataStorageService.retrieveJsonFromFile(
+  static func loadData() -> PreferencesDataManager? {
+    guard let preferencesManagerStoredContentsWrapper = DataStorageManager.retrieveJsonFromFile(
       with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
       andDecodeAsType: PreferencesManagerStoredContentsWrapper.self,
       fromStorageLocation: .applicationSupport
@@ -131,7 +129,7 @@ final class PreferencesDataManager {
     )
   }
   
-  private static func storeService() {
+  static func storeData() {
     let dispatchSemaphore = DispatchSemaphore(value: 1)
     
     dispatchSemaphore.wait()
@@ -143,7 +141,7 @@ final class PreferencesDataManager {
         windspeedUnit: PreferencesDataManager.shared.distanceSpeedUnit,
         sortingOrientation: PreferencesDataManager.shared.sortingOrientation
       )
-      DataStorageService.storeJson(for: preferencesManagerStoredContentsWrapper,
+      DataStorageManager.storeJson(for: preferencesManagerStoredContentsWrapper,
                                    inFileWithName: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
                                    toStorageLocation: .applicationSupport)
       dispatchSemaphore.signal()

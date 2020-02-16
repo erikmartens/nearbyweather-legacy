@@ -103,7 +103,7 @@ final class WeatherDetailViewController: UIViewController {
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }
     
     let weatherCode = weatherDTO.weatherCondition[0].identifier
-    conditionSymbolLabel.text = ConversionService.weatherConditionSymbol(fromWeathercode: weatherCode)
+    conditionSymbolLabel.text = ConversionService.weatherConditionSymbol(fromWeatherCode: weatherCode)
     conditionNameLabel.text = weatherDTO.weatherCondition.first?.conditionName
     conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription.capitalized
     let temperatureUnit = PreferencesDataManager.shared.temperatureUnit

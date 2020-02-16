@@ -55,7 +55,7 @@ class WeatherDataCell: UITableViewCell {
     windspeedLabel.textColor = .white
     windspeedLabel.font = .preferredFont(forTextStyle: .subheadline)
     
-    let weatherConditionSymbol = ConversionService.weatherConditionSymbol(fromWeathercode: weatherDTO.weatherCondition[0].identifier)
+    let weatherConditionSymbol = ConversionService.weatherConditionSymbol(fromWeatherCode: weatherDTO.weatherCondition[0].identifier)
     weatherConditionLabel.text = weatherConditionSymbol
     
     cityNameLabel.text = weatherDTO.cityName

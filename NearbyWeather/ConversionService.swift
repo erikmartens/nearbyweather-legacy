@@ -12,8 +12,8 @@ import APTimeZones
 
 final class ConversionService {
   
-  static func weatherConditionSymbol(fromWeathercode: Int) -> String {
-    switch fromWeathercode {
+  static func weatherConditionSymbol(fromWeatherCode code: Int) -> String {
+    switch code {
     case let x where (x >= 200 && x <= 202) || (x >= 230 && x <= 232):
       return "⛈"
     case let x where x >= 210 && x <= 211:

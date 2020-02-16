@@ -55,6 +55,8 @@
 		F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */; };
 		F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */; };
 		F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14523F355370008B0F7 /* Date+String.swift */; };
+		F2C4E14923F98A4C0008B0F7 /* EmptyWeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14823F98A4C0008B0F7 /* EmptyWeatherListViewController.swift */; };
+		F2C4E14B23F98AA50008B0F7 /* EmptyWeatherList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2C4E14A23F98AA50008B0F7 /* EmptyWeatherList.storyboard */; };
 		F2D2B1E02004171500C810EF /* DataStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2B1DF2004171500C810EF /* DataStorageService.swift */; };
 		F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */; };
 		F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEADB23E4CF7900CD513B /* Constants.swift */; };
@@ -71,7 +73,6 @@
 		F2DBEAF823E6054900CD513B /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF723E6054900CD513B /* Coordinator.swift */; };
 		F2DBEAFA23E6357C00CD513B /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */; };
 		F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */; };
-		F2DBEB0223E8DA0F00CD513B /* WeatherList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0123E8DA0F00CD513B /* WeatherList.storyboard */; };
 		F2DBEB0423E8DBF000CD513B /* WeatherMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0323E8DBF000CD513B /* WeatherMap.storyboard */; };
 		F2DBEB0823E8DDF600CD513B /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0723E8DDF600CD513B /* Welcome.storyboard */; };
 		F2DBEB0B23E8DE0E00CD513B /* SetPermissions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0A23E8DE0E00CD513B /* SetPermissions.storyboard */; };
@@ -191,6 +192,8 @@
 		F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewController.swift; sourceTree = "<group>"; };
 		F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppTableViewController.swift; sourceTree = "<group>"; };
 		F2C4E14523F355370008B0F7 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
+		F2C4E14823F98A4C0008B0F7 /* EmptyWeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyWeatherListViewController.swift; sourceTree = "<group>"; };
+		F2C4E14A23F98AA50008B0F7 /* EmptyWeatherList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EmptyWeatherList.storyboard; sourceTree = "<group>"; };
 		F2D2B1DF2004171500C810EF /* DataStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageService.swift; sourceTree = "<group>"; };
 		F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+URLs.swift"; sourceTree = "<group>"; };
 		F2DBEADB23E4CF7900CD513B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -207,7 +210,6 @@
 		F2DBEAF723E6054900CD513B /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCoordinator.swift; sourceTree = "<group>"; };
 		F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AppendSafe.swift"; sourceTree = "<group>"; };
-		F2DBEB0123E8DA0F00CD513B /* WeatherList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeatherList.storyboard; sourceTree = "<group>"; };
 		F2DBEB0323E8DBF000CD513B /* WeatherMap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeatherMap.storyboard; sourceTree = "<group>"; };
 		F2DBEB0723E8DDF600CD513B /* Welcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
 		F2DBEB0A23E8DE0E00CD513B /* SetPermissions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SetPermissions.storyboard; sourceTree = "<group>"; };
@@ -457,6 +459,15 @@
 			name = TableViewCells;
 			sourceTree = "<group>";
 		};
+		F2C4E14723F98A260008B0F7 /* Empty Weather List Scene */ = {
+			isa = PBXGroup;
+			children = (
+				F2C4E14823F98A4C0008B0F7 /* EmptyWeatherListViewController.swift */,
+				F2C4E14A23F98AA50008B0F7 /* EmptyWeatherList.storyboard */,
+			);
+			name = "Empty Weather List Scene";
+			sourceTree = "<group>";
+		};
 		F2DBEAF423E601B600CD513B /* Routing */ = {
 			isa = PBXGroup;
 			children = (
@@ -485,6 +496,7 @@
 				F2DBEB0523E8DDD200CD513B /* Welcome Scene */,
 				F2DBEB0623E8DDDE00CD513B /* Set Permissions Scene */,
 				F2DBEAFE23E8D46200CD513B /* Weather List Scene */,
+				F2C4E14723F98A260008B0F7 /* Empty Weather List Scene */,
 				F2DBEB0C23E8DF6B00CD513B /* Weather Detail Scene */,
 				F2DBEAFF23E8D46E00CD513B /* Weather Map Scene */,
 				F2DBEB0023E8D47B00CD513B /* Settings Scene */,
@@ -499,7 +511,6 @@
 		F2DBEAFE23E8D46200CD513B /* Weather List Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F2DBEB0123E8DA0F00CD513B /* WeatherList.storyboard */,
 				F28CE9671F9A9893008319C4 /* WeatherListViewController.swift */,
 			);
 			name = "Weather List Scene";
@@ -765,13 +776,13 @@
 				F2DBEB0823E8DDF600CD513B /* Welcome.storyboard in Resources */,
 				F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */,
 				F204B7851DF2EFA3000F4371 /* LaunchScreen.storyboard in Resources */,
-				F2DBEB0223E8DA0F00CD513B /* WeatherList.storyboard in Resources */,
 				F204B7B01DF2F1BC000F4371 /* Localizable.strings in Resources */,
 				F2DBEAE823E4DD0900CD513B /* ButtonCell.xib in Resources */,
 				F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */,
 				F2DBEAE223E4D71700CD513B /* DualLabelCell.xib in Resources */,
 				F2DBEAE023E4D66100CD513B /* AlertCell.xib in Resources */,
 				F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */,
+				F2C4E14B23F98AA50008B0F7 /* EmptyWeatherList.storyboard in Resources */,
 				F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */,
 				F2DBEADE23E4D46700CD513B /* WeatherDataCell.xib in Resources */,
 				F2DBEB0B23E8DE0E00CD513B /* SetPermissions.storyboard in Resources */,
@@ -952,6 +963,7 @@
 				F26699581E9AD0F100498F99 /* WeatherDataManager.swift in Sources */,
 				F2FE3EFF20027EB400EBC429 /* WeatherStationDTO.swift in Sources */,
 				F2DBEB3623F04E9D00CD513B /* MKMapType+AllCases.swift in Sources */,
+				F2C4E14923F98A4C0008B0F7 /* EmptyWeatherListViewController.swift in Sources */,
 				F22F99552034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift in Sources */,
 				86830392217BBA5D00B7122E /* BadgeService.swift in Sources */,
 				F2F7BA2123E37A9C00B4D2EB /* Constants+Values.swift in Sources */,

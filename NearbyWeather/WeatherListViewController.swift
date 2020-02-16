@@ -27,28 +27,15 @@ enum ListType: CaseIterable {
   }
 }
 
-final class WeatherListViewController: UIViewController {
+final class WeatherListViewController: UITableViewController {
   
   // MARK: - Routing
   
   weak var stepper: WeatherListStepper?
   
-  // MARK: - Properties
+  // MARK: Properties
   
-  private var refreshControl = UIRefreshControl()
-  
-  private var listType: ListType = .bookmarked
-  
-  // MARK: - Outlets
-  
-  @IBOutlet weak var tableView: UITableView!
-  
-  @IBOutlet weak var emptyListOverlayContainerView: UIView!
-  @IBOutlet weak var emptyListImageView: UIImageView!
-  @IBOutlet weak var emptyListTitleLabel: UILabel!
-  @IBOutlet weak var emptyListDescriptionLabel: UILabel!
-  
-  @IBOutlet weak var reloadButton: UIButton!
+  var listType: ListType = .bookmarked
   
   // MARK: - ViewController Lifecycle
   
@@ -77,15 +64,6 @@ final class WeatherListViewController: UIViewController {
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
       object: nil
     )
-    
-    if !WeatherDataManager.shared.hasDisplayableData {
-      NotificationCenter.default.addObserver(
-        self,
-        selector: #selector(Self.reconfigureOnNetworkDidBecomeAvailable),
-        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
-        object: nil
-      )
-    }
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -100,7 +78,7 @@ final class WeatherListViewController: UIViewController {
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     
-    refreshControl.endRefreshing()
+    refreshControl?.endRefreshing()
   }
   
   deinit {
@@ -114,13 +92,11 @@ final class WeatherListViewController: UIViewController {
     
     configureLastRefreshDate()
     configureButtons()
-    configureWeatherDataUnavailableElements()
     
-    refreshControl.addTarget(self, action: #selector(Self.updateWeatherData), for: .valueChanged)
+    refreshControl?.addTarget(self, action: #selector(Self.updateWeatherData), for: .valueChanged)
     tableView.refreshControl = refreshControl
     
     tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
-    emptyListOverlayContainerView.isHidden = WeatherDataManager.shared.hasDisplayableData
   }
   
   @objc private func reconfigureOnWeatherDataServiceDidUpdate() {
@@ -128,18 +104,6 @@ final class WeatherListViewController: UIViewController {
     configureButtons()
     tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
     tableView.reloadData()
-  }
-  
-  @objc private func reconfigureOnNetworkDidBecomeAvailable() {
-    UIView.animate(withDuration: 0.5) {
-      self.reloadButton.isHidden = WeatherNetworkingService.shared.reachabilityStatus != .connected
-    }
-  }
-  
-  private func configureWeatherDataUnavailableElements() {
-    emptyListImageView.tintColor = .lightGray
-    emptyListTitleLabel.text = R.string.localizable.no_weather_data()
-    emptyListDescriptionLabel.text = R.string.localizable.no_data_description()
   }
   
   private func configureLastRefreshDate() {
@@ -153,14 +117,6 @@ final class WeatherListViewController: UIViewController {
   }
   
   private func configureButtons() {
-    reloadButton.isHidden = WeatherNetworkingService.shared.reachabilityStatus != .connected
-    if !reloadButton.isHidden {
-      reloadButton.setTitle(R.string.localizable.reload().uppercased(), for: .normal)
-      reloadButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
-      reloadButton.layer.cornerRadius = 5.0
-      reloadButton.layer.borderColor = Constants.Theme.Interactables.standardButton.cgColor
-      reloadButton.layer.borderWidth = 1.0
-    }
     if WeatherDataManager.shared.hasDisplayableData {
       navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.swap(), style: .plain, target: self, action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:)))
     } else {
@@ -169,12 +125,12 @@ final class WeatherListViewController: UIViewController {
   }
   
   @objc private func updateWeatherData() {
-    refreshControl.beginRefreshing()
-    WeatherDataManager.shared.update(withCompletionHandler: { _ in
+    refreshControl?.beginRefreshing()
+    WeatherDataManager.shared.update(withCompletionHandler: { [weak self] _ in
       DispatchQueue.main.async {
-        self.refreshControl.endRefreshing()
-        self.configureButtons()
-        self.tableView.reloadData()
+        self?.refreshControl?.endRefreshing()
+        self?.configureButtons()
+        self?.tableView.reloadData()
       }
     })
   }
@@ -186,16 +142,6 @@ final class WeatherListViewController: UIViewController {
   // MARK: - IBActions
   
   @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
-    triggerListTypeAlert()
-  }
-  
-  @IBAction func didTapReloadButton(_ sender: UIButton) {
-    updateWeatherData()
-  }
-  
-  // MARK: - Helpers
-  
-  private func triggerListTypeAlert() {
     let alert = Factory.AlertController.make(fromType:
       .weatherListType(currentListType: listType, completionHandler: { [weak self] selectedListType in
         self?.listType = selectedListType
@@ -208,24 +154,28 @@ final class WeatherListViewController: UIViewController {
   }
 }
 
-extension WeatherListViewController: UITableViewDelegate {
+// MARK: - UITableViewDelegate
+
+extension WeatherListViewController {
   
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     UITableView.automaticDimension
   }
   
-  func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+  override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
     CGFloat(100)
   }
 }
 
-extension WeatherListViewController: UITableViewDataSource {
+// MARK: - UITableViewDataSource
+
+extension WeatherListViewController {
   
-  func numberOfSections(in tableView: UITableView) -> Int {
+  override func numberOfSections(in tableView: UITableView) -> Int {
     1
   }
   
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard !WeatherDataManager.shared.apiKeyUnauthorized else {
       return 1
     }
@@ -242,7 +192,7 @@ extension WeatherListViewController: UITableViewDataSource {
     }
   }
   
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let weatherCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.weatherDataCell.identifier, for: indexPath) as! WeatherDataCell
     let alertCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.alertCell.identifier, for: indexPath) as! AlertCell
     
@@ -289,7 +239,7 @@ extension WeatherListViewController: UITableViewDataSource {
     }
   }
   
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
     let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell
@@ -298,3 +248,4 @@ extension WeatherListViewController: UITableViewDataSource {
     )
   }
 }
+

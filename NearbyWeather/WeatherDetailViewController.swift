@@ -83,6 +83,7 @@ final class WeatherDetailViewController: UIViewController {
     
     navigationItem.title = titleString
     mapView.delegate = self
+    mapView.mapType = PreferencesDataManager.shared.preferredMapType
     
     configureMap()
   }

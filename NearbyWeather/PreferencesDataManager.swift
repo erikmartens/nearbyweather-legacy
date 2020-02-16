@@ -6,8 +6,8 @@
 //  Copyright © 2018 Erik Maximilian Martens. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import MapKit
 
 struct PreferencesManagerStoredContentsWrapper: Codable {
   var preferredBookmark: PreferredBookmarkOption
@@ -27,6 +27,7 @@ protocol StoredPreferencesProvider {
 
 protocol InMemoryPreferencesProvider {
   var preferredListType: ListType { get set }
+  var preferredMapType: MKMapType { get set }
 }
 
 final class PreferencesDataManager: StoredPreferencesProvider, InMemoryPreferencesProvider {
@@ -113,6 +114,8 @@ final class PreferencesDataManager: StoredPreferencesProvider, InMemoryPreferenc
   // MARK: - In Memory Preferences
   
   var preferredListType: ListType = .bookmarked
+  
+  var preferredMapType: MKMapType = .standard
 }
 
 extension PreferencesDataManager: DataStorageProtocol {

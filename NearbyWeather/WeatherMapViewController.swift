@@ -36,6 +36,7 @@ final class WeatherMapViewController: UIViewController {
     navigationController?.navigationBar.styleStandard()
     
     mapView.delegate = self
+    mapView.mapType = PreferencesDataManager.shared.preferredMapType
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -64,17 +65,6 @@ final class WeatherMapViewController: UIViewController {
     weatherLocationMapAnnotations.append(contentsOf: nearbyocationAnnotations ?? [WeatherLocationMapAnnotation]())
     
     mapView.addAnnotations(weatherLocationMapAnnotations)
-  }
-  
-  private func triggerMapTypeAlert() {
-    let alert = Factory.AlertController.make(fromType:
-      .weatherMapType(currentMapType: mapView.mapType, completionHandler: { [weak self] mapType in
-        DispatchQueue.main.async {
-          self?.mapView.mapType = mapType
-        }
-      })
-    )
-    present(alert, animated: true, completion: nil)
   }
   
   private func triggerFocusOnLocationAlert() {
@@ -131,7 +121,15 @@ final class WeatherMapViewController: UIViewController {
   // MARK: - IBActions
   
   @IBAction func changeMapTypeButtonTapped(_ sender: UIBarButtonItem) {
-    triggerMapTypeAlert()
+    let alert = Factory.AlertController.make(fromType:
+      .weatherMapType(currentMapType: PreferencesDataManager.shared.preferredMapType, completionHandler: { [weak self] mapType in
+        DispatchQueue.main.async {
+          PreferencesDataManager.shared.preferredMapType = mapType
+          self?.mapView.mapType = PreferencesDataManager.shared.preferredMapType
+        }
+      })
+    )
+    present(alert, animated: true, completion: nil)
   }
   
   @IBAction func focusLocationButtonTapped(_ sender: UIBarButtonItem) {

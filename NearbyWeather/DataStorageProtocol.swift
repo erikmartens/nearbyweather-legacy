@@ -9,8 +9,8 @@
 import Foundation
 
 protocol DataStorageProtocol {
-  associatedtype T: DataStorageProtocol
+  associatedtype StorageEntity: DataStorageProtocol
   
   static func storeData()
-  static func loadData() -> T?
+  static func loadData() -> StorageEntity?
 }

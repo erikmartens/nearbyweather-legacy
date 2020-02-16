@@ -25,7 +25,11 @@ protocol StoredPreferencesProvider {
   var sortingOrientation: SortingOrientationOption { get set }
 }
 
-final class PreferencesDataManager {
+protocol InMemoryPreferencesProvider {
+  var preferredListType: ListType { get set }
+}
+
+final class PreferencesDataManager: StoredPreferencesProvider, InMemoryPreferencesProvider {
   
   private static let preferencesManagerBackgroundQueue = DispatchQueue(
     label: Constants.Labels.DispatchQueues.kPreferencesManagerBackgroundQueue,
@@ -67,7 +71,7 @@ final class PreferencesDataManager {
                                                                          sortingOrientation: SortingOrientationOption(value: .name))
   }
   
-  // MARK: - Preferences
+  // MARK: - Stored Preferences
   
   var preferredBookmark: PreferredBookmarkOption {
      didSet {
@@ -105,11 +109,15 @@ final class PreferencesDataManager {
        PreferencesDataManager.storeData()
      }
    }
+  
+  // MARK: - In Memory Preferences
+  
+  var preferredListType: ListType = .bookmarked
 }
 
 extension PreferencesDataManager: DataStorageProtocol {
   
-  typealias T = PreferencesDataManager
+  typealias StorageEntity = PreferencesDataManager
   
   static func loadData() -> PreferencesDataManager? {
     guard let preferencesManagerStoredContentsWrapper = DataStorageManager.retrieveJsonFromFile(

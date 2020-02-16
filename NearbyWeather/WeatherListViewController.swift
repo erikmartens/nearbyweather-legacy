@@ -33,14 +33,6 @@ final class WeatherListViewController: UITableViewController {
   
   weak var stepper: WeatherListStepper?
   
-  // MARK: Properties
-  
-  private var listType: ListType = .bookmarked {
-    didSet {
-      tableView.reloadData()
-    }
-  }
-  
   // MARK: - ViewController Lifecycle
   
   override func viewDidLoad() {
@@ -133,8 +125,9 @@ final class WeatherListViewController: UITableViewController {
   
   @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
-      .weatherListType(currentListType: listType, completionHandler: { [weak self] selectedListType in
-        self?.listType = selectedListType
+      .weatherListType(currentListType: PreferencesDataManager.shared.preferredListType, completionHandler: { [weak self] selectedListType in
+        PreferencesDataManager.shared.preferredListType = selectedListType
+        self?.tableView.reloadData()
       })
     )
     present(alert, animated: true, completion: nil)
@@ -166,7 +159,7 @@ extension WeatherListViewController {
     guard !WeatherDataManager.shared.apiKeyUnauthorized else {
       return 1
     }
-    switch listType {
+    switch PreferencesDataManager.shared.preferredListType {
     case .bookmarked:
       let numberOfRows = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.count ?? 1
       return numberOfRows > 0 ? numberOfRows : 1
@@ -194,7 +187,7 @@ extension WeatherListViewController {
       return alertCell
     }
     
-    switch listType {
+    switch PreferencesDataManager.shared.preferredListType {
     case .bookmarked:
       guard let bookmarkedWeatherDataObjects = WeatherDataManager.shared.bookmarkedWeatherDataObjects,
         !bookmarkedWeatherDataObjects.isEmpty else {

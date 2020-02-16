@@ -85,7 +85,7 @@ final class WeatherDataManager {
     didSet {
       update(withCompletionHandler: nil)
       sortBookmarkedLocationWeatherData()
-      WeatherDataManager.storeService()
+      WeatherDataManager.storeData()
     }
   }
   var preferredBookmarkData: WeatherInformationDTO? {
@@ -123,7 +123,7 @@ final class WeatherDataManager {
   // MARK: - Public Properties & Methods
   
   static func instantiateSharedInstance() {
-    shared = WeatherDataManager.loadService() ?? WeatherDataManager(bookmarkedLocations: [Constants.Mocks.WeatherStationDTOs.kDefaultBookmarkedLocation])
+    shared = WeatherDataManager.loadData() ?? WeatherDataManager(bookmarkedLocations: [Constants.Mocks.WeatherStationDTOs.kDefaultBookmarkedLocation])
   }
   
   func update(withCompletionHandler completionHandler: ((UpdateStatus) -> Void)?) {
@@ -177,7 +177,7 @@ final class WeatherDataManager {
         self.sortNearbyLocationWeatherData()
       }
       
-      WeatherDataManager.storeService()
+      WeatherDataManager.storeData()
       DispatchQueue.main.async {
         UserDefaults.standard.set(Date(), forKey: Constants.Keys.UserDefaults.kWeatherDataLastRefreshDateKey)
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: self)
@@ -222,7 +222,7 @@ final class WeatherDataManager {
       }
       self.sortBookmarkedLocationWeatherData()
       
-      WeatherDataManager.storeService()
+      WeatherDataManager.storeData()
       DispatchQueue.main.async {
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: nil)
         BadgeService.shared.updateBadge()
@@ -290,14 +290,17 @@ final class WeatherDataManager {
   @objc private func discardLocationBasedWeatherDataIfNeeded() {
     if !UserLocationService.shared.locationPermissionsGranted {
       nearbyWeatherDataObject = nil
-      WeatherDataManager.storeService()
+      WeatherDataManager.storeData()
       NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate), object: nil)
     }
   }
+}
+
+extension WeatherDataManager: DataStorageProtocol {
   
-  /* Internal Storage Helpers */
+  typealias StorageEntity = WeatherDataManager
   
-  private static func loadService() -> WeatherDataManager? {
+  static func loadData() -> WeatherDataManager? {
     guard let weatherDataManagerStoredContents = DataStorageManager.retrieveJsonFromFile(
       with: Constants.Keys.Storage.kWeatherDataManagerStoredContentsFileName,
       andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self,
@@ -313,7 +316,7 @@ final class WeatherDataManager {
     return weatherService
   }
   
-  private static func storeService() {
+  static func storeData() {
     let dispatchSemaphore = DispatchSemaphore(value: 1)
     
     dispatchSemaphore.wait()

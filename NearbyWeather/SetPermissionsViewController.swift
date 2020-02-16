@@ -28,14 +28,13 @@ final class SetPermissionsViewController: UIViewController {
   
   // MARK: - Override Functions
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
+  override func viewDidLoad() {
+    super.viewDidLoad()
     configure()
     
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(SetPermissionsViewController.launchApp),
+      selector: #selector(Self.launchApp),
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
       object: nil
     )

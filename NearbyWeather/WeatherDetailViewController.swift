@@ -106,7 +106,7 @@ final class WeatherDetailViewController: UIViewController {
     conditionSymbolLabel.text = ConversionService.weatherConditionSymbol(fromWeathercode: weatherCode)
     conditionNameLabel.text = weatherDTO.weatherCondition.first?.conditionName
     conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription.capitalized
-    let temperatureUnit = PreferencesManager.shared.temperatureUnit
+    let temperatureUnit = PreferencesDataManager.shared.temperatureUnit
     let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin
     temperatureLabel.text = ConversionService.temperatureDescriptor(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
     
@@ -151,7 +151,7 @@ final class WeatherDetailViewController: UIViewController {
     
     windSpeedImageView.tintColor = .darkGray
     windSpeedNoteLabel.text = "\(R.string.localizable.windspeed()):"
-    let windspeedDescriptor = ConversionService.windspeedDescriptor(forDistanceSpeedUnit: PreferencesManager.shared.distanceSpeedUnit, forWindspeed: weatherDTO.windInformation.windspeed)
+    let windspeedDescriptor = ConversionService.windspeedDescriptor(forDistanceSpeedUnit: PreferencesDataManager.shared.distanceSpeedUnit, forWindspeed: weatherDTO.windInformation.windspeed)
     windSpeedLabel.text = windspeedDescriptor
     if let windDirection = weatherDTO.windInformation.degrees {
       windDirectionImageView.transform = CGAffineTransform(rotationAngle: CGFloat(windDirection)*0.0174532925199) // convert to radians
@@ -169,7 +169,7 @@ final class WeatherDetailViewController: UIViewController {
       let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
       let distanceInMetres = location.distance(from: userLocation)
       
-      let distanceSpeedUnit = PreferencesManager.shared.distanceSpeedUnit
+      let distanceSpeedUnit = PreferencesDataManager.shared.distanceSpeedUnit
       let distanceString = ConversionService.distanceDescriptor(forDistanceSpeedUnit: distanceSpeedUnit, forDistanceInMetres: distanceInMetres)
       
       distanceImageView.tintColor = .darkGray

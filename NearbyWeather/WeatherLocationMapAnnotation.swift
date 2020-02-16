@@ -29,7 +29,7 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
     
     let weatherConditionIdentifier = weatherDTO.weatherCondition.first?.identifier
     let weatherConditionSymbol = weatherConditionIdentifier != nil ? ConversionService.weatherConditionSymbol(fromWeathercode: weatherConditionIdentifier!) : nil
-    let temperatureDescriptor = ConversionService.temperatureDescriptor(forTemperatureUnit: PreferencesManager.shared.temperatureUnit, fromRawTemperature: weatherDTO.atmosphericInformation.temperatureKelvin)
+    let temperatureDescriptor = ConversionService.temperatureDescriptor(forTemperatureUnit: PreferencesDataManager.shared.temperatureUnit, fromRawTemperature: weatherDTO.atmosphericInformation.temperatureKelvin)
     
     let subtitle = weatherConditionSymbol != nil ? "\(weatherConditionSymbol!) \(temperatureDescriptor)" : "\(temperatureDescriptor)"
     

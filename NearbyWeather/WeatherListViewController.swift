@@ -35,7 +35,11 @@ final class WeatherListViewController: UITableViewController {
   
   // MARK: Properties
   
-  var listType: ListType = .bookmarked
+  private var listType: ListType = .bookmarked {
+    didSet {
+      tableView.reloadData()
+    }
+  }
   
   // MARK: - ViewController Lifecycle
   
@@ -93,15 +97,12 @@ final class WeatherListViewController: UITableViewController {
     configureButtons()
     
     refreshControl?.addTarget(self, action: #selector(Self.updateWeatherData), for: .valueChanged)
-    tableView.refreshControl = refreshControl
-    
-    tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
   }
   
   @objc private func reconfigureOnWeatherDataServiceDidUpdate() {
+    refreshControl?.endRefreshing()
     configureLastRefreshDate()
     configureButtons()
-    tableView.isHidden = !WeatherDataManager.shared.hasDisplayableData
     tableView.reloadData()
   }
   
@@ -125,13 +126,7 @@ final class WeatherListViewController: UITableViewController {
   
   @objc private func updateWeatherData() {
     refreshControl?.beginRefreshing()
-    WeatherDataManager.shared.update(withCompletionHandler: { [weak self] _ in
-      DispatchQueue.main.async {
-        self?.refreshControl?.endRefreshing()
-        self?.configureButtons()
-        self?.tableView.reloadData()
-      }
-    })
+    WeatherDataManager.shared.update(withCompletionHandler: nil)
   }
   
   // MARK: - IBActions
@@ -140,9 +135,6 @@ final class WeatherListViewController: UITableViewController {
     let alert = Factory.AlertController.make(fromType:
       .weatherListType(currentListType: listType, completionHandler: { [weak self] selectedListType in
         self?.listType = selectedListType
-        DispatchQueue.main.async {
-          self?.tableView.reloadData()
-        }
       })
     )
     present(alert, animated: true, completion: nil)

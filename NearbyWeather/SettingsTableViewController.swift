@@ -204,35 +204,35 @@ final class SettingsTableViewController: UITableViewController {
       let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
       cell.contentLabel.text = R.string.localizable.preferred_bookmark()
       cell.selectionLabel.text = nil
-      guard let preferredBookmarkId = PreferencesManager.shared.preferredBookmark.value,
+      guard let preferredBookmarkId = PreferencesDataManager.shared.preferredBookmark.value,
         WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
-          PreferencesManager.shared.preferredBookmark = PreferredBookmark(value: nil)
+          PreferencesDataManager.shared.preferredBookmark = PreferredBookmark(value: nil)
           return cell
       }
-      cell.selectionLabel.text = PreferencesManager.shared.preferredBookmark.stringValue
+      cell.selectionLabel.text = PreferencesDataManager.shared.preferredBookmark.stringValue
       return cell
     case 5:
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.amount_of_results()
-        cell.selectionLabel.text = PreferencesManager.shared.amountOfResults.stringValue
+        cell.selectionLabel.text = PreferencesDataManager.shared.amountOfResults.stringValue
         return cell
       }
       if indexPath.row == 1 {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.sorting_orientation()
-        cell.selectionLabel.text = PreferencesManager.shared.sortingOrientation.stringValue
+        cell.selectionLabel.text = PreferencesDataManager.shared.sortingOrientation.stringValue
         return cell
       }
       if indexPath.row == 2 {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.temperature_unit()
-        cell.selectionLabel.text = PreferencesManager.shared.temperatureUnit.stringValue
+        cell.selectionLabel.text = PreferencesDataManager.shared.temperatureUnit.stringValue
         return cell
       }
       let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
       cell.contentLabel.text = R.string.localizable.distanceSpeed_unit()
-      cell.selectionLabel.text = PreferencesManager.shared.distanceSpeedUnit.stringValue
+      cell.selectionLabel.text = PreferencesDataManager.shared.distanceSpeedUnit.stringValue
       return cell
     default:
       return UITableViewCell()

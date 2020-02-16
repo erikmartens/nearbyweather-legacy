@@ -14,7 +14,7 @@ enum StorageLocationType {
   case applicationSupport
 }
 
-final class DataStorageService {    
+final class DataStorageManager {    
   
   // MARK: - Public Functions
   

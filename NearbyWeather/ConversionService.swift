@@ -12,8 +12,8 @@ import APTimeZones
 
 final class ConversionService {
   
-  static func weatherConditionSymbol(fromWeathercode: Int) -> String {
-    switch fromWeathercode {
+  static func weatherConditionSymbol(fromWeatherCode code: Int) -> String {
+    switch code {
     case let x where (x >= 200 && x <= 202) || (x >= 230 && x <= 232):
       return "⛈"
     case let x where x >= 210 && x <= 211:
@@ -59,7 +59,7 @@ final class ConversionService {
     }
   }
   
-  static func temperatureIntValue(forTemperatureUnit temperatureUnit: TemperatureUnit, fromRawTemperature rawTemperature: Double) -> Int? {
+  static func temperatureIntValue(forTemperatureUnit temperatureUnit: TemperatureUnitOption, fromRawTemperature rawTemperature: Double) -> Int? {
     let adjustedTemp: Double
     switch temperatureUnit.value {
     case .celsius:
@@ -74,7 +74,7 @@ final class ConversionService {
     return Int(adjustedTemp.rounded())
   }
   
-  static func temperatureDescriptor(forTemperatureUnit temperatureUnit: TemperatureUnit, fromRawTemperature rawTemperature: Double) -> String {
+  static func temperatureDescriptor(forTemperatureUnit temperatureUnit: TemperatureUnitOption, fromRawTemperature rawTemperature: Double) -> String {
     switch temperatureUnit.value {
     case .celsius:
       return "\(String(format: "%.02f", rawTemperature - 273.15))°C"
@@ -85,7 +85,7 @@ final class ConversionService {
     }
   }
   
-  static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forWindspeed windspeed: Double) -> String {
+  static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceVelocityUnitOption, forWindspeed windspeed: Double) -> String {
     switch distanceSpeedUnit.value {
     case .kilometres:
       return "\(String(format: "%.02f", windspeed)) \(R.string.localizable.kph())"
@@ -94,7 +94,7 @@ final class ConversionService {
     }
   }
   
-  static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceSpeedUnit, forDistanceInMetres distance: Double) -> String {
+  static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceVelocityUnitOption, forDistanceInMetres distance: Double) -> String {
     switch distanceSpeedUnit.value {
     case .kilometres:
       return "\(String(format: "%.02f", distance/1000)) \(R.string.localizable.km())"

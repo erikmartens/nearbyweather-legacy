@@ -12,5 +12,5 @@ func printDebugMessage(domain: String, message: String) {
   guard !BuildEnvironment.isReleaseEvironment() else {
     return
   }
-  print("💥 \(domain) : \(message)")
+  debugPrint("💥 \(domain) : \(message)")
 }

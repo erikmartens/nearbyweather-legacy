@@ -9,7 +9,8 @@
 import UIKit
 
 enum WeatherListStep: StepProtocol {
-  case initial
+  case list
+  case emptyList
   case weatherDetails(identifier: Int?)
   case none
 }
@@ -23,13 +24,18 @@ final class WeatherListCoordinator: Coordinator {
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
     navigationController.navigationBar.tintColor = Constants.Theme.BrandColors.standardDay
+    
+    navigationController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
+    navigationController.tabBarItem.image = R.image.tabbar_list_ios11()
+    navigationController.tabBarItem.title = R.string.localizable.tab_weatherList()
+    
     return navigationController
   }()
   
   private static var _stepper: WeatherListStepper = {
     let initalStep = InitialStep(
       identifier: WeatherListStep.identifier,
-      step: WeatherListStep.initial
+      step: WeatherDataManager.shared.hasDisplayableData ? WeatherListStep.list : WeatherListStep.emptyList
     )
     return WeatherListStepper(initialStep: initalStep, type: WeatherListStep.self)
   }()
@@ -54,8 +60,10 @@ final class WeatherListCoordinator: Coordinator {
   override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
     guard let step = step as? WeatherListStep else { return }
     switch step {
-    case .initial:
+    case .list:
       summonWeatherListController(passNextChildCoordinatorTo: coordinatorReceiver)
+    case .emptyList:
+      summonEmptyWeatherListController(passNextChildCoordinatorTo: coordinatorReceiver)
     case let .weatherDetails(identifier):
       summonWeatherDetailsController(weatherDetailIdentifier: identifier,
                                      passNextChildCoordinatorTo: coordinatorReceiver)
@@ -68,16 +76,26 @@ final class WeatherListCoordinator: Coordinator {
 private extension WeatherListCoordinator {
   
   func summonWeatherListController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
-    let weatherListViewController = R.storyboard.weatherList.weatherListViewController()!
+    let weatherListViewController = WeatherListViewController(style: .grouped)
     weatherListViewController.stepper = stepper as? WeatherListStepper
     
     weatherListViewController.title = R.string.localizable.tab_weatherList()
-    weatherListViewController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
-    weatherListViewController.tabBarItem.image = R.image.tabbar_list_ios11()
     
     let root = rootViewController as? UINavigationController
     root?.setViewControllers([weatherListViewController], animated: false)
     
+    coordinatorReceiver(.none)
+  }
+  
+  func summonEmptyWeatherListController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
+    let emptyWeatherListViewController = R.storyboard.emptyWeatherList.emptyWeatherListViewController()!
+    emptyWeatherListViewController.stepper = stepper as? WeatherListStepper
+    
+    emptyWeatherListViewController.title = R.string.localizable.tab_weatherList()
+
+    let root = rootViewController as? UINavigationController
+    root?.setViewControllers([emptyWeatherListViewController], animated: false)
+
     coordinatorReceiver(.none)
   }
   

@@ -23,6 +23,11 @@ final class WeatherMapCoordinator: Coordinator {
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
     navigationController.navigationBar.tintColor = Constants.Theme.BrandColors.standardDay
+    
+    navigationController.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
+    navigationController.tabBarItem.image = R.image.tabbar_map_ios11()
+    navigationController.tabBarItem.title = R.string.localizable.tab_weatherMap()
+    
     return navigationController
   }()
   
@@ -71,9 +76,6 @@ private extension WeatherMapCoordinator {
     let mapViewController = R.storyboard.weatherMap.nearbyLocationsMapViewController()!
     mapViewController.title = R.string.localizable.tab_weatherMap()
     mapViewController.stepper = stepper as? WeatherMapStepper
-    
-    mapViewController.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
-    mapViewController.tabBarItem.image = R.image.tabbar_map_ios11()
     
     (rootViewController as? UINavigationController)?.setViewControllers([mapViewController], animated: false)
     

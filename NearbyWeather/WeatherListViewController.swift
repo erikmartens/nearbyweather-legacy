@@ -42,21 +42,13 @@ final class WeatherListViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    tableView.delegate = self
-    tableView.dataSource = self
+    tableView.separatorStyle = .none
     
     tableView.register(UINib(nibName: R.nib.weatherDataCell.name, bundle: R.nib.weatherDataCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.weatherDataCell.identifier)
     
     tableView.register(UINib(nibName: R.nib.alertCell.name, bundle: R.nib.alertCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.alertCell.identifier)
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    configure()
-    tableView.reloadData()
     
     NotificationCenter.default.addObserver(
       self,
@@ -64,6 +56,11 @@ final class WeatherListViewController: UITableViewController {
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
       object: nil
     )
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    configure()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -133,10 +130,6 @@ final class WeatherListViewController: UITableViewController {
         self?.tableView.reloadData()
       }
     })
-  }
-  
-  @objc private func reloadTableView(_ notification: Notification) {
-    tableView.reloadData()
   }
   
   // MARK: - IBActions
@@ -248,4 +241,3 @@ extension WeatherListViewController {
     )
   }
 }
-

@@ -8,31 +8,31 @@
 
 import Foundation
 
-enum TemperatureUnitWrappedEnum: Int, CaseIterable, Codable {
+enum TemperatureUnitValue: Int, CaseIterable, Codable {
   case celsius
   case fahrenheit
   case kelvin
 }
 
-struct TemperatureUnit: Codable, PreferencesOption {
-  static let availableOptions = [TemperatureUnit(value: .celsius),
-                                 TemperatureUnit(value: .fahrenheit),
-                                 TemperatureUnit(value: .kelvin)]
+struct TemperatureUnitOption: Codable, PreferencesOption {
+  static let availableOptions = [TemperatureUnitOption(value: .celsius),
+                                 TemperatureUnitOption(value: .fahrenheit),
+                                 TemperatureUnitOption(value: .kelvin)]
   
-  typealias PreferencesOptionType = TemperatureUnitWrappedEnum
+  typealias PreferencesOptionType = TemperatureUnitValue
   
   private lazy var count: Int = {
-    return TemperatureUnitWrappedEnum.allCases.count
+    return TemperatureUnitValue.allCases.count
   }()
   
-  var value: TemperatureUnitWrappedEnum
+  var value: TemperatureUnitValue
   
-  init(value: TemperatureUnitWrappedEnum) {
+  init(value: TemperatureUnitValue) {
     self.value = value
   }
   
   init?(rawValue: Int) {
-    guard let value = TemperatureUnitWrappedEnum(rawValue: rawValue) else {
+    guard let value = TemperatureUnitValue(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)

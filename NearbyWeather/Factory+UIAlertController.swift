@@ -17,11 +17,11 @@ extension Factory {
       case weatherListType(currentListType: ListType, completionHandler: ((ListType) -> Void))
       case weatherMapType(currentMapType: MKMapType, completionHandler: ((MKMapType) -> Void))
       case focusMapOnLocation(bookmarks: [WeatherInformationDTO], completionHandler: ((WeatherInformationDTO?) -> Void))
-      case preferredBookmarkOptions(options: [PreferredBookmark], completionHandler: ((Bool) -> Void))
-      case preferredAmountOfResultsOptions(options: [AmountOfResults], completionHandler: ((Bool) -> Void))
-      case preferredSortingOrientationOptions(options: [SortingOrientation], completionHandler: ((Bool) -> Void))
-      case preferredTemperatureUnitOptions(options: [TemperatureUnit], completionHandler: ((Bool) -> Void))
-      case preferredSpeedUnitOptions(options: [DistanceSpeedUnit], completionHandler: ((Bool) -> Void))
+      case preferredBookmarkOptions(options: [PreferredBookmarkOption], completionHandler: ((Bool) -> Void))
+      case preferredAmountOfResultsOptions(options: [AmountOfResultsOption], completionHandler: ((Bool) -> Void))
+      case preferredSortingOrientationOptions(options: [SortingOrientationOption], completionHandler: ((Bool) -> Void))
+      case preferredTemperatureUnitOptions(options: [TemperatureUnitOption], completionHandler: ((Bool) -> Void))
+      case preferredSpeedUnitOptions(options: [DistanceVelocityUnitOption], completionHandler: ((Bool) -> Void))
       case pushNotificationsDisabled
       case dimissableNotice(title: String?, message: String?)
     }
@@ -141,7 +141,7 @@ private extension Factory.AlertController {
     )
   }
   
-  static func preferredBookmarkOptionsAlert(options: [PreferredBookmark], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+  static func preferredBookmarkOptionsAlert(options: [PreferredBookmarkOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     
     let actions = options.map { option -> UIAlertAction in
       let actionIsSelected = PreferencesDataManager.shared.preferredBookmark.value == option.value
@@ -162,7 +162,7 @@ private extension Factory.AlertController {
     )
   }
   
-  static func preferredAmountOfResultsOptionsAlert(options: [AmountOfResults], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+  static func preferredAmountOfResultsOptionsAlert(options: [AmountOfResultsOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     let actions = options.map { option -> UIAlertAction in
       let actionIsSelected = PreferencesDataManager.shared.amountOfResults.value == option.value
       
@@ -182,7 +182,7 @@ private extension Factory.AlertController {
     )
   }
   
-  static func preferredSortingOrientationOptionsAlert(options: [SortingOrientation], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+  static func preferredSortingOrientationOptionsAlert(options: [SortingOrientationOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     let actions = options.map { option -> UIAlertAction in
       let actionIsSelected = PreferencesDataManager.shared.sortingOrientation.value == option.value
       
@@ -202,7 +202,7 @@ private extension Factory.AlertController {
     )
   }
   
-  static func preferredTemperatureUnitOptionsAlert(options: [TemperatureUnit], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+  static func preferredTemperatureUnitOptionsAlert(options: [TemperatureUnitOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     let actions = options.map { option -> UIAlertAction in
       let actionIsSelected = PreferencesDataManager.shared.temperatureUnit.value == option.value
       
@@ -222,7 +222,7 @@ private extension Factory.AlertController {
     )
   }
   
-  static func preferredSpeedUnitOptionsAlert(options: [DistanceSpeedUnit], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
+  static func preferredSpeedUnitOptionsAlert(options: [DistanceVelocityUnitOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     let actions = options.map { option -> UIAlertAction in
       let actionIsSelected = PreferencesDataManager.shared.distanceSpeedUnit.value == option.value
       

@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 struct PreferencesManagerStoredContentsWrapper: Codable {
-  var preferredBookmark: PreferredBookmark
-  var amountOfResults: AmountOfResults
-  var temperatureUnit: TemperatureUnit
-  var windspeedUnit: DistanceSpeedUnit
-  var sortingOrientation: SortingOrientation
+  var preferredBookmark: PreferredBookmarkOption
+  var amountOfResults: AmountOfResultsOption
+  var temperatureUnit: TemperatureUnitOption
+  var windspeedUnit: DistanceVelocityUnitOption
+  var sortingOrientation: SortingOrientationOption
 }
 
 final class PreferencesDataManager {
@@ -33,33 +33,36 @@ final class PreferencesDataManager {
   
   // MARK: - Properties
   
-  var preferredBookmark: PreferredBookmark {
+  var preferredBookmark: PreferredBookmarkOption {
     didSet {
       BadgeService.shared.updateBadge()
       PreferencesDataManager.storeService()
     }
   }
-  var amountOfResults: AmountOfResults {
+  var amountOfResults: AmountOfResultsOption {
     didSet {
       WeatherDataManager.shared.update(withCompletionHandler: nil)
       PreferencesDataManager.storeService()
     }
   }
-  var temperatureUnit: TemperatureUnit {
+  var temperatureUnit: TemperatureUnitOption {
     didSet {
       BadgeService.shared.updateBadge()
       PreferencesDataManager.storeService()
     }
   }
-  var distanceSpeedUnit: DistanceSpeedUnit {
+  var distanceSpeedUnit: DistanceVelocityUnitOption {
     didSet {
       PreferencesDataManager.storeService()
     }
   }
   
-  var sortingOrientation: SortingOrientation {
+  var sortingOrientation: SortingOrientationOption {
     didSet {
-      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged), object: nil)
+      NotificationCenter.default.post(
+        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged),
+        object: nil
+      )
       PreferencesDataManager.storeService()
     }
   }
@@ -68,7 +71,7 @@ final class PreferencesDataManager {
   
   // MARK: - Initialization
   
-  private init(preferredBookmark: PreferredBookmark, amountOfResults: AmountOfResults, temperatureUnit: TemperatureUnit, windspeedUnit: DistanceSpeedUnit, sortingOrientation: SortingOrientation) {
+  private init(preferredBookmark: PreferredBookmarkOption, amountOfResults: AmountOfResultsOption, temperatureUnit: TemperatureUnitOption, windspeedUnit: DistanceVelocityUnitOption, sortingOrientation: SortingOrientationOption) {
     self.preferredBookmark = preferredBookmark
     self.amountOfResults = amountOfResults
     self.temperatureUnit = temperatureUnit
@@ -90,11 +93,11 @@ final class PreferencesDataManager {
   // MARK: - Public Properties & Methods
   
   static func instantiateSharedInstance() {
-    shared = PreferencesDataManager.loadService() ?? PreferencesDataManager(preferredBookmark: PreferredBookmark(value: .none),
-                                                                    amountOfResults: AmountOfResults(value: .ten),
-                                                                    temperatureUnit: TemperatureUnit(value: .celsius),
-                                                                    windspeedUnit: DistanceSpeedUnit(value: .kilometres),
-                                                                    sortingOrientation: SortingOrientation(value: .name))
+    shared = PreferencesDataManager.loadService() ?? PreferencesDataManager(preferredBookmark: PreferredBookmarkOption(value: .none),
+                                                                    amountOfResults: AmountOfResultsOption(value: .ten),
+                                                                    temperatureUnit: TemperatureUnitOption(value: .celsius),
+                                                                    windspeedUnit: DistanceVelocityUnitOption(value: .kilometres),
+                                                                    sortingOrientation: SortingOrientationOption(value: .name))
   }
   
   // MARK: - Private Helper Methods

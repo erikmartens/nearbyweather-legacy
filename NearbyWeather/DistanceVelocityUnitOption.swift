@@ -8,29 +8,29 @@
 
 import Foundation
 
-enum DistanceSpeedUnitWrappedEnum: Int, CaseIterable, Codable {
+enum DistanceVelocityUnitValue: Int, CaseIterable, Codable {
   case kilometres
   case miles
 }
 
-struct DistanceSpeedUnit: Codable, PreferencesOption {
-  static let availableOptions = [DistanceSpeedUnit(value: .kilometres),
-                                 DistanceSpeedUnit(value: .miles)]
+struct DistanceVelocityUnitOption: Codable, PreferencesOption {
+  static let availableOptions = [DistanceVelocityUnitOption(value: .kilometres),
+                                 DistanceVelocityUnitOption(value: .miles)]
   
-  typealias PreferencesOptionType = DistanceSpeedUnitWrappedEnum
+  typealias PreferencesOptionType = DistanceVelocityUnitValue
   
   private lazy var count = {
-    return DistanceSpeedUnitWrappedEnum.allCases.count
+    return DistanceVelocityUnitValue.allCases.count
   }()
   
-  var value: DistanceSpeedUnitWrappedEnum
+  var value: DistanceVelocityUnitValue
   
-  init(value: DistanceSpeedUnitWrappedEnum) {
+  init(value: DistanceVelocityUnitValue) {
     self.value = value
   }
   
   init?(rawValue: Int) {
-    guard let value = DistanceSpeedUnitWrappedEnum(rawValue: rawValue) else {
+    guard let value = DistanceVelocityUnitValue(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)

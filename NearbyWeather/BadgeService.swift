@@ -29,7 +29,7 @@ final class BadgeService {
   
   private struct AppIconBadgeTemperatureContent {
     let sign: TemperatureSign
-    let unit: TemperatureUnit
+    let unit: TemperatureUnitOption
     let temperature: Int
     let cityName: String
   }

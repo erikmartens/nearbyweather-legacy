@@ -8,31 +8,31 @@
 
 import Foundation
 
-enum SortingOrientationWrappedEnum: Int, CaseIterable, Codable {
+enum SortingOrientationValue: Int, CaseIterable, Codable {
   case name
   case temperature
   case distance
 }
 
-struct SortingOrientation: Codable, PreferencesOption {
-  static let availableOptions = [SortingOrientation(value: .name),
-                                 SortingOrientation(value: .temperature),
-                                 SortingOrientation(value: .distance)]
+struct SortingOrientationOption: Codable, PreferencesOption {
+  static let availableOptions = [SortingOrientationOption(value: .name),
+                                 SortingOrientationOption(value: .temperature),
+                                 SortingOrientationOption(value: .distance)]
   
-  typealias PreferencesOptionType = SortingOrientationWrappedEnum
+  typealias PreferencesOptionType = SortingOrientationValue
   
   private lazy var count = {
-    return SortingOrientationWrappedEnum.allCases.count
+    return SortingOrientationValue.allCases.count
   }
   
-  var value: SortingOrientationWrappedEnum
+  var value: SortingOrientationValue
   
-  init(value: SortingOrientationWrappedEnum) {
+  init(value: SortingOrientationValue) {
     self.value = value
   }
   
   init?(rawValue: Int) {
-    guard let value = SortingOrientationWrappedEnum(rawValue: rawValue) else {
+    guard let value = SortingOrientationValue(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)

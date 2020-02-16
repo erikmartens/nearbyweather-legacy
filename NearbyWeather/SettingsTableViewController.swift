@@ -206,7 +206,7 @@ final class SettingsTableViewController: UITableViewController {
       cell.selectionLabel.text = nil
       guard let preferredBookmarkId = PreferencesDataManager.shared.preferredBookmark.value,
         WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
-          PreferencesDataManager.shared.preferredBookmark = PreferredBookmark(value: nil)
+          PreferencesDataManager.shared.preferredBookmark = PreferredBookmarkOption(value: nil)
           return cell
       }
       cell.selectionLabel.text = PreferencesDataManager.shared.preferredBookmark.stringValue
@@ -265,9 +265,9 @@ final class SettingsTableViewController: UITableViewController {
     
     switch type {
     case .preferredBookmark:
-      var options = [PreferredBookmark(value: .none)]
+      var options = [PreferredBookmarkOption(value: .none)]
       options.append(contentsOf:
-        WeatherDataManager.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmark.init)
+        WeatherDataManager.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmarkOption.init)
       )
       alert = Factory.AlertController.make(fromType:
         .preferredBookmarkOptions(options: options,
@@ -275,22 +275,22 @@ final class SettingsTableViewController: UITableViewController {
       )
     case .preferredAmountOfResults:
       alert = Factory.AlertController.make(fromType:
-        .preferredAmountOfResultsOptions(options: AmountOfResults.availableOptions,
+        .preferredAmountOfResultsOptions(options: AmountOfResultsOption.availableOptions,
                                          completionHandler: completionHandler)
       )
     case .preferredSortingOrientation:
       alert = Factory.AlertController.make(fromType:
-        .preferredSortingOrientationOptions(options: SortingOrientation.availableOptions,
+        .preferredSortingOrientationOptions(options: SortingOrientationOption.availableOptions,
                                             completionHandler: completionHandler)
       )
     case .preferredTemperatureUnit:
       alert = Factory.AlertController.make(fromType:
-        .preferredTemperatureUnitOptions(options: TemperatureUnit.availableOptions,
+        .preferredTemperatureUnitOptions(options: TemperatureUnitOption.availableOptions,
                                          completionHandler: completionHandler)
       )
     case .preferredDistanceSpeedUnit:
       alert = Factory.AlertController.make(fromType:
-        .preferredSpeedUnitOptions(options: DistanceSpeedUnit.availableOptions,
+        .preferredSpeedUnitOptions(options: DistanceVelocityUnitOption.availableOptions,
                                    completionHandler: completionHandler)
       )
     }

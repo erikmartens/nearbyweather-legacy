@@ -64,7 +64,6 @@ We looking forward to receiving your contributions. You can find more informatio
 Additionally you may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.
 
 ## Future Developments
-- [Release 2.1](https://github.com/erikmartens/NearbyWeather/projects/2)
 - [Release 2.2](https://github.com/erikmartens/NearbyWeather/projects/1)
 - Integrate XCTests and [Travis](https://travis-ci.org)
 - Integrate [Fabric](https://get.fabric.io)

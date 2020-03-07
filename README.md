@@ -65,5 +65,5 @@ Additionally you may also assist as a beta tester. Periodically test-builds will
 
 ## Future Developments
 - [Release 2.2](https://github.com/erikmartens/NearbyWeather/projects/1)
-- Integrate XCTests and [Travis](https://travis-ci.org)
-- Integrate [Fabric](https://get.fabric.io)
+- Integrate XCTests and Bitrise/[Travis](https://travis-ci.org)
+- Integrate Firebase Crashlytics/[Fabric](https://get.fabric.io)

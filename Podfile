@@ -16,6 +16,7 @@ def nearbyweather_pods
     pod 'R.swift', '5.0.3'
 
     pod 'Firebase/Analytics', '~> 6.21.0'
+    pod 'Firebase/Crashlytics', '~> 6.21.0'
 end
 
 target 'NearbyWeather' do

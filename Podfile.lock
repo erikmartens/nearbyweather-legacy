@@ -80,7 +80,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - APTimeZones (from `https://github.com/Alterplay/APTimeZones.git`, commit `9ffd147`, branch `master`)
-  - Firebase/Analytics
+  - Firebase/Analytics (~> 6.21.0)
   - FMDB (~> 2.7.5)
   - PKHUD (~> 5.3.0)
   - R.swift (= 5.0.3)
@@ -142,6 +142,6 @@ SPEC CHECKSUMS:
   SwiftLint: 8f5d2f903e1c9bcbc832fd16771e80a263ac6cbb
   TextFieldCounter: 0f20630c8fe6f02b657bd883674829edfc40d845
 
-PODFILE CHECKSUM: 20793ad385cbf1b969dcbc5946ddc7389f5b7be1
+PODFILE CHECKSUM: e6e38badb5a8fe596cda48f46eccfa4666ae8421
 
 COCOAPODS: 1.9.1

@@ -41,6 +41,7 @@
 		F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */; };
 		F274FC39202F9A9300049144 /* WeatherNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */; };
 		F274FC3B2030ED5A00049144 /* PreferencesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC3A2030ED5A00049144 /* PreferencesDataManager.swift */; };
+		F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */; };
 		F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AFDEB1DF4C089003957EB /* WeatherDataCell.swift */; };
 		F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */; };
 		F283D26E1DF39095001B879D /* DualLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283D26D1DF39095001B879D /* DualLabelCell.swift */; };
@@ -184,6 +185,7 @@
 		F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkingService.swift; sourceTree = "<group>"; };
 		F274FC3A2030ED5A00049144 /* PreferencesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesDataManager.swift; sourceTree = "<group>"; };
+		F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F27AFDEB1DF4C089003957EB /* WeatherDataCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDataCell.swift; sourceTree = "<group>"; };
 		F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsInputTableViewController.swift; sourceTree = "<group>"; };
 		F283D26D1DF39095001B879D /* DualLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DualLabelCell.swift; sourceTree = "<group>"; };
@@ -334,14 +336,10 @@
 		F204B7791DF2EFA3000F4371 /* NearbyWeather */ = {
 			isa = PBXGroup;
 			children = (
-				86830395217BC28E00B7122E /* NearbyWeather.entitlements */,
-				F2F7BA1423E0FB2D00B4D2EB /* NearbyWeather-Bridging-Header.h */,
-				F2F7BA1723E0FB4A00B4D2EB /* BuildEnvironment.h */,
-				F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */,
-				F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */,
-				F204B7861DF2EFA3000F4371 /* Info.plist */,
 				F26A6D5C20FB6E520033BC49 /* External */,
+				F27A1216243BC03000A2CE8D /* Project Files */,
 				F2FE3EFB20027DE600EBC429 /* Bundle Files */,
+				F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */,
 				F28CA547202CE83700209397 /* Services */,
 				F266995C1E9AE23900498F99 /* Model */,
 				F2DBEAF423E601B600CD513B /* Routing */,
@@ -422,6 +420,19 @@
 				F26A6D5D20FB6E610033BC49 /* R.generated.swift */,
 			);
 			name = External;
+			sourceTree = "<group>";
+		};
+		F27A1216243BC03000A2CE8D /* Project Files */ = {
+			isa = PBXGroup;
+			children = (
+				86830395217BC28E00B7122E /* NearbyWeather.entitlements */,
+				F2F7BA1423E0FB2D00B4D2EB /* NearbyWeather-Bridging-Header.h */,
+				F2F7BA1723E0FB4A00B4D2EB /* BuildEnvironment.h */,
+				F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */,
+				F204B7861DF2EFA3000F4371 /* Info.plist */,
+				F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */,
+			);
+			name = "Project Files";
 			sourceTree = "<group>";
 		};
 		F28CA5422027AE9B00209397 /* Custom Objects */ = {
@@ -824,6 +835,7 @@
 				F2DBEADE23E4D46700CD513B /* WeatherDataCell.xib in Resources */,
 				F2DBEB0B23E8DE0E00CD513B /* SetPermissions.storyboard in Resources */,
 				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
+				F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */,
 				F204B7801DF2EFA3000F4371 /* Main.storyboard in Resources */,
 				F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */,
 				F25A39712187AA5A0054BC7A /* ProjectContributors.json in Resources */,
@@ -860,18 +872,24 @@
 				"${BUILT_PRODUCTS_DIR}/APTimeZones/APTimeZones.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/TextFieldCounter/TextFieldCounter.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APTimeZones.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldCounter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -888,18 +906,24 @@
 				"${BUILT_PRODUCTS_DIR}/APTimeZones/APTimeZones.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/TextFieldCounter/TextFieldCounter.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APTimeZones.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldCounter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

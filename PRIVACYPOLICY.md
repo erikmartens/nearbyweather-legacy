@@ -1,63 +1,67 @@
 # NearbyWeather - Privacy Policy
 
-__Last updated: 30 January, 2020__
+__Last updated: 08 April, 2020__
 
 ---
 
-Erik Maximilian Martens ["the developer"] built the app "NearbyWeather" ["the app"] as a Free app. The app is provided by the developer at no cost and is intended for use as is.
+Erik Maximilian Martens built the NearbyWeather app as an Open Source app. This SERVICE is provided by Erik Maximilian Martens at no cost and is intended for use as is.
 
-This page is used to inform visitors regarding the app's practices related to the collection, use, and disclosure of Personal Information that apply to anyone deciding to use the app.
+This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
 
-If you choose to use the app, then you agree to the collection and use of information in relation to this policy. The Personal Information that is collected by the app is used for providing and improving the app. Erik Maximilian Martens will not use or share your information with anyone except as described in this Privacy Policy.
+If you choose to use my Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that I collect is used for providing and improving the Service. I will not use or share your information with anyone except as described in this Privacy Policy.
 
-The terms used in this Privacy Policy have the same meanings as in the app's Terms and Conditions, which is accessible at NearbyWeather unless otherwise defined in this Privacy Policy.
+The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at NearbyWeather unless otherwise defined in this Privacy Policy.
 
-__Information Collection and Use__
+**Information Collection and Use**
 
-For a better experience, while using the app, you may be required to provide certain personally identifiable information. The information that is requested will be retained on your device and is not collected by the developer in any way.
+For a better experience, while using our Service, I may require you to provide us with certain personally identifiable information. The information that I request will be retained on your device and is not collected by me in any way.
 
-The app does not use third party services that may collect information used to identify you.
+The app does use third party services that may collect information used to identify you.
 
-__Log Data__
+Link to privacy policy of third party service providers used by the app
 
-Whenever you use the app, in a case of an error in the app, data and information is collected (through third party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing the app, the time and date of your use of the app, and other statistics.
+*   [Google Analytics for Firebase](https://firebase.google.com/policies/analytics)
+*   [Firebase Crashlytics](https://firebase.google.com/support/privacy/)
 
-Currently such log data is collected automatically using services built by Apple Inc. ["Apple"], which are subject to your Enduser Agreement with Apple. Apple allows you to opt out of the collection of aforementioned data at any time. 
+**Log Data**
 
-__Cookies__
+I want to inform you that whenever you use my Service, in a case of an error in the app I collect data and information (through third party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing my Service, the time and date of your use of the Service, and other statistics.
+
+**Cookies**
 
 Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory.
+
 This Service does not use these “cookies” explicitly. However, the app may use third party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service.
 
-__Service Providers__
+**Service Providers**
 
-The developer may employ third-party companies and individuals due to the following reasons:
-To facilitate the Service;
-To provide the Service on the developer's behalf;
-To perform Service-related services; or
-To assist the devloper in analyzing how the Service is used.
+I may employ third-party companies and individuals due to the following reasons:
 
-The developer would like to inform users of this Service that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on the developer's behalf. However, they are obligated not to disclose or use the information for any other purpose.
+*   To facilitate our Service;
+*   To provide the Service on our behalf;
+*   To perform Service-related services; or
+*   To assist us in analyzing how our Service is used.
 
-_Currently and thus far no third parties or individuals have been contracted._
+I want to inform users of this Service that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.
 
-__Security__
+**Security**
 
-The developer values your trust in providing your Personal Information, thus the developer is striving to use commercially acceptable means of protecting it. Bear in mind that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and I cannot guarantee its absolute security.
+I value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and I cannot guarantee its absolute security.
 
-__Links to Other Sites__
+**Links to Other Sites**
 
-This Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by the developer. Therefore, the developer strongly advises you to review the Privacy Policy of these websites. The developer has no control over and assumes no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+This Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by me. Therefore, I strongly advise you to review the Privacy Policy of these websites. I have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
 
-__Children’s Privacy__
+**Children’s Privacy**
 
-These Services do not address anyone under the age of 13. The developer does not knowingly collect personally identifiable information from children under 13. In the case the developer discovers that a child under 13 has provided personal information, the developer will immediately delete this from the developer's servers. If you are a parent or guardian and you are aware that your child has provided personal information, please contact the developer so that the developer will be able to carry out the necessary actions.
+These Services do not address anyone under the age of 13. I do not knowingly collect personally identifiable information from children under 13\. In the case I discover that a child under 13 has provided me with personal information, I immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact me so that I will be able to do necessary actions.
 
-__Changes to This Privacy Policy__
+**Changes to This Privacy Policy**
 
-The developer may update the app's Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. The developer will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page.
+I may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page.
 
-__Contact Us__
+**Contact Us**
 
-If you have any questions or suggestions about the app's Privacy Policy, do not hesitate to [contact the developer](mailto:erikmartens.developer@gmail.com).
-This privacy policy page was created at privacypolicytemplate.net and modified/generated by App Privacy Policy Generator, as well as the developer.
+If you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com).
+
+This privacy policy page was created at [privacypolicytemplate.net](https://privacypolicytemplate.net) and modified/generated by [App Privacy Policy Generator](https://app-privacy-policy-generator.firebaseapp.com/)

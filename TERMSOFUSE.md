@@ -1,4 +1,4 @@
-# NearbyWeather - Terms of Service
+# NearbyWeather - Terms of Use
 
 __Last updated: 08 April, 2020__
 

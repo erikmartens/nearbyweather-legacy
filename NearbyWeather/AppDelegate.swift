@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 protocol MainWindowManager: class {
   var window: UIWindow? { get set }
@@ -31,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MainWindowManager, Welcom
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     instantiateServices()
     instantiateApplicationUserInterface()
+    
+    FirebaseApp.configure()
     
     return true
   }

@@ -74,7 +74,7 @@ final class AboutAppTableViewController: UITableViewController {
   // MARK: - TableView Delegate
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return UITableView.automaticDimension
+    UITableView.automaticDimension
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -86,8 +86,11 @@ final class AboutAppTableViewController: UITableViewController {
     }
     
     var urlStringValue: String?
-    if indexPath.section == 1 {
+    if indexPath.section == 1 && indexPath.row == 0 {
       urlStringValue = Constants.Urls.kPrivacyPolicyUrl.absoluteString
+    }
+    if indexPath.section == 1 && indexPath.row == 1 {
+      urlStringValue = Constants.Urls.kTermsOfUseUrl.absoluteString
     }
     if indexPath.section == 2 && indexPath.row == 0 {
       urlStringValue = Constants.Urls.kGitHubProjectContributionGuidelinesUrl.absoluteString
@@ -113,7 +116,7 @@ final class AboutAppTableViewController: UITableViewController {
   // MARK: - TableView Data Source
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 6
+    6
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -121,7 +124,7 @@ final class AboutAppTableViewController: UITableViewController {
     case 0:
       return 2
     case 1:
-      return 1
+      return 2
     case 2:
       return 2
     case 3:
@@ -190,8 +193,13 @@ final class AboutAppTableViewController: UITableViewController {
       )
       return buttonCell
     case 1:
-      singleLabelCell.contentLabel.text = R.string.localizable.privacy_policy()
-      return singleLabelCell
+      if indexPath.row == 0 {
+        singleLabelCell.contentLabel.text = R.string.localizable.privacy_policy()
+        return singleLabelCell
+      } else {
+        singleLabelCell.contentLabel.text = R.string.localizable.terms_of_use()
+        return singleLabelCell
+      }
     case 2:
       if indexPath.row == 0 {
         singleLabelCell.contentLabel.text = R.string.localizable.how_to_contribute()

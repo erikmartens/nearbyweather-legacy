@@ -15,7 +15,7 @@
 
 default_platform(:ios)
 
-desc "fastlane set_version version_number:2.0.0"
+desc "fastlane set_version version_number:1.0.0"
 lane :set_version  do |options|
   new_version_nr = increment_version_number(version_number: options[:version_number])
 end
@@ -33,7 +33,6 @@ desc "fastlane testflight_beta changelog: 'Notes to testers'"
 lane :testflight_beta do |options|
   clear_derived_data
   build_app
-  # TODO upload dyms to crashlytics once set up
   upload_to_testflight(
   	ipa: "./build/NearbyWeather.ipa",
     skip_submission: true,
@@ -78,7 +77,7 @@ lane :update_bootstrap_weatherstations do
   	system "sh ../Scripts/generateLocationSQLiteDatabase.sh"
 end
 
-desc "fastlane refresh_dsyms version_number:7.6.1 build_number:718 or just fastlane refresh_dsyms"
+desc "fastlane refresh_dsyms version_number:1.0.0 build_number:123 or just fastlane refresh_dsyms"
 lane :refresh_dsyms do |options|
   if options[:version_number] && options[:build_number]
     version_number = options[:version_number]

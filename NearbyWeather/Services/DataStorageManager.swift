@@ -14,6 +14,13 @@ enum StorageLocationType {
   case applicationSupport
 }
 
+protocol DataStorageProtocol {
+  associatedtype StorageEntity: DataStorageProtocol
+  
+  static func storeData()
+  static func loadData() -> StorageEntity?
+}
+
 final class DataStorageManager {    
   
   // MARK: - Public Functions

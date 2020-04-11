@@ -202,7 +202,7 @@ extension WeatherListViewController {
       return weatherCell
     case .nearby:
       if !UserLocationService.shared.locationPermissionsGranted {
-        let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .locationAccessDenied), httpStatusCode: nil)
+        let errorDataDTO = ErrorDataDTO(errorType: ErrorDataDTO.ErrorType(value: .locationAccessDenied), httpStatusCode: nil)
         alertCell.configureWithErrorDataDTO(errorDataDTO)
         return alertCell
       }

@@ -1,5 +1,5 @@
 //
-//  WeatherDTOs.swift
+//  WeatherDataDTO.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 14.04.17.
@@ -141,38 +141,4 @@ struct WeatherInformationDTO: Codable {
       self.daytimeInformation = nil
     }
   }
-}
-
-class ErrorType: Codable {
-  
-  static let count = 5
-  
-  var value: ErrorTypeWrappedEnum
-  
-  init(value: ErrorTypeWrappedEnum) {
-    self.value = value
-  }
-  
-  convenience init?(rawValue: Int) {
-    guard let value = ErrorTypeWrappedEnum(rawValue: rawValue) else {
-      return nil
-    }
-    self.init(value: value)
-  }
-  
-  enum ErrorTypeWrappedEnum: Int, Codable {
-    case httpError
-    case requestTimOutError
-    case malformedUrlError
-    case unparsableResponseError
-    case jsonSerializationError
-    case unrecognizedApiKeyError
-    case locationUnavailableError
-    case locationAccessDenied
-  }
-}
-
-struct ErrorDataDTO: Codable {
-  var errorType: ErrorType
-  var httpStatusCode: Int?
 }

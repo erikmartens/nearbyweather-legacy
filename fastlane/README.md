@@ -19,7 +19,7 @@ or alternatively using `brew cask install fastlane`
 ```
 fastlane set_version
 ```
-fastlane set_version version_number:2.0.0
+fastlane set_version version_number:1.0.0
 ### bump_build
 ```
 fastlane bump_build
@@ -64,7 +64,7 @@ fastlane update_bootstrap_weatherstations
 ```
 fastlane refresh_dsyms
 ```
-fastlane refresh_dsyms version_number:7.6.1 build_number:718 or just fastlane refresh_dsyms
+fastlane refresh_dsyms version_number:1.0.0 build_number:123 or just fastlane refresh_dsyms
 
 ----
 

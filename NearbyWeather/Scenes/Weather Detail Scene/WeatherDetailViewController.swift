@@ -57,6 +57,7 @@ final class WeatherDetailViewController: UIViewController {
   @IBOutlet weak var pressureNoteLabel: UILabel!
   @IBOutlet weak var pressureLabel: UILabel!
   
+  @IBOutlet weak var windSpeedStackView: UIStackView!
   @IBOutlet weak var windSpeedImageView: UIImageView!
   @IBOutlet weak var windSpeedNoteLabel: UILabel!
   @IBOutlet weak var windSpeedLabel: UILabel!
@@ -129,11 +130,11 @@ final class WeatherDetailViewController: UIViewController {
       timeLabel.text = "\(description), \(localTime)"
       
       sunriseImageView.tintColor = .darkGray
-      sunriseNoteLabel.text = "\(R.string.localizable.sunrise())"
+      sunriseNoteLabel.text = R.string.localizable.sunrise()
       sunriseLabel.text = dateFormatter.string(from: sunriseDate)
       
       sunsetImageView.tintColor = .darkGray
-      sunsetNoteLabel.text = "\(R.string.localizable.sunset())"
+      sunsetNoteLabel.text = R.string.localizable.sunset()
       sunsetLabel.text = dateFormatter.string(from: sunsetDate)
     } else {
       daytimeStackView.isHidden = true
@@ -141,30 +142,38 @@ final class WeatherDetailViewController: UIViewController {
     }
     
     cloudCoverImageView.tintColor = .darkGray
-    cloudCoverNoteLabel.text = "\(R.string.localizable.cloud_coverage())"
+    cloudCoverNoteLabel.text = R.string.localizable.cloud_coverage()
     cloudCoverLabel.text = "\(weatherDTO.cloudCoverage.coverage)%"
     humidityImageView.tintColor = .darkGray
-    humidityNoteLabel.text = "\(R.string.localizable.humidity())"
+    humidityNoteLabel.text = R.string.localizable.humidity()
     humidityLabel.text = "\(weatherDTO.atmosphericInformation.humidity)%"
     pressureImageView.tintColor = .darkGray
-    pressureNoteLabel.text = "\(R.string.localizable.air_pressure())"
+    pressureNoteLabel.text = R.string.localizable.air_pressure()
     pressureLabel.text = "\(weatherDTO.atmosphericInformation.pressurePsi) hpa"
     
     windSpeedImageView.tintColor = .darkGray
-    windSpeedNoteLabel.text = "\(R.string.localizable.windspeed())"
-    let windspeedDescriptor = ConversionService.windspeedDescriptor(forDistanceSpeedUnit: PreferencesDataManager.shared.distanceSpeedUnit, forWindspeed: weatherDTO.windInformation.windspeed)
-    windSpeedLabel.text = windspeedDescriptor
+    windSpeedNoteLabel.text = R.string.localizable.windspeed()
+    
+    if let windspeed = weatherDTO.windInformation.windspeed {
+      windSpeedLabel.text = ConversionService.windspeedDescriptor(
+        forDistanceSpeedUnit: PreferencesDataManager.shared.distanceSpeedUnit,
+        forWindspeed: windspeed
+      )
+    } else {
+      windSpeedStackView.isHidden = true
+    }
+    
     if let windDirection = weatherDTO.windInformation.degrees {
       windDirectionImageView.transform = CGAffineTransform(rotationAngle: CGFloat(windDirection)*0.0174532925199) // convert to radians
       windDirectionImageView.tintColor = .darkGray
-      windDirectionNoteLabel.text = " \(R.string.localizable.wind_direction())"
+      windDirectionNoteLabel.text = R.string.localizable.wind_direction()
       windDirectionLabel.text = ConversionService.windDirectionDescriptor(forWindDirection: windDirection)
     } else {
       windDirectionStackView.isHidden = true
     }
     
     coordinatesImageView.tintColor = .darkGray
-    coordinatesNoteLabel.text = "\(R.string.localizable.coordinates())"
+    coordinatesNoteLabel.text = R.string.localizable.coordinates()
     coordinatesLabel.text = "\(weatherDTO.coordinates.latitude), \(weatherDTO.coordinates.longitude)"
     if UserLocationService.shared.locationPermissionsGranted, let userLocation = UserLocationService.shared.location {
       let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
@@ -174,7 +183,7 @@ final class WeatherDetailViewController: UIViewController {
       let distanceString = ConversionService.distanceDescriptor(forDistanceSpeedUnit: distanceSpeedUnit, forDistanceInMetres: distanceInMetres)
       
       distanceImageView.tintColor = .darkGray
-      distanceNoteLabel.text = "\(R.string.localizable.distance())"
+      distanceNoteLabel.text = R.string.localizable.distance()
       distanceLabel.text = distanceString
     } else {
       distanceStackView.isHidden = true

@@ -62,7 +62,7 @@ struct WeatherInformationDTO: Codable {
   }
   
   struct WindInformation: Codable {
-    var windspeed: Double
+    var windspeed: Double?
     var degrees: Double?
     
     enum CodingKeys: String, CodingKey {
@@ -73,13 +73,8 @@ struct WeatherInformationDTO: Codable {
     init(from decoder: Decoder) throws {
       let values = try decoder.container(keyedBy: CodingKeys.self)
       
-      self.windspeed = try values.decode(Double.self, forKey: .windspeed)
-      if values.contains(.degrees) {
-        let degrees = try values.decodeIfPresent(Double.self, forKey: CodingKeys.degrees)
-        self.degrees = degrees
-      } else {
-        self.degrees = nil
-      }
+      windspeed = try values.decode(Double.self, forKey: .windspeed)
+      degrees = try values.decodeIfPresent(Double.self, forKey: .degrees)
     }
   }
   

@@ -13,7 +13,7 @@ final class WeatherStationService {
   
   // MARK: - Public Assets
   
-  static var shared: WeatherStationService!
+  static let shared = WeatherStationService()
   
   // MARK: - Private Assets
   
@@ -36,10 +36,6 @@ final class WeatherStationService {
   
   // MARK: - Public Properties & Methods
   
-  static func instantiateSharedInstance() {
-    shared = WeatherStationService()
-  }
-  
   func locations(forSearchString searchString: String, completionHandler: @escaping (([WeatherStationDTO]?) -> Void)) {
     
     if searchString.isEmpty || searchString == "" { return completionHandler(nil) }
@@ -50,7 +46,10 @@ final class WeatherStationService {
           return String($0.identifier)
         }
         let sqlUsedLocationsIdentifierssArray = "('" + usedLocationIdentifiers.joined(separator: "','") + "')"
-        let query = !usedLocationIdentifiers.isEmpty ? "SELECT * FROM locations l WHERE l.id NOT IN \(sqlUsedLocationsIdentifierssArray) AND (lower(name) LIKE '%\(searchString.lowercased())%') ORDER BY country, l.name" : "SELECT * FROM locations l WHERE (lower(name) LIKE '%\(searchString.lowercased())%') ORDER BY l.name, l.country"
+        
+        let query = !usedLocationIdentifiers.isEmpty
+          ? "SELECT * FROM locations l WHERE l.id NOT IN \(sqlUsedLocationsIdentifierssArray) AND (lower(name) LIKE '%\(searchString.lowercased())%') ORDER BY country, l.name"
+          : "SELECT * FROM locations l WHERE (lower(name) LIKE '%\(searchString.lowercased())%') ORDER BY l.name, l.country"
         var queryResult: FMResultSet?
         
         do {

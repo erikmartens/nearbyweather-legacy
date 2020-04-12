@@ -11,6 +11,7 @@ import UIKit
 class WeatherDataCell: UITableViewCell {
   
   var weatherDataIdentifier: Int!
+  var isBookmark: Bool!
   
   @IBOutlet weak var backgroundColorView: UIView!
   @IBOutlet weak var weatherConditionLabel: UILabel!
@@ -28,33 +29,50 @@ class WeatherDataCell: UITableViewCell {
   @IBOutlet weak var windSpeedImageView: UIImageView!
   @IBOutlet weak var windspeedLabel: UILabel!
   
-  func configureWithWeatherDTO(_ weatherDTO: WeatherInformationDTO) {
-    let bubbleColor: UIColor = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
-      ? Constants.Theme.BrandColors.standardDay
-      : Constants.Theme.BrandColors.standardNight // default to blue colored cells
+  func configureWithWeatherDTO(_ weatherDTO: WeatherInformationDTO, isBookmark: Bool) {
+    self.weatherDataIdentifier = weatherDTO.cityID
+    self.isBookmark = isBookmark
     
-    weatherDataIdentifier = weatherDTO.cityID
+    var bubbleColor: UIColor
+    var textColor: UIColor
+    var borderWidth: CGFloat
+    
+    switch isBookmark {
+    case true:
+      bubbleColor = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
+        ? Constants.Theme.BrandColors.standardDay
+        : Constants.Theme.BrandColors.standardNight // default to blue colored cells
+      
+      textColor = .white
+      borderWidth = 0
+    case false:
+      bubbleColor = .white
+      textColor = .black
+      borderWidth = 1/UIScreen.main.scale
+    }
     
     backgroundColorView.layer.cornerRadius = 5.0
+    backgroundColorView.layer.borderColor = textColor.cgColor
+    backgroundColorView.layer.borderWidth = borderWidth
     backgroundColorView.layer.backgroundColor = bubbleColor.cgColor
     
-    cityNameLabel.textColor = .white
+    cityNameLabel.textColor = textColor
     cityNameLabel.font = .preferredFont(forTextStyle: .headline)
     
-    temperatureImageView.tintColor = .white
-    temperatureLabel.textColor = .white
+    temperatureImageView.tintColor = textColor
+    temperatureLabel.textColor = textColor
     temperatureLabel.font = .preferredFont(forTextStyle: .subheadline)
     
-    cloudCoverImageView.tintColor = .white
-    cloudCoverageLabel.textColor = .white
+    cloudCoverImageView.tintColor = textColor
+    cloudCoverageLabel.textColor = textColor
     cloudCoverageLabel.font = .preferredFont(forTextStyle: .subheadline)
     
-    humidityImageView.tintColor = .white
-    humidityLabel.textColor = .white
+    humidityImageView.tintColor = textColor
+    humidityLabel.textColor = textColor
     humidityLabel.font = .preferredFont(forTextStyle: .subheadline)
     
-    windSpeedImageView.tintColor = .white
-    windspeedLabel.textColor = .white
+    windSpeedImageView.tintColor = textColor
+    windspeedLabel.textColor = textColor
     windspeedLabel.font = .preferredFont(forTextStyle: .subheadline)
     
     let weatherConditionSymbol = ConversionWorker.weatherConditionSymbol(

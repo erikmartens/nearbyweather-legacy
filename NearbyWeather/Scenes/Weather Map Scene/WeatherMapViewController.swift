@@ -55,12 +55,12 @@ final class WeatherMapViewController: UIViewController {
     
     let bookmarkedLocationAnnotations: [WeatherLocationMapAnnotation]? = WeatherDataService.shared.bookmarkedWeatherDataObjects?.compactMap {
       guard let weatherDTO = $0.weatherInformationDTO else { return nil }
-      return WeatherLocationMapAnnotation(weatherDTO: weatherDTO)
+      return WeatherLocationMapAnnotation(weatherDTO: weatherDTO, isBookmark: true)
     }
     weatherLocationMapAnnotations.append(contentsOf: bookmarkedLocationAnnotations ?? [WeatherLocationMapAnnotation]())
     
     let nearbyocationAnnotations = WeatherDataService.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.compactMap {
-      return WeatherLocationMapAnnotation(weatherDTO: $0)
+      return WeatherLocationMapAnnotation(weatherDTO: $0, isBookmark: false)
     }
     weatherLocationMapAnnotations.append(contentsOf: nearbyocationAnnotations ?? [WeatherLocationMapAnnotation]())
     
@@ -152,15 +152,31 @@ extension WeatherMapViewController: MKMapViewDelegate {
     } else {
       viewForCurrentAnnotation = WeatherLocationMapAnnotationView(frame: kMapAnnotationViewInitialFrame)
     }
+    
+    var fillColor: UIColor
+    var textColor: UIColor
+    
+    if annotation.isBookmark {
+      fillColor = annotation.isDayTime ?? true
+        ? Constants.Theme.BrandColors.standardDay
+        : Constants.Theme.BrandColors.standardNight // default to blue colored cells
+      
+      textColor = .white
+    } else {
+      fillColor = .white
+      textColor = .black
+    }
+    
     viewForCurrentAnnotation?.annotation = annotation
     viewForCurrentAnnotation?.configure(
       withTitle: annotation.title ?? Constants.Messages.kNotSet,
       subtitle: annotation.subtitle ?? Constants.Messages.kNotSet,
-      fillColor: (annotation.isDayTime ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight,
+      fillColor: fillColor,
+      textColor: textColor,
       tapHandler: { [weak self] _ in
         self?.previousRegion = mapView.region
         self?.stepper?.requestRouting(toStep:
-          WeatherMapStep.weatherDetails(identifier: annotation.locationId)
+          WeatherMapStep.weatherDetails(identifier: annotation.locationId, isBookmark: annotation.isBookmark)
         )
       }
     )

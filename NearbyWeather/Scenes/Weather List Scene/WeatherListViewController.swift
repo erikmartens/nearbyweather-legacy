@@ -198,7 +198,7 @@ extension WeatherListViewController {
         alertCell.configureWithErrorDataDTO(WeatherDataService.shared.bookmarkedWeatherDataObjects?[indexPath.row].errorDataDTO)
         return alertCell
       }
-      weatherCell.configureWithWeatherDTO(weatherDTO)
+      weatherCell.configureWithWeatherDTO(weatherDTO, isBookmark: true)
       return weatherCell
     case .nearby:
       if !UserLocationService.shared.locationPermissionsGranted {
@@ -214,7 +214,7 @@ extension WeatherListViewController {
         alertCell.configureWithErrorDataDTO(WeatherDataService.shared.nearbyWeatherDataObject?.errorDataDTO)
         return alertCell
       }
-      weatherCell.configureWithWeatherDTO(weatherDTO)
+      weatherCell.configureWithWeatherDTO(weatherDTO, isBookmark: false)
       return weatherCell
     }
   }
@@ -226,9 +226,11 @@ extension WeatherListViewController {
     
     tableView.deselectRow(at: indexPath, animated: true)
     
-    let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell
+    guard let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell else {
+      return
+    }
     stepper?.requestRouting(toStep:
-      WeatherListStep.weatherDetails(identifier: selectedCell?.weatherDataIdentifier)
+      WeatherListStep.weatherDetails(identifier: selectedCell.weatherDataIdentifier, isBookmark: selectedCell.isBookmark)
     )
   }
 }

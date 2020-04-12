@@ -43,6 +43,13 @@ final class WeatherLocationMapAnnotationView: MKAnnotationView {
     }
   }
   
+  private var textColor: UIColor? {
+    didSet {
+      titleLabel.textColor = textColor
+      subtitleLabel.textColor = textColor
+    }
+  }
+  
   private var gestureRecognizer = UITapGestureRecognizer()
   private var tapHandler: ((UITapGestureRecognizer) -> Void)?
   
@@ -66,10 +73,17 @@ final class WeatherLocationMapAnnotationView: MKAnnotationView {
   // MARK: - Public Functions
   
   // gets called before draw
-  func configure(withTitle title: String, subtitle: String, fillColor: UIColor, tapHandler: ((UITapGestureRecognizer) -> Void)?) {
+  func configure(
+    withTitle title: String,
+    subtitle: String,
+    fillColor: UIColor,
+    textColor: UIColor,
+    tapHandler: ((UITapGestureRecognizer) -> Void)?
+  ) {
     self.title = title
     self.subtitle = subtitle
     self.fillColor = fillColor
+    self.textColor = textColor
     
     if let tapHandler = tapHandler {
       self.tapHandler = tapHandler
@@ -92,14 +106,14 @@ final class WeatherLocationMapAnnotationView: MKAnnotationView {
     circleLayer.frame.size = CGSize(width: kRadius*2, height: kRadius*2)
     circleLayer.bounds.origin = CGPoint(x: -frame.width/2 + kRadius, y: -frame.height/2 + kRadius)
     circleLayer.fillColor = fillColor?.cgColor ?? Constants.Theme.BrandColors.standardDay.cgColor
-    circleLayer.strokeColor = UIColor.white.cgColor
+    circleLayer.strokeColor = textColor?.cgColor
     circleLayer.lineWidth = kBorderWidth/2
     layer.addSublayer(circleLayer)
     
     let speechBubbleLayer = CAShapeLayer()
     speechBubbleLayer.path = bubblePath(forContentSize: CGSize(width: kWidth, height: kHeight)).cgPath
     speechBubbleLayer.fillColor = fillColor?.cgColor ?? Constants.Theme.BrandColors.standardDay.cgColor
-    speechBubbleLayer.strokeColor = UIColor.white.cgColor
+    speechBubbleLayer.strokeColor = textColor?.cgColor
     speechBubbleLayer.position = .zero
     layer.addSublayer(speechBubbleLayer)
     
@@ -144,8 +158,8 @@ final class WeatherLocationMapAnnotationView: MKAnnotationView {
     label.numberOfLines = 1
     label.font = UIFont.systemFont(ofSize: size)
     label.textAlignment = .center
+    label.textColor = textColor
     label.minimumScaleFactor = 0.8
-    label.textColor = .white
     label.backgroundColor = .clear
     return label
   }

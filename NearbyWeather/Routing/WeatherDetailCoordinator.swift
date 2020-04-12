@@ -9,7 +9,7 @@
 import UIKit
 
 enum WeatherDetailStep: StepProtocol {
-  case initial(identifier: Int?)
+  case initial(identifier: Int?, isBookmark: Bool)
   case dismiss
   case none
 }
@@ -28,10 +28,10 @@ final class WeatherDetailCoordinator: Coordinator {
   
   // MARK: - Initialization
   
-  init(parentCoordinator: Coordinator?, weatherDetailIdentifier: Int?) {
+  init(parentCoordinator: Coordinator?, weatherDetailIdentifier: Int?, isBookmark: Bool) {
     let initialStep = InitialStep(
       identifier: WeatherDetailStep.identifier,
-      step: WeatherDetailStep.initial(identifier: weatherDetailIdentifier)
+      step: WeatherDetailStep.initial(identifier: weatherDetailIdentifier, isBookmark: isBookmark)
     )
     
     super.init(
@@ -51,8 +51,9 @@ final class WeatherDetailCoordinator: Coordinator {
   override func executeRoutingStep(_ step: StepProtocol, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
     guard let step = step as? WeatherDetailStep else { return }
     switch step {
-    case let .initial(identifier):
+    case let .initial(identifier, isBookmark):
       summonWeatherDetailController(weatherDataIdentifier: identifier,
+                                    isBookmark: isBookmark,
                                     passNextChildCoordinatorTo: coordinatorReceiver)
     case .dismiss:
       dismissWeatherDetailController(passNextChildCoordinatorTo: coordinatorReceiver)
@@ -64,7 +65,7 @@ final class WeatherDetailCoordinator: Coordinator {
 
 private extension WeatherDetailCoordinator {
   
-  func summonWeatherDetailController(weatherDataIdentifier: Int?, passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
+  func summonWeatherDetailController(weatherDataIdentifier: Int?, isBookmark: Bool, passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     guard let weatherDataIdentifier = weatherDataIdentifier,
       let weatherDTO = WeatherDataService.shared.weatherDTO(forIdentifier: weatherDataIdentifier) else {
         return
@@ -72,7 +73,8 @@ private extension WeatherDetailCoordinator {
     
     let destinationViewController = WeatherDetailViewController.instantiateFromStoryBoard(
       withTitle: weatherDTO.cityName,
-      weatherDTO: weatherDTO
+      weatherDTO: weatherDTO,
+      isBookmark: isBookmark
     )
     destinationViewController.stepper = stepper as? WeatherDetailStepper
     

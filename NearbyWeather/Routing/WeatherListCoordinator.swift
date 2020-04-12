@@ -11,7 +11,7 @@ import UIKit
 enum WeatherListStep: StepProtocol {
   case list
   case emptyList
-  case weatherDetails(identifier: Int?)
+  case weatherDetails(identifier: Int?, isBookmark: Bool)
   case none
 }
 
@@ -64,8 +64,9 @@ final class WeatherListCoordinator: Coordinator {
       summonWeatherListController(passNextChildCoordinatorTo: coordinatorReceiver)
     case .emptyList:
       summonEmptyWeatherListController(passNextChildCoordinatorTo: coordinatorReceiver)
-    case let .weatherDetails(identifier):
+    case let .weatherDetails(identifier, isBookmark):
       summonWeatherDetailsController(weatherDetailIdentifier: identifier,
+                                     isBookmark: isBookmark,
                                      passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
@@ -99,8 +100,8 @@ private extension WeatherListCoordinator {
     coordinatorReceiver(.none)
   }
   
-  func summonWeatherDetailsController(weatherDetailIdentifier: Int?, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
-    let weatherDetailCoordinator = WeatherDetailCoordinator(parentCoordinator: self, weatherDetailIdentifier: weatherDetailIdentifier)
+  func summonWeatherDetailsController(weatherDetailIdentifier: Int?, isBookmark: Bool, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
+    let weatherDetailCoordinator = WeatherDetailCoordinator(parentCoordinator: self, weatherDetailIdentifier: weatherDetailIdentifier, isBookmark: isBookmark)
 
     guard let nextRoot = weatherDetailCoordinator.rootViewController as? UINavigationController else { return }
     rootViewController.present(nextRoot, animated: true)

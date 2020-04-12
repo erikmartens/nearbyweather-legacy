@@ -19,12 +19,12 @@ extension UINavigationBar {
     barStyle = .default
   }
   
-  func style(withBarTintColor barTintColor: UIColor) {
+  func style(withBarTintColor barTintColor: UIColor, tintColor: UIColor) {
     isTranslucent = false
     
     self.barTintColor = barTintColor
-    tintColor = .white
-    titleTextAttributes = [.foregroundColor: UIColor.white]
+    self.tintColor = tintColor
+    titleTextAttributes = [.foregroundColor: tintColor]
     barStyle = .default
   }
 }

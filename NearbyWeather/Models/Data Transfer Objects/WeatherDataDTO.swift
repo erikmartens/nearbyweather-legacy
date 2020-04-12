@@ -108,6 +108,13 @@ struct WeatherInformationDTO: Codable {
       case sunrise
       case sunset
     }
+    
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
+      
+      sunrise = try? values?.decodeIfPresent(Double.self, forKey: .sunrise)
+      sunset = try? values?.decodeIfPresent(Double.self, forKey: .sunset)
+    }
   }
   
   var cityID: Int
@@ -140,14 +147,6 @@ struct WeatherInformationDTO: Codable {
     self.atmosphericInformation = try values.decode(AtmosphericInformation.self, forKey: .atmosphericInformation)
     self.windInformation = try values.decode(WindInformation.self, forKey: .windInformation)
     self.cloudCoverage = try values.decode(CloudCoverage.self, forKey: .cloudCoverage)
-    
-    if values.contains(.daytimeInformation) {
-      let daytimeInformation = try values.nestedContainer(keyedBy: DaytimeInformation.CodingKeys.self, forKey: .daytimeInformation)
-      let sunrise = try daytimeInformation.decodeIfPresent(Double.self, forKey: DaytimeInformation.CodingKeys.sunrise)
-      let sunset = try daytimeInformation.decodeIfPresent(Double.self, forKey: DaytimeInformation.CodingKeys.sunset)
-      self.daytimeInformation = DaytimeInformation(sunrise: sunrise, sunset: sunset)
-    } else {
-      self.daytimeInformation = nil
-    }
+    self.daytimeInformation = try values.decodeIfPresent(DaytimeInformation.self, forKey: .daytimeInformation)
   }
 }

@@ -41,7 +41,10 @@ extension String {
   }
   
   func append(contentsOfConvertible convertible: CustomStringConvertible?, delimiter: Delimiter) -> String {
-    append(contentsOf: String(describing: convertible), delimiter: delimiter)
+    guard let convertible = convertible else {
+      return self
+    }
+    return append(contentsOf: String(describing: convertible), delimiter: delimiter)
   }
   
   func ifEmpty(justReturn string: String?) -> String? {
@@ -65,6 +68,9 @@ extension CustomStringConvertible {
   }
   
   func append(contentsOfConvertible convertible: CustomStringConvertible?, delimiter: Delimiter) -> String {
-    append(contentsOf: String(describing: convertible), delimiter: delimiter)
+    guard let convertible = convertible else {
+      return String(describing: self)
+    }
+    return append(contentsOf: String(describing: convertible), delimiter: delimiter)
   }
 }

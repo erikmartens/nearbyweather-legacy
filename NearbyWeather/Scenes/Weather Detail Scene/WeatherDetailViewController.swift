@@ -99,19 +99,19 @@ final class WeatherDetailViewController: UIViewController {
   
   private func configure() {
     navigationController?.navigationBar.style(withBarTintColor:
-      (ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight
+      (ConversionWorker.isDayTime(forWeatherDTO: weatherDTO) ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight
     )
     
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }
     
     let weatherCode = weatherDTO.weatherCondition[0].identifier
-    conditionSymbolLabel.text = ConversionService.weatherConditionSymbol(fromWeatherCode: weatherCode)
+    conditionSymbolLabel.text = ConversionWorker.weatherConditionSymbol(fromWeatherCode: weatherCode)
     conditionNameLabel.text = weatherDTO.weatherCondition.first?.conditionName
     conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription.capitalized
     
     if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
       let temperatureUnit = PreferencesDataManager.shared.temperatureUnit
-      temperatureLabel.text = ConversionService.temperatureDescriptor(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
+      temperatureLabel.text = ConversionWorker.temperatureDescriptor(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
     } else {
       temperatureLabel.text = nil
     }
@@ -128,7 +128,7 @@ final class WeatherDetailViewController: UIViewController {
       dateFormatter.dateStyle = .none
       dateFormatter.timeStyle = .short
       
-      let isDayTime = ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true // can never be nil here
+      let isDayTime = ConversionWorker.isDayTime(forWeatherDTO: weatherDTO) ?? true // can never be nil here
       let description = isDayTime ? R.string.localizable.dayTime() : R.string.localizable.nightTime()
       let localTime = dateFormatter.string(from: Date())
       timeLabel.text = "\(description), \(localTime)"
@@ -159,7 +159,7 @@ final class WeatherDetailViewController: UIViewController {
     windSpeedNoteLabel.text = R.string.localizable.windspeed()
     
     if let windspeed = weatherDTO.windInformation.windspeed {
-      windSpeedLabel.text = ConversionService.windspeedDescriptor(
+      windSpeedLabel.text = ConversionWorker.windspeedDescriptor(
         forDistanceSpeedUnit: PreferencesDataManager.shared.distanceSpeedUnit,
         forWindspeed: windspeed
       )
@@ -171,7 +171,7 @@ final class WeatherDetailViewController: UIViewController {
       windDirectionImageView.transform = CGAffineTransform(rotationAngle: CGFloat(windDirection)*0.0174532925199) // convert to radians
       windDirectionImageView.tintColor = .darkGray
       windDirectionNoteLabel.text = R.string.localizable.wind_direction()
-      windDirectionLabel.text = ConversionService.windDirectionDescriptor(forWindDirection: windDirection)
+      windDirectionLabel.text = ConversionWorker.windDirectionDescriptor(forWindDirection: windDirection)
     } else {
       windDirectionStackView.isHidden = true
     }
@@ -184,7 +184,7 @@ final class WeatherDetailViewController: UIViewController {
       let distanceInMetres = location.distance(from: userLocation)
       
       let distanceSpeedUnit = PreferencesDataManager.shared.distanceSpeedUnit
-      let distanceString = ConversionService.distanceDescriptor(forDistanceSpeedUnit: distanceSpeedUnit, forDistanceInMetres: distanceInMetres)
+      let distanceString = ConversionWorker.distanceDescriptor(forDistanceSpeedUnit: distanceSpeedUnit, forDistanceInMetres: distanceInMetres)
       
       distanceImageView.tintColor = .darkGray
       distanceNoteLabel.text = R.string.localizable.distance()

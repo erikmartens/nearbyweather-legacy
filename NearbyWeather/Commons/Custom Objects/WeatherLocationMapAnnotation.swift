@@ -35,12 +35,12 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
     
     var weatherConditionSymbol: String?
     if let weatherConditionIdentifier = weatherDTO.weatherCondition.first?.identifier {
-      weatherConditionSymbol = ConversionService.weatherConditionSymbol(fromWeatherCode: weatherConditionIdentifier)
+      weatherConditionSymbol = ConversionWorker.weatherConditionSymbol(fromWeatherCode: weatherConditionIdentifier)
     }
     
     var temperatureDescriptor: String?
     if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
-      temperatureDescriptor = ConversionService.temperatureDescriptor(
+      temperatureDescriptor = ConversionWorker.temperatureDescriptor(
         forTemperatureUnit: PreferencesDataManager.shared.temperatureUnit,
         fromRawTemperature: temperatureKelvin
       )
@@ -51,7 +51,7 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
       .append(contentsOf: temperatureDescriptor, delimiter: " ")
       .ifEmpty(justReturn: nil)
     
-    let isDayTime = ConversionService.isDayTime(forWeatherDTO: weatherDTO)
+    let isDayTime = ConversionWorker.isDayTime(forWeatherDTO: weatherDTO)
     
     let coordinate = CLLocationCoordinate2D(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
     

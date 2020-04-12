@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 import APTimeZones
 
-final class ConversionService {
+final class ConversionWorker {
   
   static func weatherConditionSymbol(fromWeatherCode code: Int) -> String {
     switch code {

@@ -26,12 +26,19 @@ struct WeatherInformationArrayWrapper: Codable {
 struct WeatherInformationDTO: Codable {
   
   struct Coordinates: Codable {
-    var latitude: Double
-    var longitude: Double
+    var latitude: Double?
+    var longitude: Double?
     
     enum CodingKeys: String, CodingKey {
       case latitude = "lat"
       case longitude = "lon"
+    }
+    
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
+      
+      latitude = try? values?.decodeIfPresent(Double.self, forKey: .latitude)
+      longitude = try? values?.decodeIfPresent(Double.self, forKey: .longitude)
     }
   }
   

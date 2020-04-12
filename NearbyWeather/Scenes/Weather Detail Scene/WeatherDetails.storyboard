@@ -449,6 +449,7 @@
                         <outlet property="humidityImageView" destination="C2L-Sn-5uA" id="w8Y-5i-fUM"/>
                         <outlet property="humidityLabel" destination="IWf-AB-U9X" id="2aG-bU-gEr"/>
                         <outlet property="humidityNoteLabel" destination="tl7-vY-jP3" id="CgA-J2-LUI"/>
+                        <outlet property="locationStackView" destination="FxE-TE-AKp" id="Nif-hH-rKT"/>
                         <outlet property="mapView" destination="SHu-fg-dd5" id="TgU-Tr-RcH"/>
                         <outlet property="pressureImageView" destination="8Qs-Gw-dnd" id="Bjc-bL-cEA"/>
                         <outlet property="pressureLabel" destination="gYh-Xe-PqW" id="6Nd-xD-RY6"/>

@@ -113,10 +113,13 @@ final class ConversionWorker {
   static func isDayTime(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> Bool? {
     
     guard let sunrise =  dayTimeInformation?.sunrise,
-      let sunset =  dayTimeInformation?.sunset else {
+      let sunset =  dayTimeInformation?.sunset,
+      let latitude = coordinates.latitude,
+      let longitude = coordinates.longitude else {
         return nil
     }
-    let location = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
+    
+    let location = CLLocation(latitude: latitude, longitude: longitude)
     
     var calendar = Calendar.current
     calendar.timeZone = location.timeZone()

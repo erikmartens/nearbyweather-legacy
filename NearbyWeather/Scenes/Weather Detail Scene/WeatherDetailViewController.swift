@@ -66,6 +66,7 @@ final class WeatherDetailViewController: UIViewController {
   @IBOutlet weak var windDirectionNoteLabel: UILabel!
   @IBOutlet weak var windDirectionLabel: UILabel!
   
+  @IBOutlet weak var locationStackView: UIStackView!
   @IBOutlet weak var mapView: MKMapView!
   @IBOutlet weak var coordinatesImageView: UIImageView!
   @IBOutlet weak var coordinatesNoteLabel: UILabel!
@@ -121,11 +122,13 @@ final class WeatherDetailViewController: UIViewController {
     }
     
     if let sunriseTimeSinceReferenceDate = weatherDTO.daytimeInformation.sunrise,
-      let sunsetTimeSinceReferenceDate = weatherDTO.daytimeInformation.sunset {
+      let sunsetTimeSinceReferenceDate = weatherDTO.daytimeInformation.sunset,
+      let latitude = weatherDTO.coordinates.latitude,
+      let longitude = weatherDTO.coordinates.longitude {
       let sunriseDate = Date(timeIntervalSince1970: sunriseTimeSinceReferenceDate)
       let sunsetDate = Date(timeIntervalSince1970: sunsetTimeSinceReferenceDate)
       
-      let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
+      let location = CLLocation(latitude: latitude, longitude: longitude)
       
       let dateFormatter = DateFormatter()
       dateFormatter.calendar = .current
@@ -181,15 +184,39 @@ final class WeatherDetailViewController: UIViewController {
     } else {
       windDirectionStackView.isHidden = true
     }
+  }
+  
+  private func configureMap() {
+    guard let weatherLatitude = weatherDTO.coordinates.latitude,
+      let weatherLongitude = weatherDTO.coordinates.longitude else {
+        locationStackView.isHidden = true
+        return
+    }
     
+    /// mapView
+    if let mapAnnotation = WeatherLocationMapAnnotation(weatherDTO: weatherDTO) {
+      mapView.layer.cornerRadius = 10
+      mapView.addAnnotation(mapAnnotation)
+      let location = CLLocation(latitude: weatherLatitude, longitude: weatherLongitude)
+      let region = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+      mapView.setRegion(region, animated: false)
+    } else {
+      mapView.isHidden = true
+    }
+    
+    /// coordinates
     coordinatesImageView.tintColor = .darkGray
     coordinatesNoteLabel.text = R.string.localizable.coordinates()
     coordinatesLabel.text = ""
       .append(contentsOfConvertible: weatherDTO.coordinates.latitude, delimiter: .none)
       .append(contentsOfConvertible: weatherDTO.coordinates.longitude, delimiter: .comma)
     
-    if UserLocationService.shared.locationPermissionsGranted, let userLocation = UserLocationService.shared.location {
-      let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
+    /// distance
+    if UserLocationService.shared.locationPermissionsGranted,
+      let userLocation = UserLocationService.shared.location,
+      let weatherLatitude = weatherDTO.coordinates.latitude,
+      let weatherLongitude = weatherDTO.coordinates.longitude {
+      let location = CLLocation(latitude: weatherLatitude, longitude: weatherLongitude)
       let distanceInMetres = location.distance(from: userLocation)
       
       let distanceSpeedUnit = PreferencesDataService.shared.distanceSpeedUnit
@@ -201,18 +228,6 @@ final class WeatherDetailViewController: UIViewController {
     } else {
       distanceStackView.isHidden = true
     }
-  }
-  
-  private func configureMap() {
-    mapView.layer.cornerRadius = 10
-    
-    if let mapAnnotation = WeatherLocationMapAnnotation(weatherDTO: weatherDTO) {
-      mapView.addAnnotation(mapAnnotation)
-    }
-    
-    let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
-    let region = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
-    mapView.setRegion(region, animated: false)
   }
   
   // MARK: - IBActions

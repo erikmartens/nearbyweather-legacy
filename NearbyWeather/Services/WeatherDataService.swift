@@ -284,9 +284,15 @@ final class WeatherDataService {
           return
       }
       result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted {
-        let weatherLocation1 = CLLocation(latitude: $0.coordinates.latitude, longitude: $0.coordinates.longitude)
-        let weatherLocation2 = CLLocation(latitude: $1.coordinates.latitude, longitude: $1.coordinates.longitude)
-        return weatherLocation1.distance(from: currentLocation) < weatherLocation2.distance(from: currentLocation)
+        guard let lhsLatitude = $0.coordinates.latitude, let lhsLongitude = $0.coordinates.longitude else {
+          return false
+        }
+        guard let rhsLatitude = $1.coordinates.latitude, let rhsLongitude = $1.coordinates.longitude else {
+          return true
+        }
+        let lhsLocation = CLLocation(latitude: lhsLatitude, longitude: lhsLongitude)
+        let rhsLocation = CLLocation(latitude: rhsLatitude, longitude: rhsLongitude)
+        return lhsLocation.distance(from: currentLocation) < rhsLocation.distance(from: currentLocation)
       }
     }
     guard let sortedResult = result else { return }

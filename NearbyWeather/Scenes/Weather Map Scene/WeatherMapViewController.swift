@@ -98,10 +98,12 @@ final class WeatherMapViewController: UIViewController {
   }
   
   private func focusMapOnSelectedBookmarkedLocation() {
-    guard let selectedLocation = selectedBookmarkedLocation else {
-      return
+    guard let selectedLocation = selectedBookmarkedLocation,
+      let latitude = selectedLocation.coordinates.latitude,
+      let longitude = selectedLocation.coordinates.longitude else {
+        return
     }
-    let coordinate = CLLocationCoordinate2D(latitude: selectedLocation.coordinates.latitude, longitude: selectedLocation.coordinates.longitude)
+    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     let region = MKCoordinateRegion.init(center: coordinate, latitudinalMeters: 15000, longitudinalMeters: 15000)
     mapView.setRegion(region, animated: true)
   }

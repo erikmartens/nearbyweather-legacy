@@ -83,7 +83,7 @@ final class BadgeService {
       return
     }
     
-    let temperatureUnit = PreferencesDataManager.shared.temperatureUnit
+    let temperatureUnit = PreferencesDataService.shared.temperatureUnit
     
     guard let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin,
       let temperature = ConversionWorker.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin) else {

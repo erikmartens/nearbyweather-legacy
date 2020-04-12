@@ -84,7 +84,7 @@ final class WeatherDetailViewController: UIViewController {
     
     navigationItem.title = titleString
     mapView.delegate = self
-    mapView.mapType = PreferencesDataManager.shared.preferredMapType
+    mapView.mapType = PreferencesDataService.shared.preferredMapType
     
     configureMap()
   }
@@ -110,7 +110,7 @@ final class WeatherDetailViewController: UIViewController {
     conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription.capitalized
     
     if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
-      let temperatureUnit = PreferencesDataManager.shared.temperatureUnit
+      let temperatureUnit = PreferencesDataService.shared.temperatureUnit
       temperatureLabel.text = ConversionWorker.temperatureDescriptor(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
     } else {
       temperatureLabel.text = nil
@@ -160,7 +160,7 @@ final class WeatherDetailViewController: UIViewController {
     
     if let windspeed = weatherDTO.windInformation.windspeed {
       windSpeedLabel.text = ConversionWorker.windspeedDescriptor(
-        forDistanceSpeedUnit: PreferencesDataManager.shared.distanceSpeedUnit,
+        forDistanceSpeedUnit: PreferencesDataService.shared.distanceSpeedUnit,
         forWindspeed: windspeed
       )
     } else {
@@ -183,7 +183,7 @@ final class WeatherDetailViewController: UIViewController {
       let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
       let distanceInMetres = location.distance(from: userLocation)
       
-      let distanceSpeedUnit = PreferencesDataManager.shared.distanceSpeedUnit
+      let distanceSpeedUnit = PreferencesDataService.shared.distanceSpeedUnit
       let distanceString = ConversionWorker.distanceDescriptor(forDistanceSpeedUnit: distanceSpeedUnit, forDistanceInMetres: distanceInMetres)
       
       distanceImageView.tintColor = .darkGray

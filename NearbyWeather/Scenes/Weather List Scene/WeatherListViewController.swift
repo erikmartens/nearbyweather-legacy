@@ -125,8 +125,8 @@ final class WeatherListViewController: UITableViewController {
   
   @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
-      .weatherListType(currentListType: PreferencesDataManager.shared.preferredListType, completionHandler: { [weak self] selectedListType in
-        PreferencesDataManager.shared.preferredListType = selectedListType
+      .weatherListType(currentListType: PreferencesDataService.shared.preferredListType, completionHandler: { [weak self] selectedListType in
+        PreferencesDataService.shared.preferredListType = selectedListType
         self?.tableView.reloadData()
       })
     )
@@ -159,7 +159,7 @@ extension WeatherListViewController {
     guard !WeatherDataManager.shared.apiKeyUnauthorized else {
       return 1
     }
-    switch PreferencesDataManager.shared.preferredListType {
+    switch PreferencesDataService.shared.preferredListType {
     case .bookmarked:
       let numberOfRows = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.count ?? 1
       return numberOfRows > 0 ? numberOfRows : 1
@@ -187,7 +187,7 @@ extension WeatherListViewController {
       return alertCell
     }
     
-    switch PreferencesDataManager.shared.preferredListType {
+    switch PreferencesDataService.shared.preferredListType {
     case .bookmarked:
       guard let bookmarkedWeatherDataObjects = WeatherDataManager.shared.bookmarkedWeatherDataObjects,
         !bookmarkedWeatherDataObjects.isEmpty else {

@@ -39,7 +39,7 @@
 		F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254B2032051F00A1DBD1 /* ButtonCell.swift */; };
 		F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */; };
 		F274FC39202F9A9300049144 /* WeatherNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */; };
-		F274FC3B2030ED5A00049144 /* PreferencesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC3A2030ED5A00049144 /* PreferencesDataManager.swift */; };
+		F274FC3B2030ED5A00049144 /* PreferencesDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */; };
 		F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */; };
 		F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AFDEB1DF4C089003957EB /* WeatherDataCell.swift */; };
 		F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */; };
@@ -185,7 +185,7 @@
 		F273254B2032051F00A1DBD1 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkingService.swift; sourceTree = "<group>"; };
-		F274FC3A2030ED5A00049144 /* PreferencesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesDataManager.swift; sourceTree = "<group>"; };
+		F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesDataService.swift; sourceTree = "<group>"; };
 		F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F27AFDEB1DF4C089003957EB /* WeatherDataCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDataCell.swift; sourceTree = "<group>"; };
 		F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsInputTableViewController.swift; sourceTree = "<group>"; };
@@ -401,7 +401,7 @@
 				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 				F2D2B1DF2004171500C810EF /* DataStorageManager.swift */,
 				F26699571E9AD0F100498F99 /* WeatherDataManager.swift */,
-				F274FC3A2030ED5A00049144 /* PreferencesDataManager.swift */,
+				F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1010,7 +1010,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F274FC3B2030ED5A00049144 /* PreferencesDataManager.swift in Sources */,
+				F274FC3B2030ED5A00049144 /* PreferencesDataService.swift in Sources */,
 				F283D26E1DF39095001B879D /* DualLabelCell.swift in Sources */,
 				F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */,
 				F28CA5442027AEB500209397 /* WeatherLocationMapAnnotation.swift in Sources */,

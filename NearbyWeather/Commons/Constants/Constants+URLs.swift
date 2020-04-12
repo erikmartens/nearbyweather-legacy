@@ -34,7 +34,7 @@ extension Constants {
     
     static func kOpenWeatherMapMultiStationtDataRequestUrl(with apiKey: String, currentLatitude latitude: Double, currentLongitude longitude: Double) -> URL {
       let baseUrl = Constants.Urls.kOpenWeatherMultiLocationBaseUrl.absoluteString
-      let numberOfResults = PreferencesDataManager.shared.amountOfResults.integerValue
+      let numberOfResults = PreferencesDataService.shared.amountOfResults.integerValue
       return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)")!
     }
   }

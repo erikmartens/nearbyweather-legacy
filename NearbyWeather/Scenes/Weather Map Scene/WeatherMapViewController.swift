@@ -36,7 +36,7 @@ final class WeatherMapViewController: UIViewController {
     navigationController?.navigationBar.styleStandard()
     
     mapView.delegate = self
-    mapView.mapType = PreferencesDataManager.shared.preferredMapType
+    mapView.mapType = PreferencesDataService.shared.preferredMapType
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -122,10 +122,10 @@ final class WeatherMapViewController: UIViewController {
   
   @IBAction func changeMapTypeButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
-      .weatherMapType(currentMapType: PreferencesDataManager.shared.preferredMapType, completionHandler: { [weak self] mapType in
+      .weatherMapType(currentMapType: PreferencesDataService.shared.preferredMapType, completionHandler: { [weak self] mapType in
         DispatchQueue.main.async {
-          PreferencesDataManager.shared.preferredMapType = mapType
-          self?.mapView.mapType = PreferencesDataManager.shared.preferredMapType
+          PreferencesDataService.shared.preferredMapType = mapType
+          self?.mapView.mapType = PreferencesDataService.shared.preferredMapType
         }
       })
     )

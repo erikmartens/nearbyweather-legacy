@@ -70,7 +70,7 @@ extension AppDelegate {
   private func instantiateServices() {
     WeatherNetworkingService.instantiateSharedInstance()
     UserLocationService.instantiateSharedInstance()
-    PreferencesDataManager.instantiateSharedInstance()
+    PreferencesDataService.instantiateSharedInstance()
     WeatherStationService.instantiateSharedInstance()
     WeatherDataManager.instantiateSharedInstance()
     PermissionsService.instantiateSharedInstance()

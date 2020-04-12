@@ -5,7 +5,7 @@ const path = require('path')
 const sqlite3 = require('sqlite3').verbose()
 const StreamArray = require('stream-json/utils/StreamArray')
 const zlib = require('zlib')
-const https = require('http')
+const http = require('http')
 
 class LocationsSQLiteGenerator {
 
@@ -27,7 +27,7 @@ class LocationsSQLiteGenerator {
     const temporaryFilePath = path.join(__dirname, this.temporaryFilePath)
     const gunzip = zlib.createGunzip()
 
-    https.get(this.inputFileUrl, (res) => {
+    http.get(this.inputFileUrl, (res) => {
       const buffer = []
 
       res

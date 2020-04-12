@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjl-0x-P8A" userLabel="contentLabel">
-                        <rect key="frame" x="20" y="5" width="374" height="35"/>
+                        <rect key="frame" x="16" y="4" width="382" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="lie-gz-RC0"/>
                         </constraints>
@@ -28,9 +28,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="yjl-0x-P8A" secondAttribute="bottom" constant="4" id="6Kf-TH-spJ"/>
-                    <constraint firstItem="yjl-0x-P8A" firstAttribute="top" secondItem="Vu1-kK-rHa" secondAttribute="top" constant="5" id="7Eb-1y-dlJ"/>
-                    <constraint firstAttribute="trailing" secondItem="yjl-0x-P8A" secondAttribute="trailing" constant="20" id="JaS-1G-hMc"/>
-                    <constraint firstItem="yjl-0x-P8A" firstAttribute="leading" secondItem="Vu1-kK-rHa" secondAttribute="leading" constant="20" id="Xs1-l9-nIV"/>
+                    <constraint firstItem="yjl-0x-P8A" firstAttribute="top" secondItem="Vu1-kK-rHa" secondAttribute="top" constant="4" id="7Eb-1y-dlJ"/>
+                    <constraint firstAttribute="trailing" secondItem="yjl-0x-P8A" secondAttribute="trailing" constant="16" id="JaS-1G-hMc"/>
+                    <constraint firstItem="yjl-0x-P8A" firstAttribute="leading" secondItem="Vu1-kK-rHa" secondAttribute="leading" constant="16" id="Xs1-l9-nIV"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">

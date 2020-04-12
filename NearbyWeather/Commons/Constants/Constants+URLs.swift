@@ -10,6 +10,10 @@ import Foundation
 
 extension Constants {
   
+  enum EmailAdresses {
+    static let mainContact = "erikmartens.developer@gmail.com"
+  }
+  
   enum Urls {
     static let kAppStoreRatingDeepLinkUrl = URL(string: "https://itunes.apple.com/app/id1227313069?action=write-review&mt=8")!
     static let kGitHubProjectMainPageUrl =  URL(string: "https://github.com/erikmartens/NearbyWeather")!

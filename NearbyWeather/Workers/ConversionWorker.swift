@@ -77,34 +77,34 @@ final class ConversionWorker {
   static func temperatureDescriptor(forTemperatureUnit temperatureUnit: TemperatureUnitOption, fromRawTemperature rawTemperature: Double) -> String {
     switch temperatureUnit.value {
     case .celsius:
-      return "\(String(format: "%.02f", rawTemperature - 273.15))°C"
+      return String(format: "%.02f", rawTemperature - 273.15).append(contentsOf: "°C", delimiter: .none)
     case . fahrenheit:
-      return "\(String(format: "%.02f", rawTemperature * (9/5) - 459.67))°F"
+      return String(format: "%.02f", rawTemperature * (9/5) - 459.67).append(contentsOf: "°F", delimiter: .none)
     case .kelvin:
-      return "\(String(format: "%.02f", rawTemperature))°K"
+      return String(format: "%.02f", rawTemperature).append(contentsOf: "°K", delimiter: .none)
     }
   }
   
   static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceVelocityUnitOption, forWindspeed windspeed: Double) -> String {
     switch distanceSpeedUnit.value {
     case .kilometres:
-      return "\(String(format: "%.02f", windspeed)) \(R.string.localizable.kph())"
+      return String(format: "%.02f", windspeed).append(contentsOf: R.string.localizable.kph(), delimiter: .space)
     case .miles:
-      return "\(String(format: "%.02f", windspeed / 1.609344)) \(R.string.localizable.mph())"
+      return String(format: "%.02f", windspeed / 1.609344).append(contentsOf: R.string.localizable.mph(), delimiter: .space)
     }
   }
   
   static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceVelocityUnitOption, forDistanceInMetres distance: Double) -> String {
     switch distanceSpeedUnit.value {
     case .kilometres:
-      return "\(String(format: "%.02f", distance/1000)) \(R.string.localizable.km())"
+      return String(format: "%.02f", distance/1000).append(contentsOf: R.string.localizable.km(), delimiter: .space)
     case .miles:
-      return "\(String(format: "%.02f", distance/1609.344)) \(R.string.localizable.mi())"
+      return String(format: "%.02f", distance/1609.344).append(contentsOf: R.string.localizable.mi(), delimiter: .space)
     }
   }
   
   static func windDirectionDescriptor(forWindDirection degrees: Double) -> String {
-    return String(format: "%.02f", degrees) + "°"
+    return String(format: "%.02f", degrees).append(contentsOf: "°", delimiter: .none)
   }
   
   static func isDayTime(forWeatherDTO weatherDTO: WeatherInformationDTO?) -> Bool? {

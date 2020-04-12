@@ -103,7 +103,12 @@ final class BadgeService {
   }
   
   private func sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent) {
-    let notificationBody = R.string.localizable.temperature_notification(inputContent.cityName, "\(inputContent.sign.stringValue) \(inputContent.temperature)\(inputContent.unit.abbreviation)")
+    let notificationBody = R.string.localizable.temperature_notification(
+      inputContent.cityName,
+      inputContent.sign.stringValue
+        .append(contentsOfConvertible: inputContent.temperature, delimiter: .space)
+        .append(contentsOf: inputContent.unit.abbreviation, delimiter: .none)
+    )
     
     let content = UNMutableNotificationContent()
     

@@ -69,13 +69,9 @@ class WeatherDataCell: UITableViewCell {
       temperatureLabel.text = nil
     }
     
-    cloudCoverageLabel.text = "\(weatherDTO.cloudCoverage.coverage)%"
+    cloudCoverageLabel.text = weatherDTO.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none)
     
-    if let humidity = weatherDTO.atmosphericInformation.humidity {
-      humidityLabel.text = "\(humidity)%"
-    } else {
-      humidityLabel.text = nil
-    }
+    humidityLabel.text = weatherDTO.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none)
     
     if let windspeed = weatherDTO.windInformation.windspeed {
       windspeedLabel.text = ConversionWorker.windspeedDescriptor(

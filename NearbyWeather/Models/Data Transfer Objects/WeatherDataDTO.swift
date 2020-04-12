@@ -87,10 +87,16 @@ struct WeatherInformationDTO: Codable {
   }
   
   struct CloudCoverage: Codable {
-    var coverage: Double
+    var coverage: Double?
     
     enum CodingKeys: String, CodingKey {
       case coverage = "all"
+    }
+    
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
+      
+      coverage = try? values?.decodeIfPresent(Double.self, forKey: .coverage)
     }
   }
   

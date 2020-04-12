@@ -131,7 +131,9 @@ final class WeatherDetailViewController: UIViewController {
       let isDayTime = ConversionWorker.isDayTime(forWeatherDTO: weatherDTO) ?? true // can never be nil here
       let description = isDayTime ? R.string.localizable.dayTime() : R.string.localizable.nightTime()
       let localTime = dateFormatter.string(from: Date())
-      timeLabel.text = "\(description), \(localTime)"
+      timeLabel.text = ""
+        .append(contentsOf: description, delimiter: .none)
+        .append(contentsOf: localTime, delimiter: .space)
       
       sunriseImageView.tintColor = .darkGray
       sunriseNoteLabel.text = R.string.localizable.sunrise()
@@ -147,13 +149,13 @@ final class WeatherDetailViewController: UIViewController {
     
     cloudCoverImageView.tintColor = .darkGray
     cloudCoverNoteLabel.text = R.string.localizable.cloud_coverage()
-    cloudCoverLabel.text = "\(weatherDTO.cloudCoverage.coverage)%"
+    cloudCoverLabel.text = weatherDTO.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none)
     humidityImageView.tintColor = .darkGray
     humidityNoteLabel.text = R.string.localizable.humidity()
-    humidityLabel.text = "\(weatherDTO.atmosphericInformation.humidity)%"
+    humidityLabel.text = weatherDTO.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none)
     pressureImageView.tintColor = .darkGray
     pressureNoteLabel.text = R.string.localizable.air_pressure()
-    pressureLabel.text = "\(weatherDTO.atmosphericInformation.pressurePsi) hpa"
+    pressureLabel.text = weatherDTO.atmosphericInformation.pressurePsi?.append(contentsOf: "hpa", delimiter: .space)
     
     windSpeedImageView.tintColor = .darkGray
     windSpeedNoteLabel.text = R.string.localizable.windspeed()
@@ -178,7 +180,10 @@ final class WeatherDetailViewController: UIViewController {
     
     coordinatesImageView.tintColor = .darkGray
     coordinatesNoteLabel.text = R.string.localizable.coordinates()
-    coordinatesLabel.text = "\(weatherDTO.coordinates.latitude), \(weatherDTO.coordinates.longitude)"
+    coordinatesLabel.text = ""
+      .append(contentsOfConvertible: weatherDTO.coordinates.latitude, delimiter: .none)
+      .append(contentsOfConvertible: weatherDTO.coordinates.longitude, delimiter: .comma)
+    
     if UserLocationService.shared.locationPermissionsGranted, let userLocation = UserLocationService.shared.location {
       let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
       let distanceInMetres = location.distance(from: userLocation)

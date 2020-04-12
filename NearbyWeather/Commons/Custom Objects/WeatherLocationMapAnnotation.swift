@@ -47,8 +47,8 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
     }
     
     let subtitle: String? = ""
-      .append(contentsOf: weatherConditionSymbol, delimiter: " ")
-      .append(contentsOf: temperatureDescriptor, delimiter: " ")
+      .append(contentsOf: weatherConditionSymbol, delimiter: .space)
+      .append(contentsOf: temperatureDescriptor, delimiter: .space)
       .ifEmpty(justReturn: nil)
     
     let isDayTime = ConversionWorker.isDayTime(forWeatherDTO: weatherDTO)

@@ -57,7 +57,7 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
     case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
       let location = WeatherDataService.shared.bookmarkedLocations[indexPath.row]
-      cell.contentLabel.text = "\(location.name), \(location.country)"
+      cell.contentLabel.text = location.name.append(contentsOf: location.country, delimiter: .comma)
       cell.selectionStyle = .none
       return cell
     default:

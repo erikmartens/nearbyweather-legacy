@@ -166,7 +166,7 @@ final class SettingsTableViewController: UITableViewController {
           cell.accessoryType = .disclosureIndicator
           cell.selectionStyle = .default
         default:
-          cellLabelTitle = "\(entriesCount)"
+          cellLabelTitle = String(describing: entriesCount)
           cell.accessoryType = .disclosureIndicator
           cell.selectionStyle = .default
         }

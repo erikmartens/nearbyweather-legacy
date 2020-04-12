@@ -84,8 +84,11 @@ final class BadgeService {
     }
     
     let temperatureUnit = PreferencesDataManager.shared.temperatureUnit
-    let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin
-    guard let temperature = ConversionService.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin) else { return }
+    
+    guard let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin,
+      let temperature = ConversionService.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin) else {
+      return
+    }
     let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
     UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
     if previousTemperatureValue < 0 && temperature > 0 {

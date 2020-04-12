@@ -105,6 +105,7 @@
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
 		F2F1553E244278D4007A3E90 /* ErrorDataDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553D244278D4007A3E90 /* ErrorDataDTO.swift */; };
+		F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */; };
 		F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */; };
 		F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1823E0FBEB00B4D2EB /* GlobalFunctions.swift */; };
 		F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */; };
@@ -251,6 +252,7 @@
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
 		F2F1553D244278D4007A3E90 /* ErrorDataDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDataDTO.swift; sourceTree = "<group>"; };
+		F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AppendWithDelimiter.swift"; sourceTree = "<group>"; };
 		F2F7BA1423E0FB2D00B4D2EB /* NearbyWeather-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearbyWeather-Bridging-Header.h"; sourceTree = "<group>"; };
 		F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuildEnvironment.m; sourceTree = "<group>"; };
 		F2F7BA1723E0FB4A00B4D2EB /* BuildEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuildEnvironment.h; sourceTree = "<group>"; };
@@ -576,7 +578,7 @@
 				F2F7BA1823E0FBEB00B4D2EB /* GlobalFunctions.swift */,
 				F27A122A24425EC000A2CE8D /* Constants */,
 				F27A122B24425EE300A2CE8D /* Factory */,
-				F27A122C24425F0700A2CE8D /* Extension */,
+				F27A122C24425F0700A2CE8D /* Extensions */,
 				F27A122D24425F2400A2CE8D /* TableViewCells */,
 				F27A122F24425F6900A2CE8D /* Custom Objects */,
 			);
@@ -607,7 +609,7 @@
 			path = Factory;
 			sourceTree = "<group>";
 		};
-		F27A122C24425F0700A2CE8D /* Extension */ = {
+		F27A122C24425F0700A2CE8D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */,
@@ -619,8 +621,9 @@
 				F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */,
 				F2DBEB3523F04E9D00CD513B /* MKMapType+AllCases.swift */,
 				F2C4E14523F355370008B0F7 /* Date+String.swift */,
+				F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */,
 			);
-			path = Extension;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		F27A122D24425F2400A2CE8D /* TableViewCells */ = {
@@ -1039,6 +1042,7 @@
 				F2B8EA001EA11BA800704E90 /* WeatherDataDTO.swift in Sources */,
 				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,
 				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,
+				F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F2DBEB1423EA1F4D00CD513B /* WeatherDetailCoordinator.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,

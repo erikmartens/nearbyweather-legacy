@@ -108,9 +108,13 @@ final class WeatherDetailViewController: UIViewController {
     conditionSymbolLabel.text = ConversionService.weatherConditionSymbol(fromWeatherCode: weatherCode)
     conditionNameLabel.text = weatherDTO.weatherCondition.first?.conditionName
     conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription.capitalized
-    let temperatureUnit = PreferencesDataManager.shared.temperatureUnit
-    let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin
-    temperatureLabel.text = ConversionService.temperatureDescriptor(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
+    
+    if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
+      let temperatureUnit = PreferencesDataManager.shared.temperatureUnit
+      temperatureLabel.text = ConversionService.temperatureDescriptor(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
+    } else {
+      temperatureLabel.text = nil
+    }
     
     if let sunriseTimeSinceReferenceDate = weatherDTO.daytimeInformation?.sunrise, let sunsetTimeSinceReferenceDate = weatherDTO.daytimeInformation?.sunset {
       let sunriseDate = Date(timeIntervalSince1970: sunriseTimeSinceReferenceDate)

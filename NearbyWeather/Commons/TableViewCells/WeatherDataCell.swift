@@ -60,14 +60,22 @@ class WeatherDataCell: UITableViewCell {
     
     cityNameLabel.text = weatherDTO.cityName
     
-    temperatureLabel.text = ConversionService.temperatureDescriptor(
-      forTemperatureUnit: PreferencesDataManager.shared.temperatureUnit,
-      fromRawTemperature: weatherDTO.atmosphericInformation.temperatureKelvin
-    )
+    if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
+      temperatureLabel.text = ConversionService.temperatureDescriptor(
+        forTemperatureUnit: PreferencesDataManager.shared.temperatureUnit,
+        fromRawTemperature: temperatureKelvin
+      )
+    } else {
+      temperatureLabel.text = nil
+    }
     
     cloudCoverageLabel.text = "\(weatherDTO.cloudCoverage.coverage)%"
     
-    humidityLabel.text = "\(weatherDTO.atmosphericInformation.humidity)%"
+    if let humidity = weatherDTO.atmosphericInformation.humidity {
+      humidityLabel.text = "\(humidity)%"
+    } else {
+      humidityLabel.text = nil
+    }
     
     if let windspeed = weatherDTO.windInformation.windspeed {
       windspeedLabel.text = ConversionService.windspeedDescriptor(

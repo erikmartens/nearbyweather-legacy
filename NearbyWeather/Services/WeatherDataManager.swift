@@ -269,7 +269,15 @@ final class WeatherDataManager {
     case .name:
       result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted { $0.cityName < $1.cityName }
     case .temperature:
-      result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted { $0.atmosphericInformation.temperatureKelvin > $1.atmosphericInformation.temperatureKelvin }
+      result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted {
+        guard let lhsTemperature = $0.atmosphericInformation.temperatureKelvin else {
+          return false
+        }
+        guard let rhsTemperature = $1.atmosphericInformation.temperatureKelvin else {
+          return true
+        }
+        return lhsTemperature > rhsTemperature
+      }
     case .distance:
       guard UserLocationService.shared.locationPermissionsGranted,
         let currentLocation = UserLocationService.shared.currentLocation else {

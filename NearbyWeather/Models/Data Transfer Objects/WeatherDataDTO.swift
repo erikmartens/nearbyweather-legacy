@@ -50,14 +50,22 @@ struct WeatherInformationDTO: Codable {
   }
   
   struct AtmosphericInformation: Codable {
-    var temperatureKelvin: Double
-    var pressurePsi: Double
-    var humidity: Double
+    var temperatureKelvin: Double?
+    var pressurePsi: Double?
+    var humidity: Double?
     
     enum CodingKeys: String, CodingKey {
       case temperatureKelvin = "temp"
       case pressurePsi = "pressure"
       case humidity
+    }
+    
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
+      
+      temperatureKelvin = try? values?.decodeIfPresent(Double.self, forKey: .temperatureKelvin)
+      pressurePsi = try? values?.decodeIfPresent(Double.self, forKey: .pressurePsi)
+      humidity = try? values?.decodeIfPresent(Double.self, forKey: .humidity)
     }
   }
   
@@ -70,11 +78,11 @@ struct WeatherInformationDTO: Codable {
       case degrees = "deg"
     }
     
-    init(from decoder: Decoder) throws {
-      let values = try decoder.container(keyedBy: CodingKeys.self)
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
       
-      windspeed = try values.decode(Double.self, forKey: .windspeed)
-      degrees = try values.decodeIfPresent(Double.self, forKey: .degrees)
+      windspeed = try? values?.decodeIfPresent(Double.self, forKey: .windspeed)
+      degrees = try? values?.decodeIfPresent(Double.self, forKey: .degrees)
     }
   }
   

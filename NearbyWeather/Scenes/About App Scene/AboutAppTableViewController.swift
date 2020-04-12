@@ -13,7 +13,7 @@ import MessageUI
 final class AboutAppTableViewController: UITableViewController {
   
   private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO] = {
-    return DataStorageManager.retrieveJsonFromFile(with: R.file.thirdPartyLibrariesJson.name,
+    return DataStorageWorker.retrieveJsonFromFile(with: R.file.thirdPartyLibrariesJson.name,
                                                    andDecodeAsType: ThirdPartyLibraryArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -22,7 +22,7 @@ final class AboutAppTableViewController: UITableViewController {
   }()
   
   private lazy var owner: [DevelopmentContributorDTO] = {
-    return DataStorageManager.retrieveJsonFromFile(with: R.file.projectOwnerJson.name,
+    return DataStorageWorker.retrieveJsonFromFile(with: R.file.projectOwnerJson.name,
                                                    andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -30,7 +30,7 @@ final class AboutAppTableViewController: UITableViewController {
   }()
   
   private lazy var contributors: [DevelopmentContributorDTO] = {
-    return DataStorageManager.retrieveJsonFromFile(with: R.file.projectContributorsJson.name,
+    return DataStorageWorker.retrieveJsonFromFile(with: R.file.projectContributorsJson.name,
                                                    andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -185,10 +185,11 @@ final class AboutAppTableViewController: UITableViewController {
           }
         },
         rightButtonHandler: { [weak self] _ in
-          let mailAddress = "erikmartens.developer@gmail.com"
-          let subject = "NearbyWeather - \(R.string.localizable.report_issue())"
-          let message = "Hey Erik, \n"
-          self?.sendMail(to: [mailAddress], withSubject: subject, withMessage: message)
+          self?.sendMail(
+            to: [Constants.EmailAdresses.mainContact],
+            withSubject: R.string.localizable.email_salutation(),
+            withMessage: R.string.localizable.app_name().append(contentsOf: R.string.localizable.report_issue(), delimiter: .custom(string: " - "))
+          )
         }
       )
       return buttonCell
@@ -210,12 +211,12 @@ final class AboutAppTableViewController: UITableViewController {
       }
     case 3:
       let contributor = owner[indexPath.row]
-      subtitleCell.contentLabel.text = "\(contributor.firstName) \(contributor.lastName)"
+      subtitleCell.contentLabel.text = contributor.firstName.append(contentsOf: contributor.lastName, delimiter: .space)
       subtitleCell.subtitleLabel.text = contributor.localizedContributionDescription
       return subtitleCell
     case 4:
       let contributor = contributors[indexPath.row]
-      subtitleCell.contentLabel.text = "\(contributor.firstName) \(contributor.lastName)"
+      subtitleCell.contentLabel.text = contributor.firstName.append(contentsOf: contributor.lastName, delimiter: .space)
       subtitleCell.subtitleLabel.text = contributor.localizedContributionDescription
       return subtitleCell
     case 5:
@@ -234,7 +235,7 @@ final class AboutAppTableViewController: UITableViewController {
   }
   
   private func configureText() {
-    appTitleLabel.text = R.string.localizable.app_title()
+    appTitleLabel.text = R.string.localizable.app_name().append(contentsOf: R.string.localizable.app_name_subtitle(), delimiter: .custom(string: " - "))
     appVersionLabel.text = Constants.Values.AppVersion.kVersionBuildString
   }
   

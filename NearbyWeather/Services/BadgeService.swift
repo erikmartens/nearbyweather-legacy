@@ -78,14 +78,17 @@ final class BadgeService {
   // MARK: - Helpers
   
   private func performBadgeUpdate() {
-    guard let weatherData = WeatherDataManager.shared.preferredBookmarkData else {
+    guard let weatherData = WeatherDataService.shared.preferredBookmarkData else {
       clearAppIcon()
       return
     }
     
-    let temperatureUnit = PreferencesDataManager.shared.temperatureUnit
-    let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin
-    guard let temperature = ConversionService.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin) else { return }
+    let temperatureUnit = PreferencesDataService.shared.temperatureUnit
+    
+    guard let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin,
+      let temperature = ConversionWorker.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin) else {
+      return
+    }
     let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
     UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
     if previousTemperatureValue < 0 && temperature > 0 {
@@ -100,7 +103,12 @@ final class BadgeService {
   }
   
   private func sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent) {
-    let notificationBody = R.string.localizable.temperature_notification(inputContent.cityName, "\(inputContent.sign.stringValue) \(inputContent.temperature)\(inputContent.unit.abbreviation)")
+    let notificationBody = R.string.localizable.temperature_notification(
+      inputContent.cityName,
+      inputContent.sign.stringValue
+        .append(contentsOfConvertible: inputContent.temperature, delimiter: .space)
+        .append(contentsOf: inputContent.unit.abbreviation, delimiter: .none)
+    )
     
     let content = UNMutableNotificationContent()
     

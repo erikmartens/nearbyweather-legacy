@@ -29,7 +29,9 @@ class WeatherDataCell: UITableViewCell {
   @IBOutlet weak var windspeedLabel: UILabel!
   
   func configureWithWeatherDTO(_ weatherDTO: WeatherInformationDTO) {
-    let bubbleColor: UIColor = ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight // default to blue colored cells
+    let bubbleColor: UIColor = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
+      ? Constants.Theme.BrandColors.standardDay
+      : Constants.Theme.BrandColors.standardNight // default to blue colored cells
     
     weatherDataIdentifier = weatherDTO.cityID
     
@@ -55,19 +57,34 @@ class WeatherDataCell: UITableViewCell {
     windspeedLabel.textColor = .white
     windspeedLabel.font = .preferredFont(forTextStyle: .subheadline)
     
-    let weatherConditionSymbol = ConversionService.weatherConditionSymbol(fromWeatherCode: weatherDTO.weatherCondition[0].identifier)
+    let weatherConditionSymbol = ConversionWorker.weatherConditionSymbol(
+      fromWeatherCode: weatherDTO.weatherCondition[0].identifier,
+      isDayTime: ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
+    )
     weatherConditionLabel.text = weatherConditionSymbol
     
     cityNameLabel.text = weatherDTO.cityName
     
-    let temperatureDescriptor = ConversionService.temperatureDescriptor(forTemperatureUnit: PreferencesDataManager.shared.temperatureUnit, fromRawTemperature: weatherDTO.atmosphericInformation.temperatureKelvin)
-    temperatureLabel.text = "\(temperatureDescriptor)"
+    if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
+      temperatureLabel.text = ConversionWorker.temperatureDescriptor(
+        forTemperatureUnit: PreferencesDataService.shared.temperatureUnit,
+        fromRawTemperature: temperatureKelvin
+      )
+    } else {
+      temperatureLabel.text = nil
+    }
     
-    cloudCoverageLabel.text = "\(weatherDTO.cloudCoverage.coverage)%"
+    cloudCoverageLabel.text = weatherDTO.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none)
     
-    humidityLabel.text = "\(weatherDTO.atmosphericInformation.humidity)%"
+    humidityLabel.text = weatherDTO.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none)
     
-    let windspeedDescriptor = ConversionService.windspeedDescriptor(forDistanceSpeedUnit: PreferencesDataManager.shared.distanceSpeedUnit, forWindspeed: weatherDTO.windInformation.windspeed)
-    windspeedLabel.text = "\(windspeedDescriptor)"
+    if let windspeed = weatherDTO.windInformation.windspeed {
+      windspeedLabel.text = ConversionWorker.windspeedDescriptor(
+        forDistanceSpeedUnit: PreferencesDataService.shared.distanceSpeedUnit,
+        forWindspeed: windspeed
+      )
+    } else {
+      windspeedLabel.text = nil
+    }
   }
 }

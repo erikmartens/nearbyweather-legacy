@@ -66,7 +66,7 @@ private extension WeatherDetailCoordinator {
   
   func summonWeatherDetailController(weatherDataIdentifier: Int?, passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
     guard let weatherDataIdentifier = weatherDataIdentifier,
-      let weatherDTO = WeatherDataManager.shared.weatherDTO(forIdentifier: weatherDataIdentifier) else {
+      let weatherDTO = WeatherDataService.shared.weatherDTO(forIdentifier: weatherDataIdentifier) else {
         return
     }
     

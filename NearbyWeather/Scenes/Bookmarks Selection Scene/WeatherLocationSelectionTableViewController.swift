@@ -67,7 +67,7 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
-    cell.contentLabel.text = "\(filteredCities[indexPath.row].name), \(filteredCities[indexPath.row].country)"
+    cell.contentLabel.text = filteredCities[indexPath.row].name.append(contentsOf: filteredCities[indexPath.row].country, delimiter: .comma)
     return cell
   }
   
@@ -76,7 +76,7 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    WeatherDataManager.shared.bookmarkedLocations.append(filteredCities[indexPath.row])
+    WeatherDataService.shared.bookmarkedLocations.append(filteredCities[indexPath.row])
     HUD.flash(.success, delay: 1.0)
     navigationController?.popViewController(animated: true)
   }

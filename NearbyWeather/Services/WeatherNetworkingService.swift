@@ -71,7 +71,7 @@ final class WeatherNetworkingService {
   func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
     
     guard let apiKey = self.apiKey else {
-      let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
+      let errorDataDTO = ErrorDataDTO(errorType: ErrorDataDTO.ErrorType(value: .malformedUrlError), httpStatusCode: nil)
       return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
     }
     
@@ -87,7 +87,7 @@ final class WeatherNetworkingService {
         guard let self = self,
           let data = response.result.value,
           response.result.error == nil else {
-            let errorType = (response.response?.statusCode == 401) ? ErrorType(value: .unrecognizedApiKeyError) : ErrorType(value: .httpError)
+            let errorType = (response.response?.statusCode == 401) ? ErrorDataDTO.ErrorType(value: .unrecognizedApiKeyError) : ErrorDataDTO.ErrorType(value: .httpError)
             let errorDataDTO = ErrorDataDTO(errorType: errorType, httpStatusCode: response.response?.statusCode)
             return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
         }
@@ -97,12 +97,12 @@ final class WeatherNetworkingService {
   
   func fetchBulkWeatherInformation(completionHandler: @escaping (BulkWeatherDataContainer) -> Void) {
     guard let currentLatitude = UserLocationService.shared.currentLatitude, let currentLongitude = UserLocationService.shared.currentLongitude else {
-      let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .locationUnavailableError), httpStatusCode: nil)
+      let errorDataDTO = ErrorDataDTO(errorType: ErrorDataDTO.ErrorType(value: .locationUnavailableError), httpStatusCode: nil)
       return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
     }
     
     guard let apiKey = self.apiKey else {
-      let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .malformedUrlError), httpStatusCode: nil)
+      let errorDataDTO = ErrorDataDTO(errorType: ErrorDataDTO.ErrorType(value: .malformedUrlError), httpStatusCode: nil)
       return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
     }
     
@@ -118,7 +118,7 @@ final class WeatherNetworkingService {
         guard let self = self,
           let data = response.result.value,
           response.result.error == nil else {
-            let errorType = (response.response?.statusCode == 401) ? ErrorType(value: .unrecognizedApiKeyError) : ErrorType(value: .httpError)
+            let errorType = (response.response?.statusCode == 401) ? ErrorDataDTO.ErrorType(value: .unrecognizedApiKeyError) : ErrorDataDTO.ErrorType(value: .httpError)
             let errorDataDTO = ErrorDataDTO(errorType: errorType, httpStatusCode: response.response?.statusCode)
             return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
         }
@@ -132,7 +132,7 @@ final class WeatherNetworkingService {
     guard let weatherInformationDTO = try? JSONDecoder().decode(WeatherInformationDTO.self, from: data) else {
       printDebugMessage(domain: String(describing: self),
                         message: "NetworkingService: Error while decoding single-location-data to json")
-      let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
+      let errorDataDTO = ErrorDataDTO(errorType: ErrorDataDTO.ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil)
     }
     return WeatherDataContainer(locationId: identifier, errorDataDTO: nil, weatherInformationDTO: weatherInformationDTO)
@@ -142,7 +142,7 @@ final class WeatherNetworkingService {
     guard let multiWeatherData = try? JSONDecoder().decode(WeatherInformationArrayWrapper.self, from: data) else {
       printDebugMessage(domain: String(describing: self),
                         message: "NetworkingService: Error while decoding multi-location-data to json")
-      let errorDataDTO = ErrorDataDTO(errorType: ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
+      let errorDataDTO = ErrorDataDTO(errorType: ErrorDataDTO.ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil)
     }
     return BulkWeatherDataContainer(errorDataDTO: nil, weatherInformationDTOs: multiWeatherData.list)

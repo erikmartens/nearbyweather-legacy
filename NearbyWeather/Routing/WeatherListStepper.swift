@@ -35,7 +35,7 @@ extension WeatherListStepper {
 
 private extension WeatherListStepper {
   @objc func emitStepOnWeatherDataServiceDidUpdate() {
-    guard WeatherDataManager.shared.hasDisplayableData else {
+    guard WeatherDataService.shared.hasDisplayableData else {
       requestRouting(toStep: .emptyList)
       return
     }

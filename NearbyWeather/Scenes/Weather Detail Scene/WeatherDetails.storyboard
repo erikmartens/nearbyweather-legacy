@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -225,13 +225,13 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pressure:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VD7-3O-0CV">
-                                                                        <rect key="frame" x="30" y="0.0" width="122" height="20"/>
+                                                                        <rect key="frame" x="30" y="0.0" width="130.5" height="20"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2943 psi" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYh-Xe-PqW">
-                                                                        <rect key="frame" x="162" y="0.0" width="173" height="20"/>
+                                                                        <rect key="frame" x="170.5" y="0.0" width="164.5" height="20"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -351,13 +351,13 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j67-Ch-9iS">
-                                                                        <rect key="frame" x="30" y="0.0" width="115" height="20"/>
+                                                                        <rect key="frame" x="30" y="0.0" width="122.5" height="20"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123.45 km" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlv-mf-cjo">
-                                                                        <rect key="frame" x="155" y="0.0" width="180" height="20"/>
+                                                                        <rect key="frame" x="162.5" y="0.0" width="172.5" height="20"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -449,6 +449,7 @@
                         <outlet property="humidityImageView" destination="C2L-Sn-5uA" id="w8Y-5i-fUM"/>
                         <outlet property="humidityLabel" destination="IWf-AB-U9X" id="2aG-bU-gEr"/>
                         <outlet property="humidityNoteLabel" destination="tl7-vY-jP3" id="CgA-J2-LUI"/>
+                        <outlet property="locationStackView" destination="FxE-TE-AKp" id="Nif-hH-rKT"/>
                         <outlet property="mapView" destination="SHu-fg-dd5" id="TgU-Tr-RcH"/>
                         <outlet property="pressureImageView" destination="8Qs-Gw-dnd" id="Bjc-bL-cEA"/>
                         <outlet property="pressureLabel" destination="gYh-Xe-PqW" id="6Nd-xD-RY6"/>
@@ -468,6 +469,7 @@
                         <outlet property="windSpeedImageView" destination="OH4-Dm-JZc" id="sIU-tK-bNt"/>
                         <outlet property="windSpeedLabel" destination="YZg-ZJ-Cni" id="UOW-Fi-rcT"/>
                         <outlet property="windSpeedNoteLabel" destination="3uz-EZ-i7H" id="Zdl-KO-77p"/>
+                        <outlet property="windSpeedStackView" destination="TVo-0y-uho" id="7nk-1N-iZq"/>
                         <outletCollection property="separatorLineHeightConstraints" destination="EJI-P2-JFz" collectionClass="NSMutableArray" id="GJO-jv-nra"/>
                         <outletCollection property="separatorLineHeightConstraints" destination="cu7-hM-IQF" collectionClass="NSMutableArray" id="5hQ-71-ZXg"/>
                         <outletCollection property="separatorLineHeightConstraints" destination="IbO-jj-niV" collectionClass="NSMutableArray" id="92i-E6-lRW"/>
@@ -481,9 +483,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AirPressure" width="37.5" height="37.5"/>
+        <image name="AirPressure" width="25" height="25"/>
         <image name="CloudCover" width="25" height="25"/>
-        <image name="Distance" width="37.5" height="37.5"/>
+        <image name="Distance" width="25" height="25"/>
         <image name="Humidity" width="25" height="25"/>
         <image name="Location" width="25" height="25"/>
         <image name="OpenWeatherMapLogo" width="207" height="20"/>

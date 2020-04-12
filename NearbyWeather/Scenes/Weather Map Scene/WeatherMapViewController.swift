@@ -36,13 +36,13 @@ final class WeatherMapViewController: UIViewController {
     navigationController?.navigationBar.styleStandard()
     
     mapView.delegate = self
-    mapView.mapType = PreferencesDataManager.shared.preferredMapType
+    mapView.mapType = PreferencesDataService.shared.preferredMapType
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    selectedBookmarkedLocation = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first?.weatherInformationDTO
+    selectedBookmarkedLocation = WeatherDataService.shared.bookmarkedWeatherDataObjects?.first?.weatherInformationDTO
     
     prepareMapAnnotations()
     focusOnAvailableLocation()
@@ -53,13 +53,13 @@ final class WeatherMapViewController: UIViewController {
   private func prepareMapAnnotations() {
     weatherLocationMapAnnotations = [WeatherLocationMapAnnotation]()
     
-    let bookmarkedLocationAnnotations: [WeatherLocationMapAnnotation]? = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.compactMap {
+    let bookmarkedLocationAnnotations: [WeatherLocationMapAnnotation]? = WeatherDataService.shared.bookmarkedWeatherDataObjects?.compactMap {
       guard let weatherDTO = $0.weatherInformationDTO else { return nil }
       return WeatherLocationMapAnnotation(weatherDTO: weatherDTO)
     }
     weatherLocationMapAnnotations.append(contentsOf: bookmarkedLocationAnnotations ?? [WeatherLocationMapAnnotation]())
     
-    let nearbyocationAnnotations = WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.compactMap {
+    let nearbyocationAnnotations = WeatherDataService.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.compactMap {
       return WeatherLocationMapAnnotation(weatherDTO: $0)
     }
     weatherLocationMapAnnotations.append(contentsOf: nearbyocationAnnotations ?? [WeatherLocationMapAnnotation]())
@@ -68,7 +68,7 @@ final class WeatherMapViewController: UIViewController {
   }
   
   private func triggerFocusOnLocationAlert() {
-    guard let bookmarkedWeatherDataObjects = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.compactMap({
+    guard let bookmarkedWeatherDataObjects = WeatherDataService.shared.bookmarkedWeatherDataObjects?.compactMap({
       return $0.weatherInformationDTO
     }) else {
       return
@@ -98,10 +98,12 @@ final class WeatherMapViewController: UIViewController {
   }
   
   private func focusMapOnSelectedBookmarkedLocation() {
-    guard let selectedLocation = selectedBookmarkedLocation else {
-      return
+    guard let selectedLocation = selectedBookmarkedLocation,
+      let latitude = selectedLocation.coordinates.latitude,
+      let longitude = selectedLocation.coordinates.longitude else {
+        return
     }
-    let coordinate = CLLocationCoordinate2D(latitude: selectedLocation.coordinates.latitude, longitude: selectedLocation.coordinates.longitude)
+    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     let region = MKCoordinateRegion.init(center: coordinate, latitudinalMeters: 15000, longitudinalMeters: 15000)
     mapView.setRegion(region, animated: true)
   }
@@ -122,10 +124,10 @@ final class WeatherMapViewController: UIViewController {
   
   @IBAction func changeMapTypeButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
-      .weatherMapType(currentMapType: PreferencesDataManager.shared.preferredMapType, completionHandler: { [weak self] mapType in
+      .weatherMapType(currentMapType: PreferencesDataService.shared.preferredMapType, completionHandler: { [weak self] mapType in
         DispatchQueue.main.async {
-          PreferencesDataManager.shared.preferredMapType = mapType
-          self?.mapView.mapType = PreferencesDataManager.shared.preferredMapType
+          PreferencesDataService.shared.preferredMapType = mapType
+          self?.mapView.mapType = PreferencesDataService.shared.preferredMapType
         }
       })
     )

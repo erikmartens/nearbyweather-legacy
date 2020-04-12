@@ -16,7 +16,13 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
   let coordinate: CLLocationCoordinate2D
   let locationId: Int
   
-  init(title: String?, subtitle: String?, isDayTime: Bool?, coordinate: CLLocationCoordinate2D, locationId: Int) {
+  init(
+    title: String?,
+    subtitle: String?,
+    isDayTime: Bool?,
+    coordinate: CLLocationCoordinate2D,
+    locationId: Int
+  ) {
     self.title = title
     self.subtitle = subtitle
     self.isDayTime = isDayTime
@@ -25,17 +31,36 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
   }
   
   convenience init?(weatherDTO: WeatherInformationDTO?) {
-    guard let weatherDTO = weatherDTO else { return nil }
+    guard let weatherDTO = weatherDTO,
+      let latitude = weatherDTO.coordinates.latitude,
+      let longitude = weatherDTO.coordinates.longitude else {
+        return nil
+    }
     
-    let weatherConditionIdentifier = weatherDTO.weatherCondition.first?.identifier
-    let weatherConditionSymbol = weatherConditionIdentifier != nil ? ConversionService.weatherConditionSymbol(fromWeatherCode: weatherConditionIdentifier!) : nil
-    let temperatureDescriptor = ConversionService.temperatureDescriptor(forTemperatureUnit: PreferencesDataManager.shared.temperatureUnit, fromRawTemperature: weatherDTO.atmosphericInformation.temperatureKelvin)
+    let isDayTime = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
     
-    let subtitle = weatherConditionSymbol != nil ? "\(weatherConditionSymbol!) \(temperatureDescriptor)" : "\(temperatureDescriptor)"
+    var weatherConditionSymbol: String?
+    if let weatherConditionIdentifier = weatherDTO.weatherCondition.first?.identifier {
+      weatherConditionSymbol = ConversionWorker.weatherConditionSymbol(
+        fromWeatherCode: weatherConditionIdentifier,
+        isDayTime: isDayTime
+      )
+    }
     
-    let isDayTime = ConversionService.isDayTime(forWeatherDTO: weatherDTO)
+    var temperatureDescriptor: String?
+    if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
+      temperatureDescriptor = ConversionWorker.temperatureDescriptor(
+        forTemperatureUnit: PreferencesDataService.shared.temperatureUnit,
+        fromRawTemperature: temperatureKelvin
+      )
+    }
     
-    let coordinate = CLLocationCoordinate2D(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
+    let subtitle: String? = ""
+      .append(contentsOf: weatherConditionSymbol, delimiter: .space)
+      .append(contentsOf: temperatureDescriptor, delimiter: .space)
+      .ifEmpty(justReturn: nil)
+    
+    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     
     self.init(title: weatherDTO.cityName, subtitle: subtitle, isDayTime: isDayTime, coordinate: coordinate, locationId: weatherDTO.cityID)
   }

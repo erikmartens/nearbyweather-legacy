@@ -10,6 +10,10 @@ import Foundation
 
 extension Constants {
   
+  enum EmailAdresses {
+    static let mainContact = "erikmartens.developer@gmail.com"
+  }
+  
   enum Urls {
     static let kAppStoreRatingDeepLinkUrl = URL(string: "https://itunes.apple.com/app/id1227313069?action=write-review&mt=8")!
     static let kGitHubProjectMainPageUrl =  URL(string: "https://github.com/erikmartens/NearbyWeather")!
@@ -34,7 +38,7 @@ extension Constants {
     
     static func kOpenWeatherMapMultiStationtDataRequestUrl(with apiKey: String, currentLatitude latitude: Double, currentLongitude longitude: Double) -> URL {
       let baseUrl = Constants.Urls.kOpenWeatherMultiLocationBaseUrl.absoluteString
-      let numberOfResults = PreferencesDataManager.shared.amountOfResults.integerValue
+      let numberOfResults = PreferencesDataService.shared.amountOfResults.integerValue
       return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)")!
     }
   }

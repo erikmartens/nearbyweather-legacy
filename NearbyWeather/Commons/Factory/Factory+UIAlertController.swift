@@ -144,11 +144,11 @@ private extension Factory.AlertController {
   static func preferredBookmarkOptionsAlert(options: [PreferredBookmarkOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     
     let actions = options.map { option -> UIAlertAction in
-      let actionIsSelected = PreferencesDataManager.shared.preferredBookmark.value == option.value
+      let actionIsSelected = PreferencesDataService.shared.preferredBookmark.value == option.value
       
       let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
-        let previousOption = PreferencesDataManager.shared.preferredBookmark
-        PreferencesDataManager.shared.preferredBookmark = option
+        let previousOption = PreferencesDataService.shared.preferredBookmark
+        PreferencesDataService.shared.preferredBookmark = option
         completionHandler(previousOption.value != option.value)
       })
       action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)
@@ -164,11 +164,11 @@ private extension Factory.AlertController {
   
   static func preferredAmountOfResultsOptionsAlert(options: [AmountOfResultsOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     let actions = options.map { option -> UIAlertAction in
-      let actionIsSelected = PreferencesDataManager.shared.amountOfResults.value == option.value
+      let actionIsSelected = PreferencesDataService.shared.amountOfResults.value == option.value
       
       let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
-        let previousOption = PreferencesDataManager.shared.amountOfResults
-        PreferencesDataManager.shared.amountOfResults = option
+        let previousOption = PreferencesDataService.shared.amountOfResults
+        PreferencesDataService.shared.amountOfResults = option
         completionHandler(previousOption.value != option.value)
       })
       action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)
@@ -184,11 +184,11 @@ private extension Factory.AlertController {
   
   static func preferredSortingOrientationOptionsAlert(options: [SortingOrientationOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     let actions = options.map { option -> UIAlertAction in
-      let actionIsSelected = PreferencesDataManager.shared.sortingOrientation.value == option.value
+      let actionIsSelected = PreferencesDataService.shared.sortingOrientation.value == option.value
       
       let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
-        let previousOption = PreferencesDataManager.shared.sortingOrientation
-        PreferencesDataManager.shared.sortingOrientation = option
+        let previousOption = PreferencesDataService.shared.sortingOrientation
+        PreferencesDataService.shared.sortingOrientation = option
         completionHandler(previousOption.value != option.value)
       })
       action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)
@@ -204,11 +204,11 @@ private extension Factory.AlertController {
   
   static func preferredTemperatureUnitOptionsAlert(options: [TemperatureUnitOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     let actions = options.map { option -> UIAlertAction in
-      let actionIsSelected = PreferencesDataManager.shared.temperatureUnit.value == option.value
+      let actionIsSelected = PreferencesDataService.shared.temperatureUnit.value == option.value
       
       let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
-        let previousOption = PreferencesDataManager.shared.temperatureUnit
-        PreferencesDataManager.shared.temperatureUnit = option
+        let previousOption = PreferencesDataService.shared.temperatureUnit
+        PreferencesDataService.shared.temperatureUnit = option
         completionHandler(previousOption.value != option.value)
       })
       action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)
@@ -224,11 +224,11 @@ private extension Factory.AlertController {
   
   static func preferredSpeedUnitOptionsAlert(options: [DistanceVelocityUnitOption], completionHandler: @escaping ((Bool) -> Void)) -> UIAlertController {
     let actions = options.map { option -> UIAlertAction in
-      let actionIsSelected = PreferencesDataManager.shared.distanceSpeedUnit.value == option.value
+      let actionIsSelected = PreferencesDataService.shared.distanceSpeedUnit.value == option.value
       
       let action = UIAlertAction(title: option.stringValue, style: .default, handler: { _ in
-        let previousOption = PreferencesDataManager.shared.distanceSpeedUnit
-        PreferencesDataManager.shared.distanceSpeedUnit = option
+        let previousOption = PreferencesDataService.shared.distanceSpeedUnit
+        PreferencesDataService.shared.distanceSpeedUnit = option
         completionHandler(previousOption.value != option.value)
       })
       action.setValue(actionIsSelected, forKey: Constants.Keys.KeyValueBindings.kChecked)

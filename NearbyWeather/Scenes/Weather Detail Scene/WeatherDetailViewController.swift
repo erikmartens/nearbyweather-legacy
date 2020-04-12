@@ -57,6 +57,7 @@ final class WeatherDetailViewController: UIViewController {
   @IBOutlet weak var pressureNoteLabel: UILabel!
   @IBOutlet weak var pressureLabel: UILabel!
   
+  @IBOutlet weak var windSpeedStackView: UIStackView!
   @IBOutlet weak var windSpeedImageView: UIImageView!
   @IBOutlet weak var windSpeedNoteLabel: UILabel!
   @IBOutlet weak var windSpeedLabel: UILabel!
@@ -65,6 +66,7 @@ final class WeatherDetailViewController: UIViewController {
   @IBOutlet weak var windDirectionNoteLabel: UILabel!
   @IBOutlet weak var windDirectionLabel: UILabel!
   
+  @IBOutlet weak var locationStackView: UIStackView!
   @IBOutlet weak var mapView: MKMapView!
   @IBOutlet weak var coordinatesImageView: UIImageView!
   @IBOutlet weak var coordinatesNoteLabel: UILabel!
@@ -83,7 +85,7 @@ final class WeatherDetailViewController: UIViewController {
     
     navigationItem.title = titleString
     mapView.delegate = self
-    mapView.mapType = PreferencesDataManager.shared.preferredMapType
+    mapView.mapType = PreferencesDataService.shared.preferredMapType
     
     configureMap()
   }
@@ -97,25 +99,36 @@ final class WeatherDetailViewController: UIViewController {
   // MARK: - Private Helpers
   
   private func configure() {
-    navigationController?.navigationBar.style(withBarTintColor:
-      (ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight
+    let isDayTime = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
+    
+    navigationController?.navigationBar.style(
+      withBarTintColor: isDayTime ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight
     )
     
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }
     
-    let weatherCode = weatherDTO.weatherCondition[0].identifier
-    conditionSymbolLabel.text = ConversionService.weatherConditionSymbol(fromWeatherCode: weatherCode)
+    conditionSymbolLabel.text = ConversionWorker.weatherConditionSymbol(
+      fromWeatherCode: weatherDTO.weatherCondition[0].identifier,
+      isDayTime: isDayTime
+    )
     conditionNameLabel.text = weatherDTO.weatherCondition.first?.conditionName
-    conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription.capitalized
-    let temperatureUnit = PreferencesDataManager.shared.temperatureUnit
-    let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin
-    temperatureLabel.text = ConversionService.temperatureDescriptor(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
+    conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription?.capitalized
     
-    if let sunriseTimeSinceReferenceDate = weatherDTO.daytimeInformation?.sunrise, let sunsetTimeSinceReferenceDate = weatherDTO.daytimeInformation?.sunset {
+    if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
+      let temperatureUnit = PreferencesDataService.shared.temperatureUnit
+      temperatureLabel.text = ConversionWorker.temperatureDescriptor(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
+    } else {
+      temperatureLabel.text = nil
+    }
+    
+    if let sunriseTimeSinceReferenceDate = weatherDTO.daytimeInformation.sunrise,
+      let sunsetTimeSinceReferenceDate = weatherDTO.daytimeInformation.sunset,
+      let latitude = weatherDTO.coordinates.latitude,
+      let longitude = weatherDTO.coordinates.longitude {
       let sunriseDate = Date(timeIntervalSince1970: sunriseTimeSinceReferenceDate)
       let sunsetDate = Date(timeIntervalSince1970: sunsetTimeSinceReferenceDate)
       
-      let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
+      let location = CLLocation(latitude: latitude, longitude: longitude)
       
       let dateFormatter = DateFormatter()
       dateFormatter.calendar = .current
@@ -123,17 +136,18 @@ final class WeatherDetailViewController: UIViewController {
       dateFormatter.dateStyle = .none
       dateFormatter.timeStyle = .short
       
-      let isDayTime = ConversionService.isDayTime(forWeatherDTO: weatherDTO) ?? true // can never be nil here
       let description = isDayTime ? R.string.localizable.dayTime() : R.string.localizable.nightTime()
       let localTime = dateFormatter.string(from: Date())
-      timeLabel.text = "\(description), \(localTime)"
+      timeLabel.text = ""
+        .append(contentsOf: description, delimiter: .none)
+        .append(contentsOf: localTime, delimiter: .space)
       
       sunriseImageView.tintColor = .darkGray
-      sunriseNoteLabel.text = "\(R.string.localizable.sunrise())"
+      sunriseNoteLabel.text = R.string.localizable.sunrise()
       sunriseLabel.text = dateFormatter.string(from: sunriseDate)
       
       sunsetImageView.tintColor = .darkGray
-      sunsetNoteLabel.text = "\(R.string.localizable.sunset())"
+      sunsetNoteLabel.text = R.string.localizable.sunset()
       sunsetLabel.text = dateFormatter.string(from: sunsetDate)
     } else {
       daytimeStackView.isHidden = true
@@ -141,56 +155,79 @@ final class WeatherDetailViewController: UIViewController {
     }
     
     cloudCoverImageView.tintColor = .darkGray
-    cloudCoverNoteLabel.text = "\(R.string.localizable.cloud_coverage())"
-    cloudCoverLabel.text = "\(weatherDTO.cloudCoverage.coverage)%"
+    cloudCoverNoteLabel.text = R.string.localizable.cloud_coverage()
+    cloudCoverLabel.text = weatherDTO.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none)
     humidityImageView.tintColor = .darkGray
-    humidityNoteLabel.text = "\(R.string.localizable.humidity())"
-    humidityLabel.text = "\(weatherDTO.atmosphericInformation.humidity)%"
+    humidityNoteLabel.text = R.string.localizable.humidity()
+    humidityLabel.text = weatherDTO.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none)
     pressureImageView.tintColor = .darkGray
-    pressureNoteLabel.text = "\(R.string.localizable.air_pressure())"
-    pressureLabel.text = "\(weatherDTO.atmosphericInformation.pressurePsi) hpa"
+    pressureNoteLabel.text = R.string.localizable.air_pressure()
+    pressureLabel.text = weatherDTO.atmosphericInformation.pressurePsi?.append(contentsOf: "hpa", delimiter: .space)
     
     windSpeedImageView.tintColor = .darkGray
-    windSpeedNoteLabel.text = "\(R.string.localizable.windspeed())"
-    let windspeedDescriptor = ConversionService.windspeedDescriptor(forDistanceSpeedUnit: PreferencesDataManager.shared.distanceSpeedUnit, forWindspeed: weatherDTO.windInformation.windspeed)
-    windSpeedLabel.text = windspeedDescriptor
+    windSpeedNoteLabel.text = R.string.localizable.windspeed()
+    
+    if let windspeed = weatherDTO.windInformation.windspeed {
+      windSpeedLabel.text = ConversionWorker.windspeedDescriptor(
+        forDistanceSpeedUnit: PreferencesDataService.shared.distanceSpeedUnit,
+        forWindspeed: windspeed
+      )
+    } else {
+      windSpeedStackView.isHidden = true
+    }
+    
     if let windDirection = weatherDTO.windInformation.degrees {
       windDirectionImageView.transform = CGAffineTransform(rotationAngle: CGFloat(windDirection)*0.0174532925199) // convert to radians
       windDirectionImageView.tintColor = .darkGray
-      windDirectionNoteLabel.text = " \(R.string.localizable.wind_direction())"
-      windDirectionLabel.text = ConversionService.windDirectionDescriptor(forWindDirection: windDirection)
+      windDirectionNoteLabel.text = R.string.localizable.wind_direction()
+      windDirectionLabel.text = ConversionWorker.windDirectionDescriptor(forWindDirection: windDirection)
     } else {
       windDirectionStackView.isHidden = true
-    }
-    
-    coordinatesImageView.tintColor = .darkGray
-    coordinatesNoteLabel.text = "\(R.string.localizable.coordinates())"
-    coordinatesLabel.text = "\(weatherDTO.coordinates.latitude), \(weatherDTO.coordinates.longitude)"
-    if UserLocationService.shared.locationPermissionsGranted, let userLocation = UserLocationService.shared.location {
-      let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
-      let distanceInMetres = location.distance(from: userLocation)
-      
-      let distanceSpeedUnit = PreferencesDataManager.shared.distanceSpeedUnit
-      let distanceString = ConversionService.distanceDescriptor(forDistanceSpeedUnit: distanceSpeedUnit, forDistanceInMetres: distanceInMetres)
-      
-      distanceImageView.tintColor = .darkGray
-      distanceNoteLabel.text = "\(R.string.localizable.distance())"
-      distanceLabel.text = distanceString
-    } else {
-      distanceStackView.isHidden = true
     }
   }
   
   private func configureMap() {
-    mapView.layer.cornerRadius = 10
-    
-    if let mapAnnotation = WeatherLocationMapAnnotation(weatherDTO: weatherDTO) {
-      mapView.addAnnotation(mapAnnotation)
+    guard let weatherLatitude = weatherDTO.coordinates.latitude,
+      let weatherLongitude = weatherDTO.coordinates.longitude else {
+        locationStackView.isHidden = true
+        return
     }
     
-    let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
-    let region = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
-    mapView.setRegion(region, animated: false)
+    /// mapView
+    if let mapAnnotation = WeatherLocationMapAnnotation(weatherDTO: weatherDTO) {
+      mapView.layer.cornerRadius = 10
+      mapView.addAnnotation(mapAnnotation)
+      let location = CLLocation(latitude: weatherLatitude, longitude: weatherLongitude)
+      let region = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+      mapView.setRegion(region, animated: false)
+    } else {
+      mapView.isHidden = true
+    }
+    
+    /// coordinates
+    coordinatesImageView.tintColor = .darkGray
+    coordinatesNoteLabel.text = R.string.localizable.coordinates()
+    coordinatesLabel.text = ""
+      .append(contentsOfConvertible: weatherDTO.coordinates.latitude, delimiter: .none)
+      .append(contentsOfConvertible: weatherDTO.coordinates.longitude, delimiter: .comma)
+    
+    /// distance
+    if UserLocationService.shared.locationPermissionsGranted,
+      let userLocation = UserLocationService.shared.location,
+      let weatherLatitude = weatherDTO.coordinates.latitude,
+      let weatherLongitude = weatherDTO.coordinates.longitude {
+      let location = CLLocation(latitude: weatherLatitude, longitude: weatherLongitude)
+      let distanceInMetres = location.distance(from: userLocation)
+      
+      let distanceSpeedUnit = PreferencesDataService.shared.distanceSpeedUnit
+      let distanceString = ConversionWorker.distanceDescriptor(forDistanceSpeedUnit: distanceSpeedUnit, forDistanceInMetres: distanceInMetres)
+      
+      distanceImageView.tintColor = .darkGray
+      distanceNoteLabel.text = R.string.localizable.distance()
+      distanceLabel.text = distanceString
+    } else {
+      distanceStackView.isHidden = true
+    }
   }
   
   // MARK: - IBActions

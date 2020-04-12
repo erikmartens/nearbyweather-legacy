@@ -1,5 +1,5 @@
 //
-//  WeatherDTOs.swift
+//  WeatherDataDTO.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 14.04.17.
@@ -26,20 +26,27 @@ struct WeatherInformationArrayWrapper: Codable {
 struct WeatherInformationDTO: Codable {
   
   struct Coordinates: Codable {
-    var latitude: Double
-    var longitude: Double
+    var latitude: Double?
+    var longitude: Double?
     
     enum CodingKeys: String, CodingKey {
       case latitude = "lat"
       case longitude = "lon"
     }
+    
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
+      
+      latitude = try? values?.decodeIfPresent(Double.self, forKey: .latitude)
+      longitude = try? values?.decodeIfPresent(Double.self, forKey: .longitude)
+    }
   }
   
   struct WeatherCondition: Codable {
-    var identifier: Int
-    var conditionName: String
-    var conditionDescription: String
-    var conditionIconCode: String
+    var identifier: Int?
+    var conditionName: String?
+    var conditionDescription: String?
+    var conditionIconCode: String?
     
     enum CodingKeys: String, CodingKey {
       case identifier = "id"
@@ -47,22 +54,39 @@ struct WeatherInformationDTO: Codable {
       case conditionDescription = "description"
       case conditionIconCode = "icon"
     }
+    
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
+      
+      identifier = try? values?.decodeIfPresent(Int.self, forKey: .identifier)
+      conditionName = try? values?.decodeIfPresent(String.self, forKey: .conditionName)
+      conditionDescription = try? values?.decodeIfPresent(String.self, forKey: .conditionDescription)
+      conditionIconCode = try? values?.decodeIfPresent(String.self, forKey: .conditionIconCode)
+    }
   }
   
   struct AtmosphericInformation: Codable {
-    var temperatureKelvin: Double
-    var pressurePsi: Double
-    var humidity: Double
+    var temperatureKelvin: Double?
+    var pressurePsi: Double?
+    var humidity: Double?
     
     enum CodingKeys: String, CodingKey {
       case temperatureKelvin = "temp"
       case pressurePsi = "pressure"
       case humidity
     }
+    
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
+      
+      temperatureKelvin = try? values?.decodeIfPresent(Double.self, forKey: .temperatureKelvin)
+      pressurePsi = try? values?.decodeIfPresent(Double.self, forKey: .pressurePsi)
+      humidity = try? values?.decodeIfPresent(Double.self, forKey: .humidity)
+    }
   }
   
   struct WindInformation: Codable {
-    var windspeed: Double
+    var windspeed: Double?
     var degrees: Double?
     
     enum CodingKeys: String, CodingKey {
@@ -70,34 +94,44 @@ struct WeatherInformationDTO: Codable {
       case degrees = "deg"
     }
     
-    init(from decoder: Decoder) throws {
-      let values = try decoder.container(keyedBy: CodingKeys.self)
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
       
-      self.windspeed = try values.decode(Double.self, forKey: .windspeed)
-      if values.contains(.degrees) {
-        let degrees = try values.decodeIfPresent(Double.self, forKey: CodingKeys.degrees)
-        self.degrees = degrees
-      } else {
-        self.degrees = nil
-      }
+      windspeed = try? values?.decodeIfPresent(Double.self, forKey: .windspeed)
+      degrees = try? values?.decodeIfPresent(Double.self, forKey: .degrees)
     }
   }
   
   struct CloudCoverage: Codable {
-    var coverage: Double
+    var coverage: Double?
     
     enum CodingKeys: String, CodingKey {
       case coverage = "all"
     }
+    
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
+      
+      coverage = try? values?.decodeIfPresent(Double.self, forKey: .coverage)
+    }
   }
   
   struct DaytimeInformation: Codable {
+    /// multi location weather data does not contain this information
+    
     var sunrise: Double?
     var sunset: Double?
     
     enum CodingKeys: String, CodingKey {
       case sunrise
       case sunset
+    }
+    
+    init(from decoder: Decoder) {
+      let values = try? decoder.container(keyedBy: CodingKeys.self)
+      
+      sunrise = try? values?.decodeIfPresent(Double.self, forKey: .sunrise)
+      sunset = try? values?.decodeIfPresent(Double.self, forKey: .sunset)
     }
   }
   
@@ -108,7 +142,7 @@ struct WeatherInformationDTO: Codable {
   var atmosphericInformation: AtmosphericInformation
   var windInformation: WindInformation
   var cloudCoverage: CloudCoverage
-  var daytimeInformation: DaytimeInformation? // multi location weather data does not contain this information
+  var daytimeInformation: DaytimeInformation
   
   enum CodingKeys: String, CodingKey {
     case cityID = "id"
@@ -131,48 +165,6 @@ struct WeatherInformationDTO: Codable {
     self.atmosphericInformation = try values.decode(AtmosphericInformation.self, forKey: .atmosphericInformation)
     self.windInformation = try values.decode(WindInformation.self, forKey: .windInformation)
     self.cloudCoverage = try values.decode(CloudCoverage.self, forKey: .cloudCoverage)
-    
-    if values.contains(.daytimeInformation) {
-      let daytimeInformation = try values.nestedContainer(keyedBy: DaytimeInformation.CodingKeys.self, forKey: .daytimeInformation)
-      let sunrise = try daytimeInformation.decodeIfPresent(Double.self, forKey: DaytimeInformation.CodingKeys.sunrise)
-      let sunset = try daytimeInformation.decodeIfPresent(Double.self, forKey: DaytimeInformation.CodingKeys.sunset)
-      self.daytimeInformation = DaytimeInformation(sunrise: sunrise, sunset: sunset)
-    } else {
-      self.daytimeInformation = nil
-    }
+    self.daytimeInformation = try values.decode(DaytimeInformation.self, forKey: .daytimeInformation)
   }
-}
-
-class ErrorType: Codable {
-  
-  static let count = 5
-  
-  var value: ErrorTypeWrappedEnum
-  
-  init(value: ErrorTypeWrappedEnum) {
-    self.value = value
-  }
-  
-  convenience init?(rawValue: Int) {
-    guard let value = ErrorTypeWrappedEnum(rawValue: rawValue) else {
-      return nil
-    }
-    self.init(value: value)
-  }
-  
-  enum ErrorTypeWrappedEnum: Int, Codable {
-    case httpError
-    case requestTimOutError
-    case malformedUrlError
-    case unparsableResponseError
-    case jsonSerializationError
-    case unrecognizedApiKeyError
-    case locationUnavailableError
-    case locationAccessDenied
-  }
-}
-
-struct ErrorDataDTO: Codable {
-  var errorType: ErrorType
-  var httpStatusCode: Int?
 }

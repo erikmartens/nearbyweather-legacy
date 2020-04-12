@@ -21,5 +21,14 @@
 	}, {
     "name": "SwiftLint",
     "urlString": "https://github.com/realm/SwiftLint"
+  }, {
+    "name": "Fastlane",
+    "urlString": "https://fastlane.tools/"
+  }, {
+    "name": "Firebase Analytics",
+    "urlString": "https://firebase.google.com/"
+  }, {
+    "name": "Firebase Crashlytics",
+    "urlString": "https://firebase.google.com/"
   }]
 }

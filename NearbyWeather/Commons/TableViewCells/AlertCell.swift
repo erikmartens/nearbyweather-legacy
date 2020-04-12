@@ -45,7 +45,7 @@ class AlertCell: UITableViewCell {
     switch errorDataDTO.errorType.value {
     case .httpError:
       let errorCode = errorDataDTO.httpStatusCode ?? -1
-      configure(with: R.string.localizable.http_error("\(errorCode)"))
+      configure(with: R.string.localizable.http_error(String(describing: errorCode)))
     case .requestTimOutError:
       configure(with: R.string.localizable.request_timeout_error())
     case .malformedUrlError:

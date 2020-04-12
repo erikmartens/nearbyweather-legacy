@@ -35,7 +35,7 @@ final class WeatherListCoordinator: Coordinator {
   private static var _stepper: WeatherListStepper = {
     let initalStep = InitialStep(
       identifier: WeatherListStep.identifier,
-      step: WeatherDataManager.shared.hasDisplayableData ? WeatherListStep.list : WeatherListStep.emptyList
+      step: WeatherDataService.shared.hasDisplayableData ? WeatherListStep.list : WeatherListStep.emptyList
     )
     return WeatherListStepper(initialStep: initalStep, type: WeatherListStep.self)
   }()

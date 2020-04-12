@@ -21,7 +21,7 @@ protocol DataStorageProtocol {
   static func loadData() -> StorageEntity?
 }
 
-final class DataStorageManager {    
+final class DataStorageWorker {    
   
   // MARK: - Public Functions
   

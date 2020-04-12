@@ -44,10 +44,10 @@ struct AmountOfResultsOption: Codable, PreferencesOption {
   }
   
   var stringValue: String {
-    return "\(value.rawValue) \(R.string.localizable.results())"
+    value.rawValue.append(contentsOf: R.string.localizable.results(), delimiter: .space)
   }
   
   var integerValue: Int {
-    return value.rawValue
+    value.rawValue
   }
 }

@@ -30,7 +30,7 @@ protocol InMemoryPreferencesProvider {
   var preferredMapType: MKMapType { get set }
 }
 
-final class PreferencesDataManager: StoredPreferencesProvider, InMemoryPreferencesProvider {
+final class PreferencesDataService: StoredPreferencesProvider, InMemoryPreferencesProvider {
   
   private static let preferencesManagerBackgroundQueue = DispatchQueue(
     label: Constants.Labels.DispatchQueues.kPreferencesManagerBackgroundQueue,
@@ -42,7 +42,7 @@ final class PreferencesDataManager: StoredPreferencesProvider, InMemoryPreferenc
   
   // MARK: - Public Assets
   
-  static var shared: PreferencesDataManager!
+  static var shared: PreferencesDataService!
   
   // MARK: - Properties
   
@@ -65,7 +65,7 @@ final class PreferencesDataManager: StoredPreferencesProvider, InMemoryPreferenc
   // MARK: - Public Properties & Methods
   
   static func instantiateSharedInstance() {
-    shared = PreferencesDataManager.loadData() ?? PreferencesDataManager(preferredBookmark: PreferredBookmarkOption(value: .none),
+    shared = PreferencesDataService.loadData() ?? PreferencesDataService(preferredBookmark: PreferredBookmarkOption(value: .none),
                                                                          amountOfResults: AmountOfResultsOption(value: .ten),
                                                                          temperatureUnit: TemperatureUnitOption(value: .celsius),
                                                                          windspeedUnit: DistanceVelocityUnitOption(value: .kilometres),
@@ -77,27 +77,27 @@ final class PreferencesDataManager: StoredPreferencesProvider, InMemoryPreferenc
   var preferredBookmark: PreferredBookmarkOption {
      didSet {
        BadgeService.shared.updateBadge()
-       PreferencesDataManager.storeData()
+       PreferencesDataService.storeData()
      }
    }
    
    var amountOfResults: AmountOfResultsOption {
      didSet {
-       WeatherDataManager.shared.update(withCompletionHandler: nil)
-       PreferencesDataManager.storeData()
+       WeatherDataService.shared.update(withCompletionHandler: nil)
+       PreferencesDataService.storeData()
      }
    }
    
    var temperatureUnit: TemperatureUnitOption {
      didSet {
        BadgeService.shared.updateBadge()
-       PreferencesDataManager.storeData()
+       PreferencesDataService.storeData()
      }
    }
    
    var distanceSpeedUnit: DistanceVelocityUnitOption {
      didSet {
-       PreferencesDataManager.storeData()
+       PreferencesDataService.storeData()
      }
    }
    
@@ -107,7 +107,7 @@ final class PreferencesDataManager: StoredPreferencesProvider, InMemoryPreferenc
          name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged),
          object: nil
        )
-       PreferencesDataManager.storeData()
+       PreferencesDataService.storeData()
      }
    }
   
@@ -118,12 +118,12 @@ final class PreferencesDataManager: StoredPreferencesProvider, InMemoryPreferenc
   var preferredMapType: MKMapType = .standard
 }
 
-extension PreferencesDataManager: DataStorageProtocol {
+extension PreferencesDataService: DataStorageProtocol {
   
-  typealias StorageEntity = PreferencesDataManager
+  typealias StorageEntity = PreferencesDataService
   
-  static func loadData() -> PreferencesDataManager? {
-    guard let preferencesManagerStoredContentsWrapper = DataStorageManager.retrieveJsonFromFile(
+  static func loadData() -> PreferencesDataService? {
+    guard let preferencesManagerStoredContentsWrapper = DataStorageWorker.retrieveJsonFromFile(
       with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
       andDecodeAsType: PreferencesManagerStoredContentsWrapper.self,
       fromStorageLocation: .applicationSupport
@@ -131,7 +131,7 @@ extension PreferencesDataManager: DataStorageProtocol {
         return nil
     }
     
-    return PreferencesDataManager(
+    return PreferencesDataService(
       preferredBookmark: preferencesManagerStoredContentsWrapper.preferredBookmark,
       amountOfResults: preferencesManagerStoredContentsWrapper.amountOfResults,
       temperatureUnit: preferencesManagerStoredContentsWrapper.temperatureUnit,
@@ -146,13 +146,13 @@ extension PreferencesDataManager: DataStorageProtocol {
     dispatchSemaphore.wait()
     preferencesManagerBackgroundQueue.async {
       let preferencesManagerStoredContentsWrapper = PreferencesManagerStoredContentsWrapper(
-        preferredBookmark: PreferencesDataManager.shared.preferredBookmark,
-        amountOfResults: PreferencesDataManager.shared.amountOfResults,
-        temperatureUnit: PreferencesDataManager.shared.temperatureUnit,
-        windspeedUnit: PreferencesDataManager.shared.distanceSpeedUnit,
-        sortingOrientation: PreferencesDataManager.shared.sortingOrientation
+        preferredBookmark: PreferencesDataService.shared.preferredBookmark,
+        amountOfResults: PreferencesDataService.shared.amountOfResults,
+        temperatureUnit: PreferencesDataService.shared.temperatureUnit,
+        windspeedUnit: PreferencesDataService.shared.distanceSpeedUnit,
+        sortingOrientation: PreferencesDataService.shared.sortingOrientation
       )
-      DataStorageManager.storeJson(for: preferencesManagerStoredContentsWrapper,
+      DataStorageWorker.storeJson(for: preferencesManagerStoredContentsWrapper,
                                    inFileWithName: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
                                    toStorageLocation: .applicationSupport)
       dispatchSemaphore.signal()

@@ -42,25 +42,17 @@ final class WeatherStationService {
     
     openWeatherMapCityServiceBackgroundQueue.async {
       self.databaseQueue.inDatabase { database in
-        let usedLocationIdentifiers: [String] = WeatherDataService.shared.bookmarkedLocations.compactMap {
-          return String($0.identifier)
+        let usedLocationIdentifiers = WeatherDataService.shared.bookmarkedLocations.compactMap {
+          String($0.identifier)
         }
+        
         let sqlUsedLocationsIdentifierssArray = "('" + usedLocationIdentifiers.joined(separator: "','") + "')"
         
         let query = !usedLocationIdentifiers.isEmpty
           ? "SELECT * FROM locations l WHERE l.id NOT IN \(sqlUsedLocationsIdentifierssArray) AND (lower(name) LIKE '%\(searchString.lowercased())%') ORDER BY country, l.name"
           : "SELECT * FROM locations l WHERE (lower(name) LIKE '%\(searchString.lowercased())%') ORDER BY l.name, l.country"
-        var queryResult: FMResultSet?
         
-        do {
-          queryResult = try database.executeQuery(query, values: nil)
-        } catch {
-          printDebugMessage(domain: String(describing: self),
-                            message: error.localizedDescription)
-          return completionHandler(nil)
-        }
-        
-        guard let result = queryResult else {
+        guard let result = try? database.executeQuery(query, values: nil) else {
           completionHandler(nil)
           return
         }

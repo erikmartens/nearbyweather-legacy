@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WO0-CE-LKJ" userLabel="contentLabel">
-                        <rect key="frame" x="20" y="5" width="315" height="35"/>
+                        <rect key="frame" x="16" y="4" width="318" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="72b-1r-7CK"/>
                         </constraints>
@@ -38,9 +38,9 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="WO0-CE-LKJ" secondAttribute="bottom" constant="4" id="DaL-bx-hOA"/>
                     <constraint firstAttribute="trailing" secondItem="zoy-aT-Vgi" secondAttribute="trailing" constant="15" id="SQC-oF-e6j"/>
-                    <constraint firstItem="zoy-aT-Vgi" firstAttribute="leading" secondItem="WO0-CE-LKJ" secondAttribute="trailing" constant="15" id="UfS-b4-JjG"/>
-                    <constraint firstItem="WO0-CE-LKJ" firstAttribute="leading" secondItem="sZR-VB-HTP" secondAttribute="leading" constant="20" id="fFw-Xp-vWM"/>
-                    <constraint firstItem="WO0-CE-LKJ" firstAttribute="top" secondItem="sZR-VB-HTP" secondAttribute="top" constant="5" id="umV-1U-TLl"/>
+                    <constraint firstItem="zoy-aT-Vgi" firstAttribute="leading" secondItem="WO0-CE-LKJ" secondAttribute="trailing" constant="16" id="UfS-b4-JjG"/>
+                    <constraint firstItem="WO0-CE-LKJ" firstAttribute="leading" secondItem="sZR-VB-HTP" secondAttribute="leading" constant="16" id="fFw-Xp-vWM"/>
+                    <constraint firstItem="WO0-CE-LKJ" firstAttribute="top" secondItem="sZR-VB-HTP" secondAttribute="top" constant="4" id="umV-1U-TLl"/>
                     <constraint firstItem="zoy-aT-Vgi" firstAttribute="centerY" secondItem="sZR-VB-HTP" secondAttribute="centerY" id="wVk-an-2Kc"/>
                 </constraints>
                 <variation key="default">

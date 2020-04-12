@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8Y-g1-Feg" userLabel="backgroundColorView">
-                        <rect key="frame" x="50" y="10" width="295" height="105"/>
+                        <rect key="frame" x="48" y="12" width="311" height="101"/>
                         <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="e3O-5P-V2i">
@@ -128,15 +128,15 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="P8Y-g1-Feg" firstAttribute="leading" secondItem="I4A-d9-gBR" secondAttribute="leading" constant="50" id="7wb-MH-aeZ"/>
-                    <constraint firstAttribute="bottom" secondItem="P8Y-g1-Feg" secondAttribute="bottom" constant="10" id="8wj-Rs-XH1"/>
+                    <constraint firstItem="P8Y-g1-Feg" firstAttribute="leading" secondItem="I4A-d9-gBR" secondAttribute="leading" constant="48" id="7wb-MH-aeZ"/>
+                    <constraint firstAttribute="bottom" secondItem="P8Y-g1-Feg" secondAttribute="bottom" constant="12" id="8wj-Rs-XH1"/>
                     <constraint firstItem="e3O-5P-V2i" firstAttribute="leading" secondItem="I4A-d9-gBR" secondAttribute="leading" constant="110" id="AVR-ds-lXb"/>
                     <constraint firstItem="e3O-5P-V2i" firstAttribute="top" secondItem="I4A-d9-gBR" secondAttribute="top" constant="15" id="PUY-sc-v36"/>
                     <constraint firstAttribute="bottom" secondItem="e3O-5P-V2i" secondAttribute="bottom" constant="15" id="ZWM-FB-et7"/>
                     <constraint firstItem="iZD-ht-H16" firstAttribute="centerY" secondItem="P8Y-g1-Feg" secondAttribute="centerY" id="eTk-Oa-jHK"/>
                     <constraint firstAttribute="trailing" secondItem="e3O-5P-V2i" secondAttribute="trailing" constant="40" id="gM3-7H-7YR"/>
-                    <constraint firstItem="P8Y-g1-Feg" firstAttribute="top" secondItem="I4A-d9-gBR" secondAttribute="top" constant="10" id="kjZ-f4-WWs"/>
-                    <constraint firstAttribute="trailing" secondItem="P8Y-g1-Feg" secondAttribute="trailing" constant="30" id="ma6-OP-IaQ"/>
+                    <constraint firstItem="P8Y-g1-Feg" firstAttribute="top" secondItem="I4A-d9-gBR" secondAttribute="top" constant="12" id="kjZ-f4-WWs"/>
+                    <constraint firstAttribute="trailing" secondItem="P8Y-g1-Feg" secondAttribute="trailing" constant="16" id="ma6-OP-IaQ"/>
                     <constraint firstItem="iZD-ht-H16" firstAttribute="leading" secondItem="I4A-d9-gBR" secondAttribute="leading" constant="20" id="tko-Mk-QMU"/>
                 </constraints>
             </tableViewCellContentView>
@@ -157,7 +157,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="CloudCoverFilled" width="37.5" height="37.5"/>
+        <image name="CloudCoverFilled" width="25" height="25"/>
         <image name="HumidityFilled" width="25" height="25"/>
         <image name="Temperature" width="25" height="25"/>
         <image name="WindSpeed" width="25" height="25"/>

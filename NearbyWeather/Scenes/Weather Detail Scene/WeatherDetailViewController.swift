@@ -111,7 +111,7 @@ final class WeatherDetailViewController: UIViewController {
       isDayTime: isDayTime
     )
     conditionNameLabel.text = weatherDTO.weatherCondition.first?.conditionName
-    conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription.capitalized
+    conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription?.capitalized
     
     if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
       let temperatureUnit = PreferencesDataService.shared.temperatureUnit
@@ -120,7 +120,8 @@ final class WeatherDetailViewController: UIViewController {
       temperatureLabel.text = nil
     }
     
-    if let sunriseTimeSinceReferenceDate = weatherDTO.daytimeInformation?.sunrise, let sunsetTimeSinceReferenceDate = weatherDTO.daytimeInformation?.sunset {
+    if let sunriseTimeSinceReferenceDate = weatherDTO.daytimeInformation.sunrise,
+      let sunsetTimeSinceReferenceDate = weatherDTO.daytimeInformation.sunset {
       let sunriseDate = Date(timeIntervalSince1970: sunriseTimeSinceReferenceDate)
       let sunsetDate = Date(timeIntervalSince1970: sunsetTimeSinceReferenceDate)
       

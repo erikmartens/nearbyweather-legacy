@@ -12,7 +12,10 @@ import APTimeZones
 
 final class ConversionWorker {
   
-  static func weatherConditionSymbol(fromWeatherCode code: Int, isDayTime: Bool) -> String {
+  static func weatherConditionSymbol(fromWeatherCode code: Int?, isDayTime: Bool) -> String {
+    guard let code = code else {
+      return "❓"
+    }
     switch code {
     case let x where (x >= 200 && x <= 202) || (x >= 230 && x <= 232):
       return "⛈"

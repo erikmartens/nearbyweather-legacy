@@ -35,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MainWindowManager, Welcom
     
     FirebaseApp.configure()
     
+    SettingsBundleTransferService.shared.updateSystemSettings()
+    
     return true
   }
   

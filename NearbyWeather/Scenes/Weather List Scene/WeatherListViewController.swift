@@ -110,7 +110,7 @@ final class WeatherListViewController: UITableViewController {
   
   private func configureButtons() {
     if WeatherDataService.shared.hasDisplayableData {
-      navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.swap(), style: .plain, target: self, action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:)))
+      navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.layerType(), style: .plain, target: self, action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:)))
     } else {
       navigationItem.leftBarButtonItem = nil
     }

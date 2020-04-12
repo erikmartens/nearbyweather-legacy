@@ -17,19 +17,22 @@ struct WeatherStationDTO: Codable, Equatable {
   
   var identifier: Int
   var name: String
+  var state: String?
   var country: String
   var coordinates: Coordinates
   
   enum CodingKeys: String, CodingKey {
     case identifier = "id"
     case name
+    case state
     case country
     case coordinates = "coord"
   }
   
-  init(identifier: Int, name: String, country: String, coordinates: Coordinates) {
+  init(identifier: Int, name: String, state: String, country: String, coordinates: Coordinates) {
     self.identifier = identifier
     self.name = name
+    self.state = state
     self.country = country
     self.coordinates = coordinates
   }
@@ -37,6 +40,7 @@ struct WeatherStationDTO: Codable, Equatable {
   init?(from resultSet: FMResultSet) {
     guard let id = resultSet.string(forColumn: "id"),
       let identifier = Int(id),
+      let state = resultSet.string(forColumn: "state"),
       let name = resultSet.string(forColumn: "name"),
       let country = resultSet.string(forColumn: "country") else {
         return nil
@@ -46,6 +50,7 @@ struct WeatherStationDTO: Codable, Equatable {
     
     self.identifier = identifier
     self.name = name
+    self.state = !state.isEmpty ? state : nil
     self.country = country
     self.coordinates = Coordinates(latitude: latitude, longitude: longitude)
   }

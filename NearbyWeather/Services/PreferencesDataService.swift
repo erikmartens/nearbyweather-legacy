@@ -123,7 +123,7 @@ extension PreferencesDataService: DataStorageProtocol {
   typealias StorageEntity = PreferencesDataService
   
   static func loadData() -> PreferencesDataService? {
-    guard let preferencesManagerStoredContentsWrapper = DataStorageManager.retrieveJsonFromFile(
+    guard let preferencesManagerStoredContentsWrapper = DataStorageWorker.retrieveJsonFromFile(
       with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
       andDecodeAsType: PreferencesManagerStoredContentsWrapper.self,
       fromStorageLocation: .applicationSupport
@@ -152,7 +152,7 @@ extension PreferencesDataService: DataStorageProtocol {
         windspeedUnit: PreferencesDataService.shared.distanceSpeedUnit,
         sortingOrientation: PreferencesDataService.shared.sortingOrientation
       )
-      DataStorageManager.storeJson(for: preferencesManagerStoredContentsWrapper,
+      DataStorageWorker.storeJson(for: preferencesManagerStoredContentsWrapper,
                                    inFileWithName: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
                                    toStorageLocation: .applicationSupport)
       dispatchSemaphore.signal()

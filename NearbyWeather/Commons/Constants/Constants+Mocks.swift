@@ -18,6 +18,7 @@ extension Constants.Mocks {
     static let kDefaultBookmarkedLocation = WeatherStationDTO(
       identifier: 5341145,
       name: "Cupertino",
+      state: "CA",
       country: "US",
       coordinates: Coordinates(latitude: 37.323002, longitude: -122.032181)
     )

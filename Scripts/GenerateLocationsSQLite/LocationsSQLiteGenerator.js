@@ -5,7 +5,7 @@ const path = require('path')
 const sqlite3 = require('sqlite3').verbose()
 const StreamArray = require('stream-json/utils/StreamArray')
 const zlib = require('zlib')
-const request = require('request')
+const http = require('http')
 
 class LocationsSQLiteGenerator {
 
@@ -27,19 +27,19 @@ class LocationsSQLiteGenerator {
     const temporaryFilePath = path.join(__dirname, this.temporaryFilePath)
     const gunzip = zlib.createGunzip()
 
-    request.get(this.inputFileUrl, (err, res, body) => {
+    http.get(this.inputFileUrl, (res) => {
       const buffer = []
 
-      request(this.inputFileUrl)
+      res
         .pipe(gunzip)
-        .on('data', (data) => {
-          buffer.push(data.toString())
+        .on('data', (chunk) => {
+          buffer.push(chunk.toString())
         })
         .on('end', () => {
           const writer = fs.createWriteStream(temporaryFilePath)
           writer.write(buffer.join(''))
-          writer.end(()=> {
-            callback()
+          writer.end(() => {
+           callback()
           })
         })
     })
@@ -56,20 +56,28 @@ class LocationsSQLiteGenerator {
     const db = new sqlite3.Database(outputFilePath)
 
     fs.createReadStream(temporaryFilePath).pipe(jsonStream.input)
+    
     jsonStream.output.on('data', (object) => {
-      db.run('INSERT INTO locations(id, name, country, latitude, longitude) VALUES ($id, $name, $country, $latitude, $longitude)', {
-        $id: object.value.id,
-        $name: object.value.name,
-        $country: object.value.country,
-        $latitude: object.value.coord.lat,
-        $longitude: object.value.coord.lon
-      }, (dbErr) => {
-        console.log('DB Write Error:', dbErr)
+      db.serialize(() => {
+        db.run('INSERT INTO locations(id, name, state, country, latitude, longitude) VALUES ($id, $name, $state, $country, $latitude, $longitude)', {
+          $id: object.value.id,
+          $name: object.value.name,
+          $state: object.value.state,
+          $country: object.value.country,
+          $latitude: object.value.coord.lat,
+          $longitude: object.value.coord.lon
+        }, (dbErr) => {
+          if (dbErr) {
+            console.log('DB Write Error:', dbErr)
+          }
+        })
       })
     })
+
     jsonStream.output.on('end', () => {
       console.log('Stream did end')
       fs.unlinkSync(temporaryFilePath)
+      db.close()
     })
   }
 }

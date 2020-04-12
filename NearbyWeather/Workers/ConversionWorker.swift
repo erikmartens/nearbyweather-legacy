@@ -146,4 +146,12 @@ final class ConversionWorker {
         && currentTimeDateComponentMinute <= sunsetDateComponentMinute)
         || currentTimeDateComponentHour < sunsetDateComponentHour)
   }
+  
+  static func countryName(for countryCode: String) -> String? {
+    Locale.current.localizedString(forRegionCode: countryCode)
+  }
+  
+  static func usStateName(for stateCode: String) -> String? {
+    UnitedStatesOfAmericaStatesList.statesDictionary[stateCode]
+  }
 }

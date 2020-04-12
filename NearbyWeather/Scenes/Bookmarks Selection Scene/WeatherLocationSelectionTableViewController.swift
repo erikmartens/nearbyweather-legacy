@@ -28,8 +28,8 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
     tableView.delegate = self
     searchController.delegate = self
     
-    tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
+    tableView.register(UINib(nibName: R.nib.subtitleCell.name, bundle: R.nib.subtitleCell.bundle),
+                       forCellReuseIdentifier: R.reuseIdentifier.subtitleCell.identifier)
     
     searchController.searchResultsUpdater = self
     searchController.searchBar.placeholder = R.string.localizable.search_by_name()
@@ -66,8 +66,17 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
-    cell.contentLabel.text = filteredCities[indexPath.row].name.append(contentsOf: filteredCities[indexPath.row].country, delimiter: .comma)
+    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell
+    
+    var usStateName: String?
+    if let usStateCode = filteredCities[indexPath.row].state {
+      usStateName = ConversionWorker.usStateName(for: usStateCode)
+    }
+    
+    cell.contentLabel.text = filteredCities[indexPath.row].name
+    cell.subtitleLabel.text = ""
+      .append(contentsOf: usStateName, delimiter: .none) // only US states have state codes attached
+      .append(contentsOf: ConversionWorker.countryName(for: filteredCities[indexPath.row].country), delimiter: .comma)
     return cell
   }
   
@@ -80,7 +89,6 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
     HUD.flash(.success, delay: 1.0)
     navigationController?.popViewController(animated: true)
   }
-  
 }
 
 extension WeatherLocationSelectionTableViewController: UISearchResultsUpdating {

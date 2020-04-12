@@ -106,6 +106,7 @@
 		F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */; };
 		F2F1554324435E55007A3E90 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F2F1554224435E55007A3E90 /* Settings.bundle */; };
 		F2F15545244389E8007A3E90 /* SettingsBundleTransferService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */; };
+		F2F155492443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F155482443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift */; };
 		F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */; };
 		F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1823E0FBEB00B4D2EB /* GlobalFunctions.swift */; };
 		F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */; };
@@ -249,6 +250,7 @@
 		F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AppendWithDelimiter.swift"; sourceTree = "<group>"; };
 		F2F1554224435E55007A3E90 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBundleTransferService.swift; sourceTree = "<group>"; };
+		F2F155482443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitedStatesOfAmericaStatesList.swift; sourceTree = "<group>"; };
 		F2F7BA1423E0FB2D00B4D2EB /* NearbyWeather-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearbyWeather-Bridging-Header.h"; sourceTree = "<group>"; };
 		F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuildEnvironment.m; sourceTree = "<group>"; };
 		F2F7BA1723E0FB4A00B4D2EB /* BuildEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuildEnvironment.h; sourceTree = "<group>"; };
@@ -562,6 +564,7 @@
 				F27A122C24425F0700A2CE8D /* Extensions */,
 				F27A122D24425F2400A2CE8D /* TableViewCells */,
 				F27A122F24425F6900A2CE8D /* Custom Objects */,
+				F2F155472443BAE4007A3E90 /* Records */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -658,6 +661,14 @@
 				F2A5CAA52005762A0071BFFB /* ConversionWorker.swift */,
 			);
 			path = Workers;
+			sourceTree = "<group>";
+		};
+		F2F155472443BAE4007A3E90 /* Records */ = {
+			isa = PBXGroup;
+			children = (
+				F2F155482443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift */,
+			);
+			path = Records;
 			sourceTree = "<group>";
 		};
 		F2FE3EFB20027DE600EBC429 /* Bundle Files */ = {
@@ -923,6 +934,7 @@
 				F2DBEB1423EA1F4D00CD513B /* WeatherDetailCoordinator.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
 				F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */,
+				F2F155492443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift in Sources */,
 				F2DBEB1F23EF071500CD513B /* SettingsCoordinator.swift in Sources */,
 				F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */,
 				F213FA2D23F9EE1100F094D8 /* PreferencesOption.swift in Sources */,

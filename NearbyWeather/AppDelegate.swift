@@ -73,7 +73,6 @@ extension AppDelegate {
     WeatherNetworkingService.instantiateSharedInstance()
     UserLocationService.instantiateSharedInstance()
     PreferencesDataService.instantiateSharedInstance()
-    WeatherStationService.instantiateSharedInstance()
     WeatherDataService.instantiateSharedInstance()
     PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()

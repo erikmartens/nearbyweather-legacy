@@ -10,9 +10,11 @@ import UIKit
 
 class ButtonCell: UITableViewCell {
   
-  @IBOutlet weak var contentLabel: UILabel!
-  @IBOutlet weak var leftButton: UIButton!
-  @IBOutlet weak var rightButton: UIButton!
+  static let reuseIdentifier = "ButtonCell"
+  
+  private lazy var contentLabel = UILabel()
+  private lazy var leftButton = Factory.Button.make(fromType: .standard(height: 34))
+  private lazy var rightButton = Factory.Button.make(fromType: .standard(height: 34))
   
   private var leftButtonHandler: ((UIButton) -> Void)?
   private var rightButtonHandler: ((UIButton) -> Void)?
@@ -25,6 +27,15 @@ class ButtonCell: UITableViewCell {
     rightButtonHandler?(sender)
   }
   
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    composeCell()
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func prepareForReuse() {
     super.prepareForReuse()
     
@@ -35,23 +46,54 @@ class ButtonCell: UITableViewCell {
     rightButton.removeTarget(self, action: #selector(ButtonCell.rightButtonPressed(_:)), for: .touchUpInside)
   }
   
-  func configure(withTitle title: String, leftButtonTitle: String, rightButtonTitle: String, leftButtonHandler: @escaping ((UIButton) -> Void), rightButtonHandler: @escaping ((UIButton) -> Void)) {
-    
+}
+
+extension ButtonCell {
+  
+  func configure(
+    withTitle title: String,
+    leftButtonTitle: String,
+    rightButtonTitle: String,
+    leftButtonHandler: @escaping ((UIButton) -> Void),
+    rightButtonHandler: @escaping ((UIButton) -> Void)
+  ) {
     contentLabel.text = title
     
     self.rightButtonHandler = rightButtonHandler
     self.leftButtonHandler = leftButtonHandler
     
-    leftButton.setTitle(leftButtonTitle, for: .normal)
+    leftButton.setTitle(leftButtonTitle, for: UIControl.State())
     leftButton.addTarget(self, action: #selector(ButtonCell.leftButtonPressed(_:)), for: .touchUpInside)
     
-    rightButton.setTitle(rightButtonTitle, for: .normal)
+    rightButton.setTitle(rightButtonTitle, for: UIControl.State())
     rightButton.addTarget(self, action: #selector(ButtonCell.rightButtonPressed(_:)), for: .touchUpInside)
+  }
+}
+
+private extension ButtonCell {
+  
+  func composeCell() {
+    contentView.addSubview(contentLabel, constraints: [
+      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 34),
+      contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+      contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+      contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+    ])
     
-    [rightButton, leftButton].forEach {           
-      $0?.layer.cornerRadius = 5.0
-      $0?.layer.borderColor = Constants.Theme.BrandColors.standardDay.cgColor
-      $0?.layer.borderWidth = 1.0
-    }
+    contentView.addSubview(leftButton, constraints: [
+      leftButton.heightAnchor.constraint(equalToConstant: 34),
+      leftButton.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 4),
+      leftButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+      leftButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
+    ])
+    
+    contentView.addSubview(rightButton, constraints: [
+      rightButton.heightAnchor.constraint(equalToConstant: 34),
+      rightButton.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 4),
+      rightButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+      rightButton.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor, constant: 16),
+      rightButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+      rightButton.widthAnchor.constraint(equalTo: leftButton.widthAnchor, multiplier: 1)
+    ])
   }
 }

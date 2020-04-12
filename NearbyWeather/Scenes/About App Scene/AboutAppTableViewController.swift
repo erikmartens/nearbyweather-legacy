@@ -60,8 +60,7 @@ final class AboutAppTableViewController: UITableViewController {
     tableView.register(UINib(nibName: R.nib.subtitleCell.name, bundle: R.nib.subtitleCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.subtitleCell.identifier)
     
-    tableView.register(UINib(nibName: R.nib.buttonCell.name, bundle: R.nib.buttonCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.buttonCell.identifier)
+    tableView.register(ButtonCell.self, forCellReuseIdentifier: ButtonCell.reuseIdentifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -160,7 +159,7 @@ final class AboutAppTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let singleLabelCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
     let subtitleCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell
-    let buttonCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.buttonCell.identifier, for: indexPath) as! ButtonCell
+    let buttonCell = tableView.dequeueReusableCell(withIdentifier: ButtonCell.reuseIdentifier, for: indexPath) as! ButtonCell
     
     [singleLabelCell, subtitleCell].forEach {
       $0.selectionStyle = .default

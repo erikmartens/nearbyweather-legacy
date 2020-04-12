@@ -104,6 +104,8 @@
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
 		F2F1553E244278D4007A3E90 /* ErrorDataDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553D244278D4007A3E90 /* ErrorDataDTO.swift */; };
 		F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */; };
+		F2F1554324435E55007A3E90 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F2F1554224435E55007A3E90 /* Settings.bundle */; };
+		F2F15545244389E8007A3E90 /* SettingsBundleTransferService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */; };
 		F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */; };
 		F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1823E0FBEB00B4D2EB /* GlobalFunctions.swift */; };
 		F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */; };
@@ -245,6 +247,8 @@
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
 		F2F1553D244278D4007A3E90 /* ErrorDataDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDataDTO.swift; sourceTree = "<group>"; };
 		F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AppendWithDelimiter.swift"; sourceTree = "<group>"; };
+		F2F1554224435E55007A3E90 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBundleTransferService.swift; sourceTree = "<group>"; };
 		F2F7BA1423E0FB2D00B4D2EB /* NearbyWeather-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearbyWeather-Bridging-Header.h"; sourceTree = "<group>"; };
 		F2F7BA1523E0FB2D00B4D2EB /* BuildEnvironment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuildEnvironment.m; sourceTree = "<group>"; };
 		F2F7BA1723E0FB4A00B4D2EB /* BuildEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuildEnvironment.h; sourceTree = "<group>"; };
@@ -293,6 +297,7 @@
 		F204B76E1DF2EFA3000F4371 = {
 			isa = PBXGroup;
 			children = (
+				F2F1554224435E55007A3E90 /* Settings.bundle */,
 				F204B7791DF2EFA3000F4371 /* NearbyWeather */,
 				F204B78E1DF2EFA3000F4371 /* NearbyWeatherTests */,
 				F204B7991DF2EFA3000F4371 /* NearbyWeatherUITests */,
@@ -377,6 +382,7 @@
 				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 				F26699571E9AD0F100498F99 /* WeatherDataService.swift */,
 				F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */,
+				F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -815,6 +821,7 @@
 				F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */,
 				F25A39712187AA5A0054BC7A /* ProjectContributors.json in Resources */,
 				F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */,
+				F2F1554324435E55007A3E90 /* Settings.bundle in Resources */,
 				F2DBEB0F23E8E0B200CD513B /* AboutApp.storyboard in Resources */,
 				F2DBEB0423E8DBF000CD513B /* WeatherMap.storyboard in Resources */,
 			);
@@ -911,6 +918,7 @@
 				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,
 				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,
 				F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */,
+				F2F15545244389E8007A3E90 /* SettingsBundleTransferService.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F2DBEB1423EA1F4D00CD513B /* WeatherDetailCoordinator.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,

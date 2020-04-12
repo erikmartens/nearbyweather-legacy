@@ -29,7 +29,9 @@ class WeatherDataCell: UITableViewCell {
   @IBOutlet weak var windspeedLabel: UILabel!
   
   func configureWithWeatherDTO(_ weatherDTO: WeatherInformationDTO) {
-    let bubbleColor: UIColor = ConversionWorker.isDayTime(forWeatherDTO: weatherDTO) ?? true ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight // default to blue colored cells
+    let bubbleColor: UIColor = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
+      ? Constants.Theme.BrandColors.standardDay
+      : Constants.Theme.BrandColors.standardNight // default to blue colored cells
     
     weatherDataIdentifier = weatherDTO.cityID
     
@@ -55,7 +57,10 @@ class WeatherDataCell: UITableViewCell {
     windspeedLabel.textColor = .white
     windspeedLabel.font = .preferredFont(forTextStyle: .subheadline)
     
-    let weatherConditionSymbol = ConversionWorker.weatherConditionSymbol(fromWeatherCode: weatherDTO.weatherCondition[0].identifier)
+    let weatherConditionSymbol = ConversionWorker.weatherConditionSymbol(
+      fromWeatherCode: weatherDTO.weatherCondition[0].identifier,
+      isDayTime: ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
+    )
     weatherConditionLabel.text = weatherConditionSymbol
     
     cityNameLabel.text = weatherDTO.cityName

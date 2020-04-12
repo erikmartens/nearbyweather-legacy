@@ -98,14 +98,18 @@ final class WeatherDetailViewController: UIViewController {
   // MARK: - Private Helpers
   
   private func configure() {
-    navigationController?.navigationBar.style(withBarTintColor:
-      (ConversionWorker.isDayTime(forWeatherDTO: weatherDTO) ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight
+    let isDayTime = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
+    
+    navigationController?.navigationBar.style(
+      withBarTintColor: isDayTime ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight
     )
     
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }
     
-    let weatherCode = weatherDTO.weatherCondition[0].identifier
-    conditionSymbolLabel.text = ConversionWorker.weatherConditionSymbol(fromWeatherCode: weatherCode)
+    conditionSymbolLabel.text = ConversionWorker.weatherConditionSymbol(
+      fromWeatherCode: weatherDTO.weatherCondition[0].identifier,
+      isDayTime: isDayTime
+    )
     conditionNameLabel.text = weatherDTO.weatherCondition.first?.conditionName
     conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription.capitalized
     
@@ -128,7 +132,6 @@ final class WeatherDetailViewController: UIViewController {
       dateFormatter.dateStyle = .none
       dateFormatter.timeStyle = .short
       
-      let isDayTime = ConversionWorker.isDayTime(forWeatherDTO: weatherDTO) ?? true // can never be nil here
       let description = isDayTime ? R.string.localizable.dayTime() : R.string.localizable.nightTime()
       let localTime = dateFormatter.string(from: Date())
       timeLabel.text = ""

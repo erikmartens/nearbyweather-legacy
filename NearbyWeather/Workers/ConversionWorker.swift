@@ -12,7 +12,7 @@ import APTimeZones
 
 final class ConversionWorker {
   
-  static func weatherConditionSymbol(fromWeatherCode code: Int) -> String {
+  static func weatherConditionSymbol(fromWeatherCode code: Int, isDayTime: Bool) -> String {
     switch code {
     case let x where (x >= 200 && x <= 202) || (x >= 230 && x <= 232):
       return "⛈"
@@ -33,7 +33,7 @@ final class ConversionWorker {
     case let x where x == 781 || x == 900:
       return "🌪"
     case let x where x == 800:
-      return "☀️"
+      return isDayTime ? "☀️" : "🌕"
     case let x where x == 801:
       return "🌤"
     case let x where x == 802:
@@ -107,14 +107,13 @@ final class ConversionWorker {
     return String(format: "%.02f", degrees).append(contentsOf: "°", delimiter: .none)
   }
   
-  static func isDayTime(forWeatherDTO weatherDTO: WeatherInformationDTO?) -> Bool? {
+  static func isDayTime(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> Bool? {
     
-    guard let weatherDTO = weatherDTO,
-      let sunrise =  weatherDTO.daytimeInformation?.sunrise,
-      let sunset =  weatherDTO.daytimeInformation?.sunset else {
+    guard let sunrise =  dayTimeInformation?.sunrise,
+      let sunset =  dayTimeInformation?.sunset else {
         return nil
     }
-    let location = CLLocation(latitude: weatherDTO.coordinates.latitude, longitude: weatherDTO.coordinates.longitude)
+    let location = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
     
     var calendar = Calendar.current
     calendar.timeZone = location.timeZone()

@@ -113,7 +113,7 @@ private extension SettingsCoordinator {
   }
   
   func summonManageLocationsController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
-    guard !WeatherDataManager.shared.bookmarkedLocations.isEmpty else { return }
+    guard !WeatherDataService.shared.bookmarkedLocations.isEmpty else { return }
     let locationManagementController = WeatherLocationManagementTableViewController(style: .grouped)
     locationManagementController.navigationItem.title = R.string.localizable.manage_locations()
     locationManagementController.stepper = stepper as? SettingsStepper

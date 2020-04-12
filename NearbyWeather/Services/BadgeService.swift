@@ -78,7 +78,7 @@ final class BadgeService {
   // MARK: - Helpers
   
   private func performBadgeUpdate() {
-    guard let weatherData = WeatherDataManager.shared.preferredBookmarkData else {
+    guard let weatherData = WeatherDataService.shared.preferredBookmarkData else {
       clearAppIcon()
       return
     }

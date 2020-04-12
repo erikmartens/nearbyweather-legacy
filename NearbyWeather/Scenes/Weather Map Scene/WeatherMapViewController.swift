@@ -42,7 +42,7 @@ final class WeatherMapViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    selectedBookmarkedLocation = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.first?.weatherInformationDTO
+    selectedBookmarkedLocation = WeatherDataService.shared.bookmarkedWeatherDataObjects?.first?.weatherInformationDTO
     
     prepareMapAnnotations()
     focusOnAvailableLocation()
@@ -53,13 +53,13 @@ final class WeatherMapViewController: UIViewController {
   private func prepareMapAnnotations() {
     weatherLocationMapAnnotations = [WeatherLocationMapAnnotation]()
     
-    let bookmarkedLocationAnnotations: [WeatherLocationMapAnnotation]? = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.compactMap {
+    let bookmarkedLocationAnnotations: [WeatherLocationMapAnnotation]? = WeatherDataService.shared.bookmarkedWeatherDataObjects?.compactMap {
       guard let weatherDTO = $0.weatherInformationDTO else { return nil }
       return WeatherLocationMapAnnotation(weatherDTO: weatherDTO)
     }
     weatherLocationMapAnnotations.append(contentsOf: bookmarkedLocationAnnotations ?? [WeatherLocationMapAnnotation]())
     
-    let nearbyocationAnnotations = WeatherDataManager.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.compactMap {
+    let nearbyocationAnnotations = WeatherDataService.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.compactMap {
       return WeatherLocationMapAnnotation(weatherDTO: $0)
     }
     weatherLocationMapAnnotations.append(contentsOf: nearbyocationAnnotations ?? [WeatherLocationMapAnnotation]())
@@ -68,7 +68,7 @@ final class WeatherMapViewController: UIViewController {
   }
   
   private func triggerFocusOnLocationAlert() {
-    guard let bookmarkedWeatherDataObjects = WeatherDataManager.shared.bookmarkedWeatherDataObjects?.compactMap({
+    guard let bookmarkedWeatherDataObjects = WeatherDataService.shared.bookmarkedWeatherDataObjects?.compactMap({
       return $0.weatherInformationDTO
     }) else {
       return

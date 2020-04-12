@@ -83,7 +83,7 @@ final class PreferencesDataService: StoredPreferencesProvider, InMemoryPreferenc
    
    var amountOfResults: AmountOfResultsOption {
      didSet {
-       WeatherDataManager.shared.update(withCompletionHandler: nil)
+       WeatherDataService.shared.update(withCompletionHandler: nil)
        PreferencesDataService.storeData()
      }
    }

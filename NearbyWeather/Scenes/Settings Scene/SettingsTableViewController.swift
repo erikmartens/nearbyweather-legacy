@@ -154,7 +154,7 @@ final class SettingsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.manage_locations()
         
-        let entriesCount = WeatherDataManager.shared.bookmarkedLocations.count
+        let entriesCount = WeatherDataService.shared.bookmarkedLocations.count
         let cellLabelTitle: String
         switch entriesCount {
         case 0:
@@ -162,7 +162,7 @@ final class SettingsTableViewController: UITableViewController {
           cell.accessoryType = .none
           cell.selectionStyle = .none
         case 1:
-          cellLabelTitle = WeatherDataManager.shared.bookmarkedLocations[indexPath.row].name
+          cellLabelTitle = WeatherDataService.shared.bookmarkedLocations[indexPath.row].name
           cell.accessoryType = .disclosureIndicator
           cell.selectionStyle = .default
         default:
@@ -205,7 +205,7 @@ final class SettingsTableViewController: UITableViewController {
       cell.contentLabel.text = R.string.localizable.preferred_bookmark()
       cell.selectionLabel.text = nil
       guard let preferredBookmarkId = PreferencesDataService.shared.preferredBookmark.value,
-        WeatherDataManager.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
+        WeatherDataService.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
           PreferencesDataService.shared.preferredBookmark = PreferredBookmarkOption(value: nil)
           return cell
       }
@@ -267,7 +267,7 @@ final class SettingsTableViewController: UITableViewController {
     case .preferredBookmark:
       var options = [PreferredBookmarkOption(value: .none)]
       options.append(contentsOf:
-        WeatherDataManager.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmarkOption.init)
+        WeatherDataService.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmarkOption.init)
       )
       alert = Factory.AlertController.make(fromType:
         .preferredBookmarkOptions(options: options,

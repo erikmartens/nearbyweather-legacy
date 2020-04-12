@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MainWindowManager, Welcom
       self?.endBackgroundTask()
     }
     
-    WeatherDataManager.shared.updatePreferredBookmark { [weak self] result in
+    WeatherDataService.shared.updatePreferredBookmark { [weak self] result in
       switch result {
       case .success:
         completionHandler(.newData)
@@ -72,7 +72,7 @@ extension AppDelegate {
     UserLocationService.instantiateSharedInstance()
     PreferencesDataService.instantiateSharedInstance()
     WeatherStationService.instantiateSharedInstance()
-    WeatherDataManager.instantiateSharedInstance()
+    WeatherDataService.instantiateSharedInstance()
     PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()
   }
@@ -98,7 +98,7 @@ extension AppDelegate {
   private func refreshWeatherDataIfNeeded() {
     if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil,
       UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true {
-      WeatherDataManager.shared.update(withCompletionHandler: nil)
+      WeatherDataService.shared.update(withCompletionHandler: nil)
     }
   }
   

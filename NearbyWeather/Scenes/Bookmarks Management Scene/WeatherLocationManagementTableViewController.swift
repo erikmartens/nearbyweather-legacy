@@ -17,7 +17,7 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   // MARK: - Properties
   
   private var editingEnabled: Bool {
-    return WeatherDataManager.shared.bookmarkedLocations.count > 1
+    return WeatherDataService.shared.bookmarkedLocations.count > 1
   }
   
   // MARK: - ViewController LifeCycle
@@ -46,7 +46,7 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     switch section {
     case 0:
-      return WeatherDataManager.shared.bookmarkedLocations.count
+      return WeatherDataService.shared.bookmarkedLocations.count
     default:
       return 0
     }
@@ -56,7 +56,7 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
     switch indexPath.section {
     case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
-      let location = WeatherDataManager.shared.bookmarkedLocations[indexPath.row]
+      let location = WeatherDataService.shared.bookmarkedLocations[indexPath.row]
       cell.contentLabel.text = "\(location.name), \(location.country)"
       cell.selectionStyle = .none
       return cell
@@ -92,14 +92,14 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
         presentLastBookmarkDeletionAlert()
         return
       }
-      WeatherDataManager.shared.bookmarkedLocations.remove(at: indexPath.row)
+      WeatherDataService.shared.bookmarkedLocations.remove(at: indexPath.row)
     }
   }
   
   override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-    let movedLocation = WeatherDataManager.shared.bookmarkedLocations[sourceIndexPath.row]
-    WeatherDataManager.shared.bookmarkedLocations.remove(at: sourceIndexPath.row)
-    WeatherDataManager.shared.bookmarkedLocations.insert(movedLocation, at: destinationIndexPath.row)
+    let movedLocation = WeatherDataService.shared.bookmarkedLocations[sourceIndexPath.row]
+    WeatherDataService.shared.bookmarkedLocations.remove(at: sourceIndexPath.row)
+    WeatherDataService.shared.bookmarkedLocations.insert(movedLocation, at: destinationIndexPath.row)
   }
   
   override func setEditing(_ editing: Bool, animated: Bool) {

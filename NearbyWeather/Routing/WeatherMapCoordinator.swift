@@ -10,7 +10,7 @@ import UIKit
 
 enum WeatherMapStep: StepProtocol {
   case initial
-  case weatherDetails(identifier: Int?)
+  case weatherDetails(identifier: Int?, isBookmark: Bool)
   case none
 }
 
@@ -22,7 +22,7 @@ final class WeatherMapCoordinator: Coordinator {
     let navigationController = UINavigationController()
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
-    navigationController.navigationBar.tintColor = Constants.Theme.BrandColors.standardDay
+    navigationController.navigationBar.tintColor = Constants.Theme.Color.BrandColors.standardDay
     
     navigationController.tabBarItem.selectedImage = R.image.tabbar_map_ios11()
     navigationController.tabBarItem.image = R.image.tabbar_map_ios11()
@@ -61,8 +61,9 @@ final class WeatherMapCoordinator: Coordinator {
     switch step {
     case .initial:
       summonWeatherMapController(passNextChildCoordinatorTo: coordinatorReceiver)
-    case let .weatherDetails(identifier):
+    case let .weatherDetails(identifier, isBookmark):
       summonWeatherDetailsController(weatherDetailIdentifier: identifier,
+                                     isBookmark: isBookmark,
                                      passNextChildCoordinatorTo: coordinatorReceiver)
     case .none:
       break
@@ -73,7 +74,7 @@ final class WeatherMapCoordinator: Coordinator {
 private extension WeatherMapCoordinator {
   
   func summonWeatherMapController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
-    let mapViewController = R.storyboard.weatherMap.nearbyLocationsMapViewController()!
+    let mapViewController = WeatherMapViewController()
     mapViewController.title = R.string.localizable.tab_weatherMap()
     mapViewController.stepper = stepper as? WeatherMapStepper
     
@@ -82,8 +83,8 @@ private extension WeatherMapCoordinator {
     coordinatorReceiver(.none)
   }
   
-  func summonWeatherDetailsController(weatherDetailIdentifier: Int?, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
-    let weatherDetailCoordinator = WeatherDetailCoordinator(parentCoordinator: self, weatherDetailIdentifier: weatherDetailIdentifier)
+  func summonWeatherDetailsController(weatherDetailIdentifier: Int?, isBookmark: Bool, passNextChildCoordinatorTo coordinatorReceiver: @escaping (NextCoordinator) -> Void) {
+    let weatherDetailCoordinator = WeatherDetailCoordinator(parentCoordinator: self, weatherDetailIdentifier: weatherDetailIdentifier, isBookmark: isBookmark)
 
     guard let nextRoot = weatherDetailCoordinator.rootViewController as? UINavigationController else { return }
     rootViewController.present(nextRoot, animated: true)

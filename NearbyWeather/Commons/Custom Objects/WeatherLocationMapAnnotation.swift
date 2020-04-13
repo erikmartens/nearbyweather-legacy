@@ -15,22 +15,25 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
   let isDayTime: Bool?
   let coordinate: CLLocationCoordinate2D
   let locationId: Int
+  let isBookmark: Bool
   
   init(
     title: String?,
     subtitle: String?,
     isDayTime: Bool?,
     coordinate: CLLocationCoordinate2D,
-    locationId: Int
+    locationId: Int,
+    isBookmark: Bool
   ) {
     self.title = title
     self.subtitle = subtitle
     self.isDayTime = isDayTime
     self.coordinate = coordinate
     self.locationId = locationId
+    self.isBookmark = isBookmark
   }
   
-  convenience init?(weatherDTO: WeatherInformationDTO?) {
+  convenience init?(weatherDTO: WeatherInformationDTO?, isBookmark: Bool) {
     guard let weatherDTO = weatherDTO,
       let latitude = weatherDTO.coordinates.latitude,
       let longitude = weatherDTO.coordinates.longitude else {
@@ -62,6 +65,13 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
     
     let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     
-    self.init(title: weatherDTO.cityName, subtitle: subtitle, isDayTime: isDayTime, coordinate: coordinate, locationId: weatherDTO.cityID)
+    self.init(
+      title: weatherDTO.cityName,
+      subtitle: subtitle,
+      isDayTime: isDayTime,
+      coordinate: coordinate,
+      locationId: weatherDTO.cityID,
+      isBookmark: isBookmark
+    )
   }
 }

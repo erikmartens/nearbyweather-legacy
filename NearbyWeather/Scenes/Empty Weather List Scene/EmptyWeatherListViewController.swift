@@ -67,9 +67,9 @@ final class EmptyWeatherListViewController: UIViewController {
     reloadButton.isHidden = WeatherNetworkingService.shared.reachabilityStatus != .connected
     
     reloadButton.setTitle(R.string.localizable.reload().uppercased(), for: .normal)
-    reloadButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
-    reloadButton.layer.cornerRadius = 5.0
-    reloadButton.layer.borderColor = Constants.Theme.Interactables.standardButton.cgColor
-    reloadButton.layer.borderWidth = 1.0
+    reloadButton.setTitleColor(.white, for: UIControl.State())
+    reloadButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
+    reloadButton.layer.cornerRadius = reloadButton.bounds.height/2
+    reloadButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
   }
 }

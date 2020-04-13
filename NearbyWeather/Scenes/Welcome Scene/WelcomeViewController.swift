@@ -27,28 +27,31 @@ final class WelcomeViewController: UIViewController {
   
   @IBOutlet weak var descriptionLabel: UILabel!
   @IBOutlet weak var inputTextField: TextFieldCounter!
+  
+  @IBOutlet weak var saveButtonContainerView: UIView!
   @IBOutlet weak var saveButton: UIButton!
   @IBOutlet weak var getInstructionsButtons: UIButton!
   
   // MARK: - Override Functions
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    configure()
+  }
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
-    configure()
     checkValidTextFieldInput()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    
     inputTextField.becomeFirstResponder()
     animatePulse()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    
     warningImageView.layer.removeAllAnimations()
     timer?.invalidate()
   }
@@ -66,21 +69,19 @@ final class WelcomeViewController: UIViewController {
     descriptionLabel.text! = R.string.localizable.welcome_api_key_description()
     
     inputTextField.counterColor = inputTextField.textColor ?? .black
-    inputTextField.limitColor = Constants.Theme.Interactables.standardTint
+    inputTextField.limitColor = Constants.Theme.Color.InteractableElement.standardTint
     inputTextField.textColor = .lightGray
     inputTextField.tintColor = .lightGray
     
     saveButton.setTitle(R.string.localizable.save().uppercased(), for: .normal)
-    saveButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
-    saveButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .highlighted)
-    saveButton.setTitleColor(.lightGray, for: .disabled)
-    saveButton.layer.cornerRadius = 5.0
-    saveButton.layer.borderColor = UIColor.lightGray.cgColor
-    saveButton.layer.borderWidth = 1.0
+    saveButton.setTitleColor(.white, for: UIControl.State())
+    saveButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
+    saveButton.layer.cornerRadius = saveButton.bounds.height/2
+    saveButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
     
     getInstructionsButtons.setTitle(R.string.localizable.get_api_key_description().uppercased(), for: .normal)
-    getInstructionsButtons.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
-    getInstructionsButtons.setTitleColor(Constants.Theme.Interactables.standardButton, for: .highlighted)
+    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButton, for: .normal)
+    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButton, for: .highlighted)
   }
   
   fileprivate func startAnimationTimer() {
@@ -96,14 +97,13 @@ final class WelcomeViewController: UIViewController {
   
   @IBAction func inputTextFieldEditingChanged(_ sender: TextFieldCounter) {
     checkValidTextFieldInput()
-    if saveButton.isEnabled {
-      saveButton.layer.borderColor = Constants.Theme.Interactables.standardTint.cgColor
-      return
-    }
-    saveButton.layer.borderColor = UIColor.lightGray.cgColor
   }
   
   private func checkValidTextFieldInput() {
+    defer {
+      saveButtonContainerView.isHidden = !saveButton.isEnabled
+    }
+    
     guard let text = inputTextField.text,
       text.count == 32 else {
         saveButton.isEnabled = false
@@ -111,7 +111,7 @@ final class WelcomeViewController: UIViewController {
         return
     }
     saveButton.isEnabled = true
-    inputTextField.textColor = Constants.Theme.Interactables.standardTint
+    inputTextField.textColor = Constants.Theme.Color.InteractableElement.standardTint
   }
   
   // MARK: - Button Interaction

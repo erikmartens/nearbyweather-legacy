@@ -42,13 +42,11 @@ final class SetPermissionsViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    
     animatePulse()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    
     warningImageView.layer.removeAllAnimations()
     timer?.invalidate()
   }
@@ -70,11 +68,10 @@ final class SetPermissionsViewController: UIViewController {
     descriptionLabel.text! = R.string.localizable.configure_location_permissions_description()
     
     askPermissionsButton.setTitle(R.string.localizable.configure().uppercased(), for: .normal)
-    askPermissionsButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
-    askPermissionsButton.setTitleColor(Constants.Theme.Interactables.standardButton, for: .highlighted)
-    askPermissionsButton.layer.cornerRadius = 5.0
-    askPermissionsButton.layer.borderColor = Constants.Theme.BrandColors.standardDay.cgColor
-    askPermissionsButton.layer.borderWidth = 1.0
+    askPermissionsButton.setTitleColor(.white, for: UIControl.State())
+    askPermissionsButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
+    askPermissionsButton.layer.cornerRadius = askPermissionsButton.bounds.height/2
+    askPermissionsButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
   }
   
   fileprivate func startAnimationTimer() {

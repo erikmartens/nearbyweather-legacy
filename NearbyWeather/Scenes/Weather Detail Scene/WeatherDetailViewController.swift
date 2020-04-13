@@ -13,10 +13,11 @@ import APTimeZones
 
 final class WeatherDetailViewController: UIViewController {
   
-  static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO) -> WeatherDetailViewController {
+  static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO, isBookmark: Bool) -> WeatherDetailViewController {
     let viewController = R.storyboard.weatherDetails.weatherDetailViewController()!
     viewController.titleString = title
     viewController.weatherDTO = weatherDTO
+    viewController.isBookmark = isBookmark
     return viewController
   }
   
@@ -30,6 +31,7 @@ final class WeatherDetailViewController: UIViewController {
   
   private var titleString: String!
   private var weatherDTO: WeatherInformationDTO!
+  private var isBookmark: Bool!
   
   /* Outlets */
   
@@ -99,11 +101,20 @@ final class WeatherDetailViewController: UIViewController {
   // MARK: - Private Helpers
   
   private func configure() {
+    
     let isDayTime = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
     
-    navigationController?.navigationBar.style(
-      withBarTintColor: isDayTime ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight
-    )
+    var navigationBarTintColor: UIColor
+    var navigationTintColor: UIColor
+    if isBookmark {
+      navigationBarTintColor = isDayTime ? Constants.Theme.Color.BrandColors.standardDay : Constants.Theme.Color.BrandColors.standardNight
+      navigationTintColor = .white
+    } else {
+      navigationBarTintColor = .white
+      navigationTintColor = .black
+    }
+    
+    navigationController?.navigationBar.style(withBarTintColor: navigationBarTintColor, tintColor: navigationTintColor)
     
     separatorLineHeightConstraints.forEach { $0.constant = 1/UIScreen.main.scale }
     
@@ -193,8 +204,8 @@ final class WeatherDetailViewController: UIViewController {
         return
     }
     
-    /// mapView
-    if let mapAnnotation = WeatherLocationMapAnnotation(weatherDTO: weatherDTO) {
+    // mapView
+    if let mapAnnotation = WeatherLocationMapAnnotation(weatherDTO: weatherDTO, isBookmark: isBookmark) {
       mapView.layer.cornerRadius = 10
       mapView.addAnnotation(mapAnnotation)
       let location = CLLocation(latitude: weatherLatitude, longitude: weatherLongitude)
@@ -204,14 +215,14 @@ final class WeatherDetailViewController: UIViewController {
       mapView.isHidden = true
     }
     
-    /// coordinates
+    // coordinates
     coordinatesImageView.tintColor = .darkGray
     coordinatesNoteLabel.text = R.string.localizable.coordinates()
     coordinatesLabel.text = ""
       .append(contentsOfConvertible: weatherDTO.coordinates.latitude, delimiter: .none)
       .append(contentsOfConvertible: weatherDTO.coordinates.longitude, delimiter: .comma)
     
-    /// distance
+    // distance
     if UserLocationService.shared.locationPermissionsGranted,
       let userLocation = UserLocationService.shared.location,
       let weatherLatitude = weatherDTO.coordinates.latitude,
@@ -252,11 +263,27 @@ extension WeatherDetailViewController: MKMapViewDelegate {
     } else {
       viewForCurrentAnnotation = WeatherLocationMapAnnotationView(frame: kMapAnnotationViewInitialFrame)
     }
+    
+    var fillColor: UIColor
+    var textColor: UIColor
+    
+    if annotation.isBookmark {
+      fillColor = annotation.isDayTime ?? true
+        ? Constants.Theme.Color.BrandColors.standardDay
+        : Constants.Theme.Color.BrandColors.standardNight // default to blue colored cells
+      
+      textColor = .white
+    } else {
+      fillColor = .white
+      textColor = .black
+    }
+    
     viewForCurrentAnnotation?.annotation = annotation
     viewForCurrentAnnotation?.configure(
       withTitle: annotation.title ?? Constants.Messages.kNotSet,
       subtitle: annotation.subtitle ?? Constants.Messages.kNotSet,
-      fillColor: (annotation.isDayTime ?? true) ? Constants.Theme.BrandColors.standardDay : Constants.Theme.BrandColors.standardNight,
+      fillColor: fillColor,
+      textColor: textColor,
       tapHandler: nil
     )
     return viewForCurrentAnnotation

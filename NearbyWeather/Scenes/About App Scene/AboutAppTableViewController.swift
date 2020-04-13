@@ -13,7 +13,7 @@ import MessageUI
 final class AboutAppTableViewController: UITableViewController {
   
   private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO] = {
-    return DataStorageWorker.retrieveJsonFromFile(with: R.file.thirdPartyLibrariesJson.name,
+    DataStorageWorker.retrieveJsonFromFile(with: R.file.thirdPartyLibrariesJson.name,
                                                    andDecodeAsType: ThirdPartyLibraryArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -22,7 +22,7 @@ final class AboutAppTableViewController: UITableViewController {
   }()
   
   private lazy var owner: [DevelopmentContributorDTO] = {
-    return DataStorageWorker.retrieveJsonFromFile(with: R.file.projectOwnerJson.name,
+    DataStorageWorker.retrieveJsonFromFile(with: R.file.projectOwnerJson.name,
                                                    andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -30,7 +30,7 @@ final class AboutAppTableViewController: UITableViewController {
   }()
   
   private lazy var contributors: [DevelopmentContributorDTO] = {
-    return DataStorageWorker.retrieveJsonFromFile(with: R.file.projectContributorsJson.name,
+    DataStorageWorker.retrieveJsonFromFile(with: R.file.projectContributorsJson.name,
                                                    andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -60,8 +60,7 @@ final class AboutAppTableViewController: UITableViewController {
     tableView.register(UINib(nibName: R.nib.subtitleCell.name, bundle: R.nib.subtitleCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.subtitleCell.identifier)
     
-    tableView.register(UINib(nibName: R.nib.buttonCell.name, bundle: R.nib.buttonCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.buttonCell.identifier)
+    tableView.register(ButtonCell.self, forCellReuseIdentifier: ButtonCell.reuseIdentifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -145,9 +144,9 @@ final class AboutAppTableViewController: UITableViewController {
     case 1:
       return nil
     case 2:
-      return R.string.localizable.contributors()
+      return R.string.localizable.contributing()
     case 3:
-      return nil
+      return R.string.localizable.contributors()
     case 4:
       return nil
     case 5:
@@ -160,7 +159,7 @@ final class AboutAppTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let singleLabelCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
     let subtitleCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell
-    let buttonCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.buttonCell.identifier, for: indexPath) as! ButtonCell
+    let buttonCell = tableView.dequeueReusableCell(withIdentifier: ButtonCell.reuseIdentifier, for: indexPath) as! ButtonCell
     
     [singleLabelCell, subtitleCell].forEach {
       $0.selectionStyle = .default

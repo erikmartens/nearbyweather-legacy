@@ -13,7 +13,7 @@ extension UIViewController {
   
   func presentSafariViewController(for url: URL) {
     let safariController = SFSafariViewController(url: url)
-    safariController.preferredControlTintColor = Constants.Theme.BrandColors.standardDay
+    safariController.preferredControlTintColor = Constants.Theme.Color.BrandColors.standardDay
     if #available(iOS 13, *) {
       safariController.modalPresentationStyle = .automatic
     } else {

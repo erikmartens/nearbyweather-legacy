@@ -19,14 +19,9 @@ final class SettingsTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    tableView.register(UINib(nibName: R.nib.dualLabelCell.name, bundle: R.nib.dualLabelCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.dualLabelCell.identifier)
-    
-    tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
-    
-    tableView.register(UINib(nibName: R.nib.toggleCell.name, bundle: R.nib.toggleCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.toggleCell.identifier)
+    tableView.register(ImagedSingleLabelCell.self, forCellReuseIdentifier: ImagedSingleLabelCell.reuseIdentifier)
+    tableView.register(ImagedDualLabelCell.self, forCellReuseIdentifier: ImagedDualLabelCell.reuseIdentifier)
+    tableView.register(ImagedToggleCell.self, forCellReuseIdentifier: ImagedToggleCell.reuseIdentifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -46,31 +41,25 @@ final class SettingsTableViewController: UITableViewController {
     case 0:
       stepper?.requestRouting(toStep: .about)
     case 1:
-      break
-    case 2:
       if indexPath.row == 0 {
         stepper?.requestRouting(toStep: .apiKeyEdit)
         return
       }
       navigationController?.presentSafariViewController(for: Constants.Urls.kOpenWeatherMapInstructionsUrl)
-    case 3:
+    case 2:
       if indexPath.row == 0 {
         stepper?.requestRouting(toStep: .manageLocations)
       } else if indexPath.row == 1 {
         stepper?.requestRouting(toStep: .addLocation)
       }
-    case 4:
+    case 3:
       if indexPath.row == 1 {
         showOptionsAlert(withType: .preferredBookmark)
       }
+    case 4:
+      break
     case 5:
       if indexPath.row == 0 {
-        showOptionsAlert(withType: .preferredAmountOfResults)
-      }
-      if indexPath.row == 1 {
-        showOptionsAlert(withType: .preferredSortingOrientation)
-      }
-      if indexPath.row == 2 {
         showOptionsAlert(withType: .preferredTemperatureUnit)
       } else {
         showOptionsAlert(withType: .preferredDistanceSpeedUnit)
@@ -85,22 +74,22 @@ final class SettingsTableViewController: UITableViewController {
     case 0:
       return R.string.localizable.general()
     case 1:
-      return nil
-    case 2:
       return R.string.localizable.openWeatherMap_api()
-    case 3:
+    case 2:
       return R.string.localizable.bookmarks()
-    case 4:
+    case 3:
       return nil
-    case 5:
+    case 4:
       return R.string.localizable.preferences()
+    case 5:
+      return nil
     default:
       return nil
     }
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 6
+    6
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -108,15 +97,15 @@ final class SettingsTableViewController: UITableViewController {
     case 0:
       return 1
     case 1:
-      return 1
+      return 2
     case 2:
       return 2
     case 3:
       return 2
     case 4:
-      return 2
+      return 1
     case 5:
-      return 4
+      return 2
     default:
       return 0
     }
@@ -125,114 +114,149 @@ final class SettingsTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch indexPath.section {
     case 0:
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-      cell.contentLabel.text = R.string.localizable.about()
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+      cell.configure(
+        withTitle: R.string.localizable.about(),
+        image: R.image.info(),
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.blue
+      )
       cell.accessoryType = .disclosureIndicator
       return cell
     case 1:
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
-      cell.contentLabel.text = R.string.localizable.refresh_on_app_start()
-      cell.toggle.isOn = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
-      cell.toggleSwitchHandler = { sender in
-        UserDefaults.standard.set(sender.isOn, forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
-      }
-      return cell
-    case 2:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.apiKey()
-        cell.selectionLabel.text = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+        cell.configure(
+          withTitle: R.string.localizable.apiKey(),
+          description: UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String,
+          image: R.image.seal(),
+          imageBackgroundColor: Constants.Theme.Color.SystemColor.green
+        )
         cell.accessoryType = .disclosureIndicator
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
-      cell.contentLabel.text = R.string.localizable.get_started_with_openweathermap()
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+      cell.configure(
+        withTitle: R.string.localizable.get_started_with_openweathermap(),
+        image: R.image.start(),
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.green
+      )
+      cell.accessoryType = .disclosureIndicator
+      return cell
+    case 2:
+      if indexPath.row == 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+        
+        let entriesCount = WeatherDataService.shared.bookmarkedLocations.count
+        let description: String
+        switch entriesCount {
+        case 0:
+          description = R.string.localizable.empty_bookmarks()
+          cell.accessoryType = .none
+          cell.selectionStyle = .none
+        case 1:
+          description = WeatherDataService.shared.bookmarkedLocations[indexPath.row].name
+          cell.accessoryType = .disclosureIndicator
+          cell.selectionStyle = .default
+        default:
+          description = String(describing: entriesCount)
+          cell.accessoryType = .disclosureIndicator
+          cell.selectionStyle = .default
+        }
+        
+        cell.configure(
+          withTitle: R.string.localizable.manage_locations(),
+          description: description,
+          image: R.image.wrench(),
+          imageBackgroundColor: Constants.Theme.Color.SystemColor.red
+        )
+        return cell
+      }
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+      cell.configure(
+        withTitle: R.string.localizable.add_location(),
+        image: R.image.add_bookmark(),
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.red
+      )
       cell.accessoryType = .disclosureIndicator
       return cell
     case 3:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.manage_locations()
-        
-        let entriesCount = WeatherDataService.shared.bookmarkedLocations.count
-        let cellLabelTitle: String
-        switch entriesCount {
-        case 0:
-          cellLabelTitle = R.string.localizable.empty_bookmarks()
-          cell.accessoryType = .none
-          cell.selectionStyle = .none
-        case 1:
-          cellLabelTitle = WeatherDataService.shared.bookmarkedLocations[indexPath.row].name
-          cell.accessoryType = .disclosureIndicator
-          cell.selectionStyle = .default
-        default:
-          cellLabelTitle = String(describing: entriesCount)
-          cell.accessoryType = .disclosureIndicator
-          cell.selectionStyle = .default
-        }
-        cell.selectionLabel.text = cellLabelTitle
-        return cell
-      }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
-      cell.contentLabel.text = R.string.localizable.add_location()
-      cell.accessoryType = .disclosureIndicator
-      return cell
-    case 4:
-      if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
-        cell.contentLabel.text = R.string.localizable.show_temp_on_icon()
-        BadgeService.shared.isAppIconBadgeNotificationEnabled { enabled in
-          cell.toggle.isOn = enabled
-        }
-        cell.toggleSwitchHandler = { [unowned self] sender in
-          guard sender.isOn else {
-            BadgeService.shared.setTemperatureOnAppIconEnabled(false)
-            return
-          }
-          
-          PermissionsService.shared.requestNotificationPermissions { [weak self] approved in
-            guard approved else {
-              sender.setOn(false, animated: true)
-              self?.showNotificationsSettingsAlert()
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedToggleCell.reuseIdentifier, for: indexPath) as! ImagedToggleCell
+        cell.configure(
+          withTitle: R.string.localizable.show_temp_on_icon(),
+          image: R.image.badge(),
+          imageBackgroundColor: Constants.Theme.Color.SystemColor.red,
+          toggleIsOnHandler: { sender in
+            BadgeService.shared.isAppIconBadgeNotificationEnabled { enabled in
+              sender.isOn = enabled
+            }
+          },
+          toggleSwitchHandler: { [weak self] sender in
+            guard sender.isOn else {
+              BadgeService.shared.setTemperatureOnAppIconEnabled(false)
               return
             }
-            BadgeService.shared.setTemperatureOnAppIconEnabled(true)
-          }
-        }
+            
+            PermissionsService.shared.requestNotificationPermissions { [weak self] approved in
+              guard approved else {
+                sender.setOn(false, animated: true)
+                self?.showNotificationsSettingsAlert()
+                return
+              }
+              BadgeService.shared.setTemperatureOnAppIconEnabled(true)
+            }
+        })
+        
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-      cell.contentLabel.text = R.string.localizable.preferred_bookmark()
-      cell.selectionLabel.text = nil
-      guard let preferredBookmarkId = PreferencesDataService.shared.preferredBookmark.value,
-        WeatherDataService.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
+      
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+      
+      // TODO: fix this
+      if let preferredBookmarkId = PreferencesDataService.shared.preferredBookmark.value,
+        WeatherDataService.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) == nil {
           PreferencesDataService.shared.preferredBookmark = PreferredBookmarkOption(value: nil)
-          return cell
       }
-      cell.selectionLabel.text = PreferencesDataService.shared.preferredBookmark.stringValue
+      
+      cell.configure(
+        withTitle: R.string.localizable.preferred_bookmark(),
+        description: PreferencesDataService.shared.preferredBookmark.stringValue,
+        image: R.image.preferred_bookmark(),
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.red
+      )
+      
+      return cell
+    case 4:
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedToggleCell.reuseIdentifier, for: indexPath) as! ImagedToggleCell
+      cell.configure(
+        withTitle: R.string.localizable.refresh_on_app_start(),
+        image: R.image.reload(),
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.gray,
+        toggleIsOnHandler: { sender in
+          sender.isOn = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
+        },
+        toggleSwitchHandler: { sender in
+          UserDefaults.standard.set(sender.isOn, forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
+      })
       return cell
     case 5:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.amount_of_results()
-        cell.selectionLabel.text = PreferencesDataService.shared.amountOfResults.stringValue
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+        cell.configure(
+          withTitle: R.string.localizable.temperature_unit(),
+          description: PreferencesDataService.shared.temperatureUnit.stringValue,
+          image: R.image.thermometer(),
+          imageBackgroundColor: Constants.Theme.Color.SystemColor.gray
+        )
         return cell
       }
-      if indexPath.row == 1 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.sorting_orientation()
-        cell.selectionLabel.text = PreferencesDataService.shared.sortingOrientation.stringValue
-        return cell
-      }
-      if indexPath.row == 2 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.temperature_unit()
-        cell.selectionLabel.text = PreferencesDataService.shared.temperatureUnit.stringValue
-        return cell
-      }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-      cell.contentLabel.text = R.string.localizable.distanceSpeed_unit()
-      cell.selectionLabel.text = PreferencesDataService.shared.distanceSpeedUnit.stringValue
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+      cell.configure(
+        withTitle: R.string.localizable.distanceSpeed_unit(),
+        description: PreferencesDataService.shared.distanceSpeedUnit.stringValue,
+        image: R.image.dimension(),
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.gray
+      )
       return cell
     default:
       return UITableViewCell()
@@ -240,7 +264,7 @@ final class SettingsTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return UITableView.automaticDimension
+    UITableView.automaticDimension
   }
   
   // MARK: - Private Helpers
@@ -273,16 +297,6 @@ final class SettingsTableViewController: UITableViewController {
         .preferredBookmarkOptions(options: options,
                                   completionHandler: completionHandler)
       )
-    case .preferredAmountOfResults:
-      alert = Factory.AlertController.make(fromType:
-        .preferredAmountOfResultsOptions(options: AmountOfResultsOption.availableOptions,
-                                         completionHandler: completionHandler)
-      )
-    case .preferredSortingOrientation:
-      alert = Factory.AlertController.make(fromType:
-        .preferredSortingOrientationOptions(options: SortingOrientationOption.availableOptions,
-                                            completionHandler: completionHandler)
-      )
     case .preferredTemperatureUnit:
       alert = Factory.AlertController.make(fromType:
         .preferredTemperatureUnitOptions(options: TemperatureUnitOption.availableOptions,
@@ -293,6 +307,8 @@ final class SettingsTableViewController: UITableViewController {
         .preferredSpeedUnitOptions(options: DistanceVelocityUnitOption.availableOptions,
                                    completionHandler: completionHandler)
       )
+    case .preferredAmountOfResults, .preferredSortingOrientation:
+      return // these options cannot be configured in settings
     }
     present(alert, animated: true, completion: nil)
   }

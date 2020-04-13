@@ -72,7 +72,7 @@ final class SettingsInputTableViewController: UITableViewController {
     cell.inputTextField.ascending = true
     cell.inputTextField.maxLength = 32
     cell.inputTextField.counterColor = cell.inputTextField.textColor ?? .black
-    cell.inputTextField.limitColor = Constants.Theme.BrandColors.standardDay
+    cell.inputTextField.limitColor = Constants.Theme.Color.BrandColors.standardDay
     
     return cell
   }

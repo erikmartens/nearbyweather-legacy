@@ -29,6 +29,32 @@ enum ListType: CaseIterable {
 
 final class WeatherListViewController: UITableViewController {
   
+  private lazy var listTypeBarButton = {
+    UIBarButtonItem(
+      image: R.image.layerType(),
+      style: .plain, target: self,
+      action: #selector(Self.listTypeBarButtonTapped(_:))
+    )
+  }()
+  
+  private var numberOfResultsBarButton: UIBarButtonItem {
+    let image = PreferencesDataService.shared.amountOfResults.imageValue
+    
+    return UIBarButtonItem(
+      image: image,
+      style: .plain, target: self,
+      action: #selector(Self.numberOfResultsBarButtonTapped(_:))
+    )
+  }
+  
+  private lazy var sortBarButton = {
+    UIBarButtonItem(
+      image: R.image.sort(),
+      style: .plain, target: self,
+      action: #selector(Self.sortBarButtonTapped(_:))
+    )
+  }()
+  
   // MARK: - Routing
   
   weak var stepper: WeatherListStepper?
@@ -79,12 +105,16 @@ final class WeatherListViewController: UITableViewController {
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
+}
+
+private extension WeatherListViewController {
   
   // MARK: - Private Helpers
   
   private func configure() {
     navigationController?.navigationBar.styleStandard()
     
+    configureNavigationTitle()
     configureLastRefreshDate()
     configureButtons()
     
@@ -109,10 +139,32 @@ final class WeatherListViewController: UITableViewController {
   }
   
   private func configureButtons() {
-    if WeatherDataService.shared.hasDisplayableData {
-      navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.swap(), style: .plain, target: self, action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:)))
-    } else {
+    guard WeatherDataService.shared.hasDisplayableData else {
       navigationItem.leftBarButtonItem = nil
+      navigationItem.rightBarButtonItems = nil
+      return
+    }
+    navigationItem.leftBarButtonItem = listTypeBarButton
+    
+    guard WeatherDataService.shared.hasDisplayableWeatherData else {
+      navigationItem.rightBarButtonItems = nil
+      return
+    }
+    
+    switch PreferencesDataService.shared.preferredListType {
+    case .bookmarked:
+      navigationItem.rightBarButtonItems = nil
+    case .nearby:
+      navigationItem.rightBarButtonItems = [sortBarButton, numberOfResultsBarButton]
+    }
+  }
+  
+  func configureNavigationTitle() {
+    switch PreferencesDataService.shared.preferredListType {
+    case .bookmarked:
+      navigationItem.title = R.string.localizable.bookmarks()
+    case .nearby:
+      navigationItem.title = R.string.localizable.nearby()
     }
   }
   
@@ -120,14 +172,39 @@ final class WeatherListViewController: UITableViewController {
     refreshControl?.beginRefreshing()
     WeatherDataService.shared.update(withCompletionHandler: nil)
   }
+}
+
+// MARK: - IBActions
+
+private extension WeatherListViewController {
   
-  // MARK: - IBActions
-  
-  @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
+  @objc func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
       .weatherListType(currentListType: PreferencesDataService.shared.preferredListType, completionHandler: { [weak self] selectedListType in
         PreferencesDataService.shared.preferredListType = selectedListType
+        self?.configureNavigationTitle()
         self?.tableView.reloadData()
+        self?.configureButtons()
+      })
+    )
+    present(alert, animated: true, completion: nil)
+  }
+  
+  @objc func numberOfResultsBarButtonTapped(_ sender: UIBarButtonItem) {
+    let alert = Factory.AlertController.make(fromType:
+      .preferredAmountOfResultsOptions(options: AmountOfResultsOption.availableOptions, completionHandler: { [weak self] changed in
+        guard changed else { return }
+        self?.tableView.reloadData()
+        self?.configureButtons()
+      })
+    )
+    present(alert, animated: true, completion: nil)
+  }
+  
+  @objc func sortBarButtonTapped(_ sender: UIBarButtonItem) {
+    let alert = Factory.AlertController.make(fromType:
+      .preferredSortingOrientationOptions(options: SortingOrientationOption.availableOptions, completionHandler: { [weak self] changed in
+        if changed { self?.tableView.reloadData() }
       })
     )
     present(alert, animated: true, completion: nil)
@@ -198,7 +275,7 @@ extension WeatherListViewController {
         alertCell.configureWithErrorDataDTO(WeatherDataService.shared.bookmarkedWeatherDataObjects?[indexPath.row].errorDataDTO)
         return alertCell
       }
-      weatherCell.configureWithWeatherDTO(weatherDTO)
+      weatherCell.configureWithWeatherDTO(weatherDTO, isBookmark: true)
       return weatherCell
     case .nearby:
       if !UserLocationService.shared.locationPermissionsGranted {
@@ -214,7 +291,7 @@ extension WeatherListViewController {
         alertCell.configureWithErrorDataDTO(WeatherDataService.shared.nearbyWeatherDataObject?.errorDataDTO)
         return alertCell
       }
-      weatherCell.configureWithWeatherDTO(weatherDTO)
+      weatherCell.configureWithWeatherDTO(weatherDTO, isBookmark: false)
       return weatherCell
     }
   }
@@ -226,9 +303,11 @@ extension WeatherListViewController {
     
     tableView.deselectRow(at: indexPath, animated: true)
     
-    let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell
+    guard let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell else {
+      return
+    }
     stepper?.requestRouting(toStep:
-      WeatherListStep.weatherDetails(identifier: selectedCell?.weatherDataIdentifier)
+      WeatherListStep.weatherDetails(identifier: selectedCell.weatherDataIdentifier, isBookmark: selectedCell.isBookmark)
     )
   }
 }

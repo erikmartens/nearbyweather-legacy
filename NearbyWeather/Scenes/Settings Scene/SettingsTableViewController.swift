@@ -46,23 +46,23 @@ final class SettingsTableViewController: UITableViewController {
     case 0:
       stepper?.requestRouting(toStep: .about)
     case 1:
-      break
-    case 2:
       if indexPath.row == 0 {
         stepper?.requestRouting(toStep: .apiKeyEdit)
         return
       }
       navigationController?.presentSafariViewController(for: Constants.Urls.kOpenWeatherMapInstructionsUrl)
-    case 3:
+    case 2:
       if indexPath.row == 0 {
         stepper?.requestRouting(toStep: .manageLocations)
       } else if indexPath.row == 1 {
         stepper?.requestRouting(toStep: .addLocation)
       }
-    case 4:
+    case 3:
       if indexPath.row == 1 {
         showOptionsAlert(withType: .preferredBookmark)
       }
+    case 4:
+      break
     case 5:
       if indexPath.row == 0 {
         showOptionsAlert(withType: .preferredTemperatureUnit)
@@ -79,15 +79,15 @@ final class SettingsTableViewController: UITableViewController {
     case 0:
       return R.string.localizable.general()
     case 1:
-      return nil
-    case 2:
       return R.string.localizable.openWeatherMap_api()
-    case 3:
+    case 2:
       return R.string.localizable.bookmarks()
-    case 4:
+    case 3:
       return nil
-    case 5:
+    case 4:
       return R.string.localizable.preferences()
+    case 5:
+      return nil
     default:
       return nil
     }
@@ -102,13 +102,13 @@ final class SettingsTableViewController: UITableViewController {
     case 0:
       return 1
     case 1:
-      return 1
+      return 2
     case 2:
       return 2
     case 3:
       return 2
     case 4:
-      return 2
+      return 1
     case 5:
       return 2
     default:
@@ -124,14 +124,6 @@ final class SettingsTableViewController: UITableViewController {
       cell.accessoryType = .disclosureIndicator
       return cell
     case 1:
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
-      cell.contentLabel.text = R.string.localizable.refresh_on_app_start()
-      cell.toggle.isOn = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
-      cell.toggleSwitchHandler = { sender in
-        UserDefaults.standard.set(sender.isOn, forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
-      }
-      return cell
-    case 2:
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.apiKey()
@@ -143,7 +135,7 @@ final class SettingsTableViewController: UITableViewController {
       cell.contentLabel.text = R.string.localizable.get_started_with_openweathermap()
       cell.accessoryType = .disclosureIndicator
       return cell
-    case 3:
+    case 2:
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.manage_locations()
@@ -171,7 +163,7 @@ final class SettingsTableViewController: UITableViewController {
       cell.contentLabel.text = R.string.localizable.add_location()
       cell.accessoryType = .disclosureIndicator
       return cell
-    case 4:
+    case 3:
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
         cell.contentLabel.text = R.string.localizable.show_temp_on_icon()
@@ -205,6 +197,14 @@ final class SettingsTableViewController: UITableViewController {
       }
       cell.selectionLabel.text = PreferencesDataService.shared.preferredBookmark.stringValue
       return cell
+    case 4:
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
+      cell.contentLabel.text = R.string.localizable.refresh_on_app_start()
+      cell.toggle.isOn = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
+      cell.toggleSwitchHandler = { sender in
+        UserDefaults.standard.set(sender.isOn, forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
+      }
+    return cell
     case 5:
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell

@@ -65,12 +65,6 @@ final class SettingsTableViewController: UITableViewController {
       }
     case 5:
       if indexPath.row == 0 {
-        showOptionsAlert(withType: .preferredAmountOfResults)
-      }
-      if indexPath.row == 1 {
-        showOptionsAlert(withType: .preferredSortingOrientation)
-      }
-      if indexPath.row == 2 {
         showOptionsAlert(withType: .preferredTemperatureUnit)
       } else {
         showOptionsAlert(withType: .preferredDistanceSpeedUnit)
@@ -100,7 +94,7 @@ final class SettingsTableViewController: UITableViewController {
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 6
+    6
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,7 +110,7 @@ final class SettingsTableViewController: UITableViewController {
     case 4:
       return 2
     case 5:
-      return 4
+      return 2
     default:
       return 0
     }
@@ -214,18 +208,6 @@ final class SettingsTableViewController: UITableViewController {
     case 5:
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.amount_of_results()
-        cell.selectionLabel.text = PreferencesDataService.shared.amountOfResults.stringValue
-        return cell
-      }
-      if indexPath.row == 1 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.sorting_orientation()
-        cell.selectionLabel.text = PreferencesDataService.shared.sortingOrientation.stringValue
-        return cell
-      }
-      if indexPath.row == 2 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
         cell.contentLabel.text = R.string.localizable.temperature_unit()
         cell.selectionLabel.text = PreferencesDataService.shared.temperatureUnit.stringValue
         return cell
@@ -240,7 +222,7 @@ final class SettingsTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return UITableView.automaticDimension
+    UITableView.automaticDimension
   }
   
   // MARK: - Private Helpers
@@ -273,16 +255,6 @@ final class SettingsTableViewController: UITableViewController {
         .preferredBookmarkOptions(options: options,
                                   completionHandler: completionHandler)
       )
-    case .preferredAmountOfResults:
-      alert = Factory.AlertController.make(fromType:
-        .preferredAmountOfResultsOptions(options: AmountOfResultsOption.availableOptions,
-                                         completionHandler: completionHandler)
-      )
-    case .preferredSortingOrientation:
-      alert = Factory.AlertController.make(fromType:
-        .preferredSortingOrientationOptions(options: SortingOrientationOption.availableOptions,
-                                            completionHandler: completionHandler)
-      )
     case .preferredTemperatureUnit:
       alert = Factory.AlertController.make(fromType:
         .preferredTemperatureUnitOptions(options: TemperatureUnitOption.availableOptions,
@@ -293,6 +265,8 @@ final class SettingsTableViewController: UITableViewController {
         .preferredSpeedUnitOptions(options: DistanceVelocityUnitOption.availableOptions,
                                    completionHandler: completionHandler)
       )
+    case .preferredAmountOfResults, .preferredSortingOrientation:
+      return // these options cannot be configured in settings
     }
     present(alert, animated: true, completion: nil)
   }

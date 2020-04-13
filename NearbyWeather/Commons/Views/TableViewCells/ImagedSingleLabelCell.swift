@@ -12,19 +12,8 @@ class ImagedSingleLabelCell: UITableViewCell {
   
   static let reuseIdentifier = "ImagedSingleLabelCell"
   
-  private lazy var contentLabel: UILabel = {
-    let label = UILabel()
-    label.font = .preferredFont(forTextStyle: .body)
-    return label
-  }()
-  
-  private lazy var leadingImageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.tintColor = .white
-    imageView.contentMode = .scaleAspectFit
-    imageView.layer.cornerRadius = 4
-    return imageView
-  }()
+  private lazy var contentLabel = Factory.Label.make(fromType: .standard)
+  private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellImage)
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -53,20 +42,20 @@ private extension ImagedSingleLabelCell {
   
   func composeCell() {
     contentView.addSubview(leadingImageView, constraints: [
-      leadingImageView.heightAnchor.constraint(equalToConstant: 28),
-      leadingImageView.widthAnchor.constraint(equalToConstant: 28),
-      leadingImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 4),
-      leadingImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -4),
-      leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+      leadingImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImageSize.height),
+      leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImageSize.width),
+      leadingImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: Constants.Dimensions.TableCellContentInsets.top),
+      leadingImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -Constants.Dimensions.TableCellContentInsets.bottom),
+      leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.TableCellContentInsets.leading),
       leadingImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     
     contentView.addSubview(contentLabel, constraints: [
-      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 34),
-      contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-      contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
-      contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: 12),
-      contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
+      contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.TableCellContentInsets.top),
+      contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.TableCellContentInsets.bottom),
+      contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: Constants.Dimensions.TableCellContentInsets.interElementXDistance(from: .small)),
+      contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.TableCellContentInsets.trailing),
       contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
   }

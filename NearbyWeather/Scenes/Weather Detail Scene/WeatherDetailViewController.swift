@@ -204,7 +204,7 @@ final class WeatherDetailViewController: UIViewController {
         return
     }
     
-    /// mapView
+    // mapView
     if let mapAnnotation = WeatherLocationMapAnnotation(weatherDTO: weatherDTO, isBookmark: isBookmark) {
       mapView.layer.cornerRadius = 10
       mapView.addAnnotation(mapAnnotation)
@@ -215,14 +215,14 @@ final class WeatherDetailViewController: UIViewController {
       mapView.isHidden = true
     }
     
-    /// coordinates
+    // coordinates
     coordinatesImageView.tintColor = .darkGray
     coordinatesNoteLabel.text = R.string.localizable.coordinates()
     coordinatesLabel.text = ""
       .append(contentsOfConvertible: weatherDTO.coordinates.latitude, delimiter: .none)
       .append(contentsOfConvertible: weatherDTO.coordinates.longitude, delimiter: .comma)
     
-    /// distance
+    // distance
     if UserLocationService.shared.locationPermissionsGranted,
       let userLocation = UserLocationService.shared.location,
       let weatherLatitude = weatherDTO.coordinates.latitude,

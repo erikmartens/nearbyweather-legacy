@@ -200,15 +200,21 @@ final class SettingsTableViewController: UITableViewController {
         }
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-      cell.contentLabel.text = R.string.localizable.preferred_bookmark()
-      cell.selectionLabel.text = nil
-      guard let preferredBookmarkId = PreferencesDataService.shared.preferredBookmark.value,
-        WeatherDataService.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) != nil else {
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+      
+      // TODO: fix this
+      if let preferredBookmarkId = PreferencesDataService.shared.preferredBookmark.value,
+        WeatherDataService.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) == nil {
           PreferencesDataService.shared.preferredBookmark = PreferredBookmarkOption(value: nil)
-          return cell
       }
-      cell.selectionLabel.text = PreferencesDataService.shared.preferredBookmark.stringValue
+      
+      cell.configure(
+        withTitle: R.string.localizable.preferred_bookmark(),
+        description: PreferencesDataService.shared.preferredBookmark.stringValue,
+        image: R.image.preferred_bookmark(),
+        imageBackgroundColor: .red
+      )
+      
       return cell
     case 4:
       let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell

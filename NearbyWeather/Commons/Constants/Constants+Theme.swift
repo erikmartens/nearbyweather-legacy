@@ -45,13 +45,13 @@ extension Constants.Theme.Color {
   enum ContentElement {
     
     static var title: UIColor {
-      UIColor.from(dark: .init(hex: 0x000000),
-                   light: .init(hex: 0xFFFFFF))
+      UIColor.from(dark: .init(hex: 0xFFFFFF),
+                   light: .init(hex: 0x000000))
     }
     
     static var subtitle: UIColor {
-      UIColor.from(dark: .init(hex: 0x808080),
-                   light: .init(hex: 0xC0C0C0))
+      UIColor.from(dark: .init(hex: 0xC0C0C0),
+                   light: .init(hex: 0x808080))
     }
   }
 }

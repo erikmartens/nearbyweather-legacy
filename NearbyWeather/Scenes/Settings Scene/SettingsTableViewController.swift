@@ -29,6 +29,8 @@ final class SettingsTableViewController: UITableViewController {
                        forCellReuseIdentifier: R.reuseIdentifier.toggleCell.identifier)
     
     tableView.register(ImagedSingleLabelCell.self, forCellReuseIdentifier: ImagedSingleLabelCell.reuseIdentifier)
+    
+    tableView.register(ImagedDualLabelCell.self, forCellReuseIdentifier: ImagedDualLabelCell.reuseIdentifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -127,9 +129,13 @@ final class SettingsTableViewController: UITableViewController {
       return cell
     case 1:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.apiKey()
-        cell.selectionLabel.text = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+        cell.configure(
+          withTitle: R.string.localizable.apiKey(),
+          description: UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String,
+          image: R.image.seal(),
+          imageBackgroundColor: .green
+        )
         cell.accessoryType = .disclosureIndicator
         return cell
       }

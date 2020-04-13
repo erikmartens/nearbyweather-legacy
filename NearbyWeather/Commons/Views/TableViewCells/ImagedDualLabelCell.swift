@@ -30,7 +30,7 @@ extension ImagedDualLabelCell {
   
   func configure(
     withTitle title: String,
-    description: String,
+    description: String?,
     image: UIImage?,
     imageBackgroundColor: UIColor
   ) {
@@ -61,14 +61,15 @@ private extension ImagedDualLabelCell {
       contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     
-    contentView.addSubview(contentLabel, constraints: [
+    contentView.addSubview(descriptionLabel, constraints: [
       descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.TableCellContentInsets.top),
       descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.TableCellContentInsets.bottom),
       descriptionLabel.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: Constants.Dimensions.TableCellContentInsets.interElementXDistance(from: .small)),
       descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.TableCellContentInsets.trailing),
       descriptionLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      descriptionLabel.heightAnchor.constraint(equalTo: contentLabel.heightAnchor, multiplier: 1)
+      descriptionLabel.heightAnchor.constraint(equalTo: contentLabel.heightAnchor, multiplier: 1),
+      descriptionLabel.widthAnchor.constraint(equalTo: contentLabel.widthAnchor, multiplier: 1)
     ])
   }
 }

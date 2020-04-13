@@ -42,11 +42,10 @@ enum UpdateStatus {
 final class WeatherDataService {
   
   private lazy var fetchWeatherDataBackgroundQueue: DispatchQueue = {
-    return DispatchQueue(label: Constants.Labels.DispatchQueues.kFetchWeatherDataBackgroundQueue,
-                         qos: .userInitiated,
-                         attributes: [.concurrent],
-                         autoreleaseFrequency: .inherit,
-                         target: nil)
+    DispatchQueue(label: Constants.Labels.DispatchQueues.kFetchWeatherDataBackgroundQueue,
+                  qos: .userInitiated,
+                  autoreleaseFrequency: .inherit,
+                  target: nil)
   }()
   
   private static let weatherServiceBackgroundQueue = DispatchQueue(

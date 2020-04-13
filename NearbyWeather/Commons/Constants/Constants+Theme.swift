@@ -54,4 +54,62 @@ extension Constants.Theme.Color {
                    light: .init(hex: 0x808080))
     }
   }
+  
+  enum SystemColor {
+    
+    static var blue: UIColor {
+      UIColor.from(dark: .init(red: 10, green: 132, blue: 255),
+                   light: .init(red: 0, green: 122, blue: 255))
+    }
+    
+    static var green: UIColor {
+      UIColor.from(dark: .init(red: 48, green: 209, blue: 88),
+                   light: .init(red: 52, green: 199, blue: 89))
+    }
+    
+    static var indigo: UIColor {
+      UIColor.from(dark: .init(red: 94, green: 92, blue: 230),
+                   light: .init(red: 88, green: 86, blue: 214))
+    }
+    
+    static var orange: UIColor {
+      UIColor.from(dark: .init(red: 255, green: 159, blue: 10),
+                   light: .init(red: 255, green: 149, blue: 0))
+    }
+    
+    static var pink: UIColor {
+      UIColor.from(dark: .init(red: 255, green: 55, blue: 85),
+                   light: .init(red: 255, green: 45, blue: 95))
+    }
+    
+    static var purple: UIColor {
+      UIColor.from(dark: .init(red: 191, green: 90, blue: 242),
+                   light: .init(red: 175, green: 82, blue: 222))
+    }
+    
+    static var red: UIColor {
+      UIColor.from(dark: .init(red: 255, green: 69, blue: 58),
+                   light: .init(red: 255, green: 59, blue: 48))
+    }
+    
+    static var teal: UIColor {
+      UIColor.from(dark: .init(red: 100, green: 210, blue: 255),
+                   light: .init(red: 90, green: 200, blue: 250))
+    }
+    
+    static var yellow: UIColor {
+      UIColor.from(dark: .init(red: 255, green: 214, blue: 10),
+                   light: .init(red: 255, green: 204, blue: 0))
+    }
+    
+    static var gray: UIColor {
+      UIColor.from(dark: .init(red: 142, green: 142, blue: 147),
+                   light: .init(red: 142, green: 142, blue: 147))
+    }
+    
+    static var gray2: UIColor {
+      UIColor.from(dark: .init(red: 99, green: 99, blue: 102),
+                   light: .init(red: 174, green: 174, blue: 178))
+    }
+  }
 }

@@ -226,14 +226,22 @@ final class SettingsTableViewController: UITableViewController {
     return cell
     case 5:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.temperature_unit()
-        cell.selectionLabel.text = PreferencesDataService.shared.temperatureUnit.stringValue
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+        cell.configure(
+          withTitle: R.string.localizable.temperature_unit(),
+          description: PreferencesDataService.shared.temperatureUnit.stringValue,
+          image: R.image.thermometer(),
+          imageBackgroundColor: .gray
+        )
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-      cell.contentLabel.text = R.string.localizable.distanceSpeed_unit()
-      cell.selectionLabel.text = PreferencesDataService.shared.distanceSpeedUnit.stringValue
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+      cell.configure(
+        withTitle: R.string.localizable.distanceSpeed_unit(),
+        description: PreferencesDataService.shared.distanceSpeedUnit.stringValue,
+        image: R.image.dimension(),
+        imageBackgroundColor: .gray
+      )
       return cell
     default:
       return UITableViewCell()

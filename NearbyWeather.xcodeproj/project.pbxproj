@@ -78,7 +78,6 @@
 		F2DBEAF823E6054900CD513B /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF723E6054900CD513B /* Coordinator.swift */; };
 		F2DBEAFA23E6357C00CD513B /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */; };
 		F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */; };
-		F2DBEB0423E8DBF000CD513B /* WeatherMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0323E8DBF000CD513B /* WeatherMap.storyboard */; };
 		F2DBEB0823E8DDF600CD513B /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0723E8DDF600CD513B /* Welcome.storyboard */; };
 		F2DBEB0B23E8DE0E00CD513B /* SetPermissions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0A23E8DE0E00CD513B /* SetPermissions.storyboard */; };
 		F2DBEB0F23E8E0B200CD513B /* AboutApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0E23E8E0B200CD513B /* AboutApp.storyboard */; };
@@ -230,7 +229,6 @@
 		F2DBEAF723E6054900CD513B /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		F2DBEAF923E6357C00CD513B /* WelcomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCoordinator.swift; sourceTree = "<group>"; };
 		F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AppendSafe.swift"; sourceTree = "<group>"; };
-		F2DBEB0323E8DBF000CD513B /* WeatherMap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeatherMap.storyboard; sourceTree = "<group>"; };
 		F2DBEB0723E8DDF600CD513B /* Welcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
 		F2DBEB0A23E8DE0E00CD513B /* SetPermissions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SetPermissions.storyboard; sourceTree = "<group>"; };
 		F2DBEB0E23E8E0B200CD513B /* AboutApp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AboutApp.storyboard; sourceTree = "<group>"; };
@@ -534,7 +532,6 @@
 		F27A122324425DB300A2CE8D /* Weather Map Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F2DBEB0323E8DBF000CD513B /* WeatherMap.storyboard */,
 				F28CA5382016A1BA00209397 /* WeatherMapViewController.swift */,
 			);
 			path = "Weather Map Scene";
@@ -864,7 +861,6 @@
 				F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */,
 				F2F1554324435E55007A3E90 /* Settings.bundle in Resources */,
 				F2DBEB0F23E8E0B200CD513B /* AboutApp.storyboard in Resources */,
-				F2DBEB0423E8DBF000CD513B /* WeatherMap.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -74,7 +74,7 @@ final class WeatherMapCoordinator: Coordinator {
 private extension WeatherMapCoordinator {
   
   func summonWeatherMapController(passNextChildCoordinatorTo coordinatorReceiver: (NextCoordinator) -> Void) {
-    let mapViewController = R.storyboard.weatherMap.nearbyLocationsMapViewController()!
+    let mapViewController = WeatherMapViewController()
     mapViewController.title = R.string.localizable.tab_weatherMap()
     mapViewController.stepper = stepper as? WeatherMapStepper
     

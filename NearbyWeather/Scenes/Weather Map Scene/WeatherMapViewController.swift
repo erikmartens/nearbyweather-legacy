@@ -43,7 +43,7 @@ final class WeatherMapViewController: UIViewController {
   
   // MARK: - IBOutlets
   
-  @IBOutlet weak var mapView: MKMapView!
+  private var mapView: MKMapView!
   
   // MARK: - Properties
   
@@ -57,11 +57,10 @@ final class WeatherMapViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationController?.navigationBar.styleStandard()
+    
+    configureMapView()
     configureButtons()
     configureMapAnnotations()
-    
-    mapView.delegate = self
-    mapView.mapType = PreferencesDataService.shared.preferredMapType
     
     NotificationCenter.default.addObserver(
       self,
@@ -138,6 +137,20 @@ private extension WeatherMapViewController {
       return
     }
     focusMapOnUserLocation()
+  }
+  
+  func configureMapView() {
+    mapView = MKMapView()
+    
+    mapView.delegate = self
+    mapView.mapType = PreferencesDataService.shared.preferredMapType
+    
+    view.addSubview(mapView, constraints: [
+      mapView.topAnchor.constraint(equalTo: view.topAnchor),
+      mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+    ])
   }
   
   func configureButtons() {

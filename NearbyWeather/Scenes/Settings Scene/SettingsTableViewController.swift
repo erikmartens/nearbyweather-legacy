@@ -145,26 +145,31 @@ final class SettingsTableViewController: UITableViewController {
       return cell
     case 2:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-        cell.contentLabel.text = R.string.localizable.manage_locations()
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
         
         let entriesCount = WeatherDataService.shared.bookmarkedLocations.count
-        let cellLabelTitle: String
+        let description: String
         switch entriesCount {
         case 0:
-          cellLabelTitle = R.string.localizable.empty_bookmarks()
+          description = R.string.localizable.empty_bookmarks()
           cell.accessoryType = .none
           cell.selectionStyle = .none
         case 1:
-          cellLabelTitle = WeatherDataService.shared.bookmarkedLocations[indexPath.row].name
+          description = WeatherDataService.shared.bookmarkedLocations[indexPath.row].name
           cell.accessoryType = .disclosureIndicator
           cell.selectionStyle = .default
         default:
-          cellLabelTitle = String(describing: entriesCount)
+          description = String(describing: entriesCount)
           cell.accessoryType = .disclosureIndicator
           cell.selectionStyle = .default
         }
-        cell.selectionLabel.text = cellLabelTitle
+        
+        cell.configure(
+          withTitle: R.string.localizable.manage_locations(),
+          description: description,
+          image: R.image.wrench(),
+          imageBackgroundColor: .red
+        )
         return cell
       }
       let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell

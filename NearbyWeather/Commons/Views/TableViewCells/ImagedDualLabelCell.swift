@@ -44,6 +44,15 @@ extension ImagedDualLabelCell {
 private extension ImagedDualLabelCell {
   
   func composeCell() {
+    separatorInset = UIEdgeInsets(
+      top: 0,
+      left: Constants.Dimensions.TableCellContentInsets.leading
+        + Constants.Dimensions.TableCellImageSize.width
+        + Constants.Dimensions.TableCellContentInsets.interElementXDistance(from: .small),
+      bottom: 0,
+      right: 0
+    )
+    
     contentView.addSubview(leadingImageView, constraints: [
       leadingImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImageSize.height),
       leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImageSize.width),

@@ -27,9 +27,11 @@ extension Factory {
       case .standard:
         label.textColor = Constants.Theme.Color.ContentElement.title
         label.font = .preferredFont(forTextStyle: .body)
+        label.textAlignment = .left
       case .description:
         label.textColor = Constants.Theme.Color.ContentElement.subtitle
         label.font = .preferredFont(forTextStyle: .subheadline)
+        label.textAlignment = .right
       }
       
       return label

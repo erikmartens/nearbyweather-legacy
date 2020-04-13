@@ -144,9 +144,9 @@ final class AboutAppTableViewController: UITableViewController {
     case 1:
       return nil
     case 2:
-      return R.string.localizable.contributors()
+      return R.string.localizable.contributing()
     case 3:
-      return nil
+      return R.string.localizable.contributors()
     case 4:
       return nil
     case 5:

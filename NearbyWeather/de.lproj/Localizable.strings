@@ -45,6 +45,7 @@ map_type_hybrid = "Hybrid";
 map_type_satellite = "Satellit";
 about = "Über";
 resources = "Ressourcen";
+contributing = "Mitwirken";
 contributors = "Mitwirkende";
 libraries = "Bibliotheken";
 app_name = "NearbyWeather";

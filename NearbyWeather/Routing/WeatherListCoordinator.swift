@@ -23,7 +23,7 @@ final class WeatherListCoordinator: Coordinator {
     let navigationController = UINavigationController()
     navigationController.navigationBar.backgroundColor = .white
     navigationController.navigationBar.barTintColor = .black
-    navigationController.navigationBar.tintColor = Constants.Theme.BrandColors.standardDay
+    navigationController.navigationBar.tintColor = Constants.Theme.Color.BrandColors.standardDay
     
     navigationController.tabBarItem.selectedImage = R.image.tabbar_list_ios11()
     navigationController.tabBarItem.image = R.image.tabbar_list_ios11()

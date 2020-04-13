@@ -70,6 +70,6 @@ final class EmptyWeatherListViewController: UIViewController {
     reloadButton.setTitleColor(.white, for: UIControl.State())
     reloadButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
     reloadButton.layer.cornerRadius = reloadButton.bounds.height/2
-    reloadButton.layer.backgroundColor = Constants.Theme.BrandColors.standardDay.cgColor
+    reloadButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
   }
 }

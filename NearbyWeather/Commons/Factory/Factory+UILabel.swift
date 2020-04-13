@@ -14,6 +14,7 @@ extension Factory {
     
     enum LabelType {
       case standard
+      case description
     }
     
     typealias InputType = LabelType
@@ -24,7 +25,11 @@ extension Factory {
       
       switch type {
       case .standard:
+        label.textColor = Constants.Theme.Color.ContentElement.title
         label.font = .preferredFont(forTextStyle: .body)
+      case .description:
+        label.textColor = Constants.Theme.Color.ContentElement.subtitle
+        label.font = .preferredFont(forTextStyle: .subheadline)
       }
       
       return label

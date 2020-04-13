@@ -239,8 +239,8 @@ extension WeatherMapViewController: MKMapViewDelegate {
     
     if annotation.isBookmark {
       fillColor = annotation.isDayTime ?? true
-        ? Constants.Theme.BrandColors.standardDay
-        : Constants.Theme.BrandColors.standardNight // default to blue colored cells
+        ? Constants.Theme.Color.BrandColors.standardDay
+        : Constants.Theme.Color.BrandColors.standardNight // default to blue colored cells
       
       textColor = .white
     } else {

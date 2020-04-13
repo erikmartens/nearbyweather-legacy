@@ -13,6 +13,10 @@ extension Constants {
 }
 
 extension Constants.Theme {
+  enum Color {}
+}
+
+extension Constants.Theme.Color {
   
   enum BrandColors {
     
@@ -27,18 +31,27 @@ extension Constants.Theme {
     }
   }
   
-  enum Interactables {
+  enum InteractableElement {
     
     static var standardButton: UIColor {
-      Constants.Theme.BrandColors.standardDay
+      Constants.Theme.Color.BrandColors.standardDay
     }
     
     static var standardTint: UIColor {
-      Constants.Theme.BrandColors.standardDay
+      Constants.Theme.Color.BrandColors.standardDay
     }
   }
   
-  enum InterfaceComponents {
+  enum ContentElement {
     
+    static var title: UIColor {
+      UIColor.from(dark: .init(hex: 0x000000),
+                   light: .init(hex: 0xFFFFFF))
+    }
+    
+    static var subtitle: UIColor {
+      UIColor.from(dark: .init(hex: 0x808080),
+                   light: .init(hex: 0xC0C0C0))
+    }
   }
 }

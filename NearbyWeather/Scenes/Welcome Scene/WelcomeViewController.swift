@@ -69,7 +69,7 @@ final class WelcomeViewController: UIViewController {
     descriptionLabel.text! = R.string.localizable.welcome_api_key_description()
     
     inputTextField.counterColor = inputTextField.textColor ?? .black
-    inputTextField.limitColor = Constants.Theme.Interactables.standardTint
+    inputTextField.limitColor = Constants.Theme.Color.InteractableElement.standardTint
     inputTextField.textColor = .lightGray
     inputTextField.tintColor = .lightGray
     
@@ -77,11 +77,11 @@ final class WelcomeViewController: UIViewController {
     saveButton.setTitleColor(.white, for: UIControl.State())
     saveButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
     saveButton.layer.cornerRadius = saveButton.bounds.height/2
-    saveButton.layer.backgroundColor = Constants.Theme.BrandColors.standardDay.cgColor
+    saveButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
     
     getInstructionsButtons.setTitle(R.string.localizable.get_api_key_description().uppercased(), for: .normal)
-    getInstructionsButtons.setTitleColor(Constants.Theme.Interactables.standardButton, for: .normal)
-    getInstructionsButtons.setTitleColor(Constants.Theme.Interactables.standardButton, for: .highlighted)
+    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButton, for: .normal)
+    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButton, for: .highlighted)
   }
   
   fileprivate func startAnimationTimer() {
@@ -111,7 +111,7 @@ final class WelcomeViewController: UIViewController {
         return
     }
     saveButton.isEnabled = true
-    inputTextField.textColor = Constants.Theme.Interactables.standardTint
+    inputTextField.textColor = Constants.Theme.Color.InteractableElement.standardTint
   }
   
   // MARK: - Button Interaction

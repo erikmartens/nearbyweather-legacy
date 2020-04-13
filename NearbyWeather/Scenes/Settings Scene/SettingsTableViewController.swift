@@ -122,7 +122,7 @@ final class SettingsTableViewController: UITableViewController {
     switch indexPath.section {
     case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
-      cell.configure(withTitle: R.string.localizable.about(), image: R.image.info(), imageBackgroundColor: Constants.Theme.BrandColors.standardDay)
+      cell.configure(withTitle: R.string.localizable.about(), image: R.image.info(), imageBackgroundColor: Constants.Theme.Color.BrandColors.standardDay)
       cell.accessoryType = .disclosureIndicator
       return cell
     case 1:

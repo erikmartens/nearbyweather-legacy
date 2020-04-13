@@ -29,6 +29,7 @@
 		F237285B2444A72100964C49 /* Constants+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285A2444A72100964C49 /* Constants+Dimensions.swift */; };
 		F237285D2444A9AD00964C49 /* Factory+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */; };
 		F237285F2444AA5600964C49 /* Factory+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285E2444AA5600964C49 /* Factory+UILabel.swift */; };
+		F23728612444AEAC00964C49 /* ImagedDualLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23728602444AEAC00964C49 /* ImagedDualLabelCell.swift */; };
 		F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25A396E2187A6DA0054BC7A /* DevelopmentContributorDTO.swift */; };
 		F25A39712187AA5A0054BC7A /* ProjectContributors.json in Resources */ = {isa = PBXBuildFile; fileRef = F25A39702187AA5A0054BC7A /* ProjectContributors.json */; };
 		F25A39732187B1B00054BC7A /* ThirdPartyLibraryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25A39722187B1B00054BC7A /* ThirdPartyLibraryDTO.swift */; };
@@ -183,6 +184,7 @@
 		F237285A2444A72100964C49 /* Constants+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Dimensions.swift"; sourceTree = "<group>"; };
 		F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIImageView.swift"; sourceTree = "<group>"; };
 		F237285E2444AA5600964C49 /* Factory+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UILabel.swift"; sourceTree = "<group>"; };
+		F23728602444AEAC00964C49 /* ImagedDualLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagedDualLabelCell.swift; sourceTree = "<group>"; };
 		F25A396E2187A6DA0054BC7A /* DevelopmentContributorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentContributorDTO.swift; sourceTree = "<group>"; };
 		F25A39702187AA5A0054BC7A /* ProjectContributors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectContributors.json; sourceTree = "<group>"; };
 		F25A39722187B1B00054BC7A /* ThirdPartyLibraryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyLibraryDTO.swift; sourceTree = "<group>"; };
@@ -673,6 +675,7 @@
 				F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */,
 				F2DBEAF023E5F98200CD513B /* TextInputCell.swift */,
 				F273EF632444967C0085DB3F /* ImagedSingleLabelCell.swift */,
+				F23728602444AEAC00964C49 /* ImagedDualLabelCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -1056,6 +1059,7 @@
 			files = (
 				F274FC3B2030ED5A00049144 /* PreferencesDataService.swift in Sources */,
 				F283D26E1DF39095001B879D /* DualLabelCell.swift in Sources */,
+				F23728612444AEAC00964C49 /* ImagedDualLabelCell.swift in Sources */,
 				F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */,
 				F28CA5442027AEB500209397 /* WeatherLocationMapAnnotation.swift in Sources */,
 				F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */,

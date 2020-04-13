@@ -115,7 +115,11 @@ final class SettingsTableViewController: UITableViewController {
     switch indexPath.section {
     case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
-      cell.configure(withTitle: R.string.localizable.about(), image: R.image.info(), imageBackgroundColor: Constants.Theme.Color.BrandColors.standardDay)
+      cell.configure(
+        withTitle: R.string.localizable.about(),
+        image: R.image.info(),
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.blue
+      )
       cell.accessoryType = .disclosureIndicator
       return cell
     case 1:
@@ -125,13 +129,17 @@ final class SettingsTableViewController: UITableViewController {
           withTitle: R.string.localizable.apiKey(),
           description: UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String,
           image: R.image.seal(),
-          imageBackgroundColor: .green
+          imageBackgroundColor: Constants.Theme.Color.SystemColor.green
         )
         cell.accessoryType = .disclosureIndicator
         return cell
       }
       let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
-      cell.configure(withTitle: R.string.localizable.get_started_with_openweathermap(), image: R.image.start(), imageBackgroundColor: .green)
+      cell.configure(
+        withTitle: R.string.localizable.get_started_with_openweathermap(),
+        image: R.image.start(),
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.green
+      )
       cell.accessoryType = .disclosureIndicator
       return cell
     case 2:
@@ -159,12 +167,16 @@ final class SettingsTableViewController: UITableViewController {
           withTitle: R.string.localizable.manage_locations(),
           description: description,
           image: R.image.wrench(),
-          imageBackgroundColor: .red
+          imageBackgroundColor: Constants.Theme.Color.SystemColor.red
         )
         return cell
       }
       let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
-      cell.configure(withTitle: R.string.localizable.add_location(), image: R.image.add_bookmark(), imageBackgroundColor: .red)
+      cell.configure(
+        withTitle: R.string.localizable.add_location(),
+        image: R.image.add_bookmark(),
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.red
+      )
       cell.accessoryType = .disclosureIndicator
       return cell
     case 3:
@@ -173,7 +185,7 @@ final class SettingsTableViewController: UITableViewController {
         cell.configure(
           withTitle: R.string.localizable.show_temp_on_icon(),
           image: R.image.badge(),
-          imageBackgroundColor: .red,
+          imageBackgroundColor: Constants.Theme.Color.SystemColor.red,
           toggleIsOnHandler: { sender in
             BadgeService.shared.isAppIconBadgeNotificationEnabled { enabled in
               sender.isOn = enabled
@@ -210,7 +222,7 @@ final class SettingsTableViewController: UITableViewController {
         withTitle: R.string.localizable.preferred_bookmark(),
         description: PreferencesDataService.shared.preferredBookmark.stringValue,
         image: R.image.preferred_bookmark(),
-        imageBackgroundColor: .red
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.red
       )
       
       return cell
@@ -219,7 +231,7 @@ final class SettingsTableViewController: UITableViewController {
       cell.configure(
         withTitle: R.string.localizable.refresh_on_app_start(),
         image: R.image.reload(),
-        imageBackgroundColor: .gray,
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.gray,
         toggleIsOnHandler: { sender in
           sender.isOn = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
         },
@@ -234,7 +246,7 @@ final class SettingsTableViewController: UITableViewController {
           withTitle: R.string.localizable.temperature_unit(),
           description: PreferencesDataService.shared.temperatureUnit.stringValue,
           image: R.image.thermometer(),
-          imageBackgroundColor: .gray
+          imageBackgroundColor: Constants.Theme.Color.SystemColor.gray
         )
         return cell
       }
@@ -243,7 +255,7 @@ final class SettingsTableViewController: UITableViewController {
         withTitle: R.string.localizable.distanceSpeed_unit(),
         description: PreferencesDataService.shared.distanceSpeedUnit.stringValue,
         image: R.image.dimension(),
-        imageBackgroundColor: .gray
+        imageBackgroundColor: Constants.Theme.Color.SystemColor.gray
       )
       return cell
     default:

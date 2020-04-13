@@ -50,8 +50,7 @@ extension Constants.Theme.Color {
     }
     
     static var subtitle: UIColor {
-      UIColor.from(dark: .init(hex: 0xC0C0C0),
-                   light: .init(hex: 0x808080))
+      Constants.Theme.Color.SystemColor.gray
     }
   }
   
@@ -110,6 +109,26 @@ extension Constants.Theme.Color {
     static var gray2: UIColor {
       UIColor.from(dark: .init(red: 99, green: 99, blue: 102),
                    light: .init(red: 174, green: 174, blue: 178))
+    }
+    
+    static var gray3: UIColor {
+      UIColor.from(dark: .init(red: 72, green: 72, blue: 74),
+                   light: .init(red: 199, green: 199, blue: 204))
+    }
+
+    static var gray4: UIColor {
+      UIColor.from(dark: .init(red: 58, green: 58, blue: 60),
+                   light: .init(red: 209, green: 209, blue: 214))
+    }
+    
+    static var gray5: UIColor {
+      UIColor.from(dark: .init(red: 44, green: 44, blue: 46),
+                   light: .init(red: 229, green: 229, blue: 234))
+    }
+    
+    static var gray6: UIColor {
+      UIColor.from(dark: .init(red: 28, green: 28, blue: 30),
+                   light: .init(red: 242, green: 242, blue: 247))
     }
   }
 }

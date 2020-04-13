@@ -40,10 +40,10 @@ class ButtonCell: UITableViewCell {
     super.prepareForReuse()
     
     leftButtonHandler = nil
-    leftButton.removeTarget(self, action: #selector(ButtonCell.leftButtonPressed(_:)), for: .touchUpInside)
+    leftButton.removeTarget(self, action: #selector(Self.leftButtonPressed(_:)), for: .touchUpInside)
     
     rightButtonHandler = nil
-    rightButton.removeTarget(self, action: #selector(ButtonCell.rightButtonPressed(_:)), for: .touchUpInside)
+    rightButton.removeTarget(self, action: #selector(Self.rightButtonPressed(_:)), for: .touchUpInside)
   }
   
 }

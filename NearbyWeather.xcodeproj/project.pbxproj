@@ -30,6 +30,7 @@
 		F237285D2444A9AD00964C49 /* Factory+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */; };
 		F237285F2444AA5600964C49 /* Factory+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285E2444AA5600964C49 /* Factory+UILabel.swift */; };
 		F23728612444AEAC00964C49 /* ImagedDualLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23728602444AEAC00964C49 /* ImagedDualLabelCell.swift */; };
+		F23728632444C72800964C49 /* ImagedToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23728622444C72800964C49 /* ImagedToggleCell.swift */; };
 		F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25A396E2187A6DA0054BC7A /* DevelopmentContributorDTO.swift */; };
 		F25A39712187AA5A0054BC7A /* ProjectContributors.json in Resources */ = {isa = PBXBuildFile; fileRef = F25A39702187AA5A0054BC7A /* ProjectContributors.json */; };
 		F25A39732187B1B00054BC7A /* ThirdPartyLibraryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25A39722187B1B00054BC7A /* ThirdPartyLibraryDTO.swift */; };
@@ -185,6 +186,7 @@
 		F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIImageView.swift"; sourceTree = "<group>"; };
 		F237285E2444AA5600964C49 /* Factory+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UILabel.swift"; sourceTree = "<group>"; };
 		F23728602444AEAC00964C49 /* ImagedDualLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagedDualLabelCell.swift; sourceTree = "<group>"; };
+		F23728622444C72800964C49 /* ImagedToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagedToggleCell.swift; sourceTree = "<group>"; };
 		F25A396E2187A6DA0054BC7A /* DevelopmentContributorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentContributorDTO.swift; sourceTree = "<group>"; };
 		F25A39702187AA5A0054BC7A /* ProjectContributors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectContributors.json; sourceTree = "<group>"; };
 		F25A39722187B1B00054BC7A /* ThirdPartyLibraryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyLibraryDTO.swift; sourceTree = "<group>"; };
@@ -676,6 +678,7 @@
 				F2DBEAF023E5F98200CD513B /* TextInputCell.swift */,
 				F273EF632444967C0085DB3F /* ImagedSingleLabelCell.swift */,
 				F23728602444AEAC00964C49 /* ImagedDualLabelCell.swift */,
+				F23728622444C72800964C49 /* ImagedToggleCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -1105,6 +1108,7 @@
 				F213FA2D23F9EE1100F094D8 /* PreferencesOption.swift in Sources */,
 				F2F1554B2443C438007A3E90 /* Factory+UIButton.swift in Sources */,
 				F2DBEB2323EF2EE300CD513B /* WeatherDetailStepper.swift in Sources */,
+				F23728632444C72800964C49 /* ImagedToggleCell.swift in Sources */,
 				F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */,
 				F2DBEB2123EF108D00CD513B /* WeatherListStepper.swift in Sources */,
 				F204B7BD1DF35610000F4371 /* SettingsTableViewController.swift in Sources */,

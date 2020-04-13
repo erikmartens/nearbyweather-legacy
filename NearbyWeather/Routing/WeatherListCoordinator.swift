@@ -80,8 +80,6 @@ private extension WeatherListCoordinator {
     let weatherListViewController = WeatherListViewController(style: .grouped)
     weatherListViewController.stepper = stepper as? WeatherListStepper
     
-    weatherListViewController.title = R.string.localizable.tab_weatherList()
-    
     let root = rootViewController as? UINavigationController
     root?.setViewControllers([weatherListViewController], animated: false)
     

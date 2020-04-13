@@ -105,12 +105,16 @@ final class WeatherListViewController: UITableViewController {
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
+}
+
+private extension WeatherListViewController {
   
   // MARK: - Private Helpers
   
   private func configure() {
     navigationController?.navigationBar.styleStandard()
     
+    configureNavigationTitle()
     configureLastRefreshDate()
     configureButtons()
     
@@ -155,6 +159,15 @@ final class WeatherListViewController: UITableViewController {
     }
   }
   
+  func configureNavigationTitle() {
+    switch PreferencesDataService.shared.preferredListType {
+    case .bookmarked:
+      navigationItem.title = R.string.localizable.bookmarks()
+    case .nearby:
+      navigationItem.title = R.string.localizable.nearby()
+    }
+  }
+  
   @objc private func updateWeatherData() {
     refreshControl?.beginRefreshing()
     WeatherDataService.shared.update(withCompletionHandler: nil)
@@ -169,6 +182,7 @@ private extension WeatherListViewController {
     let alert = Factory.AlertController.make(fromType:
       .weatherListType(currentListType: PreferencesDataService.shared.preferredListType, completionHandler: { [weak self] selectedListType in
         PreferencesDataService.shared.preferredListType = selectedListType
+        self?.configureNavigationTitle()
         self?.tableView.reloadData()
         self?.configureButtons()
       })
@@ -180,8 +194,8 @@ private extension WeatherListViewController {
     let alert = Factory.AlertController.make(fromType:
       .preferredAmountOfResultsOptions(options: AmountOfResultsOption.availableOptions, completionHandler: { [weak self] changed in
         guard changed else { return }
-        self?.configureButtons()
         self?.tableView.reloadData()
+        self?.configureButtons()
       })
     )
     present(alert, animated: true, completion: nil)

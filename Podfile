@@ -14,6 +14,9 @@ def nearbyweather_pods
 
     pod 'SwiftLint', '~> 0.38.2'
     pod 'R.swift', '5.0.3'
+
+    pod 'Firebase/Analytics', '~> 6.21.0'
+    pod 'Firebase/Crashlytics', '~> 6.21.0'
 end
 
 target 'NearbyWeather' do
@@ -21,7 +24,7 @@ target 'NearbyWeather' do
 end  
 
 target 'NearbyWeatherTests' do
-  nearbyweather_pods
+    nearbyweather_pods
 end
 
 post_install do |installer|

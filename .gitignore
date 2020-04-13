@@ -78,3 +78,6 @@ node_modules/
 
 ## R.Swift
 *.generated.swift
+
+# Google FireBase
+NearbyWeather/GoogleService-Info.plist

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ToggleCell" id="uOt-AB-Qgh" userLabel="ToggleCell" customClass="ToggleCell" customModule="NearbyWeather" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uOt-AB-Qgh" id="sZR-VB-HTP">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WO0-CE-LKJ" userLabel="contentLabel">
+                        <rect key="frame" x="16" y="4" width="318" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="72b-1r-7CK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zoy-aT-Vgi">
+                        <rect key="frame" x="350" y="6.5" width="51" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="49" id="Lmg-z7-u2b"/>
+                        </constraints>
+                        <connections>
+                            <action selector="didToggleSwitch:" destination="uOt-AB-Qgh" eventType="valueChanged" id="xrr-CB-BNF"/>
+                        </connections>
+                    </switch>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="WO0-CE-LKJ" secondAttribute="bottom" constant="4" id="DaL-bx-hOA"/>
+                    <constraint firstAttribute="trailing" secondItem="zoy-aT-Vgi" secondAttribute="trailing" constant="15" id="SQC-oF-e6j"/>
+                    <constraint firstItem="zoy-aT-Vgi" firstAttribute="leading" secondItem="WO0-CE-LKJ" secondAttribute="trailing" constant="16" id="UfS-b4-JjG"/>
+                    <constraint firstItem="WO0-CE-LKJ" firstAttribute="leading" secondItem="sZR-VB-HTP" secondAttribute="leading" constant="16" id="fFw-Xp-vWM"/>
+                    <constraint firstItem="WO0-CE-LKJ" firstAttribute="top" secondItem="sZR-VB-HTP" secondAttribute="top" constant="4" id="umV-1U-TLl"/>
+                    <constraint firstItem="zoy-aT-Vgi" firstAttribute="centerY" secondItem="sZR-VB-HTP" secondAttribute="centerY" id="wVk-an-2Kc"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="DaL-bx-hOA"/>
+                    </mask>
+                </variation>
+                <variation key="heightClass=regular-widthClass=compact">
+                    <mask key="constraints">
+                        <include reference="DaL-bx-hOA"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="contentLabel" destination="WO0-CE-LKJ" id="RLx-Hn-0Dk"/>
+                <outlet property="toggle" destination="zoy-aT-Vgi" id="sv6-uS-6Nb"/>
+            </connections>
+            <point key="canvasLocation" x="132" y="125"/>
+        </tableViewCell>
+    </objects>
+</document>

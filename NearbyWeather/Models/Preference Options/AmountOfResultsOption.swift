@@ -6,7 +6,7 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum AmountOfResultsValue: Int, CaseIterable, Codable {
   case ten = 10
@@ -49,5 +49,20 @@ struct AmountOfResultsOption: Codable, PreferencesOption {
   
   var integerValue: Int {
     value.rawValue
+  }
+  
+  var imageValue: UIImage? {
+    switch value {
+    case .ten:
+      return R.image.ten()
+    case .twenty:
+      return R.image.twenty()
+    case .thirty:
+      return R.image.thirty()
+    case .forty:
+      return R.image.forty()
+    case .fifty:
+      return R.image.forty()
+    }
   }
 }

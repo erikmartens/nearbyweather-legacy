@@ -29,6 +29,32 @@ enum ListType: CaseIterable {
 
 final class WeatherListViewController: UITableViewController {
   
+  private lazy var listTypeBarButton = {
+    UIBarButtonItem(
+      image: R.image.layerType(),
+      style: .plain, target: self,
+      action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:))
+    )
+  }()
+  
+  private var numberOfResultsBarButton: UIBarButtonItem {
+    let image = PreferencesDataService.shared.amountOfResults.imageValue
+    
+    return UIBarButtonItem(
+      image: image,
+      style: .plain, target: self,
+      action: #selector(WeatherListViewController.numberOfResultsBarButtonTapped(_:))
+    )
+  }
+  
+  private lazy var sortBarButton = {
+    UIBarButtonItem(
+      image: R.image.sort(),
+      style: .plain, target: self,
+      action: #selector(WeatherListViewController.sortBarButtonTapped(_:))
+    )
+  }()
+  
   // MARK: - Routing
   
   weak var stepper: WeatherListStepper?
@@ -109,10 +135,23 @@ final class WeatherListViewController: UITableViewController {
   }
   
   private func configureButtons() {
-    if WeatherDataService.shared.hasDisplayableData {
-      navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.layerType(), style: .plain, target: self, action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:)))
-    } else {
+    guard WeatherDataService.shared.hasDisplayableData else {
       navigationItem.leftBarButtonItem = nil
+      navigationItem.rightBarButtonItems = nil
+      return
+    }
+    navigationItem.leftBarButtonItem = listTypeBarButton
+    
+    guard WeatherDataService.shared.hasDisplayableWeatherData else {
+      navigationItem.rightBarButtonItems = nil
+      return
+    }
+    
+    switch PreferencesDataService.shared.preferredListType {
+    case .bookmarked:
+      navigationItem.rightBarButtonItems = nil
+    case .nearby:
+      navigationItem.rightBarButtonItems = [sortBarButton, numberOfResultsBarButton]
     }
   }
   
@@ -120,14 +159,38 @@ final class WeatherListViewController: UITableViewController {
     refreshControl?.beginRefreshing()
     WeatherDataService.shared.update(withCompletionHandler: nil)
   }
-  
-  // MARK: - IBActions
+}
+
+// MARK: - IBActions
+
+private extension WeatherListViewController {
   
   @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
       .weatherListType(currentListType: PreferencesDataService.shared.preferredListType, completionHandler: { [weak self] selectedListType in
         PreferencesDataService.shared.preferredListType = selectedListType
         self?.tableView.reloadData()
+        self?.configureButtons()
+      })
+    )
+    present(alert, animated: true, completion: nil)
+  }
+  
+  @objc private func numberOfResultsBarButtonTapped(_ sender: UIBarButtonItem) {
+    let alert = Factory.AlertController.make(fromType:
+      .preferredAmountOfResultsOptions(options: AmountOfResultsOption.availableOptions, completionHandler: { [weak self] changed in
+        guard changed else { return }
+        self?.configureButtons()
+        self?.tableView.reloadData()
+      })
+    )
+    present(alert, animated: true, completion: nil)
+  }
+  
+  @objc private func sortBarButtonTapped(_ sender: UIBarButtonItem) {
+    let alert = Factory.AlertController.make(fromType:
+      .preferredSortingOrientationOptions(options: SortingOrientationOption.availableOptions, completionHandler: { [weak self] changed in
+        if changed { self?.tableView.reloadData() }
       })
     )
     present(alert, animated: true, completion: nil)

@@ -29,8 +29,8 @@ final class SettingsTableViewController: UITableViewController {
                        forCellReuseIdentifier: R.reuseIdentifier.toggleCell.identifier)
     
     tableView.register(ImagedSingleLabelCell.self, forCellReuseIdentifier: ImagedSingleLabelCell.reuseIdentifier)
-    
     tableView.register(ImagedDualLabelCell.self, forCellReuseIdentifier: ImagedDualLabelCell.reuseIdentifier)
+    tableView.register(ImagedToggleCell.self, forCellReuseIdentifier: ImagedToggleCell.reuseIdentifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -178,28 +178,35 @@ final class SettingsTableViewController: UITableViewController {
       return cell
     case 3:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
-        cell.contentLabel.text = R.string.localizable.show_temp_on_icon()
-        BadgeService.shared.isAppIconBadgeNotificationEnabled { enabled in
-          cell.toggle.isOn = enabled
-        }
-        cell.toggleSwitchHandler = { [unowned self] sender in
-          guard sender.isOn else {
-            BadgeService.shared.setTemperatureOnAppIconEnabled(false)
-            return
-          }
-          
-          PermissionsService.shared.requestNotificationPermissions { [weak self] approved in
-            guard approved else {
-              sender.setOn(false, animated: true)
-              self?.showNotificationsSettingsAlert()
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedToggleCell.reuseIdentifier, for: indexPath) as! ImagedToggleCell
+        cell.configure(
+          withTitle: R.string.localizable.show_temp_on_icon(),
+          image: R.image.badge(),
+          imageBackgroundColor: .red,
+          toggleIsOnHandler: { sender in
+            BadgeService.shared.isAppIconBadgeNotificationEnabled { enabled in
+              sender.isOn = enabled
+            }
+          },
+          toggleSwitchHandler: { [weak self] sender in
+            guard sender.isOn else {
+              BadgeService.shared.setTemperatureOnAppIconEnabled(false)
               return
             }
-            BadgeService.shared.setTemperatureOnAppIconEnabled(true)
-          }
-        }
+            
+            PermissionsService.shared.requestNotificationPermissions { [weak self] approved in
+              guard approved else {
+                sender.setOn(false, animated: true)
+                self?.showNotificationsSettingsAlert()
+                return
+              }
+              BadgeService.shared.setTemperatureOnAppIconEnabled(true)
+            }
+        })
+        
         return cell
       }
+      
       let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
       
       // TODO: fix this
@@ -217,13 +224,18 @@ final class SettingsTableViewController: UITableViewController {
       
       return cell
     case 4:
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.toggleCell.identifier, for: indexPath) as! ToggleCell
-      cell.contentLabel.text = R.string.localizable.refresh_on_app_start()
-      cell.toggle.isOn = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
-      cell.toggleSwitchHandler = { sender in
-        UserDefaults.standard.set(sender.isOn, forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
-      }
-    return cell
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedToggleCell.reuseIdentifier, for: indexPath) as! ImagedToggleCell
+      cell.configure(
+        withTitle: R.string.localizable.refresh_on_app_start(),
+        image: R.image.reload(),
+        imageBackgroundColor: .gray,
+        toggleIsOnHandler: { sender in
+          sender.isOn = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
+        },
+        toggleSwitchHandler: { sender in
+          UserDefaults.standard.set(sender.isOn, forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
+      })
+      return cell
     case 5:
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell

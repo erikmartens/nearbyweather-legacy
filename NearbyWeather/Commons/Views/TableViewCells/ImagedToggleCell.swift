@@ -40,13 +40,16 @@ extension ImagedToggleCell {
     withTitle title: String,
     image: UIImage?,
     imageBackgroundColor: UIColor,
+    toggleIsOnHandler: ((UISwitch) -> Void)?,
     toggleSwitchHandler: ((UISwitch) -> Void)?
   ) {
     contentLabel.text = title
     leadingImageView.image = image
     leadingImageView.backgroundColor = imageBackgroundColor
-    self.toggleSwitchHandler = toggleSwitchHandler
     
+    toggleIsOnHandler?(toggleSwitch)
+    
+    self.toggleSwitchHandler = toggleSwitchHandler
     toggleSwitch.addTarget(self, action: #selector(Self.toggleSwitchChanged), for: .valueChanged)
   }
 }

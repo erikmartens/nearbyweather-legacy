@@ -37,6 +37,7 @@
 		F26A6D6020FB70DD0033BC49 /* WeatherDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F26A6D5F20FB70DD0033BC49 /* WeatherDetails.storyboard */; };
 		F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254B2032051F00A1DBD1 /* ButtonCell.swift */; };
 		F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */; };
+		F273EF642444967C0085DB3F /* ImagedSingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273EF632444967C0085DB3F /* ImagedSingleLabelCell.swift */; };
 		F274FC39202F9A9300049144 /* WeatherNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */; };
 		F274FC3B2030ED5A00049144 /* PreferencesDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */; };
 		F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */; };
@@ -187,6 +188,7 @@
 		F26A6D5F20FB70DD0033BC49 /* WeatherDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeatherDetails.storyboard; sourceTree = "<group>"; };
 		F273254B2032051F00A1DBD1 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
+		F273EF632444967C0085DB3F /* ImagedSingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagedSingleLabelCell.swift; sourceTree = "<group>"; };
 		F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkingService.swift; sourceTree = "<group>"; };
 		F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesDataService.swift; sourceTree = "<group>"; };
 		F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -383,6 +385,14 @@
 				F26A6D5D20FB6E610033BC49 /* R.generated.swift */,
 			);
 			name = External;
+			sourceTree = "<group>";
+		};
+		F273EF65244496C40085DB3F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F27A122D24425F2400A2CE8D /* TableViewCells */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		F27A1216243BC03000A2CE8D /* Project Files */ = {
@@ -585,7 +595,7 @@
 				F27A122A24425EC000A2CE8D /* Constants */,
 				F27A122B24425EE300A2CE8D /* Factory */,
 				F27A122C24425F0700A2CE8D /* Extensions */,
-				F27A122D24425F2400A2CE8D /* TableViewCells */,
+				F273EF65244496C40085DB3F /* Views */,
 				F27A122F24425F6900A2CE8D /* Custom Objects */,
 				F2F155472443BAE4007A3E90 /* Records */,
 			);
@@ -653,6 +663,7 @@
 				F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */,
 				F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */,
 				F2DBEAF023E5F98200CD513B /* TextInputCell.swift */,
+				F273EF632444967C0085DB3F /* ImagedSingleLabelCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -1104,6 +1115,7 @@
 				F2DBEAFA23E6357C00CD513B /* WelcomeCoordinator.swift in Sources */,
 				F2F1553E244278D4007A3E90 /* ErrorDataDTO.swift in Sources */,
 				F2B8EA021EA121CC00704E90 /* AlertCell.swift in Sources */,
+				F273EF642444967C0085DB3F /* ImagedSingleLabelCell.swift in Sources */,
 				F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */,
 				F2DBEB1B23EEF92800CD513B /* Step.swift in Sources */,
 				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,

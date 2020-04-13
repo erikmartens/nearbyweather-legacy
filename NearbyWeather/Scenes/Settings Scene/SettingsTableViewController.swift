@@ -27,6 +27,8 @@ final class SettingsTableViewController: UITableViewController {
     
     tableView.register(UINib(nibName: R.nib.toggleCell.name, bundle: R.nib.toggleCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.toggleCell.identifier)
+    
+    tableView.register(ImagedSingleLabelCell.self, forCellReuseIdentifier: ImagedSingleLabelCell.reuseIdentifier)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -119,8 +121,8 @@ final class SettingsTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch indexPath.section {
     case 0:
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dualLabelCell.identifier, for: indexPath) as! DualLabelCell
-      cell.contentLabel.text = R.string.localizable.about()
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+      cell.configure(withTitle: R.string.localizable.about(), image: R.image.info(), imageBackgroundColor: Constants.Theme.BrandColors.standardDay)
       cell.accessoryType = .disclosureIndicator
       return cell
     case 1:
@@ -131,8 +133,8 @@ final class SettingsTableViewController: UITableViewController {
         cell.accessoryType = .disclosureIndicator
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
-      cell.contentLabel.text = R.string.localizable.get_started_with_openweathermap()
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+      cell.configure(withTitle: R.string.localizable.get_started_with_openweathermap(), image: R.image.start(), imageBackgroundColor: .green)
       cell.accessoryType = .disclosureIndicator
       return cell
     case 2:
@@ -159,8 +161,8 @@ final class SettingsTableViewController: UITableViewController {
         cell.selectionLabel.text = cellLabelTitle
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
-      cell.contentLabel.text = R.string.localizable.add_location()
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+      cell.configure(withTitle: R.string.localizable.add_location(), image: R.image.add_bookmark(), imageBackgroundColor: .red)
       cell.accessoryType = .disclosureIndicator
       return cell
     case 3:

@@ -19,15 +19,6 @@ final class SettingsTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    tableView.register(UINib(nibName: R.nib.dualLabelCell.name, bundle: R.nib.dualLabelCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.dualLabelCell.identifier)
-    
-    tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
-    
-    tableView.register(UINib(nibName: R.nib.toggleCell.name, bundle: R.nib.toggleCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.toggleCell.identifier)
-    
     tableView.register(ImagedSingleLabelCell.self, forCellReuseIdentifier: ImagedSingleLabelCell.reuseIdentifier)
     tableView.register(ImagedDualLabelCell.self, forCellReuseIdentifier: ImagedDualLabelCell.reuseIdentifier)
     tableView.register(ImagedToggleCell.self, forCellReuseIdentifier: ImagedToggleCell.reuseIdentifier)

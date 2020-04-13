@@ -62,7 +62,7 @@ struct AmountOfResultsOption: Codable, PreferencesOption {
     case .forty:
       return R.image.forty()
     case .fifty:
-      return R.image.forty()
+      return R.image.fifty()
     }
   }
 }

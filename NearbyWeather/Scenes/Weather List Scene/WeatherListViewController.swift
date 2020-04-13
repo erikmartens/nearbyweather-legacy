@@ -33,7 +33,7 @@ final class WeatherListViewController: UITableViewController {
     UIBarButtonItem(
       image: R.image.layerType(),
       style: .plain, target: self,
-      action: #selector(WeatherListViewController.listTypeBarButtonTapped(_:))
+      action: #selector(Self.listTypeBarButtonTapped(_:))
     )
   }()
   
@@ -43,7 +43,7 @@ final class WeatherListViewController: UITableViewController {
     return UIBarButtonItem(
       image: image,
       style: .plain, target: self,
-      action: #selector(WeatherListViewController.numberOfResultsBarButtonTapped(_:))
+      action: #selector(Self.numberOfResultsBarButtonTapped(_:))
     )
   }
   
@@ -51,7 +51,7 @@ final class WeatherListViewController: UITableViewController {
     UIBarButtonItem(
       image: R.image.sort(),
       style: .plain, target: self,
-      action: #selector(WeatherListViewController.sortBarButtonTapped(_:))
+      action: #selector(Self.sortBarButtonTapped(_:))
     )
   }()
   
@@ -178,7 +178,7 @@ private extension WeatherListViewController {
 
 private extension WeatherListViewController {
   
-  @objc private func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
+  @objc func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
       .weatherListType(currentListType: PreferencesDataService.shared.preferredListType, completionHandler: { [weak self] selectedListType in
         PreferencesDataService.shared.preferredListType = selectedListType
@@ -190,7 +190,7 @@ private extension WeatherListViewController {
     present(alert, animated: true, completion: nil)
   }
   
-  @objc private func numberOfResultsBarButtonTapped(_ sender: UIBarButtonItem) {
+  @objc func numberOfResultsBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
       .preferredAmountOfResultsOptions(options: AmountOfResultsOption.availableOptions, completionHandler: { [weak self] changed in
         guard changed else { return }
@@ -201,7 +201,7 @@ private extension WeatherListViewController {
     present(alert, animated: true, completion: nil)
   }
   
-  @objc private func sortBarButtonTapped(_ sender: UIBarButtonItem) {
+  @objc func sortBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
       .preferredSortingOrientationOptions(options: SortingOrientationOption.availableOptions, completionHandler: { [weak self] changed in
         if changed { self?.tableView.reloadData() }

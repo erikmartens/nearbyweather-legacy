@@ -32,21 +32,7 @@
                         <viewLayoutGuide key="safeArea" id="1W5-hY-SIv"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="ba4-H7-WKH">
-                        <barButtonItem key="leftBarButtonItem" image="LayerType" id="H5s-gX-pXC">
-                            <connections>
-                                <action selector="changeMapTypeButtonTapped:" destination="4pw-T6-fLw" id="ctj-XP-U7u"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="marker" id="AHZ-7N-a8R">
-                            <connections>
-                                <action selector="focusLocationButtonTapped:" destination="4pw-T6-fLw" id="lfk-2R-tkh"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
-                        <outlet property="changeMapTypeButton" destination="H5s-gX-pXC" id="arr-gv-Jyx"/>
-                        <outlet property="focusLocationButton" destination="AHZ-7N-a8R" id="fHr-dF-P1f"/>
                         <outlet property="mapView" destination="dWU-f3-idb" id="e7j-Ga-fbQ"/>
                     </connections>
                 </viewController>
@@ -55,8 +41,4 @@
             <point key="canvasLocation" x="3772" y="195.6521739130435"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="LayerType" width="25" height="25"/>
-        <image name="marker" width="25" height="25"/>
-    </resources>
 </document>

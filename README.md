@@ -2,7 +2,7 @@
 <img src="Resources/app_icon.png" alt="NearbyWeather for iOS" height="128" width="128">
 </p>
 
-<h1 align="center">NearbyWeather - Open Source Weather</h1>
+<h1 align="center">NearbyWeather - OpenWeatherMap Client</h1>
 
 <p align="center">
 <a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-5-orange.svg?style=flat" alt="Swift"/></a>
@@ -25,14 +25,15 @@ NearbyWeather is a simple weather app, that provides current weather information
 With NearbyWeather you can:
 
 - See current weather information for bookmarked and nearby places via a list and a map view
+- See the current temperature on your app icon
 - Detailed weather information is offered in addition to the overviews
 - Add places as bookmarks via OpenWeatherMaps weather-station data base
 - Choose your preferred units (celsius/fahrenheit/kelvin & kilometres/miles)
 - Access previously loaded data offline
 
-> Please note that you need to supply your own OpenWeatherMap api key, in order to use the app. A free tier api key only allows for 60 requests per minute, which may only be sufficient for a single user. As the app is available at no charge and is open source, a paid tier api key can not be included. 
+> Please note that you need to supply your own OpenWeatherMap API key, in order to use the app. A free tier API key only allows for 60 requests per minute, which may only be sufficient for a single user. As the app is available at no charge, a paid tier API key can not be included. 
 
-> Downloading data for a bookmarked location counts as one request. Downloading bulk data for nearby places also counts as a single request, regardless of the amount of results you choose. You can add bookmarks indefinitely, but for example exceeding the 60 requests limit with a free tier api key may result in a failure to download data (this scenario has not been tested and depends of the tier of your api key).
+> Downloading data for a bookmarked location counts as one request. Downloading bulk data for nearby places also counts as a single request, regardless of the amount of results you choose. You can add bookmarks indefinitely, but for example exceeding the 60 requests limit with a free tier API key may result in a failure to download data (this scenario has not been tested and depends of the tier of your API key).
 
 ## Goals of this Project
 NearbyWeather should help you as a reference for your development. Whether you just started iOS development or want to learn more about Swift by seeing in action, this project is here for your guidance. Idealy you already have gained some experience or got your feet wet with mobile development. NearbyWeather is created to teach basic principles of iOS development, including but not limited to:
@@ -71,8 +72,9 @@ We looking forward to receiving your contributions. You can find more informatio
 Additionally you may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.
 
 ## Future Developments
-- Integrate RxSwift (routing via RxFlow)
+- Integrate RxSwift
+- Re-Build Routing using RxFlow
 - Integrate Realm for data persistence
-- Refactor scene-architecture using MVVM+C pattern
-- Integrate XCTests
+- Refactor scene-architecture using MVVM+C pattern with RxSwift
+- Write XCTests
 - Setup CI and CD with Bitrise

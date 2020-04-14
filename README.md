@@ -20,9 +20,10 @@
 </p>
 
 ## About the App
-NearbyWeather is a simple weather app, that provides current weather information for nearby cities, as well for bookmarked locations. NearbyWeather uses the OpenWeatherMap api to download weather data. Additionally the OpenWeatherMaps location database is directly bootstrapped into the app for quick access.
+NearbyWeather is a simple weather app, that provides current weather information for nearby cities, as well for bookmarked locations. NearbyWeather uses the OpenWeatherMap API to download weather data. Additionally the OpenWeatherMaps location database is directly bootstrapped into the app for quick access.
 
 With NearbyWeather you can:
+
 - See current weather information for bookmarked and nearby places via a list and a map view
 - Detailed weather information is offered in addition to the overviews
 - Add places as bookmarks via OpenWeatherMaps weather-station data base
@@ -70,6 +71,8 @@ We looking forward to receiving your contributions. You can find more informatio
 Additionally you may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.
 
 ## Future Developments
-- [Release 2.2](https://github.com/erikmartens/NearbyWeather/projects/1)
-- Integrate XCTests and Bitrise/[Travis](https://travis-ci.org)
-- Integrate Firebase Crashlytics/[Fabric](https://get.fabric.io)
+- Integrate RxSwift (routing via RxFlow)
+- Integrate Realm for data persistence
+- Refactor scene-architecture using MVVM+C pattern
+- Integrate XCTests
+- Setup CI and CD with Bitrise

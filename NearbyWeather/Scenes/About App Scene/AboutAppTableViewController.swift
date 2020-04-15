@@ -186,8 +186,9 @@ final class AboutAppTableViewController: UITableViewController {
         rightButtonHandler: { [weak self] _ in
           self?.sendMail(
             to: [Constants.EmailAdresses.mainContact],
-            withSubject: R.string.localizable.email_salutation(),
-            withMessage: R.string.localizable.app_name().append(contentsOf: R.string.localizable.report_issue(), delimiter: .custom(string: " - "))
+            withSubject: R.string.localizable.app_name()
+              .append(contentsOf: R.string.localizable.report_issue(), delimiter: .custom(string: " - ")),
+            withMessage: R.string.localizable.email_salutation()
           )
         }
       )

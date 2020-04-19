@@ -1,5 +1,5 @@
 //
-//  WeatherListViewController.swift
+//  ListViewController.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 20.10.17.
@@ -16,7 +16,7 @@ enum ListType: CaseIterable {
   case nearby
   
   static var allCases: [ListType] {
-    return [.bookmarked, .nearby]
+    [.bookmarked, .nearby]
   }
   
   var title: String {
@@ -29,7 +29,7 @@ enum ListType: CaseIterable {
   }
 }
 
-final class WeatherListViewController: UITableViewController, Stepper {
+final class ListViewController: UITableViewController, Stepper {
   
   private lazy var listTypeBarButton = {
     UIBarButtonItem(
@@ -115,7 +115,7 @@ final class WeatherListViewController: UITableViewController, Stepper {
   }
 }
 
-private extension WeatherListViewController {
+private extension ListViewController {
   
   // MARK: - Private Helpers
   
@@ -182,7 +182,7 @@ private extension WeatherListViewController {
 
 // MARK: - IBActions
 
-private extension WeatherListViewController {
+private extension ListViewController {
   
   @objc func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
@@ -219,7 +219,7 @@ private extension WeatherListViewController {
 
 // MARK: - UITableViewDelegate
 
-extension WeatherListViewController {
+extension ListViewController {
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     UITableView.automaticDimension
@@ -232,7 +232,7 @@ extension WeatherListViewController {
 
 // MARK: - UITableViewDataSource
 
-extension WeatherListViewController {
+extension ListViewController {
   
   override func numberOfSections(in tableView: UITableView) -> Int {
     1

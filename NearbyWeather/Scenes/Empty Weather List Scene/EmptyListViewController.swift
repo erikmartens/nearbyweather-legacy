@@ -1,5 +1,5 @@
 //
-//  EmptyWeatherListViewController.swift
+//  EmptyListViewController.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 16.02.20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class EmptyWeatherListViewController: UIViewController {
+final class EmptyListViewController: UIViewController {
   
   // MARK: - IBOutlets
   

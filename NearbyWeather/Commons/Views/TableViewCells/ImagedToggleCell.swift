@@ -10,7 +10,7 @@ import UIKit
 
 class ImagedToggleCell: UITableViewCell, ReuseIdentifiable {
   
-  private lazy var contentLabel = Factory.Label.make(fromType: .body)
+  private lazy var contentLabel = Factory.Label.make(fromType: .body(alignment: .left, numberOfLines: 0))
   private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
   private lazy var toggleSwitch = UISwitch()
   

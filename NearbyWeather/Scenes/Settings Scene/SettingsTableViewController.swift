@@ -132,10 +132,9 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       return cell
     case 1:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
         cell.configure(
           withTitle: R.string.localizable.apiKey(),
-          description: UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String,
           image: R.image.seal(),
           imageBackgroundColor: Constants.Theme.Color.SystemColor.green
         )
@@ -214,7 +213,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
               BadgeService.shared.setTemperatureOnAppIconEnabled(true)
             }
         })
-        
+        cell.selectionStyle = .none
         return cell
       }
       
@@ -246,6 +245,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
         toggleSwitchHandler: { sender in
           UserDefaults.standard.set(sender.isOn, forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey)
       })
+      cell.selectionStyle = .none
       return cell
     case 5:
       if indexPath.row == 0 {

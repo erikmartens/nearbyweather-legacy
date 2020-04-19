@@ -58,20 +58,27 @@ final class SettingsFlow: Flow {
 
 private extension SettingsFlow {
   
+  static func preferredTableViewStyle() -> UITableView.Style {
+    if #available(iOS 13, *) {
+      return .insetGrouped
+    }
+    return .grouped
+  }
+  
   func summonSettingsController() -> FlowContributors {
-    let settingsViewController = SettingsTableViewController(style: .grouped)
+    let settingsViewController = SettingsTableViewController(style: SettingsFlow.preferredTableViewStyle())
     rootViewController.setViewControllers([settingsViewController], animated: false)
     return .one(flowContributor: .contribute(withNext: settingsViewController))
   }
   
   func summonAboutController() -> FlowContributors {
-    let aboutController = AboutAppTableViewController(style: .grouped)
+    let aboutController = AboutAppTableViewController(style: SettingsFlow.preferredTableViewStyle())
     rootViewController.pushViewController(aboutController, animated: true)
     return .one(flowContributor: .contribute(withNext: aboutController))
   }
   
   func summonApiKeyEditController() -> FlowContributors {
-    let apiKeyEditController = SettingsInputTableViewController(style: .grouped)
+    let apiKeyEditController = SettingsInputTableViewController(style: SettingsFlow.preferredTableViewStyle())
     rootViewController.pushViewController(apiKeyEditController, animated: true)
     return .one(flowContributor: .contribute(withNext: apiKeyEditController))
   }
@@ -80,13 +87,13 @@ private extension SettingsFlow {
     guard !WeatherDataService.shared.bookmarkedLocations.isEmpty else {
       return .none
     }
-    let locationManagementController = WeatherLocationManagementTableViewController(style: .grouped)
+    let locationManagementController = WeatherLocationManagementTableViewController(style: SettingsFlow.preferredTableViewStyle())
     rootViewController.pushViewController(locationManagementController, animated: true)
     return .one(flowContributor: .contribute(withNext: locationManagementController))
   }
   
   func summonAddLocationController() -> FlowContributors {
-    let addLocationController = WeatherLocationSelectionTableViewController(style: .grouped)
+    let addLocationController = WeatherLocationSelectionTableViewController(style: SettingsFlow.preferredTableViewStyle())
     rootViewController.pushViewController(addLocationController, animated: true)
     return .one(flowContributor: .contribute(withNext: addLocationController))
   }

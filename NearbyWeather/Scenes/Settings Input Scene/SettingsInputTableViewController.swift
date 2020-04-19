@@ -19,19 +19,21 @@ final class SettingsInputTableViewController: UITableViewController, Stepper {
   
   // MARK: - ViewController Life Cycle
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    title = R.string.localizable.api_settings()
+  override init(style: UITableView.Style) {
+    super.init(style: style)
     
     tableView.delegate = self
     tableView.register(UINib(nibName: R.nib.textInputCell.name, bundle: R.nib.textInputCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.textInputCell.identifier)
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    tableView.reloadData()
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    title = R.string.localizable.api_settings()
   }
   
   override func viewDidAppear(_ animated: Bool) {

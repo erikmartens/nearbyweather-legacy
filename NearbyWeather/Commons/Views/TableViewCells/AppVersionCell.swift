@@ -11,16 +11,8 @@ import UIKit
 class AppVersionCell: UITableViewCell, ReuseIdentifiable {
   
   private lazy var mainImageView = Factory.ImageView.make(fromType: .appIcon)
-  private lazy var titleLabel: UILabel = {
-    let label = Factory.Label.make(fromType: .title)
-    label.textAlignment = .center
-    return label
-  }()
-  private lazy var subtitleLabel: UILabel = {
-    let label = Factory.Label.make(fromType: .description)
-    label.textAlignment = .center
-    return label
-  }()
+  private lazy var titleLabel = Factory.Label.make(fromType: .title(alignment: .center, numberOfLines: 0))
+  private lazy var subtitleLabel = Factory.Label.make(fromType: .description(alignment: .center, numberOfLines: 0))
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)

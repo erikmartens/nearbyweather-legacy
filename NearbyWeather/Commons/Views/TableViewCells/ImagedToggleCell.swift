@@ -8,12 +8,10 @@
 
 import UIKit
 
-class ImagedToggleCell: UITableViewCell {
+class ImagedToggleCell: UITableViewCell, ReuseIdentifiable {
   
-  static let reuseIdentifier = "ImagedToggleCell"
-  
-  private lazy var contentLabel = Factory.Label.make(fromType: .standard)
-  private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellImage)
+  private lazy var contentLabel = Factory.Label.make(fromType: .body)
+  private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
   private lazy var toggleSwitch = UISwitch()
   
   private var toggleSwitchHandler: ((UISwitch) -> Void)?

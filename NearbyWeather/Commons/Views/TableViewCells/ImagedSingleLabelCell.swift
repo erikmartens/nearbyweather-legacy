@@ -8,12 +8,10 @@
 
 import UIKit
 
-class ImagedSingleLabelCell: UITableViewCell {
+class ImagedSingleLabelCell: UITableViewCell, ReuseIdentifiable {
   
-  static let reuseIdentifier = "ImagedSingleLabelCell"
-  
-  private lazy var contentLabel = Factory.Label.make(fromType: .standard)
-  private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellImage)
+  private lazy var contentLabel = Factory.Label.make(fromType: .body)
+  private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)

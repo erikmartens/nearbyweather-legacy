@@ -65,7 +65,7 @@ private extension SettingsFlow {
   }
   
   func summonAboutController() -> FlowContributors {
-    let aboutController = R.storyboard.aboutApp.infoTableViewController()!
+    let aboutController = AboutAppTableViewController(style: .grouped)
     rootViewController.pushViewController(aboutController, animated: true)
     return .one(flowContributor: .contribute(withNext: aboutController))
   }

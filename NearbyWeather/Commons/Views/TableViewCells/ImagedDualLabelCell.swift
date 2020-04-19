@@ -8,13 +8,11 @@
 
 import UIKit
 
-class ImagedDualLabelCell: UITableViewCell {
+class ImagedDualLabelCell: UITableViewCell, ReuseIdentifiable {
   
-  static let reuseIdentifier = "ImagedDualLabelCell"
-  
-  private lazy var contentLabel = Factory.Label.make(fromType: .standard)
+  private lazy var contentLabel = Factory.Label.make(fromType: .body)
   private lazy var descriptionLabel = Factory.Label.make(fromType: .description)
-  private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellImage)
+  private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)

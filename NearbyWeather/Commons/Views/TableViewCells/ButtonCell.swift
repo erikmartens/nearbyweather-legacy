@@ -12,7 +12,7 @@ class ButtonCell: UITableViewCell {
   
   static let reuseIdentifier = "ButtonCell"
   
-  private lazy var contentLabel = Factory.Label.make(fromType: .standard)
+  private lazy var contentLabel = Factory.Label.make(fromType: .body)
   private lazy var leftButton = Factory.Button.make(fromType: .standard(height: Constants.Dimensions.InteractableElement.height))
   private lazy var rightButton = Factory.Button.make(fromType: .standard(height: Constants.Dimensions.InteractableElement.height))
   

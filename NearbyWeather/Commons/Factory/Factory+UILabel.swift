@@ -13,7 +13,8 @@ extension Factory {
   struct Label: FactoryFunction {
     
     enum LabelType {
-      case standard
+      case title
+      case body
       case description
     }
     
@@ -24,7 +25,11 @@ extension Factory {
       let label = UILabel()
       
       switch type {
-      case .standard:
+      case .title:
+        label.textColor = Constants.Theme.Color.ContentElement.title
+        label.font = .preferredFont(forTextStyle: .title3)
+        label.textAlignment = .left
+      case .body:
         label.textColor = Constants.Theme.Color.ContentElement.title
         label.font = .preferredFont(forTextStyle: .body)
         label.textAlignment = .left
@@ -32,6 +37,7 @@ extension Factory {
         label.textColor = Constants.Theme.Color.ContentElement.subtitle
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.textAlignment = .right
+      
       }
       
       return label

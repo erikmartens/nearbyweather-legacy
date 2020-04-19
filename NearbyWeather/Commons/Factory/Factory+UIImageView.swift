@@ -13,7 +13,8 @@ extension Factory {
   struct ImageView: FactoryFunction {
     
     enum ImageViewType {
-      case cellImage
+      case appIcon
+      case cellPrefix
     }
     
     typealias InputType = ImageViewType
@@ -23,10 +24,15 @@ extension Factory {
       let imageView = UIImageView()
       
       switch type {
-      case .cellImage:
+      case .appIcon:
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = Constants.Dimensions.AppIconImageSize.cornerRadius
+        imageView.layer.masksToBounds = true
+      case .cellPrefix:
         imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = Constants.Dimensions.TableCellImageSize.cornerRadius
+        imageView.layer.masksToBounds = true
       }
       
       return imageView

@@ -24,8 +24,6 @@ final class EmptyWeatherListViewController: UIViewController {
     super.viewDidLoad()
     title = R.string.localizable.tab_weatherList()
     
-    navigationController?.navigationBar.isHidden = true
-    
     configureWeatherDataUnavailableElements()
     configureButtons()
     

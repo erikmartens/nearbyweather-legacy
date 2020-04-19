@@ -18,10 +18,8 @@ final class ListFlow: Flow {
   
   private lazy var rootViewController: UINavigationController = {
     let navigationController = Factory.NavigationController.make(fromType: .standard)
-    
     navigationController.tabBarItem.image = R.image.tabbar_list_ios11()
     navigationController.tabBarItem.title = R.string.localizable.tab_weatherList()
-    
     return navigationController
   }()
   

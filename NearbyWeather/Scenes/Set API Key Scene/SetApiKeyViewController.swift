@@ -11,7 +11,7 @@ import RxFlow
 import RxCocoa
 import TextFieldCounter
 
-final class WelcomeViewController: UIViewController, Stepper { // TODO Rename to Set API Key Scene
+final class SetApiKeyViewController: UIViewController, Stepper {
   
   // MARK: - Routing
   
@@ -85,7 +85,7 @@ final class WelcomeViewController: UIViewController, Stepper { // TODO Rename to
   }
   
   fileprivate func startAnimationTimer() {
-    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: (#selector(WelcomeViewController.animatePulse)), userInfo: nil, repeats: false)
+    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: (#selector(SetApiKeyViewController.animatePulse)), userInfo: nil, repeats: false)
   }
   
   @objc private func animatePulse() {
@@ -128,7 +128,7 @@ final class WelcomeViewController: UIViewController, Stepper { // TODO Rename to
   }
 }
 
-extension WelcomeViewController: CAAnimationDelegate {
+extension SetApiKeyViewController: CAAnimationDelegate {
   
   func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
     startAnimationTimer()

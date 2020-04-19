@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Welcome View Controller-->
+        <!--Set Api Key View Controller-->
         <scene sceneID="ndt-Yg-WbV">
             <objects>
-                <viewController storyboardIdentifier="WelcomeScreenViewController" id="cEM-Q0-XtO" customClass="WelcomeViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetApiKeyViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cEM-Q0-XtO" customClass="SetApiKeyViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Yaf-73-dty"/>
                         <viewControllerLayoutGuide type="bottom" id="dea-Jv-t9w"/>

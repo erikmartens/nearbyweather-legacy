@@ -17,13 +17,7 @@ final class WelcomeFlow: Flow {
   }
   
   private lazy var rootViewController: UINavigationController = {
-    let navigationController = UINavigationController()
-    
-    navigationController.navigationBar.backgroundColor = Constants.Theme.Color.ViewElement.background
-    navigationController.navigationBar.barTintColor = Constants.Theme.Color.ContentElement.title
-    navigationController.navigationBar.tintColor = Constants.Theme.Color.BrandColors.standardDay
-    
-    return navigationController
+    Factory.NavigationController.make(fromType: .standard)
   }()
   
   // MARK: - Initialization
@@ -55,7 +49,7 @@ private extension WelcomeFlow {
   
   private func summonWelcomeWindow() -> FlowContributors {
    
-    let welcomeViewController = R.storyboard.welcome.welcomeScreenViewController()!
+    let welcomeViewController = R.storyboard.setApiKey.setApiKeyViewController()!
     rootViewController.setViewControllers([welcomeViewController], animated: false)
     return .one(flowContributor: .contribute(withNext: welcomeViewController))
   }

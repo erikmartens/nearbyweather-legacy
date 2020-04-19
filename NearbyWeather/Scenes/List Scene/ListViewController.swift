@@ -168,9 +168,9 @@ private extension ListViewController {
   func configureNavigationTitle() {
     switch PreferencesDataService.shared.preferredListType {
     case .bookmarked:
-      title = R.string.localizable.bookmarks()
+      navigationItem.title = R.string.localizable.bookmarks()
     case .nearby:
-      title = R.string.localizable.nearby()
+      navigationItem.title = R.string.localizable.nearby()
     }
   }
   

@@ -66,7 +66,7 @@ final class MapFlow: Flow {
 private extension MapFlow {
   
   func summonWeatherMapController() -> FlowContributors {
-    let mapViewController = WeatherMapViewController()
+    let mapViewController = MapViewController()
     rootViewController.setViewControllers([mapViewController], animated: false)
     return .one(flowContributor: .contribute(withNext: mapViewController))
   }

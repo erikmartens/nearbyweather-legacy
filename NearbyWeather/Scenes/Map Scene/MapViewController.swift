@@ -11,7 +11,7 @@ import MapKit
 import RxFlow
 import RxCocoa
 
-final class WeatherMapViewController: UIViewController, Stepper {
+final class MapViewController: UIViewController, Stepper {
   
   private lazy var mapTypeBarButton = {
     UIBarButtonItem(
@@ -87,7 +87,7 @@ final class WeatherMapViewController: UIViewController, Stepper {
 
 // MARK: - Private Helpers
 
-private extension WeatherMapViewController {
+private extension MapViewController {
   
   func configureMapAnnotations() {
     // remove previous annotations
@@ -169,7 +169,7 @@ private extension WeatherMapViewController {
 
 // MARK: - Target Functions
 
-private extension WeatherMapViewController {
+private extension MapViewController {
   
   @objc func mapTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
@@ -222,7 +222,7 @@ private extension WeatherMapViewController {
   }
 }
 
-extension WeatherMapViewController: MKMapViewDelegate {
+extension MapViewController: MKMapViewDelegate {
   
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     guard let annotation = annotation as? WeatherLocationMapAnnotation else {

@@ -14,7 +14,7 @@ import APTimeZones
 
 extension WeatherDetailViewController {
   static func instantiateFromStoryBoard(weatherDTO: WeatherInformationDTO, isBookmark: Bool) -> WeatherDetailViewController {
-    let viewController = R.storyboard.weatherDetails.weatherDetailViewController()!
+    let viewController = R.storyboard.weatherDetail.weatherDetailViewController()!
     viewController.titleString = weatherDTO.cityName
     viewController.weatherDTO = weatherDTO
     viewController.isBookmark = isBookmark

@@ -18,18 +18,25 @@ final class SettingsTableViewController: UITableViewController, Stepper {
   
   // MARK: - ViewController LifeCycle
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    title = R.string.localizable.tab_settings()
+  override init(style: UITableView.Style) {
+    super.init(style: style)
     
     tableView.register(ImagedSingleLabelCell.self, forCellReuseIdentifier: ImagedSingleLabelCell.reuseIdentifier)
     tableView.register(ImagedDualLabelCell.self, forCellReuseIdentifier: ImagedDualLabelCell.reuseIdentifier)
     tableView.register(ImagedToggleCell.self, forCellReuseIdentifier: ImagedToggleCell.reuseIdentifier)
   }
   
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    title = R.string.localizable.tab_settings()
+  }
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
     tableView.reloadData()
   }
   

@@ -63,11 +63,8 @@ final class WeatherListViewController: UITableViewController, Stepper {
   
   // MARK: - ViewController Lifecycle
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    navigationController?.navigationBar.isHidden = false
-    
-    refreshControl = UIRefreshControl()
+  override init(style: UITableView.Style) {
+    super.init(style: style)
     tableView.separatorStyle = .none
     
     tableView.register(UINib(nibName: R.nib.weatherDataCell.name, bundle: R.nib.weatherDataCell.bundle),
@@ -75,6 +72,15 @@ final class WeatherListViewController: UITableViewController, Stepper {
     
     tableView.register(UINib(nibName: R.nib.alertCell.name, bundle: R.nib.alertCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.alertCell.identifier)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    refreshControl = UIRefreshControl()
     
     NotificationCenter.default.addObserver(
       self,
@@ -162,9 +168,9 @@ private extension WeatherListViewController {
   func configureNavigationTitle() {
     switch PreferencesDataService.shared.preferredListType {
     case .bookmarked:
-      navigationItem.title = R.string.localizable.bookmarks()
+      title = R.string.localizable.bookmarks()
     case .nearby:
-      navigationItem.title = R.string.localizable.nearby()
+      title = R.string.localizable.nearby()
     }
   }
   

@@ -7,10 +7,11 @@
 //
 
 import UIKit
-import SafariServices
+import RxFlow
+import RxCocoa
 import MessageUI
 
-final class AboutAppTableViewController: UITableViewController {
+final class AboutAppTableViewController: UITableViewController, Stepper {
   
   private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO] = {
     DataStorageWorker.retrieveJsonFromFile(with: R.file.thirdPartyLibrariesJson.name,
@@ -39,7 +40,7 @@ final class AboutAppTableViewController: UITableViewController {
   
   // MARK: - Routing
   
-  weak var stepper: SettingsStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - IBOutlets
   
@@ -50,6 +51,7 @@ final class AboutAppTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.about()
     
     tableView.delegate = self
     tableView.estimatedRowHeight = 44
@@ -109,7 +111,7 @@ final class AboutAppTableViewController: UITableViewController {
     guard let urlString = urlStringValue, let url = URL(string: urlString) else {
       return
     }
-    presentSafariViewController(for: url)
+    steps.accept(SettingsStep.webBrowser(url: url))
   }
   
   // MARK: - TableView Data Source

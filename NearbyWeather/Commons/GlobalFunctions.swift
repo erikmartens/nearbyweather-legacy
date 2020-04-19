@@ -13,7 +13,11 @@ func printDebugMessage(domain: String, message: String) {
   guard !BuildEnvironment.isReleaseEvironment() else {
     return
   }
-  debugPrint("💥 \(domain) : \(message)")
+  debugPrint(
+    "💥"
+      .append(contentsOf: domain, delimiter: .space)
+      .append(contentsOf: message, delimiter: .custom(string: " : "))
+  )
 }
 
 func reportNonFatalError(_ error: NSError) {

@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 
-final class WeatherLocationManagementTableViewController: UITableViewController {
+final class WeatherLocationManagementTableViewController: UITableViewController, Stepper {
   
   // MARK: - Routing
   
-  weak var stepper: SettingsStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - Properties
   
@@ -24,6 +26,7 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.manage_locations()
     
     tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
@@ -70,15 +73,15 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   }
   
   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-    return true
+    true
   }
   
   override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-    return false
+    false
   }
   
   override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-    return true
+    true
   }
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

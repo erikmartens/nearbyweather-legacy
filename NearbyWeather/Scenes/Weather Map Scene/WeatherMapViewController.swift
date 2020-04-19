@@ -8,8 +8,10 @@
 
 import UIKit
 import MapKit
+import RxFlow
+import RxCocoa
 
-final class WeatherMapViewController: UIViewController {
+final class WeatherMapViewController: UIViewController, Stepper {
   
   private lazy var mapTypeBarButton = {
     UIBarButtonItem(
@@ -39,7 +41,7 @@ final class WeatherMapViewController: UIViewController {
   
   // MARK: - Routing
   
-  weak var stepper: WeatherMapStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - IBOutlets
   
@@ -256,8 +258,8 @@ extension WeatherMapViewController: MKMapViewDelegate {
       textColor: textColor,
       tapHandler: { [weak self] _ in
         self?.previousRegion = mapView.region
-        self?.stepper?.requestRouting(toStep:
-          WeatherMapStep.weatherDetails(identifier: annotation.locationId, isBookmark: annotation.isBookmark)
+        self?.steps.accept(
+          MapStep.weatherDetails(identifier: annotation.locationId, isBookmark: annotation.isBookmark)
         )
       }
     )

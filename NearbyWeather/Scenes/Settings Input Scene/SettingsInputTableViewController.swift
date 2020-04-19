@@ -7,18 +7,21 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 import PKHUD
 
-final class SettingsInputTableViewController: UITableViewController {
+final class SettingsInputTableViewController: UITableViewController, Stepper {
   
   // MARK: - Routing
   
-  weak var stepper: SettingsStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - ViewController Life Cycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.api_settings()
     
     tableView.delegate = self
     tableView.register(UINib(nibName: R.nib.textInputCell.name, bundle: R.nib.textInputCell.bundle),

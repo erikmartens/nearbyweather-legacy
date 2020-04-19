@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 
-final class SetPermissionsViewController: UIViewController {
+final class SetPermissionsViewController: UIViewController, Stepper {
   
   // MARK: - Routing
   
-  weak var stepper: WelcomeStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - Properties
   
@@ -30,6 +32,7 @@ final class SetPermissionsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.location_access()
     configure()
     
     NotificationCenter.default.addObserver(
@@ -84,7 +87,7 @@ final class SetPermissionsViewController: UIViewController {
   }
   
   @objc func launchApp() {
-    stepper?.requestRouting(toStep: .launchApp)
+    steps.accept(WelcomeStep.launchApp)
   }
   
   // MARK: - Button Interaction

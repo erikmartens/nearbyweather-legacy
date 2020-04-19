@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 
-final class SettingsTableViewController: UITableViewController {
+final class SettingsTableViewController: UITableViewController, Stepper {
   
   // MARK: - Routing
   
-  weak var stepper: SettingsStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - ViewController LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.tab_settings()
     
     tableView.register(ImagedSingleLabelCell.self, forCellReuseIdentifier: ImagedSingleLabelCell.reuseIdentifier)
     tableView.register(ImagedDualLabelCell.self, forCellReuseIdentifier: ImagedDualLabelCell.reuseIdentifier)
@@ -39,18 +42,18 @@ final class SettingsTableViewController: UITableViewController {
     
     switch indexPath.section {
     case 0:
-      stepper?.requestRouting(toStep: .about)
+      steps.accept(SettingsStep.about)
     case 1:
       if indexPath.row == 0 {
-        stepper?.requestRouting(toStep: .apiKeyEdit)
+        steps.accept(SettingsStep.apiKeyEdit)
         return
       }
       navigationController?.presentSafariViewController(for: Constants.Urls.kOpenWeatherMapInstructionsUrl)
     case 2:
       if indexPath.row == 0 {
-        stepper?.requestRouting(toStep: .manageLocations)
+        steps.accept(SettingsStep.manageLocations)
       } else if indexPath.row == 1 {
-        stepper?.requestRouting(toStep: .addLocation)
+        steps.accept(SettingsStep.addLocation)
       }
     case 3:
       if indexPath.row == 1 {

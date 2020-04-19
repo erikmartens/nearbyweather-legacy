@@ -10,10 +10,6 @@ import UIKit
 
 final class EmptyWeatherListViewController: UIViewController {
   
-  // MARK: - Routing
-  
-  weak var stepper: WeatherListStepper?
-  
   // MARK: - IBOutlets
   
   @IBOutlet weak var emptyListImageView: UIImageView!
@@ -26,6 +22,8 @@ final class EmptyWeatherListViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.tab_weatherList()
+    
     navigationController?.navigationBar.isHidden = true
     
     configureWeatherDataUnavailableElements()

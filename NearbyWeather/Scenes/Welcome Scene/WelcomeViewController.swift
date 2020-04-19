@@ -7,14 +7,15 @@
 //
 
 import UIKit
-import SafariServices
+import RxFlow
+import RxCocoa
 import TextFieldCounter
 
-final class WelcomeViewController: UIViewController {
+final class WelcomeViewController: UIViewController, Stepper { // TODO Rename to Set API Key Scene
   
   // MARK: - Routing
   
-  weak var stepper: WelcomeStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - Properties
   
@@ -36,6 +37,7 @@ final class WelcomeViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.welcome()
     configure()
   }
   
@@ -120,7 +122,7 @@ final class WelcomeViewController: UIViewController {
     inputTextField.resignFirstResponder()
     UserDefaults.standard.set(inputTextField.text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
     
-    stepper?.requestRouting(toStep: .setPermissions)
+    steps.accept(WelcomeStep.setPermissions)
   }
   
   @IBAction func didTapGetInstructionsButton(_ sender: UIButton) {

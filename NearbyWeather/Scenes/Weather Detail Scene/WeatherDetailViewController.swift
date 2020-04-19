@@ -7,23 +7,26 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 import MapKit
-import SafariServices
 import APTimeZones
 
-final class WeatherDetailViewController: UIViewController {
-  
-  static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO, isBookmark: Bool) -> WeatherDetailViewController {
+extension WeatherDetailViewController {
+  static func instantiateFromStoryBoard(weatherDTO: WeatherInformationDTO, isBookmark: Bool) -> WeatherDetailViewController {
     let viewController = R.storyboard.weatherDetails.weatherDetailViewController()!
-    viewController.titleString = title
+    viewController.titleString = weatherDTO.cityName
     viewController.weatherDTO = weatherDTO
     viewController.isBookmark = isBookmark
     return viewController
   }
-  
+}
+
+final class WeatherDetailViewController: UIViewController, Stepper {
+
   // MARK: - Routing
   
-  weak var stepper: WeatherDetailStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - Properties
   
@@ -84,8 +87,14 @@ final class WeatherDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = titleString
     
-    navigationItem.title = titleString
+    navigationItem.leftBarButtonItem = UIBarButtonItem(
+      image: R.image.verticalCloseButton(),
+      style: .plain,
+      target: self,
+      action: #selector(Self.dismissButtonTapped))
+    
     mapView.delegate = self
     mapView.mapType = PreferencesDataService.shared.preferredMapType
     
@@ -247,6 +256,10 @@ final class WeatherDetailViewController: UIViewController {
     presentSafariViewController(for:
       Constants.Urls.kOpenWeatherMapCityDetailsUrl(forCityWithName: weatherDTO.cityName)
     )
+  }
+  
+  @objc private func dismissButtonTapped(_ sender: UIBarButtonItem) {
+    steps.accept(WeatherDetailStep.dismiss)
   }
 }
 

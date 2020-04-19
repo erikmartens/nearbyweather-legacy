@@ -8,6 +8,8 @@
 
 import UIKit
 import MapKit
+import RxFlow
+import RxCocoa
 
 enum ListType: CaseIterable {
   case bookmarked
@@ -27,7 +29,7 @@ enum ListType: CaseIterable {
   }
 }
 
-final class WeatherListViewController: UITableViewController {
+final class WeatherListViewController: UITableViewController, Stepper {
   
   private lazy var listTypeBarButton = {
     UIBarButtonItem(
@@ -57,7 +59,7 @@ final class WeatherListViewController: UITableViewController {
   
   // MARK: - Routing
   
-  weak var stepper: WeatherListStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - ViewController Lifecycle
   
@@ -306,8 +308,11 @@ extension WeatherListViewController {
     guard let selectedCell = tableView.cellForRow(at: indexPath) as? WeatherDataCell else {
       return
     }
-    stepper?.requestRouting(toStep:
-      WeatherListStep.weatherDetails(identifier: selectedCell.weatherDataIdentifier, isBookmark: selectedCell.isBookmark)
+    steps.accept(
+      ListStep.weatherDetails(
+        identifier: selectedCell.weatherDataIdentifier,
+        isBookmark: selectedCell.isBookmark
+      )
     )
   }
 }

@@ -18,5 +18,5 @@ final class WeatherDetailStepper: Stepper {
   
   var steps = PublishRelay<Step>()
   
-  var initialStep: Step = SettingsStep.initial
+  var initialStep: Step = WeatherDetailStep.initial
 }

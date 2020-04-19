@@ -12,6 +12,7 @@ import RxCocoa
 enum RootStep: Step {
   case main
   case welcome
+  case dimissWelcome
 }
 
 class RootStepper: Stepper {

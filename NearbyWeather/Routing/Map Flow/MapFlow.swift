@@ -56,7 +56,7 @@ final class MapFlow: Flow {
       case .initial:
         return nil
       case .dismiss:
-        return ListStep.dismissChildFlow
+        return MapStep.dismissChildFlow
       }
     }
     return step

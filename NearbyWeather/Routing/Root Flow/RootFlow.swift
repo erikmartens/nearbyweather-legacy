@@ -37,6 +37,8 @@ class RootFlow: Flow {
       return summonMainWindow()
     case .welcome:
       return summonWelcomeWindow()
+    case .dimissWelcome:
+      return dismissWelcomeWindow()
     }
   }
   
@@ -59,14 +61,8 @@ private extension RootFlow {
     let mainFlow = MainFlow()
     
     Flows.whenReady(flow1: mainFlow) { [rootWindow] (mainRoot: UITabBarController) in
-      UIView.animate(withDuration: 0.2, animations: {
-        rootWindow.alpha = 0
-        rootWindow.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-      }, completion: { _ in
-        rootWindow.rootViewController = mainRoot
-        rootWindow.alpha = 1
-        
-      })
+      rootWindow.rootViewController = mainRoot
+      rootWindow.makeKeyAndVisible()
     }
     
     return .one(flowContributor: .contribute(withNextPresentable: mainFlow, withNextStepper: MainStepper()))
@@ -81,5 +77,21 @@ private extension RootFlow {
     }
     
     return .one(flowContributor: .contribute(withNextPresentable: welcomeFlow, withNextStepper: WelcomeStepper()))
+  }
+  
+  func dismissWelcomeWindow() -> FlowContributors {
+    let mainFlow = MainFlow()
+    
+    Flows.whenReady(flow1: mainFlow) { [rootWindow] (mainRoot: UITabBarController) in
+      UIView.animate(withDuration: 0.2, animations: {
+        rootWindow.alpha = 0
+        rootWindow.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+      }, completion: { _ in
+        rootWindow.rootViewController = mainRoot
+        rootWindow.alpha = 1
+      })
+    }
+    
+    return .one(flowContributor: .contribute(withNextPresentable: mainFlow, withNextStepper: MainStepper()))
   }
 }

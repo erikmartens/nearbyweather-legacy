@@ -10,7 +10,7 @@ import RxCocoa
 import RxFlow
 
 enum MapStep: Step {
-  case initial // TODO rename to map
+  case map
   case weatherDetails(identifier: Int?, isBookmark: Bool)
   case dismissChildFlow
 }
@@ -19,5 +19,5 @@ final class MapStepper: Stepper {
   
   var steps = PublishRelay<Step>()
   
-  let initialStep: Step = MapStep.initial
+  let initialStep: Step = MapStep.map
 }

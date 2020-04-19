@@ -40,7 +40,7 @@ final class MapFlow: Flow {
       return .none
     }
     switch step {
-    case .initial:
+    case .map:
       return summonWeatherMapController()
     case let .weatherDetails(identifier, isBookmark):
       return summonWeatherDetailsController(identifier: identifier,
@@ -53,7 +53,7 @@ final class MapFlow: Flow {
   private func transform(step: Step) -> Step? {
     if let weatherDetailStep = step as? WeatherDetailStep {
       switch weatherDetailStep {
-      case .initial:
+      case .weatherDetail:
         return nil
       case .dismiss:
         return MapStep.dismissChildFlow

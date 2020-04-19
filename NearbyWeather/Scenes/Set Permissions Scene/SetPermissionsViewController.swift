@@ -37,7 +37,7 @@ final class SetPermissionsViewController: UIViewController, Stepper {
     
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(Self.launchApp),
+      selector: #selector(Self.dismiss),
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
       object: nil
     )
@@ -85,7 +85,7 @@ final class SetPermissionsViewController: UIViewController, Stepper {
   }
   
   @objc func launchApp() {
-    steps.accept(WelcomeStep.launchApp)
+    steps.accept(WelcomeStep.dismiss)
   }
   
   // MARK: - Button Interaction

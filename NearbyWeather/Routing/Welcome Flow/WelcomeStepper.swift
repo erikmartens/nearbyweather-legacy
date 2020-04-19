@@ -10,14 +10,14 @@ import RxCocoa
 import RxFlow
 
 enum WelcomeStep: Step {
-  case initial // TODO rename setApiKey
+  case setApiKey
   case setPermissions
-  case launchApp // TODO rename to dismiss
+  case dismiss
 }
 
 final class WelcomeStepper: Stepper {
   
   var steps = PublishRelay<Step>()
   
-  let initialStep: Step = WelcomeStep.initial
+  let initialStep: Step = WelcomeStep.setApiKey
 }

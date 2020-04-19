@@ -48,7 +48,7 @@ final class WeatherDetailFlow: Flow {
       return .none
     }
     switch step {
-    case .initial:
+    case .weatherDetail:
       return summonWeatherDetailController(weatherDataIdentifier: dependencies.identifier,
                                            isBookmark: dependencies.isBookmark)
     case .dismiss:

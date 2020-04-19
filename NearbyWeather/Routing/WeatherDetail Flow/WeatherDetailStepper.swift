@@ -10,7 +10,7 @@ import RxCocoa
 import RxFlow
 
 enum WeatherDetailStep: Step {
-  case initial // TODO rename detail
+  case weatherDetail
   case dismiss
 }
 
@@ -18,5 +18,5 @@ final class WeatherDetailStepper: Stepper {
   
   var steps = PublishRelay<Step>()
   
-  var initialStep: Step = WeatherDetailStep.initial
+  var initialStep: Step = WeatherDetailStep.weatherDetail
 }

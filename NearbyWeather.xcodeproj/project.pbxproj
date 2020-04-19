@@ -12,7 +12,6 @@
 		A915ED5FA3BE6C00D3AF757E /* Pods_NearbyWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DB2B9188E145E8485785A8 /* Pods_NearbyWeather.framework */; };
 		ED33E12DE3CBFCEB00B5A2F4 /* Pods_NearbyWeatherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335D21A5B34D01D7F82BE2B2 /* Pods_NearbyWeatherTests.framework */; };
 		F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */; };
-		F204B7801DF2EFA3000F4371 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F204B77E1DF2EFA3000F4371 /* Main.storyboard */; };
 		F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F204B7811DF2EFA3000F4371 /* Assets.xcassets */; };
 		F204B7851DF2EFA3000F4371 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F204B7831DF2EFA3000F4371 /* LaunchScreen.storyboard */; };
 		F204B7901DF2EFA3000F4371 /* NearbyWeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204B78F1DF2EFA3000F4371 /* NearbyWeatherTests.swift */; };
@@ -151,7 +150,6 @@
 		335D21A5B34D01D7F82BE2B2 /* Pods_NearbyWeatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearbyWeatherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		492DE383DD00B0EA45C50B62 /* Pods-NearbyWeatherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeatherTests.debug.xcconfig"; path = "Target Support Files/Pods-NearbyWeatherTests/Pods-NearbyWeatherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5142D45C22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		5142D45D22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		5142D45E22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5142D45F22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6118D9FAB4AA666AC9A465C0 /* Pods-NearbyWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeather.release.xcconfig"; path = "Target Support Files/Pods-NearbyWeather/Pods-NearbyWeather.release.xcconfig"; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 		C4EFEB29FC6D3B88220827D4 /* Pods-NearbyWeatherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearbyWeatherTests.release.xcconfig"; path = "Target Support Files/Pods-NearbyWeatherTests/Pods-NearbyWeatherTests.release.xcconfig"; sourceTree = "<group>"; };
 		F204B7771DF2EFA3000F4371 /* NearbyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearbyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F204B77F1DF2EFA3000F4371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F204B7811DF2EFA3000F4371 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F204B7841DF2EFA3000F4371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F204B7861DF2EFA3000F4371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -171,7 +168,6 @@
 		F204B7961DF2EFA3000F4371 /* NearbyWeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NearbyWeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F204B79A1DF2EFA3000F4371 /* NearbyWeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyWeatherUITests.swift; sourceTree = "<group>"; };
 		F204B79C1DF2EFA3000F4371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F204B7AC1DF2F19A000F4371 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		F204B7AD1DF2F19A000F4371 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		F204B7B11DF2F1BC000F4371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F204B7B31DF2F1BD000F4371 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -540,8 +536,7 @@
 			isa = PBXGroup;
 			children = (
 				F204B7831DF2EFA3000F4371 /* LaunchScreen.storyboard */,
-				F204B77E1DF2EFA3000F4371 /* Main.storyboard */,
-				F27A121E24425D0300A2CE8D /* Welcome Scene */,
+				F27A121E24425D0300A2CE8D /* Set API Key Scene */,
 				F27A121F24425D2A00A2CE8D /* Set Permissions Scene */,
 				F27A122024425D4E00A2CE8D /* Weather List Scene */,
 				F27A122124425D6800A2CE8D /* Empty Weather List Scene */,
@@ -556,13 +551,13 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		F27A121E24425D0300A2CE8D /* Welcome Scene */ = {
+		F27A121E24425D0300A2CE8D /* Set API Key Scene */ = {
 			isa = PBXGroup;
 			children = (
 				F2DBEB0723E8DDF600CD513B /* Welcome.storyboard */,
 				F2B8EA051EA2893C00704E90 /* WelcomeViewController.swift */,
 			);
-			path = "Welcome Scene";
+			path = "Set API Key Scene";
 			sourceTree = "<group>";
 		};
 		F27A121F24425D2A00A2CE8D /* Set Permissions Scene */ = {
@@ -935,7 +930,6 @@
 				F2DBEB0B23E8DE0E00CD513B /* SetPermissions.storyboard in Resources */,
 				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
 				F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */,
-				F204B7801DF2EFA3000F4371 /* Main.storyboard in Resources */,
 				F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */,
 				F25A39712187AA5A0054BC7A /* ProjectContributors.json in Resources */,
 				F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */,
@@ -1257,16 +1251,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		F204B77E1DF2EFA3000F4371 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F204B77F1DF2EFA3000F4371 /* Base */,
-				F204B7AC1DF2F19A000F4371 /* de */,
-				5142D45D22F45DC2000E6B06 /* fr */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F204B7831DF2EFA3000F4371 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -10,12 +10,12 @@ import RxCocoa
 import RxFlow
 
 enum MainStep: Step {
-  case rootTabBar // TODO rename to main
+  case main
 }
 
 final class MainStepper: Stepper {
   
   var steps = PublishRelay<Step>()
   
-  let initialStep: Step = MainStep.rootTabBar
+  let initialStep: Step = MainStep.main
 }

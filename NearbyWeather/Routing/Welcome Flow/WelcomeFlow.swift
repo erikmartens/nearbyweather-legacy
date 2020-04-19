@@ -41,11 +41,11 @@ final class WelcomeFlow: Flow {
       return .none
     }
     switch step {
-    case .initial:
+    case .setApiKey:
       return summonWelcomeWindow()
     case .setPermissions:
       return summonSetPermissions()
-    case .launchApp:
+    case .dismiss:
       return dismissWelcomeWindow()
     }
   }
@@ -67,7 +67,7 @@ private extension WelcomeFlow {
   }
   
   private func dismissWelcomeWindow() -> FlowContributors {
-    .end(forwardToParentFlowWithStep: WelcomeStep.launchApp)
+    .end(forwardToParentFlowWithStep: WelcomeStep.dismiss)
   }
 }
 

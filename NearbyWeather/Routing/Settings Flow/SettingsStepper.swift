@@ -10,7 +10,7 @@ import RxCocoa
 import RxFlow
 
 enum SettingsStep: Step {
-  case initial // TODO rename to settings
+  case settings
   case about
   case apiKeyEdit
   case manageLocations
@@ -22,5 +22,5 @@ final class SettingsStepper: Stepper {
   
   var steps = PublishRelay<Step>()
   
-  var initialStep: Step = SettingsStep.initial
+  var initialStep: Step = SettingsStep.settings
 }

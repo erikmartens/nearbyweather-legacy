@@ -40,7 +40,7 @@ final class SettingsFlow: Flow {
       return .none
     }
     switch step {
-    case .initial:
+    case .settings:
       return summonSettingsController()
     case .about:
       return summonAboutController()

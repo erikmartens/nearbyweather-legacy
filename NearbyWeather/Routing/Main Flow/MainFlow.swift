@@ -39,7 +39,7 @@ final class MainFlow: Flow {
       return .none
     }
     switch step {
-    case .rootTabBar:
+    case .main:
       return summonRootTabBar()
     }
   }

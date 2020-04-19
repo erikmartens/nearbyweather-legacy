@@ -55,7 +55,7 @@ final class ListFlow: Flow {
   private func transform(step: Step) -> Step? {
     if let weatherDetailStep = step as? WeatherDetailStep {
       switch weatherDetailStep {
-      case .initial:
+      case .weatherDetail:
         return nil
       case .dismiss:
         return ListStep.dismissChildFlow

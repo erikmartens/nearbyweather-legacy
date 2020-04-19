@@ -45,7 +45,7 @@ class RootFlow: Flow {
   private func transform(step: Step) -> Step? {
     if let welcomeStep = step as? WelcomeStep {
       switch welcomeStep {
-      case .launchApp:
+      case .dismiss:
         return RootStep.main
       default:
         return nil

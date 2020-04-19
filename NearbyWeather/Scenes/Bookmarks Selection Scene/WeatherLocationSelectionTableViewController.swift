@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 import PKHUD
 
-final class WeatherLocationSelectionTableViewController: UITableViewController {
+final class WeatherLocationSelectionTableViewController: UITableViewController, Stepper {
   
   // MARK: - Routing
   
-  weak var stepper: SettingsStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - Properties
   
@@ -24,6 +26,7 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.add_location()
     
     tableView.delegate = self
     searchController.delegate = self
@@ -41,8 +44,6 @@ final class WeatherLocationSelectionTableViewController: UITableViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
-    navigationController?.navigationBar.styleStandard()
     
     tableView.reloadData()
   }

@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 
-final class WeatherLocationManagementTableViewController: UITableViewController {
+final class WeatherLocationManagementTableViewController: UITableViewController, Stepper {
   
   // MARK: - Routing
   
-  weak var stepper: SettingsStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - Properties
   
@@ -22,25 +24,27 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   
   // MARK: - ViewController LifeCycle
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  override init(style: UITableView.Style) {
+    super.init(style: style)
     
     tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
-                       forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
+    forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    navigationController?.navigationBar.styleStandard()
-    
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    title = R.string.localizable.manage_locations()
     tableView.isEditing = true
   }
   
   // MARK: - TableViewDelegate
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    1
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -70,15 +74,15 @@ final class WeatherLocationManagementTableViewController: UITableViewController 
   }
   
   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-    return true
+    true
   }
   
   override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-    return false
+    false
   }
   
   override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-    return true
+    true
   }
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

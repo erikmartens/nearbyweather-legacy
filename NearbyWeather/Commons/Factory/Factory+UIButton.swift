@@ -6,7 +6,7 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
-import UIKit
+import UIKit.UIButton
 
 extension Factory {
   

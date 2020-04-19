@@ -8,13 +8,11 @@
 
 import UIKit
 
-class ImagedDualLabelCell: UITableViewCell {
+class ImagedDualLabelCell: UITableViewCell, ReuseIdentifiable {
   
-  static let reuseIdentifier = "ImagedDualLabelCell"
-  
-  private lazy var contentLabel = Factory.Label.make(fromType: .standard)
-  private lazy var descriptionLabel = Factory.Label.make(fromType: .description)
-  private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellImage)
+  private lazy var contentLabel = Factory.Label.make(fromType: .body(alignment: .left, numberOfLines: 0))
+  private lazy var descriptionLabel = Factory.Label.make(fromType: .description(alignment: .right, numberOfLines: 1))
+  private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -78,7 +76,7 @@ private extension ImagedDualLabelCell {
       descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.TableCellContentInsets.trailing),
       descriptionLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       descriptionLabel.heightAnchor.constraint(equalTo: contentLabel.heightAnchor, multiplier: 1),
-      descriptionLabel.widthAnchor.constraint(equalTo: contentLabel.widthAnchor, multiplier: 1)
+      descriptionLabel.widthAnchor.constraint(equalTo: contentLabel.widthAnchor, multiplier: 1/2)
     ])
   }
 }

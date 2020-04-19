@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 
-final class SetPermissionsViewController: UIViewController {
+final class SetPermissionsViewController: UIViewController, Stepper {
   
   // MARK: - Routing
   
-  weak var stepper: WelcomeStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - Properties
   
@@ -30,11 +32,12 @@ final class SetPermissionsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.location_access()
     configure()
     
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(Self.launchApp),
+      selector: #selector(Self.dismiss),
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
       object: nil
     )
@@ -57,9 +60,7 @@ final class SetPermissionsViewController: UIViewController {
   
   // MARK: - Helper Functions
   
-  func configure() {
-    navigationController?.navigationBar.styleStandard()
-    
+  func configure() {    
     bubbleView.layer.cornerRadius = 10
     bubbleView.backgroundColor = .black
     
@@ -84,7 +85,7 @@ final class SetPermissionsViewController: UIViewController {
   }
   
   @objc func launchApp() {
-    stepper?.requestRouting(toStep: .launchApp)
+    steps.accept(WelcomeStep.dismiss)
   }
   
   // MARK: - Button Interaction

@@ -30,6 +30,15 @@ extension Constants.Dimensions {
     static let height: CGFloat = 34
   }
   
+  enum AppIconImageSize {
+    /// constant: 75
+    static let width: CGFloat = 75
+    /// constant: 75
+    static let height: CGFloat = 75
+    /// constant: 4
+    static let cornerRadius: CGFloat = 13
+  }
+  
   enum TableCellImageSize {
     /// constant: 28
     static let width: CGFloat = 28

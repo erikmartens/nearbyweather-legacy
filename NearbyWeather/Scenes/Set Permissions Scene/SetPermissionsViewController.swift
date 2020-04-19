@@ -60,9 +60,7 @@ final class SetPermissionsViewController: UIViewController, Stepper {
   
   // MARK: - Helper Functions
   
-  func configure() {
-    navigationController?.navigationBar.styleStandard()
-    
+  func configure() {    
     bubbleView.layer.cornerRadius = 10
     bubbleView.backgroundColor = .black
     

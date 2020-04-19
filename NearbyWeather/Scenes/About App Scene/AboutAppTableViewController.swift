@@ -232,7 +232,6 @@ final class AboutAppTableViewController: UITableViewController, Stepper {
   // MARK: - Private Helpers
   
   private func configure() {
-    navigationController?.navigationBar.styleStandard()
     configureText()
   }
   

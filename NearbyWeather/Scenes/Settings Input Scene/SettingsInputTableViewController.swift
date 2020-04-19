@@ -31,8 +31,6 @@ final class SettingsInputTableViewController: UITableViewController, Stepper {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    navigationController?.navigationBar.styleStandard()
-    
     tableView.reloadData()
   }
   

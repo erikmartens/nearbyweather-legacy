@@ -114,8 +114,6 @@ private extension WeatherListViewController {
   // MARK: - Private Helpers
   
   private func configure() {
-    navigationController?.navigationBar.styleStandard()
-    
     configureNavigationTitle()
     configureLastRefreshDate()
     configureButtons()

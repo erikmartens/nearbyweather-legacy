@@ -71,7 +71,7 @@ private extension RootFlow {
   func summonWelcomeWindow() -> FlowContributors {
     let welcomeFlow = WelcomeFlow()
     
-    Flows.whenReady(flow1: welcomeFlow) { [rootWindow] (welcomeRoot: UITabBarController) in
+    Flows.whenReady(flow1: welcomeFlow) { [rootWindow] (welcomeRoot: UINavigationController) in
       rootWindow.rootViewController = welcomeRoot
       rootWindow.makeKeyAndVisible()
     }

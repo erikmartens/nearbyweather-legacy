@@ -60,9 +60,7 @@ final class WelcomeViewController: UIViewController, Stepper { // TODO Rename to
   
   // MARK: - Helper Functions
   
-  func configure() {
-    navigationController?.navigationBar.styleStandard()
-    
+  func configure() {    
     bubbleView.layer.cornerRadius = 10
     bubbleView.backgroundColor = .black
     

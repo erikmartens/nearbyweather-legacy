@@ -58,7 +58,7 @@ final class WeatherMapViewController: UIViewController, Stepper {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationController?.navigationBar.styleStandard()
+    title = R.string.localizable.tab_weatherMap()
     
     configureMapView()
     configureButtons()

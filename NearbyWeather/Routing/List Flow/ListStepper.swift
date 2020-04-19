@@ -18,11 +18,28 @@ enum ListStep: Step {
 
 final class ListStepper: Stepper {
   
+  init() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(Self.emitStepOnWeatherDataServiceDidUpdate),
+      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
+      object: nil
+    )
+  }
+  
   var steps = PublishRelay<Step>()
   
   var initialStep: Step {
     WeatherDataService.shared.hasDisplayableData
       ? ListStep.list
       : ListStep.emptyList
+  }
+  
+  @objc private func emitStepOnWeatherDataServiceDidUpdate() {
+    guard WeatherDataService.shared.hasDisplayableData else {
+      steps.accept(ListStep.emptyList)
+      return
+    }
+    steps.accept(ListStep.list)
   }
 }

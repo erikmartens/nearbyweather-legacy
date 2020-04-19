@@ -25,8 +25,11 @@ extension Factory {
       switch type {
       case .standard:
         navigationController.navigationBar.backgroundColor = Constants.Theme.Color.ViewElement.background
-        navigationController.navigationBar.barTintColor = Constants.Theme.Color.ContentElement.title
-        navigationController.navigationBar.tintColor = Constants.Theme.Color.BrandColors.standardDay
+        navigationController.navigationBar.barTintColor = Constants.Theme.Color.ViewElement.background
+        navigationController.navigationBar.tintColor = Constants.Theme.Color.ContentElement.title
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        navigationController.navigationBar.barStyle = .default
       }
       
       return navigationController

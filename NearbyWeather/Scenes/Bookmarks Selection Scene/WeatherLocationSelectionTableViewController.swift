@@ -45,8 +45,6 @@ final class WeatherLocationSelectionTableViewController: UITableViewController, 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    navigationController?.navigationBar.styleStandard()
-    
     tableView.reloadData()
   }
   

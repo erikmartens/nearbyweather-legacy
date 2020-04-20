@@ -39,5 +39,11 @@
   }, {
     "name": "RxFlow",
     "urlString": "https://github.com/RxSwiftCommunity/RxFlow"
+  }, {
+    "name": "RxRealm",
+    "urlString": "https://github.com/RxSwiftCommunity/RxRealm"
+  }, {
+    "name": "RealmSwift",
+    "urlString": "https://github.com/realm/realm-cocoa"
   }]
 }

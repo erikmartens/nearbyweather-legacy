@@ -40,8 +40,8 @@ class WeatherDataCell: UITableViewCell {
     switch isBookmark {
     case true:
       bubbleColor = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
-        ? Constants.Theme.Color.BrandColors.standardDay
-        : Constants.Theme.Color.BrandColors.standardNight // default to blue colored cells
+        ? Constants.Theme.Color.BrandColor.standardDay
+        : Constants.Theme.Color.BrandColor.standardNight // default to blue colored cells
       
       textColor = .white
       borderWidth = 0

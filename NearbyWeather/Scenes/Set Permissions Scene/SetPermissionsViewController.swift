@@ -72,7 +72,7 @@ final class SetPermissionsViewController: UIViewController, Stepper {
     askPermissionsButton.setTitleColor(.white, for: UIControl.State())
     askPermissionsButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
     askPermissionsButton.layer.cornerRadius = askPermissionsButton.bounds.height/2
-    askPermissionsButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
+    askPermissionsButton.layer.backgroundColor = Constants.Theme.Color.BrandColor.standardDay.cgColor
   }
   
   fileprivate func startAnimationTimer() {

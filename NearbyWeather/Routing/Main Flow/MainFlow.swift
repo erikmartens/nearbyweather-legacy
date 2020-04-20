@@ -20,7 +20,7 @@ final class MainFlow: Flow {
     let tabbar = UITabBarController()
     tabbar.tabBar.backgroundColor = Constants.Theme.Color.ViewElement.background
     tabbar.tabBar.barTintColor = Constants.Theme.Color.ViewElement.background
-    tabbar.tabBar.tintColor = Constants.Theme.Color.BrandColors.standardDay
+    tabbar.tabBar.tintColor = Constants.Theme.Color.BrandColor.standardDay
     return tabbar
   }()
   

@@ -14,7 +14,7 @@ extension Constants.Theme {
 
 extension Constants.Theme.Color {
   
-  enum BrandColors { // TODO rename
+  enum BrandColor {
     
     static var standardDay: UIColor {
       UIColor.from(dark: .init(hex: 0x64aff5),
@@ -30,11 +30,11 @@ extension Constants.Theme.Color {
   enum InteractableElement {
     
     static var standardButton: UIColor {
-      Constants.Theme.Color.BrandColors.standardDay
+      Constants.Theme.Color.BrandColor.standardDay
     }
     
     static var standardTint: UIColor {
-      Constants.Theme.Color.BrandColors.standardDay
+      Constants.Theme.Color.BrandColor.standardDay
     }
   }
   

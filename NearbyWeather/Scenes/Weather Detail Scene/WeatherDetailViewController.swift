@@ -116,7 +116,7 @@ final class WeatherDetailViewController: UIViewController, Stepper {
     var navigationBarTintColor: UIColor
     var navigationTintColor: UIColor
     if isBookmark {
-      navigationBarTintColor = isDayTime ? Constants.Theme.Color.BrandColors.standardDay : Constants.Theme.Color.BrandColors.standardNight
+      navigationBarTintColor = isDayTime ? Constants.Theme.Color.BrandColor.standardDay : Constants.Theme.Color.BrandColor.standardNight
       navigationTintColor = .white
     } else {
       navigationBarTintColor = .white
@@ -282,8 +282,8 @@ extension WeatherDetailViewController: MKMapViewDelegate {
     
     if annotation.isBookmark {
       fillColor = annotation.isDayTime ?? true
-        ? Constants.Theme.Color.BrandColors.standardDay
-        : Constants.Theme.Color.BrandColors.standardNight // default to blue colored cells
+        ? Constants.Theme.Color.BrandColor.standardDay
+        : Constants.Theme.Color.BrandColor.standardNight // default to blue colored cells
       
       textColor = .white
     } else {

@@ -105,14 +105,14 @@ final class WeatherLocationMapAnnotationView: MKAnnotationView {
     circleLayer.path = UIBezierPath(arcCenter: CGPoint(x: kRadius, y: kRadius), radius: CGFloat(kRadius - kBorderWidth/2), startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true).cgPath
     circleLayer.frame.size = CGSize(width: kRadius*2, height: kRadius*2)
     circleLayer.bounds.origin = CGPoint(x: -frame.width/2 + kRadius, y: -frame.height/2 + kRadius)
-    circleLayer.fillColor = fillColor?.cgColor ?? Constants.Theme.Color.BrandColors.standardDay.cgColor
+    circleLayer.fillColor = fillColor?.cgColor ?? Constants.Theme.Color.BrandColor.standardDay.cgColor
     circleLayer.strokeColor = textColor?.cgColor
     circleLayer.lineWidth = kBorderWidth/2
     layer.addSublayer(circleLayer)
     
     let speechBubbleLayer = CAShapeLayer()
     speechBubbleLayer.path = bubblePath(forContentSize: CGSize(width: kWidth, height: kHeight)).cgPath
-    speechBubbleLayer.fillColor = fillColor?.cgColor ?? Constants.Theme.Color.BrandColors.standardDay.cgColor
+    speechBubbleLayer.fillColor = fillColor?.cgColor ?? Constants.Theme.Color.BrandColor.standardDay.cgColor
     speechBubbleLayer.strokeColor = textColor?.cgColor
     speechBubbleLayer.position = .zero
     layer.addSublayer(speechBubbleLayer)

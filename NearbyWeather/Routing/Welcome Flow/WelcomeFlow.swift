@@ -64,4 +64,3 @@ private extension WelcomeFlow {
     .end(forwardToParentFlowWithStep: WelcomeStep.dismiss)
   }
 }
-

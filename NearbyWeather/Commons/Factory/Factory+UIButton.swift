@@ -25,7 +25,7 @@ extension Factory {
       switch type {
       case let .standard(title, height):
         button.layer.cornerRadius = height/2
-        button.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
+        button.layer.backgroundColor = Constants.Theme.Color.BrandColor.standardDay.cgColor
         
         button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
         button.setTitleColor(.white, for: UIControl.State())

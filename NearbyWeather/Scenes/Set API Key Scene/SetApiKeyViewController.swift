@@ -77,7 +77,7 @@ final class SetApiKeyViewController: UIViewController, Stepper {
     saveButton.setTitleColor(.white, for: UIControl.State())
     saveButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
     saveButton.layer.cornerRadius = saveButton.bounds.height/2
-    saveButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
+    saveButton.layer.backgroundColor = Constants.Theme.Color.BrandColor.standardDay.cgColor
     
     getInstructionsButtons.setTitle(R.string.localizable.get_api_key_description().uppercased(), for: .normal)
     getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButton, for: .normal)

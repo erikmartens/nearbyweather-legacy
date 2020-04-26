@@ -14,7 +14,7 @@ import MessageUI
 final class AboutAppTableViewController: UITableViewController, Stepper {
   
   private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO] = {
-    DataStorageWorker.retrieveJsonFromFile(with: R.file.thirdPartyLibrariesJson.name,
+    JsonPersistencyWorker.retrieveJsonFromFile(with: R.file.thirdPartyLibrariesJson.name,
                                                    andDecodeAsType: ThirdPartyLibraryArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -23,7 +23,7 @@ final class AboutAppTableViewController: UITableViewController, Stepper {
   }()
   
   private lazy var owner: [DevelopmentContributorDTO] = {
-    DataStorageWorker.retrieveJsonFromFile(with: R.file.projectOwnerJson.name,
+    JsonPersistencyWorker.retrieveJsonFromFile(with: R.file.projectOwnerJson.name,
                                                    andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements
@@ -31,7 +31,7 @@ final class AboutAppTableViewController: UITableViewController, Stepper {
   }()
   
   private lazy var contributors: [DevelopmentContributorDTO] = {
-    DataStorageWorker.retrieveJsonFromFile(with: R.file.projectContributorsJson.name,
+    JsonPersistencyWorker.retrieveJsonFromFile(with: R.file.projectContributorsJson.name,
                                                    andDecodeAsType: DevelopmentContributorArrayWrapper.self,
                                                    fromStorageLocation: .bundle)?
       .elements

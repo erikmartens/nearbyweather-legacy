@@ -21,7 +21,7 @@ protocol DataStorageProtocol {
   static func loadData() -> StorageEntity?
 }
 
-final class DataStorageWorker {    
+final class JsonPersistencyWorker {    
   
   // MARK: - Public Functions
   

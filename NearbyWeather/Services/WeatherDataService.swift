@@ -16,7 +16,7 @@ import Alamofire
 /// while other information may still be representable.
 struct WeatherDataContainer: Codable {
   var locationId: Int
-  var errorDataDTO: ErrorDataDTO?
+  var errorDataDTO: WeatherInformationErrorDTO?
   var weatherInformationDTO: WeatherInformationDTO?
 }
 
@@ -24,7 +24,7 @@ struct WeatherDataContainer: Codable {
 /// It contains multiple WeatherInformationDTOs but only one associated ErrorDataDTO
 /// This is because the fetch either succeeds as a whole or not at all.
 struct BulkWeatherDataContainer: Codable {
-  var errorDataDTO: ErrorDataDTO?
+  var errorDataDTO: WeatherInformationErrorDTO?
   var weatherInformationDTOs: [WeatherInformationDTO]?
 }
 
@@ -314,7 +314,7 @@ extension WeatherDataService: DataStorageProtocol {
   typealias StorageEntity = WeatherDataService
   
   static func loadData() -> WeatherDataService? {
-    guard let weatherDataManagerStoredContents = DataStorageWorker.retrieveJsonFromFile(
+    guard let weatherDataManagerStoredContents = JsonPersistencyWorker.retrieveJsonFromFile(
       with: Constants.Keys.Storage.kWeatherDataManagerStoredContentsFileName,
       andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self,
       fromStorageLocation: .documents
@@ -339,7 +339,7 @@ extension WeatherDataService: DataStorageProtocol {
         bookmarkedWeatherDataObjects: WeatherDataService.shared.bookmarkedWeatherDataObjects,
         nearbyWeatherDataObject: WeatherDataService.shared.nearbyWeatherDataObject
       )
-      DataStorageWorker.storeJson(for: weatherDataManagerStoredContents,
+      JsonPersistencyWorker.storeJson(for: weatherDataManagerStoredContents,
                                    inFileWithName: Constants.Keys.Storage.kWeatherDataManagerStoredContentsFileName,
                                    toStorageLocation: .documents)
       dispatchSemaphore.signal()

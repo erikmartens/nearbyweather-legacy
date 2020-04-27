@@ -73,6 +73,7 @@ enum RealmPersistencyWorkerError: String, Error {
   }
   
   case realmConfigurationError = "Trying to access Realm with configuration, but an error occured."
+  case dataEncodingError = "Trying to save a resource, but its information could not be encoded correctly."
 }
 
 final class RealmPersistencyWorker {
@@ -142,7 +143,94 @@ private extension RealmPersistencyWorker {
 
 // MARK: - Public CRUD Functions
 
-extension RealmPersistencyWorker {
+protocol RealmPersistencyWorkerCRUD {
+  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], classType: T.Type) -> Completable
+  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, classType: T.Type) -> Completable
+  func observeResources<T: Codable>(_ collection: String, classType: T.Type) -> Observable<[PersistencyModel<T>]>
+  func observeResource<T: Codable>(_ identity: PersistencyModelIdentity, classType: T.Type) -> Observable<PersistencyModel<T>?>
+  func deleteResources(with identities: [PersistencyModelIdentity]) -> Completable
+  func deleteResource(with identity: PersistencyModelIdentity) -> Completable
+}
+
+extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
+  
+  /// save a new set of resources or update already existing resources for the specified identities
+  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], classType: T.Type) -> Completable {
+    Completable
+      .create { [configuration] completable in
+        do {
+          let realm = try Realm(configuration: configuration)
+          
+          realm.beginWrite()
+          
+          try resources.forEach { resource in
+            let newModel = resource.toRealmModel()
+            
+            guard newModel.data != nil else {
+              throw RealmPersistencyWorkerError.dataEncodingError
+            }
+            
+            let predicate = NSPredicate(format: "collection = %@ AND identifier = %@", resource.identity.collection, resource.identity.identifier)
+            
+            // resource does not yet exist
+            guard let existingModel = realm.objects(RealmModel.self).filter(predicate).first else {
+              realm.add(newModel)
+              return
+            }
+            
+            // resource exists -> update if needed
+            if existingModel.data != newModel.data {
+              existingModel.data = newModel.data
+            }
+          }
+          
+          try realm.commitWrite()
+          
+          completable(.completed)
+        } catch {
+          completable(.error(error))
+        }
+        return Disposables.create()
+    }
+  }
+  
+  /// save a new resource or update an already existing resource for the specified identity
+  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, classType: T.Type) -> Completable {
+    Completable
+      .create { [configuration] completable in
+        let newModel = resource.toRealmModel()
+        
+        guard newModel.data != nil else {
+          completable(.error(RealmPersistencyWorkerError.dataEncodingError))
+          return Disposables.create()
+        }
+        
+        do {
+          let realm = try Realm(configuration: configuration)
+          let predicate = NSPredicate(format: "collection = %@ AND identifier = %@", resource.identity.collection, resource.identity.identifier)
+          
+          // resource does not yet exist
+          guard let existingModel = realm.objects(RealmModel.self).filter(predicate).first else {
+            try realm.write {
+              realm.add(newModel)
+            }
+            completable(.completed)
+            return Disposables.create()
+          }
+          
+          // resource exists -> update if needed
+          if existingModel.data != newModel.data {
+            try realm.write {
+              existingModel.data = newModel.data
+            }
+          }
+          completable(.completed)
+        } catch {
+          completable(.error(error))
+        }
+        return Disposables.create()
+    }
+  }
   
   /// observes all resources within a specified collection
   func observeResources<T: Codable>(_ collection: String, classType: T.Type) -> Observable<[PersistencyModel<T>]> {
@@ -163,6 +251,8 @@ extension RealmPersistencyWorker {
     .map { results -> [PersistencyModel<T>] in
       results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
     }
+      .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
+      .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
   }
   
   /// observes a specified resource for a specified identity
@@ -186,26 +276,8 @@ extension RealmPersistencyWorker {
         .compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
         .first
     }
-  }
-  
-  
-  /// save a new set of resources to the specified collection
-  func createResources<T: RealmModel>(_ resources: [T], classType: T.Type) -> Completable {
-    
-  }
-  
-  /// save a new resource for its specified identity
-  func createResource<T: RealmModel>(_ resource: T, classType: T.Type) -> Completable {
-    
-  }
-  
-  /// override a resource's content with updated
-  func updateResources<T: RealmModel>(_ resources: [T], classType: T.Type) -> Completable {
-    
-  }
-  
-  func updateResource<T: RealmModel>(_ resource: T, classType: T.Type) -> Completable {
-    
+      .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
+      .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
   }
   
   func deleteResources(with identities: [PersistencyModelIdentity]) -> Completable {
@@ -235,15 +307,14 @@ extension RealmPersistencyWorker {
       .create { [configuration] handler -> Disposable in
         do {
           let realm = try Realm(configuration: configuration)
-          realm.beginWrite()
-          
           let predicate = NSPredicate(format: "collection = %@ AND identifier = %@", identity.collection, identity.identifier)
           let identifiedObject = realm
             .objects(RealmModel.self)
             .filter(predicate)
           
-          realm.delete(identifiedObject)
-          try realm.commitWrite()
+          try realm.write {
+            realm.delete(identifiedObject)
+          }
           
           handler(.completed)
         } catch {

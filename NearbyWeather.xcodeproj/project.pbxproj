@@ -57,7 +57,7 @@
 		F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260BDAB244CFAE500B4357A /* Bundle+AppIcon.swift */; };
 		F260BDAE244F7BA700B4357A /* RealmPersistencyWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260BDAD244F7BA700B4357A /* RealmPersistencyWorker.swift */; };
 		F260C4431F9D4883000D2BC0 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260C4421F9D4883000D2BC0 /* UINavigationController+Extensions.swift */; };
-		F26699581E9AD0F100498F99 /* WeatherInformationPersistencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699571E9AD0F100498F99 /* WeatherInformationPersistencyService.swift */; };
+		F26699581E9AD0F100498F99 /* WeatherInformationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699571E9AD0F100498F99 /* WeatherInformationService.swift */; };
 		F266995A1E9ADBC300498F99 /* UserLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699591E9ADBC300498F99 /* UserLocationService.swift */; };
 		F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26A6D5D20FB6E610033BC49 /* R.generated.swift */; };
 		F26A6D6020FB70DD0033BC49 /* WeatherDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F26A6D5F20FB70DD0033BC49 /* WeatherDetail.storyboard */; };
@@ -215,7 +215,7 @@
 		F260BDAB244CFAE500B4357A /* Bundle+AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIcon.swift"; sourceTree = "<group>"; };
 		F260BDAD244F7BA700B4357A /* RealmPersistencyWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPersistencyWorker.swift; sourceTree = "<group>"; };
 		F260C4421F9D4883000D2BC0 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
-		F26699571E9AD0F100498F99 /* WeatherInformationPersistencyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInformationPersistencyService.swift; sourceTree = "<group>"; };
+		F26699571E9AD0F100498F99 /* WeatherInformationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInformationService.swift; sourceTree = "<group>"; };
 		F26699591E9ADBC300498F99 /* UserLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocationService.swift; sourceTree = "<group>"; };
 		F26A6D5D20FB6E610033BC49 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		F26A6D5F20FB70DD0033BC49 /* WeatherDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeatherDetail.storyboard; sourceTree = "<group>"; };
@@ -498,7 +498,7 @@
 				F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */,
 				F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */,
 				F26699591E9ADBC300498F99 /* UserLocationService.swift */,
-				F26699571E9AD0F100498F99 /* WeatherInformationPersistencyService.swift */,
+				F26699571E9AD0F100498F99 /* WeatherInformationService.swift */,
 				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
 				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 			);
@@ -1172,7 +1172,7 @@
 				F28CA5442027AEB500209397 /* WeatherLocationMapAnnotation.swift in Sources */,
 				F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */,
 				F2F7BA1F23E3792F00B4D2EB /* Constants+Mocks.swift in Sources */,
-				F26699581E9AD0F100498F99 /* WeatherInformationPersistencyService.swift in Sources */,
+				F26699581E9AD0F100498F99 /* WeatherInformationService.swift in Sources */,
 				F2FE3EFF20027EB400EBC429 /* WeatherStationDTO.swift in Sources */,
 				F2DBEB3623F04E9D00CD513B /* MKMapType+AllCases.swift in Sources */,
 				F2372887244C90FF00964C49 /* WelcomeStepper.swift in Sources */,

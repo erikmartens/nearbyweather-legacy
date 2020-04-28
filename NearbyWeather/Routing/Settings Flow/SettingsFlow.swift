@@ -84,7 +84,7 @@ private extension SettingsFlow {
   }
   
   func summonManageLocationsController() -> FlowContributors {
-    guard !WeatherDataService.shared.bookmarkedLocations.isEmpty else {
+    guard !WeatherInformationPersistencyService.shared.bookmarkedLocations.isEmpty else {
       return .none
     }
     let locationManagementController = WeatherLocationManagementTableViewController(style: SettingsFlow.preferredTableViewStyle())

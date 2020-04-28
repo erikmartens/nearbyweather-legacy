@@ -102,7 +102,7 @@ final class SettingsInputTableViewController: UITableViewController, Stepper {
     }
     UserDefaults.standard.set(text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
     HUD.flash(.success, delay: 1.0)
-    WeatherDataService.shared.update(withCompletionHandler: nil)
+    WeatherInformationPersistencyService.shared.update(withCompletionHandler: nil)
     return true
   }
 }

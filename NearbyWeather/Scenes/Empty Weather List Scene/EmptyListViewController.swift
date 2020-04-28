@@ -42,7 +42,7 @@ final class EmptyListViewController: UIViewController {
   // MARK: - IBActions
   
   @IBAction func didTapReloadButton(_ sender: UIButton) {
-    WeatherDataService.shared.update(withCompletionHandler: nil)
+    WeatherInformationPersistencyService.shared.update(withCompletionHandler: nil)
   }
   
   // MARK: - Functions

@@ -145,14 +145,14 @@ private extension ListViewController {
   }
   
   private func configureButtons() {
-    guard WeatherDataService.shared.hasDisplayableData else {
+    guard WeatherInformationPersistencyService.shared.hasDisplayableData else {
       navigationItem.leftBarButtonItem = nil
       navigationItem.rightBarButtonItems = nil
       return
     }
     navigationItem.leftBarButtonItem = listTypeBarButton
     
-    guard WeatherDataService.shared.hasDisplayableWeatherData else {
+    guard WeatherInformationPersistencyService.shared.hasDisplayableWeatherData else {
       navigationItem.rightBarButtonItems = nil
       return
     }
@@ -176,7 +176,7 @@ private extension ListViewController {
   
   @objc private func updateWeatherData() {
     refreshControl?.beginRefreshing()
-    WeatherDataService.shared.update(withCompletionHandler: nil)
+    WeatherInformationPersistencyService.shared.update(withCompletionHandler: nil)
   }
 }
 
@@ -239,18 +239,18 @@ extension ListViewController {
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard !WeatherDataService.shared.apiKeyUnauthorized else {
+    guard !WeatherInformationPersistencyService.shared.apiKeyUnauthorized else {
       return 1
     }
     switch PreferencesDataService.shared.preferredListType {
     case .bookmarked:
-      let numberOfRows = WeatherDataService.shared.bookmarkedWeatherDataObjects?.count ?? 1
+      let numberOfRows = WeatherInformationPersistencyService.shared.bookmarkedWeatherDataObjects?.count ?? 1
       return numberOfRows > 0 ? numberOfRows : 1
     case .nearby:
       guard UserLocationService.shared.locationPermissionsGranted else {
         return 1
       }
-      let numberOfRows = WeatherDataService.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.count ?? 1
+      let numberOfRows = WeatherInformationPersistencyService.shared.nearbyWeatherDataObject?.weatherInformationDTOs?.count ?? 1
       return numberOfRows > 0 ? numberOfRows : 1
     }
   }
@@ -264,21 +264,21 @@ extension ListViewController {
       $0.selectionStyle = .none
     }
     
-    if WeatherDataService.shared.apiKeyUnauthorized {
-      let errorDataDTO = (WeatherDataService.shared.bookmarkedWeatherDataObjects?.first { $0.errorDataDTO != nil})?.errorDataDTO ?? WeatherDataService.shared.nearbyWeatherDataObject?.errorDataDTO
+    if WeatherInformationPersistencyService.shared.apiKeyUnauthorized {
+      let errorDataDTO = (WeatherInformationPersistencyService.shared.bookmarkedWeatherDataObjects?.first { $0.errorDataDTO != nil})?.errorDataDTO ?? WeatherInformationPersistencyService.shared.nearbyWeatherDataObject?.errorDataDTO
       alertCell.configureWithErrorDataDTO(errorDataDTO)
       return alertCell
     }
     
     switch PreferencesDataService.shared.preferredListType {
     case .bookmarked:
-      guard let bookmarkedWeatherDataObjects = WeatherDataService.shared.bookmarkedWeatherDataObjects,
+      guard let bookmarkedWeatherDataObjects = WeatherInformationPersistencyService.shared.bookmarkedWeatherDataObjects,
         !bookmarkedWeatherDataObjects.isEmpty else {
           alertCell.configure(with: R.string.localizable.empty_bookmarks_message())
           return alertCell
       }
       guard let weatherDTO = bookmarkedWeatherDataObjects[indexPath.row].weatherInformationDTO else {
-        alertCell.configureWithErrorDataDTO(WeatherDataService.shared.bookmarkedWeatherDataObjects?[indexPath.row].errorDataDTO)
+        alertCell.configureWithErrorDataDTO(WeatherInformationPersistencyService.shared.bookmarkedWeatherDataObjects?[indexPath.row].errorDataDTO)
         return alertCell
       }
       weatherCell.configureWithWeatherDTO(weatherDTO, isBookmark: true)
@@ -289,12 +289,12 @@ extension ListViewController {
         alertCell.configureWithErrorDataDTO(errorDataDTO)
         return alertCell
       }
-      guard let nearbyWeatherDataObject = WeatherDataService.shared.nearbyWeatherDataObject else {
+      guard let nearbyWeatherDataObject = WeatherInformationPersistencyService.shared.nearbyWeatherDataObject else {
         alertCell.configure(with: R.string.localizable.empty_nearby_locations_message())
         return alertCell
       }
       guard let weatherDTO = nearbyWeatherDataObject.weatherInformationDTOs?[indexPath.row] else {
-        alertCell.configureWithErrorDataDTO(WeatherDataService.shared.nearbyWeatherDataObject?.errorDataDTO)
+        alertCell.configureWithErrorDataDTO(WeatherInformationPersistencyService.shared.nearbyWeatherDataObject?.errorDataDTO)
         return alertCell
       }
       weatherCell.configureWithWeatherDTO(weatherDTO, isBookmark: false)
@@ -303,7 +303,7 @@ extension ListViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard WeatherDataService.shared.hasDisplayableData else {
+    guard WeatherInformationPersistencyService.shared.hasDisplayableData else {
       return
     }
     

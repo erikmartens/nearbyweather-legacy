@@ -153,7 +153,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
         
-        let entriesCount = WeatherDataService.shared.bookmarkedLocations.count
+        let entriesCount = WeatherInformationPersistencyService.shared.bookmarkedLocations.count
         let description: String
         switch entriesCount {
         case 0:
@@ -161,7 +161,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
           cell.accessoryType = .none
           cell.selectionStyle = .none
         case 1:
-          description = WeatherDataService.shared.bookmarkedLocations[indexPath.row].name
+          description = WeatherInformationPersistencyService.shared.bookmarkedLocations[indexPath.row].name
           cell.accessoryType = .disclosureIndicator
           cell.selectionStyle = .default
         default:
@@ -221,7 +221,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       
       // TODO: fix this
       if let preferredBookmarkId = PreferencesDataService.shared.preferredBookmark.value,
-        WeatherDataService.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) == nil {
+        WeatherInformationPersistencyService.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) == nil {
           PreferencesDataService.shared.preferredBookmark = PreferredBookmarkOption(value: nil)
       }
       
@@ -299,7 +299,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
     case .preferredBookmark:
       var options = [PreferredBookmarkOption(value: .none)]
       options.append(contentsOf:
-        WeatherDataService.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmarkOption.init)
+        WeatherInformationPersistencyService.shared.bookmarkedLocations.map { $0.identifier }.map(PreferredBookmarkOption.init)
       )
       alert = Factory.AlertController.make(fromType:
         .preferredBookmarkOptions(options: options,

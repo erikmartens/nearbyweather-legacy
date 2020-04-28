@@ -10,20 +10,31 @@ import Foundation
 
 extension FileManager {
   
+  enum FileManagerError: String, Error {
+    case directoryUrlDeterminationError = "Could not determine the specified directory within the SearchPathDirectory"
+  }
+  
   enum StorageLocationType {
     case bundle
     case documents
     case applicationSupport
   }
   
-  class func directoryURL(for location: StorageLocationType, fileName: String? = nil, fileExtension: String? = nil) -> URL? {
+  class func directoryUrl(for location: StorageLocationType, fileName: String? = nil, fileExtension: String? = nil) throws -> URL {
+    var url: URL?
+    
     switch location {
     case .bundle:
-      return Bundle.main.bundleURL
+      url = Bundle.main.bundleURL
     case .documents:
-      return  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+      url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     case .applicationSupport:
-      return  FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+      url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
     }
+    
+    guard let result = url else {
+      throw FileManager.FileManagerError.directoryUrlDeterminationError
+    }
+    return result
   }
 }

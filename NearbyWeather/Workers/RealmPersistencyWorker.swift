@@ -109,11 +109,11 @@ final class RealmPersistencyWorker {
   // MARK: - Initialization
   
   init(
-    baseDirectoryUrl: URL,
+    storageLocation: FileManager.StorageLocationType,
     dataBaseFileName: String,
     objectTypes: [Object.Type]?
-  ) {
-    self.baseDirectory = baseDirectoryUrl
+  ) throws {
+    self.baseDirectory = try FileManager.directoryUrl(for: storageLocation)
     self.databaseFileName = dataBaseFileName
     self.objectTypes = objectTypes
     

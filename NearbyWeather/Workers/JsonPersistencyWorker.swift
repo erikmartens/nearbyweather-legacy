@@ -15,6 +15,15 @@ protocol DataStorageProtocol {
   static func loadData() -> StorageEntity?
 }
 
+enum JsonPersistencyWorkerError: String, Error {
+  
+  var domain: String {
+    "JsonPersistencyWorker"
+  }
+  
+  case fileNotFoundError = "Tried to retrieve a file from disk, but the file did not exist."
+}
+
 final class JsonPersistencyWorker {
   
   private static let fileExtension = "json"
@@ -40,12 +49,12 @@ final class JsonPersistencyWorker {
     try data.write(to: destinationFileUrl)
   }
   
-  func retrieveJsonFromFile<T: Decodable>(with fileName: String, andDecodeAsType type: T.Type, fromStorageLocation location: FileManager.StorageLocationType) throws -> T? {
+  func retrieveJsonFromFile<T: Decodable>(with fileName: String, andDecodeAsType type: T.Type, fromStorageLocation location: FileManager.StorageLocationType) throws -> T {
     let fileDirectoryURL = try fileManager.directoryUrl(for: location, fileName: fileName, fileExtension: JsonPersistencyWorker.fileExtension)
     let fileUrl = fileDirectoryURL.appendingPathComponent(fileName).appendingPathExtension(Self.fileExtension)
     
     guard fileManager.fileExists(atPath: fileUrl.path) else {
-      return nil
+      throw JsonPersistencyWorkerError.fileNotFoundError
     }
     let data = try Data(contentsOf: fileUrl)
     let model = try JSONDecoder().decode(type, from: data)

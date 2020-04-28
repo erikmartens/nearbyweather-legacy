@@ -18,7 +18,7 @@ final class AboutAppTableViewController: UITableViewController, Stepper {
       with: R.file.thirdPartyLibrariesJson.name,
       andDecodeAsType: ThirdPartyLibraryArrayWrapper.self,
       fromStorageLocation: .bundle
-      )?
+      )
       .elements
       .sorted { $0.name.lowercased() < $1.name.lowercased() }
   }()
@@ -28,7 +28,7 @@ final class AboutAppTableViewController: UITableViewController, Stepper {
       with: R.file.projectOwnerJson.name,
       andDecodeAsType: DevelopmentContributorArrayWrapper.self,
       fromStorageLocation: .bundle
-      )?
+      )
       .elements
       .sorted { $0.lastName.lowercased() < $1.lastName.lowercased() }
   }()
@@ -38,7 +38,7 @@ final class AboutAppTableViewController: UITableViewController, Stepper {
       with: R.file.projectContributorsJson.name,
       andDecodeAsType: DevelopmentContributorArrayWrapper.self,
       fromStorageLocation: .bundle
-      )?
+      )
       .elements
       .sorted { $0.lastName.lowercased() < $1.lastName.lowercased() }
   }()

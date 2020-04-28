@@ -319,7 +319,7 @@ final class WeatherInformationService {
   }
 }
 
-extension WeatherInformationService: DataStorageProtocol {
+extension WeatherInformationService: JsonPersistencyProtocol {
   
   typealias StorageEntity = WeatherInformationService
   

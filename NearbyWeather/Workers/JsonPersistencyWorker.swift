@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol DataStorageProtocol {
-  associatedtype StorageEntity: DataStorageProtocol
+protocol JsonPersistencyProtocol {
+  associatedtype StorageEntity: JsonPersistencyProtocol
   
   static func storeData()
   static func loadData() -> StorageEntity?

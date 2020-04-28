@@ -118,7 +118,7 @@ final class PreferencesDataService: StoredPreferencesProvider, InMemoryPreferenc
   var preferredMapType: MKMapType = .standard
 }
 
-extension PreferencesDataService: DataStorageProtocol {
+extension PreferencesDataService: JsonPersistencyProtocol {
   
   typealias StorageEntity = PreferencesDataService
   

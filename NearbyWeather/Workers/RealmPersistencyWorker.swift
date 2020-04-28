@@ -86,7 +86,6 @@ final class RealmPersistencyWorker {
   
   private let baseDirectory: URL
   private let databaseFileName: String
-  private let objectTypes: [Object.Type]?
   
   private lazy var configuration: Realm.Configuration = {
     Realm.Configuration(
@@ -94,7 +93,7 @@ final class RealmPersistencyWorker {
       readOnly: false,
       migrationBlock: { (_, _) in },
       deleteRealmIfMigrationNeeded: false,
-      objectTypes: objectTypes
+      objectTypes: [RealmModel.self]
     )
   }()
   
@@ -109,15 +108,14 @@ final class RealmPersistencyWorker {
   // MARK: - Initialization
   
   init(
+    fileManager: FileManager = FileManager.default,
     storageLocation: FileManager.StorageLocationType,
-    dataBaseFileName: String,
-    objectTypes: [Object.Type]?
+    dataBaseFileName: String
   ) throws {
-    self.baseDirectory = try FileManager.default.directoryUrl(for: storageLocation)
+    self.baseDirectory = try fileManager.directoryUrl(for: storageLocation)
     self.databaseFileName = dataBaseFileName
-    self.objectTypes = objectTypes
     
-    try FileManager.default.createBaseDirectoryIfNeeded(for: baseDirectory.path)
+    try fileManager.createBaseDirectoryIfNeeded(for: baseDirectory.path)
   }
 }
 

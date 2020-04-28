@@ -27,18 +27,11 @@ final class JsonPersistencyWorker {
                         message: "Could not construct directory url.")
       return
     }
-    if !FileManager.default.fileExists(atPath: destinationDirectoryURL.path, isDirectory: nil) {
-      do {
-        try FileManager.default.createDirectory(at: destinationDirectoryURL, withIntermediateDirectories: true, attributes: nil)
-      } catch {
-        printDebugMessage(domain: String(describing: self),
-                          message: "Error while creating directory \(destinationDirectoryURL.path). Error-Description: \(error.localizedDescription)")
-        return
-      }
-    }
+    
     let filePathUrl = destinationDirectoryURL.appendingPathComponent(fileName).appendingPathExtension(Self.fileExtension)
     
     do {
+      try FileManager.createBaseDirectoryIfNeeded(for: destinationDirectoryURL.path)
       let data = try JSONEncoder().encode(codable)
       try data.write(to: filePathUrl)
     } catch let error {
@@ -48,25 +41,25 @@ final class JsonPersistencyWorker {
   }
   
   static func retrieveJsonFromFile<T: Decodable>(with fileName: String, andDecodeAsType type: T.Type, fromStorageLocation location: FileManager.StorageLocationType) -> T? {
-    guard let fileBaseURL = try? FileManager.directoryUrl(for: location, fileName: fileName, fileExtension: "json") else {
+    guard let fileDirectoryURL = try? FileManager.directoryUrl(for: location, fileName: fileName, fileExtension: JsonPersistencyWorker.fileExtension) else {
       printDebugMessage(domain: String(describing: self),
                         message: "Could not construct directory url.")
       return nil
     }
-    let filePathUrl = fileBaseURL.appendingPathComponent(fileName).appendingPathExtension(Self.fileExtension)
+    let fileUrl = fileDirectoryURL.appendingPathComponent(fileName).appendingPathExtension(Self.fileExtension)
     
-    if !FileManager.default.fileExists(atPath: filePathUrl.path) {
+    if !FileManager.default.fileExists(atPath: fileUrl.path) {
       printDebugMessage(domain: String(describing: self),
-                        message: "File at path \(filePathUrl.path) does not exist!")
+                        message: "File at path \(fileUrl.path) does not exist!")
       return nil
     }
     do {
-      let data = try Data(contentsOf: filePathUrl)
+      let data = try Data(contentsOf: fileUrl)
       let model = try JSONDecoder().decode(type, from: data)
       return model
     } catch let error {
       printDebugMessage(domain: String(describing: self),
-                        message: "DataStorageService: Error while retrieving data from \(filePathUrl.path). Error-Description: \(error.localizedDescription)")
+                        message: "DataStorageService: Error while retrieving data from \(fileUrl.path). Error-Description: \(error.localizedDescription)")
       return nil
     }
   }

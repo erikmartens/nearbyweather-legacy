@@ -27,14 +27,30 @@ extension FileManager {
     case .bundle:
       url = Bundle.main.bundleURL
     case .documents:
-      url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+      url = self.default.urls(for: .documentDirectory, in: .userDomainMask).first
     case .applicationSupport:
-      url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+      url = self.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
     }
     
     guard let result = url else {
       throw FileManager.FileManagerError.directoryUrlDeterminationError
     }
     return result
+  }
+  
+  class func createBaseDirectoryIfNeeded(for filePath: String) throws {
+    if self.default.fileExists(atPath: filePath, isDirectory: nil) {
+      return
+    }
+    try self.default.createDirectory(atPath: filePath, withIntermediateDirectories: true, attributes: nil)
+//    do {
+//
+//    } catch {
+//      printDebugMessage(
+//        domain: String(describing: self),
+//        message: "Error while creating directory \(filePath). Error-Description: \(error.localizedDescription)"
+//      )
+//      fatalError(error.localizedDescription)
+//    }
   }
 }

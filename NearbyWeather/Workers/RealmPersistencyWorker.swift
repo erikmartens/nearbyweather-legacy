@@ -117,27 +117,7 @@ final class RealmPersistencyWorker {
     self.databaseFileName = dataBaseFileName
     self.objectTypes = objectTypes
     
-    createBaseDirectoryIfNeeded()
-  }
-}
-
-// MARK: - Private Helper Functions
-
-private extension RealmPersistencyWorker {
-  
-  private func createBaseDirectoryIfNeeded() {
-    // basedirectoy (application support directory) may not exist yet -> has to be created first
-    if !FileManager.default.fileExists(atPath: baseDirectory.path, isDirectory: nil) {
-      do {
-        try FileManager.default.createDirectory(atPath: baseDirectory.path, withIntermediateDirectories: true, attributes: nil)
-      } catch {
-        printDebugMessage(
-          domain: String(describing: self),
-          message: "Error while creating directory \(baseDirectory.path). Error-Description: \(error.localizedDescription)"
-        )
-        fatalError(error.localizedDescription)
-      }
-    }
+    try FileManager.createBaseDirectoryIfNeeded(for: baseDirectory.path)
   }
 }
 

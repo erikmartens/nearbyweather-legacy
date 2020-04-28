@@ -75,41 +75,41 @@ final class PreferencesDataService: StoredPreferencesProvider, InMemoryPreferenc
   // MARK: - Stored Preferences
   
   var preferredBookmark: PreferredBookmarkOption {
-     didSet {
-       BadgeService.shared.updateBadge()
-       PreferencesDataService.storeData()
-     }
-   }
-   
-   var amountOfResults: AmountOfResultsOption {
-     didSet {
-       WeatherInformationService.shared.update(withCompletionHandler: nil)
-       PreferencesDataService.storeData()
-     }
-   }
-   
-   var temperatureUnit: TemperatureUnitOption {
-     didSet {
-       BadgeService.shared.updateBadge()
-       PreferencesDataService.storeData()
-     }
-   }
-   
-   var distanceSpeedUnit: DistanceVelocityUnitOption {
-     didSet {
-       PreferencesDataService.storeData()
-     }
-   }
-   
-   var sortingOrientation: SortingOrientationOption {
-     didSet {
-       NotificationCenter.default.post(
-         name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged),
-         object: nil
-       )
-       PreferencesDataService.storeData()
-     }
-   }
+    didSet {
+      BadgeService.shared.updateBadge()
+      PreferencesDataService.storeData()
+    }
+  }
+  
+  var amountOfResults: AmountOfResultsOption {
+    didSet {
+      WeatherInformationService.shared.update(withCompletionHandler: nil)
+      PreferencesDataService.storeData()
+    }
+  }
+  
+  var temperatureUnit: TemperatureUnitOption {
+    didSet {
+      BadgeService.shared.updateBadge()
+      PreferencesDataService.storeData()
+    }
+  }
+  
+  var distanceSpeedUnit: DistanceVelocityUnitOption {
+    didSet {
+      PreferencesDataService.storeData()
+    }
+  }
+  
+  var sortingOrientation: SortingOrientationOption {
+    didSet {
+      NotificationCenter.default.post(
+        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged),
+        object: nil
+      )
+      PreferencesDataService.storeData()
+    }
+  }
   
   // MARK: - In Memory Preferences
   
@@ -123,7 +123,7 @@ extension PreferencesDataService: DataStorageProtocol {
   typealias StorageEntity = PreferencesDataService
   
   static func loadData() -> PreferencesDataService? {
-    guard let preferencesManagerStoredContentsWrapper = JsonPersistencyWorker.retrieveJsonFromFile(
+    guard let preferencesManagerStoredContentsWrapper = try? JsonPersistencyWorker().retrieveJsonFromFile(
       with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
       andDecodeAsType: PreferencesManagerStoredContentsWrapper.self,
       fromStorageLocation: .applicationSupport
@@ -152,9 +152,11 @@ extension PreferencesDataService: DataStorageProtocol {
         windspeedUnit: PreferencesDataService.shared.distanceSpeedUnit,
         sortingOrientation: PreferencesDataService.shared.sortingOrientation
       )
-      JsonPersistencyWorker.storeJson(for: preferencesManagerStoredContentsWrapper,
-                                   inFileWithName: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
-                                   toStorageLocation: .applicationSupport)
+      try? JsonPersistencyWorker().storeJson(
+        for: preferencesManagerStoredContentsWrapper,
+        inFileWithName: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
+        toStorageLocation: .applicationSupport
+      )
       dispatchSemaphore.signal()
     }
   }

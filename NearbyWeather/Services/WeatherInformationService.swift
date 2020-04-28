@@ -324,7 +324,7 @@ extension WeatherInformationService: DataStorageProtocol {
   typealias StorageEntity = WeatherInformationService
   
   static func loadData() -> WeatherInformationService? {
-    guard let weatherDataManagerStoredContents = JsonPersistencyWorker.retrieveJsonFromFile(
+    guard let weatherDataManagerStoredContents = try? JsonPersistencyWorker().retrieveJsonFromFile(
       with: Constants.Keys.Storage.kWeatherDataManagerStoredContentsFileName,
       andDecodeAsType: WeatherDataManagerStoredContentsWrapper.self,
       fromStorageLocation: .documents
@@ -349,9 +349,11 @@ extension WeatherInformationService: DataStorageProtocol {
         bookmarkedWeatherDataObjects: WeatherInformationService.shared.bookmarkedWeatherDataObjects,
         nearbyWeatherDataObject: WeatherInformationService.shared.nearbyWeatherDataObject
       )
-      JsonPersistencyWorker.storeJson(for: weatherDataManagerStoredContents,
-                                   inFileWithName: Constants.Keys.Storage.kWeatherDataManagerStoredContentsFileName,
-                                   toStorageLocation: .documents)
+      try? JsonPersistencyWorker().storeJson(
+        for: weatherDataManagerStoredContents,
+        inFileWithName: Constants.Keys.Storage.kWeatherDataManagerStoredContentsFileName,
+        toStorageLocation: .documents
+      )
       dispatchSemaphore.signal()
     }
   }

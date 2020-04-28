@@ -113,11 +113,11 @@ final class RealmPersistencyWorker {
     dataBaseFileName: String,
     objectTypes: [Object.Type]?
   ) throws {
-    self.baseDirectory = try FileManager.directoryUrl(for: storageLocation)
+    self.baseDirectory = try FileManager.default.directoryUrl(for: storageLocation)
     self.databaseFileName = dataBaseFileName
     self.objectTypes = objectTypes
     
-    try FileManager.createBaseDirectoryIfNeeded(for: baseDirectory.path)
+    try FileManager.default.createBaseDirectoryIfNeeded(for: baseDirectory.path)
   }
 }
 

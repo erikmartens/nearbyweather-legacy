@@ -54,7 +54,7 @@ protocol WeatherInformationProvisioning {
 extension WeatherInformationService2: WeatherInformationProvisioning {
   
   func createBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
-    persistencyWorker.observeResources(Self.bookmarkedWeatherInformationCollection, type: WeatherInformationDTO.self)
+    persistencyWorker.observeResources(in: Self.bookmarkedWeatherInformationCollection, type: WeatherInformationDTO.self)
   }
   
   func createBookmarkedWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
@@ -62,11 +62,11 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       collection: Self.bookmarkedWeatherInformationCollection,
       identifier: identifier
     )
-    return persistencyWorker.observeResource(identity, type: WeatherInformationDTO.self)
+    return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
   }
   
   func createNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
-    persistencyWorker.observeResources(Self.bookmarkedWeatherInformationCollection, type: WeatherInformationDTO.self)
+    persistencyWorker.observeResources(in: Self.bookmarkedWeatherInformationCollection, type: WeatherInformationDTO.self)
   }
   
   func createNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
@@ -74,6 +74,6 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       collection: Self.nearbyWeatherInformationCollection,
       identifier: identifier
     )
-    return persistencyWorker.observeResource(identity, type: WeatherInformationDTO.self)
+    return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
   }
 }

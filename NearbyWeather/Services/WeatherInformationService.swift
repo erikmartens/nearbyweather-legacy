@@ -56,16 +56,6 @@ final class WeatherInformationService {
     target: nil
   )
   
-  // MARK: - Properties
-  
-  private lazy var persistencyWorker: RealmPersistencyWorker = {
-    try! RealmPersistencyWorker( // TODO
-      storageLocation: .documents,
-      dataBaseFileName: "weatherInformationDataBase",
-      objectTypes: [] // TODO
-    )
-  }()
-  
   // MARK: - Public Assets
   
   static var shared: WeatherInformationService!

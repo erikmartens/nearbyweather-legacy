@@ -11,16 +11,27 @@ import RxRealm
 import RxSwift
 
 protocol PersistencyModelProtocol {
-  associatedtype T
+  associatedtype T: Codable
   var identity: PersistencyModelIdentityProtocol { get }
   var entity: T { get }
+  init(identity: PersistencyModelIdentityProtocol, entity: T)
+  init?(collection: String, identifier: String, data: Data?)
+  func toRealmModel() -> RealmModel
 }
 
-struct PersistencyModel<T: Codable>: PersistencyModelProtocol {
-  var identity: PersistencyModelIdentityProtocol
-  var entity: T
+class PersistencyModel<T: Codable>: PersistencyModelProtocol {
+  let identity: PersistencyModelIdentityProtocol
+  let entity: T
   
-  init?(collection: String, identifier: String, data: Data?) {
+  required init(
+    identity: PersistencyModelIdentityProtocol,
+    entity: T
+  ) {
+    self.identity = identity
+    self.entity = entity
+  }
+  
+  required init?(collection: String, identifier: String, data: Data?) {
     self.identity = PersistencyModelIdentity(collection: collection, identifier: identifier)
     guard let data = data,
       let entity = try? JSONDecoder().decode(T.self, from: data) else {

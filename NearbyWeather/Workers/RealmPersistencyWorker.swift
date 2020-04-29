@@ -133,10 +133,10 @@ final class RealmPersistencyWorker {
 // MARK: - Public CRUD Functions
 
 protocol RealmPersistencyWorkerCRUD {
-  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], classType: T.Type) -> Completable
-  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, classType: T.Type) -> Completable
-  func observeResources<T: Codable>(_ collection: String, classType: T.Type) -> Observable<[PersistencyModel<T>]>
-  func observeResource<T: Codable>(_ identity: PersistencyModelIdentity, classType: T.Type) -> Observable<PersistencyModel<T>?>
+  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable
+  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable
+  func observeResources<T: Codable>(_ collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]>
+  func observeResource<T: Codable>(_ identity: PersistencyModelIdentity, type: T.Type) -> Observable<PersistencyModel<T>?>
   func deleteResources(with identities: [PersistencyModelIdentity]) -> Completable
   func deleteResource(with identity: PersistencyModelIdentity) -> Completable
 }
@@ -144,7 +144,7 @@ protocol RealmPersistencyWorkerCRUD {
 extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   
   /// save a new set of resources or update already existing resources for the specified identities
-  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], classType: T.Type) -> Completable {
+  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable {
     Completable
       .create { [configuration] completable in
         do {
@@ -184,7 +184,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   }
   
   /// save a new resource or update an already existing resource for the specified identity
-  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, classType: T.Type) -> Completable {
+  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable {
     Completable
       .create { [configuration] completable in
         let newModel = resource.toRealmModel()
@@ -222,7 +222,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   }
   
   /// observes all resources within a specified collection
-  func observeResources<T: Codable>(_ collection: String, classType: T.Type) -> Observable<[PersistencyModel<T>]> {
+  func observeResources<T: Codable>(_ collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]> {
     Observable<Results<RealmModel>>
       .create { [configuration] handler in
         do {
@@ -245,7 +245,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   }
   
   /// observes a specified resource for a specified identity
-  func observeResource<T: Codable>(_ identity: PersistencyModelIdentity, classType: T.Type) -> Observable<PersistencyModel<T>?> {
+  func observeResource<T: Codable>(_ identity: PersistencyModelIdentity, type: T.Type) -> Observable<PersistencyModel<T>?> {
     Observable<Results<RealmModel>>
       .create { [configuration] handler in
         do {

@@ -91,6 +91,11 @@ PODS:
   - Realm/Headers (4.4.1)
   - RealmSwift (4.4.1):
     - Realm (= 4.4.1)
+  - RxAlamofire (5.1.0):
+    - RxAlamofire/Core (= 5.1.0)
+  - RxAlamofire/Core (5.1.0):
+    - Alamofire (~> 4.8)
+    - RxSwift (~> 5.0)
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -115,6 +120,7 @@ DEPENDENCIES:
   - PKHUD (~> 5.3.0)
   - R.swift (= 5.0.3)
   - RealmSwift (~> 4.4.1)
+  - RxAlamofire (~> 5.1.0)
   - RxCocoa (~> 5.1.1)
   - RxFlow (~> 2.7.0)
   - RxRealm (~> 2.0.0)
@@ -145,6 +151,7 @@ SPEC REPOS:
     - R.swift.Library
     - Realm
     - RealmSwift
+    - RxAlamofire
     - RxCocoa
     - RxFlow
     - RxRealm
@@ -187,6 +194,7 @@ SPEC CHECKSUMS:
   R.swift.Library: cfe85d569d9bae6cb262922db130e7c3a7a5fad1
   Realm: 4eb04d7487bd43c0581256f40b424eafb711deff
   RealmSwift: 3eb8924ff7100df5928c7602f71d0fec51e7c9c5
+  RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxFlow: 605ef6364d7e937bea8f9507a1e99a431cdc2493
   RxRealm: 900f5c7e6f0a2d6527b56eaf7283f3035ec1e8ba
@@ -195,6 +203,6 @@ SPEC CHECKSUMS:
   SwiftLint: 8f5d2f903e1c9bcbc832fd16771e80a263ac6cbb
   TextFieldCounter: 0f20630c8fe6f02b657bd883674829edfc40d845
 
-PODFILE CHECKSUM: 0b8535a352f959138837c0286f6f21db06e1bca4
+PODFILE CHECKSUM: 01722a88411821dad41a306dd366e28fdc0f51a0
 
 COCOAPODS: 1.9.1

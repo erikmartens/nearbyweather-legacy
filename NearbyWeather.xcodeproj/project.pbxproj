@@ -73,6 +73,8 @@
 		F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F283D2751DF393B2001B879D /* InfoPlist.strings */; };
 		F284DDC42458C07400445BFF /* FileManager+DirectoryUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDC32458C07400445BFF /* FileManager+DirectoryUrl.swift */; };
 		F284DDCB245A263900445BFF /* WeatherInformationService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDCA245A263900445BFF /* WeatherInformationService2.swift */; };
+		F284DDCE245A40F500445BFF /* UserLocationService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDCD245A40F500445BFF /* UserLocationService2.swift */; };
+		F284DDD0245A414B00445BFF /* WeatherStationService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDCF245A414B00445BFF /* WeatherStationService2.swift */; };
 		F28CA5392016A1BA00209397 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA5382016A1BA00209397 /* MapViewController.swift */; };
 		F28CA53D202622C200209397 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA53C202622C200209397 /* ToggleCell.swift */; };
 		F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA54020279EE300209397 /* WeatherDetailViewController.swift */; };
@@ -233,6 +235,8 @@
 		F283D2761DF393B3001B879D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F284DDC32458C07400445BFF /* FileManager+DirectoryUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+DirectoryUrl.swift"; sourceTree = "<group>"; };
 		F284DDCA245A263900445BFF /* WeatherInformationService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationService2.swift; sourceTree = "<group>"; };
+		F284DDCD245A40F500445BFF /* UserLocationService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationService2.swift; sourceTree = "<group>"; };
+		F284DDCF245A414B00445BFF /* WeatherStationService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationService2.swift; sourceTree = "<group>"; };
 		F28CA5382016A1BA00209397 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F28CA53C202622C200209397 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		F28CA54020279EE300209397 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
@@ -504,6 +508,8 @@
 				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
 				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 				F284DDCA245A263900445BFF /* WeatherInformationService2.swift */,
+				F284DDCD245A40F500445BFF /* UserLocationService2.swift */,
+				F284DDCF245A414B00445BFF /* WeatherStationService2.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1001,6 +1007,7 @@
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxFlow/RxFlow.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
@@ -1020,6 +1027,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFlow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
@@ -1049,6 +1057,7 @@
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxFlow/RxFlow.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
@@ -1068,6 +1077,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFlow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
@@ -1135,7 +1145,7 @@
 			);
 			name = "R.Swift Generate File";
 			outputPaths = (
-				$SRCROOT/R.generated.swift,
+				"$SRCROOT/R.generated.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1234,11 +1244,13 @@
 				F28CE9681F9A9893008319C4 /* ListViewController.swift in Sources */,
 				F2F7BA1D23E373DD00B4D2EB /* Constants+Labels.swift in Sources */,
 				F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */,
+				F284DDD0245A414B00445BFF /* WeatherStationService2.swift in Sources */,
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */,
 				F213FA3423F9EF2400F094D8 /* TemperatureUnitOption.swift in Sources */,
 				F237287A244C7FDD00964C49 /* SettingsFlow.swift in Sources */,
 				F2372891244CAAF400964C49 /* RootFlow.swift in Sources */,
+				F284DDCE245A40F500445BFF /* UserLocationService2.swift in Sources */,
 				F237287E244C801000964C49 /* MapStepper.swift in Sources */,
 				F2372880244C802900964C49 /* SettingsStepper.swift in Sources */,
 				F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */,

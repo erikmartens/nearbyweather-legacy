@@ -33,10 +33,6 @@ class WeatherStationService2 {
   
   private static let weatherStationBookmarkCollection = "/weather_station/bookmarked/"
   
-  private lazy var bookmarkedLocations: [WeatherStationDTO] = { // TODO: replace
-    WeatherInformationService.shared.bookmarkedLocations
-  }()
-  
   // MARK: - Properties
   
   // MARK: - Initialization
@@ -47,12 +43,12 @@ class WeatherStationService2 {
 // MARK: - Weather Station Lookup
 
 protocol WeatherStationLookup {
-  func lookupWeatherStations(for searchTerm: String) -> Observable<[WeatherStationDTO]>
+  func createWeatherStationsLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]>
 }
 
 extension WeatherStationService2: WeatherStationLookup {
   
-  func lookupWeatherStations(for searchTerm: String) -> Observable<[WeatherStationDTO]> {
+  func createWeatherStationsLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]> {
     Observable<[WeatherStationDTO]?>
       .create { [lookupWorker] subscriber in
         lookupWorker.inDatabase { database in
@@ -71,7 +67,12 @@ extension WeatherStationService2: WeatherStationLookup {
         return Disposables.create()
       }
       .replaceNilWith([])
-      .map { [bookmarkedLocations] in $0.filter { !bookmarkedLocations.contains($0) } }
+      .flatMapLatest { [createBookmarkedStationsObservable] weatherStationDtos -> Observable<[WeatherStationDTO]> in
+        createBookmarkedStationsObservable()
+          .map { bookmarkedWeatherStations in
+            weatherStationDtos.filter { !bookmarkedWeatherStations.contains($0) }
+          }
+      }
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
   }
 }
@@ -81,7 +82,7 @@ extension WeatherStationService2: WeatherStationLookup {
 protocol WeatherStationBookmarking {
   func addBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
   func removeBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
-  func observeBookmarks() -> Observable<[WeatherStationDTO]>
+  func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
 }
 
 extension WeatherStationService2: WeatherStationBookmarking {
@@ -107,7 +108,7 @@ extension WeatherStationService2: WeatherStationBookmarking {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.deleteResource(with: $0) }
   }
   
-  func observeBookmarks() -> Observable<[WeatherStationDTO]> {
+  func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]> {
     persistencyWorker
       .observeResources(in: Self.weatherStationBookmarkCollection, type: WeatherStationDTO.self)
       .map { $0.map { $0.entity } }

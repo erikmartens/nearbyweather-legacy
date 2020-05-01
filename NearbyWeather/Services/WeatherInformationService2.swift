@@ -9,7 +9,6 @@
 import RxSwift
 import RxOptional
 import RxAlamofire
-import Alamofire
 
 enum WeatherInformationServiceError: String, Error {
   
@@ -19,7 +18,6 @@ enum WeatherInformationServiceError: String, Error {
   
   case apiKeyError = "Trying to request data from OpenWeatherMap, but no API key was found."
 }
-
 
 extension WeatherInformationService2 {
   struct Dependencies {
@@ -139,8 +137,9 @@ extension WeatherInformationService2: WeatherInformationUpdating {
   }
   
   func updateBookmarkedWeatherInformation() {
-    _ = Observable
-      .just([1, 2, 3]) // TODO // dependency: bookmarked locations service
+    _ = dependencies.weatherStationService
+      .createBookmarksObservable()
+      .map { $0.map { $0.identifier } }
       .flatMapLatest { [apiKey] identifiers -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
         guard let apiKey = apiKey else {
           throw WeatherInformationServiceError.apiKeyError
@@ -203,8 +202,8 @@ extension WeatherInformationService2: WeatherInformationUpdating {
           }
           return Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
             with: apiKey,
-            currentLatitude: currentLatitude,
-            currentLongitude: currentLongitude
+            currentLatitude: latitude,
+            currentLongitude: longitude
           )
       })
       .flatMapLatest { url -> Observable<[PersistencyModel<WeatherInformationDTO>]> in

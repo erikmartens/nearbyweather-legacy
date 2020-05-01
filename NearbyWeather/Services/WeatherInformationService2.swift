@@ -58,72 +58,7 @@ final class WeatherInformationService2 {
   }
 }
 
-// MARK: - Private Helpers
-
-private extension WeatherInformationService2 {
-  
-  private static func mapResponseToPersistencyModel(_ response: (HTTPURLResponse, Data), identifier: Int) -> PersistencyModel<WeatherInformationDTO>? {
-    guard response.0.statusCode == 200,
-      let weatherInformationDto = try? JSONDecoder().decode(WeatherInformationDTO.self, from: response.1) else {
-        return nil
-    }
-    return PersistencyModel(
-      identity: PersistencyModelIdentity(
-        collection: Self.bookmarkedWeatherInformationCollection,
-        identifier: String(identifier)
-      ),
-      entity: weatherInformationDto
-    )
-  }
-  
-  func updateBookmarkedWeatherInformation() {
-    _ = Observable
-    .just([1, 2, 3]) // TODO // dependency: bookmarked locations service
-    .flatMapLatest { [apiKey] identifiers -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
-      guard let apiKey = apiKey else {
-        throw WeatherInformationServiceError.apiKeyError
-      }
-      return Observable.zip(
-        identifiers.map { identifier -> Observable<PersistencyModel<WeatherInformationDTO>> in
-          RxAlamofire
-            .requestData(.get, Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier))
-            .map { Self.mapResponseToPersistencyModel($0, identifier: identifier) }
-            .compactMap { $0 }
-        }
-      )
-    }
-    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-    .observeOn(Self.persistencyWriteScheduler)
-    .take(1)
-    .asSingle()
-    .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
-    .subscribe()
-  }
-  
-  func updateWeatherInformationForStation(with identifier: Int) {
-    _ = Single
-      .just(identifier)
-      .flatMapCompletable { [apiKey, persistencyWorker] identifier -> Completable in
-        guard let apiKey = apiKey else {
-          throw WeatherInformationServiceError.apiKeyError
-        }
-        return RxAlamofire
-          .requestData(.get, Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier))
-          .map { Self.mapResponseToPersistencyModel($0, identifier: identifier) }
-          .compactMap { $0 }
-          .take(1)
-          .asSingle()
-          .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherInformationDTO.self) }
-      }
-      .subscribe()
-  }
-  
-  func updateNearbyWeatherInformation() {
-    // dependency: location service
-  }
-}
-
-// MARK: - WeatherInformationProvisioning
+// MARK: - Weather Information Provisioning
 
 protocol WeatherInformationProvisioning {
   func createBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
@@ -156,5 +91,124 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       identifier: identifier
     )
     return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
+  }
+}
+
+// MARK: - Weather Information Updating
+
+extension WeatherInformationService2 {
+  
+  private static func mapSingleInformationResponseToPersistencyModel(_ response: (HTTPURLResponse, Data)) -> PersistencyModel<WeatherInformationDTO>? {
+    guard response.0.statusCode == 200,
+      let weatherInformationDto = try? JSONDecoder().decode(WeatherInformationDTO.self, from: response.1) else {
+        return nil
+    }
+    return PersistencyModel(
+      identity: PersistencyModelIdentity(
+        collection: Self.bookmarkedWeatherInformationCollection,
+        identifier: String(weatherInformationDto.cityID)
+      ),
+      entity: weatherInformationDto
+    )
+  }
+  
+  private static func mapMultiInformationResponseToPersistencyModel(_ response: (HTTPURLResponse, Data)) -> [PersistencyModel<WeatherInformationDTO>]? {
+    guard response.0.statusCode == 200,
+      let multiWeatherData = try? JSONDecoder().decode(WeatherInformationListDTO.self, from: response.1) else {
+        return nil
+    }
+    
+    return multiWeatherData.list.map { weatherInformationDto in
+      PersistencyModel(
+        identity: PersistencyModelIdentity(
+          collection: Self.nearbyWeatherInformationCollection,
+          identifier: String(weatherInformationDto.cityID)
+        ),
+        entity: weatherInformationDto
+      )
+    }
+  }
+  
+  func updateBookmarkedWeatherInformation() {
+    _ = Observable
+      .just([1, 2, 3]) // TODO // dependency: bookmarked locations service
+      .flatMapLatest { [apiKey] identifiers -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
+        guard let apiKey = apiKey else {
+          throw WeatherInformationServiceError.apiKeyError
+        }
+        return Observable.zip(
+          identifiers.map { identifier -> Observable<PersistencyModel<WeatherInformationDTO>> in
+            RxAlamofire
+              .requestData(.get, Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier))
+              .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
+              .compactMap { $0 }
+          }
+        )
+      }
+      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+      .observeOn(Self.persistencyWriteScheduler)
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .subscribe()
+  }
+  
+  func updateWeatherInformationForBookmarkedStation(with identifier: Int) {
+    _ = Single
+      .just(identifier)
+      .map { [apiKey] identifier in
+        guard let apiKey = apiKey else {
+          throw WeatherInformationServiceError.apiKeyError
+        }
+        return Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(
+          with: apiKey,
+          stationIdentifier: identifier
+        )
+      }
+      .flatMapCompletable { [persistencyWorker] url -> Completable in
+        RxAlamofire
+          .requestData(.get, url)
+          .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
+          .compactMap { $0 }
+          .take(1)
+          .asSingle()
+          .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherInformationDTO.self) }
+        }
+        .subscribe()
+  }
+  
+  func updateNearbyWeatherInformation() {
+    // dependency: location service reactive
+     guard let currentLatitude = UserLocationService.shared.currentLatitude,
+      let currentLongitude = UserLocationService.shared.currentLongitude else {
+        return
+    }
+    
+    _ = Observable
+      .combineLatest(
+        Observable.just(currentLatitude),
+        Observable.just(currentLongitude),
+        resultSelector: { [apiKey] latitude, longitude -> URL in
+          guard let apiKey = apiKey else {
+            throw WeatherInformationServiceError.apiKeyError
+          }
+          return Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
+            with: apiKey,
+            currentLatitude: currentLatitude,
+            currentLongitude: currentLongitude
+          )
+      })
+      .flatMapLatest { url -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
+        RxAlamofire
+          .requestData(.get, url)
+          .map { Self.mapMultiInformationResponseToPersistencyModel($0) }
+          .compactMap { $0 }
+      }
+      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+      .observeOn(Self.persistencyWriteScheduler)
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .subscribe()
   }
 }

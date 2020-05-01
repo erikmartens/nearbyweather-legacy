@@ -503,12 +503,12 @@
 				86830393217BBAE400B7122E /* PermissionsService.swift */,
 				F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */,
 				F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */,
-				F26699591E9ADBC300498F99 /* UserLocationService.swift */,
-				F26699571E9AD0F100498F99 /* WeatherInformationService.swift */,
 				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
-				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
+				F26699571E9AD0F100498F99 /* WeatherInformationService.swift */,
 				F284DDCA245A263900445BFF /* WeatherInformationService2.swift */,
+				F26699591E9ADBC300498F99 /* UserLocationService.swift */,
 				F284DDCD245A40F500445BFF /* UserLocationService2.swift */,
+				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 				F284DDCF245A414B00445BFF /* WeatherStationService2.swift */,
 			);
 			path = Services;
@@ -1149,7 +1149,7 @@
 			);
 			name = "R.Swift Generate File";
 			outputPaths = (
-				"$SRCROOT/R.generated.swift",
+				$SRCROOT/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

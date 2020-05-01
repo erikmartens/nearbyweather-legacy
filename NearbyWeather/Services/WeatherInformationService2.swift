@@ -35,16 +35,18 @@ final class WeatherInformationService2 {
   private lazy var persistencyWorker: RealmPersistencyWorker = {
     try! RealmPersistencyWorker(
       storageLocation: .documents,
-      dataBaseFileName: "WeatherInformationDataBase"
+      dataBaseFileName: "WeatherInformationServiceDataBase"
     )
   }()
   
-  private static let persistencyWriteScheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "WeatherInformationService.PersistencyWriteScheduler")
+  private static let persistencyWriteScheduler = SerialDispatchQueueScheduler(
+    internalSerialQueueName: "WeatherInformationService.PersistencyWriteScheduler"
+  )
   
   private static let bookmarkedWeatherInformationCollection = "/weather_information/bookmarked/"
   private static let nearbyWeatherInformationCollection = "/weather_information/nearby/"
   
-  private var apiKey: String? {
+  private var apiKey: String? { // TODO: put into API service
     UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
   }
   
@@ -180,8 +182,8 @@ extension WeatherInformationService2: WeatherInformationUpdating {
           .take(1)
           .asSingle()
           .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherInformationDTO.self) }
-        }
-        .subscribe()
+      }
+      .subscribe()
   }
   
   func updateNearbyWeatherInformation() {

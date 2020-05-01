@@ -102,6 +102,9 @@ PODS:
   - RxFlow (2.7.0):
     - RxCocoa (>= 5.0.0)
     - RxSwift (>= 5.0.0)
+  - RxOptional (4.1.0):
+    - RxCocoa (~> 5)
+    - RxSwift (~> 5)
   - RxRealm (2.0.0):
     - RealmSwift (~> 4.0)
     - RxSwift (~> 5.0)
@@ -123,6 +126,7 @@ DEPENDENCIES:
   - RxAlamofire (~> 5.1.0)
   - RxCocoa (~> 5.1.1)
   - RxFlow (~> 2.7.0)
+  - RxOptional
   - RxRealm (~> 2.0.0)
   - RxSwift (~> 5.1.1)
   - SwiftLint (~> 0.38.2)
@@ -154,6 +158,7 @@ SPEC REPOS:
     - RxAlamofire
     - RxCocoa
     - RxFlow
+    - RxOptional
     - RxRealm
     - RxRelay
     - RxSwift
@@ -197,12 +202,13 @@ SPEC CHECKSUMS:
   RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxFlow: 605ef6364d7e937bea8f9507a1e99a431cdc2493
+  RxOptional: b1fcd60856807a564c0215c2184b8d33e7826dc2
   RxRealm: 900f5c7e6f0a2d6527b56eaf7283f3035ec1e8ba
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   SwiftLint: 8f5d2f903e1c9bcbc832fd16771e80a263ac6cbb
   TextFieldCounter: 0f20630c8fe6f02b657bd883674829edfc40d845
 
-PODFILE CHECKSUM: 01722a88411821dad41a306dd366e28fdc0f51a0
+PODFILE CHECKSUM: 27d366f9c7ca34e0a69e7710e1496638eeceb3fe
 
 COCOAPODS: 1.9.1

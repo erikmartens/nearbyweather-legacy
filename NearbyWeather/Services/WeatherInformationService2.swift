@@ -7,6 +7,7 @@
 //
 
 import RxSwift
+import RxOptional
 import RxAlamofire
 import Alamofire
 
@@ -96,7 +97,13 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
 
 // MARK: - Weather Information Updating
 
-extension WeatherInformationService2 {
+protocol WeatherInformationUpdating {
+  func updateBookmarkedWeatherInformation()
+  func updateWeatherInformationForBookmarkedStation(with identifier: Int)
+  func updateNearbyWeatherInformation()
+}
+
+extension WeatherInformationService2: WeatherInformationUpdating {
   
   private static func mapSingleInformationResponseToPersistencyModel(_ response: (HTTPURLResponse, Data)) -> PersistencyModel<WeatherInformationDTO>? {
     guard response.0.statusCode == 200,
@@ -141,7 +148,7 @@ extension WeatherInformationService2 {
             RxAlamofire
               .requestData(.get, Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier))
               .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
-              .compactMap { $0 }
+              .filterNil()
           }
         )
       }
@@ -169,7 +176,7 @@ extension WeatherInformationService2 {
         RxAlamofire
           .requestData(.get, url)
           .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
-          .compactMap { $0 }
+          .filterNil()
           .take(1)
           .asSingle()
           .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherInformationDTO.self) }
@@ -202,7 +209,7 @@ extension WeatherInformationService2 {
         RxAlamofire
           .requestData(.get, url)
           .map { Self.mapMultiInformationResponseToPersistencyModel($0) }
-          .compactMap { $0 }
+          .filterNil()
       }
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
       .observeOn(Self.persistencyWriteScheduler)

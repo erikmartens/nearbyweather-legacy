@@ -15,6 +15,7 @@ def nearbyweather_pods
 
     pod 'RxSwift', '~> 5.1.1'
     pod 'RxCocoa', '~> 5.1.1'
+    pod 'RxOptional', '~> 4.1.0'
     pod 'RxFlow', '~> 2.7.0'
     pod 'RxRealm', '~> 2.0.0'
     pod 'RxAlamofire', '~> 5.1.0'

@@ -136,9 +136,10 @@ protocol RealmPersistencyWorkerCRUD {
   func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable
   func saveResource<T: Codable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable
   func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]>
-  func observeResource<T: Codable>(with identity: PersistencyModelIdentity, type: T.Type) -> Observable<PersistencyModel<T>?>
-  func deleteResources(with identities: [PersistencyModelIdentity]) -> Completable
-  func deleteResource(with identity: PersistencyModelIdentity) -> Completable
+  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModel<T>?>
+  func deleteResources(with identities: [PersistencyModelIdentityProtocol]) -> Completable
+  func deleteResources(in collection: String) -> Completable
+  func deleteResource(with identity: PersistencyModelIdentityProtocol) -> Completable
 }
 
 extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
@@ -245,7 +246,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   }
   
   /// observes a specified resource for a specified identity
-  func observeResource<T: Codable>(with identity: PersistencyModelIdentity, type: T.Type) -> Observable<PersistencyModel<T>?> {
+  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModel<T>?> {
     Observable<Results<RealmModel>>
       .create { [configuration] handler in
         do {
@@ -269,7 +270,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
       .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
   }
   
-  func deleteResources(with identities: [PersistencyModelIdentity]) -> Completable {
+  func deleteResources(with identities: [PersistencyModelIdentityProtocol]) -> Completable {
     Completable
       .create { [configuration] handler -> Disposable in
         do {
@@ -291,7 +292,28 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
     }
   }
   
-  func deleteResource(with identity: PersistencyModelIdentity) -> Completable {
+  func deleteResources(in collection: String) -> Completable {
+    Completable
+      .create { [configuration] handler -> Disposable in
+        do {
+          let realm = try Realm(configuration: configuration)
+          let predicate = NSPredicate(format: "collection = %@", collection)
+          let identifiedObjects = realm
+            .objects(RealmModel.self)
+            .filter(predicate)
+          
+          try realm.write {
+            realm.delete(identifiedObjects)
+          }
+          handler(.completed)
+        } catch {
+          handler(.error(error))
+        }
+        return Disposables.create()
+    }
+  }
+  
+  func deleteResource(with identity: PersistencyModelIdentityProtocol) -> Completable {
     Completable
       .create { [configuration] handler -> Disposable in
         do {

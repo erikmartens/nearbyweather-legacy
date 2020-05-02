@@ -24,6 +24,8 @@ final class PreferencesService2 {
   }()
   
   private static let weatherStationBookmarkCollection = "/weather_station/bookmarked/"
+  private static let weatherStationPreferredCollection = "/weather_station/"
+  private static let weatherStationPreferredIdentifier = "preferred"
   
   // MARK: - Properties
   
@@ -38,6 +40,10 @@ protocol WeatherStationBookmarking {
   func addBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
   func removeBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
   func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
+  
+  func setPreferredBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
+  func clearPreferredBookmark() -> Completable
+  func createPreferredBookmarkObservable() -> Observable<WeatherStationDTO?>
 }
 
 extension PreferencesService2: WeatherStationBookmarking {
@@ -67,5 +73,39 @@ extension PreferencesService2: WeatherStationBookmarking {
     persistencyWorker
       .observeResources(in: Self.weatherStationBookmarkCollection, type: WeatherStationDTO.self)
       .map { $0.map { $0.entity } }
+  }
+  
+  func setPreferredBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable {
+    Single
+      .just(weatherStationDto)
+      .map {
+        PersistencyModel(
+          identity: PersistencyModelIdentity(
+            collection: Self.weatherStationPreferredCollection,
+            identifier: Self.weatherStationPreferredIdentifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [persistencyWorker] persistencyModel -> Completable in
+        persistencyWorker.saveResource(persistencyModel, type: WeatherStationDTO.self)
+      }
+  }
+  
+  func clearPreferredBookmark() -> Completable {
+    persistencyWorker
+      .deleteResource(with: PersistencyModelIdentity(
+        collection: Self.weatherStationPreferredCollection,
+        identifier: Self.weatherStationPreferredIdentifier
+      ))
+  }
+  
+  func createPreferredBookmarkObservable() -> Observable<WeatherStationDTO?> {
+    persistencyWorker
+      .observeResources(in: Self.weatherStationPreferredCollection, type: WeatherStationDTO.self)
+      .map { $0.first }
+      .errorOnNil()
+      .map { $0.entity }
+      .catchErrorJustReturn(nil)
   }
 }

@@ -75,6 +75,8 @@
 		F284DDCB245A263900445BFF /* WeatherInformationService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDCA245A263900445BFF /* WeatherInformationService2.swift */; };
 		F284DDCE245A40F500445BFF /* UserLocationService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDCD245A40F500445BFF /* UserLocationService2.swift */; };
 		F284DDD0245A414B00445BFF /* WeatherStationService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDCF245A414B00445BFF /* WeatherStationService2.swift */; };
+		F284DDD4245CF37800445BFF /* PermissionService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDD3245CF37800445BFF /* PermissionService2.swift */; };
+		F284DDD6245CF38800445BFF /* PreferencesService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDD5245CF38800445BFF /* PreferencesService2.swift */; };
 		F28CA5392016A1BA00209397 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA5382016A1BA00209397 /* MapViewController.swift */; };
 		F28CA53D202622C200209397 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA53C202622C200209397 /* ToggleCell.swift */; };
 		F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA54020279EE300209397 /* WeatherDetailViewController.swift */; };
@@ -237,6 +239,8 @@
 		F284DDCA245A263900445BFF /* WeatherInformationService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationService2.swift; sourceTree = "<group>"; };
 		F284DDCD245A40F500445BFF /* UserLocationService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationService2.swift; sourceTree = "<group>"; };
 		F284DDCF245A414B00445BFF /* WeatherStationService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationService2.swift; sourceTree = "<group>"; };
+		F284DDD3245CF37800445BFF /* PermissionService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService2.swift; sourceTree = "<group>"; };
+		F284DDD5245CF38800445BFF /* PreferencesService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesService2.swift; sourceTree = "<group>"; };
 		F28CA5382016A1BA00209397 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F28CA53C202622C200209397 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		F28CA54020279EE300209397 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
@@ -500,14 +504,16 @@
 			isa = PBXGroup;
 			children = (
 				86830391217BBA5D00B7122E /* BadgeService.swift */,
+				F284DDD3245CF37800445BFF /* PermissionService2.swift */,
 				86830393217BBAE400B7122E /* PermissionsService.swift */,
 				F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */,
+				F284DDD5245CF38800445BFF /* PreferencesService2.swift */,
 				F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */,
-				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
-				F26699571E9AD0F100498F99 /* WeatherInformationService.swift */,
-				F284DDCA245A263900445BFF /* WeatherInformationService2.swift */,
 				F26699591E9ADBC300498F99 /* UserLocationService.swift */,
 				F284DDCD245A40F500445BFF /* UserLocationService2.swift */,
+				F26699571E9AD0F100498F99 /* WeatherInformationService.swift */,
+				F284DDCA245A263900445BFF /* WeatherInformationService2.swift */,
+				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
 				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 				F284DDCF245A414B00445BFF /* WeatherStationService2.swift */,
 			);
@@ -1009,6 +1015,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCoreLocation/RxCoreLocation.framework",
 				"${BUILT_PRODUCTS_DIR}/RxFlow/RxFlow.framework",
 				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
@@ -1030,6 +1037,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCoreLocation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFlow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
@@ -1061,6 +1069,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCoreLocation/RxCoreLocation.framework",
 				"${BUILT_PRODUCTS_DIR}/RxFlow/RxFlow.framework",
 				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
@@ -1082,6 +1091,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCoreLocation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxFlow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
@@ -1216,6 +1226,7 @@
 				F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */,
 				F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */,
 				F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */,
+				F284DDD4245CF37800445BFF /* PermissionService2.swift in Sources */,
 				F2DBEB3423F0427000CD513B /* Factory+UIAlertController.swift in Sources */,
 				F237287C244C800400964C49 /* ListStepper.swift in Sources */,
 				F2B8EA061EA2893C00704E90 /* SetApiKeyViewController.swift in Sources */,
@@ -1272,6 +1283,7 @@
 				F2D2B1E02004171500C810EF /* JsonPersistencyWorker.swift in Sources */,
 				F260BDAA244CF3CB00B4357A /* ReuseIdentifiable.swift in Sources */,
 				F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */,
+				F284DDD6245CF38800445BFF /* PreferencesService2.swift in Sources */,
 				F213FA2F23F9EE4200F094D8 /* PreferredBookmarkOption.swift in Sources */,
 				F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */,
 				F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */,

@@ -23,6 +23,7 @@ extension WeatherInformationService2 {
   struct Dependencies {
     let weatherStationService: WeatherStationService2
     let userLocationService: UserLocationService2
+    // TODO api key service
   }
 }
 
@@ -138,7 +139,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
   
   func updateBookmarkedWeatherInformation() {
     _ = dependencies.weatherStationService
-      .createBookmarksObservable()
+      .createBookmarkedStationsObservable()
       .map { $0.map { $0.identifier } }
       .flatMapLatest { [apiKey] identifiers -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
         guard let apiKey = apiKey else {
@@ -186,26 +187,18 @@ extension WeatherInformationService2: WeatherInformationUpdating {
   }
   
   func updateNearbyWeatherInformation() {
-    // dependency: location service reactive
-     guard let currentLatitude = UserLocationService.shared.currentLatitude,
-      let currentLongitude = UserLocationService.shared.currentLongitude else {
-        return
-    }
-    
-    _ = Observable
-      .combineLatest(
-        Observable.just(currentLatitude),
-        Observable.just(currentLongitude),
-        resultSelector: { [apiKey] latitude, longitude -> URL in
+    _ = dependencies.userLocationService
+      .createDidUpdateLocationObservable()
+      .map { [apiKey] location -> URL in
           guard let apiKey = apiKey else {
             throw WeatherInformationServiceError.apiKeyError
           }
           return Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
             with: apiKey,
-            currentLatitude: latitude,
-            currentLongitude: longitude
+            currentLatitude: location.coordinate.latitude,
+            currentLongitude: location.coordinate.longitude
           )
-      })
+      }
       .flatMapLatest { url -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
         RxAlamofire
           .requestData(.get, url)

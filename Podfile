@@ -19,6 +19,7 @@ def nearbyweather_pods
     pod 'RxFlow', '~> 2.7.0'
     pod 'RxRealm', '~> 2.0.0'
     pod 'RxAlamofire', '~> 5.1.0'
+    pod 'RxCoreLocation', '~> 1.4.2'
 
     pod 'SwiftLint', '~> 0.38.2'
     pod 'R.swift', '5.0.3'

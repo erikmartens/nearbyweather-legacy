@@ -51,5 +51,8 @@
   }, {
     "name": "RxOptional",
     "urlString": "https://github.com/RxSwiftCommunity/RxOptional"
+  }, {
+    "name": "RxCoreLocation",
+    "urlString": "https://github.com/RxSwiftCommunity/RxCoreLocation"
   }]
 }

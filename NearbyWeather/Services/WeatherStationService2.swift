@@ -6,6 +6,9 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
+// TODO: Migration
+// TODO: Store sort weighting
+
 import FMDB
 import RxSwift
 import RxOptional

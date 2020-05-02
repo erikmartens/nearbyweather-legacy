@@ -10,6 +10,15 @@ import CoreLocation
 import RxSwift
 import RxCoreLocation
 
+enum UserLocationServiceError: String, Error {
+  
+  var domain: String {
+    "UserLocationService"
+  }
+  
+  case authorizationError = "Trying access the user location, but sufficient authorization was not granted."
+}
+
 final class UserLocationService2 {
   
   // MARK: - Properties
@@ -38,23 +47,28 @@ extension UserLocationService2 {
   }
   
   func createDidUpdateLocationObservable() -> Observable<CLLocation> {
-    locationManager.rx
-      .location
-      .errorOnNil()
+   createAuthorizationStatusObservable()
+      .map { if !$0 { throw UserLocationServiceError.authorizationError } }
+      .flatMapLatest { [locationManager] in
+        locationManager.rx
+          .location
+          .errorOnNil()
+      }
       .do(onSubscribe: { [locationManager] in locationManager.startUpdatingLocation() },
           onDispose: { [locationManager] in locationManager.stopUpdatingLocation() })
   }
   
-  func createCurrentAuthorizationStatusSingle() -> Single<Bool> {
+  func createAuthorizationStatusSingle() -> Single<Bool> {
     Single
       .just(CLLocationManager.authorizationStatus())
       .map { Self.authorizationStatusIsSufficient($0) }
   }
   
-  func createDidChangeAuthorizationObservable() -> Observable<Bool> {
+  func createAuthorizationStatusObservable() -> Observable<Bool> {
     locationManager.rx
       .didChangeAuthorization
       .map { $0.status }
+      .startWith(CLLocationManager.authorizationStatus())
       .map { Self.authorizationStatusIsSufficient($0) }
   }
 }

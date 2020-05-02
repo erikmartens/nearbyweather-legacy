@@ -6,14 +6,17 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
-// TODO: Migration
-// TODO: Store sort weighting
-
 import FMDB
 import RxSwift
 import RxOptional
 
-class WeatherStationService2 {
+extension WeatherStationService2 {
+  struct Dependencies {
+    let preferencesService: PreferencesService2
+  }
+}
+
+final class WeatherStationService2 {
   
   // MARK: - Assets
   
@@ -38,9 +41,13 @@ class WeatherStationService2 {
   
   // MARK: - Properties
   
+  private let dependencies: Dependencies
+  
   // MARK: - Initialization
   
-  init() {}
+  init(dependencies: WeatherStationService2.Dependencies) {
+    self.dependencies = dependencies
+  }
 }
 
 // MARK: - Weather Station Lookup
@@ -70,50 +77,13 @@ extension WeatherStationService2: WeatherStationLookup {
         return Disposables.create()
       }
       .replaceNilWith([])
-      .flatMapLatest { [createBookmarkedStationsObservable] weatherStationDtos -> Observable<[WeatherStationDTO]> in
-        createBookmarkedStationsObservable()
+      .flatMapLatest { [dependencies] weatherStationDtos -> Observable<[WeatherStationDTO]> in
+        dependencies.preferencesService
+          .createBookmarkedStationsObservable()
           .map { bookmarkedWeatherStations in
             weatherStationDtos.filter { !bookmarkedWeatherStations.contains($0) }
           }
       }
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-  }
-}
-
-// MARK: - Weather Station Bookmarking
-
-protocol WeatherStationBookmarking {
-  func addBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
-  func removeBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
-  func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
-}
-
-extension WeatherStationService2: WeatherStationBookmarking {
-  
-  func addBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable {
-    Single
-      .just(weatherStationDto)
-      .map { weatherStationDto -> PersistencyModel<WeatherStationDTO> in
-        PersistencyModel<WeatherStationDTO>(
-          identity: PersistencyModelIdentity(
-            collection: Self.weatherStationBookmarkCollection,
-            identifier: String(weatherStationDto.identifier)),
-          entity: weatherStationDto
-        )
-      }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherStationDTO.self) }
-  }
-  
-  func removeBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable {
-    Single
-      .just(weatherStationDto.identifier)
-      .map { PersistencyModelIdentity(collection: Self.weatherStationBookmarkCollection, identifier: String($0)) }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.deleteResource(with: $0) }
-  }
-  
-  func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]> {
-    persistencyWorker
-      .observeResources(in: Self.weatherStationBookmarkCollection, type: WeatherStationDTO.self)
-      .map { $0.map { $0.entity } }
   }
 }

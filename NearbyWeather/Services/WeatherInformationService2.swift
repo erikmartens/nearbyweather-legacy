@@ -21,7 +21,7 @@ enum WeatherInformationServiceError: String, Error {
 
 extension WeatherInformationService2 {
   struct Dependencies {
-    let weatherStationService: WeatherStationService2
+    let preferencesService: PreferencesService2
     let userLocationService: UserLocationService2
     // TODO api key service
   }
@@ -138,7 +138,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
   }
   
   func updateBookmarkedWeatherInformation() {
-    _ = dependencies.weatherStationService
+    _ = dependencies.preferencesService
       .createBookmarkedStationsObservable()
       .map { $0.map { $0.identifier } }
       .flatMapLatest { [apiKey] identifiers -> Observable<[PersistencyModel<WeatherInformationDTO>]> in

@@ -63,13 +63,28 @@ final class WeatherInformationService2 {
 // MARK: - Weather Information Provisioning
 
 protocol WeatherInformationProvisioning {
+  func setBookmarkerWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable
   func createBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
   func createBookmarkedWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
+  func setNearbyWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable
   func createNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
   func createNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
 }
 
 extension WeatherInformationService2: WeatherInformationProvisioning {
+  
+  func setBookmarkerWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable {
+    Single
+      .just(list)
+      .map { list in
+        list.map { weatherInformationDto in
+          PersistencyModel(identity: PersistencyModelIdentity(collection: Self.bookmarkedWeatherInformationCollection,
+                                                              identifier: String(weatherInformationDto.cityID)),
+                           entity: weatherInformationDto)
+        }
+      }
+      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+  }
   
   func createBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
     persistencyWorker.observeResources(in: Self.bookmarkedWeatherInformationCollection, type: WeatherInformationDTO.self)
@@ -81,6 +96,19 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       identifier: identifier
     )
     return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
+  }
+  
+  func setNearbyWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable {
+    Single
+      .just(list)
+      .map { list in
+        list.map { weatherInformationDto in
+          PersistencyModel(identity: PersistencyModelIdentity(collection: Self.nearbyWeatherInformationCollection,
+                                                              identifier: String(weatherInformationDto.cityID)),
+                           entity: weatherInformationDto)
+        }
+      }
+      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {

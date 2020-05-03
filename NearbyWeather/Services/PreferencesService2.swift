@@ -199,9 +199,9 @@ protocol WeatherStationBookmarkSetting {
   func setBookmarksSorting(_ sorting: [String: Int]) -> Completable
   func getBookmarksSorting() -> Observable<[String: Int]?>
   
-  func setPreferredBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
+  func setPreferredBookmark(_ weatherStationDto: PreferredBookmarkOption) -> Completable
   func clearPreferredBookmark() -> Completable
-  func createPreferredBookmarkObservable() -> Observable<WeatherStationDTO?>
+  func createPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
 }
 
 extension PreferencesService2: WeatherStationBookmarkSetting {

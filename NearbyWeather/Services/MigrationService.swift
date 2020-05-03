@@ -12,7 +12,7 @@ import RxOptional
 extension MigrationService {
   struct Dependencies {
     let preferencesService: PreferencesService2
-    let weatherInformationService: WeatherStationService2
+    let weatherInformationService: WeatherInformationService2
   }
 }
 
@@ -54,8 +54,8 @@ extension MigrationService {
       .flatMapCompletable { [dependencies] preferencesStoredContentsWrapper -> Completable in
         guard let preferencesStoredContentsWrapper = preferencesStoredContentsWrapper else {
           // previous data does not exist or could not be read -> do not try to migrate anymore
-          return Completable.create {
-            $0(.completed)
+          return Completable.create { handler in
+            handler(.completed)
             return Disposables.create()
           }
         }
@@ -84,13 +84,18 @@ extension MigrationService {
       .flatMapCompletable { [dependencies] weatherInformationStoredContents -> Completable in
         guard let weatherInformationStoredContents = weatherInformationStoredContents else {
           // previous data does not exist or could not be read -> do not try to migrate anymore
-          return Completable.create {
-            $0(.completed)
+          return Completable.create { handler in
+            handler(.completed)
             return Disposables.create()
           }
         }
         return Completable.zip([
-          dependencies.weatherInformationService.
+          dependencies.weatherInformationService.setBookmarkerWeatherInformationList(
+            weatherInformationStoredContents.bookmarkedWeatherDataObjects?.compactMap { $0.weatherInformationDTO } ?? []
+          ),
+          dependencies.weatherInformationService.setNearbyWeatherInformationList(
+            weatherInformationStoredContents.nearbyWeatherDataObject?.weatherInformationDTOs ?? []
+          )
         ])
       }
     

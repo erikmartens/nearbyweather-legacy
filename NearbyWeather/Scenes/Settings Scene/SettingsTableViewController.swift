@@ -312,7 +312,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       )
     case .preferredDistanceSpeedUnit:
       alert = Factory.AlertController.make(fromType:
-        .preferredSpeedUnitOptions(options: DistanceVelocityUnitOption.availableOptions,
+        .preferredSpeedUnitOptions(options: DimensionalUnitsOption.availableOptions,
                                    completionHandler: completionHandler)
       )
     case .preferredAmountOfResults, .preferredSortingOrientation:

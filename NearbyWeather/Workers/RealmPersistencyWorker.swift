@@ -135,6 +135,8 @@ final class RealmPersistencyWorker {
 protocol RealmPersistencyWorkerCRUD {
   func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable
   func saveResource<T: Codable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable
+  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModel<T>]>
+  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModel<T>?>
   func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]>
   func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModel<T>?>
   func deleteResources(with identities: [PersistencyModelIdentityProtocol]) -> Completable
@@ -222,6 +224,52 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
     }
   }
   
+  /// returns a single containing all resources within a specified collection
+  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModel<T>]> {
+    Single<Results<RealmModel>>
+      .create { [configuration] handler in
+        do {
+          let realm = try Realm(configuration: configuration)
+          let predicate = NSPredicate(format: "collection = %@", collection)
+          let results = realm
+            .objects(RealmModel.self)
+            .filter(predicate)
+          handler(.success(results))
+        } catch {
+          handler(.error(error))
+        }
+        return Disposables.create()
+      }
+      .map { results -> [PersistencyModel<T>] in
+        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
+      }
+  }
+  
+  /// returns a single containing a specified resource for a specified identity
+  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModel<T>?> {
+    Single<Results<RealmModel>>
+      .create { [configuration] handler in
+        do {
+          let realm = try Realm(configuration: configuration)
+          let predicate = NSPredicate(format: "collection = %@ AND identifier = %@", identity.collection, identity.identifier)
+          let results = realm
+            .objects(RealmModel.self)
+            .filter(predicate)
+          handler(.success(results))
+        } catch {
+          handler(.error(error))
+        }
+        return Disposables.create()
+      }
+      .map { results -> PersistencyModel<T>? in
+        results
+          .compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
+          .first
+      }
+      .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
+      .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
+  }
+  
   /// observes all resources within a specified collection
   func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]> {
     Observable<Results<RealmModel>>
@@ -237,10 +285,10 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
           handler.onError(error)
         }
         return Disposables.create()
-    }
-    .map { results -> [PersistencyModel<T>] in
-      results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
-    }
+      }
+      .map { results -> [PersistencyModel<T>] in
+        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
+      }
       .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
       .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
   }
@@ -260,12 +308,12 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
           handler.onError(error)
         }
         return Disposables.create()
-    }
-    .map { results -> PersistencyModel<T>? in
-      results
-        .compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
-        .first
-    }
+      }
+      .map { results -> PersistencyModel<T>? in
+        results
+          .compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
+          .first
+      }
       .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
       .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
   }

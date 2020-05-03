@@ -11,24 +11,6 @@ import MapKit
 import RxFlow
 import RxCocoa
 
-enum ListType: CaseIterable {
-  case bookmarked
-  case nearby
-  
-  static var allCases: [ListType] {
-    [.bookmarked, .nearby]
-  }
-  
-  var title: String {
-    switch self {
-    case .bookmarked:
-      return R.string.localizable.bookmarked()
-    case .nearby:
-      return R.string.localizable.nearby()
-    }
-  }
-}
-
 final class ListViewController: UITableViewController, Stepper {
   
   private lazy var listTypeBarButton = {

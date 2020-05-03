@@ -88,20 +88,20 @@ final class ConversionWorker {
     }
   }
   
-  static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceVelocityUnitOption, forWindspeed windspeed: Double) -> String {
+  static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitsOption, forWindspeed windspeed: Double) -> String {
     switch distanceSpeedUnit.value {
-    case .kilometres:
+    case .metric:
       return String(format: "%.02f", windspeed).append(contentsOf: R.string.localizable.kph(), delimiter: .space)
-    case .miles:
+    case .imperial:
       return String(format: "%.02f", windspeed / 1.609344).append(contentsOf: R.string.localizable.mph(), delimiter: .space)
     }
   }
   
-  static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DistanceVelocityUnitOption, forDistanceInMetres distance: Double) -> String {
+  static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitsOption, forDistanceInMetres distance: Double) -> String {
     switch distanceSpeedUnit.value {
-    case .kilometres:
+    case .metric:
       return String(format: "%.02f", distance/1000).append(contentsOf: R.string.localizable.km(), delimiter: .space)
-    case .miles:
+    case .imperial:
       return String(format: "%.02f", distance/1609.344).append(contentsOf: R.string.localizable.mi(), delimiter: .space)
     }
   }

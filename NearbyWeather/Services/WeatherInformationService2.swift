@@ -187,18 +187,21 @@ extension WeatherInformationService2: WeatherInformationUpdating {
   }
   
   func updateNearbyWeatherInformation() {
-    _ = dependencies.userLocationService
-      .createDidUpdateLocationObservable()
-      .map { [apiKey] location -> URL in
+    _ = Observable
+      .combineLatest(
+        dependencies.userLocationService.createDidUpdateLocationObservable(),
+        dependencies.preferencesService.getAmountOfNearbyResultsOption(),
+        resultSelector: { [apiKey] location, amountOfResultsOption -> URL in
           guard let apiKey = apiKey else {
             throw WeatherInformationServiceError.apiKeyError
           }
           return Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
             with: apiKey,
-            currentLatitude: location.coordinate.latitude,
-            currentLongitude: location.coordinate.longitude
+            latitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude,
+            numberOfResults: amountOfResultsOption.value.rawValue
           )
-      }
+      })
       .flatMapLatest { url -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
         RxAlamofire
           .requestData(.get, url)

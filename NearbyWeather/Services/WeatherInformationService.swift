@@ -10,30 +10,6 @@ import RxSwift
 import MapKit
 import Alamofire
 
-/// This value type represents single location data.
-/// Each WeatherInformationDTO is fetched indvidually and therefore needs its own
-/// associated ErrorDataDTO. This is because each download may fail on it's own
-/// while other information may still be representable.
-struct WeatherDataContainer: Codable {
-  var locationId: Int
-  var errorDataDTO: WeatherInformationErrorDTO?
-  var weatherInformationDTO: WeatherInformationDTO?
-}
-
-/// This value type represents bulk location data.
-/// It contains multiple WeatherInformationDTOs but only one associated ErrorDataDTO
-/// This is because the fetch either succeeds as a whole or not at all.
-struct BulkWeatherDataContainer: Codable {
-  var errorDataDTO: WeatherInformationErrorDTO?
-  var weatherInformationDTOs: [WeatherInformationDTO]?
-}
-
-struct WeatherDataManagerStoredContentsWrapper: Codable {
-  var bookmarkedLocations: [WeatherStationDTO]
-  var bookmarkedWeatherDataObjects: [WeatherDataContainer]?
-  var nearbyWeatherDataObject: BulkWeatherDataContainer?
-}
-
 enum UpdateStatus {
   case success
   case failure

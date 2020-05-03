@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     instantiateServices()
     instantiateApplicationUserInterface()
     
+    runMigrationIfNeeded()
     
     SettingsBundleTransferService.shared.updateSystemSettings()
     
@@ -61,14 +62,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: - Private Helper Functions
 
-extension AppDelegate {
+private extension AppDelegate {
   
-  private func instantiateServices() {
+  func instantiateServices() {
 //    WeatherNetworkingService.instantiateSharedInstance()
 //    UserLocationService.instantiateSharedInstance()
 //    PreferencesDataService.instantiateSharedInstance()
 //    WeatherInformationService.instantiateSharedInstance()
-//    PermissionsService.instantiateSharedInstance()
+    PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()
     
     
@@ -93,7 +94,7 @@ extension AppDelegate {
     self.dependencyContainer = dependencyContainer
   }
   
-  private func instantiateApplicationUserInterface() {
+  func instantiateApplicationUserInterface() {
     let window = UIWindow(frame: UIScreen.main.bounds)
     self.window = window
     let rootFlow = RootFlow(
@@ -108,15 +109,25 @@ extension AppDelegate {
     )
   }
   
-  private func refreshWeatherDataIfNeeded() {
+  func refreshWeatherDataIfNeeded() {
     if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil,
       UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true {
       WeatherInformationService.shared.update(withCompletionHandler: nil)
     }
   }
   
-  private func endBackgroundTask() {
+  func endBackgroundTask() {
     UIApplication.shared.endBackgroundTask(backgroundTaskId)
     backgroundTaskId = .invalid
+  }
+  
+  func runMigrationIfNeeded() {
+    guard let dependencyContainer = dependencyContainer else {
+      return
+    }
+    MigrationService(dependencies: MigrationService.Dependencies(
+      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!,
+      weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!
+    )).runMigrationIfNeeded()
   }
 }

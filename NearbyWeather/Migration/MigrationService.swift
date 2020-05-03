@@ -34,7 +34,7 @@ final class MigrationService {
 extension MigrationService {
   
   func runMigrationIfNeeded() {
-    guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kMigratedToVersion_2_3_0) == nil else {
+    guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kMigratedToVersion230) == nil else {
       return
     }
     
@@ -105,6 +105,6 @@ extension MigrationService {
         migratePreferencesCompletable,
         migrateWeatherInformationCompletable
       ])
-      .subscribe(onCompleted: { UserDefaults.standard.set(true, forKey: Constants.Keys.UserDefaults.kMigratedToVersion_2_3_0) })
+      .subscribe(onCompleted: { UserDefaults.standard.set(true, forKey: Constants.Keys.UserDefaults.kMigratedToVersion230) })
   }
 }

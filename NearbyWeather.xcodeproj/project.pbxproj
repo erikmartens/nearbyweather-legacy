@@ -80,6 +80,9 @@
 		F284DDD8245E4AFC00445BFF /* ListTypeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDD7245E4AFC00445BFF /* ListTypeOption.swift */; };
 		F284DDDA245E4B1600445BFF /* MapTypeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDD9245E4B1600445BFF /* MapTypeOption.swift */; };
 		F284DDDC245F3FDB00445BFF /* MigrationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDDB245F3FDB00445BFF /* MigrationService.swift */; };
+		F284DDDF245F5EC600445BFF /* WeatherDataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDDE245F5EC600445BFF /* WeatherDataContainer.swift */; };
+		F284DDE1245F5EE600445BFF /* BulkWeatherDataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDE0245F5EE600445BFF /* BulkWeatherDataContainer.swift */; };
+		F284DDE3245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDE2245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift */; };
 		F28CA5392016A1BA00209397 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA5382016A1BA00209397 /* MapViewController.swift */; };
 		F28CA53D202622C200209397 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA53C202622C200209397 /* ToggleCell.swift */; };
 		F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA54020279EE300209397 /* WeatherDetailViewController.swift */; };
@@ -247,6 +250,9 @@
 		F284DDD7245E4AFC00445BFF /* ListTypeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTypeOption.swift; sourceTree = "<group>"; };
 		F284DDD9245E4B1600445BFF /* MapTypeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeOption.swift; sourceTree = "<group>"; };
 		F284DDDB245F3FDB00445BFF /* MigrationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationService.swift; sourceTree = "<group>"; };
+		F284DDDE245F5EC600445BFF /* WeatherDataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataContainer.swift; sourceTree = "<group>"; };
+		F284DDE0245F5EE600445BFF /* BulkWeatherDataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkWeatherDataContainer.swift; sourceTree = "<group>"; };
+		F284DDE2245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManagerStoredContentsWrapper.swift; sourceTree = "<group>"; };
 		F28CA5382016A1BA00209397 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F28CA53C202622C200209397 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		F28CA54020279EE300209397 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
@@ -391,6 +397,7 @@
 				F2F1554124432D77007A3E90 /* Workers */,
 				F27A121924425BC600A2CE8D /* Models */,
 				F27A122924425E8800A2CE8D /* Commons */,
+				F284DDDD245F5A8C00445BFF /* Migration */,
 			);
 			path = NearbyWeather;
 			sourceTree = "<group>";
@@ -522,7 +529,6 @@
 				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
 				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 				F284DDCF245A414B00445BFF /* WeatherStationService2.swift */,
-				F284DDDB245F3FDB00445BFF /* MigrationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -802,6 +808,17 @@
 				F260BDA9244CF3CB00B4357A /* ReuseIdentifiable.swift */,
 			);
 			path = Fundamentals;
+			sourceTree = "<group>";
+		};
+		F284DDDD245F5A8C00445BFF /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				F284DDDB245F3FDB00445BFF /* MigrationService.swift */,
+				F284DDDE245F5EC600445BFF /* WeatherDataContainer.swift */,
+				F284DDE0245F5EE600445BFF /* BulkWeatherDataContainer.swift */,
+				F284DDE2245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift */,
+			);
+			path = Migration;
 			sourceTree = "<group>";
 		};
 		F2F1554124432D77007A3E90 /* Workers */ = {
@@ -1208,9 +1225,11 @@
 				F23728612444AEAC00964C49 /* ImagedDualLabelCell.swift in Sources */,
 				F237288A244C934100964C49 /* WeatherDetailFlow.swift in Sources */,
 				F237286C2445024D00964C49 /* Collection+SafeIndex.swift in Sources */,
+				F284DDE1245F5EE600445BFF /* BulkWeatherDataContainer.swift in Sources */,
 				F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */,
 				F28CA5442027AEB500209397 /* WeatherLocationMapAnnotation.swift in Sources */,
 				F284DDDA245E4B1600445BFF /* MapTypeOption.swift in Sources */,
+				F284DDDF245F5EC600445BFF /* WeatherDataContainer.swift in Sources */,
 				F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */,
 				F2F7BA1F23E3792F00B4D2EB /* Constants+Mocks.swift in Sources */,
 				F26699581E9AD0F100498F99 /* WeatherInformationService.swift in Sources */,
@@ -1278,6 +1297,7 @@
 				F284DDD0245A414B00445BFF /* WeatherStationService2.swift in Sources */,
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */,
+				F284DDE3245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift in Sources */,
 				F213FA3423F9EF2400F094D8 /* TemperatureUnitOption.swift in Sources */,
 				F237287A244C7FDD00964C49 /* SettingsFlow.swift in Sources */,
 				F2372891244CAAF400964C49 /* RootFlow.swift in Sources */,

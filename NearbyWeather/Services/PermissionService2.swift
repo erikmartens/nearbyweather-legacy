@@ -7,3 +7,5 @@
 //
 
 import Foundation
+
+// TODO add locationPermission

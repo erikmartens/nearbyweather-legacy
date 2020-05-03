@@ -127,9 +127,9 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
 // MARK: - Weather Information Updating
 
 protocol WeatherInformationUpdating {
-  func updateBookmarkedWeatherInformation()
-  func updateWeatherInformationForBookmarkedStation(with identifier: Int)
-  func updateNearbyWeatherInformation()
+  func createUpdateBookmarkedWeatherInformationCompletable() -> Completable
+  func updateWeatherInformationForBookmarkedStation(with identifier: Int) -> Completable
+  func createUpdateNearbyWeatherInformationCompletable() -> Completable
 }
 
 extension WeatherInformationService2: WeatherInformationUpdating {
@@ -165,8 +165,8 @@ extension WeatherInformationService2: WeatherInformationUpdating {
     }
   }
   
-  func updateBookmarkedWeatherInformation() {
-    _ = dependencies.preferencesService
+  func createUpdateBookmarkedWeatherInformationCompletable() -> Completable {
+    dependencies.preferencesService
       .createBookmarkedStationsObservable()
       .map { $0.map { $0.identifier } }
       .map { [apiKey] identifiers -> [URL] in
@@ -190,11 +190,10 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .take(1)
       .asSingle()
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
-      .subscribe()
   }
   
-  func updateWeatherInformationForBookmarkedStation(with identifier: Int) {
-    _ = Single
+  func updateWeatherInformationForBookmarkedStation(with identifier: Int)  -> Completable {
+    Single
       .just(identifier)
       .map { [apiKey] identifier in
         guard let apiKey = apiKey else {
@@ -214,11 +213,10 @@ extension WeatherInformationService2: WeatherInformationUpdating {
           .asSingle()
           .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherInformationDTO.self) }
       }
-      .subscribe()
   }
   
-  func updateNearbyWeatherInformation() {
-    _ = Observable
+  func createUpdateNearbyWeatherInformationCompletable() -> Completable {
+    Observable
       .combineLatest(
         dependencies.userLocationService.createDidUpdateLocationObservable(),
         dependencies.preferencesService.getAmountOfNearbyResultsOption(),
@@ -244,6 +242,5 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .take(1)
       .asSingle()
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
-      .subscribe()
   }
 }

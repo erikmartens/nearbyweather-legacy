@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 import RxFlow
 import Swinject
 import Firebase
@@ -65,14 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 private extension AppDelegate {
   
   func instantiateServices() {
-//    WeatherNetworkingService.instantiateSharedInstance()
-//    UserLocationService.instantiateSharedInstance()
-//    PreferencesDataService.instantiateSharedInstance()
-//    WeatherInformationService.instantiateSharedInstance()
     PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()
-    
-    
+     
     let dependencyContainer = Container()
     
     dependencyContainer.register(PreferencesService2.self) { _ in PreferencesService2() }
@@ -110,10 +106,16 @@ private extension AppDelegate {
   }
   
   func refreshWeatherDataIfNeeded() {
-    if UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil,
-      UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true {
-      WeatherInformationService.shared.update(withCompletionHandler: nil)
+    guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil,
+      UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true,
+      let weatherInformationService = dependencyContainer?.resolve(WeatherInformationService2.self) else {
+        return
     }
+    _ = Completable.zip([
+        weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
+        weatherInformationService.createUpdateNearbyWeatherInformationCompletable()
+      ])
+      .subscribe()
   }
   
   func endBackgroundTask() {
@@ -122,12 +124,15 @@ private extension AppDelegate {
   }
   
   func runMigrationIfNeeded() {
-    guard let dependencyContainer = dependencyContainer else {
-      return
+    guard let dependencyContainer = dependencyContainer,
+      let preferencesService = dependencyContainer.resolve(PreferencesService2.self),
+      let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self) else {
+        return
     }
     MigrationService(dependencies: MigrationService.Dependencies(
-      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!,
-      weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!
-    )).runMigrationIfNeeded()
+      preferencesService: preferencesService,
+      weatherInformationService: weatherInformationService
+    ))
+    .runMigrationIfNeeded()
   }
 }

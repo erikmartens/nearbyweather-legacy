@@ -27,10 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   // MARK: - Functions
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    FirebaseApp.configure()
+    
     instantiateServices()
     instantiateApplicationUserInterface()
     
-    FirebaseApp.configure()
     
     SettingsBundleTransferService.shared.updateSystemSettings()
     

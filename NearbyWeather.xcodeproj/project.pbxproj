@@ -79,6 +79,7 @@
 		F284DDD6245CF38800445BFF /* PreferencesService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDD5245CF38800445BFF /* PreferencesService2.swift */; };
 		F284DDD8245E4AFC00445BFF /* ListTypeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDD7245E4AFC00445BFF /* ListTypeOption.swift */; };
 		F284DDDA245E4B1600445BFF /* MapTypeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDD9245E4B1600445BFF /* MapTypeOption.swift */; };
+		F284DDDC245F3FDB00445BFF /* MigrationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDDB245F3FDB00445BFF /* MigrationService.swift */; };
 		F28CA5392016A1BA00209397 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA5382016A1BA00209397 /* MapViewController.swift */; };
 		F28CA53D202622C200209397 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA53C202622C200209397 /* ToggleCell.swift */; };
 		F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA54020279EE300209397 /* WeatherDetailViewController.swift */; };
@@ -245,6 +246,7 @@
 		F284DDD5245CF38800445BFF /* PreferencesService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesService2.swift; sourceTree = "<group>"; };
 		F284DDD7245E4AFC00445BFF /* ListTypeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTypeOption.swift; sourceTree = "<group>"; };
 		F284DDD9245E4B1600445BFF /* MapTypeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeOption.swift; sourceTree = "<group>"; };
+		F284DDDB245F3FDB00445BFF /* MigrationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationService.swift; sourceTree = "<group>"; };
 		F28CA5382016A1BA00209397 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F28CA53C202622C200209397 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		F28CA54020279EE300209397 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
 				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 				F284DDCF245A414B00445BFF /* WeatherStationService2.swift */,
+				F284DDDB245F3FDB00445BFF /* MigrationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1169,7 +1172,7 @@
 			);
 			name = "R.Swift Generate File";
 			outputPaths = (
-				"$SRCROOT/R.generated.swift",
+				$SRCROOT/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1245,6 +1248,7 @@
 				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,
 				F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */,
 				F2372893244CAB0A00964C49 /* RootStepper.swift in Sources */,
+				F284DDDC245F3FDB00445BFF /* MigrationService.swift in Sources */,
 				F284DDD8245E4AFC00445BFF /* ListTypeOption.swift in Sources */,
 				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,
 				F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */,

@@ -249,7 +249,7 @@ extension PreferencesService2: WeatherStationBookmarkSetting {
       .map { $0.map { $0.entity } }
   }
   
-  func setPreferredBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable {
+  func setPreferredBookmark(_ weatherStationDto: PreferredBookmarkOption) -> Completable {
     Single
       .just(weatherStationDto)
       .map {
@@ -257,7 +257,7 @@ extension PreferencesService2: WeatherStationBookmarkSetting {
                                                             identifier: Self.weatherStationPreferredBookmarkIdentifier),
                          entity: $0)
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherStationDTO.self) }
+      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: PreferredBookmarkOption.self) }
   }
   
   func clearPreferredBookmark() -> Completable {
@@ -266,9 +266,9 @@ extension PreferencesService2: WeatherStationBookmarkSetting {
                                                      identifier: Self.weatherStationPreferredBookmarkIdentifier))
   }
   
-  func createPreferredBookmarkObservable() -> Observable<WeatherStationDTO?> {
+  func createPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?> {
     persistencyWorker
-      .observeResources(in: Self.weatherStationPreferredBookmarkCollection, type: WeatherStationDTO.self)
+      .observeResources(in: Self.weatherStationPreferredBookmarkCollection, type: PreferredBookmarkOption.self)
       .map { $0.first }
       .errorOnNil()
       .map { $0.entity }

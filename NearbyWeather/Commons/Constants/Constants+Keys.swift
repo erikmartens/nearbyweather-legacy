@@ -15,6 +15,8 @@ extension Constants {
 extension Constants.Keys {
   
   enum UserDefaults {
+    static let kMigratedToVersion_2_3_0 =  "de.erikmaximilianmartens.nearbyWeather.migratedToVersion_2_3_0"
+    
     static let kNearbyWeatherApiKeyKey = "nearby_weather.openWeatherMapApiKey"
     static let kIsInitialLaunch = "nearby_weather.isInitialLaunch"
     static let kRefreshOnAppStartKey = "de.erikmaximilianmartens.nearbyWeather.refreshOnAppStart"

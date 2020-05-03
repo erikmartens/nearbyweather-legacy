@@ -141,14 +141,17 @@ extension WeatherInformationService2: WeatherInformationUpdating {
     _ = dependencies.preferencesService
       .createBookmarkedStationsObservable()
       .map { $0.map { $0.identifier } }
-      .flatMapLatest { [apiKey] identifiers -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
+      .map { [apiKey] identifiers -> [URL] in
         guard let apiKey = apiKey else {
           throw WeatherInformationServiceError.apiKeyError
         }
-        return Observable.zip(
-          identifiers.map { identifier -> Observable<PersistencyModel<WeatherInformationDTO>> in
+        return identifiers.map { Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: $0) }
+      }
+      .flatMapLatest { urls -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
+        Observable.zip(
+          urls.map { url -> Observable<PersistencyModel<WeatherInformationDTO>> in
             RxAlamofire
-              .requestData(.get, Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier))
+              .requestData(.get, url)
               .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
               .filterNil()
           }

@@ -54,5 +54,8 @@
   }, {
     "name": "RxCoreLocation",
     "urlString": "https://github.com/RxSwiftCommunity/RxCoreLocation"
+  }, {
+    "name": "Swinject",
+    "urlString": "https://github.com/Swinject/Swinject"
   }]
 }

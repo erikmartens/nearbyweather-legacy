@@ -12,6 +12,7 @@ def nearbyweather_pods
     pod 'APTimeZones', :git => 'https://github.com/Alterplay/APTimeZones.git', :branch => 'master', :commit => '9ffd147'
     pod 'FMDB', '~> 2.7.5'
     pod 'RealmSwift', '~> 4.4.1'
+    pod 'Swinject', '~> 2.7.1'
 
     pod 'RxSwift', '~> 5.1.1'
     pod 'RxCocoa', '~> 5.1.1'

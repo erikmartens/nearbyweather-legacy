@@ -8,6 +8,7 @@
 
 import UIKit
 import RxFlow
+import Swinject
 import Firebase
 
 @UIApplicationMain
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var welcomeWindow: UIWindow?
   
+  private var dependencyContainer: Container?
   private var flowCoordinator: FlowCoordinator?
   
   private var backgroundTaskId: UIBackgroundTaskIdentifier = .invalid
@@ -61,18 +63,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
   
   private func instantiateServices() {
-    WeatherNetworkingService.instantiateSharedInstance()
-    UserLocationService.instantiateSharedInstance()
-    PreferencesDataService.instantiateSharedInstance()
-    WeatherInformationService.instantiateSharedInstance()
-    PermissionsService.instantiateSharedInstance()
+//    WeatherNetworkingService.instantiateSharedInstance()
+//    UserLocationService.instantiateSharedInstance()
+//    PreferencesDataService.instantiateSharedInstance()
+//    WeatherInformationService.instantiateSharedInstance()
+//    PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()
+    
+    
+    let dependencyContainer = Container()
+    
+    dependencyContainer.register(PreferencesService2.self) { _ in PreferencesService2() }
+    dependencyContainer.register(UserLocationService2.self) { _ in UserLocationService2() }
+    
+    dependencyContainer.register(WeatherStationService2.self) { resolver in
+      WeatherStationService2(dependencies: WeatherStationService2.Dependencies(
+        preferencesService: resolver.resolve(PreferencesService2.self)!
+      ))
+    }
+    
+    dependencyContainer.register(WeatherInformationService2.self) { resolver in
+      WeatherInformationService2(dependencies: WeatherInformationService2.Dependencies(
+        preferencesService: resolver.resolve(PreferencesService2.self)!,
+        userLocationService: resolver.resolve(UserLocationService2.self)!
+      ))
+    }
+    
+    self.dependencyContainer = dependencyContainer
   }
   
   private func instantiateApplicationUserInterface() {
     let window = UIWindow(frame: UIScreen.main.bounds)
     self.window = window
-    let rootFlow = RootFlow(rootWindow: window)
+    let rootFlow = RootFlow(
+      rootWindow: window,
+      dependencyContainer: dependencyContainer!
+    )
     
     flowCoordinator = FlowCoordinator()
     flowCoordinator?.coordinate(

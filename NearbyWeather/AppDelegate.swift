@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     runMigrationIfNeeded()
     
-    SettingsBundleTransferService.shared.updateSystemSettings()
+    SettingsBundleTransferWorker.updateSystemSettings()
     
     return true
   }

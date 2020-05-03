@@ -128,7 +128,7 @@
 		F2F1553E244278D4007A3E90 /* WeatherInformationErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553D244278D4007A3E90 /* WeatherInformationErrorDTO.swift */; };
 		F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */; };
 		F2F1554324435E55007A3E90 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F2F1554224435E55007A3E90 /* Settings.bundle */; };
-		F2F15545244389E8007A3E90 /* SettingsBundleTransferService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */; };
+		F2F15545244389E8007A3E90 /* SettingsBundleTransferWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F15544244389E8007A3E90 /* SettingsBundleTransferWorker.swift */; };
 		F2F155492443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F155482443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift */; };
 		F2F1554B2443C438007A3E90 /* Factory+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1554A2443C438007A3E90 /* Factory+UIButton.swift */; };
 		F2F1554D2443C842007A3E90 /* UIView+AddSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1554C2443C842007A3E90 /* UIView+AddSubview.swift */; };
@@ -299,7 +299,7 @@
 		F2F1553D244278D4007A3E90 /* WeatherInformationErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationErrorDTO.swift; sourceTree = "<group>"; };
 		F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AppendWithDelimiter.swift"; sourceTree = "<group>"; };
 		F2F1554224435E55007A3E90 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBundleTransferService.swift; sourceTree = "<group>"; };
+		F2F15544244389E8007A3E90 /* SettingsBundleTransferWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBundleTransferWorker.swift; sourceTree = "<group>"; };
 		F2F155482443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitedStatesOfAmericaStatesList.swift; sourceTree = "<group>"; };
 		F2F1554A2443C438007A3E90 /* Factory+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIButton.swift"; sourceTree = "<group>"; };
 		F2F1554C2443C842007A3E90 /* UIView+AddSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AddSubview.swift"; sourceTree = "<group>"; };
@@ -523,7 +523,7 @@
 				86830393217BBAE400B7122E /* PermissionsService.swift */,
 				F274FC3A2030ED5A00049144 /* PreferencesDataService.swift */,
 				F284DDD5245CF38800445BFF /* PreferencesService2.swift */,
-				F2F15544244389E8007A3E90 /* SettingsBundleTransferService.swift */,
+				F2F15544244389E8007A3E90 /* SettingsBundleTransferWorker.swift */,
 				F26699591E9ADBC300498F99 /* UserLocationService.swift */,
 				F284DDCD245A40F500445BFF /* UserLocationService2.swift */,
 				F26699571E9AD0F100498F99 /* WeatherInformationService.swift */,
@@ -1274,7 +1274,7 @@
 				F284DDD8245E4AFC00445BFF /* ListTypeOption.swift in Sources */,
 				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,
 				F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */,
-				F2F15545244389E8007A3E90 /* SettingsBundleTransferService.swift in Sources */,
+				F2F15545244389E8007A3E90 /* SettingsBundleTransferWorker.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
 				F284DDE5245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift in Sources */,

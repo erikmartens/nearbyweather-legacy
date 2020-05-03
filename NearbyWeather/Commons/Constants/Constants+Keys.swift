@@ -16,12 +16,14 @@ extension Constants.Keys {
   
   enum UserDefaults {
     static let kMigratedToVersion230 =  "de.erikmaximilianmartens.nearbyWeather.migratedToVersion_2_3_0"
+    static let kIsInitialLaunch = "nearby_weather.isInitialLaunch"
     
     static let kNearbyWeatherApiKeyKey = "nearby_weather.openWeatherMapApiKey"
-    static let kIsInitialLaunch = "nearby_weather.isInitialLaunch"
+    
     static let kRefreshOnAppStartKey = "de.erikmaximilianmartens.nearbyWeather.refreshOnAppStart"
-    static let kWeatherDataLastRefreshDateKey = "de.erikmaximilianmartens.nearbyWeather.weatherDataService.lastUpdateDate"
     static let kIsTemperatureOnAppIconEnabledKey = "de.erikmaximilianmartens.nearbyWeather.isTemperatureOnAppIconEnabled"
+    
+    static let kWeatherDataLastRefreshDateKey = "de.erikmaximilianmartens.nearbyWeather.weatherDataService.lastUpdateDate"
   }
 }
 

@@ -9,14 +9,6 @@
 import UIKit
 import MapKit
 
-struct PreferencesManagerStoredContentsWrapper: Codable {
-  var preferredBookmark: PreferredBookmarkOption
-  var amountOfResults: AmountOfResultsOption
-  var temperatureUnit: TemperatureUnitOption
-  var windspeedUnit: DimensionalUnitsOption
-  var sortingOrientation: SortingOrientationOption
-}
-
 protocol StoredPreferencesProvider {
   var preferredBookmark: PreferredBookmarkOption { get set }
   var amountOfResults: AmountOfResultsOption { get set }

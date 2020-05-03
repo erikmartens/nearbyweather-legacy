@@ -83,6 +83,7 @@
 		F284DDDF245F5EC600445BFF /* WeatherDataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDDE245F5EC600445BFF /* WeatherDataContainer.swift */; };
 		F284DDE1245F5EE600445BFF /* BulkWeatherDataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDE0245F5EE600445BFF /* BulkWeatherDataContainer.swift */; };
 		F284DDE3245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDE2245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift */; };
+		F284DDE5245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDE4245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift */; };
 		F28CA5392016A1BA00209397 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA5382016A1BA00209397 /* MapViewController.swift */; };
 		F28CA53D202622C200209397 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA53C202622C200209397 /* ToggleCell.swift */; };
 		F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA54020279EE300209397 /* WeatherDetailViewController.swift */; };
@@ -253,6 +254,7 @@
 		F284DDDE245F5EC600445BFF /* WeatherDataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataContainer.swift; sourceTree = "<group>"; };
 		F284DDE0245F5EE600445BFF /* BulkWeatherDataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkWeatherDataContainer.swift; sourceTree = "<group>"; };
 		F284DDE2245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManagerStoredContentsWrapper.swift; sourceTree = "<group>"; };
+		F284DDE4245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManagerStoredContentsWrapper.swift; sourceTree = "<group>"; };
 		F28CA5382016A1BA00209397 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F28CA53C202622C200209397 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		F28CA54020279EE300209397 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
@@ -817,6 +819,7 @@
 				F284DDDE245F5EC600445BFF /* WeatherDataContainer.swift */,
 				F284DDE0245F5EE600445BFF /* BulkWeatherDataContainer.swift */,
 				F284DDE2245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift */,
+				F284DDE4245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift */,
 			);
 			path = Migration;
 			sourceTree = "<group>";
@@ -1274,6 +1277,7 @@
 				F2F15545244389E8007A3E90 /* SettingsBundleTransferService.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
+				F284DDE5245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift in Sources */,
 				F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */,
 				F2F155492443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift in Sources */,
 				F237285B2444A72100964C49 /* Constants+Dimensions.swift in Sources */,

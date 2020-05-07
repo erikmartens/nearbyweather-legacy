@@ -131,6 +131,8 @@
 		F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */; };
 		F2DBEB3423F0427000CD513B /* Factory+UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB3323F0427000CD513B /* Factory+UIAlertController.swift */; };
 		F2DBEB3623F04E9D00CD513B /* MKMapType+AllCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB3523F04E9D00CD513B /* MKMapType+AllCases.swift */; };
+		F2DE35012464AF4E00FDC4C7 /* Constants+Dimensions.Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE35002464AF4E00FDC4C7 /* Constants+Dimensions.Spacing.swift */; };
+		F2DE35032464B02F00FDC4C7 /* Constants+Dimensions.Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE35022464B02F00FDC4C7 /* Constants+Dimensions.Size.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
@@ -311,6 +313,8 @@
 		F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SemanticInitializer.swift"; sourceTree = "<group>"; };
 		F2DBEB3323F0427000CD513B /* Factory+UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIAlertController.swift"; sourceTree = "<group>"; };
 		F2DBEB3523F04E9D00CD513B /* MKMapType+AllCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapType+AllCases.swift"; sourceTree = "<group>"; };
+		F2DE35002464AF4E00FDC4C7 /* Constants+Dimensions.Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Dimensions.Spacing.swift"; sourceTree = "<group>"; };
+		F2DE35022464B02F00FDC4C7 /* Constants+Dimensions.Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Dimensions.Size.swift"; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
@@ -727,6 +731,8 @@
 				F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */,
 				F2372881244C82B200964C49 /* Constants+Theme.Color.swift */,
 				F237285A2444A72100964C49 /* Constants+Dimensions.swift */,
+				F2DE35022464B02F00FDC4C7 /* Constants+Dimensions.Size.swift */,
+				F2DE35002464AF4E00FDC4C7 /* Constants+Dimensions.Spacing.swift */,
 				F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */,
 				F2E7238023E0F044001189F5 /* Constants+Keys.swift */,
 				F2F7BA1A23E3706100B4D2EB /* Constants+Messages.swift */,
@@ -1318,6 +1324,7 @@
 				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,
 				F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */,
 				F2372893244CAB0A00964C49 /* RootStepper.swift in Sources */,
+				F2DE35032464B02F00FDC4C7 /* Constants+Dimensions.Size.swift in Sources */,
 				F284DDDC245F3FDB00445BFF /* MigrationService.swift in Sources */,
 				F284DDD8245E4AFC00445BFF /* ListTypeOption.swift in Sources */,
 				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,
@@ -1345,6 +1352,7 @@
 				F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */,
 				F28CA5392016A1BA00209397 /* MapViewController.swift in Sources */,
 				F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */,
+				F2DE35012464AF4E00FDC4C7 /* Constants+Dimensions.Spacing.swift in Sources */,
 				F28CE9681F9A9893008319C4 /* ListViewController.swift in Sources */,
 				F2F7BA1D23E373DD00B4D2EB /* Constants+Labels.swift in Sources */,
 				F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */,

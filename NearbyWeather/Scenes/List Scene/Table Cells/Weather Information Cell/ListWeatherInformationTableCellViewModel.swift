@@ -12,15 +12,12 @@ import RxCocoa
 extension ListWeatherInformationTableCellViewModel {
   
   struct Dependencies {
-    
+    let weatherInformationIdentity: PersistencyModelIdentity
+    let weatherInformationService: WeatherInformationService2
   }
 }
 
 final class ListWeatherInformationTableCellViewModel: NSObject, BaseCellViewModel {
-  
-  // MARK: - Assets
-  
-  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -28,19 +25,14 @@ final class ListWeatherInformationTableCellViewModel: NSObject, BaseCellViewMode
 
   // MARK: - Events
   
-  let cellModelSubject = PublishSubject<ListWeatherInformationTableCellModel>()
+  let cellModelDriver: Driver<ListWeatherInformationTableCellModel>
 
   // MARK: - Initialization
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-  }
-
-  // MARK: - Functions
-  
-  public func observeEvents() {
-    observeDataSource()
-    observeUserTapEvents()
+    
+    self.cellModelDriver = Self.createDataSourceObserver(with: dependencies)
   }
 }
 
@@ -48,11 +40,19 @@ final class ListWeatherInformationTableCellViewModel: NSObject, BaseCellViewMode
 
 private extension ListWeatherInformationTableCellViewModel {
   
-  func observeDataSource() {
-    
-  }
-  
-  func observeUserTapEvents() {
-  
+  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<ListWeatherInformationTableCellModel> {
+    dependencies.weatherInformationService
+      .createBookmarkedWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
+      .map { $0?.entity }
+      .map { weatherInformation -> ListWeatherInformationTableCellModel in
+        ListWeatherInformationTableCellModel(
+          weatherConditionCode: weatherInformation?.weatherCondition.first?.identifier,
+          temperature: weatherInformation?.atmosphericInformation.temperatureKelvin,
+          cloudCoverage: weatherInformation?.cloudCoverage.coverage,
+          humidity: weatherInformation?.atmosphericInformation.humidity,
+          windspeed: weatherInformation?.windInformation.windspeed
+        )
+      }
+      .asDriver(onErrorJustReturn: ListWeatherInformationTableCellModel())
   }
 }

@@ -9,16 +9,21 @@
 import UIKit
 import RxSwift
 
+private extension ListWeatherInformationTableCell {
+  
+}
+
 final class ListWeatherInformationTableCell: UITableViewCell, BaseCell, ReuseIdentifiable {
   
   typealias CellViewModel = ListWeatherInformationTableCellViewModel
   
   // MARK: - UIComponents
   
-//  private lazy var backgroundColorView: UIView = {
-//    let view = UIView()
-//    view.layer.cornerRadius = Constants.
-//  }()
+  private lazy var backgroundColorView: UIView = {
+    let view = UIView()
+    view.layer.cornerRadius = Constants.Dimensions.Size.CornerRadiusSize.from(weight: .medium)
+    return view
+  }()
   
   private lazy var weatherConditionSymbolLabel = Factory.Label.make(fromType: .weatherSymbol)
   private lazy var placeNameLabel = Factory.Label.make(fromType: .title(numberOfLines: 1))
@@ -70,9 +75,7 @@ final class ListWeatherInformationTableCell: UITableViewCell, BaseCell, ReuseIde
 extension ListWeatherInformationTableCell {
   
   private func bindInputFromViewModel(_ viewModel: CellViewModel) {
-    viewModel.cellModelSubject
-      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-      .asDriver(onErrorJustReturn: ListWeatherInformationTableCellModel())
+    viewModel.cellModelDriver      
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
@@ -87,7 +90,10 @@ extension ListWeatherInformationTableCell {
 private extension ListWeatherInformationTableCell {
   
   func setContent(for cellModel: ListWeatherInformationTableCellModel) {
-//    contentView.addSubview(<#T##subview: S##S#>, constraints: <#T##[NSLayoutConstraint]#>)
+    contentView.addSubview(backgroundColorView, constraints: [
+      backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
+      backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
+    ])
   }
   
   func layoutUserInterface() {

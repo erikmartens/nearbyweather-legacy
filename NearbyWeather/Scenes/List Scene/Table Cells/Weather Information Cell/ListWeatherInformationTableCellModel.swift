@@ -6,26 +6,29 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct ListWeatherInformationTableCellModel {
-  let weatherConditionCode: Int?
-  let temperature: Double?
-  let cloudCoverage: Double?
-  let humidity: Double?
-  let windspeed: Double?
+  let weatherConditionSymbol: String?
+  let temperature: String?
+  let cloudCoverage: String?
+  let humidity: String?
+  let windspeed: String?
+  let backgroundColor: UIColor?
   
   init(
-    weatherConditionCode: Int? = nil,
-    temperature: Double? = nil,
-    cloudCoverage: Double? = nil,
-    humidity: Double? = nil,
-    windspeed: Double? = nil
+    weatherConditionSymbol: String? = nil,
+    temperature: String? = nil,
+    cloudCoverage: String? = nil,
+    humidity: String? = nil,
+    windspeed: String? = nil,
+    backgroundColor: UIColor? = nil
   ) {
-    self.weatherConditionCode = weatherConditionCode
+    self.weatherConditionSymbol = weatherConditionSymbol
     self.temperature = temperature
     self.cloudCoverage = cloudCoverage
     self.humidity = humidity
     self.windspeed = windspeed
+    self.backgroundColor = backgroundColor
   }
 }

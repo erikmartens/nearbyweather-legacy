@@ -60,7 +60,7 @@ protocol GeneralPreferenceSetting {
   func getSortingOrientationOption() -> Observable<SortingOrientationOption>
 
   func setPreferredListTypeOption(_ option: ListTypeOption) -> Completable
-  func getPreferredListTypeOption() -> Observable<ListTypeOption>
+  func createPreferredListTypeOptionObservable() -> Observable<ListTypeOption>
   
   func setPreferredMapTypeOption(_ option: MapTypeOption) -> Completable
   func getPreferredMapTypeOption() -> Observable<MapTypeOption>
@@ -159,7 +159,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: ListTypeOption.self) }
   }
   
-  func getPreferredListTypeOption() -> Observable<ListTypeOption> {
+  func createPreferredListTypeOptionObservable() -> Observable<ListTypeOption> {
     persistencyWorker
       .observeResource(with: PersistencyModelIdentity(collection: Self.preferredListTypeOptionCollection,
                                                       identifier: Self.preferredListTypeOptionIdentifier),

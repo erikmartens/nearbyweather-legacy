@@ -11,6 +11,10 @@ import RxSwift
 
 private extension ListWeatherInformationTableCell {
   
+  struct Definitions {
+    static let cellLeadingInset: CGFloat = 48
+    static let weatherConditionSymbolHeight: CGFloat = 80
+  }
 }
 
 final class ListWeatherInformationTableCell: UITableViewCell, BaseCell, ReuseIdentifiable {
@@ -48,10 +52,6 @@ final class ListWeatherInformationTableCell: UITableViewCell, BaseCell, ReuseIde
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    selectionStyle = .none
-    backgroundColor = .clear
-    contentView.backgroundColor = .clear
-    
     layoutUserInterface()
     setupAppearance()
   }
@@ -66,7 +66,6 @@ final class ListWeatherInformationTableCell: UITableViewCell, BaseCell, ReuseIde
     self.cellViewModel = cellViewModel
     bindInputFromViewModel(cellViewModel)
     bindOutputToViewModel(cellViewModel)
-    cellViewModel.observeEvents()
   }
 }
 
@@ -74,13 +73,13 @@ final class ListWeatherInformationTableCell: UITableViewCell, BaseCell, ReuseIde
 
 extension ListWeatherInformationTableCell {
   
-  private func bindInputFromViewModel(_ viewModel: CellViewModel) {
-    viewModel.cellModelDriver      
+  private func bindInputFromViewModel(_ cellViewModel: CellViewModel) {
+    cellViewModel.cellModelDriver
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
   
-  private func bindOutputToViewModel(_ viewModel: CellViewModel) {
+  private func bindOutputToViewModel(_ cellViewModel: CellViewModel) {
     // nothing to do
   }
 }
@@ -90,17 +89,51 @@ extension ListWeatherInformationTableCell {
 private extension ListWeatherInformationTableCell {
   
   func setContent(for cellModel: ListWeatherInformationTableCellModel) {
-    contentView.addSubview(backgroundColorView, constraints: [
-      backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
-      backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
-    ])
+    backgroundColorView.backgroundColor = cellModel.backgroundColor
+    weatherConditionSymbolLabel.text = cellModel.weatherConditionSymbol
+    temperatureLabel.text = cellModel.temperature
+    cloudCoverageLabel.text = cellModel.cloudCoverage
+    humidityLabel.text = cellModel.humidity
+    windspeedLabel.text = cellModel.windspeed
   }
   
   func layoutUserInterface() {
+    contentView.addSubview(backgroundColorView, constraints: [
+      backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
+      backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
+      backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.cellLeadingInset),
+      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.trailing)
+    ])
     
+    contentView.addSubview(weatherConditionSymbolLabel, constraints: [
+      weatherConditionSymbolLabel.heightAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolHeight),
+      weatherConditionSymbolLabel.widthAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolHeight),
+      weatherConditionSymbolLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
+      weatherConditionSymbolLabel.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
+      weatherConditionSymbolLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.leading),
+      weatherConditionSymbolLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+    ])
+    
+    contentView.addSubview(placeNameLabel, constraints: [
+      placeNameLabel.heightAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolHeight),
+      placeNameLabel.topAnchor.constraint(
+        greaterThanOrEqualTo: contentView.topAnchor,
+        constant: Constants.Dimensions.Spacing.TableCellContentInsets.top + Constants.Dimensions.Spacing.InterElementSpacing.yDistance(from: .medium)
+      ),
+      placeNameLabel.leadingAnchor.constraint(
+        equalTo: weatherConditionSymbolLabel.trailingAnchor,
+        constant: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .medium)
+      ),
+      placeNameLabel.trailingAnchor.constraint(
+        equalTo: contentView.trailingAnchor,
+        constant: -(Constants.Dimensions.Spacing.TableCellContentInsets.trailing + Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .medium))
+      )
+    ])
   }
   
   func setupAppearance() {
-    
+    selectionStyle = .none
+    backgroundColor = .clear
+    contentView.backgroundColor = .clear
   }
 }

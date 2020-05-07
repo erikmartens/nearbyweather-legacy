@@ -10,7 +10,7 @@ import UIKit
 
 class ImagedToggleCell: UITableViewCell, ReuseIdentifiable {
   
-  private lazy var contentLabel = Factory.Label.make(fromType: .body(alignment: .left, numberOfLines: 0))
+  private lazy var contentLabel = Factory.Label.make(fromType: .body())
   private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
   private lazy var toggleSwitch = UISwitch()
   
@@ -61,9 +61,9 @@ private extension ImagedToggleCell {
   func composeCell() {
     separatorInset = UIEdgeInsets(
       top: 0,
-      left: Constants.Dimensions.TableCellContentInsets.leading
+      left: Constants.Spacing.TableCellContentInsets.leading
         + Constants.Dimensions.TableCellImageSize.width
-        + Constants.Dimensions.TableCellContentInsets.interElementXDistance(from: .small),
+        + Constants.Spacing.InterElementSpacing.yDistance(from: .small),
       bottom: 0,
       right: 0
     )
@@ -71,25 +71,25 @@ private extension ImagedToggleCell {
     contentView.addSubview(leadingImageView, constraints: [
       leadingImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImageSize.height),
       leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImageSize.width),
-      leadingImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: Constants.Dimensions.TableCellContentInsets.top),
-      leadingImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -Constants.Dimensions.TableCellContentInsets.bottom),
-      leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.TableCellContentInsets.leading),
+      leadingImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: Constants.Spacing.TableCellContentInsets.top),
+      leadingImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -Constants.Spacing.TableCellContentInsets.bottom),
+      leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Spacing.TableCellContentInsets.leading),
       leadingImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     
     contentView.addSubview(contentLabel, constraints: [
-      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.TableCellContentInsets.top),
-      contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.TableCellContentInsets.bottom),
-      contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: Constants.Dimensions.TableCellContentInsets.interElementXDistance(from: .small)),
+      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElementSize.height),
+      contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Spacing.TableCellContentInsets.top),
+      contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Spacing.TableCellContentInsets.bottom),
+      contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: Constants.Spacing.InterElementSpacing.xDistance(from: .small)),
       contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     
     contentView.addSubview(toggleSwitch, constraints: [
-      toggleSwitch.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.TableCellContentInsets.top),
-      toggleSwitch.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.TableCellContentInsets.bottom),
-      toggleSwitch.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: Constants.Dimensions.TableCellContentInsets.interElementXDistance(from: .small)),
-      toggleSwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.TableCellContentInsets.trailing),
+      toggleSwitch.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Spacing.TableCellContentInsets.top),
+      toggleSwitch.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Spacing.TableCellContentInsets.bottom),
+      toggleSwitch.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: Constants.Spacing.InterElementSpacing.xDistance(from: .small)),
+      toggleSwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Spacing.TableCellContentInsets.trailing),
       toggleSwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
   }

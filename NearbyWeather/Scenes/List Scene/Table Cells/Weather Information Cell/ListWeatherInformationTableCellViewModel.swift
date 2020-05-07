@@ -55,19 +55,24 @@ private extension ListWeatherInformationTableCellViewModel {
         }
       }
       .map { $0?.entity }
+      .errorOnNil()
       .map { weatherInformation -> ListWeatherInformationTableCellModel in
         ListWeatherInformationTableCellModel(
           weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
-            fromWeatherCode: weatherInformation?.weatherCondition.first?.identifier,
-            isDayTime: <#T##Bool#>
+            fromWeatherCode: weatherInformation.weatherCondition.first?.identifier,
+            isDayTime: ConversionWorker.isDayTime(for: weatherInformation.daytimeInformation, coordinates: weatherInformation.coordinates)
           ),
           temperature: ConversionWorker.temperatureDescriptor(
-            forTemperatureUnit: <#T##TemperatureUnitOption#>,
-            fromRawTemperature: weatherInformation?.atmosphericInformation.temperatureKelvin),
-          cloudCoverage: weatherInformation?.cloudCoverage.coverage,
-          humidity: weatherInformation?.atmosphericInformation.humidity,
-          windspeed: weatherInformation?.windInformation.windspeed,
-          backgroundColor: .clear
+            forTemperatureUnit: PreferencesDataService.shared.temperatureUnit, // TODO
+            fromRawTemperature: weatherInformation.atmosphericInformation.temperatureKelvin
+          ),
+          cloudCoverage: weatherInformation.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
+          humidity: weatherInformation.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none),
+          windspeed: ConversionWorker.windspeedDescriptor(
+            forDistanceSpeedUnit: PreferencesDataService.shared.distanceSpeedUnit, // TODO
+            forWindspeed: weatherInformation.windInformation.windspeed
+          ),
+          backgroundColor: .clear // TODO
         )
       }
       .asDriver(onErrorJustReturn: ListWeatherInformationTableCellModel())

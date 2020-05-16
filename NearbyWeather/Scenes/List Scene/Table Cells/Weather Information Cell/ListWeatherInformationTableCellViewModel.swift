@@ -73,6 +73,7 @@ private extension ListWeatherInformationTableCellViewModel {
             forWindspeed: weatherInformation.windInformation.windspeed
           ),
           backgroundColor: .clear // TODO
+          // TODO border
         )
       }
       .asDriver(onErrorJustReturn: ListWeatherInformationTableCellModel())

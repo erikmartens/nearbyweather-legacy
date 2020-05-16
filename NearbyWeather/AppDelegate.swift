@@ -28,7 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     instantiateServices()
     instantiateApplicationUserInterface()
     
-    FirebaseApp.configure()
+    if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
+      let firebaseOptions = FirebaseOptions(contentsOfFile: filePath) {
+      FirebaseApp.configure(options: firebaseOptions)
+    }
     
     SettingsBundleTransferService.shared.updateSystemSettings()
     

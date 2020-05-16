@@ -61,9 +61,7 @@ In order to get started, fork the project and clone it to your local machine.
 
 In order to open the project and in oder to run it, you will need to have the latest Apple developer tools installed, namely Xcode. 
 
-For libraries this app uses the dependency manager [Cocoa Pods](https://cocoapods.org). Pods are not checked into the repository, so you will have run `pod install` after cloning. Additionally it might be helpful to set up signing through [fastlane match](https://docs.fastlane.tools/actions/match/). Create your own repo to store your personal sigining certificates and provisioning profiles and adapt the `./fastlane/Matchfile` accordingly. _Make sure to never commit these changes or your pull requests will be rejected._
-
-Additionally this project is gathering anonymus crash reports and anonymus usage statistics through [Google Firebase](https://firebase.google.com). Google supplies a project configuration file in the form of the `.plist`-file `GoogleService-Info.plist`. This file is not checked into this repository as it contains secrets. In order to run the project remove the file reference from it and uninstall the pod `Firebase/Analytics` by removing the lines that start with `pod 'Firebase/Analytics'` and with `pod 'Firebase/Crashlytics'` from the `podfile` and executing `pod install`. _Make sure to never commit these changes or your pull requests will be rejected._
+For libraries this app uses the dependency manager [Cocoa Pods](https://cocoapods.org). Pods are not checked into the repository, so you will have run `pod install` in the project base directory after cloning. Additionally it might be helpful to set up signing through [fastlane match](https://docs.fastlane.tools/actions/match/). Create your own repo to store your personal sigining certificates and provisioning profiles and adapt the `./fastlane/Matchfile` accordingly. _Make sure to never commit these changes or your pull requests will be rejected._
 
 ## Contributing
 

@@ -71,7 +71,8 @@ Additionally you may also assist as a beta tester. Periodically test-builds will
 
 ## Future Developments
 - Integrate RxSwift for reactive scenes
+- Refactor scene-architecture using the MVVM+C pattern and define UI programmatically via autolayout
 - Integrate Realm for data persistence
-- Refactor scene-architecture using MVVM+C pattern with RxSwift and define UI via programmatic autolayout code
-- Write XCTests
+- Include Unit Tests for Services
+- Include UITests for Scenes
 - Setup CI and CD with Bitrise

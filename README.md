@@ -70,9 +70,8 @@ We looking forward to receiving your contributions. You can find more informatio
 Additionally you may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.
 
 ## Future Developments
-- Integrate RxSwift
-- Re-Build Routing using RxFlow
+- Integrate RxSwift for reactive scenes
 - Integrate Realm for data persistence
-- Refactor scene-architecture using MVVM+C pattern with RxSwift
+- Refactor scene-architecture using MVVM+C pattern with RxSwift and define UI via programmatic autolayout code
 - Write XCTests
 - Setup CI and CD with Bitrise

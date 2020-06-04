@@ -73,6 +73,7 @@ Additionally you may also assist as a beta tester. Periodically test-builds will
 ## Future Developments
 - Integrate RxSwift for reactive scenes
 - Refactor scene-architecture using the MVVM+C pattern and define UI programmatically via autolayout
+- SwiftUI previews for ViewControllers using mock models
 - Integrate Realm for data persistence
 - Include Unit Tests for Services
 - Include UITests for Scenes

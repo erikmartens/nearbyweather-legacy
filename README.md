@@ -66,7 +66,7 @@ Past releases are documented in the [release section](https://github.com/erikmar
 
 | Version | Tag |
 |:--|:--|
-| Current Release | [v2.2.0)[https://github.com/erikmartens/NearbyWeather/releases/tag/v2.2.0]
+| Current Release | [v2.2.0](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.2.0)
 | Next Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/projects/5) |
 | Future Releases | [vX.X.X](https://github.com/erikmartens/NearbyWeather/projects/1) |
 

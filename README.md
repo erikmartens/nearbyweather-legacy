@@ -21,6 +21,7 @@
 </p>
 
 ## About the App
+
 NearbyWeather is a simple weather app, that provides current weather information for nearby cities, as well for bookmarked locations. NearbyWeather uses the OpenWeatherMap API to download weather data. Additionally the OpenWeatherMaps location database is directly bootstrapped into the app for quick access.
 
 With NearbyWeather you can:
@@ -36,7 +37,8 @@ With NearbyWeather you can:
 
 > Downloading data for a bookmarked location counts as one request. Downloading bulk data for nearby places also counts as a single request, regardless of the amount of results you choose. You can add bookmarks indefinitely, but for example exceeding the 60 requests limit with a free tier API key may result in a failure to download data (this scenario has not been tested and depends of the tier of your API key).
 
-## Goals of this Project
+## Mission of this Project
+
 NearbyWeather should help you as a reference for your development. Whether you just started iOS development or want to learn more about Swift by seeing in action, this project is here for your guidance. Idealy you already have gained some experience or got your feet wet with mobile development. NearbyWeather is created to teach basic principles of iOS development, including but not limited to:
 
 - Programming concepts such as delegation, closures, generics & extensions
@@ -57,20 +59,18 @@ NearbyWeather should help you as a reference for your development. Whether you j
 
 It therefore otherwise refrains from advanced concepts. The architecture is kept simple by using [Apple's recommended MVC pattern](https://developer.apple.com/library/content/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html). This architecture is fine for a small projects like this one. For complex apps there are better options, such as MVVM, VIP (Clean Swift) or even VIPER. The chosen architecture may for example limit the testability of the project, but then again for simplicty sake there are no unit tests present at all. Additionally the app uses singeltons for all services and managers. This further hinders testing. A better approach to enable this would be dependency injection. Furthermore delegation is used only losely. 
 
-## Getting Started
-In order to get started, fork the project and clone it to your local machine. 
+## Goals for this Project
 
-In order to open the project and in oder to run it, you will need to have the latest Apple developer tools installed, namely Xcode. 
+### Release Planning
 
-For libraries this app uses the dependency manager [Cocoa Pods](https://cocoapods.org). Pods are not checked into the repository, so you will have run `pod install` in the project base directory after cloning. Additionally it might be helpful to set up signing through [fastlane match](https://docs.fastlane.tools/actions/match/). Create your own repo to store your personal sigining certificates and provisioning profiles and adapt the `./fastlane/Matchfile` accordingly. _Make sure to never commit these changes or your pull requests will be rejected._
+Past releases are documented in the [release-section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects).
 
-## Contributing
+| Release Title | Version |
+|:--|:--|
+| Next Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/projects/5) |
+| Future Releases | [vX.X.X](https://github.com/erikmartens/NearbyWeather/projects/1) |
 
-We looking forward to receiving your contributions. You can find more information in the [contribution docs](https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md).
-
-Additionally you may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.
-
-## Future Developments
+### General Objectives
 - Integrate RxSwift for reactive scenes
 - Refactor scene-architecture using the MVVM+C pattern and define UI programmatically via autolayout
 - SwiftUI previews for ViewControllers using mock models
@@ -78,3 +78,17 @@ Additionally you may also assist as a beta tester. Periodically test-builds will
 - Include Unit Tests for Services
 - Include UITests for Scenes
 - Setup CI and CD with Bitrise
+
+## How to Get Started
+
+In order to get started, fork the project and clone it to your local machine. 
+
+In order to open the project and in oder to run it, you will need to have the latest Apple developer tools installed, namely Xcode. 
+
+For libraries this app uses the dependency manager [Cocoa Pods](https://cocoapods.org). Pods are not checked into the repository, so you will have run `pod install` in the project base directory after cloning. Additionally it might be helpful to set up signing through [fastlane match](https://docs.fastlane.tools/actions/match/). Create your own repo to store your personal sigining certificates and provisioning profiles and adapt the `./fastlane/Matchfile` accordingly. _Make sure to never commit these changes or your pull requests will be rejected._
+
+## How to Contribute
+
+We looking forward to receiving your contributions. You can find more information in the [contribution docs](https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md).
+
+Additionally you may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.

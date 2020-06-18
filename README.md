@@ -33,51 +33,41 @@ With NearbyWeather you can:
 - Choose your preferred units (celsius/fahrenheit/kelvin & kilometres/miles)
 - Access previously loaded data offline
 
-> Please note that you need to supply your own OpenWeatherMap API key, in order to use the app. A free tier API key only allows for 60 requests per minute, which may only be sufficient for a single user. As the app is available at no charge, a paid tier API key can not be included. 
-
-> Downloading data for a bookmarked location counts as one request. Downloading bulk data for nearby places also counts as a single request, regardless of the amount of results you choose. You can add bookmarks indefinitely, but for example exceeding the 60 requests limit with a free tier API key may result in a failure to download data (this scenario has not been tested and depends of the tier of your API key).
+```
+❗️Please note that you need to supply your own OpenWeatherMap API key, in order to use the app.
+```
 
 ## Mission of this Project
 
-NearbyWeather should help you as a reference for your development. Whether you just started iOS development or want to learn more about Swift by seeing in action, this project is here for your guidance. Idealy you already have gained some experience or got your feet wet with mobile development. NearbyWeather is created to teach basic principles of iOS development, including but not limited to:
+NearbyWeather was created to help you as a reference for developing your skills. The app is kept up to date with the latest best practices in mobile app development. Find out how how modern iOS apps are engineered:
 
-- Programming concepts such as delegation, closures, generics & extensions
-- Avoidance of retain cycles
-- Swift language features such as codables
-- Persisiting data
-- Using various UIKit classes
-- Various Apple-iOS-Components such as UserDefaults or NotificationCenter
-- Using MapKit and customising maps
-- Accessing and using the user's location
-- Language localization
-- Network requests
-- Using 3rd part REST-APIs
-- Using 3rd party libraries via CocoaPods
-- Using support scripts for creating bootstrapped/bundle resources
-- Accessing bootstrapped/bundle resources
-- "DevOps" tools such as Fastlane or SwiftLint
+| Area | Concepts | Comment |
+|:--|:--|:--|
+| Language | Swift (latest release) | ✅ |
+| Additional Languages | Objective-C, JavaScript | ✅ |
+| Additional Frameworks | RxSwift | 🔄 In Progress |
+| Architecture | MVVM+C | 🔄 In Progress |
+| Navigation | Coordinator Pattern with RxFlow | ✅ |
+| UI-Construction | Autolayout in Code + Factory Pattern | 🔄 In Progress |
+| Dependencies | Dependency Injection & Singletons | ✅ |
+| Data Persistence | Realm & Files on Disk | 🔄 In Progress |
+| Networking | Alamofire | ✅ |
+| Asset Management | R.Swift | ✅ |
+| Code Quality | SwiftLint | ✅ |
+| Analytics and Reporting | Google Firebase | ✅ |
+| Library Management | CocoaPods | ✅ |
+| Bootsrapped Bundle Data | Node.js Scripts | ✅ |
+| Deployment | Fastlane | ✅ |
+| Testing and Quality Assurance | Unit Tests and UI Tests, SwiftUI Scene Previews | 🅾️ Coming Soon |
 
-It therefore otherwise refrains from advanced concepts. The architecture is kept simple by using [Apple's recommended MVC pattern](https://developer.apple.com/library/content/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html). This architecture is fine for a small projects like this one. For complex apps there are better options, such as MVVM, VIP (Clean Swift) or even VIPER. The chosen architecture may for example limit the testability of the project, but then again for simplicty sake there are no unit tests present at all. Additionally the app uses singeltons for all services and managers. This further hinders testing. A better approach to enable this would be dependency injection. Furthermore delegation is used only losely. 
+## Future Releases
 
-## Goals for this Project
-
-### Release Planning
-
-Past releases are documented in the [release-section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects).
+Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects).
 
 | Release Title | Version |
 |:--|:--|
 | Next Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/projects/5) |
 | Future Releases | [vX.X.X](https://github.com/erikmartens/NearbyWeather/projects/1) |
-
-### General Objectives
-- Integrate RxSwift for reactive scenes
-- Refactor scene-architecture using the MVVM+C pattern and define UI programmatically via autolayout
-- SwiftUI previews for ViewControllers using mock models
-- Integrate Realm for data persistence
-- Include Unit Tests for Services
-- Include UITests for Scenes
-- Setup CI and CD with Bitrise
 
 ## How to Get Started
 
@@ -89,6 +79,10 @@ For libraries this app uses the dependency manager [Cocoa Pods](https://cocoapod
 
 ## How to Contribute
 
-We looking forward to receiving your contributions. You can find more information in the [contribution docs](https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md).
+### Development
 
-Additionally you may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.
+We looking forward to receiving your contributions. You can find out how to take part in the development of this application via the [contribution guidelines](https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md).
+
+### Beta Testing
+
+You may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.

@@ -5,12 +5,24 @@
 <h1 align="center">NearbyWeather - OpenWeatherMap Client</h1>
 
 <p align="center">
+  <a href="#about-the-app">About the App</a> •
+  <a href="#mission-of-this-project">Mission of this Project</a> •
+  <a href="#future-releases">Future Releases</a> •
+  <a href="#how-to-get-started">How to Get Started</a> •
+  <a href="#how-to-contribute">How to Contribute</a> •
+  <a href="#support--feedback">Support & Feedback</a> •
+  <a href="#licensing">Licensing</a>
+</p>
+
+---
+
+<p align="center">
 <a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-5-orange.svg?style=flat" alt="Swift"/></a>
 <img src="https://img.shields.io/badge/Platform-iOS%2011.0+-lightgrey.svg" alt="Platform: iOS">
 <img src="https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat" alt="License: MIT">
+<a href="https://github.com/erikmartens/NearbyWeather/commits/develop" title="Latest Commit"><img src="https://img.shields.io/github/last-commit/erikmartens/NearbyWeather?style=flat"></a>
+<a href="https://github.com/erikmartens/NearbyWeather/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/erikmartens/NearbyWeather?style=flat"></a>
 <a href="https://github.com/erikmartens/NearbyWeather/graphs/contributors"><img src="https://img.shields.io/github/contributors/erikmartens/NearbyWeather.svg?style=flat" alt="Contributors"></a>
-<a href="https://twitter.com/erik_martens"><img src="https://img.shields.io/badge/Twitter-@erik_martens-blue.svg" alt="Twitter: @erik_martens"/></a>
-<a href="https://discord.gg/fxPgKzC"><img src="https://img.shields.io/discord/717413902689894411.svg?style=shield" alt="Discord: NearbyWeather by Erik Martens"/></a>
 </p>
 <p align="center">
 <a href="https://itunes.apple.com/app/nearbyweather/id1227313069"><img src="Resources/app_store_badge.svg" alt="Download on the App Store"/></a>
@@ -87,3 +99,23 @@ We looking forward to receiving your contributions. You can find out how to take
 ### Beta Testing
 
 You may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.
+
+## Support & Feedback
+
+If you are having technical issues or want to raise a bug/issue with the app, the preferred way is through [GitHub issues](https://github.com/erikmartens/NearbyWeather/issues). In order to contact Erik Maximilian Martens for any other request please reach out via one of the channels detailed in table below:
+
+| Platform | Address |
+|:--|:--|
+| Discord | <a href="https://discord.gg/fxPgKzC"><img src="https://img.shields.io/discord/717413902689894411.svg?style=shield" alt="Discord: NearbyWeather by Erik Martens"/></a> |
+| Twitter | <a href="https://twitter.com/erik_m_martens"><img src="https://img.shields.io/badge/Twitter-@erik_m_martens-blue.svg" alt="Twitter: @erik_m_martens"/></a> |
+| Email | <a href="mailto:erikmartens.developer@gmail.com" title="erikmartens.developer@gmail.com"><img src="https://img.shields.io/badge/email-erikmartens.developer@gmail.com-green?logo=mail.ru&style=flat-square&logoColor=white"></a> |
+
+## Licensing
+
+Copyright (c) 2020 Erik Maximilian Martens.
+
+Licensed under the **MIT License** (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at https://opensource.org/licenses/MIT.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the [LICENSE](./LICENSE) for the specific language governing permissions and limitations under the License.

@@ -112,7 +112,7 @@ If you are having technical issues or want to raise a bug/issue with the app, th
 
 ## Licensing
 
-Copyright (c) 2016 - 2020 Erik Maximilian Martens.
+Copyright © 2016 - 2020 Erik Maximilian Martens.
 
 Licensed under the **MIT License** (the "License"); you may not use this file except in compliance with the License.
 

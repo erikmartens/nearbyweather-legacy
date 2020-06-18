@@ -41,7 +41,7 @@ With NearbyWeather you can:
 
 NearbyWeather was created to help you as a reference for developing your skills. The app is kept up to date with the latest best practices in mobile app development. Find out how how modern iOS apps are engineered:
 
-| Area | Concepts | Comment |
+| Area | Concepts | Status |
 |:--|:--|:--|
 | Language | Swift (latest release) | ✅ |
 | Additional Languages | Objective-C, JavaScript | ✅ |
@@ -64,8 +64,9 @@ NearbyWeather was created to help you as a reference for developing your skills.
 
 Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects).
 
-| Release Title | Version |
+| Version | Tag |
 |:--|:--|
+| Current Release | [v2.2.0)[https://github.com/erikmartens/NearbyWeather/releases/tag/v2.2.0]
 | Next Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/projects/5) |
 | Future Releases | [vX.X.X](https://github.com/erikmartens/NearbyWeather/projects/1) |
 

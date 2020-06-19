@@ -7,7 +7,7 @@
 <p align="center">
   <a href="#about-the-app">About the App</a> •
   <a href="#mission-of-this-project">Mission of this Project</a> •
-  <a href="#future-releases">Future Releases</a> •
+  <a href="#app-releases">App Releases</a> •
   <a href="#how-to-get-started">How to Get Started</a> •
   <a href="#how-to-contribute">How to Contribute</a> •
   <a href="#support--feedback">Support & Feedback</a> •
@@ -61,8 +61,8 @@ NearbyWeather was created to help you as a reference for developing your skills.
 | Architecture | MVVM+C | 🔄 In Progress |
 | Navigation | Coordinator Pattern with RxFlow | ✅ |
 | UI-Construction | Autolayout in Code + Factory Pattern | 🔄 In Progress |
-| Dependencies | Dependency Injection & Singletons | ✅ |
-| Data Persistence | Realm & Files on Disk | 🔄 In Progress |
+| Dependencies | Dependency Injection & Singletons | 🔄 In Progress / ✅ |
+| Data Persistence | Realm & Files on Disk | 🔄 In Progress / ✅ |
 | Networking | Alamofire | ✅ |
 | Asset Management | R.Swift | ✅ |
 | Code Quality | SwiftLint | ✅ |
@@ -72,7 +72,7 @@ NearbyWeather was created to help you as a reference for developing your skills.
 | Deployment | Fastlane | ✅ |
 | Testing and Quality Assurance | Unit Tests and UI Tests, SwiftUI Scene Previews | 🅾️ Coming Soon |
 
-## Future Releases
+## App Releases
 
 Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects).
 

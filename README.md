@@ -61,7 +61,7 @@ NearbyWeather was created to help you as a reference for developing your skills.
 | Architecture | MVVM+C | 🔄 In Progress |
 | Navigation | Coordinator Pattern with RxFlow | ✅ |
 | UI-Construction | Autolayout in Code + Factory Pattern | 🔄 In Progress |
-| Dependencies | Dependency Injection & Singletons | 🔄 In Progress / ✅ |
+| Dependencies | Dependency Injection with Swinject & Singletons | 🔄 In Progress / ✅ |
 | Data Persistence | Realm & Files on Disk | 🔄 In Progress / ✅ |
 | Networking | Alamofire | ✅ |
 | Asset Management | R.Swift | ✅ |

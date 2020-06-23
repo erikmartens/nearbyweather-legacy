@@ -94,7 +94,7 @@ For libraries this app uses the dependency manager [Cocoa Pods](https://cocoapod
 
 ### Development
 
-We looking forward to receiving your contributions. You can find out how to take part in the development of this application via the [contribution guidelines](https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md).
+We looking forward to receiving your contributions. You can find out how to take part in the development of this application. Please find out how to submit code to this repository via the [contribution guidelines](https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md).
 
 ### Beta Testing
 

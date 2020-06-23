@@ -84,11 +84,17 @@ Past releases are documented in the [release section](https://github.com/erikmar
 
 ## How to Get Started
 
-In order to get started, fork the project and clone it to your local machine. 
-
-In order to open the project and in oder to run it, you will need to have the latest Apple developer tools installed, namely Xcode. 
-
-For libraries this app uses the dependency manager [Cocoa Pods](https://cocoapods.org). Pods are not checked into the repository, so you will have run `pod install` in the project base directory after cloning. Additionally it might be helpful to set up signing through [fastlane match](https://docs.fastlane.tools/actions/match/). Create your own repo to store your personal sigining certificates and provisioning profiles and adapt the `./fastlane/Matchfile` accordingly. _Make sure to never commit these changes or your pull requests will be rejected._
+1. Install the latest version of Xcode from the Mac AppStore
+2. Install the latest Xcode command line tools
+    ```
+    xcode-select --install
+    ```
+3. Install [CocoaPods](https://cocoapods.org) to your machine
+4. Install [fastlane](https://docs.fastlane.tools/getting-started/ios/setup/) to your machine
+5. Install [SwiftLint](https://github.com/realm/SwiftLint/#installation) to your machine
+6. Fork the project and clone it to your local machine
+7. Configure signing via [fastlane match](https://docs.fastlane.tools/actions/match/) to use your personal certificates
+7. Run `pod install` to be able to build locally
 
 ## How to Contribute
 

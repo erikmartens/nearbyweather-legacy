@@ -8,7 +8,7 @@ Thank you for considering to allocate some of your precious time to moving this 
 
 - You have forked this repository and cloned it to your local machine
 - You have the latest version of Xcode installed (currently `11.5`)
-- You have completed the steps to get started and can build the project as detailed in the [README.md](README.md/#app-releases)
+- You have completed the steps to get started and can build the project as detailed in the [README.md](README.md)
 - You have set the following Indentation settings for Xcode:
 
 ![Screenshot 2020-06-24 at 00 15 45](https://user-images.githubusercontent.com/18531084/85470909-f9054d80-b5af-11ea-89a6-99b4b889521c.png)
@@ -22,7 +22,7 @@ Thank you for considering to allocate some of your precious time to moving this 
 
 #### Before You Begin Coding
 
-1. Select an issue-ticket from the next release project as detailed in the [README.md](README.md)
+1. Select an issue-ticket from the next release project as detailed in the [README.md](https://github.com/erikmartens/NearbyWeather/blob/develop/README.md/#app-releases)
 2. Comment that you want to start working on the issue 
 3. Wait for feedback to receive clearance for beginning the coding process 
   - You may be asked to join the official [discord](https://discord.gg/fxPgKzC) to receive further instructions

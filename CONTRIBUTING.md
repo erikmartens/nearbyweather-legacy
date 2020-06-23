@@ -29,6 +29,11 @@ Thank you for considering to allocate some of your precious time to moving this 
     - For some tickets you will be asked to deliver a design document that needs to be cleared before you can begin your work
 4. If you need help or guidance there will be a channel dedicated to your issue-ticket on the official [discord](https://discord.gg/fxPgKzC)
 
+```
+❗️ If you submit code without following these steps your code may get reviewed. 
+❗️ However working without guidance may result in an adverse amount of change requests.
+```
+
 #### Writing and Delivering Your Code
 
 1. Before you start please make sure you meet the [contribution requirements](#contribution-requirements)

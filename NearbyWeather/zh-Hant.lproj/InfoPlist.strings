@@ -1,0 +1,9 @@
+/*
+ InfoPlist.strings
+ NearbyWeather
+ 
+ Created by poormusic2001 on 24.07.20.
+ Copyright © 2020 poormusic2001. All rights reserved.
+ */
+
+NSLocationWhenInUseUsageDescription = "NearbyWeather正在使用您的位置，根據這個資料來確定附近的城市並傳送天氣資訊。";

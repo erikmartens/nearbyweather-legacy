@@ -151,6 +151,8 @@
 		86830391217BBA5D00B7122E /* BadgeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeService.swift; sourceTree = "<group>"; };
 		86830393217BBAE400B7122E /* PermissionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsService.swift; sourceTree = "<group>"; };
 		86830395217BC28E00B7122E /* NearbyWeather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NearbyWeather.entitlements; sourceTree = "<group>"; };
+		E8303A8024CB199800FD9531 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E8303A8124CB199900FD9531 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F204B7771DF2EFA3000F4371 /* NearbyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearbyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F204B7811DF2EFA3000F4371 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -873,6 +875,7 @@
 				Base,
 				de,
 				fr,
+				"zh-Hant",
 			);
 			mainGroup = F204B76E1DF2EFA3000F4371;
 			productRefGroup = F204B7781DF2EFA3000F4371 /* Products */;
@@ -1119,6 +1122,7 @@
 				F204B7B11DF2F1BC000F4371 /* Base */,
 				F204B7B31DF2F1BD000F4371 /* de */,
 				5142D45E22F45DC2000E6B06 /* fr */,
+				E8303A8024CB199800FD9531 /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1129,6 +1133,7 @@
 				F283D2741DF393B2001B879D /* Base */,
 				F283D2761DF393B3001B879D /* de */,
 				5142D45F22F45DC2000E6B06 /* fr */,
+				E8303A8124CB199900FD9531 /* zh-Hant */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

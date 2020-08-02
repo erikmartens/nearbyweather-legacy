@@ -45,5 +45,14 @@
       "fr": "Température sous forme de notification sur l'icône de l'application"
     },
     "urlString": "https://github.com/lprokein"
+  }, {
+    "firstName": "Jim",
+    "lastName": "Tsai",
+    "contributionDescription": {
+      "en": "Traditional Chinese Localization",
+      "de": "Übersetzungen für Traditionelles Chinesisch",
+      "fr": "Traductions chinoises traditionnelles"
+    },
+    "urlString": "https://github.com/poormusic2001"
   }]
 }

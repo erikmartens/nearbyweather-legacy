@@ -116,7 +116,7 @@ If you are having technical issues or want to raise a bug/issue with the app, th
 |:--|:--|
 | Discord | <a href="https://discord.gg/fxPgKzC"><img src="https://img.shields.io/discord/717413902689894411.svg?style=shield" alt="Discord: NearbyWeather by Erik Martens"/></a> |
 | Twitter | <a href="https://twitter.com/erik_m_martens"><img src="https://img.shields.io/badge/Twitter-@erik_m_martens-blue.svg" alt="Twitter: @erik_m_martens"/></a> |
-| Email | <a href="mailto:erikmartens.dev@gicloud.com" title="erikmartens.developer@gmail.com"><img src="https://img.shields.io/badge/email-erikmartens.developer@gmail.com-green?logo=mail&style=flat&logoColor=white"></a> |
+| Email | <a href="mailto:erikmartens.dev@gicloud.com" title="erikmartens.developer@gmail.com"><img src="https://img.shields.io/badge/email-erikmartens.dev@icloud.com-green?logo=mail&style=flat&logoColor=white"></a> |
 
 ## Licensing
 

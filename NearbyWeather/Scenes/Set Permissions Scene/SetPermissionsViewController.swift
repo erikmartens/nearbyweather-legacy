@@ -91,7 +91,7 @@ final class SetPermissionsViewController: UIViewController, Stepper {
   // MARK: - Button Interaction
   
   @IBAction func didTapAskPermissionsButton(_ sender: UIButton) {
-    guard UserLocationService.shared.authorizationStatus != .notDetermined else {
+    guard UserLocationService.shared.currentAuthorizationStatus != .notDetermined else {
       UserLocationService.shared.requestWhenInUseAuthorization()
       return
     }

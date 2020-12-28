@@ -16,12 +16,12 @@ final class UserLocationService: CLLocationManager, CLLocationManagerDelegate {
   
   var currentLatitude: Double?
   var currentLongitude: Double?
-  var authorizationStatus: CLAuthorizationStatus
+  var currentAuthorizationStatus: CLAuthorizationStatus
   
   // MARK: - Intialization
   
   private override init() {
-    authorizationStatus = CLLocationManager.authorizationStatus()
+    currentAuthorizationStatus = CLLocationManager.authorizationStatus()
     super.init()
   }
   
@@ -37,7 +37,7 @@ final class UserLocationService: CLLocationManager, CLLocationManagerDelegate {
   }
   
   var locationPermissionsGranted: Bool {
-    return authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse
+    return currentAuthorizationStatus == .authorizedAlways || currentAuthorizationStatus == .authorizedWhenInUse
   }
   
   var currentLocation: CLLocation? {
@@ -50,8 +50,8 @@ final class UserLocationService: CLLocationManager, CLLocationManagerDelegate {
   // MARK: - Delegate Methods
   
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-    authorizationStatus = status
-    if authorizationStatus != .authorizedWhenInUse && authorizationStatus != .authorizedAlways {
+    currentAuthorizationStatus = status
+    if currentAuthorizationStatus != .authorizedWhenInUse && currentAuthorizationStatus != .authorizedAlways {
       self.currentLatitude = nil
       self.currentLongitude = nil
     }

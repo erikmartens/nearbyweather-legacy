@@ -258,9 +258,10 @@ extension MapViewController: MKMapViewDelegate {
       textColor: textColor,
       tapHandler: { [weak self] _ in
         self?.previousRegion = mapView.region
-        self?.steps.accept(
-          MapStep.weatherDetails(identifier: annotation.locationId, isBookmark: annotation.isBookmark)
-        )
+        self?.steps.accept(MapStep.weatherDetails(
+            identifier: annotation.locationId,
+            isBookmark: annotation.isBookmark
+        ))
       }
     )
     return viewForCurrentAnnotation

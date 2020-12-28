@@ -66,6 +66,6 @@ final class EmptyListViewController: UIViewController {
     reloadButton.setTitleColor(.white, for: UIControl.State())
     reloadButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
     reloadButton.layer.cornerRadius = reloadButton.bounds.height/2
-    reloadButton.layer.backgroundColor = Constants.Theme.Color.DefaultColors.standardDay.cgColor
+    reloadButton.layer.backgroundColor = Constants.Theme.Color.MarqueColors.standardDay.cgColor
   }
 }

@@ -9,7 +9,7 @@
 import RxSwift
 import RxCocoa
 
-extension ListWeatherInformationTableCellViewModel {
+extension WeatherListInformationTableViewCellViewModel {
   
   struct Dependencies {
     let weatherInformationIdentity: PersistencyModelIdentity
@@ -18,7 +18,7 @@ extension ListWeatherInformationTableCellViewModel {
   }
 }
 
-final class ListWeatherInformationTableCellViewModel: NSObject, BaseCellViewModel {
+final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellViewModel {
   
   // MARK: - Properties
   
@@ -26,7 +26,7 @@ final class ListWeatherInformationTableCellViewModel: NSObject, BaseCellViewMode
 
   // MARK: - Events
   
-  let cellModelDriver: Driver<ListWeatherInformationTableCellModel>
+  let cellModelDriver: Driver<WeatherListInformationTableViewCellModel>
 
   // MARK: - Initialization
   
@@ -39,9 +39,9 @@ final class ListWeatherInformationTableCellViewModel: NSObject, BaseCellViewMode
 
 // MARK: - Observations
 
-private extension ListWeatherInformationTableCellViewModel {
+private extension WeatherListInformationTableViewCellViewModel {
   
-  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<ListWeatherInformationTableCellModel> {
+  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherListInformationTableViewCellModel> {
     dependencies.userPreferencesService
       .createPreferredListTypeOptionObservable()
       .flatMapLatest { [dependencies] listTypeOption -> Observable<PersistencyModel<WeatherInformationDTO>?> in
@@ -56,14 +56,14 @@ private extension ListWeatherInformationTableCellViewModel {
       }
       .map { $0?.entity }
       .errorOnNil()
-      .map { weatherInformation -> ListWeatherInformationTableCellModel in
-        ListWeatherInformationTableCellModel(
+      .map { weatherInformation -> WeatherListInformationTableViewCellModel in
+        WeatherListInformationTableViewCellModel(
           weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
             fromWeatherCode: weatherInformation.weatherCondition.first?.identifier,
             isDayTime: ConversionWorker.isDayTime(for: weatherInformation.daytimeInformation, coordinates: weatherInformation.coordinates)
           ),
           temperature: ConversionWorker.temperatureDescriptor(
-            forTemperatureUnit: PreferencesDataService.shared.temperatureUnit, // TODO
+            forTemperatureUnit: PreferencesDataService.shared.temperatureUnit, // TODO observe user preference service 2
             fromRawTemperature: weatherInformation.atmosphericInformation.temperatureKelvin
           ),
           cloudCoverage: weatherInformation.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
@@ -76,6 +76,6 @@ private extension ListWeatherInformationTableCellViewModel {
           // TODO border
         )
       }
-      .asDriver(onErrorJustReturn: ListWeatherInformationTableCellModel())
+      .asDriver(onErrorJustReturn: WeatherListInformationTableViewCellModel())
   }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-private extension ListWeatherInformationTableCell {
+private extension WeatherListInformationTableViewCell {
   
   struct Definitions {
     static let cellLeadingInset: CGFloat = 48
@@ -17,9 +17,9 @@ private extension ListWeatherInformationTableCell {
   }
 }
 
-final class ListWeatherInformationTableCell: UITableViewCell, BaseCell, ReuseIdentifiable {
+final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell, ReuseIdentifiable {
   
-  typealias CellViewModel = ListWeatherInformationTableCellViewModel
+  typealias CellViewModel = WeatherListInformationTableViewCellViewModel
   
   // MARK: - UIComponents
   
@@ -71,7 +71,7 @@ final class ListWeatherInformationTableCell: UITableViewCell, BaseCell, ReuseIde
 
 // MARK: - ViewModel Bindings
 
-extension ListWeatherInformationTableCell {
+extension WeatherListInformationTableViewCell {
   
   private func bindInputFromViewModel(_ cellViewModel: CellViewModel) {
     cellViewModel.cellModelDriver
@@ -86,9 +86,9 @@ extension ListWeatherInformationTableCell {
 
 // MARK: - Cell Composition
 
-private extension ListWeatherInformationTableCell {
+private extension WeatherListInformationTableViewCell {
   
-  func setContent(for cellModel: ListWeatherInformationTableCellModel) {
+  func setContent(for cellModel: WeatherListInformationTableViewCellModel) {
     backgroundColorView.backgroundColor = cellModel.backgroundColor
     weatherConditionSymbolLabel.text = cellModel.weatherConditionSymbol
     temperatureLabel.text = cellModel.temperature

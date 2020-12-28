@@ -17,12 +17,12 @@ extension Constants.Theme.Color {
   enum BrandColor {
     
     static var standardDay: UIColor {
-      UIColor.from(dark: .init(hex: 0x64aff5),
+      UIColor.from(dark: .init(hex: 0x64AFF5),
                    light: .init(hex: 0x50B4FA))
     }
     
     static var standardNight: UIColor {
-      UIColor.from(dark: .init(hex: 0x3f709b),
+      UIColor.from(dark: .init(hex: 0x3F709B),
                    light: .init(hex: 0x32719C))
     }
   }

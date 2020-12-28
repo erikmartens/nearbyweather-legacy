@@ -241,8 +241,8 @@ extension MapViewController: MKMapViewDelegate {
     
     if annotation.isBookmark {
       fillColor = annotation.isDayTime ?? true
-        ? Constants.Theme.Color.BrandColors.standardDay
-        : Constants.Theme.Color.BrandColors.standardNight // default to blue colored cells
+        ? Constants.Theme.Color.DefaultColors.standardDay
+        : Constants.Theme.Color.DefaultColors.standardNight // default to blue colored cells
       
       textColor = .white
     } else {

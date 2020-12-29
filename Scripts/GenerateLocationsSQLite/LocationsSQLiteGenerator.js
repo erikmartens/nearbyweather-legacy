@@ -66,7 +66,7 @@ class LocationsSQLiteGenerator {
     const begin = db.prepare('BEGIN');
     const commit = db.prepare('COMMIT');
     const rollback = db.prepare('ROLLBACK');
-    const insertStatement = db.prepare('INSERT INTO locations(id, name, state, country, latitude, longitude) VALUES ($id, $name, $state, $country, $latitude, $longitude)')
+    const insertStatement = db.prepare('INSERT INTO locations VALUES ($id, $name, $state, $country, $latitude, $longitude)')
 
     begin.run()
     spinner.start()    
@@ -74,7 +74,7 @@ class LocationsSQLiteGenerator {
     jsonStream.output.on('data', (object) => {
       try {
         insertStatement.run({
-          id: object.value.id,
+          id: object.value.id.toString(),
           name: object.value.name,
           state: object.value.state,
           country: object.value.country,

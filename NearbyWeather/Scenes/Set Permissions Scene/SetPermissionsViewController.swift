@@ -76,7 +76,13 @@ final class SetPermissionsViewController: UIViewController, Stepper {
   }
   
   fileprivate func startAnimationTimer() {
-    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: (#selector(Self.animatePulse)), userInfo: nil, repeats: false)
+    timer = Timer.scheduledTimer(
+      timeInterval: 5,
+      target: self,
+      selector: (#selector(Self.animatePulse)),
+      userInfo: nil,
+      repeats: false
+    )
   }
   
   @objc private func animatePulse() {

@@ -37,7 +37,7 @@ final class SetPermissionsViewController: UIViewController, Stepper {
     
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(Self.dismiss),
+      selector: #selector(Self.launchApp),
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
       object: nil
     )

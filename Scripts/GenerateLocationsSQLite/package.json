@@ -6,9 +6,10 @@
   "homepage": "https://github.com/erikmartens/nearbyweather",
   "dependencies": {
     "fs-extra": "^9.0.0",
-    "sqlite3": "^4.1.1",
+    "better-sqlite3": "^7.1.2",
     "stream-json": "^0.5.1",
-    "zlib": "^1.0.5"
+    "zlib": "^1.0.5",
+    "ora": "^5.2.0"
   },
   "devDependencies": {
     "eslint": "^4.18.2",

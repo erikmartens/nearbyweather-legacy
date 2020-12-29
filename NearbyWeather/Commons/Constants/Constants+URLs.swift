@@ -11,7 +11,7 @@ import Foundation
 extension Constants {
   
   enum EmailAdresses {
-    static let mainContact = "erikmartens.developer@gmail.com"
+    static let mainContact = "erikmartens.dev@icloud.com"
   }
   
   enum Urls {

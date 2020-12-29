@@ -14,7 +14,7 @@ Thank you for considering to allocate some of your precious time to moving this 
 ![Screenshot 2020-06-24 at 00 15 45](https://user-images.githubusercontent.com/18531084/85470909-f9054d80-b5af-11ea-89a6-99b4b889521c.png)
 
 ```
-❗️ Commiting changes caused by improper re-indentation will be rejected automatically. 
+❗️ Commiting changes caused by improper re-indentation will be rejected automatically.
 ❗️ They will have to be fixed before your pull request can be reviewed.
 ```
 
@@ -23,11 +23,16 @@ Thank you for considering to allocate some of your precious time to moving this 
 #### Before You Begin Coding
 
 1. Select an issue-ticket from the next release project as detailed in the [README.md](README.md/#app-releases)
-2. Comment that you want to start working on the issue 
-3. Wait for feedback to receive clearance for beginning the coding process 
+2. Comment that you want to start working on the issue
+3. Wait for feedback to receive clearance for beginning the coding process
     - You may be asked to join the official [discord](https://discord.gg/fxPgKzC) to receive further instructions
     - For some tickets you will be asked to deliver a design document that needs to be cleared before you can begin your work
 4. If you need help or guidance there will be a channel dedicated to your issue-ticket on the official [discord](https://discord.gg/fxPgKzC)
+
+```
+❗️ If you submit code without following these steps you may or may not receive a review.
+❗️ However in the case of receiving a review it may be subject to an adverse amount of change requests.
+```
 
 #### Writing and Delivering Your Code
 
@@ -41,7 +46,7 @@ Thank you for considering to allocate some of your precious time to moving this 
 8. Once your are ready to have your code looked at, set it to ready for review
 
 ```
-❗️ Do not include any changes that are not related to your assigned issue ticket. 
+❗️ Do not include any changes that are not related to your assigned issue ticket.
 ❗️ Your pull request will not be reviewed until this requirement is met.
 ```
 

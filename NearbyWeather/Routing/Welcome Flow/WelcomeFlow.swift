@@ -25,7 +25,11 @@ final class WelcomeFlow: Flow {
   init() {}
   
   deinit {
-    printDebugMessage(domain: String(describing: self), message: "was deinitialized")
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
   }
   
   // MARK: - Functions
@@ -64,4 +68,3 @@ private extension WelcomeFlow {
     .end(forwardToParentFlowWithStep: WelcomeStep.dismiss)
   }
 }
-

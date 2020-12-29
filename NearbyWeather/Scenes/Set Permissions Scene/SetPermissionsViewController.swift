@@ -37,7 +37,7 @@ final class SetPermissionsViewController: UIViewController, Stepper {
     
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(Self.dismiss),
+      selector: #selector(Self.launchApp),
       name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
       object: nil
     )
@@ -72,11 +72,17 @@ final class SetPermissionsViewController: UIViewController, Stepper {
     askPermissionsButton.setTitleColor(.white, for: UIControl.State())
     askPermissionsButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
     askPermissionsButton.layer.cornerRadius = askPermissionsButton.bounds.height/2
-    askPermissionsButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
+    askPermissionsButton.layer.backgroundColor = Constants.Theme.Color.MarqueColors.standardDay.cgColor
   }
   
   fileprivate func startAnimationTimer() {
-    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: (#selector(Self.animatePulse)), userInfo: nil, repeats: false)
+    timer = Timer.scheduledTimer(
+      timeInterval: 5,
+      target: self,
+      selector: (#selector(Self.animatePulse)),
+      userInfo: nil,
+      repeats: false
+    )
   }
   
   @objc private func animatePulse() {
@@ -91,7 +97,7 @@ final class SetPermissionsViewController: UIViewController, Stepper {
   // MARK: - Button Interaction
   
   @IBAction func didTapAskPermissionsButton(_ sender: UIButton) {
-    guard UserLocationService.shared.authorizationStatus != .notDetermined else {
+    guard UserLocationService.shared.currentAuthorizationStatus != .notDetermined else {
       UserLocationService.shared.requestWhenInUseAuthorization()
       return
     }

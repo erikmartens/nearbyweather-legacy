@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UnitedStatesOfAmericaStatesList {
+struct UnitedStatesOfAmericaStatesList {
   
   static let statesDictionary = [
     "NM": "New Mexico",

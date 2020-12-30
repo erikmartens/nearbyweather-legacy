@@ -49,13 +49,16 @@ end
 
 lane :release do
   clear_derived_data
+  system "pod install"
   build_app
+  system "pod deintegrate"
   deliver(
     ipa: "./build/NearbyWeather.ipa",
     submit_for_review: false,
     skip_screenshots: true,
     skip_metadata: true
   )
+  
 end
 
 lane :upload_meta_data do

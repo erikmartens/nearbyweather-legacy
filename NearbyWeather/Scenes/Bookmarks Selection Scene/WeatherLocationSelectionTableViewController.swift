@@ -20,7 +20,13 @@ final class WeatherLocationSelectionTableViewController: UITableViewController, 
   // MARK: - Properties
   
   private let searchController = UISearchController(searchResultsController: nil)
-  private var filteredCities = [WeatherStationDTO]()
+  private var filteredCities = [WeatherStationDTO]() {
+    didSet {
+      DispatchQueue.main.async { [weak self] in
+        self?.tableView.reloadData()
+      }
+    }
+  }
   
   // MARK: - ViewController Life Cycle
   
@@ -100,12 +106,9 @@ extension WeatherLocationSelectionTableViewController: UISearchResultsUpdating {
       tableView.reloadData()
       return
     }
-    WeatherStationService.shared.locations(forSearchString: searchText, completionHandler: { [unowned self] weatherLocationDTOs in
+    WeatherStationService.shared.locations(forSearchString: searchText, completionHandler: { [weak self] weatherLocationDTOs in
       if let weatherLocationDTOs = weatherLocationDTOs {
-        self.filteredCities = weatherLocationDTOs
-      }
-      DispatchQueue.main.async {
-        self.tableView.reloadData()
+        self?.filteredCities = weatherLocationDTOs
       }
     })
   }

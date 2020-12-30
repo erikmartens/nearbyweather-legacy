@@ -54,9 +54,9 @@ extension Constants.Dimensions {
     /// constant: 16
     static let trailing: CGFloat = 16
     /// constant: 4
-    static let top: CGFloat = 4
+    static let top: CGFloat = 12
     /// constant: 4
-    static let bottom: CGFloat = 4
+    static let bottom: CGFloat = 12
     /// values: 4, 8 or 12
     static func interElementYDistance(from weight: Weight) -> CGFloat {
       switch weight {

@@ -80,9 +80,9 @@ Past releases are documented in the [release section](https://github.com/erikmar
 
 | Version | Tag |
 |:--|:--|
-| Current Release | [v2.2.0](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.2.0)
+| Current Release | [v2.2.1](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.2.1)
 | Next Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/projects/5) |
-| Future Releases | [vX.X.X](https://github.com/erikmartens/NearbyWeather/projects/1) |
+| Future Releases | [v?.?.?](https://github.com/erikmartens/NearbyWeather/projects/1) |
 
 ## How to Get Started
 
@@ -120,7 +120,7 @@ If you are having technical issues or want to raise a bug/issue with the app, th
 
 ## Licensing
 
-Copyright © 2016 - 2020 Erik Maximilian Martens.
+Copyright © 2016 - 2021 Erik Maximilian Martens.
 
 Licensed under the **MIT License** (the "License"); you may not use this file except in compliance with the License.
 

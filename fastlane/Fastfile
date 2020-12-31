@@ -48,10 +48,10 @@ lane :prepare_release do
 end
 
 lane :release do
-  clear_derived_data
   system "pod install"
+
+  clear_derived_data
   build_app
-  system "pod deintegrate"
   deliver(
     ipa: "./build/NearbyWeather.ipa",
     submit_for_review: false,
@@ -59,6 +59,7 @@ lane :release do
     skip_metadata: true
   )
   
+  system "pod deintegrate ../NearbyWeather.xcodeproj"
 end
 
 lane :upload_meta_data do
@@ -82,6 +83,8 @@ end
 
 desc "fastlane refresh_dsyms version_number:1.0.0 build_number:123 or just fastlane refresh_dsyms"
 lane :refresh_dsyms do |options|
+  system "pod install"
+
   if options[:version_number] && options[:build_number]
     version_number = options[:version_number]
     build_number = options[:build_number]
@@ -93,6 +96,9 @@ lane :refresh_dsyms do |options|
   else
     download_dsyms
   end
+
   upload_symbols_to_crashlytics
   clean_build_artifacts
+
+  system "pod deintegrate ../NearbyWeather.xcodeproj"
 end

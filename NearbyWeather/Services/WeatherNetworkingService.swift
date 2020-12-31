@@ -130,8 +130,11 @@ final class WeatherNetworkingService {
   
   private func extractWeatherInformation(_ data: Data, identifier: Int) -> WeatherDataContainer {
     guard let weatherInformationDTO = try? JSONDecoder().decode(WeatherInformationDTO.self, from: data) else {
-      printDebugMessage(domain: String(describing: self),
-                        message: "NetworkingService: Error while decoding single-location-data to json")
+      printDebugMessage(
+        domain: String(describing: self),
+        message: "NetworkingService: Error while decoding single-location-data to json",
+        type: .error
+      )
       let errorDataDTO = ErrorDataDTO(errorType: ErrorDataDTO.ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil)
     }
@@ -140,8 +143,11 @@ final class WeatherNetworkingService {
   
   private func extractBulkWeatherInformation(_ data: Data) -> BulkWeatherDataContainer {
     guard let multiWeatherData = try? JSONDecoder().decode(WeatherInformationArrayWrapper.self, from: data) else {
-      printDebugMessage(domain: String(describing: self),
-                        message: "NetworkingService: Error while decoding multi-location-data to json")
+      printDebugMessage(
+        domain: String(describing: self),
+        message: "NetworkingService: Error while decoding multi-location-data to json",
+        type: .error
+      )
       let errorDataDTO = ErrorDataDTO(errorType: ErrorDataDTO.ErrorType(value: .jsonSerializationError), httpStatusCode: nil)
       return BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil)
     }

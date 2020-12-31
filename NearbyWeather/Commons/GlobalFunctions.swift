@@ -9,11 +9,22 @@
 import Foundation
 import Firebase
 
-func printDebugMessage(domain: String, message: String) {
+enum DebugMessageType: String {
+  case info = "ℹ️"
+  case warning = "⚠️"
+  case error = "💥"
+}
+
+func printDebugMessage(domain: String, message: String, type: DebugMessageType = .info) {
   guard !BuildEnvironment.isReleaseEvironment() else {
     return
   }
-  debugPrint("💥 \(domain) : \(message)")
+  debugPrint(
+    type
+      .rawValue
+      .append(contentsOf: domain, delimiter: .space)
+      .append(contentsOf: message, delimiter: .custom(string: " : "))
+  )
 }
 
 func reportNonFatalError(_ error: NSError) {

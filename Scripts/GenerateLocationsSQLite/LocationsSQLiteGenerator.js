@@ -2,10 +2,13 @@
 
 const fs = require('fs-extra')
 const path = require('path')
-const sqlite3 = require('sqlite3').verbose()
+const Database = require('better-sqlite3')
 const StreamArray = require('stream-json/utils/StreamArray')
 const zlib = require('zlib')
 const http = require('http')
+const ora = require('ora')
+
+var totalCities = 0;
 
 class LocationsSQLiteGenerator {
 
@@ -23,7 +26,7 @@ class LocationsSQLiteGenerator {
   }
 
   downloadCityList(callback) {
-    
+
     const temporaryFilePath = path.join(__dirname, this.temporaryFilePath)
     const gunzip = zlib.createGunzip()
 
@@ -39,7 +42,7 @@ class LocationsSQLiteGenerator {
           const writer = fs.createWriteStream(temporaryFilePath)
           writer.write(buffer.join(''))
           writer.end(() => {
-           callback()
+            callback()
           })
         })
     })
@@ -51,33 +54,48 @@ class LocationsSQLiteGenerator {
     const temporaryFilePath = path.join(__dirname, this.temporaryFilePath)
 
     fs.copySync(templateFilePath, outputFilePath)
-    
+
     const jsonStream = StreamArray.make()
-    const db = new sqlite3.Database(outputFilePath)
+    const db = new Database(outputFilePath)
 
     fs.createReadStream(temporaryFilePath).pipe(jsonStream.input)
-    
+
+    const spinner = ora('Writing locations to database')
+    spinner.color = 'white'
+
+    const begin = db.prepare('BEGIN');
+    const commit = db.prepare('COMMIT');
+    const rollback = db.prepare('ROLLBACK');
+    const insertStatement = db.prepare('INSERT INTO locations VALUES ($id, $name, $state, $country, $latitude, $longitude)')
+
+    begin.run()
+    spinner.start()    
+
     jsonStream.output.on('data', (object) => {
-      db.serialize(() => {
-        db.run('INSERT INTO locations(id, name, state, country, latitude, longitude) VALUES ($id, $name, $state, $country, $latitude, $longitude)', {
-          $id: object.value.id,
-          $name: object.value.name,
-          $state: object.value.state,
-          $country: object.value.country,
-          $latitude: object.value.coord.lat,
-          $longitude: object.value.coord.lon
-        }, (dbErr) => {
-          if (dbErr) {
-            console.log('DB Write Error:', dbErr)
-          }
+      try {
+        insertStatement.run({
+          id: object.value.id.toString(),
+          name: object.value.name,
+          state: object.value.state,
+          country: object.value.country,
+          latitude: object.value.coord.lat,
+          longitude: object.value.coord.lon
         })
-      })
+      } catch (error) {
+        console.log('DB write error', error)
+        rollback.run()
+      }
     })
 
     jsonStream.output.on('end', () => {
       console.log('Stream did end')
-      fs.unlinkSync(temporaryFilePath)
+
+      commit.run()
       db.close()
+
+      spinner.stopAndPersist({symbol: '✓', text: 'Finished writing locations to database', prefixText: ''})
+
+      fs.unlinkSync(temporaryFilePath)
     })
   }
 }

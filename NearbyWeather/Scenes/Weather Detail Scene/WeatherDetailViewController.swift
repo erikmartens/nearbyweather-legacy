@@ -7,23 +7,26 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 import MapKit
-import SafariServices
 import APTimeZones
 
-final class WeatherDetailViewController: UIViewController {
-  
-  static func instantiateFromStoryBoard(withTitle title: String, weatherDTO: WeatherInformationDTO, isBookmark: Bool) -> WeatherDetailViewController {
-    let viewController = R.storyboard.weatherDetails.weatherDetailViewController()!
-    viewController.titleString = title
+extension WeatherDetailViewController {
+  static func instantiateFromStoryBoard(weatherDTO: WeatherInformationDTO, isBookmark: Bool) -> WeatherDetailViewController {
+    let viewController = R.storyboard.weatherDetail.weatherDetailViewController()!
+    viewController.titleString = weatherDTO.cityName
     viewController.weatherDTO = weatherDTO
     viewController.isBookmark = isBookmark
     return viewController
   }
-  
+}
+
+final class WeatherDetailViewController: UIViewController, Stepper {
+
   // MARK: - Routing
   
-  weak var stepper: WeatherDetailStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - Properties
   
@@ -84,8 +87,14 @@ final class WeatherDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = titleString
     
-    navigationItem.title = titleString
+    navigationItem.leftBarButtonItem = UIBarButtonItem(
+      image: R.image.verticalCloseButton(),
+      style: .plain,
+      target: self,
+      action: #selector(Self.dismissButtonTapped))
+    
     mapView.delegate = self
     mapView.mapType = PreferencesDataService.shared.preferredMapType
     
@@ -107,7 +116,7 @@ final class WeatherDetailViewController: UIViewController {
     var navigationBarTintColor: UIColor
     var navigationTintColor: UIColor
     if isBookmark {
-      navigationBarTintColor = isDayTime ? Constants.Theme.Color.BrandColors.standardDay : Constants.Theme.Color.BrandColors.standardNight
+      navigationBarTintColor = isDayTime ? Constants.Theme.Color.MarqueColors.standardDay : Constants.Theme.Color.MarqueColors.standardNight
       navigationTintColor = .white
     } else {
       navigationBarTintColor = .white
@@ -248,6 +257,10 @@ final class WeatherDetailViewController: UIViewController {
       Constants.Urls.kOpenWeatherMapCityDetailsUrl(forCityWithName: weatherDTO.cityName)
     )
   }
+  
+  @objc private func dismissButtonTapped(_ sender: UIBarButtonItem) {
+    steps.accept(WeatherDetailStep.dismiss)
+  }
 }
 
 extension WeatherDetailViewController: MKMapViewDelegate {
@@ -269,8 +282,8 @@ extension WeatherDetailViewController: MKMapViewDelegate {
     
     if annotation.isBookmark {
       fillColor = annotation.isDayTime ?? true
-        ? Constants.Theme.Color.BrandColors.standardDay
-        : Constants.Theme.Color.BrandColors.standardNight // default to blue colored cells
+        ? Constants.Theme.Color.MarqueColors.standardDay
+        : Constants.Theme.Color.MarqueColors.standardNight // default to blue colored cells
       
       textColor = .white
     } else {

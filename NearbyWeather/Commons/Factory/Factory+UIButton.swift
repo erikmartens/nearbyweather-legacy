@@ -6,7 +6,7 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
-import UIKit
+import UIKit.UIButton
 
 extension Factory {
   
@@ -25,7 +25,7 @@ extension Factory {
       switch type {
       case let .standard(title, height):
         button.layer.cornerRadius = height/2
-        button.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
+        button.layer.backgroundColor = Constants.Theme.Color.MarqueColors.standardDay.cgColor
         
         button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
         button.setTitleColor(.white, for: UIControl.State())

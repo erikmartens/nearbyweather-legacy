@@ -8,11 +8,9 @@
 
 import UIKit
 
-class ButtonCell: UITableViewCell {
+class ButtonCell: UITableViewCell, ReuseIdentifiable {
   
-  static let reuseIdentifier = "ButtonCell"
-  
-  private lazy var contentLabel = Factory.Label.make(fromType: .standard)
+  private lazy var contentLabel = Factory.Label.make(fromType: .body(alignment: .left, numberOfLines: 0))
   private lazy var leftButton = Factory.Button.make(fromType: .standard(height: Constants.Dimensions.InteractableElement.height))
   private lazy var rightButton = Factory.Button.make(fromType: .standard(height: Constants.Dimensions.InteractableElement.height))
   

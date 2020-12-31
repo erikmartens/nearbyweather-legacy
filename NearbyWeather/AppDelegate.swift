@@ -7,33 +7,31 @@
 //
 
 import UIKit
+import RxFlow
 import Firebase
 
-protocol MainWindowManager: class {
-  var window: UIWindow? { get set }
-}
-
-protocol WelcomeWindowManager: class {
-  var welcomeWindow: UIWindow? { get set }
-  func notifyForMainAppLaunch()
-}
-
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, MainWindowManager, WelcomeWindowManager {
+class AppDelegate: UIResponder, UIApplicationDelegate {
   
-  private var mainCoordinator: MainCoordinator?
-  private var welcomeCoordinator: WelcomeCoordinator?
+  // MARK: - Properties
   
   var window: UIWindow?
   var welcomeWindow: UIWindow?
   
-  private var backgroundTaskId: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
+  private var flowCoordinator: FlowCoordinator?
+  
+  private var backgroundTaskId: UIBackgroundTaskIdentifier = .invalid
+  
+  // MARK: - Functions
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     instantiateServices()
     instantiateApplicationUserInterface()
     
-    FirebaseApp.configure()
+    if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
+      let firebaseOptions = FirebaseOptions(contentsOfFile: filePath) {
+      FirebaseApp.configure(options: firebaseOptions)
+    }
     
     SettingsBundleTransferService.shared.updateSystemSettings()
     
@@ -59,10 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MainWindowManager, Welcom
       self?.endBackgroundTask()
     }
   }
-  
-  func notifyForMainAppLaunch() {
-    loadMainWindow()
-  }
 }
 
 // MARK: - Private Helper Functions
@@ -79,21 +73,15 @@ extension AppDelegate {
   }
   
   private func instantiateApplicationUserInterface() {
-    guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil else {
-      loadWelcomeWindow()
-      return
-    }
-    loadMainWindow()
-  }
-  
-  private func loadWelcomeWindow() {
-    welcomeCoordinator = WelcomeCoordinator(parentCoordinator: nil, windowManager: self)
-    (welcomeCoordinator?.stepper as? WelcomeStepper)?.requestRouting(toStep: .initial)
-  }
-  
-  private func loadMainWindow() {
-    mainCoordinator = MainCoordinator(parentCoordinator: nil, windowManager: self)
-    (mainCoordinator?.stepper as? MainStepper)?.requestRouting(toStep: .initial)
+    let window = UIWindow(frame: UIScreen.main.bounds)
+    self.window = window
+    let rootFlow = RootFlow(rootWindow: window)
+    
+    flowCoordinator = FlowCoordinator()
+    flowCoordinator?.coordinate(
+      flow: rootFlow,
+      with: RootStepper()
+    )
   }
   
   private func refreshWeatherDataIfNeeded() {

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--EmptyListViewController-->
+        <scene sceneID="3Q5-0S-Rlz">
+            <objects>
+                <viewController storyboardIdentifier="EmptyListViewController" title="EmptyListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oQI-Ws-w0h" customClass="EmptyListViewController" customModule="NearbyWeather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JUk-Fk-Ndh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="81U-mh-A2x">
+                                <rect key="frame" x="44" y="270.5" width="326" height="355.5"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="16z-Ir-uPX">
+                                        <rect key="frame" x="0.0" y="0.0" width="326" height="206"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SadCloud" translatesAutoresizingMaskIntoConstraints="NO" id="7HE-1z-dTJ">
+                                                <rect key="frame" x="8.5" y="0.0" width="309" height="206"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="7HE-1z-dTJ" secondAttribute="height" multiplier="3:2" id="Q2o-b9-VLq"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="7HE-1z-dTJ" firstAttribute="centerX" secondItem="16z-Ir-uPX" secondAttribute="centerX" id="aB8-90-I7W"/>
+                                            <constraint firstAttribute="bottom" secondItem="7HE-1z-dTJ" secondAttribute="bottom" id="ljK-kS-KFP"/>
+                                            <constraint firstItem="7HE-1z-dTJ" firstAttribute="top" secondItem="16z-Ir-uPX" secondAttribute="top" id="mbU-b6-Jaz"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hTn-iJ-lOi">
+                                        <rect key="frame" x="0.0" y="226" width="326" height="129.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Weather Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctA-RN-4HD">
+                                                <rect key="frame" x="0.0" y="0.0" width="326" height="20.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather data could not be loaded. Make sure you are connected to the Internet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SgX-01-F5k">
+                                                <rect key="frame" x="0.0" y="30.5" width="326" height="38"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQG-k6-tht">
+                                                <rect key="frame" x="0.0" y="78.5" width="326" height="51"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KD0-MZ-Gjp">
+                                                        <rect key="frame" x="88" y="15" width="150" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="36" id="k1H-2D-qzL"/>
+                                                            <constraint firstAttribute="width" constant="150" id="lGV-wk-vnZ"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <connections>
+                                                            <action selector="didTapReloadButton:" destination="oQI-Ws-w0h" eventType="touchUpInside" id="Adj-aO-Y8s"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="KD0-MZ-Gjp" secondAttribute="bottom" id="TLZ-xO-trR"/>
+                                                    <constraint firstItem="KD0-MZ-Gjp" firstAttribute="centerX" secondItem="hQG-k6-tht" secondAttribute="centerX" id="UfU-nA-p39"/>
+                                                    <constraint firstItem="KD0-MZ-Gjp" firstAttribute="top" secondItem="hQG-k6-tht" secondAttribute="top" constant="15" id="nqP-Rf-ug0"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="odD-OZ-BqQ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="81U-mh-A2x" secondAttribute="bottom" id="6St-21-4SL"/>
+                            <constraint firstItem="81U-mh-A2x" firstAttribute="top" relation="greaterThanOrEqual" secondItem="odD-OZ-BqQ" secondAttribute="top" id="Ab5-IF-zuA"/>
+                            <constraint firstItem="81U-mh-A2x" firstAttribute="centerY" secondItem="JUk-Fk-Ndh" secondAttribute="centerY" id="J63-vg-LBp"/>
+                            <constraint firstItem="81U-mh-A2x" firstAttribute="leading" secondItem="JUk-Fk-Ndh" secondAttribute="leadingMargin" constant="24" id="K2m-tK-Jox"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="81U-mh-A2x" secondAttribute="trailing" constant="24" id="PYK-Od-dcw"/>
+                            <constraint firstItem="81U-mh-A2x" firstAttribute="centerX" secondItem="JUk-Fk-Ndh" secondAttribute="centerX" id="lWT-H3-2p6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="odD-OZ-BqQ"/>
+                    </view>
+                    <connections>
+                        <outlet property="emptyListDescriptionLabel" destination="SgX-01-F5k" id="cc0-lc-qRi"/>
+                        <outlet property="emptyListImageView" destination="7HE-1z-dTJ" id="1cm-aq-xLP"/>
+                        <outlet property="emptyListTitleLabel" destination="ctA-RN-4HD" id="oQu-Vh-bVS"/>
+                        <outlet property="reloadButton" destination="KD0-MZ-Gjp" id="hZg-rY-jRo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ga-LZ-8fL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-546" y="108"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="SadCloud" width="150" height="103"/>
+    </resources>
+</document>

@@ -6,15 +6,16 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
-import UIKit
+import UIKit.UILabel
 
 extension Factory {
   
   struct Label: FactoryFunction {
     
     enum LabelType {
-      case standard
-      case description
+      case title(alignment: NSTextAlignment, numberOfLines: Int)
+      case body(alignment: NSTextAlignment, numberOfLines: Int)
+      case description(alignment: NSTextAlignment, numberOfLines: Int)
     }
     
     typealias InputType = LabelType
@@ -24,14 +25,21 @@ extension Factory {
       let label = UILabel()
       
       switch type {
-      case .standard:
+      case let .title(alignment, numberOfLines):
+        label.textColor = Constants.Theme.Color.ContentElement.title
+        label.font = .preferredFont(forTextStyle: .title3)
+        label.textAlignment = alignment
+        label.numberOfLines = numberOfLines
+      case let .body(alignment, numberOfLines):
         label.textColor = Constants.Theme.Color.ContentElement.title
         label.font = .preferredFont(forTextStyle: .body)
-        label.textAlignment = .left
-      case .description:
+        label.textAlignment = alignment
+        label.numberOfLines = numberOfLines
+      case let .description(alignment, numberOfLines):
         label.textColor = Constants.Theme.Color.ContentElement.subtitle
         label.font = .preferredFont(forTextStyle: .subheadline)
-        label.textAlignment = .right
+        label.textAlignment = alignment
+        label.numberOfLines = numberOfLines
       }
       
       return label

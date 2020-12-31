@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import RxFlow
+import RxCocoa
 
-final class SetPermissionsViewController: UIViewController {
+final class SetPermissionsViewController: UIViewController, Stepper {
   
   // MARK: - Routing
   
-  weak var stepper: WelcomeStepper?
+  var steps = PublishRelay<Step>()
   
   // MARK: - Properties
   
@@ -30,6 +32,7 @@ final class SetPermissionsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = R.string.localizable.location_access()
     configure()
     
     NotificationCenter.default.addObserver(
@@ -57,9 +60,7 @@ final class SetPermissionsViewController: UIViewController {
   
   // MARK: - Helper Functions
   
-  func configure() {
-    navigationController?.navigationBar.styleStandard()
-    
+  func configure() {    
     bubbleView.layer.cornerRadius = 10
     bubbleView.backgroundColor = .black
     
@@ -71,11 +72,17 @@ final class SetPermissionsViewController: UIViewController {
     askPermissionsButton.setTitleColor(.white, for: UIControl.State())
     askPermissionsButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
     askPermissionsButton.layer.cornerRadius = askPermissionsButton.bounds.height/2
-    askPermissionsButton.layer.backgroundColor = Constants.Theme.Color.BrandColors.standardDay.cgColor
+    askPermissionsButton.layer.backgroundColor = Constants.Theme.Color.MarqueColors.standardDay.cgColor
   }
   
   fileprivate func startAnimationTimer() {
-    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: (#selector(Self.animatePulse)), userInfo: nil, repeats: false)
+    timer = Timer.scheduledTimer(
+      timeInterval: 5,
+      target: self,
+      selector: (#selector(Self.animatePulse)),
+      userInfo: nil,
+      repeats: false
+    )
   }
   
   @objc private func animatePulse() {
@@ -84,13 +91,13 @@ final class SetPermissionsViewController: UIViewController {
   }
   
   @objc func launchApp() {
-    stepper?.requestRouting(toStep: .launchApp)
+    steps.accept(WelcomeStep.dismiss)
   }
   
   // MARK: - Button Interaction
   
   @IBAction func didTapAskPermissionsButton(_ sender: UIButton) {
-    guard UserLocationService.shared.authorizationStatus != .notDetermined else {
+    guard UserLocationService.shared.currentAuthorizationStatus != .notDetermined else {
       UserLocationService.shared.requestWhenInUseAuthorization()
       return
     }

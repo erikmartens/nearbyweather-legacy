@@ -7,10 +7,11 @@
 //
 
 import UIKit
-import SafariServices
+import RxFlow
+import RxCocoa
 import MessageUI
 
-final class AboutAppTableViewController: UITableViewController {
+final class AboutAppTableViewController: UITableViewController, Stepper {
   
   private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO] = {
     DataStorageWorker.retrieveJsonFromFile(with: R.file.thirdPartyLibrariesJson.name,
@@ -39,20 +40,17 @@ final class AboutAppTableViewController: UITableViewController {
   
   // MARK: - Routing
   
-  weak var stepper: SettingsStepper?
-  
-  // MARK: - IBOutlets
-  
-  @IBOutlet weak var appTitleLabel: UILabel!
-  @IBOutlet weak var appVersionLabel: UILabel!
+  var steps = PublishRelay<Step>()
   
   // MARK: - ViewController Life Cycle
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  override init(style: UITableView.Style) {
+    super.init(style: style)
     
     tableView.delegate = self
     tableView.estimatedRowHeight = 44
+    
+    tableView.register(AppVersionCell.self, forCellReuseIdentifier: AppVersionCell.reuseIdentifier)
     
     tableView.register(UINib(nibName: R.nib.singleLabelCell.name, bundle: R.nib.singleLabelCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.singleLabelCell.identifier)
@@ -63,11 +61,13 @@ final class AboutAppTableViewController: UITableViewController {
     tableView.register(ButtonCell.self, forCellReuseIdentifier: ButtonCell.reuseIdentifier)
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    configure()
-    tableView.reloadData() // in case of preferred content size change
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    title = R.string.localizable.about()
   }
   
   // MARK: - TableView Delegate
@@ -85,52 +85,54 @@ final class AboutAppTableViewController: UITableViewController {
     }
     
     var urlStringValue: String?
-    if indexPath.section == 1 && indexPath.row == 0 {
+    if indexPath.section == 2 && indexPath.row == 0 {
       urlStringValue = Constants.Urls.kPrivacyPolicyUrl.absoluteString
     }
-    if indexPath.section == 1 && indexPath.row == 1 {
+    if indexPath.section == 2 && indexPath.row == 1 {
       urlStringValue = Constants.Urls.kTermsOfUseUrl.absoluteString
     }
-    if indexPath.section == 2 && indexPath.row == 0 {
+    if indexPath.section == 3 && indexPath.row == 0 {
       urlStringValue = Constants.Urls.kGitHubProjectContributionGuidelinesUrl.absoluteString
     }
-    if indexPath.section == 2 && indexPath.row == 1 {
+    if indexPath.section == 3 && indexPath.row == 1 {
       urlStringValue = Constants.Urls.kGitHubProjectMainPageUrl.absoluteString
     }
-    if indexPath.section == 3 {
+    if indexPath.section == 4 {
       urlStringValue = owner[indexPath.row].urlString
     }
-    if indexPath.section == 4 {
+    if indexPath.section == 5 {
       urlStringValue = contributors[indexPath.row].urlString
     }
-    if indexPath.section == 5 {
+    if indexPath.section == 6 {
       urlStringValue = thirdPartyLibraries[indexPath.row].urlString
     }
     guard let urlString = urlStringValue, let url = URL(string: urlString) else {
       return
     }
-    presentSafariViewController(for: url)
+    steps.accept(SettingsStep.webBrowser(url: url))
   }
   
   // MARK: - TableView Data Source
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    6
+    7
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     switch section {
     case 0:
-      return 2
+      return 1
     case 1:
       return 2
     case 2:
       return 2
     case 3:
-      return owner.count
+      return 2
     case 4:
-      return contributors.count
+      return owner.count
     case 5:
+      return contributors.count
+    case 6:
       return thirdPartyLibraries.count
     default:
       return 0
@@ -140,16 +142,18 @@ final class AboutAppTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     switch section {
     case 0:
-      return R.string.localizable.resources()
+      return nil
     case 1:
-      return nil
+      return R.string.localizable.resources()
     case 2:
-      return R.string.localizable.contributing()
-    case 3:
-      return R.string.localizable.contributors()
-    case 4:
       return nil
+    case 3:
+      return R.string.localizable.contributing()
+    case 4:
+      return R.string.localizable.contributors()
     case 5:
+      return nil
+    case 6:
       return R.string.localizable.libraries()
     default:
       return nil
@@ -170,6 +174,14 @@ final class AboutAppTableViewController: UITableViewController {
     
     switch indexPath.section {
     case 0:
+      let appVersionCell = tableView.dequeueReusableCell(withIdentifier: AppVersionCell.reuseIdentifier, for: indexPath) as! AppVersionCell
+      appVersionCell.configure(
+        withImage: Bundle.main.appIcon,
+        title: R.string.localizable.app_name().append(contentsOf: R.string.localizable.app_name_subtitle(), delimiter: .custom(string: " - ")),
+        subtitle: Constants.Values.AppVersion.kVersionBuildString
+      )
+      return appVersionCell
+    case 1:
       if indexPath.row == 0 {
         singleLabelCell.contentLabel.text = R.string.localizable.rate_version()
         return singleLabelCell
@@ -193,7 +205,7 @@ final class AboutAppTableViewController: UITableViewController {
         }
       )
       return buttonCell
-    case 1:
+    case 2:
       if indexPath.row == 0 {
         singleLabelCell.contentLabel.text = R.string.localizable.privacy_policy()
         return singleLabelCell
@@ -201,7 +213,7 @@ final class AboutAppTableViewController: UITableViewController {
         singleLabelCell.contentLabel.text = R.string.localizable.terms_of_use()
         return singleLabelCell
       }
-    case 2:
+    case 3:
       if indexPath.row == 0 {
         singleLabelCell.contentLabel.text = R.string.localizable.how_to_contribute()
         return singleLabelCell
@@ -209,37 +221,30 @@ final class AboutAppTableViewController: UITableViewController {
         singleLabelCell.contentLabel.text = R.string.localizable.source_code_via_github()
         return singleLabelCell
       }
-    case 3:
+    case 4:
       let contributor = owner[indexPath.row]
       subtitleCell.contentLabel.text = contributor.firstName.append(contentsOf: contributor.lastName, delimiter: .space)
       subtitleCell.subtitleLabel.text = contributor.localizedContributionDescription
       return subtitleCell
-    case 4:
+    case 5:
       let contributor = contributors[indexPath.row]
       subtitleCell.contentLabel.text = contributor.firstName.append(contentsOf: contributor.lastName, delimiter: .space)
       subtitleCell.subtitleLabel.text = contributor.localizedContributionDescription
       return subtitleCell
-    case 5:
+    case 6:
       singleLabelCell.contentLabel.text = thirdPartyLibraries[indexPath.row].name
       return singleLabelCell
     default:
       return UITableViewCell()
     }
   }
-  
+}
+
   // MARK: - Private Helpers
-  
-  private func configure() {
-    navigationController?.navigationBar.styleStandard()
-    configureText()
-  }
-  
-  private func configureText() {
-    appTitleLabel.text = R.string.localizable.app_name().append(contentsOf: R.string.localizable.app_name_subtitle(), delimiter: .custom(string: " - "))
-    appVersionLabel.text = Constants.Values.AppVersion.kVersionBuildString
-  }
-  
-  private func sendMail(to recipients: [String], withSubject subject: String, withMessage message: String) {
+
+private extension AboutAppTableViewController {
+
+  func sendMail(to recipients: [String], withSubject subject: String, withMessage message: String) {
     guard MFMailComposeViewController.canSendMail() else {
       return // TODO: tell user needs to set up a mail account
     }

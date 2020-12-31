@@ -30,5 +30,14 @@
   }, {
     "name": "Firebase Crashlytics",
     "urlString": "https://firebase.google.com/"
+  }, {
+    "name": "RxSwift",
+    "urlString": "https://github.com/ReactiveX/RxSwift"
+  }, {
+    "name": "RxCocoa",
+    "urlString": "https://github.com/ReactiveX/RxSwift/tree/master/RxCocoa"
+  }, {
+    "name": "RxFlow",
+    "urlString": "https://github.com/RxSwiftCommunity/RxFlow"
   }]
 }

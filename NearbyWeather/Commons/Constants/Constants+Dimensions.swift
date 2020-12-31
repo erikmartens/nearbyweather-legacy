@@ -30,6 +30,15 @@ extension Constants.Dimensions {
     static let height: CGFloat = 34
   }
   
+  enum AppIconImageSize {
+    /// constant: 75
+    static let width: CGFloat = 75
+    /// constant: 75
+    static let height: CGFloat = 75
+    /// constant: 4
+    static let cornerRadius: CGFloat = 13
+  }
+  
   enum TableCellImageSize {
     /// constant: 28
     static let width: CGFloat = 28
@@ -45,9 +54,9 @@ extension Constants.Dimensions {
     /// constant: 16
     static let trailing: CGFloat = 16
     /// constant: 4
-    static let top: CGFloat = 4
+    static let top: CGFloat = 12
     /// constant: 4
-    static let bottom: CGFloat = 4
+    static let bottom: CGFloat = 12
     /// values: 4, 8 or 12
     static func interElementYDistance(from weight: Weight) -> CGFloat {
       switch weight {

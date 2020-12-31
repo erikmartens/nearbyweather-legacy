@@ -5,11 +5,24 @@
 <h1 align="center">NearbyWeather - OpenWeatherMap Client</h1>
 
 <p align="center">
-<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-5-orange.svg?style=flat" alt="Swift"/></a>
-<img src="https://img.shields.io/badge/Platform-iOS%2011.0+-lightgrey.svg" alt="Platform: iOS">
-<img src="https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat" alt="License: MIT">
+  <a href="#about-the-app">About the App</a> •
+  <a href="#mission-of-this-project">Mission of this Project</a> •
+  <a href="#app-releases">App Releases</a> •
+  <a href="#how-to-get-started">How to Get Started</a> •
+  <a href="#how-to-contribute">How to Contribute</a> •
+  <a href="#support--feedback">Support & Feedback</a> •
+  <a href="#licensing">Licensing</a>
+</p>
+
+---
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-iOS%2012.0+-lightgrey.svg" alt="Platform: iOS">
+<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-5.2-orange.svg?style=flat" alt="Swift"/></a>
+<a href="https://github.com/erikmartens/NearbyWeather/commits/develop" title="Latest Commit"><img src="https://img.shields.io/github/last-commit/erikmartens/NearbyWeather?style=flat"></a>
+<a href="https://github.com/erikmartens/NearbyWeather/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/erikmartens/NearbyWeather?style=flat"></a>
 <a href="https://github.com/erikmartens/NearbyWeather/graphs/contributors"><img src="https://img.shields.io/github/contributors/erikmartens/NearbyWeather.svg?style=flat" alt="Contributors"></a>
-<a href="https://twitter.com/erik_martens"><img src="https://img.shields.io/badge/Twitter-@erik_martens-blue.svg" alt="Twitter: @erik_martens"/></a>
+<img src="https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat" alt="License: MIT">
 </p>
 <p align="center">
 <a href="https://itunes.apple.com/app/nearbyweather/id1227313069"><img src="Resources/app_store_badge.svg" alt="Download on the App Store"/></a>
@@ -20,6 +33,9 @@
 </p>
 
 ## About the App
+
+> ℹ️ By using the app you automatically agree to the [privacy policy](PRIVACYPOLICY.md) and the [terms of use](TERMSOFUSE.md).
+
 NearbyWeather is a simple weather app, that provides current weather information for nearby cities, as well for bookmarked locations. NearbyWeather uses the OpenWeatherMap API to download weather data. Additionally the OpenWeatherMaps location database is directly bootstrapped into the app for quick access.
 
 With NearbyWeather you can:
@@ -31,50 +47,83 @@ With NearbyWeather you can:
 - Choose your preferred units (celsius/fahrenheit/kelvin & kilometres/miles)
 - Access previously loaded data offline
 
-> Please note that you need to supply your own OpenWeatherMap API key, in order to use the app. A free tier API key only allows for 60 requests per minute, which may only be sufficient for a single user. As the app is available at no charge, a paid tier API key can not be included. 
+```
+❗️Please note that you need to supply your own OpenWeatherMap API key, in order to use the app.
+```
 
-> Downloading data for a bookmarked location counts as one request. Downloading bulk data for nearby places also counts as a single request, regardless of the amount of results you choose. You can add bookmarks indefinitely, but for example exceeding the 60 requests limit with a free tier API key may result in a failure to download data (this scenario has not been tested and depends of the tier of your API key).
+## Mission of this Project
 
-## Goals of this Project
-NearbyWeather should help you as a reference for your development. Whether you just started iOS development or want to learn more about Swift by seeing in action, this project is here for your guidance. Idealy you already have gained some experience or got your feet wet with mobile development. NearbyWeather is created to teach basic principles of iOS development, including but not limited to:
+NearbyWeather was created to help you as a reference for developing your skills. The app is kept up to date with the latest best practices in mobile app development. Find out how how modern iOS apps are engineered:
 
-- Programming concepts such as delegation, closures, generics & extensions
-- Avoidance of retain cycles
-- Swift language features such as codables
-- Persisiting data
-- Using various UIKit classes
-- Various Apple-iOS-Components such as UserDefaults or NotificationCenter
-- Using MapKit and customising maps
-- Accessing and using the user's location
-- Language localization
-- Network requests
-- Using 3rd part REST-APIs
-- Using 3rd party libraries via CocoaPods
-- Using support scripts for creating bootstrapped/bundle resources
-- Accessing bootstrapped/bundle resources
-- "DevOps" tools such as Fastlane or SwiftLint
+| Area | Concepts | Status |
+|:--|:--|:--|
+| Language | Swift (latest release) | ✅ |
+| Additional Languages | Objective-C, JavaScript | ✅ |
+| Additional Frameworks | RxSwift | 🔄 In Progress |
+| Architecture | MVVM+C | 🔄 In Progress |
+| Navigation | Coordinator Pattern with RxFlow | ✅ |
+| UI-Construction | Autolayout in Code + Factory Pattern | 🔄 In Progress |
+| Dependencies | Dependency Injection with Swinject & Singletons | 🔄 In Progress / ✅ |
+| Data Persistence | Realm & Files on Disk | 🔄 In Progress / ✅ |
+| Networking | Alamofire | ✅ |
+| Asset Management | R.Swift | ✅ |
+| Code Quality | SwiftLint | ✅ |
+| Analytics and Reporting | Google Firebase | ✅ |
+| Library Management | CocoaPods | ✅ |
+| Bootsrapped Bundle Data | Node.js Scripts | ✅ |
+| Deployment | Fastlane | ✅ |
+| Testing and Quality Assurance | Unit Tests and UI Tests, SwiftUI Scene Previews | 🅾️ Coming Soon |
 
-It therefore otherwise refrains from advanced concepts. The architecture is kept simple by using [Apple's recommended MVC pattern](https://developer.apple.com/library/content/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html). This architecture is fine for a small projects like this one. For complex apps there are better options, such as MVVM, VIP (Clean Swift) or even VIPER. The chosen architecture may for example limit the testability of the project, but then again for simplicty sake there are no unit tests present at all. Additionally the app uses singeltons for all services and managers. This further hinders testing. A better approach to enable this would be dependency injection. Furthermore delegation is used only losely. 
+## App Releases
 
-## Getting Started
-In order to get started, fork the project and clone it to your local machine. 
+Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects).
 
-In order to open the project and in oder to run it, you will need to have the latest Apple developer tools installed, namely Xcode. 
+| Version | Tag |
+|:--|:--|
+| Current Release | [v2.2.1](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.2.1)
+| Next Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/projects/5) |
+| Future Releases | [v?.?.?](https://github.com/erikmartens/NearbyWeather/projects/1) |
 
-For libraries this app uses the dependency manager [Cocoa Pods](https://cocoapods.org). Pods are not checked into the repository, so you will have run `pod install` after cloning. Additionally it might be helpful to set up signing through [fastlane match](https://docs.fastlane.tools/actions/match/). Create your own repo to store your personal sigining certificates and provisioning profiles and adapt the `./fastlane/Matchfile` accordingly. _Make sure to never commit these changes or your pull requests will be rejected._
+## How to Get Started
 
-Additionally this project is gathering anonymus crash reports and anonymus usage statistics through [Google Firebase](https://firebase.google.com). Google supplies a project configuration file in the form of the `.plist`-file `GoogleService-Info.plist`. This file is not checked into this repository as it contains secrets. In order to run the project remove the file reference from it and uninstall the pod `Firebase/Analytics` by removing the lines that start with `pod 'Firebase/Analytics'` and with `pod 'Firebase/Crashlytics'` from the `podfile` and executing `pod install`. _Make sure to never commit these changes or your pull requests will be rejected._
+1. Install the latest version of Xcode from the Mac AppStore
+2. Install the latest Xcode command line tools
+    ```
+    xcode-select --install
+    ```
+3. Install [CocoaPods](https://cocoapods.org) to your machine
+4. Install [fastlane](https://docs.fastlane.tools/getting-started/ios/setup/) to your machine
+5. Install [SwiftLint](https://github.com/realm/SwiftLint/#installation) to your machine
+6. Fork the project and clone it to your local machine
+7. Configure signing via [fastlane match](https://docs.fastlane.tools/actions/match/) to use your personal certificates
+7. Run `pod install` to be able to build locally
 
-## Contributing
+## How to Contribute
 
-We looking forward to receiving your contributions. You can find more information in the [contribution docs](https://github.com/erikmartens/NearbyWeather/blob/master/CONTRIBUTING.md).
+### Development
 
-Additionally you may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.developer@gmail.com](mailto:erikmartens.developer@gmail.com) to be added to the list of testers.
+We looking forward to receiving your contributions. You can find out how to take part in the development of this application. Please find out how to submit code to this repository via the [contribution guidelines](CONTRIBUTING.md).
 
-## Future Developments
-- Integrate RxSwift
-- Re-Build Routing using RxFlow
-- Integrate Realm for data persistence
-- Refactor scene-architecture using MVVM+C pattern with RxSwift
-- Write XCTests
-- Setup CI and CD with Bitrise
+### Beta Testing
+
+You may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.dev@icloud.com](mailto:erikmartens.dev@icloud.com) to be added to the list of testers.
+
+## Support & Feedback
+
+If you are having technical issues or want to raise a bug/issue with the app, the preferred way is through [GitHub issues](https://github.com/erikmartens/NearbyWeather/issues). In order to contact Erik Maximilian Martens for any other request please reach out via one of the channels detailed in table below:
+
+| Platform | Link |
+|:--|:--|
+| Discord | <a href="https://discord.gg/fxPgKzC"><img src="https://img.shields.io/discord/717413902689894411.svg?style=shield" alt="Discord: NearbyWeather by Erik Martens"/></a> |
+| Twitter | <a href="https://twitter.com/erik_m_martens"><img src="https://img.shields.io/badge/Twitter-@erik_m_martens-blue.svg" alt="Twitter: @erik_m_martens"/></a> |
+| Email | <a href="mailto:erikmartens.dev@gicloud.com" title="erikmartens.dev@icloud.com"><img src="https://img.shields.io/badge/email-erikmartens.dev@icloud.com-green?logo=mail&style=flat&logoColor=white"></a> |
+
+## Licensing
+
+Copyright © 2016 - 2021 Erik Maximilian Martens.
+
+Licensed under the **MIT License** (the "License"); you may not use this file except in compliance with the License.
+
+You may obtain a copy of the License at https://opensource.org/licenses/MIT.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the [LICENSE](./LICENSE) for the specific language governing permissions and limitations under the License.

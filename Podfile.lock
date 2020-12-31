@@ -86,6 +86,15 @@ PODS:
   - R.swift (5.0.3):
     - R.swift.Library (~> 5.0.0)
   - R.swift.Library (5.0.1)
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxFlow (2.7.0):
+    - RxCocoa (>= 5.0.0)
+    - RxSwift (>= 5.0.0)
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.1)
   - SwiftLint (0.38.2)
   - TextFieldCounter (1.1.0)
 
@@ -97,6 +106,9 @@ DEPENDENCIES:
   - FMDB (~> 2.7.5)
   - PKHUD (~> 5.3.0)
   - R.swift (= 5.0.3)
+  - RxCocoa (~> 5.1.1)
+  - RxFlow (~> 2.7.0)
+  - RxSwift (~> 5.1.1)
   - SwiftLint (~> 0.38.2)
   - TextFieldCounter (~> 1.1.0)
 
@@ -121,6 +133,10 @@ SPEC REPOS:
     - PromisesObjC
     - R.swift
     - R.swift.Library
+    - RxCocoa
+    - RxFlow
+    - RxRelay
+    - RxSwift
     - SwiftLint
     - TextFieldCounter
 
@@ -156,9 +172,13 @@ SPEC CHECKSUMS:
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   R.swift: f5a87643b91ea569d23d6afb3eee9c743edde239
   R.swift.Library: cfe85d569d9bae6cb262922db130e7c3a7a5fad1
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxFlow: 605ef6364d7e937bea8f9507a1e99a431cdc2493
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   SwiftLint: 8f5d2f903e1c9bcbc832fd16771e80a263ac6cbb
   TextFieldCounter: 0f20630c8fe6f02b657bd883674829edfc40d845
 
-PODFILE CHECKSUM: fda4096e7b1b63ad5277e25492715d806668ae13
+PODFILE CHECKSUM: e43cd804589b4f6dad4ca51e2821ffd6e05fe5e6
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.0

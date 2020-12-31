@@ -7,7 +7,7 @@ Thank you for considering to allocate some of your precious time to moving this 
 ## Contribution Requirements
 
 - You have forked this repository and cloned it to your local machine
-- You have the latest version of Xcode installed (currently `11.5`)
+- You have the latest version of Xcode installed (currently `12.3`)
 - You have completed the steps to get started and can build the project as detailed in the [README.md](README.md/#how-to-get-started)
 - You have set the following Indentation settings for Xcode:
 
@@ -22,7 +22,15 @@ Thank you for considering to allocate some of your precious time to moving this 
 
 #### Before You Begin Coding
 
-1. Select an issue-ticket from the next release project as detailed in the [README.md](README.md/#app-releases)
+1. Select an issue-ticket that is labeled `Contributable` from the next release project as detailed in the [README.md](README.md/#app-releases)
+
+```
+❗️ There are many reasons for issue-tickets not being labeled with `Contributable`. 
+❗️ The most important may be that they require other tickets to be completed first 
+❗️ (in a specific way). Therefore you may do unnecessary work which might not be 
+❗️ usable when tackeling them anyway.
+```
+
 2. Comment that you want to start working on the issue
 3. Wait for feedback to receive clearance for beginning the coding process
     - You may be asked to join the official [discord](https://discord.gg/fxPgKzC) to receive further instructions
@@ -31,7 +39,8 @@ Thank you for considering to allocate some of your precious time to moving this 
 
 ```
 ❗️ If you submit code without following these steps you may or may not receive a review.
-❗️ However in the case of receiving a review it may be subject to an adverse amount of change requests.
+❗️ However in the case of receiving a review it may be subject to an adverse amount of 
+❗️ change requests.
 ```
 
 #### Writing and Delivering Your Code

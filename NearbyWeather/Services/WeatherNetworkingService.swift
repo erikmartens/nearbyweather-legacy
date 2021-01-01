@@ -56,8 +56,10 @@ final class WeatherNetworkingService {
       case .notReachable: self?.reachabilityStatus = .disconnected
       case .reachable(.ethernetOrWiFi), .reachable(.wwan): self?.reachabilityStatus = .connected
       }
-      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
-                                      object: nil)
+      NotificationCenter.default.post(
+        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
+        object: nil
+      )
     }
     reachabilityManager?.startListening()
   }
@@ -71,7 +73,10 @@ final class WeatherNetworkingService {
   func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
 
     guard let apiKey = self.apiKey else {
-      let errorDataDTO = WeatherInformationErrorDTO(errorType: WeatherInformationErrorDTO.ErrorType(value: .malformedUrlError), httpStatusCode: nil)
+      let errorDataDTO = WeatherInformationErrorDTO(
+        errorType: WeatherInformationErrorDTO.ErrorType(value: .malformedUrlError),
+        httpStatusCode: nil
+      )
       return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
     }
 
@@ -108,7 +113,11 @@ final class WeatherNetworkingService {
 
     Alamofire
       .request(
-        Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(with: apiKey, currentLatitude: currentLatitude, currentLongitude: currentLongitude),
+        Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
+          with: apiKey,
+          currentLatitude: currentLatitude,
+          currentLongitude: currentLongitude
+        ),
         method: .get,
         parameters: nil,
         encoding: JSONEncoding.default,

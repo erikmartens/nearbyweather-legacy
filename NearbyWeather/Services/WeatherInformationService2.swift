@@ -192,7 +192,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
-  func updateWeatherInformationForBookmarkedStation(with identifier: Int)  -> Completable {
+  func updateWeatherInformationForBookmarkedStation(with identifier: Int) -> Completable {
     Single
       .just(identifier)
       .map { [apiKey] identifier in

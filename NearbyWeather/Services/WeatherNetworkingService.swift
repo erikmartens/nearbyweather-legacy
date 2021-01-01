@@ -142,7 +142,7 @@ final class WeatherNetworkingService {
   }
 
   private func extractBulkWeatherInformation(_ data: Data) -> BulkWeatherDataContainer {
-    guard let multiWeatherData = try? JSONDecoder().decode(WeatherInformationArrayWrapper.self, from: data) else {
+    guard let multiWeatherData = try? JSONDecoder().decode(WeatherInformationListDTO.self, from: data) else {
       printDebugMessage(
         domain: String(describing: self),
         message: "NetworkingService: Error while decoding multi-location-data to json",

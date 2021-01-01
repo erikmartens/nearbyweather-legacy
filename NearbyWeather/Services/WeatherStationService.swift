@@ -46,10 +46,10 @@ final class WeatherStationService {
           String($0.identifier)
         }
         
-        let sqlUsedLocationsIdentifierssArray = "('" + usedLocationIdentifiers.joined(separator: "','") + "')"
+        let sqlUsedLocationsIdentifiersArray = "('" + usedLocationIdentifiers.joined(separator: "','") + "')"
         
         let query = !usedLocationIdentifiers.isEmpty
-          ? "SELECT * FROM locations l WHERE l.id NOT IN \(sqlUsedLocationsIdentifierssArray) AND (lower(name) LIKE '%\(searchString.lowercased())%') ORDER BY country, l.name"
+          ? "SELECT * FROM locations l WHERE l.id NOT IN \(sqlUsedLocationsIdentifiersArray) AND (lower(name) LIKE '%\(searchString.lowercased())%') ORDER BY country, l.name"
           : "SELECT * FROM locations l WHERE (lower(name) LIKE '%\(searchString.lowercased())%') ORDER BY l.name, l.country"
         
         guard let result = try? database.executeQuery(query, values: nil) else {

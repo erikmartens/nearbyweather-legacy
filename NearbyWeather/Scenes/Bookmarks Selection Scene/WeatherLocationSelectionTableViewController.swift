@@ -18,9 +18,14 @@ final class WeatherLocationSelectionTableViewController: UITableViewController, 
   var steps = PublishRelay<Step>()
   
   // MARK: - Properties
-  
-  private let searchController = UISearchController(searchResultsController: nil)
-  private var filteredCities = [WeatherStationDTO]()
+
+  private var filteredCities = [WeatherStationDTO]() {
+    didSet {
+      DispatchQueue.main.async { [weak self] in
+        self?.tableView.reloadData()
+      }
+    }
+  }
   
   // MARK: - ViewController Life Cycle
   
@@ -29,30 +34,34 @@ final class WeatherLocationSelectionTableViewController: UITableViewController, 
     title = R.string.localizable.add_location()
     
     tableView.delegate = self
-    searchController.delegate = self
-    
     tableView.register(UINib(nibName: R.nib.subtitleCell.name, bundle: R.nib.subtitleCell.bundle),
                        forCellReuseIdentifier: R.reuseIdentifier.subtitleCell.identifier)
     
+    let searchController = UISearchController(searchResultsController: nil)
+    searchController.delegate = self
     searchController.searchResultsUpdater = self
     searchController.searchBar.placeholder = R.string.localizable.search_by_name()
     searchController.hidesNavigationBarDuringPresentation = false
     searchController.dimsBackgroundDuringPresentation = false
-    tableView.tableHeaderView = searchController.searchBar
-    definesPresentationContext = true
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
     
-    tableView.reloadData()
+    navigationItem.searchController = searchController
+    navigationItem.hidesSearchBarWhenScrolling = false
+    
+    tableView.contentInset = UIEdgeInsets(
+      top: Constants.Dimensions.TableCellContentInsets.top,
+      left: .zero,
+      bottom: Constants.Dimensions.TableCellContentInsets.bottom,
+      right: .zero
+    )
+    
+    definesPresentationContext = true
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
     DispatchQueue.main.async {
-      self.searchController.searchBar.becomeFirstResponder()
+      self.navigationItem.searchController?.searchBar.becomeFirstResponder()
     }
   }
   
@@ -95,17 +104,14 @@ final class WeatherLocationSelectionTableViewController: UITableViewController, 
 extension WeatherLocationSelectionTableViewController: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
-    guard let searchText = searchController.searchBar.text else {
+    guard let searchText = navigationItem.searchController?.searchBar.text else {
       filteredCities = [WeatherStationDTO]()
       tableView.reloadData()
       return
     }
-    WeatherStationService.shared.locations(forSearchString: searchText, completionHandler: { [unowned self] weatherLocationDTOs in
+    WeatherStationService.shared.locations(forSearchString: searchText, completionHandler: { [weak self] weatherLocationDTOs in
       if let weatherLocationDTOs = weatherLocationDTOs {
-        self.filteredCities = weatherLocationDTOs
-      }
-      DispatchQueue.main.async {
-        self.tableView.reloadData()
+        self?.filteredCities = weatherLocationDTOs
       }
     })
   }

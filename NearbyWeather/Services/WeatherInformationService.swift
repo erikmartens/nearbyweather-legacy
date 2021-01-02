@@ -64,7 +64,7 @@ final class WeatherInformationService {
     }
   }
   var preferredBookmarkData: WeatherInformationDTO? {
-    let preferredBookmarkId = PreferencesDataService.shared.preferredBookmark.value
+    let preferredBookmarkId = PreferencesService.shared.preferredBookmark.value
     return WeatherInformationService.shared.bookmarkedWeatherDataObjects?.first(where: { $0.locationId == preferredBookmarkId })?.weatherInformationDTO
   }
   private(set) var bookmarkedWeatherDataObjects: [WeatherDataContainer]?
@@ -163,7 +163,7 @@ final class WeatherInformationService {
   }
   
   func updatePreferredBookmark(withCompletionHandler completionHandler: @escaping ((UpdateStatus) -> Void)) {
-    guard let preferredBookmarkId = PreferencesDataService.shared.preferredBookmark.value,
+    guard let preferredBookmarkId = PreferencesService.shared.preferredBookmark.value,
       WeatherNetworkingService.shared.reachabilityStatus == .connected else {
         completionHandler(.failure)
         return
@@ -240,7 +240,7 @@ final class WeatherInformationService {
   
   private func sortNearbyLocationWeatherData() {
     let result: [WeatherInformationDTO]?
-    switch PreferencesDataService.shared.sortingOrientation.value {
+    switch PreferencesService.shared.sortingOrientation.value {
     case .name:
       result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted { $0.cityName < $1.cityName }
     case .temperature:

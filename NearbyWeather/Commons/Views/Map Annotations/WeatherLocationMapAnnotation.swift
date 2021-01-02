@@ -53,7 +53,7 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
     var temperatureDescriptor: String?
     if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
       temperatureDescriptor = ConversionWorker.temperatureDescriptor(
-        forTemperatureUnit: PreferencesDataService.shared.temperatureUnit,
+        forTemperatureUnit: PreferencesService.shared.temperatureUnit,
         fromRawTemperature: temperatureKelvin
       )
     }

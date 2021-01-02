@@ -22,7 +22,7 @@ final class ListViewController: UITableViewController, Stepper {
   }()
   
   private var numberOfResultsBarButton: UIBarButtonItem {
-    let image = PreferencesDataService.shared.amountOfResults.imageValue
+    let image = PreferencesService.shared.amountOfResults.imageValue
     
     return UIBarButtonItem(
       image: image,
@@ -139,7 +139,7 @@ private extension ListViewController {
       return
     }
     
-    switch PreferencesDataService.shared.preferredListType {
+    switch PreferencesService.shared.preferredListType {
     case .bookmarked:
       navigationItem.rightBarButtonItems = nil
     case .nearby:
@@ -148,7 +148,7 @@ private extension ListViewController {
   }
   
   func configureNavigationTitle() {
-    switch PreferencesDataService.shared.preferredListType {
+    switch PreferencesService.shared.preferredListType {
     case .bookmarked:
       navigationItem.title = R.string.localizable.bookmarks()
     case .nearby:
@@ -168,8 +168,8 @@ private extension ListViewController {
   
   @objc func listTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
-      .weatherListType(currentListType: PreferencesDataService.shared.preferredListType, completionHandler: { [weak self] selectedListType in
-        PreferencesDataService.shared.preferredListType = selectedListType
+      .weatherListType(currentListType: PreferencesService.shared.preferredListType, completionHandler: { [weak self] selectedListType in
+        PreferencesService.shared.preferredListType = selectedListType
         self?.configureNavigationTitle()
         self?.tableView.reloadData()
         self?.configureButtons()
@@ -224,7 +224,7 @@ extension ListViewController {
     guard !WeatherInformationService.shared.apiKeyUnauthorized else {
       return 1
     }
-    switch PreferencesDataService.shared.preferredListType {
+    switch PreferencesService.shared.preferredListType {
     case .bookmarked:
       let numberOfRows = WeatherInformationService.shared.bookmarkedWeatherDataObjects?.count ?? 1
       return numberOfRows > 0 ? numberOfRows : 1
@@ -252,7 +252,7 @@ extension ListViewController {
       return alertCell
     }
     
-    switch PreferencesDataService.shared.preferredListType {
+    switch PreferencesService.shared.preferredListType {
     case .bookmarked:
       guard let bookmarkedWeatherDataObjects = WeatherInformationService.shared.bookmarkedWeatherDataObjects,
         !bookmarkedWeatherDataObjects.isEmpty else {

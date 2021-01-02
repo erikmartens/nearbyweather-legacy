@@ -31,6 +31,7 @@ extension PreferencesService2 {
       case .sortingOrientationOption: return "/general_preferences/sorting_orientation/"
       case .preferredListTypeOption: return "/general_preferences/preferred_list_type/"
       case .preferredMapTypeOption: return "/general_preferences/preferred_map_type/"
+      
       case .weatherStationBookmarks: return "/weather_station/bookmarks/"
       case .weatherStationBookmarksSorting: return "/weather_station/bookmarks_sorting/"
       case .weatherStationPreferredBookmark: return "/weather_station/preferred_bookmark/"

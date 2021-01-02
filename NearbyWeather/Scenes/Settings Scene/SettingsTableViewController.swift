@@ -220,14 +220,14 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
       
       // TODO: fix this
-      if let preferredBookmarkId = PreferencesDataService.shared.preferredBookmark.value,
+      if let preferredBookmarkId = PreferencesService.shared.preferredBookmark.value,
         WeatherInformationService.shared.bookmarkedLocations.first(where: { $0.identifier == preferredBookmarkId }) == nil {
-          PreferencesDataService.shared.preferredBookmark = PreferredBookmarkOption(value: nil)
+          PreferencesService.shared.preferredBookmark = PreferredBookmarkOption(value: nil)
       }
       
       cell.configure(
         withTitle: R.string.localizable.preferred_bookmark(),
-        description: PreferencesDataService.shared.preferredBookmark.stringValue,
+        description: PreferencesService.shared.preferredBookmark.stringValue,
         image: R.image.preferred_bookmark(),
         imageBackgroundColor: Constants.Theme.Color.SystemColor.red
       )
@@ -252,7 +252,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
         cell.configure(
           withTitle: R.string.localizable.temperature_unit(),
-          description: PreferencesDataService.shared.temperatureUnit.stringValue,
+          description: PreferencesService.shared.temperatureUnit.stringValue,
           image: R.image.thermometer(),
           imageBackgroundColor: Constants.Theme.Color.SystemColor.gray
         )
@@ -261,7 +261,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
       cell.configure(
         withTitle: R.string.localizable.distanceSpeed_unit(),
-        description: PreferencesDataService.shared.distanceSpeedUnit.stringValue,
+        description: PreferencesService.shared.distanceSpeedUnit.stringValue,
         image: R.image.dimension(),
         imageBackgroundColor: Constants.Theme.Color.SystemColor.gray
       )

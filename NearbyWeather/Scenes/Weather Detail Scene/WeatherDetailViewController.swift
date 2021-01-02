@@ -96,7 +96,7 @@ final class WeatherDetailViewController: UIViewController, Stepper {
       action: #selector(Self.dismissButtonTapped))
 
     mapView.delegate = self
-    mapView.mapType = PreferencesDataService.shared.preferredMapType
+    mapView.mapType = PreferencesService.shared.preferredMapType
 
     configureMap()
   }
@@ -135,7 +135,7 @@ final class WeatherDetailViewController: UIViewController, Stepper {
     conditionDescriptionLabel.text = weatherDTO.weatherCondition.first?.conditionDescription?.capitalized
 
     if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
-      let temperatureUnit = PreferencesDataService.shared.temperatureUnit
+      let temperatureUnit = PreferencesService.shared.temperatureUnit
       temperatureLabel.text = ConversionWorker.temperatureDescriptor(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin)
     } else {
       temperatureLabel.text = nil
@@ -189,7 +189,7 @@ final class WeatherDetailViewController: UIViewController, Stepper {
 
     if let windspeed = weatherDTO.windInformation.windspeed {
       windSpeedLabel.text = ConversionWorker.windspeedDescriptor(
-        forDistanceSpeedUnit: PreferencesDataService.shared.distanceSpeedUnit,
+        forDistanceSpeedUnit: PreferencesService.shared.distanceSpeedUnit,
         forWindspeed: windspeed
       )
     } else {
@@ -239,7 +239,7 @@ final class WeatherDetailViewController: UIViewController, Stepper {
       let location = CLLocation(latitude: weatherLatitude, longitude: weatherLongitude)
       let distanceInMetres = location.distance(from: userLocation)
 
-      let distanceSpeedUnit = PreferencesDataService.shared.distanceSpeedUnit
+      let distanceSpeedUnit = PreferencesService.shared.distanceSpeedUnit
       let distanceString = ConversionWorker.distanceDescriptor(forDistanceSpeedUnit: distanceSpeedUnit, forDistanceInMetres: distanceInMetres)
 
       distanceImageView.tintColor = .darkGray

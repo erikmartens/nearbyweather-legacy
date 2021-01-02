@@ -63,13 +63,13 @@ private extension WeatherListInformationTableViewCellViewModel {
             isDayTime: ConversionWorker.isDayTime(for: weatherInformation.daytimeInformation, coordinates: weatherInformation.coordinates)
           ),
           temperature: ConversionWorker.temperatureDescriptor(
-            forTemperatureUnit: PreferencesDataService.shared.temperatureUnit, // TODO observe user preference service 2
+            forTemperatureUnit: PreferencesService.shared.temperatureUnit, // TODO observe user preference service 2
             fromRawTemperature: weatherInformation.atmosphericInformation.temperatureKelvin
           ),
           cloudCoverage: weatherInformation.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
           humidity: weatherInformation.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none),
           windspeed: ConversionWorker.windspeedDescriptor(
-            forDistanceSpeedUnit: PreferencesDataService.shared.distanceSpeedUnit, // TODO
+            forDistanceSpeedUnit: PreferencesService.shared.distanceSpeedUnit, // TODO
             forWindspeed: weatherInformation.windInformation.windspeed
           ),
           backgroundColor: .clear // TODO

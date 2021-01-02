@@ -22,7 +22,7 @@ final class MapViewController: UIViewController, Stepper {
   }()
 
   private var numberOfResultsBarButton: UIBarButtonItem {
-    let image = PreferencesDataService.shared.amountOfResults.imageValue
+    let image = PreferencesService.shared.amountOfResults.imageValue
 
     return UIBarButtonItem(
       image: image,
@@ -145,7 +145,7 @@ private extension MapViewController {
     mapView = MKMapView()
 
     mapView.delegate = self
-    mapView.mapType = PreferencesDataService.shared.preferredMapType
+    mapView.mapType = PreferencesService.shared.preferredMapType
 
     view.addSubview(mapView, constraints: [
       mapView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -173,10 +173,10 @@ private extension MapViewController {
 
   @objc func mapTypeBarButtonTapped(_ sender: UIBarButtonItem) {
     let alert = Factory.AlertController.make(fromType:
-      .weatherMapType(currentMapType: PreferencesDataService.shared.preferredMapType, completionHandler: { [weak self] mapType in
+      .weatherMapType(currentMapType: PreferencesService.shared.preferredMapType, completionHandler: { [weak self] mapType in
         DispatchQueue.main.async {
-          PreferencesDataService.shared.preferredMapType = mapType
-          self?.mapView.mapType = PreferencesDataService.shared.preferredMapType
+          PreferencesService.shared.preferredMapType = mapType
+          self?.mapView.mapType = PreferencesService.shared.preferredMapType
         }
       })
     )

@@ -85,7 +85,7 @@ class WeatherDataCell: UITableViewCell {
 
     if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
       temperatureLabel.text = ConversionWorker.temperatureDescriptor(
-        forTemperatureUnit: PreferencesDataService.shared.temperatureUnit,
+        forTemperatureUnit: PreferencesService.shared.temperatureUnit,
         fromRawTemperature: temperatureKelvin
       )
     } else {
@@ -98,7 +98,7 @@ class WeatherDataCell: UITableViewCell {
 
     if let windspeed = weatherDTO.windInformation.windspeed {
       windspeedLabel.text = ConversionWorker.windspeedDescriptor(
-        forDistanceSpeedUnit: PreferencesDataService.shared.distanceSpeedUnit,
+        forDistanceSpeedUnit: PreferencesService.shared.distanceSpeedUnit,
         forWindspeed: windspeed
       )
     } else {

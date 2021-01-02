@@ -53,7 +53,7 @@ extension MigrationService {
       .asSingle()
       .flatMapCompletable { [dependencies] preferencesStoredContentsWrapper -> Completable in
         guard let preferencesStoredContentsWrapper = preferencesStoredContentsWrapper else {
-          // previous data does not exist or could not be read -> do not try to migrate anymore
+          // previous data does not exist or could not be read -> do not try to migrate any further
           return Completable.create { handler in
             handler(.completed)
             return Disposables.create()

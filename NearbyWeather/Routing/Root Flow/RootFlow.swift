@@ -64,7 +64,7 @@ class RootFlow: Flow {
 private extension RootFlow {
   
   func summonMainWindow() -> FlowContributors {
-    let mainFlow = MainFlow()
+    let mainFlow = MainFlow(dependencyContainer: dependencyContainer)
     
     Flows.whenReady(flow1: mainFlow) { [rootWindow] (mainRoot: UITabBarController) in
       rootWindow.rootViewController = mainRoot
@@ -86,7 +86,7 @@ private extension RootFlow {
   }
   
   func dismissWelcomeWindow() -> FlowContributors {
-    let mainFlow = MainFlow()
+    let mainFlow = MainFlow(dependencyContainer: dependencyContainer)
     
     Flows.whenReady(flow1: mainFlow) { [rootWindow] (mainRoot: UITabBarController) in
       UIView.animate(withDuration: 0.2, animations: {

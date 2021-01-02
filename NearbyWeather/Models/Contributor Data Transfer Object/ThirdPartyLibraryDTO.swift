@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ThirdPartyLibraryArrayWrapper: Codable {
+struct ThirdPartyLibrariesWrapperDTO: Codable {
   var elements: [ThirdPartyLibraryDTO]
 }
 

@@ -7,6 +7,7 @@
 //
 
 import RxFlow
+import Swinject
 
 final class MainFlow: Flow {
 
@@ -23,10 +24,16 @@ final class MainFlow: Flow {
     tabbar.tabBar.tintColor = Constants.Theme.Color.MarqueColors.standardDay
     return tabbar
   }()
+  
+  // MARK: - Properties
+  
+  let dependencyContainer: Container
 
   // MARK: - Initialization
 
-  init() {}
+  init(dependencyContainer: Container) {
+    self.dependencyContainer = dependencyContainer
+  }
 
   deinit {
     printDebugMessage(
@@ -53,9 +60,9 @@ private extension MainFlow {
 
   func summonRootTabBar() -> FlowContributors {
 
-    let listFlow = ListFlow()
-    let mapFlow = MapFlow()
-    let settingsFlow = SettingsFlow()
+    let listFlow = ListFlow(dependencyContainer: dependencyContainer)
+    let mapFlow = MapFlow(dependencyContainer: dependencyContainer)
+    let settingsFlow = SettingsFlow(dependencyContainer: dependencyContainer)
 
     Flows.whenReady(
       flow1: listFlow,

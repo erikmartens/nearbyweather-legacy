@@ -16,7 +16,7 @@ final class AboutAppTableViewController: UITableViewController, Stepper {
   private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO]? = {
     try? JsonPersistencyWorker().retrieveJsonFromFile(
       with: R.file.thirdPartyLibrariesJson.name,
-      andDecodeAsType: ThirdPartyLibraryArrayWrapper.self,
+      andDecodeAsType: ThirdPartyLibrariesWrapperDTO.self,
       fromStorageLocation: .bundle
       )
       .elements

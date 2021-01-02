@@ -7,6 +7,7 @@
 //
 
 import RxFlow
+import Swinject
 
 final class MapFlow: Flow {
   
@@ -25,9 +26,15 @@ final class MapFlow: Flow {
     return navigationController
   }()
   
-  // MARK: - Initialization
+  // MARK: - Properties
   
-  init() {}
+  let dependencyContainer: Container
+
+  // MARK: - Initialization
+
+  init(dependencyContainer: Container) {
+    self.dependencyContainer = dependencyContainer
+  }
   
   deinit {
     printDebugMessage(

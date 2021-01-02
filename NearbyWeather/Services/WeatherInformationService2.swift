@@ -10,6 +10,11 @@ import RxSwift
 import RxOptional
 import RxAlamofire
 
+enum WeatherInformationAvailability {
+  case available
+  case unavailable
+}
+
 enum WeatherInformationServiceError: String, Error {
   
   var domain: String {
@@ -69,6 +74,7 @@ protocol WeatherInformationProvisioning {
   func setNearbyWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable
   func createNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
   func createNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
+  func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability>
 }
 
 extension WeatherInformationService2: WeatherInformationProvisioning {
@@ -121,6 +127,15 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       identifier: identifier
     )
     return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
+  }
+  
+  func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability> {
+    Observable<WeatherInformationAvailability>
+      .combineLatest(
+        createBookmarkedWeatherInformationListObservable().map { $0.isEmpty },
+        createNearbyWeatherInformationListObservable().map { $0.isEmpty },
+        resultSelector: { ($0 && $1) ? WeatherInformationAvailability.unavailable : WeatherInformationAvailability.available }
+      )
   }
 }
 

@@ -65,7 +65,9 @@ final class WeatherInformationService {
   }
   var preferredBookmarkData: WeatherInformationDTO? {
     let preferredBookmarkId = PreferencesService.shared.preferredBookmark.value
-    return WeatherInformationService.shared.bookmarkedWeatherDataObjects?.first(where: { $0.locationId == preferredBookmarkId })?.weatherInformationDTO
+    return WeatherInformationService.shared.bookmarkedWeatherDataObjects?
+      .first(where: { $0.locationId == preferredBookmarkId })?
+      .weatherInformationDTO
   }
   private(set) var bookmarkedWeatherDataObjects: [WeatherDataContainer]?
   private(set) var nearbyWeatherDataObject: BulkWeatherDataContainer?

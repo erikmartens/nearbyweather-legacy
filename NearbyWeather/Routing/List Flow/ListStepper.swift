@@ -6,8 +6,10 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
+import RxSwift
 import RxCocoa
 import RxFlow
+import Swinject
 
 enum ListStep: Step {
   case list
@@ -18,28 +20,29 @@ enum ListStep: Step {
 
 final class ListStepper: Stepper {
   
-  init() {
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(Self.emitStepOnWeatherDataServiceDidUpdate),
-      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kWeatherServiceDidUpdate),
-      object: nil
-    )
+  // MARK: - Assets
+  
+  let disposeBag = DisposeBag()
+  let steps = PublishRelay<Step>()
+  
+  // MARK: - Properties
+  
+  let dependencyContainer: Container
+  
+  // MARK: - Initialization
+  
+  init(dependencyContainer: Container) {
+    self.dependencyContainer = dependencyContainer
   }
   
-  var steps = PublishRelay<Step>()
-  
-  var initialStep: Step {
-    WeatherInformationService.shared.hasDisplayableData
-      ? ListStep.list
-      : ListStep.emptyList
-  }
-  
-  @objc private func emitStepOnWeatherDataServiceDidUpdate() {
-    guard WeatherInformationService.shared.hasDisplayableData else {
-      steps.accept(ListStep.emptyList)
-      return
-    }
-    steps.accept(ListStep.list)
+  func readyToEmitSteps() {
+    dependencyContainer.resolve(WeatherInformationService2.self)?
+      .createDidUpdateWeatherInformationObservable()
+      .subscribe { [weak steps] informationAvailable in
+        steps?.accept(
+          (informationAvailable == .available) ? ListStep.list : ListStep.emptyList
+        )
+      }
+      .disposed(by: disposeBag)
   }
 }

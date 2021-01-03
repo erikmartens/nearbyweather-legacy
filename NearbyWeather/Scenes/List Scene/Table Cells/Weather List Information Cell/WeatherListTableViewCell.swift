@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-private extension WeatherListInformationTableViewCell {
+private extension WeatherListTableViewCell {
   
   struct Definitions {
     static let cellLeadingInset: CGFloat = 48
@@ -17,9 +17,9 @@ private extension WeatherListInformationTableViewCell {
   }
 }
 
-final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell, ReuseIdentifiable {
+final class WeatherListTableViewCell: UITableViewCell, BaseCell {
   
-  typealias CellViewModel = WeatherListInformationTableViewCellViewModel
+  typealias BaseCellViewModel = WeatherListTableViewCellViewModel
   
   // MARK: - UIComponents
   
@@ -46,7 +46,7 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell, Reus
   
   // MARK: - Properties
   
-  private var cellViewModel: CellViewModel?
+  internal var cellViewModel: BaseCellViewModel?
   
   // MARK: - Initialization
   
@@ -62,7 +62,10 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell, Reus
   
   // MARK: - Cell Life Cycle
   
-  func configure(with cellViewModel: CellViewModel) {
+  func configure(with cellViewModel: BaseCellViewModelProtocol?) {
+    guard let cellViewModel = cellViewModel as? WeatherListTableViewCellViewModel else {
+      return
+    }
     self.cellViewModel = cellViewModel
     bindInputFromViewModel(cellViewModel)
     bindOutputToViewModel(cellViewModel)
@@ -71,24 +74,24 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell, Reus
 
 // MARK: - ViewModel Bindings
 
-extension WeatherListInformationTableViewCell {
+extension WeatherListTableViewCell {
   
-  private func bindInputFromViewModel(_ cellViewModel: CellViewModel) {
+  internal func bindInputFromViewModel(_ cellViewModel: BaseCellViewModel) {
     cellViewModel.cellModelDriver
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
   
-  private func bindOutputToViewModel(_ cellViewModel: CellViewModel) {
+  internal func bindOutputToViewModel(_ cellViewModel: BaseCellViewModel) {
     // nothing to do
   }
 }
 
 // MARK: - Cell Composition
 
-private extension WeatherListInformationTableViewCell {
+private extension WeatherListTableViewCell {
   
-  func setContent(for cellModel: WeatherListInformationTableViewCellModel) {
+  func setContent(for cellModel: WeatherListTableViewCellModel) {
     backgroundColorView.backgroundColor = cellModel.backgroundColor
     weatherConditionSymbolLabel.text = cellModel.weatherConditionSymbol
     temperatureLabel.text = cellModel.temperature

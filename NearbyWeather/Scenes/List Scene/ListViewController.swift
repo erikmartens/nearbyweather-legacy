@@ -16,7 +16,8 @@ final class ListViewController: UITableViewController, Stepper {
   private lazy var listTypeBarButton = {
     UIBarButtonItem(
       image: R.image.layerType(),
-      style: .plain, target: self,
+      style: .plain,
+      target: self,
       action: #selector(Self.listTypeBarButtonTapped(_:))
     )
   }()

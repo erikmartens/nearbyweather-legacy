@@ -9,16 +9,22 @@
 import RxSwift
 import RxCocoa
 
-extension WeatherListInformationTableViewCellViewModel {
+extension WeatherListTableViewCellViewModel {
   
   struct Dependencies {
-    let weatherInformationIdentity: PersistencyModelIdentity
+    let weatherInformationIdentity: PersistencyModelIdentityProtocol
+    let isBookmark: Bool
     let weatherInformationService: WeatherInformationService2
-    let userPreferencesService: PreferencesService2
   }
 }
 
-final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellViewModel {
+final class WeatherListTableViewCellViewModel: NSObject, BaseCellViewModel {
+  
+  // MARK: - Public Access
+  
+  var weatherInformationIdentity: PersistencyModelIdentityProtocol {
+    dependencies.weatherInformationIdentity
+  }
   
   // MARK: - Properties
   
@@ -26,7 +32,7 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
 
   // MARK: - Events
   
-  let cellModelDriver: Driver<WeatherListInformationTableViewCellModel>
+  let cellModelDriver: Driver<WeatherListTableViewCellModel>
 
   // MARK: - Initialization
   
@@ -39,25 +45,22 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
 
 // MARK: - Observations
 
-private extension WeatherListInformationTableViewCellViewModel {
+private extension WeatherListTableViewCellViewModel {
   
-  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherListInformationTableViewCellModel> {
-    dependencies.userPreferencesService
-      .createPreferredListTypeOptionObservable()
-      .flatMapLatest { [dependencies] listTypeOption -> Observable<PersistencyModel<WeatherInformationDTO>?> in
-        switch listTypeOption.value {
-        case .bookmarked:
+  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherListTableViewCellModel> {
+    Observable.just(dependencies.isBookmark)
+      .flatMapLatest { [dependencies] isBookmark -> Observable<PersistencyModel<WeatherInformationDTO>?> in
+        if isBookmark {
           return dependencies.weatherInformationService
             .createBookmarkedWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
-        case .nearby:
-          return dependencies.weatherInformationService
-            .createNearbyWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
         }
+        return dependencies.weatherInformationService
+          .createNearbyWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
       }
       .map { $0?.entity }
       .errorOnNil()
-      .map { weatherInformation -> WeatherListInformationTableViewCellModel in
-        WeatherListInformationTableViewCellModel(
+      .map { weatherInformation -> WeatherListTableViewCellModel in
+        WeatherListTableViewCellModel(
           weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
             fromWeatherCode: weatherInformation.weatherCondition.first?.identifier,
             isDayTime: ConversionWorker.isDayTime(for: weatherInformation.daytimeInformation, coordinates: weatherInformation.coordinates)
@@ -69,13 +72,13 @@ private extension WeatherListInformationTableViewCellViewModel {
           cloudCoverage: weatherInformation.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
           humidity: weatherInformation.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none),
           windspeed: ConversionWorker.windspeedDescriptor(
-            forDistanceSpeedUnit: PreferencesService.shared.distanceSpeedUnit, // TODO
+            forDistanceSpeedUnit: PreferencesService.shared.distanceSpeedUnit, // TODO observe user preference service 2
             forWindspeed: weatherInformation.windInformation.windspeed
           ),
           backgroundColor: .clear // TODO
           // TODO border
         )
       }
-      .asDriver(onErrorJustReturn: WeatherListInformationTableViewCellModel())
+      .asDriver(onErrorJustReturn: WeatherListTableViewCellModel())
   }
 }

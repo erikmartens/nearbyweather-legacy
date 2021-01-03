@@ -27,9 +27,9 @@ final class ListFlow: Flow {
   // MARK: - Properties
   
   let dependencyContainer: Container
-
+  
   // MARK: - Initialization
-
+  
   init(dependencyContainer: Container) {
     self.dependencyContainer = dependencyContainer
   }
@@ -54,8 +54,15 @@ final class ListFlow: Flow {
     case .emptyList:
       return summonEmptyWeatherListController()
     case let .weatherDetails(identifier, isBookmark):
-      return summonWeatherDetailsController(identifier: identifier,
-                                            isBookmark: isBookmark)
+      return summonWeatherDetailsController(identifier: identifier, isBookmark: isBookmark)
+    case let .weatherDetails2(identity, isBookmark):
+      return summonWeatherDetailsController2(identity: identity, isBookmark: isBookmark)
+    case .changeListTypeAlert:
+      return summonChangeListTypeAlert()
+    case .changeAmountOfResultsAlert:
+     return summonChangeAmountOfResultsAlert()
+    case .changeSortingOrientationAlert:
+      return summonChangeSortingOrientationAlert()
     case .dismissChildFlow:
       return dismissChildFlow()
     }
@@ -102,6 +109,22 @@ private extension ListFlow {
     }
     
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: WeatherDetailStepper()))
+  }
+  
+  func summonWeatherDetailsController2(identity: PersistencyModelIdentityProtocol, isBookmark: Bool) -> FlowContributors {
+    .none // TODO
+  }
+  
+  func summonChangeListTypeAlert() -> FlowContributors {
+    .none // TODO
+  }
+  
+  func summonChangeAmountOfResultsAlert() -> FlowContributors {
+    .none // TODO
+  }
+  
+  func summonChangeSortingOrientationAlert() -> FlowContributors {
+    .none // TODO
   }
   
   func dismissChildFlow() -> FlowContributors {

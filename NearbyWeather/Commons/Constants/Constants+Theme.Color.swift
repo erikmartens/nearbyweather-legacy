@@ -52,7 +52,7 @@ extension Constants.Theme.Color {
 
   enum ViewElement {
 
-    static var background: UIColor {
+    static var primaryBackground: UIColor {
       guard #available(iOS 13, *) else {
         return UIColor(red: 0, green: 0, blue: 0) // TODO
       }

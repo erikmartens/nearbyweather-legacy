@@ -19,8 +19,8 @@ final class MainFlow: Flow {
 
   private lazy var rootViewController: UITabBarController = {
     let tabbar = UITabBarController()
-    tabbar.tabBar.backgroundColor = Constants.Theme.Color.ViewElement.background
-    tabbar.tabBar.barTintColor = Constants.Theme.Color.ViewElement.background
+    tabbar.tabBar.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    tabbar.tabBar.barTintColor = Constants.Theme.Color.ViewElement.primaryBackground
     tabbar.tabBar.tintColor = Constants.Theme.Color.MarqueColors.standardDay
     return tabbar
   }()
@@ -77,7 +77,7 @@ private extension MainFlow {
     }
 
     return .multiple(flowContributors: [
-      .contribute(withNextPresentable: listFlow, withNextStepper: ListStepper()),
+      .contribute(withNextPresentable: listFlow, withNextStepper: ListStepper(dependencyContainer: dependencyContainer)),
       .contribute(withNextPresentable: mapFlow, withNextStepper: MapStepper()),
       .contribute(withNextPresentable: settingsFlow, withNextStepper: SettingsStepper())
     ])

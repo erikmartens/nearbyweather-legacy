@@ -15,6 +15,10 @@ enum ListStep: Step {
   case list
   case emptyList
   case weatherDetails(identifier: Int?, isBookmark: Bool)
+  case weatherDetails2(identity: PersistencyModelIdentityProtocol, isBookmark: Bool)
+  case changeListTypeAlert
+  case changeAmountOfResultsAlert
+  case changeSortingOrientationAlert
   case dismissChildFlow
 }
 
@@ -22,7 +26,7 @@ final class ListStepper: Stepper {
   
   // MARK: - Assets
   
-  let disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   let steps = PublishRelay<Step>()
   
   // MARK: - Properties

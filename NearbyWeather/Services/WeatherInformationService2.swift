@@ -74,7 +74,6 @@ protocol WeatherInformationProvisioning {
   func setNearbyWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable
   func createNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
   func createNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
-  func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability>
 }
 
 extension WeatherInformationService2: WeatherInformationProvisioning {
@@ -129,21 +128,15 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
     return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
   }
   
-  func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability> {
-    Observable<WeatherInformationAvailability>
-      .combineLatest(
-        createBookmarkedWeatherInformationListObservable().map { $0.isEmpty },
-        createNearbyWeatherInformationListObservable().map { $0.isEmpty },
-        resultSelector: { ($0 && $1) ? WeatherInformationAvailability.unavailable : WeatherInformationAvailability.available }
-      )
-  }
+  
 }
 
 // MARK: - Weather Information Updating
 
 protocol WeatherInformationUpdating {
+  func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability>
   func createUpdateBookmarkedWeatherInformationCompletable() -> Completable
-  func updateWeatherInformationForBookmarkedStation(with identifier: Int) -> Completable
+  func createUpdateWeatherInformationForBookmarkedStation(with identifier: Int) -> Completable
   func createUpdateNearbyWeatherInformationCompletable() -> Completable
 }
 
@@ -180,6 +173,15 @@ extension WeatherInformationService2: WeatherInformationUpdating {
     }
   }
   
+  func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability> {
+    Observable<WeatherInformationAvailability>
+      .combineLatest(
+        createBookmarkedWeatherInformationListObservable().map { $0.isEmpty },
+        createNearbyWeatherInformationListObservable().map { $0.isEmpty },
+        resultSelector: { ($0 && $1) ? .unavailable : .available }
+      )
+  }
+  
   func createUpdateBookmarkedWeatherInformationCompletable() -> Completable {
     dependencies.preferencesService
       .createBookmarkedStationsObservable()
@@ -207,7 +209,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
-  func updateWeatherInformationForBookmarkedStation(with identifier: Int) -> Completable {
+  func createUpdateWeatherInformationForBookmarkedStation(with identifier: Int) -> Completable {
     Single
       .just(identifier)
       .map { [apiKey] identifier in

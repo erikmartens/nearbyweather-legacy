@@ -115,8 +115,10 @@ private extension ListFlow {
     .none // TODO
   }
   
-  func summonChangeListTypeAlert() -> FlowContributors {
-    .none // TODO
+  func summonChangeListTypeAlert() -> FlowContributors { // TODO: test cancel action works properly
+    let alertController = ListTypeSelectionAlertController(dependencies: ListTypeSelectionViewModel.Dependencies(preferencesService: dependencyContainer.resolve(PreferencesService2.self)!))
+    rootViewController.present(alertController, animated: true, completion: nil)
+    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
   }
   
   func summonChangeAmountOfResultsAlert() -> FlowContributors {

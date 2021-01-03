@@ -126,6 +126,9 @@
 		F2D1995825A1F5C1004C7753 /* UITableView+RegisterCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1995725A1F5C1004C7753 /* UITableView+RegisterCells.swift */; };
 		F2D1995E25A204FA004C7753 /* WeatherListNearbyItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1995D25A204FA004C7753 /* WeatherListNearbyItemsSection.swift */; };
 		F2D1996325A2050C004C7753 /* WeatherListBookmarkedItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1996225A2050C004C7753 /* WeatherListBookmarkedItemsSection.swift */; };
+		F2D1996A25A23CD9004C7753 /* ListTypeSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1996925A23CD9004C7753 /* ListTypeSelectionAlertController.swift */; };
+		F2D1996F25A23CEF004C7753 /* ListTypeSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1996E25A23CEE004C7753 /* ListTypeSelectionViewModel.swift */; };
+		F2D1998525A274ED004C7753 /* Factory+UIAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1998425A274ED004C7753 /* Factory+UIAlertAction.swift */; };
 		F2D2B1E02004171500C810EF /* JsonPersistencyWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D2B1DF2004171500C810EF /* JsonPersistencyWorker.swift */; };
 		F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */; };
 		F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEADB23E4CF7900CD513B /* Constants.swift */; };
@@ -326,6 +329,9 @@
 		F2D1995725A1F5C1004C7753 /* UITableView+RegisterCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+RegisterCells.swift"; sourceTree = "<group>"; };
 		F2D1995D25A204FA004C7753 /* WeatherListNearbyItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListNearbyItemsSection.swift; sourceTree = "<group>"; };
 		F2D1996225A2050C004C7753 /* WeatherListBookmarkedItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListBookmarkedItemsSection.swift; sourceTree = "<group>"; };
+		F2D1996925A23CD9004C7753 /* ListTypeSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTypeSelectionAlertController.swift; sourceTree = "<group>"; };
+		F2D1996E25A23CEE004C7753 /* ListTypeSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTypeSelectionViewModel.swift; sourceTree = "<group>"; };
+		F2D1998425A274ED004C7753 /* Factory+UIAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIAlertAction.swift"; sourceTree = "<group>"; };
 		F2D2B1DF2004171500C810EF /* JsonPersistencyWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonPersistencyWorker.swift; sourceTree = "<group>"; };
 		F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+URLs.swift"; sourceTree = "<group>"; };
 		F2DBEADB23E4CF7900CD513B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -674,6 +680,7 @@
 				F2D1993725A1E482004C7753 /* WeatherListTableViewDataSource.swift */,
 				F2D1995C25A204C4004C7753 /* Table Sections */,
 				F284DDEA245F78FE00445BFF /* Table Cells */,
+				F2D1996725A23C6B004C7753 /* Alert Controllers */,
 				F28CE9671F9A9893008319C4 /* ListViewController.swift */,
 			);
 			path = "List Scene";
@@ -786,6 +793,7 @@
 				F2D1994425A1EED1004C7753 /* Factory+UIBarButtonItem.swift */,
 				F237285E2444AA5600964C49 /* Factory+UILabel.swift */,
 				F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */,
+				F2D1998425A274ED004C7753 /* Factory+UIAlertAction.swift */,
 				F2DBEB3323F0427000CD513B /* Factory+UIAlertController.swift */,
 				F237288D244C93BD00964C49 /* Factory+UINavigationController.swift */,
 				F2D1994F25A1F1A4004C7753 /* Factory+UITableView.swift */,
@@ -950,6 +958,23 @@
 				F2D1996225A2050C004C7753 /* WeatherListBookmarkedItemsSection.swift */,
 			);
 			path = "Table Sections";
+			sourceTree = "<group>";
+		};
+		F2D1996725A23C6B004C7753 /* Alert Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F2D1996825A23C94004C7753 /* List Type */,
+			);
+			path = "Alert Controllers";
+			sourceTree = "<group>";
+		};
+		F2D1996825A23C94004C7753 /* List Type */ = {
+			isa = PBXGroup;
+			children = (
+				F2D1996E25A23CEE004C7753 /* ListTypeSelectionViewModel.swift */,
+				F2D1996925A23CD9004C7753 /* ListTypeSelectionAlertController.swift */,
+			);
+			path = "List Type";
 			sourceTree = "<group>";
 		};
 		F2F1554124432D77007A3E90 /* Workers */ = {
@@ -1385,6 +1410,7 @@
 				F2372882244C82B200964C49 /* Constants+Theme.Color.swift in Sources */,
 				F2372878244C7F2E00964C49 /* MapFlow.swift in Sources */,
 				F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */,
+				F2D1998525A274ED004C7753 /* Factory+UIAlertAction.swift in Sources */,
 				86830394217BBAE400B7122E /* PermissionsService.swift in Sources */,
 				F2F1554D2443C842007A3E90 /* UIView+AddSubview.swift in Sources */,
 				F213FA3223F9EEE300F094D8 /* SortingOrientationOption.swift in Sources */,
@@ -1410,6 +1436,7 @@
 				F2D1995E25A204FA004C7753 /* WeatherListNearbyItemsSection.swift in Sources */,
 				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,
 				F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */,
+				F2D1996A25A23CD9004C7753 /* ListTypeSelectionAlertController.swift in Sources */,
 				F2372893244CAB0A00964C49 /* RootStepper.swift in Sources */,
 				F2D1993325A1E330004C7753 /* TableSectionData+Subscript.swift in Sources */,
 				F2DE35032464B02F00FDC4C7 /* Constants+Dimensions.Size.swift in Sources */,
@@ -1471,6 +1498,7 @@
 				F273EF642444967C0085DB3F /* ImagedSingleLabelCell.swift in Sources */,
 				F282166024608175004E5B08 /* BaseCell.swift in Sources */,
 				F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */,
+				F2D1996F25A23CEF004C7753 /* ListTypeSelectionViewModel.swift in Sources */,
 				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,
 				F2D2B1E02004171500C810EF /* JsonPersistencyWorker.swift in Sources */,
 				F260BDAA244CF3CB00B4357A /* ReuseIdentifiable.swift in Sources */,

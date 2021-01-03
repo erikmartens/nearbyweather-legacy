@@ -194,8 +194,7 @@ private extension Array where Element == PersistencyModel<WeatherInformationDTO>
 private extension WeatherListViewModel {
   
   // TODO: move to weather service
-  static func sortNearbyResults(_ results: [PersistencyModel<WeatherInformationDTO>], using sortingOrientationValue: SortingOrientationValue) -> [PersistencyModel<WeatherInformationDTO>]
-  {
+  static func sortNearbyResults(_ results: [PersistencyModel<WeatherInformationDTO>], using sortingOrientationValue: SortingOrientationValue) -> [PersistencyModel<WeatherInformationDTO>] {
     results.sorted { lhsValue, rhsValue -> Bool in
       switch sortingOrientationValue {
       case .name:

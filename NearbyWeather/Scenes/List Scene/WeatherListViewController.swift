@@ -36,7 +36,7 @@ final class WeatherListViewController: UIViewController, BaseViewController {
   // MARK: - Initialization
   
   required init(dependencies: ViewModel.Dependencies) {
-    self.viewModel = WeatherListViewModel(dependencies: dependencies)
+    viewModel = WeatherListViewModel(dependencies: dependencies)
     super.init(nibName: nil, bundle: nil)
   }
   

@@ -75,7 +75,7 @@ final class SettingsInputTableViewController: UITableViewController, Stepper {
     cell.inputTextField.ascending = true
     cell.inputTextField.maxLength = 32
     cell.inputTextField.counterColor = cell.inputTextField.textColor ?? .black
-    cell.inputTextField.limitColor = Constants.Theme.Color.MarqueColors.standardDay
+    cell.inputTextField.limitColor = Constants.Theme.Color.MarqueColors.bookmarkDay
 
     return cell
   }

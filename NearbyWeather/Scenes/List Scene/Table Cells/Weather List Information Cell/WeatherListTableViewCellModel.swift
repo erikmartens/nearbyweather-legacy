@@ -15,6 +15,7 @@ struct WeatherListTableViewCellModel {
   let humidity: String?
   let windspeed: String?
   let backgroundColor: UIColor?
+  let borderColor: UIColor?
   
   init(
     weatherConditionSymbol: String? = nil,
@@ -22,7 +23,8 @@ struct WeatherListTableViewCellModel {
     cloudCoverage: String? = nil,
     humidity: String? = nil,
     windspeed: String? = nil,
-    backgroundColor: UIColor? = nil
+    backgroundColor: UIColor? = nil,
+    borderColor: UIColor? = nil
   ) {
     self.weatherConditionSymbol = weatherConditionSymbol
     self.temperature = temperature
@@ -30,5 +32,6 @@ struct WeatherListTableViewCellModel {
     self.humidity = humidity
     self.windspeed = windspeed
     self.backgroundColor = backgroundColor
+    self.borderColor = borderColor
   }
 }

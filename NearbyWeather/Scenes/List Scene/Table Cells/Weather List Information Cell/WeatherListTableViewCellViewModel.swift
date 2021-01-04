@@ -62,11 +62,13 @@ private extension WeatherListTableViewCellViewModel {
         weatherInformationModelObservable.errorOnNil(),
         dependencies.preferencesService.createTemperatureUnitOptionObservable(),
         dependencies.preferencesService.createDimensionalUnitsOptionObservable(),
-        resultSelector: { weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherListTableViewCellModel in
-          WeatherListTableViewCellModel(
+        resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherListTableViewCellModel in
+          let isDayTime = ConversionWorker.isDayTime(for: weatherInformationModel.daytimeInformation, coordinates: weatherInformationModel.coordinates) ?? true
+          
+          return WeatherListTableViewCellModel(
             weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
               fromWeatherCode: weatherInformationModel.weatherCondition.first?.identifier,
-              isDayTime: ConversionWorker.isDayTime(for: weatherInformationModel.daytimeInformation, coordinates: weatherInformationModel.coordinates)
+              isDayTime: isDayTime
             ),
             temperature: ConversionWorker.temperatureDescriptor(
               forTemperatureUnit: temperatureUnitOption,
@@ -78,11 +80,28 @@ private extension WeatherListTableViewCellViewModel {
               forDistanceSpeedUnit: dimensionalUnitsOption,
               forWindspeed: weatherInformationModel.windInformation.windspeed
             ),
-            backgroundColor: .clear // TODO
-            // TODO border
+            backgroundColor: Self.backgroundColor(for: dependencies.isBookmark, isDayTime: isDayTime),
+            borderColor: Self.borderColor(for: dependencies.isBookmark)
           )
         }
       )
       .asDriver(onErrorJustReturn: WeatherListTableViewCellModel())
+  }
+}
+
+// MARK: - Helpers
+
+private extension WeatherListTableViewCellViewModel {
+  
+  static func borderColor(for isBookmark: Bool) -> UIColor {
+    isBookmark
+      ? Constants.Theme.Color.ViewElement.borderBookmark
+      : Constants.Theme.Color.ViewElement.borderBookmark
+  }
+  
+  static func backgroundColor(for isBookmark: Bool, isDayTime: Bool) -> UIColor {
+    isBookmark
+      ? (isDayTime ? Constants.Theme.Color.MarqueColors.bookmarkDay : Constants.Theme.Color.MarqueColors.bookmarkNight)
+      : (isDayTime ? Constants.Theme.Color.MarqueColors.nearbyDay : Constants.Theme.Color.MarqueColors.nearbyNight)
   }
 }

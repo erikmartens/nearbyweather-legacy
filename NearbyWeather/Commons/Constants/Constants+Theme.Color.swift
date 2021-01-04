@@ -16,29 +16,39 @@ extension Constants.Theme.Color {
 
   enum MarqueColors {
 
-    static var standardDay: UIColor {
+    static var bookmarkDay: UIColor {
       UIColor.from(dark: .init(hex: 0x64AFF5),
                    light: .init(hex: 0x50B4FA))
     }
 
-    static var standardNight: UIColor {
+    static var bookmarkNight: UIColor {
       UIColor.from(dark: .init(hex: 0x3F709B),
                    light: .init(hex: 0x32719C))
+    }
+    
+    static var nearbyDay: UIColor { // TODO correct actual colors
+      UIColor.from(dark: .init(hex: 0xFFFFFF),
+                   light: .init(hex: 0x000000))
+    }
+    
+    static var nearbyNight: UIColor { // TODO correct actual colors
+      UIColor.from(dark: .init(hex: 0xFFFFFF),
+                   light: .init(hex: 0x000000))
     }
   }
 
   enum InteractableElement {
 
     static var standardButton: UIColor {
-      Constants.Theme.Color.MarqueColors.standardDay
+      Constants.Theme.Color.MarqueColors.bookmarkDay
     }
 
     static var standardTint: UIColor {
-      Constants.Theme.Color.MarqueColors.standardDay
+      Constants.Theme.Color.MarqueColors.bookmarkDay
     }
   }
 
-  enum ContentElement {
+  enum ViewElement {
 
     static var title: UIColor {
       UIColor.from(dark: .init(hex: 0xFFFFFF),
@@ -48,9 +58,16 @@ extension Constants.Theme.Color {
     static var subtitle: UIColor {
       Constants.Theme.Color.SystemColor.gray
     }
-  }
-
-  enum ViewElement {
+    
+    static var borderNearby: UIColor { // TODO correct actual colors
+      UIColor.from(dark: .init(hex: 0xFFFFFF),
+                   light: .init(hex: 0x000000))
+    }
+    
+    static var borderBookmark: UIColor { // TODO correct actual colors
+      UIColor.from(dark: .init(hex: 0xFFFFFF),
+                   light: .init(hex: 0x000000))
+    }
 
     static var primaryBackground: UIColor {
       guard #available(iOS 13, *) else {

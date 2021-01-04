@@ -12,6 +12,7 @@ import RxFlow
 
 extension ListTypeSelectionViewModel {
   struct Dependencies {
+    let selectedOptionValue: ListTypeValue
     let preferencesService: PreferencesService2
   }
 }
@@ -28,8 +29,7 @@ final class ListTypeSelectionViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Events
   
-  let onDidSelectNearbySubject = PublishSubject<Void>()
-  let onDidSelectBookmarksSubject = PublishSubject<Void>()
+  let onDidSelectOptionSubject = PublishSubject<ListTypeOption>()
   
   // MARK: - Initialization
   
@@ -49,17 +49,10 @@ final class ListTypeSelectionViewModel: NSObject, Stepper, BaseViewModel {
 private extension ListTypeSelectionViewModel {
   
   func observeUserTapEvents() {
-    _ = onDidSelectNearbySubject
+    _ = onDidSelectOptionSubject
       .asSingle()
-      .flatMapCompletable { [dependencies] _ -> Completable in
-        dependencies.preferencesService.setPreferredListTypeOption(ListTypeOption(value: .nearby))
-      }
-      .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
-    
-    _ = onDidSelectBookmarksSubject
-      .asSingle()
-      .flatMapCompletable { [dependencies] _ -> Completable in
-        dependencies.preferencesService.setPreferredListTypeOption(ListTypeOption(value: .bookmarked))
+      .flatMapCompletable { [dependencies] listTypeOption -> Completable in
+        dependencies.preferencesService.setPreferredListTypeOption(listTypeOption)
       }
       .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
   }

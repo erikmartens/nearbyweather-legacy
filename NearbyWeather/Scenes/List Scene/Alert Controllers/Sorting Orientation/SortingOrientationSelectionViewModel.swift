@@ -1,5 +1,5 @@
 //
-//  AmountOfNearbyResultsSelectionViewModel.swift
+//  SortingOrientationSelectionViewModel.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 04.01.21.
@@ -10,14 +10,14 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-extension AmountOfNearbyResultsSelectionViewModel {
+extension SortingOrientationSelectionViewModel {
   struct Dependencies {
-    let selectedOptionValue: AmountOfResultsValue
+    let selectedOptionValue: SortingOrientationValue
     let preferencesService: PreferencesService2
   }
 }
 
-final class AmountOfNearbyResultsSelectionViewModel: NSObject, Stepper, BaseViewModel {
+final class SortingOrientationSelectionViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Routing
   
@@ -29,7 +29,7 @@ final class AmountOfNearbyResultsSelectionViewModel: NSObject, Stepper, BaseView
   
   // MARK: - Events
   
-  let onDidSelectOptionSubject = PublishSubject<AmountOfResultsOption>()
+  let onDidSelectOptionSubject = PublishSubject<SortingOrientationOption>()
   
   // MARK: - Initialization
   
@@ -46,13 +46,13 @@ final class AmountOfNearbyResultsSelectionViewModel: NSObject, Stepper, BaseView
 
 // MARK: - Observations
 
-private extension AmountOfNearbyResultsSelectionViewModel {
+private extension SortingOrientationSelectionViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject
       .asSingle()
-      .flatMapCompletable { [dependencies] amountOfResultsOption -> Completable in
-        dependencies.preferencesService.setAmountOfNearbyResultsOption(amountOfResultsOption)
+      .flatMapCompletable { [dependencies] sortingOrientationOption -> Completable in
+        dependencies.preferencesService.setSortingOrientationOption(sortingOrientationOption)
       }
       .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
   }

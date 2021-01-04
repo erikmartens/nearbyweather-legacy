@@ -25,6 +25,8 @@
 		F213FA3923F9EF9A00F094D8 /* AmountOfResultsOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F213FA3823F9EF9A00F094D8 /* AmountOfResultsOption.swift */; };
 		F22A21F125A33A9C00C97844 /* AmountOfNearbyResultsSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A21F025A33A9C00C97844 /* AmountOfNearbyResultsSelectionViewModel.swift */; };
 		F22A21F625A33AB900C97844 /* AmountOfNearbyResultsSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlertController.swift */; };
+		F22A21FC25A36B1F00C97844 /* SortingOrientationSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A21FB25A36B1F00C97844 /* SortingOrientationSelectionViewModel.swift */; };
+		F22A220425A36B5500C97844 /* SortingOrientationSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A220325A36B5500C97844 /* SortingOrientationSelectionAlertController.swift */; };
 		F22F99552034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22F99542034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift */; };
 		F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F22F99562037676B00B7CB6B /* locationsSQLite.sqlite */; };
 		F237285B2444A72100964C49 /* Constants+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285A2444A72100964C49 /* Constants+Dimensions.swift */; };
@@ -229,6 +231,8 @@
 		F213FA3823F9EF9A00F094D8 /* AmountOfResultsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfResultsOption.swift; sourceTree = "<group>"; };
 		F22A21F025A33A9C00C97844 /* AmountOfNearbyResultsSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfNearbyResultsSelectionViewModel.swift; sourceTree = "<group>"; };
 		F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfNearbyResultsSelectionAlertController.swift; sourceTree = "<group>"; };
+		F22A21FB25A36B1F00C97844 /* SortingOrientationSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrientationSelectionViewModel.swift; sourceTree = "<group>"; };
+		F22A220325A36B5500C97844 /* SortingOrientationSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrientationSelectionAlertController.swift; sourceTree = "<group>"; };
 		F22F99542034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationMapAnnotationView.swift; sourceTree = "<group>"; };
 		F22F99562037676B00B7CB6B /* locationsSQLite.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = locationsSQLite.sqlite; sourceTree = "<group>"; };
 		F237285A2444A72100964C49 /* Constants+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Dimensions.swift"; sourceTree = "<group>"; };
@@ -484,6 +488,15 @@
 				F204B79C1DF2EFA3000F4371 /* Info.plist */,
 			);
 			path = NearbyWeatherUITests;
+			sourceTree = "<group>";
+		};
+		F22A21FA25A36A6500C97844 /* Sorting Orientation */ = {
+			isa = PBXGroup;
+			children = (
+				F22A21FB25A36B1F00C97844 /* SortingOrientationSelectionViewModel.swift */,
+				F22A220325A36B5500C97844 /* SortingOrientationSelectionAlertController.swift */,
+			);
+			path = "Sorting Orientation";
 			sourceTree = "<group>";
 		};
 		F237286D244C7D6800964C49 /* Main Flow */ = {
@@ -969,6 +982,7 @@
 			children = (
 				F2D1996825A23C94004C7753 /* List Type */,
 				F2D1998C25A33A03004C7753 /* Amount of Nearby Results */,
+				F22A21FA25A36A6500C97844 /* Sorting Orientation */,
 			);
 			path = "Alert Controllers";
 			sourceTree = "<group>";
@@ -1451,10 +1465,12 @@
 				F2D1995E25A204FA004C7753 /* WeatherListNearbyItemsSection.swift in Sources */,
 				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,
 				F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */,
+				F22A21FC25A36B1F00C97844 /* SortingOrientationSelectionViewModel.swift in Sources */,
 				F2D1996A25A23CD9004C7753 /* ListTypeSelectionAlertController.swift in Sources */,
 				F2372893244CAB0A00964C49 /* RootStepper.swift in Sources */,
 				F2D1993325A1E330004C7753 /* TableSectionData+Subscript.swift in Sources */,
 				F2DE35032464B02F00FDC4C7 /* Constants+Dimensions.Size.swift in Sources */,
+				F22A220425A36B5500C97844 /* SortingOrientationSelectionAlertController.swift in Sources */,
 				F284DDDC245F3FDB00445BFF /* MigrationService.swift in Sources */,
 				F284DDD8245E4AFC00445BFF /* ListTypeOption.swift in Sources */,
 				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,

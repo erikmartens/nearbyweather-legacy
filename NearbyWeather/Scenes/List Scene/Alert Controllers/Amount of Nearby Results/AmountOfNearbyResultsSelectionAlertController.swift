@@ -17,19 +17,19 @@ final class AmountOfNearbyResultsSelectionAlertController: UIAlertController, Ba
   // MARK: - Actions
   
   fileprivate lazy var tenNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.nearby.title, handler: { [weak viewModel] _ in
-    viewModel?.onDidSelectAmountOfResultsSubject.onNext(AmountOfResultsOption(value: .ten))
+    viewModel?.onDidSelectOptionSubject.onNext(AmountOfResultsOption(value: .ten))
   }))
   fileprivate lazy var twentyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.nearby.title, handler: { [weak viewModel] _ in
-    viewModel?.onDidSelectAmountOfResultsSubject.onNext(AmountOfResultsOption(value: .twenty))
+    viewModel?.onDidSelectOptionSubject.onNext(AmountOfResultsOption(value: .twenty))
   }))
   fileprivate lazy var thirtyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.nearby.title, handler: { [weak viewModel] _ in
-    viewModel?.onDidSelectAmountOfResultsSubject.onNext(AmountOfResultsOption(value: .thirty))
+    viewModel?.onDidSelectOptionSubject.onNext(AmountOfResultsOption(value: .thirty))
   }))
   fileprivate lazy var fortyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.nearby.title, handler: { [weak viewModel] _ in
-    viewModel?.onDidSelectAmountOfResultsSubject.onNext(AmountOfResultsOption(value: .forty))
+    viewModel?.onDidSelectOptionSubject.onNext(AmountOfResultsOption(value: .forty))
   }))
   fileprivate lazy var fiftyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.nearby.title, handler: { [weak viewModel] _ in
-    viewModel?.onDidSelectAmountOfResultsSubject.onNext(AmountOfResultsOption(value: .fifty))
+    viewModel?.onDidSelectOptionSubject.onNext(AmountOfResultsOption(value: .fifty))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
   

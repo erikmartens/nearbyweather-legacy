@@ -17,10 +17,10 @@ final class ListTypeSelectionAlertController: UIAlertController, BaseViewControl
   // MARK: - Actions
   
   fileprivate lazy var nearbySelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.nearby.title, handler: { [weak viewModel] _ in
-    viewModel?.onDidSelectNearbySubject.onNext(())
+    viewModel?.onDidSelectOptionSubject.onNext(ListTypeOption(value: .nearby))
   }))
   fileprivate lazy var bookmarksSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.bookmarked.title, handler: { [weak viewModel] _ in
-    viewModel?.onDidSelectBookmarksSubject.onNext(())
+    viewModel?.onDidSelectOptionSubject.onNext(ListTypeOption(value: .bookmarked))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
   

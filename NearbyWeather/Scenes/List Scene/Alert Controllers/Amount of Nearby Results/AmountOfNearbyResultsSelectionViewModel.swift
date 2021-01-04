@@ -52,7 +52,7 @@ private extension AmountOfNearbyResultsSelectionViewModel {
     _ = onDidSelectOptionSubject
       .asSingle()
       .flatMapCompletable { [dependencies] amountOfResultsOption -> Completable in
-        dependencies.preferencesService.setAmountOfNearbyResultsOption(amountOfResultsOption)
+        dependencies.preferencesService.createSetAmountOfNearbyResultsOptionCompletable(amountOfResultsOption)
       }
       .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
   }

@@ -52,7 +52,7 @@ private extension ListTypeSelectionViewModel {
     _ = onDidSelectOptionSubject
       .asSingle()
       .flatMapCompletable { [dependencies] listTypeOption -> Completable in
-        dependencies.preferencesService.setPreferredListTypeOption(listTypeOption)
+        dependencies.preferencesService.createSetListTypeOptionCompletable(listTypeOption)
       }
       .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
   }

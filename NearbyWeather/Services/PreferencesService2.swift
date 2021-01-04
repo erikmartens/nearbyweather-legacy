@@ -57,7 +57,7 @@ extension PreferencesService2 {
 
 final class PreferencesService2 {
   
-  // MARK: - Assets
+  // MARK: - Computed Properties
   
   private lazy var persistencyWorker: RealmPersistencyWorker = {
     try! RealmPersistencyWorker(
@@ -65,37 +65,33 @@ final class PreferencesService2 {
       dataBaseFileName: "PreferencesServiceDataBase"
     )
   }()
-  
-  // MARK: - Properties
-  
-  // MARK: - Initialization
 }
 
-// MARK: - General Preference Setting
+// MARK: - General Preference Settings
 
-protocol GeneralPreferenceSetting {
-  func setAmountOfNearbyResultsOption(_ option: AmountOfResultsOption) -> Completable
+protocol GeneralPreferenceSettings {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
   func createAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
   
-  func setTemperatureUnitOption(_ option: TemperatureUnitOption) -> Completable
+  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
   func createTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
   
-  func setDimensionalUnitsOption(_ option: DimensionalUnitsOption) -> Completable
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
   func createDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
   
-  func setSortingOrientationOption(_ option: SortingOrientationOption) -> Completable
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
   func createSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
   
-  func setPreferredListTypeOption(_ option: ListTypeOption) -> Completable
+  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
   func createListTypeOptionObservable() -> Observable<ListTypeOption>
   
-  func setPreferredMapTypeOption(_ option: MapTypeOption) -> Completable
-  func createPreferredMapTypeOptionObservable() -> Observable<MapTypeOption>
+  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
+  func createMapTypeOptionObservable() -> Observable<MapTypeOption>
 }
 
-extension PreferencesService2: GeneralPreferenceSetting {
+extension PreferencesService2: GeneralPreferenceSettings {
   
-  func setAmountOfNearbyResultsOption(_ option: AmountOfResultsOption) -> Completable {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable {
     Single
       .just(option)
       .map {
@@ -123,7 +119,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .replaceNilWith(AmountOfResultsOption(value: .ten)) // default value
   }
   
-  func setTemperatureUnitOption(_ option: TemperatureUnitOption) -> Completable {
+  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable {
     Single
       .just(option)
       .map {
@@ -151,7 +147,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .replaceNilWith(TemperatureUnitOption(value: .celsius)) // default value
   }
   
-  func setDimensionalUnitsOption(_ option: DimensionalUnitsOption) -> Completable {
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable {
     Single
       .just(option)
       .map {
@@ -179,7 +175,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .replaceNilWith(DimensionalUnitsOption(value: .metric)) // default value
   }
   
-  func setSortingOrientationOption(_ option: SortingOrientationOption) -> Completable {
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable {
     Single
       .just(option)
       .map {
@@ -207,7 +203,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .replaceNilWith(SortingOrientationOption(value: .name)) // default value
   }
   
-  func setPreferredListTypeOption(_ option: ListTypeOption) -> Completable {
+  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable {
     Single
       .just(option)
       .map {
@@ -235,7 +231,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .replaceNilWith(ListTypeOption(value: .nearby)) // default value
   }
   
-  func setPreferredMapTypeOption(_ option: MapTypeOption) -> Completable {
+  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable {
     Single
       .just(option)
       .map {
@@ -250,7 +246,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: MapTypeOption.self) }
   }
   
-  func createPreferredMapTypeOptionObservable() -> Observable<MapTypeOption> {
+  func createMapTypeOptionObservable() -> Observable<MapTypeOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -264,9 +260,9 @@ extension PreferencesService2: GeneralPreferenceSetting {
   }
 }
 
-// MARK: - Weather Station Bookmarking
+// MARK: - Weather Station Bookmark Settings
 
-protocol WeatherStationBookmarkSetting {
+protocol WeatherStationBookmarkSettings {
   func addBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
   func removeBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
   func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
@@ -279,7 +275,7 @@ protocol WeatherStationBookmarkSetting {
   func createPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
 }
 
-extension PreferencesService2: WeatherStationBookmarkSetting {
+extension PreferencesService2: WeatherStationBookmarkSettings {
   
   func addBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable {
     Single

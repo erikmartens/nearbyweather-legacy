@@ -52,7 +52,7 @@ private extension SortingOrientationSelectionViewModel {
     _ = onDidSelectOptionSubject
       .asSingle()
       .flatMapCompletable { [dependencies] sortingOrientationOption -> Completable in
-        dependencies.preferencesService.setSortingOrientationOption(sortingOrientationOption)
+        dependencies.preferencesService.createSetSortingOrientationOptionCompletable(sortingOrientationOption)
       }
       .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
   }

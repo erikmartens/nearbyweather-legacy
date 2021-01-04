@@ -61,10 +61,10 @@ extension MigrationService {
         }
         return Completable.zip([
           dependencies.preferencesService.setPreferredBookmark(preferencesStoredContentsWrapper.preferredBookmark),
-          dependencies.preferencesService.setAmountOfNearbyResultsOption(preferencesStoredContentsWrapper.amountOfResults),
-          dependencies.preferencesService.setTemperatureUnitOption(preferencesStoredContentsWrapper.temperatureUnit),
-          dependencies.preferencesService.setDimensionalUnitsOption(preferencesStoredContentsWrapper.windspeedUnit),
-          dependencies.preferencesService.setSortingOrientationOption(preferencesStoredContentsWrapper.sortingOrientation)
+          dependencies.preferencesService.createSetAmountOfNearbyResultsOptionCompletable(preferencesStoredContentsWrapper.amountOfResults),
+          dependencies.preferencesService.createSetTemperatureUnitOptionCompletable(preferencesStoredContentsWrapper.temperatureUnit),
+          dependencies.preferencesService.createSetDimensionalUnitsOptionCompletable(preferencesStoredContentsWrapper.windspeedUnit),
+          dependencies.preferencesService.createSetSortingOrientationOptionCompletable(preferencesStoredContentsWrapper.sortingOrientation)
         ])
       }
     

@@ -9,7 +9,7 @@
 import RxSwift
 import RxOptional
 
-extension PreferencesService2 {
+private extension PreferencesService2 {
   
   enum PersistencyKeys {
     case amountOfNearbyResultsOption

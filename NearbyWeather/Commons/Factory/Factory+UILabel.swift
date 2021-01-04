@@ -27,17 +27,17 @@ extension Factory {
       
       switch type {
       case let .title(alignment, numberOfLines):
-        label.textColor = Constants.Theme.Color.ContentElement.title
+        label.textColor = Constants.Theme.Color.ViewElement.title
         label.font = .preferredFont(forTextStyle: .title3)
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
       case let .body(alignment, numberOfLines):
-        label.textColor = Constants.Theme.Color.ContentElement.title
+        label.textColor = Constants.Theme.Color.ViewElement.title
         label.font = .preferredFont(forTextStyle: .body)
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
       case let .description(alignment, numberOfLines):
-        label.textColor = Constants.Theme.Color.ContentElement.subtitle
+        label.textColor = Constants.Theme.Color.ViewElement.subtitle
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines

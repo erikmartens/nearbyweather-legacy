@@ -26,7 +26,7 @@ extension Factory {
       case .standard:
         navigationController.navigationBar.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
         navigationController.navigationBar.barTintColor = Constants.Theme.Color.ViewElement.primaryBackground
-        navigationController.navigationBar.tintColor = Constants.Theme.Color.ContentElement.title
+        navigationController.navigationBar.tintColor = Constants.Theme.Color.ViewElement.title
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
         navigationController.navigationBar.barStyle = .default

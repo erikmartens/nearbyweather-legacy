@@ -55,9 +55,32 @@ final class AmountOfNearbyResultsSelectionAlertController: UIAlertController, Ba
     super.init(nibName: nil, bundle: nil)
     title = R.string.localizable.amount_of_results().capitalized
     message = nil
+    
+    setCheckmarkForOption(with: viewModel.dependencies.selectedOptionValue)
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  // MARK: - Functions
+  
+  private func setCheckmarkForOption(with value: AmountOfResultsValue) {
+    var action: UIAlertAction
+    
+    switch viewModel.dependencies.selectedOptionValue {
+    case .ten:
+      action = tenNearbyResultsSelectionAction
+    case .twenty:
+      action = twentyNearbyResultsSelectionAction
+    case .thirty:
+      action = thirtyNearbyResultsSelectionAction
+    case .forty:
+      action = fortyNearbyResultsSelectionAction
+    case .fifty:
+      action = fiftyNearbyResultsSelectionAction
+    }
+    
+    action.setValue(true, forKey: Constants.Keys.KeyValueBindings.kChecked)
   }
 }

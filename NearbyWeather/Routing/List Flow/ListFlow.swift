@@ -138,7 +138,14 @@ private extension ListFlow {
   }
   
   func summonChangeSortingOrientationAlert() -> FlowContributors {
-    .none // TODO
+    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
+    
+    let alertController = SortingOrientationSelectionAlertController(dependencies: SortingOrientationSelectionViewModel.Dependencies(
+      selectedOptionValue: SortingOrientationValue#,
+      preferencesService: preferencesService
+    ))
+    rootViewController.present(alertController, animated: true, completion: nil)
+    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
   }
   
   func dismissChildFlow() -> FlowContributors {

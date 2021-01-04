@@ -34,7 +34,9 @@
 
 ## About the App
 
-> ℹ️ By using the app you automatically agree to the [privacy policy](PRIVACYPOLICY.md) and the [terms of use](TERMSOFUSE.md).
+> ❗️ By using the app you automatically agree to the [privacy policy](PRIVACYPOLICY.md) and the [terms of use](TERMSOFUSE.md).
+
+> ❗️Please note that you need to supply your own OpenWeatherMap API key, in order to use the app.
 
 NearbyWeather is a simple weather app, that provides current weather information for nearby cities, as well for bookmarked locations. NearbyWeather uses the OpenWeatherMap API to download weather data. Additionally the OpenWeatherMaps location database is directly bootstrapped into the app for quick access.
 
@@ -47,42 +49,37 @@ With NearbyWeather you can:
 - Choose your preferred units (celsius/fahrenheit/kelvin & kilometres/miles)
 - Access previously loaded data offline
 
-```
-❗️Please note that you need to supply your own OpenWeatherMap API key, in order to use the app.
-```
-
 ## Mission of this Project
 
 NearbyWeather was created to help you as a reference for developing your skills. The app is kept up to date with the latest best practices in mobile app development. Find out how how modern iOS apps are engineered:
 
 | Area | Concepts | Status |
 |:--|:--|:--|
-| Language | Swift (latest release) | ✅ |
-| Additional Languages | Objective-C, JavaScript | ✅ |
-| Additional Frameworks | RxSwift | 🔄 In Progress |
-| Architecture | MVVM+C | 🔄 In Progress |
-| Navigation | Coordinator Pattern with RxFlow | ✅ |
-| UI-Construction | Autolayout in Code + Factory Pattern | 🔄 In Progress |
-| Dependencies | Dependency Injection with Swinject & Singletons | 🔄 In Progress / ✅ |
-| Data Persistence | Realm & Files on Disk | 🔄 In Progress / ✅ |
+| Languages | Swift, Objective-C, JavaScript | ✅ |
+| Frameworks | RxSwift, RxFlow | ✅ |
+| Architecture | MVVM+C | ✅ |
+| UI-Construction | Autolayout in Code + Factory Pattern | ✅ |
+| Dependency Management| Swinject | ✅ |
+| Data Persistence | Realm, Files on Disk & UserDefaults | ✅ |
 | Networking | Alamofire | ✅ |
 | Asset Management | R.Swift | ✅ |
 | Code Quality | SwiftLint | ✅ |
 | Analytics and Reporting | Google Firebase | ✅ |
-| Library Management | CocoaPods | ✅ |
-| Bootsrapped Bundle Data | Node.js Scripts | ✅ |
+| Package Management | CocoaPods | ✅ |
+| Bootsrapping | Node.js Scripts | ✅ |
 | Deployment | Fastlane | ✅ |
-| Testing and Quality Assurance | Unit Tests and UI Tests, SwiftUI Scene Previews | 🅾️ Coming Soon |
+| Continuous Integration | BitRise | 🅾️ Coming Soon |
+| Testing and Quality Assurance | Unit Tests & UI Tests, SwiftUI Scene Previews | 🅾️ Coming Soon |
 
 ## App Releases
 
-Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects).
+Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects). There you can get an overview of planned features. If you want to suggest a feature, you can submit a new issue for triage.
 
 | Version | Tag |
 |:--|:--|
-| Current Release | [v2.2.1](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.2.1)
-| Next Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/projects/5) |
-| Future Releases | [v?.?.?](https://github.com/erikmartens/NearbyWeather/projects/1) |
+| Current Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.3.0)
+| Next Release | [v2.4.0](https://github.com/erikmartens/NearbyWeather/projects/8) |
+| Future Releases | [v?.?.?](https://github.com/erikmartens/NearbyWeather/projects) |
 
 ## How to Get Started
 

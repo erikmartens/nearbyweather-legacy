@@ -103,7 +103,7 @@ extension PreferencesService2: GeneralPreferenceSettings {
           entity: $0
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: AmountOfResultsOption.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: AmountOfResultsOption.self) }
   }
   
   func createAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption> {
@@ -131,7 +131,7 @@ extension PreferencesService2: GeneralPreferenceSettings {
           entity: $0
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: TemperatureUnitOption.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: TemperatureUnitOption.self) }
   }
   
   func createTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption> {
@@ -159,7 +159,7 @@ extension PreferencesService2: GeneralPreferenceSettings {
           entity: $0
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: DimensionalUnitsOption.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: DimensionalUnitsOption.self) }
   }
   
   func createDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption> {
@@ -187,7 +187,7 @@ extension PreferencesService2: GeneralPreferenceSettings {
           entity: $0
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: SortingOrientationOption.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: SortingOrientationOption.self) }
   }
   
   func createSortingOrientationOptionObservable() -> Observable<SortingOrientationOption> {
@@ -215,7 +215,7 @@ extension PreferencesService2: GeneralPreferenceSettings {
           entity: $0
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: ListTypeOption.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: ListTypeOption.self) }
   }
   
   func createListTypeOptionObservable() -> Observable<ListTypeOption> {
@@ -243,7 +243,7 @@ extension PreferencesService2: GeneralPreferenceSettings {
           entity: $0
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: MapTypeOption.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: MapTypeOption.self) }
   }
   
   func createMapTypeOptionObservable() -> Observable<MapTypeOption> {
@@ -289,7 +289,7 @@ extension PreferencesService2: WeatherStationBookmarkSettings {
           entity: $0
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherStationDTO.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherStationDTO.self) }
   }
   
   func removeBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable {
@@ -301,7 +301,7 @@ extension PreferencesService2: WeatherStationBookmarkSettings {
           identifier: String($0)
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.deleteResource(with: $0) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.deleteResource(with: $0) }
   }
   
   func setBookmarksSorting(_ sorting: [String: Int]) -> Completable {
@@ -316,7 +316,7 @@ extension PreferencesService2: WeatherStationBookmarkSettings {
           entity: $0
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: [String: Int].self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: [String: Int].self) }
   }
   
   func getBookmarksSorting() -> Observable<[String: Int]?> {
@@ -349,7 +349,7 @@ extension PreferencesService2: WeatherStationBookmarkSettings {
           entity: $0
         )
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: PreferredBookmarkOption.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: PreferredBookmarkOption.self) }
   }
   
   func clearPreferredBookmark() -> Completable {

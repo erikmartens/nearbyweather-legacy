@@ -41,7 +41,7 @@ final class ListTypeSelectionAlertController: UIAlertController, BaseViewControl
     viewModel = ListTypeSelectionViewModel(dependencies: dependencies)
     
     super.init(nibName: nil, bundle: nil)
-    title = R.string.localizable.select_list_type()
+    title = R.string.localizable.select_list_type().capitalized
     message = nil
   }
   

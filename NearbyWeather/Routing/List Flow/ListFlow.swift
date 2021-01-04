@@ -122,7 +122,9 @@ private extension ListFlow {
   }
   
   func summonChangeAmountOfResultsAlert() -> FlowContributors {
-    .none // TODO
+    let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionViewModel.Dependencies(preferencesService: dependencyContainer.resolve(PreferencesService2.self)!))
+    rootViewController.present(alertController, animated: true, completion: nil)
+    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
   }
   
   func summonChangeSortingOrientationAlert() -> FlowContributors {

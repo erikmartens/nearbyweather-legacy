@@ -8,6 +8,7 @@
 
 import RxSwift
 import RxCocoa
+import RxOptional
 import RxFlow
 
 extension WeatherListViewModel {
@@ -46,7 +47,7 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   lazy var preferredListTypeObservable: Observable<ListTypeValue> = { [dependencies] in
     dependencies
       .preferencesService
-      .createPreferredListTypeOptionObservable()
+      .createListTypeOptionObservable()
       .map { $0.value }
       .share(replay: 1)
   }()
@@ -74,23 +75,44 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
 private extension WeatherListViewModel {
   
   func observeUserTapEvents() {
+    let preferredAmountOfResultsObservable = dependencies
+      .preferencesService
+      .createAmountOfNearbyResultsOptionObservable()
+      .map { $0.value }
+      .share(replay: 1)
+    
+    let preferredSortingOrientationObservable = dependencies
+      .preferencesService
+      .createSortingOrientationOptionObservable()
+      .map { $0.value }
+      .share(replay: 1)
+    
     onDidTapListTypeBarButton
-      .subscribe(onNext: { [weak steps] in steps?.accept(ListStep.changeListTypeAlert) })
+      .flatMapLatest { [unowned preferredListTypeObservable] in preferredListTypeObservable }
+      .subscribe(onNext: { [weak steps] preferredListType in
+        steps?.accept(ListStep.changeListTypeAlert(currentSelectedOptionValue: preferredListType))
+      })
       .disposed(by: disposeBag)
     
     onDidTapAmountOfResultsBarButton
-      .subscribe(onNext: { [weak steps] in steps?.accept(ListStep.changeAmountOfResultsAlert) })
+      .flatMapLatest { [unowned preferredAmountOfResultsObservable] in preferredAmountOfResultsObservable }
+      .subscribe(onNext: { [weak steps] preferredAmountOfResults in
+        steps?.accept(ListStep.changeAmountOfResultsAlert(currentSelectedOptionValue: preferredAmountOfResults))
+      })
       .disposed(by: disposeBag)
     
     onDidTapSortingOrientationBarButton
-      .subscribe(onNext: { [weak steps] in steps?.accept(ListStep.changeSortingOrientationAlert) })
+      .flatMapLatest { [unowned preferredSortingOrientationObservable] in preferredSortingOrientationObservable }
+      .subscribe(onNext: { [weak steps] preferredSortingOrientation in
+        steps?.accept(ListStep.changeSortingOrientationAlert(currentSelectedOptionValue: preferredSortingOrientation))
+      })
       .disposed(by: disposeBag)
   }
   
   func observeDataSource() {
     let preferredSortingOrientationObservable = dependencies
       .preferencesService
-      .createPreferredSortingOrientationOptionObservable()
+      .createSortingOrientationOptionObservable()
       .map { $0.value }
       .share(replay: 1)
     

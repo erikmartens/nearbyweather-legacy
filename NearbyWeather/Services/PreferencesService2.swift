@@ -75,22 +75,22 @@ final class PreferencesService2 {
 
 protocol GeneralPreferenceSetting {
   func setAmountOfNearbyResultsOption(_ option: AmountOfResultsOption) -> Completable
-  func getAmountOfNearbyResultsOption() -> Observable<AmountOfResultsOption>
+  func createAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
   
   func setTemperatureUnitOption(_ option: TemperatureUnitOption) -> Completable
-  func getTemperatureUnitOption() -> Observable<TemperatureUnitOption>
+  func createTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
   
   func setDimensionalUnitsOption(_ option: DimensionalUnitsOption) -> Completable
-  func getDimensionalUnitsOption() -> Observable<DimensionalUnitsOption>
+  func createDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
   
   func setSortingOrientationOption(_ option: SortingOrientationOption) -> Completable
-  func createPreferredSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
+  func createSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
   
   func setPreferredListTypeOption(_ option: ListTypeOption) -> Completable
-  func createPreferredListTypeOptionObservable() -> Observable<ListTypeOption>
+  func createListTypeOptionObservable() -> Observable<ListTypeOption>
   
   func setPreferredMapTypeOption(_ option: MapTypeOption) -> Completable
-  func getPreferredMapTypeOption() -> Observable<MapTypeOption>
+  func createPreferredMapTypeOptionObservable() -> Observable<MapTypeOption>
 }
 
 extension PreferencesService2: GeneralPreferenceSetting {
@@ -110,7 +110,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: AmountOfResultsOption.self) }
   }
   
-  func getAmountOfNearbyResultsOption() -> Observable<AmountOfResultsOption> {
+  func createAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -138,7 +138,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: TemperatureUnitOption.self) }
   }
   
-  func getTemperatureUnitOption() -> Observable<TemperatureUnitOption> {
+  func createTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -166,7 +166,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: DimensionalUnitsOption.self) }
   }
   
-  func getDimensionalUnitsOption() -> Observable<DimensionalUnitsOption> {
+  func createDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -194,7 +194,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: SortingOrientationOption.self) }
   }
   
-  func createPreferredSortingOrientationOptionObservable() -> Observable<SortingOrientationOption> {
+  func createSortingOrientationOptionObservable() -> Observable<SortingOrientationOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -222,7 +222,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: ListTypeOption.self) }
   }
   
-  func createPreferredListTypeOptionObservable() -> Observable<ListTypeOption> {
+  func createListTypeOptionObservable() -> Observable<ListTypeOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -250,7 +250,7 @@ extension PreferencesService2: GeneralPreferenceSetting {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: MapTypeOption.self) }
   }
   
-  func getPreferredMapTypeOption() -> Observable<MapTypeOption> {
+  func createPreferredMapTypeOptionObservable() -> Observable<MapTypeOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(

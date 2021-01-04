@@ -16,9 +16,9 @@ enum ListStep: Step {
   case emptyList
   case weatherDetails(identifier: Int?, isBookmark: Bool)
   case weatherDetails2(identity: PersistencyModelIdentityProtocol, isBookmark: Bool)
-  case changeListTypeAlert
-  case changeAmountOfResultsAlert
-  case changeSortingOrientationAlert
+  case changeListTypeAlert(currentSelectedOptionValue: ListTypeValue)
+  case changeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue)
+  case changeSortingOrientationAlert(currentSelectedOptionValue: SortingOrientationValue)
   case dismissChildFlow
 }
 

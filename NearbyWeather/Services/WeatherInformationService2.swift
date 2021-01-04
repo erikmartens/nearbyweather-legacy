@@ -236,7 +236,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
     Observable
       .combineLatest(
         dependencies.userLocationService.createDidUpdateLocationObservable(),
-        dependencies.preferencesService.getAmountOfNearbyResultsOption(),
+        dependencies.preferencesService.createAmountOfNearbyResultsOptionObservable(),
         resultSelector: { [apiKey] location, amountOfResultsOption -> URL in
           guard let apiKey = apiKey else {
             throw WeatherInformationServiceError.apiKeyError

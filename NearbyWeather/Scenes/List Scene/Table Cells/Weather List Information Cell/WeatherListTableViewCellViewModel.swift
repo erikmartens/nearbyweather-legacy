@@ -15,6 +15,7 @@ extension WeatherListTableViewCellViewModel {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
     let isBookmark: Bool
     let weatherInformationService: WeatherInformationService2
+    let preferencesService: PreferencesService2
   }
 }
 
@@ -38,8 +39,7 @@ final class WeatherListTableViewCellViewModel: NSObject, BaseCellViewModel {
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    
-    self.cellModelDriver = Self.createDataSourceObserver(with: dependencies)
+    cellModelDriver = Self.createDataSourceObserver(with: dependencies)
   }
 }
 
@@ -48,37 +48,41 @@ final class WeatherListTableViewCellViewModel: NSObject, BaseCellViewModel {
 private extension WeatherListTableViewCellViewModel {
   
   static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherListTableViewCellModel> {
-    Observable.just(dependencies.isBookmark)
+    let weatherInformationModelObservable = Observable
+      .just(dependencies.isBookmark)
       .flatMapLatest { [dependencies] isBookmark -> Observable<PersistencyModel<WeatherInformationDTO>?> in
-        if isBookmark {
-          return dependencies.weatherInformationService
-            .createBookmarkedWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
-        }
-        return dependencies.weatherInformationService
-          .createNearbyWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
+        isBookmark
+          ? dependencies.weatherInformationService.createBookmarkedWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
+          : dependencies.weatherInformationService.createNearbyWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
       }
       .map { $0?.entity }
-      .errorOnNil()
-      .map { weatherInformation -> WeatherListTableViewCellModel in
-        WeatherListTableViewCellModel(
-          weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
-            fromWeatherCode: weatherInformation.weatherCondition.first?.identifier,
-            isDayTime: ConversionWorker.isDayTime(for: weatherInformation.daytimeInformation, coordinates: weatherInformation.coordinates)
-          ),
-          temperature: ConversionWorker.temperatureDescriptor(
-            forTemperatureUnit: PreferencesService.shared.temperatureUnit, // TODO observe user preference service 2
-            fromRawTemperature: weatherInformation.atmosphericInformation.temperatureKelvin
-          ),
-          cloudCoverage: weatherInformation.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
-          humidity: weatherInformation.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none),
-          windspeed: ConversionWorker.windspeedDescriptor(
-            forDistanceSpeedUnit: PreferencesService.shared.distanceSpeedUnit, // TODO observe user preference service 2
-            forWindspeed: weatherInformation.windInformation.windspeed
-          ),
-          backgroundColor: .clear // TODO
-          // TODO border
-        )
-      }
+      
+    return Observable
+      .combineLatest(
+        weatherInformationModelObservable.errorOnNil(),
+        dependencies.preferencesService.createTemperatureUnitOptionObservable(),
+        dependencies.preferencesService.createDimensionalUnitsOptionObservable(),
+        resultSelector: { weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherListTableViewCellModel in
+          WeatherListTableViewCellModel(
+            weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
+              fromWeatherCode: weatherInformationModel.weatherCondition.first?.identifier,
+              isDayTime: ConversionWorker.isDayTime(for: weatherInformationModel.daytimeInformation, coordinates: weatherInformationModel.coordinates)
+            ),
+            temperature: ConversionWorker.temperatureDescriptor(
+              forTemperatureUnit: temperatureUnitOption,
+              fromRawTemperature: weatherInformationModel.atmosphericInformation.temperatureKelvin
+            ),
+            cloudCoverage: weatherInformationModel.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
+            humidity: weatherInformationModel.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none),
+            windspeed: ConversionWorker.windspeedDescriptor(
+              forDistanceSpeedUnit: dimensionalUnitsOption,
+              forWindspeed: weatherInformationModel.windInformation.windspeed
+            ),
+            backgroundColor: .clear // TODO
+            // TODO border
+          )
+        }
+      )
       .asDriver(onErrorJustReturn: WeatherListTableViewCellModel())
   }
 }

@@ -39,11 +39,11 @@ extension Constants.Theme.Color {
 
   enum InteractableElement {
 
-    static var standardButton: UIColor {
+    static var standardButtonBackground: UIColor {
       Constants.Theme.Color.MarqueColors.bookmarkDay
     }
 
-    static var standardTint: UIColor {
+    static var standardButtonTint: UIColor {
       Constants.Theme.Color.MarqueColors.bookmarkDay
     }
   }
@@ -88,6 +88,11 @@ extension Constants.Theme.Color {
         return UIColor(red: 0, green: 0, blue: 0) // TODO
       }
       return UIColor.tertiarySystemBackground
+    }
+    
+    static var alert: UIColor {
+      UIColor.from(dark: .init(hex: 0x000000),
+                   light: .init(hex: 0xFFFFFF))
     }
   }
 

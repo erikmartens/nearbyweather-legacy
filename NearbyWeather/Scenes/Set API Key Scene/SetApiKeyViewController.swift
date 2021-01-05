@@ -69,7 +69,7 @@ final class SetApiKeyViewController: UIViewController, Stepper {
     descriptionLabel.text! = R.string.localizable.welcome_api_key_description()
 
     inputTextField.counterColor = inputTextField.textColor ?? .black
-    inputTextField.limitColor = Constants.Theme.Color.InteractableElement.standardTint
+    inputTextField.limitColor = Constants.Theme.Color.InteractableElement.standardButtonTint
     inputTextField.textColor = .lightGray
     inputTextField.tintColor = .lightGray
 
@@ -80,8 +80,8 @@ final class SetApiKeyViewController: UIViewController, Stepper {
     saveButton.layer.backgroundColor = Constants.Theme.Color.MarqueColors.bookmarkDay.cgColor
 
     getInstructionsButtons.setTitle(R.string.localizable.get_api_key_description().uppercased(), for: .normal)
-    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButton, for: .normal)
-    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButton, for: .highlighted)
+    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButtonBackground, for: .normal)
+    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButtonBackground, for: .highlighted)
   }
 
   fileprivate func startAnimationTimer() {
@@ -111,7 +111,7 @@ final class SetApiKeyViewController: UIViewController, Stepper {
         return
     }
     saveButton.isEnabled = true
-    inputTextField.textColor = Constants.Theme.Color.InteractableElement.standardTint
+    inputTextField.textColor = Constants.Theme.Color.InteractableElement.standardButtonTint
   }
 
   // MARK: - Button Interaction

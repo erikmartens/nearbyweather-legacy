@@ -22,7 +22,7 @@ final class WeatherListViewController: UIViewController, BaseViewController {
   // MARK: - UIComponents
   
   fileprivate lazy var listTypeBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.layerType()))
-  fileprivate lazy var amountOfResultsBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.layerType())) // TODO: change image
+  fileprivate lazy var amountOfResultsBarButton = Factory.BarButtonItem.make(fromType: .standard())
   fileprivate lazy var sortingOrientationBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.sort()))
   
   fileprivate lazy var tableView = Factory.TableView.make(fromType: .standard(frame: view.frame))
@@ -84,9 +84,7 @@ private extension WeatherListViewController {
       .disposed(by: disposeBag)
     
     viewModel
-      .preferredListTypeObservable
-      .observeOn(MainScheduler.instance)
-      .asDriver(onErrorJustReturn: ListTypeValue.bookmarked)
+      .preferredListTypeDriver
       .drive(onNext: { [weak navigationItem, weak amountOfResultsBarButton, weak sortingOrientationBarButton] listTypeValue in
         switch listTypeValue {
         case .bookmarked:
@@ -96,6 +94,17 @@ private extension WeatherListViewController {
             navigationItem?.rightBarButtonItems = [amountOfResultsBarButton, sortingOrientationBarButton]
           }
         }
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel
+      .preferredAmountOfResultsDriver
+      .drive(onNext: { [weak amountOfResultsBarButton] amountOfResultsValue in
+        amountOfResultsBarButton?.setBackgroundImage(
+          AmountOfResultsOption(value: amountOfResultsValue).imageValue,
+          for: UIControl.State(),
+          barMetrics: .default
+        )
       })
       .disposed(by: disposeBag)
     

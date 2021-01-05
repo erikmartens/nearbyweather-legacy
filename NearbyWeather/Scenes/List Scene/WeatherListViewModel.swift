@@ -47,13 +47,23 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   // MARK: - Drivers
   
   lazy var isRefreshingDriver = isRefreshingSubject.asDriver(onErrorJustReturn: false)
+  lazy var preferredListTypeDriver = preferredListTypeObservable.asDriver(onErrorJustReturn: .bookmarked)
+  lazy var preferredAmountOfResultsDriver = preferredAmountOfResultsObservable.asDriver(onErrorJustReturn: .ten)
   
   // MARK: - Observables
   
-  lazy var preferredListTypeObservable: Observable<ListTypeValue> = { [dependencies] in
+  private lazy var preferredListTypeObservable: Observable<ListTypeValue> = { [dependencies] in
     dependencies
       .preferencesService
       .createListTypeOptionObservable()
+      .map { $0.value }
+      .share(replay: 1)
+  }()
+  
+  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsValue>  = { [dependencies] in
+    dependencies
+      .preferencesService
+      .createAmountOfNearbyResultsOptionObservable()
       .map { $0.value }
       .share(replay: 1)
   }()
@@ -81,12 +91,6 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
 private extension WeatherListViewModel {
   
   func observeUserTapEvents() {
-    let preferredAmountOfResultsObservable = dependencies
-      .preferencesService
-      .createAmountOfNearbyResultsOptionObservable()
-      .map { $0.value }
-      .share(replay: 1)
-    
     let preferredSortingOrientationObservable = dependencies
       .preferencesService
       .createSortingOrientationOptionObservable()

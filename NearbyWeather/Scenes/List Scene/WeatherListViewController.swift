@@ -11,7 +11,7 @@ import RxSwift
 
 private extension WeatherListViewController {
   struct Definitions {
-    static let weatherInformationCellHeight: CGFloat = 100 // TODO: verify is correct
+    static let weatherInformationCellHeight: CGFloat = 100
   }
 }
 
@@ -153,7 +153,7 @@ private extension WeatherListViewController {
     tableView.refreshControl = UIRefreshControl()
     
     tableView.registerCells([
-      WeatherListTableViewCell.self // TODO: also register Alert Cell
+      WeatherInformationTableViewCell.self // TODO: also register Alert Cell
     ])
     
     tableView.contentInset = UIEdgeInsets(

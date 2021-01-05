@@ -9,7 +9,7 @@
 import RxSwift
 import RxCocoa
 
-extension WeatherListTableViewCellViewModel {
+extension WeatherInformationTableViewCellViewModel {
   
   struct Dependencies {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
@@ -19,7 +19,7 @@ extension WeatherListTableViewCellViewModel {
   }
 }
 
-final class WeatherListTableViewCellViewModel: NSObject, BaseCellViewModel {
+final class WeatherInformationTableViewCellViewModel: NSObject, BaseCellViewModel {
   
   // MARK: - Public Access
   
@@ -33,7 +33,7 @@ final class WeatherListTableViewCellViewModel: NSObject, BaseCellViewModel {
 
   // MARK: - Events
   
-  let cellModelDriver: Driver<WeatherListTableViewCellModel>
+  let cellModelDriver: Driver<WeatherInformationTableViewCellModel>
 
   // MARK: - Initialization
   
@@ -45,9 +45,9 @@ final class WeatherListTableViewCellViewModel: NSObject, BaseCellViewModel {
 
 // MARK: - Observations
 
-private extension WeatherListTableViewCellViewModel {
+private extension WeatherInformationTableViewCellViewModel {
   
-  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherListTableViewCellModel> {
+  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherInformationTableViewCellModel> {
     let weatherInformationModelObservable = Observable
       .just(dependencies.isBookmark)
       .flatMapLatest { [dependencies] isBookmark -> Observable<PersistencyModel<WeatherInformationDTO>?> in
@@ -62,10 +62,10 @@ private extension WeatherListTableViewCellViewModel {
         weatherInformationModelObservable.errorOnNil(),
         dependencies.preferencesService.createTemperatureUnitOptionObservable(),
         dependencies.preferencesService.createDimensionalUnitsOptionObservable(),
-        resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherListTableViewCellModel in
+        resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherInformationTableViewCellModel in
           let isDayTime = ConversionWorker.isDayTime(for: weatherInformationModel.daytimeInformation, coordinates: weatherInformationModel.coordinates) ?? true
           
-          return WeatherListTableViewCellModel(
+          return WeatherInformationTableViewCellModel(
             weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
               fromWeatherCode: weatherInformationModel.weatherCondition.first?.identifier,
               isDayTime: isDayTime
@@ -85,13 +85,13 @@ private extension WeatherListTableViewCellViewModel {
           )
         }
       )
-      .asDriver(onErrorJustReturn: WeatherListTableViewCellModel())
+      .asDriver(onErrorJustReturn: WeatherInformationTableViewCellModel())
   }
 }
 
 // MARK: - Helpers
 
-private extension WeatherListTableViewCellViewModel {
+private extension WeatherInformationTableViewCellViewModel {
   
   static func borderColor(for isBookmark: Bool) -> UIColor {
     isBookmark

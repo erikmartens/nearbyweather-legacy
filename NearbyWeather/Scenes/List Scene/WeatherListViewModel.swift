@@ -169,8 +169,8 @@ private extension WeatherListViewModel {
         nearbyListItemsObservable,
         bookmarkedListItemsObservable,
         resultSelector: { nearbyListItems, bookmarkedListItems -> [TableViewSectionData] in
-          [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherListTableViewCell.reuseIdentifier, sectionItems: nearbyListItems),
-           WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListTableViewCell.reuseIdentifier, sectionItems: bookmarkedListItems)]
+          [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherInformationTableViewCell.reuseIdentifier, sectionItems: nearbyListItems),
+           WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherInformationTableViewCell.reuseIdentifier, sectionItems: bookmarkedListItems)]
         }
       )
       .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .userInteractive))
@@ -184,7 +184,7 @@ private extension WeatherListViewModel {
 extension WeatherListViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
-    guard let cellViewModel = tableDataSource.sectionDataSources[indexPath] as? WeatherListTableViewCellViewModel else {
+    guard let cellViewModel = tableDataSource.sectionDataSources[indexPath] as? WeatherInformationTableViewCellViewModel else {
       return
     }
     Observable
@@ -223,10 +223,10 @@ extension WeatherListViewModel: ViewControllerLifeCycleRelay {
 
 private extension Array where Element == PersistencyModel<WeatherInformationDTO> {
   
-  func mapToWeatherListTableViewCellViewModel(dependencies: WeatherListViewModel.Dependencies, isBookmark: Bool) -> [WeatherListTableViewCellViewModel] {
-    map { weatherInformationPersistencyModel -> WeatherListTableViewCellViewModel in
-      WeatherListTableViewCellViewModel(
-        dependencies: WeatherListTableViewCellViewModel.Dependencies(
+  func mapToWeatherListTableViewCellViewModel(dependencies: WeatherListViewModel.Dependencies, isBookmark: Bool) -> [WeatherInformationTableViewCellViewModel] {
+    map { weatherInformationPersistencyModel -> WeatherInformationTableViewCellViewModel in
+      WeatherInformationTableViewCellViewModel(
+        dependencies: WeatherInformationTableViewCellViewModel.Dependencies(
           weatherInformationIdentity: weatherInformationPersistencyModel.identity,
           isBookmark: isBookmark,
           weatherInformationService: dependencies.weatherInformationService,

@@ -74,8 +74,8 @@
 		F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */; };
 		F282166024608175004E5B08 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282165F24608175004E5B08 /* BaseCell.swift */; };
 		F282166224608194004E5B08 /* BaseCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166124608194004E5B08 /* BaseCellViewModel.swift */; };
-		F282166524608205004E5B08 /* WeatherListTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166424608205004E5B08 /* WeatherListTableViewCellViewModel.swift */; };
-		F282166724608690004E5B08 /* WeatherListTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166624608690004E5B08 /* WeatherListTableViewCellModel.swift */; };
+		F282166524608205004E5B08 /* WeatherInformationTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166424608205004E5B08 /* WeatherInformationTableViewCellViewModel.swift */; };
+		F282166724608690004E5B08 /* WeatherInformationTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166624608690004E5B08 /* WeatherInformationTableViewCellModel.swift */; };
 		F283D26E1DF39095001B879D /* DualLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283D26D1DF39095001B879D /* DualLabelCell.swift */; };
 		F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F283D2751DF393B2001B879D /* InfoPlist.strings */; };
 		F284DDC42458C07400445BFF /* FileManager+DirectoryUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDC32458C07400445BFF /* FileManager+DirectoryUrl.swift */; };
@@ -93,7 +93,7 @@
 		F284DDE5245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDE4245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift */; };
 		F284DDE7245F779500445BFF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDE6245F779500445BFF /* BaseViewController.swift */; };
 		F284DDE9245F77A300445BFF /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDE8245F77A200445BFF /* BaseViewModel.swift */; };
-		F284DDEC245F792D00445BFF /* WeatherListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDEB245F792D00445BFF /* WeatherListTableViewCell.swift */; };
+		F284DDEC245F792D00445BFF /* WeatherInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDEB245F792D00445BFF /* WeatherInformationTableViewCell.swift */; };
 		F284DDF0245F794E00445BFF /* WeatherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDEF245F794E00445BFF /* WeatherListViewModel.swift */; };
 		F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDF1245F796000445BFF /* WeatherListViewController.swift */; };
 		F28CA5392016A1BA00209397 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA5382016A1BA00209397 /* MapViewController.swift */; };
@@ -280,8 +280,8 @@
 		F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsInputTableViewController.swift; sourceTree = "<group>"; };
 		F282165F24608175004E5B08 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		F282166124608194004E5B08 /* BaseCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCellViewModel.swift; sourceTree = "<group>"; };
-		F282166424608205004E5B08 /* WeatherListTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListTableViewCellViewModel.swift; sourceTree = "<group>"; };
-		F282166624608690004E5B08 /* WeatherListTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListTableViewCellModel.swift; sourceTree = "<group>"; };
+		F282166424608205004E5B08 /* WeatherInformationTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationTableViewCellViewModel.swift; sourceTree = "<group>"; };
+		F282166624608690004E5B08 /* WeatherInformationTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationTableViewCellModel.swift; sourceTree = "<group>"; };
 		F283D26D1DF39095001B879D /* DualLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DualLabelCell.swift; sourceTree = "<group>"; };
 		F283D2741DF393B2001B879D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F283D2761DF393B3001B879D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 		F284DDE4245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManagerStoredContentsWrapper.swift; sourceTree = "<group>"; };
 		F284DDE6245F779500445BFF /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		F284DDE8245F77A200445BFF /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
-		F284DDEB245F792D00445BFF /* WeatherListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListTableViewCell.swift; sourceTree = "<group>"; };
+		F284DDEB245F792D00445BFF /* WeatherInformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationTableViewCell.swift; sourceTree = "<group>"; };
 		F284DDEF245F794E00445BFF /* WeatherListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewModel.swift; sourceTree = "<group>"; };
 		F284DDF1245F796000445BFF /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
 		F28CA5382016A1BA00209397 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -497,6 +497,13 @@
 				F22A220325A36B5500C97844 /* SortingOrientationSelectionAlertController.swift */,
 			);
 			path = "Sorting Orientation";
+			sourceTree = "<group>";
+		};
+		F22A220825A4A47100C97844 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		F237286D244C7D6800964C49 /* Main Flow */ = {
@@ -874,14 +881,14 @@
 			path = "Map Annotations";
 			sourceTree = "<group>";
 		};
-		F2821663246081B6004E5B08 /* Weather List Information Cell */ = {
+		F2821663246081B6004E5B08 /* Weather Information */ = {
 			isa = PBXGroup;
 			children = (
-				F282166424608205004E5B08 /* WeatherListTableViewCellViewModel.swift */,
-				F282166624608690004E5B08 /* WeatherListTableViewCellModel.swift */,
-				F284DDEB245F792D00445BFF /* WeatherListTableViewCell.swift */,
+				F282166424608205004E5B08 /* WeatherInformationTableViewCellViewModel.swift */,
+				F282166624608690004E5B08 /* WeatherInformationTableViewCellModel.swift */,
+				F284DDEB245F792D00445BFF /* WeatherInformationTableViewCell.swift */,
 			);
-			path = "Weather List Information Cell";
+			path = "Weather Information";
 			sourceTree = "<group>";
 		};
 		F284DDC5245A12A100445BFF /* Weather Information Data Transfer Objects */ = {
@@ -928,7 +935,8 @@
 		F284DDEA245F78FE00445BFF /* Table Cells */ = {
 			isa = PBXGroup;
 			children = (
-				F2821663246081B6004E5B08 /* Weather List Information Cell */,
+				F22A220825A4A47100C97844 /* Alert */,
+				F2821663246081B6004E5B08 /* Weather Information */,
 			);
 			path = "Table Cells";
 			sourceTree = "<group>";
@@ -1411,10 +1419,10 @@
 				F237288A244C934100964C49 /* WeatherDetailFlow.swift in Sources */,
 				F237286C2445024D00964C49 /* Collection+SafeIndex.swift in Sources */,
 				F284DDE1245F5EE600445BFF /* BulkWeatherDataContainer.swift in Sources */,
-				F282166724608690004E5B08 /* WeatherListTableViewCellModel.swift in Sources */,
+				F282166724608690004E5B08 /* WeatherInformationTableViewCellModel.swift in Sources */,
 				F2F7BA1B23E3706100B4D2EB /* Constants+Messages.swift in Sources */,
 				F28CA5442027AEB500209397 /* WeatherLocationMapAnnotation.swift in Sources */,
-				F284DDEC245F792D00445BFF /* WeatherListTableViewCell.swift in Sources */,
+				F284DDEC245F792D00445BFF /* WeatherInformationTableViewCell.swift in Sources */,
 				F284DDDA245E4B1600445BFF /* MapTypeOption.swift in Sources */,
 				F284DDDF245F5EC600445BFF /* WeatherDataContainer.swift in Sources */,
 				F2D198FE25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift in Sources */,
@@ -1495,7 +1503,7 @@
 				F22A21F125A33A9C00C97844 /* AmountOfNearbyResultsSelectionViewModel.swift in Sources */,
 				F2D1993D25A1E51E004C7753 /* WeatherListTableViewDelegate.swift in Sources */,
 				F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */,
-				F282166524608205004E5B08 /* WeatherListTableViewCellViewModel.swift in Sources */,
+				F282166524608205004E5B08 /* WeatherInformationTableViewCellViewModel.swift in Sources */,
 				F204B7BD1DF35610000F4371 /* SettingsTableViewController.swift in Sources */,
 				F260BDAE244F7BA700B4357A /* RealmPersistencyWorker.swift in Sources */,
 				F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */,

@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-private extension WeatherListTableViewCell {
+private extension WeatherInformationTableViewCell {
   
   struct Definitions {
     static let cellLeadingInset: CGFloat = 48
@@ -17,9 +17,9 @@ private extension WeatherListTableViewCell {
   }
 }
 
-final class WeatherListTableViewCell: UITableViewCell, BaseCell {
+final class WeatherInformationTableViewCell: UITableViewCell, BaseCell {
   
-  typealias BaseCellViewModel = WeatherListTableViewCellViewModel
+  typealias BaseCellViewModel = WeatherInformationTableViewCellViewModel
   
   // MARK: - UIComponents
   
@@ -63,7 +63,7 @@ final class WeatherListTableViewCell: UITableViewCell, BaseCell {
   // MARK: - Cell Life Cycle
   
   func configure(with cellViewModel: BaseCellViewModelProtocol?) {
-    guard let cellViewModel = cellViewModel as? WeatherListTableViewCellViewModel else {
+    guard let cellViewModel = cellViewModel as? WeatherInformationTableViewCellViewModel else {
       return
     }
     self.cellViewModel = cellViewModel
@@ -74,7 +74,7 @@ final class WeatherListTableViewCell: UITableViewCell, BaseCell {
 
 // MARK: - ViewModel Bindings
 
-extension WeatherListTableViewCell {
+extension WeatherInformationTableViewCell {
   
   internal func bindInputFromViewModel(_ cellViewModel: BaseCellViewModel) {
     cellViewModel.cellModelDriver
@@ -89,9 +89,9 @@ extension WeatherListTableViewCell {
 
 // MARK: - Cell Composition
 
-private extension WeatherListTableViewCell {
+private extension WeatherInformationTableViewCell {
   
-  func setContent(for cellModel: WeatherListTableViewCellModel) {
+  func setContent(for cellModel: WeatherInformationTableViewCellModel) {
     backgroundColorView.backgroundColor = cellModel.backgroundColor
     weatherConditionSymbolLabel.text = cellModel.weatherConditionSymbol
     temperatureLabel.text = cellModel.temperature

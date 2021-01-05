@@ -84,9 +84,12 @@ final class ListFlow: Flow {
 private extension ListFlow {
   
   func summonWeatherListController() -> FlowContributors {
-    let weatherListViewController = ListViewController(style: .grouped)
+    let weatherListViewController = WeatherListViewController(dependencies: WeatherListViewController.ViewModel.Dependencies(
+      weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!,
+      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!
+    ))
     rootViewController.setViewControllers([weatherListViewController], animated: false)
-    return .one(flowContributor: .contribute(withNext: weatherListViewController))
+    return .one(flowContributor: .contribute(withNextPresentable: weatherListViewController, withNextStepper: weatherListViewController.viewModel))
   }
   
   func summonEmptyWeatherListController() -> FlowContributors {

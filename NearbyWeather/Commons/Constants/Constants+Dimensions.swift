@@ -60,10 +60,13 @@ extension Constants.Dimensions {
     /// values: 4, 8 or 12
     static func interElementYDistance(from weight: Weight) -> CGFloat {
       switch weight {
+      /// constant: 4
       case .small:
         return 4
+      /// constant: 8
       case .medium:
         return 8
+      /// constant: 12
       case .large:
         return 12
       }
@@ -71,10 +74,13 @@ extension Constants.Dimensions {
     /// values: 8, 12 and 16
     static func interElementXDistance(from weight: Weight) -> CGFloat {
       switch weight {
+      /// constant: 8
       case .small:
         return 8
+      /// constant: 12
       case .medium:
         return 12
+      /// constant: 16
       case .large:
         return 16
       }

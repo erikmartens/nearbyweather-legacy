@@ -82,9 +82,7 @@ extension WeatherInformationTableViewCell {
       .disposed(by: disposeBag)
   }
   
-  internal func bindOutputToViewModel(_ cellViewModel: BaseCellViewModel) {
-    // nothing to do
-  }
+  internal func bindOutputToViewModel(_ cellViewModel: BaseCellViewModel) {} // nothing to do
 }
 
 // MARK: - Cell Composition
@@ -105,7 +103,7 @@ private extension WeatherInformationTableViewCell {
       backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
       backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
       backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.cellLeadingInset),
-      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.trailing)
+      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.trailing)
     ])
     
     contentView.addSubview(weatherConditionSymbolLabel, constraints: [

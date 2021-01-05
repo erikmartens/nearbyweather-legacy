@@ -11,11 +11,11 @@ import UIKit.UITableViewCell
 
 extension UITableView {
   
-  func registerCells<C: UITableViewCell>(_ cells: [C.Type]) where C: ReuseIdentifiable {
+  func registerCells(_ cells: [UITableViewCell.Type]) {
     cells.forEach { registerCell($0) }
   }
   
-  func registerCell<C: UITableViewCell>(_ cell: C.Type) where C: ReuseIdentifiable {
+  func registerCell(_ cell: UITableViewCell.Type) {
     register(cell, forCellReuseIdentifier: cell.reuseIdentifier)
   }
 }

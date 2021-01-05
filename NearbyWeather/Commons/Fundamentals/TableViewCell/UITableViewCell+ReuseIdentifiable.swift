@@ -1,12 +1,12 @@
 //
-//  ReuseIdentifiable.swift
+//  UITableViewCell+ReuseIdentifiable.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 19.04.20.
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
-import Foundation
+import UIKit.UITableViewCell
 
 protocol ReuseIdentifiable {
   static var reuseIdentifier: String { get }
@@ -18,3 +18,5 @@ extension ReuseIdentifiable {
     String(describing: self)
   }
 }
+
+extension UITableViewCell: ReuseIdentifiable {}

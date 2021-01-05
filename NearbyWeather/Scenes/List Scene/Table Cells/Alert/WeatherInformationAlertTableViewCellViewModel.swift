@@ -45,8 +45,8 @@ final class WeatherInformationAlertTableViewCellViewModel: NSObject, BaseCellVie
 private extension WeatherInformationAlertTableViewCellViewModel {
   
   static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherInformationAlertTableViewCellModel> {
-    let alertInformationModelObservable = Observable
-      
+   Observable
+      .just(WeatherInformationAlertTableViewCellModel())
       .asDriver(onErrorJustReturn: WeatherInformationAlertTableViewCellModel())
   }
 }

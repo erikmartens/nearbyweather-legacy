@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppVersionCell: UITableViewCell, ReuseIdentifiable {
+class AppVersionCell: UITableViewCell {
   
   private lazy var mainImageView = Factory.ImageView.make(fromType: .appIcon)
   private lazy var titleLabel = Factory.Label.make(fromType: .title(alignment: .center))

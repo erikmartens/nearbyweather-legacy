@@ -28,6 +28,7 @@ final class WeatherInformationAlertTableViewCell: UITableViewCell, BaseCell {
     return view
   }()
   
+  private lazy var contentStackView = Factory.StackView.make(fromType: .horizontal(spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .large)))
   private lazy var alertImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.temperature()))
   private lazy var alertInformationLabel = Factory.Label.make(fromType: .title(numberOfLines: 1))
   
@@ -73,9 +74,7 @@ extension WeatherInformationAlertTableViewCell {
       .disposed(by: disposeBag)
   }
   
-  internal func bindOutputToViewModel(_ cellViewModel: BaseCellViewModel) {
-    // nothing to do
-  }
+  internal func bindOutputToViewModel(_ cellViewModel: BaseCellViewModel) {} // nothing to do
 }
 
 // MARK: - Cell Composition
@@ -93,16 +92,22 @@ private extension WeatherInformationAlertTableViewCell {
       backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
       backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
       backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.leading),
-      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.trailing)
+      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.trailing)
     ])
     
-    contentView.addSubview(alertImageView, constraints: [
+    contentStackView.addArrangedSubview(alertImageView, constraints: [
       alertImageView.heightAnchor.constraint(equalToConstant: Definitions.alertImageViewHeight),
       alertImageView.widthAnchor.constraint(equalToConstant: Definitions.alertImageViewHeight)
     ])
+    contentStackView.addArrangedSubview(alertInformationLabel, constraints: [
+      alertInformationLabel.heightAnchor.constraint(equalTo: alertImageView.heightAnchor)
+    ])
     
-    contentView.addSubview(alertInformationLabel, constraints: [
-      
+    backgroundColorView.addSubview(contentStackView, constraints: [
+      contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.ContentInsets.top),
+      contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.ContentInsets.bottom),
+      contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.Spacing.ContentInsets.leading),
+      contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.Spacing.ContentInsets.trailing)
     ])
   }
   

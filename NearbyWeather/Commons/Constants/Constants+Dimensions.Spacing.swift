@@ -25,6 +25,17 @@ extension Constants.Dimensions.Spacing {
     static let bottom: CGFloat = 4
   }
   
+  enum ContentInsets {
+    /// constant: 16
+    static let leading: CGFloat = 16
+    /// constant: 16
+    static let trailing: CGFloat = 16
+    /// constant: 4
+    static let top: CGFloat = 12
+    /// constant: 4
+    static let bottom: CGFloat = 12
+  }
+  
   enum InterElementSpacing {
     /// values: 4, 8 or 12
     static func yDistance(from weight: Weight) -> CGFloat {

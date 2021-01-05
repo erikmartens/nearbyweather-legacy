@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImagedDualLabelCell: UITableViewCell, ReuseIdentifiable {
+class ImagedDualLabelCell: UITableViewCell {
   
   private lazy var contentLabel = Factory.Label.make(fromType: .body())
   private lazy var descriptionLabel = Factory.Label.make(fromType: .description(alignment: .right, numberOfLines: 1))

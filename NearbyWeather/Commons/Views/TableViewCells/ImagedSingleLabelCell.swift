@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImagedSingleLabelCell: UITableViewCell, ReuseIdentifiable {
+class ImagedSingleLabelCell: UITableViewCell {
   
   private lazy var contentLabel = Factory.Label.make(fromType: .body())
   private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)

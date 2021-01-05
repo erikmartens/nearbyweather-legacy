@@ -15,7 +15,7 @@ private extension WeatherListViewController {
   }
 }
 
-final class WeatherListViewController: UIViewController, BaseViewController { // TODO: add pull to refresh with last updated info
+final class WeatherListViewController: UIViewController, BaseViewController {
   
   typealias ViewModel = WeatherListViewModel
   
@@ -57,6 +57,11 @@ final class WeatherListViewController: UIViewController, BaseViewController { //
     super.viewWillAppear(animated)
     setupAppearance()
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    tableView.refreshControl?.endRefreshing()
+  }
 }
 
 // MARK: - ViewModel Bindings
@@ -93,22 +98,36 @@ private extension WeatherListViewController {
         }
       })
       .disposed(by: disposeBag)
+    
+    viewModel
+      .isRefreshingDriver
+      .drive(onNext: { [weak tableView] isRefreshing in
+        isRefreshing
+          ? tableView?.refreshControl?.beginRefreshing()
+          : tableView?.refreshControl?.endRefreshing()
+      })
+      .disposed(by: disposeBag)
   }
   
   private func bindUserInputToViewModel(_ viewModel: ViewModel) {
     listTypeBarButton.rx
       .tap
-      .bind(to: viewModel.onDidTapListTypeBarButton)
+      .bind(to: viewModel.onDidTapListTypeBarButtonSubject)
       .disposed(by: disposeBag)
     
     amountOfResultsBarButton.rx
       .tap
-      .bind(to: viewModel.onDidTapAmountOfResultsBarButton)
+      .bind(to: viewModel.onDidTapAmountOfResultsBarButtonSubject)
       .disposed(by: disposeBag)
     
     sortingOrientationBarButton.rx
       .tap
-      .bind(to: viewModel.onDidTapSortingOrientationBarButton)
+      .bind(to: viewModel.onDidTapSortingOrientationBarButtonSubject)
+      .disposed(by: disposeBag)
+    
+    tableView.refreshControl?.rx
+      .controlEvent(.valueChanged)
+      .bind(to: viewModel.onDidPullToRefreshSubject)
       .disposed(by: disposeBag)
   }
 }
@@ -121,6 +140,8 @@ private extension WeatherListViewController {
     tableView.dataSource = viewModel.tableDataSource
     tableView.delegate = viewModel.tableDelegate
     tableView.estimatedRowHeight = Definitions.weatherInformationCellHeight
+    
+    tableView.refreshControl = UIRefreshControl()
     
     tableView.registerCells([
       WeatherListTableViewCell.self // TODO: also register Alert Cell

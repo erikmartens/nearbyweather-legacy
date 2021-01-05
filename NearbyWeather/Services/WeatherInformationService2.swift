@@ -136,7 +136,7 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
 protocol WeatherInformationUpdating {
   func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability>
   func createUpdateBookmarkedWeatherInformationCompletable() -> Completable
-  func createUpdateWeatherInformationForBookmarkedStation(with identifier: Int) -> Completable
+  func createBookmarkedUpdateWeatherInformationCompletable(forStationWith identifier: Int) -> Completable
   func createUpdateNearbyWeatherInformationCompletable() -> Completable
 }
 
@@ -209,7 +209,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
-  func createUpdateWeatherInformationForBookmarkedStation(with identifier: Int) -> Completable {
+  func createBookmarkedUpdateWeatherInformationCompletable(forStationWith identifier: Int) -> Completable {
     Single
       .just(identifier)
       .map { [apiKey] identifier in

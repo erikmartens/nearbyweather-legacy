@@ -37,9 +37,16 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Events
   
-  let onDidTapListTypeBarButton = PublishSubject<Void>()
-  let onDidTapAmountOfResultsBarButton = PublishSubject<Void>()
-  let onDidTapSortingOrientationBarButton = PublishSubject<Void>()
+  let onDidTapListTypeBarButtonSubject = PublishSubject<Void>()
+  let onDidTapAmountOfResultsBarButtonSubject = PublishSubject<Void>()
+  let onDidTapSortingOrientationBarButtonSubject = PublishSubject<Void>()
+  let onDidPullToRefreshSubject = PublishSubject<Void>()
+  
+  private let isRefreshingSubject = BehaviorSubject<Bool>(value: false)
+  
+  // MARK: - Drivers
+  
+  lazy var isRefreshingDriver = isRefreshingSubject.asDriver(onErrorJustReturn: false)
   
   // MARK: - Observables
   
@@ -86,25 +93,38 @@ private extension WeatherListViewModel {
       .map { $0.value }
       .share(replay: 1)
     
-    onDidTapListTypeBarButton
+    onDidTapListTypeBarButtonSubject
       .flatMapLatest { [unowned preferredListTypeObservable] in preferredListTypeObservable }
       .subscribe(onNext: { [weak steps] preferredListType in
         steps?.accept(ListStep.changeListTypeAlert(currentSelectedOptionValue: preferredListType))
       })
       .disposed(by: disposeBag)
     
-    onDidTapAmountOfResultsBarButton
+    onDidTapAmountOfResultsBarButtonSubject
       .flatMapLatest { [unowned preferredAmountOfResultsObservable] in preferredAmountOfResultsObservable }
       .subscribe(onNext: { [weak steps] preferredAmountOfResults in
         steps?.accept(ListStep.changeAmountOfResultsAlert(currentSelectedOptionValue: preferredAmountOfResults))
       })
       .disposed(by: disposeBag)
     
-    onDidTapSortingOrientationBarButton
+    onDidTapSortingOrientationBarButtonSubject
       .flatMapLatest { [unowned preferredSortingOrientationObservable] in preferredSortingOrientationObservable }
       .subscribe(onNext: { [weak steps] preferredSortingOrientation in
         steps?.accept(ListStep.changeSortingOrientationAlert(currentSelectedOptionValue: preferredSortingOrientation))
       })
+      .disposed(by: disposeBag)
+    
+    onDidPullToRefreshSubject
+      .do(onNext: { [weak isRefreshingSubject] in isRefreshingSubject?.onNext(true) })
+      .flatMapLatest { [dependencies] _ -> Observable<Void> in
+        Observable
+          .zip([dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable().asObservable(),
+                dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable().asObservable()])
+          .map { _ in () }
+      }
+      .subscribe { [weak isRefreshingSubject] _ in
+        isRefreshingSubject?.onNext(false)
+      }
       .disposed(by: disposeBag)
   }
   

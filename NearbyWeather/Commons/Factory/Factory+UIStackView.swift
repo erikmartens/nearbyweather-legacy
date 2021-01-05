@@ -13,8 +13,8 @@ extension Factory {
   struct StackView: FactoryFunction {
     
     enum StackViewType {
-      case vertical(distribution: UIStackView.Distribution = .fill, alignment: UIStackView.Alignment = .fill, spacing: CGFloat = 0)
-      case horizontal(distribution: UIStackView.Distribution = .fill, alignment: UIStackView.Alignment = .fill, spacing: CGFloat = 0)
+      case vertical(alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill, spacing: CGFloat = 0)
+      case horizontal(alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill, spacing: CGFloat = 0)
     }
     
     typealias InputType = StackViewType
@@ -24,12 +24,12 @@ extension Factory {
       let stackView = UIStackView()
       
       switch type {
-      case let .vertical(distribution, alignment, spacing):
+      case let .vertical(alignment, distribution, spacing):
         stackView.axis = .vertical
         stackView.distribution = distribution
         stackView.alignment = alignment
         stackView.spacing = spacing
-      case let .horizontal(distribution, alignment, spacing):
+      case let .horizontal(alignment, distribution, spacing):
         stackView.axis = .horizontal
         stackView.distribution = distribution
         stackView.alignment = alignment

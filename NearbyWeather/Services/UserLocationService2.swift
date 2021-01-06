@@ -12,9 +12,7 @@ import RxCoreLocation
 
 enum UserLocationServiceError: String, Error {
   
-  var domain: String {
-    "UserLocationService"
-  }
+  var domain: String { "UserLocationService" }
   
   case authorizationError = "Trying access the user location, but sufficient authorization was not granted."
 }

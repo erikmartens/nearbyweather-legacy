@@ -15,8 +15,21 @@ extension WeatherStationService2 {
     let preferencesService: PreferencesService2
   }
 }
+ 
+private extension WeatherStationService2 {
+  
+  enum PersistencyKeys {
+    case weatherStationBookmark
+    
+    var collection: String {
+      switch self {
+      case .weatherStationBookmark: return "/weather_station/bookmarked/"
+      }
+    }
+  }
+}
 
-final class WeatherStationService2 {
+final class WeatherStationService2 { // TODO: save bookmarks by storing the ID of the station
   
   // MARK: - Assets
   
@@ -36,8 +49,6 @@ final class WeatherStationService2 {
   private static func lookupQuery(for searchTerm: String) -> String {
     "SELECT * FROM locations l WHERE (lower(name) LIKE '%\(searchTerm.lowercased())%') ORDER BY l.name, l.country"
   }
-  
-  private static let weatherStationBookmarkCollection = "/weather_station/bookmarked/"
   
   // MARK: - Properties
   

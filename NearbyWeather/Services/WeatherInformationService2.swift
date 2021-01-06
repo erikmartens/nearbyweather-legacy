@@ -17,11 +17,10 @@ enum WeatherInformationAvailability {
 
 enum WeatherInformationServiceError: String, Error {
   
-  var domain: String {
-    "WeatherInformationService"
-  }
+  var domain: String { "WeatherInformationService" }
   
-  case apiKeyError = "Trying to request data from OpenWeatherMap, but no API key was found."
+  case apiKeyMissingError = "Trying to request data from OpenWeatherMap, but no API key exists."
+  case apiKeyInvalidError = "Trying to request data from OpenWeatherMap, but the API key is invalid."
 }
 
 extension WeatherInformationService2 {
@@ -88,7 +87,7 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
                            entity: weatherInformationDto)
         }
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
@@ -113,7 +112,7 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
                            entity: weatherInformationDto)
         }
       }
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
@@ -127,8 +126,6 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
     )
     return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
   }
-  
-  
 }
 
 // MARK: - Weather Information Updating
@@ -188,7 +185,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .map { $0.map { $0.identifier } }
       .map { [apiKey] identifiers -> [URL] in
         guard let apiKey = apiKey else {
-          throw WeatherInformationServiceError.apiKeyError
+          throw WeatherInformationServiceError.apiKeyMissingError
         }
         return identifiers.map { Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: $0) }
       }
@@ -206,7 +203,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .observeOn(Self.persistencyWriteScheduler)
       .take(1)
       .asSingle()
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createBookmarkedUpdateWeatherInformationCompletable(forStationWith identifier: Int) -> Completable {
@@ -214,21 +211,21 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .just(identifier)
       .map { [apiKey] identifier in
         guard let apiKey = apiKey else {
-          throw WeatherInformationServiceError.apiKeyError
+          throw WeatherInformationServiceError.apiKeyMissingError
         }
         return Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(
           with: apiKey,
           stationIdentifier: identifier
         )
       }
-      .flatMapCompletable { [persistencyWorker] url -> Completable in
+      .flatMapCompletable { [unowned persistencyWorker] url -> Completable in
         RxAlamofire
           .requestData(.get, url)
           .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
           .filterNil()
           .take(1)
           .asSingle()
-          .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherInformationDTO.self) }
+          .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherInformationDTO.self) }
       }
   }
   
@@ -239,7 +236,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
         dependencies.preferencesService.createAmountOfNearbyResultsOptionObservable(),
         resultSelector: { [apiKey] location, amountOfResultsOption -> URL in
           guard let apiKey = apiKey else {
-            throw WeatherInformationServiceError.apiKeyError
+            throw WeatherInformationServiceError.apiKeyMissingError
           }
           return Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
             with: apiKey,
@@ -258,6 +255,6 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .observeOn(Self.persistencyWriteScheduler)
       .take(1)
       .asSingle()
-      .flatMapCompletable { [persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
 }

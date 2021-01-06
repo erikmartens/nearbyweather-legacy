@@ -23,6 +23,21 @@ enum WeatherInformationServiceError: String, Error {
   case apiKeyInvalidError = "Trying to request data from OpenWeatherMap, but the API key is invalid."
 }
 
+private extension WeatherInformationService2 {
+  
+  enum PersistencyKeys {
+    case bookmarkedWeatherInformation
+    case nearbyWeatherInformation
+    
+    var collection: String {
+      switch self {
+      case .bookmarkedWeatherInformation: return "/weather_information/bookmarked/"
+      case .nearbyWeatherInformation: return "/weather_information/nearby/"
+      }
+    }
+  }
+}
+
 extension WeatherInformationService2 {
   struct Dependencies {
     let preferencesService: PreferencesService2
@@ -45,9 +60,6 @@ final class WeatherInformationService2 {
   private static let persistencyWriteScheduler = SerialDispatchQueueScheduler(
     internalSerialQueueName: "WeatherInformationService.PersistencyWriteScheduler"
   )
-  
-  private static let bookmarkedWeatherInformationCollection = "/weather_information/bookmarked/"
-  private static let nearbyWeatherInformationCollection = "/weather_information/nearby/"
   
   private var apiKey: String? { // TODO: put into API service
     UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
@@ -82,7 +94,7 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       .just(list)
       .map { list in
         list.map { weatherInformationDto in
-          PersistencyModel(identity: PersistencyModelIdentity(collection: Self.bookmarkedWeatherInformationCollection,
+          PersistencyModel(identity: PersistencyModelIdentity(collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
                                                               identifier: String(weatherInformationDto.cityID)),
                            entity: weatherInformationDto)
         }
@@ -91,12 +103,12 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
   }
   
   func createBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
-    persistencyWorker.observeResources(in: Self.bookmarkedWeatherInformationCollection, type: WeatherInformationDTO.self)
+    persistencyWorker.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
   }
   
   func createBookmarkedWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
     let identity = PersistencyModelIdentity(
-      collection: Self.bookmarkedWeatherInformationCollection,
+      collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
       identifier: identifier
     )
     return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
@@ -107,7 +119,7 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       .just(list)
       .map { list in
         list.map { weatherInformationDto in
-          PersistencyModel(identity: PersistencyModelIdentity(collection: Self.nearbyWeatherInformationCollection,
+          PersistencyModel(identity: PersistencyModelIdentity(collection: PersistencyKeys.nearbyWeatherInformation.collection,
                                                               identifier: String(weatherInformationDto.cityID)),
                            entity: weatherInformationDto)
         }
@@ -116,12 +128,12 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
   }
   
   func createNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
-    persistencyWorker.observeResources(in: Self.bookmarkedWeatherInformationCollection, type: WeatherInformationDTO.self)
+    persistencyWorker.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
   }
   
   func createNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
     let identity = PersistencyModelIdentity(
-      collection: Self.nearbyWeatherInformationCollection,
+      collection: PersistencyKeys.nearbyWeatherInformation.collection,
       identifier: identifier
     )
     return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
@@ -146,7 +158,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
     }
     return PersistencyModel(
       identity: PersistencyModelIdentity(
-        collection: Self.bookmarkedWeatherInformationCollection,
+        collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
         identifier: String(weatherInformationDto.cityID)
       ),
       entity: weatherInformationDto
@@ -162,7 +174,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
     return multiWeatherData.list.map { weatherInformationDto in
       PersistencyModel(
         identity: PersistencyModelIdentity(
-          collection: Self.nearbyWeatherInformationCollection,
+          collection: PersistencyKeys.nearbyWeatherInformation.collection,
           identifier: String(weatherInformationDto.cityID)
         ),
         entity: weatherInformationDto

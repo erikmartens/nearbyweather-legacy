@@ -78,22 +78,23 @@ private extension AppDelegate {
 
     dependencyContainer.register(PreferencesService2.self) { _ in PreferencesService2() }
     dependencyContainer.register(UserLocationService2.self) { _ in UserLocationService2() }
+    dependencyContainer.register(ApiKeyService2.self) { _ in ApiKeyService2() }
 
     dependencyContainer.register(WeatherStationService2.self) { resolver in
       WeatherStationService2(dependencies: WeatherStationService2.Dependencies(
         preferencesService: resolver.resolve(PreferencesService2.self)!
       ))
     }
-    
-    // TODO: register remaining services
-
     dependencyContainer.register(WeatherInformationService2.self) { resolver in
       WeatherInformationService2(dependencies: WeatherInformationService2.Dependencies(
         preferencesService: resolver.resolve(PreferencesService2.self)!,
+        weatherStationService: resolver.resolve(WeatherStationService2.self)!,
         userLocationService: resolver.resolve(UserLocationService2.self)!,
         apiKeyService: resolver.resolve(ApiKeyService2.self)!
       ))
     }
+    
+    // TODO: register remaining services
 
     self.dependencyContainer = dependencyContainer
   }
@@ -134,12 +135,14 @@ private extension AppDelegate {
   func runMigrationIfNeeded() {
     guard let dependencyContainer = dependencyContainer,
       let preferencesService = dependencyContainer.resolve(PreferencesService2.self),
-      let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self) else {
+      let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self),
+      let weatherStationService = dependencyContainer.resolve(WeatherStationService2.self) else {
         return
     }
     MigrationService(dependencies: MigrationService.Dependencies(
       preferencesService: preferencesService,
-      weatherInformationService: weatherInformationService
+      weatherInformationService: weatherInformationService,
+      weatherStationService: weatherStationService
     ))
     .runMigrationIfNeeded()
   }

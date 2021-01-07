@@ -21,10 +21,6 @@ private extension PreferencesService2 {
     case preferredListTypeOption
     case preferredMapTypeOption
     
-    case weatherStationBookmarks
-    case weatherStationBookmarksSorting
-    case weatherStationPreferredBookmark
-    
     var collection: String {
       switch self {
       case .amountOfNearbyResultsOption: return "/general_preferences/amount_of_results/"
@@ -33,10 +29,6 @@ private extension PreferencesService2 {
       case .sortingOrientationOption: return "/general_preferences/sorting_orientation/"
       case .preferredListTypeOption: return "/general_preferences/preferred_list_type/"
       case .preferredMapTypeOption: return "/general_preferences/preferred_map_type/"
-      
-      case .weatherStationBookmarks: return "/weather_stations/bookmarks/"
-      case .weatherStationBookmarksSorting: return "/weather_stations/bookmarks_sorting/"
-      case .weatherStationPreferredBookmark: return "/weather_stations/preferred_bookmark/"
       }
     }
     
@@ -48,10 +40,6 @@ private extension PreferencesService2 {
       case .sortingOrientationOption: return "default"
       case .preferredListTypeOption: return "default"
       case .preferredMapTypeOption: return "default"
-        
-      case .weatherStationBookmarks: return "default"
-      case .weatherStationBookmarksSorting: return "default"
-      case .weatherStationPreferredBookmark: return "default"
       }
     }
   }
@@ -261,117 +249,5 @@ extension PreferencesService2: GeneralPreferenceSettings {
       )
       .map { $0?.entity }
       .replaceNilWith(MapTypeOption(value: .standard)) // default value
-  }
-}
-
-// MARK: - Weather Station Bookmark Settings
-
-protocol WeatherStationBookmarkSettings {
-  func addBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
-  func removeBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable
-  func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
-  
-  func setBookmarksSorting(_ sorting: [String: Int]) -> Completable
-  func getBookmarksSorting() -> Observable<[String: Int]?>
-  
-  func setPreferredBookmark(_ weatherStationDto: PreferredBookmarkOption) -> Completable
-  func clearPreferredBookmark() -> Completable
-  func createPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
-}
-
-extension PreferencesService2: WeatherStationBookmarkSettings {
-  
-  func addBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable {
-    Single
-      .just(weatherStationDto)
-      .map {
-        PersistencyModel<WeatherStationDTO>(
-          identity: PersistencyModelIdentity(
-            collection: PreferencesService2.PersistencyKeys.weatherStationBookmarks.collection,
-            identifier: String($0.identifier)
-          ),
-          entity: $0
-        )
-      }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherStationDTO.self) }
-  }
-  
-  func removeBookmark(_ weatherStationDto: WeatherStationDTO) -> Completable {
-    Single
-      .just(weatherStationDto.identifier)
-      .map {
-        PersistencyModelIdentity(
-          collection: PreferencesService2.PersistencyKeys.weatherStationBookmarks.collection,
-          identifier: String($0)
-        )
-      }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.deleteResource(with: $0) }
-  }
-  
-  func setBookmarksSorting(_ sorting: [String: Int]) -> Completable {
-    Single
-      .just(sorting)
-      .map {
-        PersistencyModel(
-          identity: PersistencyModelIdentity(
-            collection: PreferencesService2.PersistencyKeys.weatherStationBookmarksSorting.collection,
-            identifier: PreferencesService2.PersistencyKeys.weatherStationBookmarksSorting.identifier
-          ),
-          entity: $0
-        )
-      }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: [String: Int].self) }
-  }
-  
-  func getBookmarksSorting() -> Observable<[String: Int]?> {
-    persistencyWorker
-      .observeResource(
-        with: PersistencyModelIdentity(
-          collection: PreferencesService2.PersistencyKeys.weatherStationBookmarksSorting.collection,
-          identifier: PreferencesService2.PersistencyKeys.weatherStationBookmarksSorting.identifier
-        ),
-        type: [String: Int].self
-      )
-      .map { $0?.entity }
-  }
-  
-  func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]> {
-    persistencyWorker
-      .observeResources(in: PreferencesService2.PersistencyKeys.weatherStationBookmarks.collection, type: WeatherStationDTO.self)
-      .map { $0.map { $0.entity } }
-  }
-  
-  func setPreferredBookmark(_ weatherStationDto: PreferredBookmarkOption) -> Completable {
-    Single
-      .just(weatherStationDto)
-      .map {
-        PersistencyModel(
-          identity: PersistencyModelIdentity(
-            collection: PreferencesService2.PersistencyKeys.weatherStationPreferredBookmark.collection,
-            identifier: PreferencesService2.PersistencyKeys.weatherStationPreferredBookmark.identifier
-          ),
-          entity: $0
-        )
-      }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: PreferredBookmarkOption.self) }
-  }
-  
-  func clearPreferredBookmark() -> Completable {
-    persistencyWorker
-      .deleteResource(
-        with: PersistencyModelIdentity(
-          collection: PreferencesService2.PersistencyKeys.weatherStationPreferredBookmark.collection,
-          identifier: PreferencesService2.PersistencyKeys.weatherStationPreferredBookmark.identifier
-        )
-      )
-  }
-  
-  func createPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?> {
-    persistencyWorker
-      .observeResources(in: PreferencesService2.PersistencyKeys.weatherStationPreferredBookmark.collection, type: PreferredBookmarkOption.self)
-      .map { $0.first }
-      .errorOnNil()
-      .map { $0.entity }
-      .catchErrorJustReturn(nil)
   }
 }

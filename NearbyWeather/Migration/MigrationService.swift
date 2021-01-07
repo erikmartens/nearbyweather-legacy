@@ -13,6 +13,7 @@ extension MigrationService {
   struct Dependencies {
     let preferencesService: PreferencesService2
     let weatherInformationService: WeatherInformationService2
+    let weatherStationService: WeatherStationService2
   }
 }
 
@@ -60,7 +61,7 @@ extension MigrationService {
           }
         }
         return Completable.zip([
-          dependencies.preferencesService.setPreferredBookmark(preferencesStoredContentsWrapper.preferredBookmark),
+          dependencies.weatherStationService.setPreferredBookmark(preferencesStoredContentsWrapper.preferredBookmark),
           dependencies.preferencesService.createSetAmountOfNearbyResultsOptionCompletable(preferencesStoredContentsWrapper.amountOfResults),
           dependencies.preferencesService.createSetTemperatureUnitOptionCompletable(preferencesStoredContentsWrapper.temperatureUnit),
           dependencies.preferencesService.createSetDimensionalUnitsOptionCompletable(preferencesStoredContentsWrapper.windspeedUnit),

@@ -21,7 +21,8 @@ extension WeatherInformationService2 {
 
 // MARK: - Persistency Keys
 
-private extension WeatherInformationService2 {enum PersistencyKeys {
+private extension WeatherInformationService2 {
+  enum PersistencyKeys {
     case bookmarkedWeatherInformation
     case nearbyWeatherInformation
     
@@ -39,6 +40,7 @@ private extension WeatherInformationService2 {enum PersistencyKeys {
 extension WeatherInformationService2 {
   struct Dependencies {
     let preferencesService: PreferencesService2
+    let weatherStationService: WeatherStationService2
     let userLocationService: UserLocationService2
     let apiKeyService: ApiKeyService2
   }
@@ -196,7 +198,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
     Observable
       .combineLatest(
         dependencies.apiKeyService.createGetApiKeyObservable(),
-        dependencies.preferencesService.createBookmarkedStationsObservable().map { $0.map { $0.identifier } },
+        dependencies.weatherStationService.createBookmarkedStationsObservable().map { $0.map { $0.identifier } },
         resultSelector: { apiKey, identifiers -> [URL] in
           identifiers.map { Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: $0) }
         }

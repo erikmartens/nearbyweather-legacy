@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct WeatherInformationAlertTableViewCellModel {
+struct WeatherListAlertTableViewCellModel {
   let backgroundColor = Constants.Theme.Color.ViewElement.alert
   let alertImage = R.image.exclamationMark()
   let alertImageTintColor = Constants.Theme.Color.ViewElement.title

@@ -9,16 +9,16 @@
 import UIKit
 import RxSwift
 
-private extension WeatherInformationAlertTableViewCell {
+private extension WeatherListAlertTableViewCell {
   
   struct Definitions {
     static let alertImageViewHeight: CGFloat = 25
   }
 }
 
-final class WeatherInformationAlertTableViewCell: UITableViewCell, BaseCell {
+final class WeatherListAlertTableViewCell: UITableViewCell, BaseCell {
   
-  typealias BaseCellViewModel = WeatherInformationAlertTableViewCellViewModel
+  typealias BaseCellViewModel = WeatherListAlertTableViewCellViewModel
   
   // MARK: - UIComponents
   
@@ -55,7 +55,7 @@ final class WeatherInformationAlertTableViewCell: UITableViewCell, BaseCell {
   // MARK: - Cell Life Cycle
   
   func configure(with cellViewModel: BaseCellViewModelProtocol?) {
-    guard let cellViewModel = cellViewModel as? WeatherInformationAlertTableViewCellViewModel else {
+    guard let cellViewModel = cellViewModel as? WeatherListAlertTableViewCellViewModel else {
       return
     }
     self.cellViewModel = cellViewModel
@@ -66,7 +66,7 @@ final class WeatherInformationAlertTableViewCell: UITableViewCell, BaseCell {
 
 // MARK: - ViewModel Bindings
 
-extension WeatherInformationAlertTableViewCell {
+extension WeatherListAlertTableViewCell {
   
   internal func bindInputFromViewModel(_ cellViewModel: BaseCellViewModel) {
     cellViewModel.cellModelDriver
@@ -79,9 +79,9 @@ extension WeatherInformationAlertTableViewCell {
 
 // MARK: - Cell Composition
 
-private extension WeatherInformationAlertTableViewCell {
+private extension WeatherListAlertTableViewCell {
   
-  func setContent(for cellModel: WeatherInformationAlertTableViewCellModel) {
+  func setContent(for cellModel: WeatherListAlertTableViewCellModel) {
     backgroundColorView.backgroundColor = cellModel.backgroundColor
     alertImageView.image = cellModel.alertImage
     alertInformationLabel.text = cellModel.alertInformationText

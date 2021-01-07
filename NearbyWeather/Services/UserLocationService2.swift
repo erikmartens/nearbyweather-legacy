@@ -13,11 +13,12 @@ import RxCoreLocation
 // MARK: - Domain-Specific Errors
 
 extension UserLocationService2 {
-  enum UserLocationServiceError: String, Error {
+  enum DomainError: String, Error {
     
     var domain: String { "UserLocationService" }
     
     case authorizationError = "Trying access the user location, but sufficient authorization was not granted."
+    case locationUndeterminableError = "Trying access the user location, but it could not be determined."
   }
 }
 
@@ -49,7 +50,7 @@ extension UserLocationService2: LocationObserving {
   
   func createDidUpdateLocationObservable() -> Observable<CLLocation> {
     createAuthorizationStatusObservable()
-      .map { if !$0 { throw UserLocationServiceError.authorizationError } }
+      .map { if !$0 { throw DomainError.authorizationError } }
       .flatMapLatest { [locationManager] in
         locationManager.rx
           .location
@@ -74,7 +75,10 @@ extension UserLocationService2: LocationObserving {
         createAuthorizationStatusObservable(),
         resultSelector: { currentLocation, currentAuthorizationStatus -> CLLocation? in
           guard currentAuthorizationStatus == true else {
-            return nil
+            throw UserLocationService2.DomainError.authorizationError
+          }
+          guard let currentLocation = currentLocation else {
+            throw UserLocationService2.DomainError.locationUndeterminableError
           }
           return currentLocation
         })

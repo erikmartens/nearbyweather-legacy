@@ -153,8 +153,8 @@ private extension WeatherListViewController {
     tableView.refreshControl = UIRefreshControl()
     
     tableView.registerCells([
-      WeatherInformationTableViewCell.self,
-      WeatherInformationAlertTableViewCell.self
+      WeatherListInformationTableViewCell.self,
+      WeatherListAlertTableViewCell.self
     ])
     
     tableView.contentInset = UIEdgeInsets(

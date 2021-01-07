@@ -143,42 +143,11 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
 protocol WeatherInformationUpdating {
   func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationService2.WeatherInformationAvailability>
   func createUpdateBookmarkedWeatherInformationCompletable() -> Completable
-  func createBookmarkedUpdateWeatherInformationCompletable(forStationWith identifier: Int) -> Completable
+  func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int) -> Completable
   func createUpdateNearbyWeatherInformationCompletable() -> Completable
 }
 
 extension WeatherInformationService2: WeatherInformationUpdating {
-  
-  private static func mapSingleInformationResponseToPersistencyModel(_ response: (HTTPURLResponse, Data)) -> PersistencyModel<WeatherInformationDTO>? {
-    guard response.0.statusCode == 200,
-      let weatherInformationDto = try? JSONDecoder().decode(WeatherInformationDTO.self, from: response.1) else {
-        return nil
-    }
-    return PersistencyModel(
-      identity: PersistencyModelIdentity(
-        collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
-        identifier: String(weatherInformationDto.cityID)
-      ),
-      entity: weatherInformationDto
-    )
-  }
-  
-  private static func mapMultiInformationResponseToPersistencyModel(_ response: (HTTPURLResponse, Data)) -> [PersistencyModel<WeatherInformationDTO>]? {
-    guard response.0.statusCode == 200,
-      let multiWeatherData = try? JSONDecoder().decode(WeatherInformationListDTO.self, from: response.1) else {
-        return nil
-    }
-    
-    return multiWeatherData.list.map { weatherInformationDto in
-      PersistencyModel(
-        identity: PersistencyModelIdentity(
-          collection: PersistencyKeys.nearbyWeatherInformation.collection,
-          identifier: String(weatherInformationDto.cityID)
-        ),
-        entity: weatherInformationDto
-      )
-    }
-  }
   
   func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability> {
     Observable<WeatherInformationAvailability>
@@ -215,7 +184,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
-  func createBookmarkedUpdateWeatherInformationCompletable(forStationWith identifier: Int) -> Completable {
+  func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int) -> Completable {
     Observable
       .combineLatest(
         dependencies.apiKeyService.createGetApiKeyObservable(),
@@ -259,5 +228,41 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .take(1)
       .asSingle()
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+  }
+}
+
+// MARK: - Helpers
+
+private extension WeatherInformationService2 {
+  
+  static func mapSingleInformationResponseToPersistencyModel(_ response: (HTTPURLResponse, Data)) -> PersistencyModel<WeatherInformationDTO>? {
+    guard response.0.statusCode == 200,
+      let weatherInformationDto = try? JSONDecoder().decode(WeatherInformationDTO.self, from: response.1) else {
+        return nil
+    }
+    return PersistencyModel(
+      identity: PersistencyModelIdentity(
+        collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
+        identifier: String(weatherInformationDto.cityID)
+      ),
+      entity: weatherInformationDto
+    )
+  }
+  
+  static func mapMultiInformationResponseToPersistencyModel(_ response: (HTTPURLResponse, Data)) -> [PersistencyModel<WeatherInformationDTO>]? {
+    guard response.0.statusCode == 200,
+      let multiWeatherData = try? JSONDecoder().decode(WeatherInformationListDTO.self, from: response.1) else {
+        return nil
+    }
+    
+    return multiWeatherData.list.map { weatherInformationDto in
+      PersistencyModel(
+        identity: PersistencyModelIdentity(
+          collection: PersistencyKeys.nearbyWeatherInformation.collection,
+          identifier: String(weatherInformationDto.cityID)
+        ),
+        entity: weatherInformationDto
+      )
+    }
   }
 }

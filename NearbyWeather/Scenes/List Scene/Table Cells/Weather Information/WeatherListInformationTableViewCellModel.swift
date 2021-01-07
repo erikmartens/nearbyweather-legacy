@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct WeatherInformationTableViewCellModel {
+struct WeatherListInformationTableViewCellModel {
   let weatherConditionSymbol: String?
   let temperature: String?
   let cloudCoverage: String?

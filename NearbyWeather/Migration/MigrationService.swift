@@ -14,10 +14,11 @@ extension MigrationService {
     let preferencesService: PreferencesService2
     let weatherInformationService: WeatherInformationService2
     let weatherStationService: WeatherStationService2
+    let apiKeyService: ApiKeyService2
   }
 }
 
-final class MigrationService {
+final class MigrationService { // TODO: move all Constants-Keys here and make private
   
   // MARK: - Properties
   
@@ -38,6 +39,26 @@ extension MigrationService {
     guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kMigratedToVersion230) == nil else {
       return
     }
+    
+    // mirgrate api key
+    let migrateApiKeyCompletable = Observable<String?>
+      .create { handler in
+        let apiKey = UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
+        handler.on(.next(apiKey))
+        return Disposables.create()
+      }
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { [dependencies] apiKey -> Completable in
+        guard let apiKey = apiKey else {
+          // previous data does not exist or could not be read -> do not try to migrate any further
+          return Completable.create { handler in
+            handler(.completed)
+            return Disposables.create()
+          }
+        }
+        return dependencies.apiKeyService.createSetApiKeyCompletable(apiKey)
+      }
     
     // migrate preferences
     let migratePreferencesCompletable = Observable<PreferencesManagerStoredContentsWrapper?>
@@ -103,6 +124,7 @@ extension MigrationService {
     // execute migration
     _ = Completable
       .zip([
+        migrateApiKeyCompletable,
         migratePreferencesCompletable,
         migrateWeatherInformationCompletable
       ])

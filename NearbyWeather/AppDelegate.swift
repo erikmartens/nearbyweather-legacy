@@ -136,13 +136,15 @@ private extension AppDelegate {
     guard let dependencyContainer = dependencyContainer,
       let preferencesService = dependencyContainer.resolve(PreferencesService2.self),
       let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self),
-      let weatherStationService = dependencyContainer.resolve(WeatherStationService2.self) else {
+      let weatherStationService = dependencyContainer.resolve(WeatherStationService2.self),
+      let apiKeyService = dependencyContainer.resolve(ApiKeyService2.self) else {
         return
     }
     MigrationService(dependencies: MigrationService.Dependencies(
       preferencesService: preferencesService,
       weatherInformationService: weatherInformationService,
-      weatherStationService: weatherStationService
+      weatherStationService: weatherStationService,
+      apiKeyService: apiKeyService
     ))
     .runMigrationIfNeeded()
   }

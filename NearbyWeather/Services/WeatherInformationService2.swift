@@ -63,11 +63,6 @@ final class WeatherInformationService2 {
     internalSerialQueueName: "WeatherInformationService.PersistencyWriteScheduler"
   )
   
-  // TODO: migrate
-//  private var apiKey: String? { // TODO: put into API service
-//    UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
-//  }
-  
   // MARK: - Properties
   
   private let dependencies: Dependencies

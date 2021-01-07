@@ -32,7 +32,7 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   
   private let dependencies: Dependencies
   
-  var tableDelegate: WeatherListTableViewDelegate?
+  var tableDelegate: WeatherListTableViewDelegate? // swiftlint:disable:this weak_delegate
   let tableDataSource: WeatherListTableViewDataSource
   
   // MARK: - Events
@@ -121,9 +121,10 @@ private extension WeatherListViewModel {
     onDidPullToRefreshSubject
       .do(onNext: { [weak isRefreshingSubject] in isRefreshingSubject?.onNext(true) })
       .flatMapLatest { [dependencies] _ -> Observable<Void> in
-        Observable
-          .zip([dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable().asObservable(),
-                dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable().asObservable()])
+        Completable
+          .zip([dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable(),
+                dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()])
+          .asObservable()
           .map { _ in () }
       }
       .subscribe { [weak isRefreshingSubject] _ in

@@ -33,17 +33,6 @@ final class UserLocationService2 {
 
 extension UserLocationService2 {
   
-  private static func authorizationStatusIsSufficient(_ authorizationStatus: CLAuthorizationStatus) -> Bool {
-    switch authorizationStatus {
-    case .notDetermined, .restricted, .denied:
-      return false
-    case .authorizedWhenInUse, .authorizedAlways:
-      return true
-    @unknown default:
-      return false
-    }
-  }
-  
   func createDidUpdateLocationObservable() -> Observable<CLLocation> {
    createAuthorizationStatusObservable()
       .map { if !$0 { throw UserLocationServiceError.authorizationError } }
@@ -68,5 +57,21 @@ extension UserLocationService2 {
       .map { $0.status }
       .startWith(CLLocationManager.authorizationStatus())
       .map { Self.authorizationStatusIsSufficient($0) }
+  }
+}
+
+// MARK: - Helpers
+
+private extension UserLocationService2 {
+  
+  static func authorizationStatusIsSufficient(_ authorizationStatus: CLAuthorizationStatus) -> Bool {
+    switch authorizationStatus {
+    case .notDetermined, .restricted, .denied:
+      return false
+    case .authorizedWhenInUse, .authorizedAlways:
+      return true
+    @unknown default:
+      return false
+    }
   }
 }

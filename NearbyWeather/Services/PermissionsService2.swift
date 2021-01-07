@@ -1,5 +1,5 @@
 //
-//  PermissionService2.swift
+//  PermissionsService2.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 02.05.20.

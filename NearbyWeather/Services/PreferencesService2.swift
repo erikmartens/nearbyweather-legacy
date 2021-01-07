@@ -9,6 +9,8 @@
 import RxSwift
 import RxOptional
 
+// MARK: - Persistency Keys
+
 private extension PreferencesService2 {
   
   enum PersistencyKeys {
@@ -32,9 +34,9 @@ private extension PreferencesService2 {
       case .preferredListTypeOption: return "/general_preferences/preferred_list_type/"
       case .preferredMapTypeOption: return "/general_preferences/preferred_map_type/"
       
-      case .weatherStationBookmarks: return "/weather_station/bookmarks/"
-      case .weatherStationBookmarksSorting: return "/weather_station/bookmarks_sorting/"
-      case .weatherStationPreferredBookmark: return "/weather_station/preferred_bookmark/"
+      case .weatherStationBookmarks: return "/weather_stations/bookmarks/"
+      case .weatherStationBookmarksSorting: return "/weather_stations/bookmarks_sorting/"
+      case .weatherStationPreferredBookmark: return "/weather_stations/preferred_bookmark/"
       }
     }
     
@@ -54,6 +56,8 @@ private extension PreferencesService2 {
     }
   }
 }
+
+// MARK: - Class Definition
 
 final class PreferencesService2 {
   

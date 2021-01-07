@@ -10,14 +10,9 @@ import FMDB
 import RxSwift
 import RxOptional
 
-extension WeatherStationService2 {
-  struct Dependencies {
-    let preferencesService: PreferencesService2
-  }
-}
- 
+// MARK: - Persistency Keys
+
 private extension WeatherStationService2 {
-  
   enum PersistencyKeys {
     case weatherStationBookmark
     
@@ -28,6 +23,16 @@ private extension WeatherStationService2 {
     }
   }
 }
+
+// MARK: - Dependencies
+
+extension WeatherStationService2 {
+  struct Dependencies {
+    let preferencesService: PreferencesService2
+  }
+}
+ 
+// MARK: - Class Definition
 
 final class WeatherStationService2 { // TODO: save bookmarks by storing the ID of the station
   
@@ -64,12 +69,12 @@ final class WeatherStationService2 { // TODO: save bookmarks by storing the ID o
 // MARK: - Weather Station Lookup
 
 protocol WeatherStationLookup {
-  func createWeatherStationsLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]>
+  func createWeatherStationsLocalLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]>
 }
 
 extension WeatherStationService2: WeatherStationLookup {
   
-  func createWeatherStationsLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]> {
+  func createWeatherStationsLocalLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]> {
     Observable<[WeatherStationDTO]?>
       .create { [lookupWorker] subscriber in
         lookupWorker.inDatabase { database in

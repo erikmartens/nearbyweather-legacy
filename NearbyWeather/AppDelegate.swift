@@ -84,11 +84,14 @@ private extension AppDelegate {
         preferencesService: resolver.resolve(PreferencesService2.self)!
       ))
     }
+    
+    // TODO: register remaining services
 
     dependencyContainer.register(WeatherInformationService2.self) { resolver in
       WeatherInformationService2(dependencies: WeatherInformationService2.Dependencies(
         preferencesService: resolver.resolve(PreferencesService2.self)!,
-        userLocationService: resolver.resolve(UserLocationService2.self)!
+        userLocationService: resolver.resolve(UserLocationService2.self)!,
+        apiKeyService: resolver.resolve(ApiKeyService2.self)!
       ))
     }
 

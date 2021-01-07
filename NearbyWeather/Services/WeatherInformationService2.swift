@@ -10,22 +10,18 @@ import RxSwift
 import RxOptional
 import RxAlamofire
 
-enum WeatherInformationAvailability {
-  case available
-  case unavailable
+// MARK: - Domain-Specific Types
+
+extension WeatherInformationService2 {
+  enum WeatherInformationAvailability {
+    case available
+    case unavailable
+  }
 }
 
-enum WeatherInformationServiceError: String, Error {
-  
-  var domain: String { "WeatherInformationService" }
-  
-  case apiKeyMissingError = "Trying to request data from OpenWeatherMap, but no API key exists."
-  case apiKeyInvalidError = "Trying to request data from OpenWeatherMap, but the API key is invalid."
-}
+// MARK: - Persistency Keys
 
-private extension WeatherInformationService2 {
-  
-  enum PersistencyKeys {
+private extension WeatherInformationService2 {enum PersistencyKeys {
     case bookmarkedWeatherInformation
     case nearbyWeatherInformation
     
@@ -38,13 +34,17 @@ private extension WeatherInformationService2 {
   }
 }
 
+// MARK: - Dependencies
+
 extension WeatherInformationService2 {
   struct Dependencies {
     let preferencesService: PreferencesService2
     let userLocationService: UserLocationService2
-    // TODO api key service
+    let apiKeyService: ApiKeyService2
   }
 }
+
+// MARK: - Class Definition
 
 final class WeatherInformationService2 {
   
@@ -71,7 +71,7 @@ final class WeatherInformationService2 {
   
   // MARK: - Initialization
   
-  init(dependencies: WeatherInformationService2.Dependencies) {
+  init(dependencies: Dependencies) {
     self.dependencies = dependencies
   }
 }
@@ -143,7 +143,7 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
 // MARK: - Weather Information Updating
 
 protocol WeatherInformationUpdating {
-  func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability>
+  func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationService2.WeatherInformationAvailability>
   func createUpdateBookmarkedWeatherInformationCompletable() -> Completable
   func createBookmarkedUpdateWeatherInformationCompletable(forStationWith identifier: Int) -> Completable
   func createUpdateNearbyWeatherInformationCompletable() -> Completable
@@ -197,7 +197,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .map { $0.map { $0.identifier } }
       .map { [apiKey] identifiers -> [URL] in
         guard let apiKey = apiKey else {
-          throw WeatherInformationServiceError.apiKeyMissingError
+          throw ApiKeyService2.DomainError.apiKeyMissingError
         }
         return identifiers.map { Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: $0) }
       }
@@ -223,7 +223,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .just(identifier)
       .map { [apiKey] identifier in
         guard let apiKey = apiKey else {
-          throw WeatherInformationServiceError.apiKeyMissingError
+          throw ApiKeyService2.DomainError.apiKeyMissingError
         }
         return Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(
           with: apiKey,
@@ -248,7 +248,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
         dependencies.preferencesService.createAmountOfNearbyResultsOptionObservable(),
         resultSelector: { [apiKey] location, amountOfResultsOption -> URL in
           guard let apiKey = apiKey else {
-            throw WeatherInformationServiceError.apiKeyMissingError
+            throw ApiKeyService2.DomainError.apiKeyMissingError
           }
           return Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
             with: apiKey,

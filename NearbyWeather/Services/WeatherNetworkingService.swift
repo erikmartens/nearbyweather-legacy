@@ -113,7 +113,7 @@ final class WeatherNetworkingService {
 
     Alamofire
       .request(
-        Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
+        Constants.Urls.kOpenWeatherMapNearbyStationsDataRequestUrl(
           with: apiKey,
           currentLatitude: currentLatitude,
           currentLongitude: currentLongitude

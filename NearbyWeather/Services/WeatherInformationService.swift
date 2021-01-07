@@ -135,7 +135,7 @@ final class WeatherInformationService {
       
       let waitResult = dispatchGroup.wait(timeout: .now() + 60.0)
       if waitResult == .timedOut {
-        completionHandler?(.failure) // todo: notify user
+        completionHandler?(.failure)
         return
       }
       

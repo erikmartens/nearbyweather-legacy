@@ -29,7 +29,7 @@ extension Constants.Keys {
 
 extension Constants.Keys {
   
-  // TODO: remove no longer used keys
+  // TODO: remove no longer used keys, after deleting old services
   enum NotificationCenter {
     static let kWeatherServiceDidUpdate = "de.erikmaximilianmartens.nearbyWeather.weatherServiceDidUpdate"
     static let kLocationAuthorizationUpdated = "de.erikmaximilianmartens.nearbyWeather.locationAuthorizationUpdated"

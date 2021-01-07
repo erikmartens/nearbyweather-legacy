@@ -222,6 +222,24 @@ extension WeatherListViewModel: ViewControllerLifeCycleRelay {
 
 // MARK: - Helpers
 
+private extension WeatherListViewModel {
+  
+  static func sortNearbyResults(_ results: [PersistencyModel<WeatherInformationDTO>], using sortingOrientationValue: SortingOrientationValue) -> [PersistencyModel<WeatherInformationDTO>] {
+    results.sorted { lhsValue, rhsValue -> Bool in
+      switch sortingOrientationValue {
+      case .name:
+        return lhsValue.entity.cityName > rhsValue.entity.cityName
+      case .temperature:
+        return (lhsValue.entity.atmosphericInformation.temperatureKelvin ?? 0) > (rhsValue.entity.atmosphericInformation.temperatureKelvin ?? 0)
+      case .distance:
+        return lhsValue.entity.cityName > rhsValue.entity.cityName // TODO: use correct values
+      }
+    }
+  }
+}
+
+// MARK: - Helper Extensions
+
 private extension Array where Element == PersistencyModel<WeatherInformationDTO> {
   
   func mapToWeatherListTableViewCellViewModel(dependencies: WeatherListViewModel.Dependencies, isBookmark: Bool) -> [WeatherInformationTableViewCellViewModel] {
@@ -234,23 +252,6 @@ private extension Array where Element == PersistencyModel<WeatherInformationDTO>
           preferencesService: dependencies.preferencesService
         )
       )
-    }
-  }
-}
-
-private extension WeatherListViewModel {
-  
-  // TODO: move to weather service
-  static func sortNearbyResults(_ results: [PersistencyModel<WeatherInformationDTO>], using sortingOrientationValue: SortingOrientationValue) -> [PersistencyModel<WeatherInformationDTO>] {
-    results.sorted { lhsValue, rhsValue -> Bool in
-      switch sortingOrientationValue {
-      case .name:
-        return lhsValue.entity.cityName > rhsValue.entity.cityName
-      case .temperature:
-        return (lhsValue.entity.atmosphericInformation.temperatureKelvin ?? 0) > (rhsValue.entity.atmosphericInformation.temperatureKelvin ?? 0)
-      case .distance:
-        return lhsValue.entity.cityName > rhsValue.entity.cityName // TODO: use correct values
-      }
     }
   }
 }

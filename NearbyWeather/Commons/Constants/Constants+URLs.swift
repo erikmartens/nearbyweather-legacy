@@ -22,7 +22,7 @@ extension Constants {
     static let kPrivacyPolicyUrl = URL(string: "https://github.com/erikmartens/NearbyWeather/blob/master/PRIVACYPOLICY.md")!
     static let kTermsOfUseUrl = URL(string: "https://github.com/erikmartens/NearbyWeather/blob/master/TERMSOFUSE.md")!
     static let kOpenWeatherSingleLocationBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/weather")!
-    static let kOpenWeatherMultiLocationBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/find")!
+    static let kOpenWeatherNearbyStationsDataBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/find")!
     static let kOpenWeatherMapUrl = URL(string: "https://openweathermap.org")!
     static let kOpenWeatherMapInstructionsUrl = URL(string: "https://openweathermap.org/appid")!
     
@@ -42,15 +42,15 @@ extension Constants {
       return URL(string: "\(baseUrlString)?q=\(stationName)&APPID=\(apiKey)")!
     }
     
-    // TODO: remove
-    static func kOpenWeatherMapMultiStationtDataRequestUrl(with apiKey: String, currentLatitude latitude: Double, currentLongitude longitude: Double) -> URL {
-      let baseUrl = Constants.Urls.kOpenWeatherMultiLocationBaseUrl.absoluteString
+    // TODO: remove, use function below only after deleting old services
+    static func kOpenWeatherMapNearbyStationsDataRequestUrl(with apiKey: String, currentLatitude latitude: Double, currentLongitude longitude: Double) -> URL {
+      let baseUrl = Constants.Urls.kOpenWeatherNearbyStationsDataBaseUrl.absoluteString
       let numberOfResults = PreferencesService.shared.amountOfResults.integerValue
       return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)")!
     }
     
     static func kOpenWeatherMapMultiStationtDataRequestUrl(with apiKey: String, latitude: Double, longitude: Double, numberOfResults: Int) -> URL {
-      let baseUrl = Constants.Urls.kOpenWeatherMultiLocationBaseUrl.absoluteString
+      let baseUrl = Constants.Urls.kOpenWeatherNearbyStationsDataBaseUrl.absoluteString
       return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)")!
     }
   }

@@ -61,9 +61,10 @@ final class WeatherInformationService2 {
     internalSerialQueueName: "WeatherInformationService.PersistencyWriteScheduler"
   )
   
-  private var apiKey: String? { // TODO: put into API service
-    UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
-  }
+  // TODO: migrate
+//  private var apiKey: String? { // TODO: put into API service
+//    UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) as? String
+//  }
   
   // MARK: - Properties
   
@@ -79,17 +80,17 @@ final class WeatherInformationService2 {
 // MARK: - Weather Information Provisioning
 
 protocol WeatherInformationProvisioning {
-  func setBookmarkerWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable
-  func createBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
-  func createBookmarkedWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
-  func setNearbyWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable
-  func createNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
-  func createNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
+  func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
+  func createGetBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
+  func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
+  func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
+  func createGetNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
+  func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
 }
 
 extension WeatherInformationService2: WeatherInformationProvisioning {
   
-  func setBookmarkerWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable {
+  func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable {
     Single
       .just(list)
       .map { list in
@@ -102,11 +103,11 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
-  func createBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
+  func createGetBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
     persistencyWorker.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
   }
   
-  func createBookmarkedWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
+  func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
     let identity = PersistencyModelIdentity(
       collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
       identifier: identifier
@@ -114,7 +115,7 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
     return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
   }
   
-  func setNearbyWeatherInformationList(_ list: [WeatherInformationDTO]) -> Completable {
+  func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable {
     Single
       .just(list)
       .map { list in
@@ -127,11 +128,11 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
-  func createNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
+  func createGetNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
     persistencyWorker.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
   }
   
-  func createNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
+  func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
     let identity = PersistencyModelIdentity(
       collection: PersistencyKeys.nearbyWeatherInformation.collection,
       identifier: identifier
@@ -185,22 +186,21 @@ extension WeatherInformationService2: WeatherInformationUpdating {
   func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability> {
     Observable<WeatherInformationAvailability>
       .combineLatest(
-        createBookmarkedWeatherInformationListObservable().map { $0.isEmpty },
-        createNearbyWeatherInformationListObservable().map { $0.isEmpty },
+        createGetBookmarkedWeatherInformationListObservable().map { $0.isEmpty },
+        createGetNearbyWeatherInformationListObservable().map { $0.isEmpty },
         resultSelector: { ($0 && $1) ? .unavailable : .available }
       )
   }
   
   func createUpdateBookmarkedWeatherInformationCompletable() -> Completable {
-    dependencies.preferencesService
-      .createBookmarkedStationsObservable()
-      .map { $0.map { $0.identifier } }
-      .map { [apiKey] identifiers -> [URL] in
-        guard let apiKey = apiKey else {
-          throw ApiKeyService2.DomainError.apiKeyMissingError
+    Observable
+      .combineLatest(
+        dependencies.apiKeyService.createGetApiKeyObservable(),
+        dependencies.preferencesService.createBookmarkedStationsObservable().map { $0.map { $0.identifier } },
+        resultSelector: { apiKey, identifiers -> [URL] in
+          identifiers.map { Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: $0) }
         }
-        return identifiers.map { Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: $0) }
-      }
+      )
       .flatMapLatest { urls -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
         Observable.zip(
           urls.map { url -> Observable<PersistencyModel<WeatherInformationDTO>> in
@@ -219,17 +219,13 @@ extension WeatherInformationService2: WeatherInformationUpdating {
   }
   
   func createBookmarkedUpdateWeatherInformationCompletable(forStationWith identifier: Int) -> Completable {
-    Single
-      .just(identifier)
-      .map { [apiKey] identifier in
-        guard let apiKey = apiKey else {
-          throw ApiKeyService2.DomainError.apiKeyMissingError
-        }
-        return Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(
-          with: apiKey,
-          stationIdentifier: identifier
-        )
-      }
+    Observable
+      .combineLatest(
+        dependencies.apiKeyService.createGetApiKeyObservable(),
+        Observable.just(identifier),
+        resultSelector: { apiKey, identifier -> URL in Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier) }
+      )
+      .asSingle()
       .flatMapCompletable { [unowned persistencyWorker] url -> Completable in
         RxAlamofire
           .requestData(.get, url)
@@ -244,13 +240,11 @@ extension WeatherInformationService2: WeatherInformationUpdating {
   func createUpdateNearbyWeatherInformationCompletable() -> Completable {
     Observable
       .combineLatest(
+        dependencies.apiKeyService.createGetApiKeyObservable(),
         dependencies.userLocationService.createDidUpdateLocationObservable(),
         dependencies.preferencesService.createAmountOfNearbyResultsOptionObservable(),
-        resultSelector: { [apiKey] location, amountOfResultsOption -> URL in
-          guard let apiKey = apiKey else {
-            throw ApiKeyService2.DomainError.apiKeyMissingError
-          }
-          return Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
+        resultSelector: { apiKey, location, amountOfResultsOption -> URL in
+          Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
             with: apiKey,
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude,

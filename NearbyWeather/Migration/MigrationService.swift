@@ -90,10 +90,10 @@ extension MigrationService {
           }
         }
         return Completable.zip([
-          dependencies.weatherInformationService.setBookmarkerWeatherInformationList(
+          dependencies.weatherInformationService.createSetBookmarkedWeatherInformationListCompletable(
             weatherInformationStoredContents.bookmarkedWeatherDataObjects?.compactMap { $0.weatherInformationDTO } ?? []
           ),
-          dependencies.weatherInformationService.setNearbyWeatherInformationList(
+          dependencies.weatherInformationService.createSetNearbyWeatherInformationListCompletable(
             weatherInformationStoredContents.nearbyWeatherDataObject?.weatherInformationDTOs ?? []
           )
         ])

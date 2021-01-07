@@ -142,7 +142,7 @@ private extension WeatherListViewModel {
     let nearbyListItemsObservable = Observable
       .combineLatest(
         preferredListTypeObservable,
-        dependencies.weatherInformationService.createNearbyWeatherInformationListObservable(),
+        dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
         resultSelector: { listTypeValue, nearbyWeatherInformationItems -> [PersistencyModel<WeatherInformationDTO>] in
           listTypeValue == .nearby ? nearbyWeatherInformationItems : []
         }
@@ -154,7 +154,7 @@ private extension WeatherListViewModel {
       .combineLatest(
         preferredListTypeObservable,
         preferredSortingOrientationObservable,
-        dependencies.weatherInformationService.createBookmarkedWeatherInformationListObservable(),
+        dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
         resultSelector: { listTypeValue, sortingOrientationValue, nearbyWeatherInformationItems -> [PersistencyModel<WeatherInformationDTO>] in
           listTypeValue == .bookmarked
             ? Self.sortNearbyResults(nearbyWeatherInformationItems, using: sortingOrientationValue)

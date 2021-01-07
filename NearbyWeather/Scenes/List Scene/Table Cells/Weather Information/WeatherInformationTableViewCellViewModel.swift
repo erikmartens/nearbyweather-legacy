@@ -52,8 +52,8 @@ private extension WeatherInformationTableViewCellViewModel {
       .just(dependencies.isBookmark)
       .flatMapLatest { [dependencies] isBookmark -> Observable<PersistencyModel<WeatherInformationDTO>?> in
         isBookmark
-          ? dependencies.weatherInformationService.createBookmarkedWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
-          : dependencies.weatherInformationService.createNearbyWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
+          ? dependencies.weatherInformationService.createGetBookmarkedWeatherInformationItemObservable(for: dependencies.weatherInformationIdentity.identifier)
+          : dependencies.weatherInformationService.createGetNearbyWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
       }
       .map { $0?.entity }
       

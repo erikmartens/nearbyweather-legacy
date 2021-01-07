@@ -7,7 +7,7 @@
 //
 
 import RxSwift
-import RxOptional
+import RxAlamofire
 
 // MARK: - Domain-Specific Errors
 
@@ -25,8 +25,10 @@ extension ApiKeyService2 {
 
 extension ApiKeyService2 {
   enum ApiKeyValidity {
-    case valid
+    case valid(apiKey: String)
     case invalid
+    case missing
+    case unknown(apiKey: String)
   }
 }
 
@@ -50,14 +52,6 @@ private extension ApiKeyService2 {
   }
 }
 
-// MARK: - Dependencies
-
-extension ApiKeyService2 {
-  struct Dependencies {
-    let preferencesService: PreferencesService2
-  }
-}
-
 // MARK: - Class Definition
 
 final class ApiKeyService2 {
@@ -70,16 +64,6 @@ final class ApiKeyService2 {
       dataBaseFileName: "ApiKeyServiceDataBase"
     )
   }()
-  
-  // MARK: - Properties
-  
-  private let dependencies: Dependencies
-  
-  // MARK: - Initialization
-  
-  init(dependencies: Dependencies) {
-    self.dependencies = dependencies
-  }
 }
 
 // MARK: - API Key Lookup
@@ -87,20 +71,61 @@ final class ApiKeyService2 {
 protocol ApiKeyLookup {
   func createApiKeyIsValidObservable() -> Observable<ApiKeyService2.ApiKeyValidity>
   func createSetApiKeyCompletable(_ apiKey: String) -> Completable
-  func createGetApiKeyObservable() -> Observable<String?>
+  func createGetApiKeyObservable() -> Observable<String>
 }
 
 extension ApiKeyService2: ApiKeyLookup {
   
   func createApiKeyIsValidObservable() -> Observable<ApiKeyService2.ApiKeyValidity> {
-    
+    let identity = PersistencyModelIdentity(
+      collection: PersistencyKeys.userApiKey.collection,
+      identifier: PersistencyKeys.userApiKey.identifier
+    )
+    return persistencyWorker
+      .observeResource(with: identity, type: ApiKeyDTO.self)
+      .map { $0?.entity.apiKey }
+      .flatMapLatest { apiKey -> Observable<ApiKeyService2.ApiKeyValidity> in
+        guard let apiKey = apiKey else {
+          return Observable.just(.missing)
+        }
+        return RxAlamofire
+          .requestData(.get, Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: 1))
+          .map { response -> ApiKeyService2.ApiKeyValidity in
+            if response.0.statusCode == 401 {
+              return .invalid
+            }
+            guard response.0.statusCode == 200 else {
+              return .unknown(apiKey: apiKey) // another http error was returned and it cannot be determined whether the key is valid
+            }
+            return .valid(apiKey: apiKey)
+          }
+      }
   }
   
   func createSetApiKeyCompletable(_ apiKey: String) -> Completable {
-    
+    Single
+      .just(ApiKeyDTO(apiKey: apiKey))
+      .map {
+        PersistencyModel(identity: PersistencyModelIdentity(collection: PersistencyKeys.userApiKey.collection,
+                                                            identifier: PersistencyKeys.userApiKey.identifier),
+                         entity: $0)
+      }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: ApiKeyDTO.self) }
   }
   
-  func createGetApiKeyObservable() -> Observable<String?> {
-    
+  func createGetApiKeyObservable() -> Observable<String> {
+    createApiKeyIsValidObservable()
+      .map { apiKeyValidity -> String in
+        switch apiKeyValidity {
+        case let .valid(apiKey):
+          return apiKey
+        case .invalid:
+          throw ApiKeyService2.DomainError.apiKeyInvalidError
+        case .missing:
+          throw ApiKeyService2.DomainError.apiKeyMissingError
+        case let .unknown(apiKey):
+          return apiKey
+        }
+      }
   }
 }

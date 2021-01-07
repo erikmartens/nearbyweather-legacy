@@ -86,6 +86,7 @@ private extension ListFlow {
   func summonWeatherListController() -> FlowContributors {
     let weatherListViewController = WeatherListViewController(dependencies: WeatherListViewController.ViewModel.Dependencies(
       weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!,
+      userLocationService: dependencyContainer.resolve(UserLocationService2.self)!,
       preferencesService: dependencyContainer.resolve(PreferencesService2.self)!
     ))
     rootViewController.setViewControllers([weatherListViewController], animated: false)

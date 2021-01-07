@@ -41,8 +41,8 @@ final class UserLocationService2 {
 
 protocol LocationObserving {
   func createDidUpdateLocationObservable() -> Observable<CLLocation>
-  func createAuthorizationStatusSingle() -> Single<Bool>
   func createAuthorizationStatusObservable() -> Observable<Bool>
+  func createCurrentLocationObservable() -> Observable<CLLocation?>
 }
 
 extension UserLocationService2: LocationObserving {
@@ -59,18 +59,25 @@ extension UserLocationService2: LocationObserving {
           onDispose: { [locationManager] in locationManager.stopUpdatingLocation() })
   }
   
-  func createAuthorizationStatusSingle() -> Single<Bool> {
-    Single
-      .just(CLLocationManager.authorizationStatus())
-      .map { Self.authorizationStatusIsSufficient($0) }
-  }
-  
   func createAuthorizationStatusObservable() -> Observable<Bool> {
     locationManager.rx
       .didChangeAuthorization
       .map { $0.status }
       .startWith(CLLocationManager.authorizationStatus())
       .map { Self.authorizationStatusIsSufficient($0) }
+  }
+  
+  func createCurrentLocationObservable() -> Observable<CLLocation?> {
+    Observable
+      .combineLatest(
+        locationManager.rx.location,
+        createAuthorizationStatusObservable(),
+        resultSelector: { currentLocation, currentAuthorizationStatus -> CLLocation? in
+          guard currentAuthorizationStatus == true else {
+            return nil
+          }
+          return currentLocation
+        })
   }
 }
 

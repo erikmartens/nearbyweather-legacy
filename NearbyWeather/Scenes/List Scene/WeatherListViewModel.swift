@@ -9,11 +9,13 @@
 import RxSwift
 import RxCocoa
 import RxFlow
+import CoreLocation
 
 extension WeatherListViewModel {
   
   struct Dependencies {
     let weatherInformationService: WeatherInformationService2
+    let userLocationService: UserLocationService2
     let preferencesService: PreferencesService2
   }
 }
@@ -156,9 +158,10 @@ private extension WeatherListViewModel {
         preferredListTypeObservable,
         preferredSortingOrientationObservable,
         dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
-        resultSelector: { listTypeValue, sortingOrientationValue, nearbyWeatherInformationItems -> [PersistencyModel<WeatherInformationDTO>] in
+        dependencies.userLocationService.createCurrentLocationObservable(),
+        resultSelector: { listTypeValue, sortingOrientationValue, nearbyWeatherInformationItems, currentLocation -> [PersistencyModel<WeatherInformationDTO>] in
           listTypeValue == .bookmarked
-            ? Self.sortNearbyResults(nearbyWeatherInformationItems, using: sortingOrientationValue)
+            ? Self.sortNearbyResults(nearbyWeatherInformationItems, sortingOrientationValue: sortingOrientationValue, currentLocation: currentLocation)
             : []
         }
       )
@@ -224,15 +227,35 @@ extension WeatherListViewModel: ViewControllerLifeCycleRelay {
 
 private extension WeatherListViewModel {
   
-  static func sortNearbyResults(_ results: [PersistencyModel<WeatherInformationDTO>], using sortingOrientationValue: SortingOrientationValue) -> [PersistencyModel<WeatherInformationDTO>] {
+  static func sortNearbyResults(_ results: [PersistencyModel<WeatherInformationDTO>], sortingOrientationValue: SortingOrientationValue, currentLocation: CLLocation?) -> [PersistencyModel<WeatherInformationDTO>] {
     results.sorted { lhsValue, rhsValue -> Bool in
+      let lhsEntity = lhsValue.entity
+      let rhsEntity = rhsValue.entity
+      
       switch sortingOrientationValue {
       case .name:
-        return lhsValue.entity.cityName > rhsValue.entity.cityName
+        return lhsEntity.cityName < rhsEntity.cityName
       case .temperature:
-        return (lhsValue.entity.atmosphericInformation.temperatureKelvin ?? 0) > (rhsValue.entity.atmosphericInformation.temperatureKelvin ?? 0)
+        guard let lhsTemperature = lhsEntity.atmosphericInformation.temperatureKelvin else {
+          return false
+        }
+        guard let rhsTemperature = rhsEntity.atmosphericInformation.temperatureKelvin else {
+          return true
+        }
+        return lhsTemperature > rhsTemperature
       case .distance:
-        return lhsValue.entity.cityName > rhsValue.entity.cityName // TODO: use correct values
+        guard let currentLocation = currentLocation else {
+            return false
+        }
+        guard let lhsLatitude = lhsEntity.coordinates.latitude, let lhsLongitude = lhsEntity.coordinates.longitude else {
+          return false
+        }
+        guard let rhsLatitude = rhsEntity.coordinates.latitude, let rhsLongitude = rhsEntity.coordinates.longitude else {
+          return true
+        }
+        let lhsLocation = CLLocation(latitude: lhsLatitude, longitude: lhsLongitude)
+        let rhsLocation = CLLocation(latitude: rhsLatitude, longitude: rhsLongitude)
+        return lhsLocation.distance(from: currentLocation) < rhsLocation.distance(from: currentLocation)
       }
     }
   }

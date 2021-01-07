@@ -27,13 +27,19 @@ extension Constants {
     static let kOpenWeatherMapInstructionsUrl = URL(string: "https://openweathermap.org/appid")!
     
     static func kOpenWeatherMapCityDetailsUrl(forCityWithName name: String) -> URL {
-      return URL(string: "https://openweathermap.org/find?q=\(name)")!
+      URL(string: "https://openweathermap.org/find?q=\(name)")!
     }
     
     static func kOpenWeatherMapSingleStationtDataRequestUrl(with apiKey: String, stationIdentifier identifier: Int) -> URL {
       let localeTag = Locale.current.languageCode?.lowercased() ?? "en"
       let baseUrl = Constants.Urls.kOpenWeatherSingleLocationBaseUrl.absoluteString
       return URL(string: "\(baseUrl)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)")!
+    }
+    
+    static func kOpenWeatherMapApitTestRequestUrl(with apiKey: String) -> URL {
+      let stationName = "Cupertino"
+      let baseUrlString = "http://api.openweathermap.org/data/2.5/weather"
+      return URL(string: "\(baseUrlString)?q=\(stationName)&APPID=\(apiKey)")!
     }
     
     // TODO: remove

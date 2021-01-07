@@ -89,7 +89,7 @@ extension ApiKeyService2: ApiKeyLookup {
           return Observable.just(.missing)
         }
         return RxAlamofire
-          .requestData(.get, Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: 1)) // TODO: use valid existing station identifier
+          .requestData(.get, Constants.Urls.kOpenWeatherMapApitTestRequestUrl(with: apiKey))
           .map { response -> ApiKeyService2.ApiKeyValidity in
             if response.0.statusCode == 401 {
               return .invalid

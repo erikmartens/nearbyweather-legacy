@@ -38,9 +38,9 @@
 
 > ❗️Please note that you need to supply your own OpenWeatherMap API key, in order to use the app.
 
-NearbyWeather is a simple weather app, that provides current weather information for nearby cities, as well for bookmarked locations. NearbyWeather uses the OpenWeatherMap API to download weather data. Additionally the OpenWeatherMaps location database is directly bootstrapped into the app for quick access.
+NearbyWeather is a simple weather app, that provides current weather information for nearby weather stations, as well for bookmarked weather stations. NearbyWeather uses the OpenWeatherMap API to download weather data. Additionally the OpenWeatherMap's station-database is directly bootstrapped into the app for quick access.
 
-With NearbyWeather you can:
+### Feature Set
 
 - See current weather information for bookmarked and nearby places via a list and a map view
 - See the current temperature on your app icon
@@ -48,6 +48,12 @@ With NearbyWeather you can:
 - Add places as bookmarks via OpenWeatherMaps weather-station data base
 - Choose your preferred units (celsius/fahrenheit/kelvin & kilometres/miles)
 - Access previously loaded data offline
+
+### Supported Languages
+
+| Development Language | App Localizations |
+|:--|:--|
+| 🇺🇸 | 🇺🇸 🇩🇪 🇫🇷 🇨🇳 (Traditional) |
 
 ## Mission of this Project
 
@@ -73,7 +79,7 @@ NearbyWeather was created to help you as a reference for developing your skills.
 | Continuous Integration | Bitrise | 🅾️ |
 | Testing & Quality Assurance | Unit Tests & UI Tests, SwiftUI Scene Previews | 🅾️ |
 
-__LEGEND:__ ✅ Done, 🔄 In Progress, 🅾️ Coming Soon
+> __LEGEND:__ ✅ = Done, 🔄 = In Progress, 🅾️ = Coming Soon
 
 ## App Releases
 

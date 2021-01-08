@@ -15,6 +15,7 @@ extension WeatherListViewModel {
   
   struct Dependencies {
     let weatherInformationService: WeatherInformationService2
+    let weatherStationService: WeatherStationService2
     let userLocationService: UserLocationService2
     let preferencesService: PreferencesService2
   }
@@ -136,16 +137,20 @@ private extension WeatherListViewModel {
   }
   
   func observeDataSource() {
+    // TODO: Observe Data Downloading to catch errors for presentation
+    
     let preferredSortingOrientationObservable = dependencies
       .preferencesService
       .createSortingOrientationOptionObservable()
       .map { $0.value }
       .share(replay: 1)
     
-    let nearbyListItemsObservable = dependencies
-      .weatherInformationService
-      .createGetNearbyWeatherInformationListObservable()
-//      .map { Self.sortBookmarkedResults($0, sortingWeights: sortingOrientationValue, currentLocation: currentLocation) } // TODO
+    let nearbyListItemsObservable = Observable
+      .combineLatest(
+        dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
+        dependencies.weatherStationService.createGetBookmarksSortingObservable(),
+        resultSelector:  Self.sortBookmarkedResults
+      )
       .map { [dependencies] listItems -> [BaseCellViewModelProtocol] in
         listItems.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false)
       }
@@ -226,6 +231,14 @@ extension WeatherListViewModel: ViewControllerLifeCycleRelay {
 // MARK: - Helpers
 
 private extension WeatherListViewModel {
+  
+  static func sortBookmarkedResults(_ persistedWeatherInformationDTOs: [PersistencyModel<WeatherInformationDTO>], sortingWeights: [WeatherStationSortingOrientationDTO]?) -> [PersistencyModel<WeatherInformationDTO>] {
+    persistedWeatherInformationDTOs.sorted { lhsModel, rhsModel -> Bool in
+      let lhsSortingWeight = (sortingWeights?.first { $0.stationIdentifier == lhsModel.entity.cityID })?.stationIndex ?? 999
+      let rhsSortingWeight = (sortingWeights?.first { $0.stationIdentifier == rhsModel.entity.cityID })?.stationIndex ?? 999
+      return lhsSortingWeight < rhsSortingWeight
+    }
+  }
   
   static func sortNearbyResults(_ results: [PersistencyModel<WeatherInformationDTO>], sortingOrientationValue: SortingOrientationValue, currentLocation: CLLocation?) -> [PersistencyModel<WeatherInformationDTO>] {
     results.sorted { lhsValue, rhsValue -> Bool in

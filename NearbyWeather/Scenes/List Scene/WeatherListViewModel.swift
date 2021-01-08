@@ -154,6 +154,8 @@ private extension WeatherListViewModel {
       .map { [dependencies] listItems -> [BaseCellViewModelProtocol] in
         listItems.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false)
       }
+      .map { [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
+      .catchError { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
     let bookmarkedListItemsObservable = Observable
@@ -164,6 +166,8 @@ private extension WeatherListViewModel {
         resultSelector: Self.sortNearbyResults
       )
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
+      .map { [WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
+      .catchError { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
     Observable
@@ -171,20 +175,15 @@ private extension WeatherListViewModel {
         nearbyListItemsObservable,
         bookmarkedListItemsObservable,
         preferredListTypeObservable,
-        resultSelector: { nearbyListItems, bookmarkedListItems, preferredListType -> [TableViewSectionData] in
+        resultSelector: { nearbyListSections, bookmarkedListSections, preferredListType -> [TableViewSectionData] in
           switch preferredListType {
-          case .bookmarked:
-            return [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: nearbyListItems)]
           case .nearby:
-            return [WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: bookmarkedListItems)]
+            return nearbyListSections
+          case .bookmarked:
+            return bookmarkedListSections
           }
         }
       )
-      .catchError {
-        Observable
-          .just([WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(error: $0))])
-          .map { [WeatherListAlertItemsSection(sectionCellsIdentifier: WeatherListAlertTableViewCell.reuseIdentifier, sectionItems: $0)] }
-      }
       .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .userInteractive))
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
@@ -266,6 +265,15 @@ private extension WeatherListViewModel {
 }
 
 // MARK: - Helper Extensions
+
+private extension Error {
+  
+  func mapToObservableTableSectionData() -> Observable<[TableViewSectionData]> {
+    Observable
+      .just([WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(error: self))])
+      .map { [WeatherListAlertItemsSection(sectionCellsIdentifier: WeatherListAlertTableViewCell.reuseIdentifier, sectionItems: $0)] }
+  }
+}
 
 private extension Array where Element == PersistencyModel<WeatherInformationDTO> {
   

@@ -101,6 +101,10 @@ Past releases are documented in the [release section](https://github.com/erikmar
 
 We looking forward to receiving your contributions. You can find out how to take part in the development of this application. Please find out how to submit code to this repository via the [contribution guidelines](CONTRIBUTING.md).
 
+### Translations
+
+Localizing the app for additional languages is another great way to contribute. If you are an experienced iOS developer, you know what to do. Please create an issue for your chosen language and follow the [contribution guidelines](CONTRIBUTING.md). Otherwise get into contact in order to be introduced to the procedure.
+
 ### Beta Testing
 
 You may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.dev@icloud.com](mailto:erikmartens.dev@icloud.com) to be added to the list of testers.
@@ -119,7 +123,7 @@ If you are having technical issues or want to raise a bug/issue with the app, th
 
 Copyright © 2016 - 2021 Erik Maximilian Martens.
 
-Licensed under the **MIT License** (the "License"); you may not use this file except in compliance with the License.
+Licensed under the **MIT License** (the "License"); you may not use this project except in compliance with the License.
 
 You may obtain a copy of the License at https://opensource.org/licenses/MIT.
 

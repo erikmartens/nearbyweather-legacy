@@ -70,12 +70,12 @@ NearbyWeather was created to help you as a reference for developing your skills.
 | Networking | Alamofire | ✅ |
 | Asset Management | R.Swift | ✅ |
 | Code Quality | SwiftLint | ✅ |
-| Analytics and Reporting | Google Firebase | ✅ |
 | Package Management | CocoaPods | ✅ |
 | Bootsrapping | Node.js Scripts | ✅ |
 | Deployment | Fastlane | ✅ |
-| Developer Sanity | SwiftUI Scene Previews | 🅾️ |
-| Analytics | Ananymous Usage Behavior | 🅾️ |
+| Crash Data Analytics | Logs and Stack Traces to Google Firebase | ✅ |
+| Usage Behavior Analytics | Events to Google Firebase | 🅾️ |
+| UI Deign Verification | SwiftUI Scene Previews | 🅾️ |
 | Continuous Integration | Bitrise | 🅾️ |
 | Testing & Quality Assurance | Unit Tests & UI Tests, SwiftUI Scene Previews | 🅾️ |
 

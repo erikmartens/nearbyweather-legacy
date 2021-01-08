@@ -63,23 +63,25 @@ final class WeatherStationService2 {
 // MARK: - Weather Station Bookmark Settings
 
 protocol WeatherStationBookmarkPersistence {
-  func createAddBookmarkCompletable(_ weatherStationDto: WeatherStationDTO) -> Completable
-  func createRemoveBookmarkCompletable(_ weatherStationDto: WeatherStationDTO) -> Completable
+  func createAddBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable
+  func createRemoveBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable
+ 
+  func createSetBookmarkedStationsCompletable(_ weatherStationDTOs: [WeatherStationDTO]) -> Completable
   func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
   
   func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
   func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?>
   
-  func createSetPreferredBookmarkCompletable(_ weatherStationDto: PreferredBookmarkOption) -> Completable
+  func createSetPreferredBookmarkCompletable(_ weatherStationDTO: PreferredBookmarkOption) -> Completable
   func createRemovePreferredBookmarkCompletable() -> Completable
   func createGetPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
 }
 
 extension WeatherStationService2: WeatherStationBookmarkPersistence {
   
-  func createAddBookmarkCompletable(_ weatherStationDto: WeatherStationDTO) -> Completable {
+  func createAddBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable {
     Single
-      .just(weatherStationDto)
+      .just(weatherStationDTO)
       .map {
         PersistencyModel<WeatherStationDTO>(
           identity: PersistencyModelIdentity(
@@ -92,9 +94,9 @@ extension WeatherStationService2: WeatherStationBookmarkPersistence {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherStationDTO.self) }
   }
   
-  func createRemoveBookmarkCompletable(_ weatherStationDto: WeatherStationDTO) -> Completable {
+  func createRemoveBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable {
     Single
-      .just(weatherStationDto.identifier)
+      .just(weatherStationDTO.identifier)
       .map {
         PersistencyModelIdentity(
           collection: WeatherStationService2.PersistencyKeys.weatherStationBookmarks.collection,
@@ -102,6 +104,29 @@ extension WeatherStationService2: WeatherStationBookmarkPersistence {
         )
       }
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.deleteResource(with: $0) }
+  }
+  
+  func createSetBookmarkedStationsCompletable(_ weatherStationDTOs: [WeatherStationDTO]) -> Completable {
+    Single
+      .just(weatherStationDTOs)
+      .map {
+        $0.map {
+          PersistencyModel(
+            identity: PersistencyModelIdentity(
+              collection: WeatherStationService2.PersistencyKeys.weatherStationBookmarks.collection,
+              identifier: String($0.identifier)
+            ),
+            entity: $0
+          )
+        }
+      }
+      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherStationDTO.self) }
+  }
+  
+  func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]> {
+    persistencyWorker
+      .observeResources(in: WeatherStationService2.PersistencyKeys.weatherStationBookmarks.collection, type: WeatherStationDTO.self)
+      .map { $0.map { $0.entity } }
   }
   
   func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable {
@@ -131,15 +156,9 @@ extension WeatherStationService2: WeatherStationBookmarkPersistence {
       .map { $0?.entity.toDictionary() }
   }
   
-  func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]> {
-    persistencyWorker
-      .observeResources(in: WeatherStationService2.PersistencyKeys.weatherStationBookmarks.collection, type: WeatherStationDTO.self)
-      .map { $0.map { $0.entity } }
-  }
-  
-  func createSetPreferredBookmarkCompletable(_ weatherStationDto: PreferredBookmarkOption) -> Completable {
+  func createSetPreferredBookmarkCompletable(_ weatherStationDTO: PreferredBookmarkOption) -> Completable {
     Single
-      .just(weatherStationDto)
+      .just(weatherStationDTO)
       .map {
         PersistencyModel(
           identity: PersistencyModelIdentity(
@@ -209,10 +228,10 @@ extension WeatherStationService2: WeatherStationLookup {
         return Disposables.create()
       }
       .replaceNilWith([])
-      .flatMapLatest { [unowned self] weatherStationDtos -> Observable<[WeatherStationDTO]> in
+      .flatMapLatest { [unowned self] weatherStationDTOs -> Observable<[WeatherStationDTO]> in
         self
           .createGetBookmarkedStationsObservable()
-          .map { bookmarkedWeatherStations in weatherStationDtos.filter { !bookmarkedWeatherStations.contains($0) } }
+          .map { bookmarkedWeatherStations in weatherStationDTOs.filter { !bookmarkedWeatherStations.contains($0) } }
       }
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
   }
@@ -221,8 +240,10 @@ extension WeatherStationService2: WeatherStationLookup {
 // MARK: - Weather Station Bookmark Migration
 
 protocol WeatherStationBookmarkMigration {
+  func createSetBookmarkedStationsCompletable(_ weatherStationDTOs: [WeatherStationDTO]) -> Completable
+  func createSetPreferredBookmarkCompletable(_ weatherStationDTO: PreferredBookmarkOption) -> Completable
   func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
-  func createSetPreferredBookmarkCompletable(_ weatherStationDto: PreferredBookmarkOption) -> Completable
+  
 }
 
 extension WeatherStationService2: WeatherStationBookmarkMigration {}

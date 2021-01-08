@@ -54,7 +54,7 @@ With NearbyWeather you can:
 NearbyWeather was created to help you as a reference for developing your skills. The app is kept up to date with the latest best practices in mobile app development. Find out how how modern iOS apps are engineered:
 
 | Area | Concepts | Status |
-|:--|:--|:--|
+|:--|:--|:-:|
 | Languages | Swift, Objective-C, JavaScript | ✅ |
 | Frameworks | RxSwift, RxFlow | ✅ |
 | Architecture | MVVM+C | ✅ |
@@ -68,8 +68,12 @@ NearbyWeather was created to help you as a reference for developing your skills.
 | Package Management | CocoaPods | ✅ |
 | Bootsrapping | Node.js Scripts | ✅ |
 | Deployment | Fastlane | ✅ |
-| Continuous Integration | BitRise | 🅾️ Coming Soon |
-| Testing and Quality Assurance | Unit Tests & UI Tests, SwiftUI Scene Previews | 🅾️ Coming Soon |
+| Developer Sanity | SwiftUI Scene Previews | 🅾️ |
+| Analytics | Ananymous Usage Behavior | 🅾️ |
+| Continuous Integration | Bitrise | 🅾️ |
+| Testing & Quality Assurance | Unit Tests & UI Tests, SwiftUI Scene Previews | 🅾️ |
+
+__LEGEND:__ ✅ Done, 🔄 In Progress, 🅾️ Coming Soon
 
 ## App Releases
 
@@ -125,6 +129,6 @@ Copyright © 2016 - 2021 Erik Maximilian Martens.
 
 Licensed under the **MIT License** (the "License"); you may not use this project except in compliance with the License.
 
-You may obtain a copy of the License at https://opensource.org/licenses/MIT.
+You may obtain a copy of the License at [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT).
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the [LICENSE](./LICENSE) for the specific language governing permissions and limitations under the License.

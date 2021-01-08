@@ -88,7 +88,8 @@ private extension ListFlow {
       weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!,
       weatherStationService: dependencyContainer.resolve(WeatherStationService2.self)!,
       userLocationService: dependencyContainer.resolve(UserLocationService2.self)!,
-      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!
+      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!,
+      apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!
     ))
     rootViewController.setViewControllers([weatherListViewController], animated: false)
     return .one(flowContributor: .contribute(withNextPresentable: weatherListViewController, withNextStepper: weatherListViewController.viewModel))

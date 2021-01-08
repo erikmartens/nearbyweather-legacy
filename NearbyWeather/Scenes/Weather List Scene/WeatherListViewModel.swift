@@ -14,10 +14,11 @@ import CoreLocation
 extension WeatherListViewModel {
   
   struct Dependencies {
-    let weatherInformationService: WeatherInformationService2
+    let weatherInformationService: WeatherInformationProvisioning & WeatherInformationUpdating
     let weatherStationService: WeatherStationService2
     let userLocationService: UserLocationService2
-    let preferencesService: PreferencesService2
+    let preferencesService: WeatherListPreferencePersistence & UnitSettingsPreferenceReading
+    let apiKeyService: ApiKeyReading
   }
 }
 
@@ -137,7 +138,10 @@ private extension WeatherListViewModel {
   }
   
   func observeDataSource() {
-    // TODO: Observe Data Downloading to catch errors for presentation
+    let apiKeyValidObservable = dependencies
+      .apiKeyService
+      .createGetApiKeyObservable()
+      .share(replay: 1)
     
     let preferredSortingOrientationObservable = dependencies
       .preferencesService
@@ -149,7 +153,8 @@ private extension WeatherListViewModel {
       .combineLatest(
         dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
         dependencies.weatherStationService.createGetBookmarksSortingObservable(),
-        resultSelector: Self.sortBookmarkedResults
+        apiKeyValidObservable,
+        resultSelector: { weatherInformationItems, sortingWeights, _ in Self.sortBookmarkedResults(weatherInformationItems, sortingWeights: sortingWeights) }
       )
       .map { [dependencies] listItems -> [BaseCellViewModelProtocol] in
         listItems.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false)
@@ -163,7 +168,10 @@ private extension WeatherListViewModel {
         dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
         preferredSortingOrientationObservable,
         dependencies.userLocationService.createCurrentLocationObservable(),
-        resultSelector: Self.sortNearbyResults
+        apiKeyValidObservable,
+        resultSelector: { weatherInformationItems, sortingOrientation, currentLocation, _ in
+          Self.sortNearbyResults(weatherInformationItems, sortingOrientationValue: sortingOrientation, currentLocation: currentLocation)
+        }
       )
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
       .map { [WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
@@ -221,10 +229,10 @@ private extension WeatherListViewModel {
   
   static func sortBookmarkedResults(_ persistedWeatherInformationDTOs: [PersistencyModel<WeatherInformationDTO>], sortingWeights: [Int: Int]?) -> [PersistencyModel<WeatherInformationDTO>] {
     persistedWeatherInformationDTOs.sorted { lhsModel, rhsModel -> Bool in
-      let lhsSortingWeight = sortingWeights?[lhsModel.entity.cityID] ?? 999
-      let rhsSortingWeight = sortingWeights?[rhsModel.entity.cityID] ?? 999
+      let lhsSortingWeight = sortingWeights?[lhsModel.entity.stationIdentifier] ?? 999
+      let rhsSortingWeight = sortingWeights?[rhsModel.entity.stationIdentifier] ?? 999
       if lhsSortingWeight == rhsSortingWeight {
-        return lhsModel.entity.cityName < rhsModel.entity.cityName
+        return lhsModel.entity.stationName < rhsModel.entity.stationName
       }
       return lhsSortingWeight < rhsSortingWeight
     }
@@ -237,7 +245,7 @@ private extension WeatherListViewModel {
       
       switch sortingOrientationValue {
       case .name:
-        return lhsEntity.cityName < rhsEntity.cityName
+        return lhsEntity.stationName < rhsEntity.stationName
       case .temperature:
         guard let lhsTemperature = lhsEntity.atmosphericInformation.temperatureKelvin else {
           return false

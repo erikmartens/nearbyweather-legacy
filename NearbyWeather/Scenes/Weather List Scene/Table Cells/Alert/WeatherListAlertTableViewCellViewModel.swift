@@ -41,7 +41,14 @@ private extension WeatherListAlertTableViewCellViewModel {
   static func createDataSourceObserver(error: Error) -> Driver<WeatherListAlertTableViewCellModel> {
     var errorMessage: String
     
-    if let error = error as? UserLocationService2.DomainError {
+    if let error = error as? WeatherInformationService2.DomainError {
+      switch error {
+      case .nearbyWeatherInformationMissing:
+        errorMessage = R.string.localizable.empty_nearby_locations_message()
+      case .bookmarkedWeatherInformationMissing:
+        errorMessage = R.string.localizable.empty_bookmarks_message()
+      }
+    } else if let error = error as? UserLocationService2.DomainError {
       switch error {
       case .locationAuthorizationError:
         errorMessage = R.string.localizable.location_denied_error()

@@ -210,13 +210,13 @@ final class WeatherInformationService {
   
   func weatherDTO(forIdentifier identifier: Int) -> WeatherInformationDTO? {
     if let bookmarkedLocationMatch = bookmarkedWeatherDataObjects?.first(where: {
-      return $0.weatherInformationDTO?.cityID == identifier
+      return $0.weatherInformationDTO?.stationIdentifier == identifier
     }), let weatherDTO = bookmarkedLocationMatch.weatherInformationDTO {
       return weatherDTO
     }
     
     if let nearbyLocationMatch = nearbyWeatherDataObject?.weatherInformationDTOs?.first(where: { weatherDTO in
-      return weatherDTO.cityID == identifier
+      return weatherDTO.stationIdentifier == identifier
     }) {
       return nearbyLocationMatch
     }
@@ -244,7 +244,7 @@ final class WeatherInformationService {
     let result: [WeatherInformationDTO]?
     switch PreferencesService.shared.sortingOrientation.value {
     case .name:
-      result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted { $0.cityName < $1.cityName }
+      result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted { $0.stationName < $1.stationName }
     case .temperature:
       result = nearbyWeatherDataObject?.weatherInformationDTOs?.sorted {
         guard let lhsTemperature = $0.atmosphericInformation.temperatureKelvin else {

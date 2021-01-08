@@ -13,7 +13,6 @@ import RxAlamofire
 
 extension ApiKeyService2 {
   enum DomainError: String, Error {
-    
     var domain: String { "WeatherInformationService" }
     
     case apiKeyMissingError = "Trying to request data from OpenWeatherMap, but no API key exists."
@@ -66,15 +65,13 @@ final class ApiKeyService2 {
   }()
 }
 
-// MARK: - API Key Lookup
+// MARK: - API Key Validity
 
-protocol ApiKeyLookup {
+protocol ApiKeyValidity {
   func createApiKeyIsValidObservable() -> Observable<ApiKeyService2.ApiKeyValidity>
-  func createSetApiKeyCompletable(_ apiKey: String) -> Completable
-  func createGetApiKeyObservable() -> Observable<String>
 }
 
-extension ApiKeyService2: ApiKeyLookup {
+extension ApiKeyService2: ApiKeyValidity {
   
   func createApiKeyIsValidObservable() -> Observable<ApiKeyService2.ApiKeyValidity> {
     let identity = PersistencyModelIdentity(
@@ -101,6 +98,16 @@ extension ApiKeyService2: ApiKeyLookup {
           }
       }
   }
+}
+
+// MARK: - API Key Persistence
+
+protocol ApiKeyPersistence {
+  func createSetApiKeyCompletable(_ apiKey: String) -> Completable
+  func createGetApiKeyObservable() -> Observable<String>
+}
+
+extension ApiKeyService2: ApiKeyPersistence {
   
   func createSetApiKeyCompletable(_ apiKey: String) -> Completable {
     Single
@@ -129,3 +136,11 @@ extension ApiKeyService2: ApiKeyLookup {
       }
   }
 }
+
+// MARK: - API Key Reading
+
+protocol ApiKeyReading {
+  func createGetApiKeyObservable() -> Observable<String>
+}
+
+extension ApiKeyService2: ApiKeyReading {}

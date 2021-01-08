@@ -14,8 +14,8 @@ extension WeatherListInformationTableViewCellViewModel {
   struct Dependencies {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
     let isBookmark: Bool
-    let weatherInformationService: WeatherInformationService2
-    let preferencesService: PreferencesService2
+    let weatherInformationService: WeatherInformationProvisioning
+    let preferencesService: UnitSettingsPreferenceReading
   }
 }
 
@@ -50,16 +50,16 @@ private extension WeatherListInformationTableViewCellViewModel {
   static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherListInformationTableViewCellModel> {
     let weatherInformationModelObservable = Observable
       .just(dependencies.isBookmark)
-      .flatMapLatest { [dependencies] isBookmark -> Observable<PersistencyModel<WeatherInformationDTO>?> in
+      .flatMapLatest { [dependencies] isBookmark -> Observable<PersistencyModel<WeatherInformationDTO>> in
         isBookmark
           ? dependencies.weatherInformationService.createGetBookmarkedWeatherInformationItemObservable(for: dependencies.weatherInformationIdentity.identifier)
           : dependencies.weatherInformationService.createGetNearbyWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
       }
-      .map { $0?.entity }
+      .map { $0.entity }
       
     return Observable
       .combineLatest(
-        weatherInformationModelObservable.errorOnNil(),
+        weatherInformationModelObservable,
         dependencies.preferencesService.createTemperatureUnitOptionObservable(),
         dependencies.preferencesService.createDimensionalUnitsOptionObservable(),
         resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherListInformationTableViewCellModel in

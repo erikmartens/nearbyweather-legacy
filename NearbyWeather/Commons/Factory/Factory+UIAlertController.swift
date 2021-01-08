@@ -119,7 +119,7 @@ private extension Factory.AlertController {
   
   static func focusMapOnLocationAlert(bookmarks: [WeatherInformationDTO], completionHandler: @escaping ((WeatherInformationDTO?) -> Void)) -> UIAlertController {
     var actions = bookmarks.map { bookmark -> UIAlertAction in
-      let action = UIAlertAction(title: bookmark.cityName, style: .default, handler: { _ in
+      let action = UIAlertAction(title: bookmark.stationName, style: .default, handler: { _ in
         completionHandler(bookmark)
       })
       action.setValue(R.image.locateFavoriteActiveIcon(), forKey: Constants.Keys.KeyValueBindings.kImage)

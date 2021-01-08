@@ -30,7 +30,7 @@ class WeatherDataCell: UITableViewCell {
   @IBOutlet weak var windspeedLabel: UILabel!
 
   func configureWithWeatherDTO(_ weatherDTO: WeatherInformationDTO, isBookmark: Bool) {
-    self.weatherDataIdentifier = weatherDTO.cityID
+    self.weatherDataIdentifier = weatherDTO.stationIdentifier
     self.isBookmark = isBookmark
 
     var bubbleColor: UIColor
@@ -81,7 +81,7 @@ class WeatherDataCell: UITableViewCell {
     )
     weatherConditionLabel.text = weatherConditionSymbol
 
-    cityNameLabel.text = weatherDTO.cityName
+    cityNameLabel.text = weatherDTO.stationName
 
     if let temperatureKelvin = weatherDTO.atmosphericInformation.temperatureKelvin {
       temperatureLabel.text = ConversionWorker.temperatureDescriptor(

@@ -15,7 +15,7 @@ import APTimeZones
 extension WeatherDetailViewController {
   static func instantiateFromStoryBoard(weatherDTO: WeatherInformationDTO, isBookmark: Bool) -> WeatherDetailViewController {
     let viewController = R.storyboard.weatherDetail.weatherDetailViewController()!
-    viewController.titleString = weatherDTO.cityName
+    viewController.titleString = weatherDTO.stationName
     viewController.weatherDTO = weatherDTO
     viewController.isBookmark = isBookmark
     return viewController
@@ -254,7 +254,7 @@ final class WeatherDetailViewController: UIViewController, Stepper {
 
   @IBAction func openWeatherMapButtonPressed(_ sender: UIButton) {
     presentSafariViewController(for:
-      Constants.Urls.kOpenWeatherMapCityDetailsUrl(forCityWithName: weatherDTO.cityName)
+      Constants.Urls.kOpenWeatherMapCityDetailsUrl(forCityWithName: weatherDTO.stationName)
     )
   }
 

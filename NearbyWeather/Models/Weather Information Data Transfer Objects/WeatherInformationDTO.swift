@@ -135,8 +135,8 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  var cityID: Int
-  var cityName: String
+  var stationIdentifier: Int
+  var stationName: String
   var coordinates: Coordinates
   var weatherCondition: [WeatherCondition]
   var atmosphericInformation: AtmosphericInformation
@@ -145,8 +145,8 @@ struct WeatherInformationDTO: Codable {
   var daytimeInformation: DaytimeInformation
   
   enum CodingKeys: String, CodingKey {
-    case cityID = "id"
-    case cityName = "name"
+    case stationIdentifier = "id"
+    case stationName = "name"
     case coordinates = "coord"
     case weatherCondition = "weather"
     case atmosphericInformation = "main"
@@ -158,8 +158,8 @@ struct WeatherInformationDTO: Codable {
   init(from decoder: Decoder) throws {
     let values = try decoder.container(keyedBy: CodingKeys.self)
     
-    self.cityID = try values.decode(Int.self, forKey: .cityID)
-    self.cityName = try values.decode(String.self, forKey: .cityName)
+    self.stationIdentifier = try values.decode(Int.self, forKey: .stationIdentifier)
+    self.stationName = try values.decode(String.self, forKey: .stationName)
     self.coordinates = try values.decode(Coordinates.self, forKey: .coordinates)
     self.weatherCondition = try values.decode([WeatherCondition].self, forKey: .weatherCondition)
     self.atmosphericInformation = try values.decode(AtmosphericInformation.self, forKey: .atmosphericInformation)

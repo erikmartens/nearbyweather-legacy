@@ -688,7 +688,7 @@
 				F204B7831DF2EFA3000F4371 /* LaunchScreen.storyboard */,
 				F27A121E24425D0300A2CE8D /* Set API Key Scene */,
 				F27A121F24425D2A00A2CE8D /* Set Permissions Scene */,
-				F27A122024425D4E00A2CE8D /* List Scene */,
+				F27A122024425D4E00A2CE8D /* Weather List Scene */,
 				F27A122124425D6800A2CE8D /* Empty Weather List Scene */,
 				F27A122224425D9D00A2CE8D /* Weather Detail Scene */,
 				F27A122324425DB300A2CE8D /* Map Scene */,
@@ -719,7 +719,7 @@
 			path = "Set Permissions Scene";
 			sourceTree = "<group>";
 		};
-		F27A122024425D4E00A2CE8D /* List Scene */ = {
+		F27A122024425D4E00A2CE8D /* Weather List Scene */ = {
 			isa = PBXGroup;
 			children = (
 				F284DDEF245F794E00445BFF /* WeatherListViewModel.swift */,
@@ -731,7 +731,7 @@
 				F2D1996725A23C6B004C7753 /* Alert Controllers */,
 				F28CE9671F9A9893008319C4 /* ListViewController.swift */,
 			);
-			path = "List Scene";
+			path = "Weather List Scene";
 			sourceTree = "<group>";
 		};
 		F27A122124425D6800A2CE8D /* Empty Weather List Scene */ = {

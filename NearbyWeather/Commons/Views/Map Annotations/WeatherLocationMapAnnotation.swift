@@ -66,11 +66,11 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
     let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     
     self.init(
-      title: weatherDTO.cityName,
+      title: weatherDTO.stationName,
       subtitle: subtitle,
       isDayTime: isDayTime,
       coordinate: coordinate,
-      locationId: weatherDTO.cityID,
+      locationId: weatherDTO.stationIdentifier,
       isBookmark: isBookmark
     )
   }

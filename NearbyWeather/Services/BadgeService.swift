@@ -92,9 +92,9 @@ final class BadgeService {
     let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
     UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
     if previousTemperatureValue < 0 && temperature > 0 {
-      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
+      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.stationName))
     } else if previousTemperatureValue > 0 && temperature < 0 {
-      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.cityName))
+      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.stationName))
     }
   }
   

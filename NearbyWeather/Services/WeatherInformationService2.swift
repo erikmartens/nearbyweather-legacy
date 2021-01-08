@@ -10,8 +10,20 @@ import RxSwift
 import RxOptional
 import RxAlamofire
 
+// MARK: - Domain-Specific Errors
+
+extension WeatherInformationService2 {
+  enum DomainError: String, Error {
+    var domain: String { "WeatherInformationService" }
+    
+    case nearbyWeatherInformationMissing = "Trying access the weather information data within the user's vicinity, but it does not exist."
+    case bookmarkedWeatherInformationMissing = "Trying access the weather information data for the user's bookmarks, but it does not exist."
+  }
+}
+
 // MARK: - Domain-Specific Types
 
+// TODO : remove this type
 extension WeatherInformationService2 {
   enum WeatherInformationAvailability {
     case available
@@ -79,10 +91,10 @@ final class WeatherInformationService2 {
 protocol WeatherInformationProvisioning {
   func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
   func createGetBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
-  func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
+  func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>>
   func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
   func createGetNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
-  func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?>
+  func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>>
 }
 
 extension WeatherInformationService2: WeatherInformationProvisioning {
@@ -93,7 +105,7 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       .map { list in
         list.map { weatherInformationDto in
           PersistencyModel(identity: PersistencyModelIdentity(collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
-                                                              identifier: String(weatherInformationDto.cityID)),
+                                                              identifier: String(weatherInformationDto.stationIdentifier)),
                            entity: weatherInformationDto)
         }
       }
@@ -104,12 +116,14 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
     persistencyWorker.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
   }
   
-  func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
+  func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>> {
     let identity = PersistencyModelIdentity(
       collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
       identifier: identifier
     )
-    return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
+    return persistencyWorker
+      .observeResource(with: identity, type: WeatherInformationDTO.self)
+      .errorOnNil(DomainError.bookmarkedWeatherInformationMissing)
   }
   
   func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable {
@@ -118,7 +132,7 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
       .map { list in
         list.map { weatherInformationDto in
           PersistencyModel(identity: PersistencyModelIdentity(collection: PersistencyKeys.nearbyWeatherInformation.collection,
-                                                              identifier: String(weatherInformationDto.cityID)),
+                                                              identifier: String(weatherInformationDto.stationIdentifier)),
                            entity: weatherInformationDto)
         }
       }
@@ -129,12 +143,14 @@ extension WeatherInformationService2: WeatherInformationProvisioning {
     persistencyWorker.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
   }
   
-  func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>?> {
+  func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>> {
     let identity = PersistencyModelIdentity(
       collection: PersistencyKeys.nearbyWeatherInformation.collection,
       identifier: identifier
     )
-    return persistencyWorker.observeResource(with: identity, type: WeatherInformationDTO.self)
+    return persistencyWorker
+      .observeResource(with: identity, type: WeatherInformationDTO.self)
+      .errorOnNil(DomainError.nearbyWeatherInformationMissing)
   }
 }
 
@@ -149,6 +165,7 @@ protocol WeatherInformationUpdating {
 
 extension WeatherInformationService2: WeatherInformationUpdating {
   
+  // TODO : remove this function
   func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability> {
     Observable<WeatherInformationAvailability>
       .combineLatest(
@@ -243,7 +260,7 @@ private extension WeatherInformationService2 {
     return PersistencyModel(
       identity: PersistencyModelIdentity(
         collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
-        identifier: String(weatherInformationDto.cityID)
+        identifier: String(weatherInformationDto.stationIdentifier)
       ),
       entity: weatherInformationDto
     )
@@ -259,7 +276,7 @@ private extension WeatherInformationService2 {
       PersistencyModel(
         identity: PersistencyModelIdentity(
           collection: PersistencyKeys.nearbyWeatherInformation.collection,
-          identifier: String(weatherInformationDto.cityID)
+          identifier: String(weatherInformationDto.stationIdentifier)
         ),
         entity: weatherInformationDto
       )

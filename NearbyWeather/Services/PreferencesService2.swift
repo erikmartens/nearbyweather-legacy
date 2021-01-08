@@ -59,9 +59,9 @@ final class PreferencesService2 {
   }()
 }
 
-// MARK: - General Preference Settings
+// MARK: - General Preference Persistence
 
-protocol GeneralPreferenceSettings {
+protocol GeneralPreferencePersistence {
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
   func createAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
   
@@ -81,7 +81,7 @@ protocol GeneralPreferenceSettings {
   func createMapTypeOptionObservable() -> Observable<MapTypeOption>
 }
 
-extension PreferencesService2: GeneralPreferenceSettings {
+extension PreferencesService2: GeneralPreferencePersistence {
   
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable {
     Single
@@ -251,3 +251,36 @@ extension PreferencesService2: GeneralPreferenceSettings {
       .replaceNilWith(MapTypeOption(value: .standard)) // default value
   }
 }
+
+// MARK: - WeatherList Preference Persistence
+
+protocol WeatherListPreferencePersistence {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
+  func createSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
+  
+  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
+  func createListTypeOptionObservable() -> Observable<ListTypeOption>
+}
+
+extension PreferencesService2: WeatherListPreferencePersistence {}
+
+// MARK: - WeatherMap Preference Persistence
+
+protocol WeatherMapPreferencePersistence {
+  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
+  func createMapTypeOptionObservable() -> Observable<MapTypeOption>
+}
+
+extension PreferencesService2: WeatherMapPreferencePersistence {}
+
+// MARK: - UnitSettings Preference Reading
+
+protocol UnitSettingsPreferenceReading {
+  func createTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
+  func createDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
+}
+
+extension PreferencesService2: UnitSettingsPreferenceReading {}

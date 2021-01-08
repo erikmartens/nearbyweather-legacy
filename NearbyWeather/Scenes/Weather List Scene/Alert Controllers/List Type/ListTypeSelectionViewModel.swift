@@ -10,12 +10,16 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
+// MARK: - Dependencies
+
 extension ListTypeSelectionViewModel {
   struct Dependencies {
     let selectedOptionValue: ListTypeValue
-    let preferencesService: PreferencesService2
+    let preferencesService: WeatherListPreferenceSetting
   }
 }
+
+// MARK: - Class Definition
 
 final class ListTypeSelectionViewModel: NSObject, Stepper, BaseViewModel {
   

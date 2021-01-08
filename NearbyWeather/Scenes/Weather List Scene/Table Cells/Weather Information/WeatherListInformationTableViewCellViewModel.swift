@@ -9,15 +9,18 @@
 import RxSwift
 import RxCocoa
 
+// MARK: - Dependencies
+
 extension WeatherListInformationTableViewCellViewModel {
-  
   struct Dependencies {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
     let isBookmark: Bool
-    let weatherInformationService: WeatherInformationProvisioning
+    let weatherInformationService: WeatherInformationPersistence
     let preferencesService: UnitSettingsPreferenceReading
   }
 }
+
+// MARK: - Class Definition
 
 final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellViewModel {
   
@@ -60,8 +63,8 @@ private extension WeatherListInformationTableViewCellViewModel {
     return Observable
       .combineLatest(
         weatherInformationModelObservable,
-        dependencies.preferencesService.createTemperatureUnitOptionObservable(),
-        dependencies.preferencesService.createDimensionalUnitsOptionObservable(),
+        dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
+        dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
         resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherListInformationTableViewCellModel in
           let isDayTime = ConversionWorker.isDayTime(for: weatherInformationModel.daytimeInformation, coordinates: weatherInformationModel.coordinates) ?? true
           

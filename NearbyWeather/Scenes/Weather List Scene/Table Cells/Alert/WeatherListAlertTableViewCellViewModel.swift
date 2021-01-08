@@ -9,12 +9,15 @@
 import RxSwift
 import RxCocoa
 
+// MARK: - Dependencies
+
 extension WeatherListAlertTableViewCellViewModel {
-  
   struct Dependencies {
     let error: Error
   }
 }
+
+// MARK: - Class Definition
 
 final class WeatherListAlertTableViewCellViewModel: NSObject, BaseCellViewModel {
 

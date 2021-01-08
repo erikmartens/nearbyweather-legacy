@@ -79,12 +79,8 @@ private extension AppDelegate {
     dependencyContainer.register(PreferencesService2.self) { _ in PreferencesService2() }
     dependencyContainer.register(UserLocationService2.self) { _ in UserLocationService2() }
     dependencyContainer.register(ApiKeyService2.self) { _ in ApiKeyService2() }
-
-    dependencyContainer.register(WeatherStationService2.self) { resolver in
-      WeatherStationService2(dependencies: WeatherStationService2.Dependencies(
-        preferencesService: resolver.resolve(PreferencesService2.self)!
-      ))
-    }
+    dependencyContainer.register(WeatherStationService2.self) { _ in WeatherStationService2() }
+    
     dependencyContainer.register(WeatherInformationService2.self) { resolver in
       WeatherInformationService2(dependencies: WeatherInformationService2.Dependencies(
         preferencesService: resolver.resolve(PreferencesService2.self)!,

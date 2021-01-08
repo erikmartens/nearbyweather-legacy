@@ -11,16 +11,19 @@ import RxCocoa
 import RxFlow
 import CoreLocation
 
+// MARK: - Dependencies
+
 extension WeatherListViewModel {
-  
   struct Dependencies {
-    let weatherInformationService: WeatherInformationProvisioning & WeatherInformationUpdating
-    let weatherStationService: WeatherStationService2
-    let userLocationService: UserLocationService2
+    let weatherInformationService: WeatherInformationPersistence & WeatherInformationUpdating
+    let weatherStationService: WeatherStationBookmarkReading
+    let userLocationService: UserLocationReading
     let preferencesService: WeatherListPreferencePersistence & UnitSettingsPreferenceReading
     let apiKeyService: ApiKeyReading
   }
 }
+
+// MARK: - Class Definition
 
 final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   
@@ -59,7 +62,7 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   private lazy var preferredListTypeObservable: Observable<ListTypeValue> = { [dependencies] in
     dependencies
       .preferencesService
-      .createListTypeOptionObservable()
+      .createGetListTypeOptionObservable()
       .map { $0.value }
       .share(replay: 1)
   }()
@@ -67,7 +70,7 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsValue>  = { [dependencies] in
     dependencies
       .preferencesService
-      .createAmountOfNearbyResultsOptionObservable()
+      .createGetAmountOfNearbyResultsOptionObservable()
       .map { $0.value }
       .share(replay: 1)
   }()
@@ -97,7 +100,7 @@ private extension WeatherListViewModel {
   func observeUserTapEvents() {
     let preferredSortingOrientationObservable = dependencies
       .preferencesService
-      .createSortingOrientationOptionObservable()
+      .createGetSortingOrientationOptionObservable()
       .map { $0.value }
       .share(replay: 1)
     
@@ -145,7 +148,7 @@ private extension WeatherListViewModel {
     
     let preferredSortingOrientationObservable = dependencies
       .preferencesService
-      .createSortingOrientationOptionObservable()
+      .createGetSortingOrientationOptionObservable()
       .map { $0.value }
       .share(replay: 1)
     
@@ -167,7 +170,7 @@ private extension WeatherListViewModel {
       .combineLatest(
         dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
         preferredSortingOrientationObservable,
-        dependencies.userLocationService.createCurrentLocationObservable(),
+        dependencies.userLocationService.createGetCurrentLocationObservable(),
         apiKeyValidObservable,
         resultSelector: { weatherInformationItems, sortingOrientation, currentLocation, _ in
           Self.sortNearbyResults(weatherInformationItems, sortingOrientationValue: sortingOrientation, currentLocation: currentLocation)

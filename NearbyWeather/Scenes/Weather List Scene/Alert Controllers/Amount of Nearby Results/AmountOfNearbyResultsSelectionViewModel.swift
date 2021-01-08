@@ -10,12 +10,16 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
+// MARK: - Dependencies
+
 extension AmountOfNearbyResultsSelectionViewModel {
   struct Dependencies {
     let selectedOptionValue: AmountOfResultsValue
-    let preferencesService: PreferencesService2
+    let preferencesService: WeatherListPreferenceSetting
   }
 }
+
+// MARK: - Class Definition
 
 final class AmountOfNearbyResultsSelectionViewModel: NSObject, Stepper, BaseViewModel {
   

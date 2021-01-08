@@ -52,7 +52,7 @@ final class PreferencesService2 {
   // MARK: - Computed Properties
   
   private lazy var persistencyWorker: RealmPersistencyWorker = {
-    try! RealmPersistencyWorker(
+    try! RealmPersistencyWorker( // swiftlint:disable:this force_try
       storageLocation: .documents,
       dataBaseFileName: "PreferencesServiceDataBase"
     )
@@ -61,24 +61,24 @@ final class PreferencesService2 {
 
 // MARK: - General Preference Persistence
 
-protocol GeneralPreferencePersistence {
+protocol GeneralPreferencePersistence: WeatherListPreferencePersistence, WeatherMapPreferencePersistence, UnitSettingsPreferenceReading, PreferenceMigration {
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
-  func createAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
   
   func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
-  func createTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
+  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
   
   func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
-  func createDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
   
   func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
-  func createSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
+  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
   
   func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
-  func createListTypeOptionObservable() -> Observable<ListTypeOption>
+  func createGetListTypeOptionObservable() -> Observable<ListTypeOption>
   
   func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
-  func createMapTypeOptionObservable() -> Observable<MapTypeOption>
+  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
 }
 
 extension PreferencesService2: GeneralPreferencePersistence {
@@ -98,7 +98,7 @@ extension PreferencesService2: GeneralPreferencePersistence {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: AmountOfResultsOption.self) }
   }
   
-  func createAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption> {
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -126,7 +126,7 @@ extension PreferencesService2: GeneralPreferencePersistence {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: TemperatureUnitOption.self) }
   }
   
-  func createTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption> {
+  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -154,7 +154,7 @@ extension PreferencesService2: GeneralPreferencePersistence {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: DimensionalUnitsOption.self) }
   }
   
-  func createDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption> {
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -182,7 +182,7 @@ extension PreferencesService2: GeneralPreferencePersistence {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: SortingOrientationOption.self) }
   }
   
-  func createSortingOrientationOptionObservable() -> Observable<SortingOrientationOption> {
+  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -210,7 +210,7 @@ extension PreferencesService2: GeneralPreferencePersistence {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: ListTypeOption.self) }
   }
   
-  func createListTypeOptionObservable() -> Observable<ListTypeOption> {
+  func createGetListTypeOptionObservable() -> Observable<ListTypeOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -238,7 +238,7 @@ extension PreferencesService2: GeneralPreferencePersistence {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: MapTypeOption.self) }
   }
   
-  func createMapTypeOptionObservable() -> Observable<MapTypeOption> {
+  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -254,24 +254,44 @@ extension PreferencesService2: GeneralPreferencePersistence {
 
 // MARK: - WeatherList Preference Persistence
 
-protocol WeatherListPreferencePersistence {
+protocol WeatherListPreferencePersistence: WeatherListPreferenceSetting, WeatherListPreferenceReading {
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
-  func createAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
   
   func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
-  func createSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
+  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
   
   func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
-  func createListTypeOptionObservable() -> Observable<ListTypeOption>
+  func createGetListTypeOptionObservable() -> Observable<ListTypeOption>
 }
 
 extension PreferencesService2: WeatherListPreferencePersistence {}
+
+// MARK: - WeatherList Preference Setting
+
+protocol WeatherListPreferenceSetting {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
+  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
+}
+
+extension PreferencesService2: WeatherListPreferenceSetting {}
+
+// MARK: - WeatherList Preference Reading
+
+protocol WeatherListPreferenceReading {
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
+  func createGetListTypeOptionObservable() -> Observable<ListTypeOption>
+}
+
+extension PreferencesService2: WeatherListPreferenceReading {}
 
 // MARK: - WeatherMap Preference Persistence
 
 protocol WeatherMapPreferencePersistence {
   func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
-  func createMapTypeOptionObservable() -> Observable<MapTypeOption>
+  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
 }
 
 extension PreferencesService2: WeatherMapPreferencePersistence {}
@@ -279,8 +299,19 @@ extension PreferencesService2: WeatherMapPreferencePersistence {}
 // MARK: - UnitSettings Preference Reading
 
 protocol UnitSettingsPreferenceReading {
-  func createTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
-  func createDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
+  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
 }
 
 extension PreferencesService2: UnitSettingsPreferenceReading {}
+
+// MARK: - Preference Migration
+
+protocol PreferenceMigration {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
+}
+
+extension PreferencesService2: PreferenceMigration {}

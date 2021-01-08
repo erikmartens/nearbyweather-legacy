@@ -11,10 +11,10 @@ import RxOptional
 
 extension MigrationService {
   struct Dependencies {
-    let preferencesService: PreferencesService2
-    let weatherInformationService: WeatherInformationService2
-    let weatherStationService: WeatherStationService2
-    let apiKeyService: ApiKeyService2
+    let preferencesService: PreferenceMigration
+    let weatherInformationService: WeatherInformationMigration
+    let weatherStationService: WeatherStationBookmarkMigration
+    let apiKeyService: ApiKeySetting
   }
 }
 
@@ -83,6 +83,8 @@ extension MigrationService {
         }
         return Completable.zip([
           dependencies.weatherStationService.createSetPreferredBookmarkCompletable(preferencesStoredContentsWrapper.preferredBookmark),
+          // TODO: station migrate sorting
+          // TODO: migrate all bookmarks
           dependencies.preferencesService.createSetAmountOfNearbyResultsOptionCompletable(preferencesStoredContentsWrapper.amountOfResults),
           dependencies.preferencesService.createSetTemperatureUnitOptionCompletable(preferencesStoredContentsWrapper.temperatureUnit),
           dependencies.preferencesService.createSetDimensionalUnitsOptionCompletable(preferencesStoredContentsWrapper.windspeedUnit),

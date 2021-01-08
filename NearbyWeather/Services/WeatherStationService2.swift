@@ -35,14 +35,6 @@ private extension WeatherStationService2 {
     }
   }
 }
-
-// MARK: - Dependencies
-
-extension WeatherStationService2 {
-  struct Dependencies {
-    let preferencesService: PreferencesService2
-  }
-}
  
 // MARK: - Class Definition
 
@@ -51,7 +43,7 @@ final class WeatherStationService2 {
   // MARK: - Assets
   
   private lazy var persistencyWorker: RealmPersistencyWorker = {
-    try! RealmPersistencyWorker(
+    try! RealmPersistencyWorker( // swiftlint:disable:this force_try
       storageLocation: .documents,
       dataBaseFileName: "WeatherStationServiceDataBase"
     )
@@ -66,24 +58,14 @@ final class WeatherStationService2 {
   private static func lookupQuery(for searchTerm: String) -> String {
     "SELECT * FROM locations l WHERE (lower(name) LIKE '%\(searchTerm.lowercased())%') ORDER BY l.name, l.country"
   }
-  
-  // MARK: - Properties
-  
-  private let dependencies: Dependencies
-  
-  // MARK: - Initialization
-  
-  init(dependencies: WeatherStationService2.Dependencies) {
-    self.dependencies = dependencies
-  }
 }
 
 // MARK: - Weather Station Bookmark Settings
 
-protocol WeatherStationBookmarkSettings {
+protocol WeatherStationBookmarkPersistence {
   func createAddBookmarkCompletable(_ weatherStationDto: WeatherStationDTO) -> Completable
   func createRemoveBookmarkCompletable(_ weatherStationDto: WeatherStationDTO) -> Completable
-  func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
+  func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
   
   func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
   func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?>
@@ -93,7 +75,7 @@ protocol WeatherStationBookmarkSettings {
   func createGetPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
 }
 
-extension WeatherStationService2: WeatherStationBookmarkSettings {
+extension WeatherStationService2: WeatherStationBookmarkPersistence {
   
   func createAddBookmarkCompletable(_ weatherStationDto: WeatherStationDTO) -> Completable {
     Single
@@ -149,7 +131,7 @@ extension WeatherStationService2: WeatherStationBookmarkSettings {
       .map { $0?.entity.toDictionary() }
   }
   
-  func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]> {
+  func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]> {
     persistencyWorker
       .observeResources(in: WeatherStationService2.PersistencyKeys.weatherStationBookmarks.collection, type: WeatherStationDTO.self)
       .map { $0.map { $0.entity } }
@@ -190,6 +172,16 @@ extension WeatherStationService2: WeatherStationBookmarkSettings {
   }
 }
 
+// MARK: - Weather Station Bookmark Sorting Reading
+
+protocol WeatherStationBookmarkReading {
+  func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
+  func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?>
+  func createGetPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
+}
+
+extension WeatherStationService2: WeatherStationBookmarkReading {}
+
 // MARK: - Weather Station Lookup
 
 protocol WeatherStationLookup {
@@ -219,12 +211,21 @@ extension WeatherStationService2: WeatherStationLookup {
       .replaceNilWith([])
       .flatMapLatest { [unowned self] weatherStationDtos -> Observable<[WeatherStationDTO]> in
         self
-          .createBookmarkedStationsObservable()
+          .createGetBookmarkedStationsObservable()
           .map { bookmarkedWeatherStations in weatherStationDtos.filter { !bookmarkedWeatherStations.contains($0) } }
       }
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
   }
 }
+
+// MARK: - Weather Station Bookmark Migration
+
+protocol WeatherStationBookmarkMigration {
+  func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
+  func createSetPreferredBookmarkCompletable(_ weatherStationDto: PreferredBookmarkOption) -> Completable
+}
+
+extension WeatherStationService2: WeatherStationBookmarkMigration {}
 
 // MARK: - Helper Extensions
 

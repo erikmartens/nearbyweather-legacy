@@ -10,12 +10,16 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
+// MARK: - Dependencies
+
 extension SortingOrientationSelectionViewModel {
   struct Dependencies {
     let selectedOptionValue: SortingOrientationValue
-    let preferencesService: PreferencesService2
+    let preferencesService: WeatherListPreferenceSetting
   }
 }
+
+// MARK: - Class Definition
 
 final class SortingOrientationSelectionViewModel: NSObject, Stepper, BaseViewModel {
   

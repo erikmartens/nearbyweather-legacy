@@ -58,7 +58,7 @@ final class ApiKeyService2 {
   // MARK: - Assets
   
   private lazy var persistencyWorker: RealmPersistencyWorker = {
-    try! RealmPersistencyWorker(
+    try! RealmPersistencyWorker( // swiftlint:disable:this force_try
       storageLocation: .documents,
       dataBaseFileName: "ApiKeyServiceDataBase"
     )
@@ -102,7 +102,7 @@ extension ApiKeyService2: ApiKeyValidity {
 
 // MARK: - API Key Persistence
 
-protocol ApiKeyPersistence {
+protocol ApiKeyPersistence: ApiKeySetting, ApiKeyReading {
   func createSetApiKeyCompletable(_ apiKey: String) -> Completable
   func createGetApiKeyObservable() -> Observable<String>
 }
@@ -136,6 +136,14 @@ extension ApiKeyService2: ApiKeyPersistence {
       }
   }
 }
+
+// MARK: - API Key Setting
+
+protocol ApiKeySetting {
+  func createSetApiKeyCompletable(_ apiKey: String) -> Completable
+}
+
+extension ApiKeyService2: ApiKeySetting {}
 
 // MARK: - API Key Reading
 

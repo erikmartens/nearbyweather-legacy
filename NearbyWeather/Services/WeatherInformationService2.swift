@@ -51,10 +51,10 @@ private extension WeatherInformationService2 {
 
 extension WeatherInformationService2 {
   struct Dependencies {
-    let preferencesService: PreferencesService2
-    let weatherStationService: WeatherStationService2
-    let userLocationService: UserLocationService2
-    let apiKeyService: ApiKeyService2
+    let preferencesService: WeatherListPreferenceReading
+    let weatherStationService: WeatherStationBookmarkReading
+    let userLocationService: UserLocationReading
+    let apiKeyService: ApiKeyReading
   }
 }
 
@@ -65,7 +65,7 @@ final class WeatherInformationService2 {
   // MARK: - Assets
   
   private lazy var persistencyWorker: RealmPersistencyWorker = {
-    try! RealmPersistencyWorker(
+    try! RealmPersistencyWorker( // swiftlint:disable:this force_try
       storageLocation: .documents,
       dataBaseFileName: "WeatherInformationServiceDataBase"
     )
@@ -88,7 +88,7 @@ final class WeatherInformationService2 {
 
 // MARK: - Weather Information Provisioning
 
-protocol WeatherInformationProvisioning {
+protocol WeatherInformationPersistence {
   func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
   func createGetBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
   func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>>
@@ -97,7 +97,7 @@ protocol WeatherInformationProvisioning {
   func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>>
 }
 
-extension WeatherInformationService2: WeatherInformationProvisioning {
+extension WeatherInformationService2: WeatherInformationPersistence {
   
   func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable {
     Single
@@ -179,7 +179,7 @@ extension WeatherInformationService2: WeatherInformationUpdating {
     Observable
       .combineLatest(
         dependencies.apiKeyService.createGetApiKeyObservable(),
-        dependencies.weatherStationService.createBookmarkedStationsObservable().map { $0.map { $0.identifier } },
+        dependencies.weatherStationService.createGetBookmarkedStationsObservable().map { $0.map { $0.identifier } },
         resultSelector: { apiKey, identifiers -> [URL] in
           identifiers.map { Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: $0) }
         }
@@ -224,8 +224,8 @@ extension WeatherInformationService2: WeatherInformationUpdating {
     Observable
       .combineLatest(
         dependencies.apiKeyService.createGetApiKeyObservable(),
-        dependencies.userLocationService.createDidUpdateLocationObservable(),
-        dependencies.preferencesService.createAmountOfNearbyResultsOptionObservable(),
+        dependencies.userLocationService.createGetCurrentLocationObservable(),
+        dependencies.preferencesService.createGetAmountOfNearbyResultsOptionObservable(),
         resultSelector: { apiKey, location, amountOfResultsOption -> URL in
           Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
             with: apiKey,
@@ -247,6 +247,15 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
   }
 }
+
+// MARK: - Weather Information Migration
+
+protocol WeatherInformationMigration {
+  func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
+  func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
+}
+
+extension WeatherInformationService2: WeatherInformationMigration {}
 
 // MARK: - Helpers
 

@@ -8,12 +8,16 @@
 
 import RxFlow
 
+// MARK: - Dependencies
+
 extension WeatherDetailFlow {
   struct Dependencies {
     let identifier: Int
     let isBookmark: Bool
   }
 }
+
+// MARK: - Class Definition
 
 final class WeatherDetailFlow: Flow {
   

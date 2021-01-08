@@ -37,29 +37,16 @@ final class UserLocationService2 {
   }
 }
 
-// MARK: - Location Observing
+// MARK: - User Location Accessing
 
-protocol LocationObserving {
-  func createDidUpdateLocationObservable() -> Observable<CLLocation>
-  func createAuthorizationStatusObservable() -> Observable<Bool>
-  func createCurrentLocationObservable() -> Observable<CLLocation?>
+protocol UserLocationAccessing {
+  func createGetAuthorizationStatusObservable() -> Observable<Bool>
+  func createGetCurrentLocationObservable() -> Observable<CLLocation>
 }
 
-extension UserLocationService2: LocationObserving {
+extension UserLocationService2: UserLocationAccessing {
   
-  func createDidUpdateLocationObservable() -> Observable<CLLocation> {
-    createAuthorizationStatusObservable()
-      .map { if !$0 { throw DomainError.locationAuthorizationError } }
-      .flatMapLatest { [locationManager] in
-        locationManager.rx
-          .location
-          .errorOnNil()
-      }
-      .do(onSubscribe: { [locationManager] in locationManager.startUpdatingLocation() },
-          onDispose: { [locationManager] in locationManager.stopUpdatingLocation() })
-  }
-  
-  func createAuthorizationStatusObservable() -> Observable<Bool> {
+  func createGetAuthorizationStatusObservable() -> Observable<Bool> {
     locationManager.rx
       .didChangeAuthorization
       .map { $0.status }
@@ -67,12 +54,12 @@ extension UserLocationService2: LocationObserving {
       .map { Self.authorizationStatusIsSufficient($0) }
   }
   
-  func createCurrentLocationObservable() -> Observable<CLLocation?> {
+  func createGetCurrentLocationObservable() -> Observable<CLLocation> {
     Observable
       .combineLatest(
         locationManager.rx.location,
-        createAuthorizationStatusObservable(),
-        resultSelector: { currentLocation, currentAuthorizationStatus -> CLLocation? in
+        createGetAuthorizationStatusObservable(),
+        resultSelector: { currentLocation, currentAuthorizationStatus -> CLLocation in
           guard currentAuthorizationStatus == true else {
             throw UserLocationService2.DomainError.locationAuthorizationError
           }
@@ -80,9 +67,20 @@ extension UserLocationService2: LocationObserving {
             throw UserLocationService2.DomainError.locationUndeterminableError
           }
           return currentLocation
-        })
+        }
+      )
+      .do(onSubscribe: { [locationManager] in locationManager.startUpdatingLocation() },
+          onDispose: { [locationManager] in locationManager.stopUpdatingLocation() })
   }
 }
+
+// MARK: - User Location Reading
+
+protocol UserLocationReading {
+  func createGetCurrentLocationObservable() -> Observable<CLLocation>
+}
+
+extension UserLocationService2: UserLocationReading {}
 
 // MARK: - Helpers
 

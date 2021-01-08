@@ -232,10 +232,13 @@ extension WeatherListViewModel: ViewControllerLifeCycleRelay {
 
 private extension WeatherListViewModel {
   
-  static func sortBookmarkedResults(_ persistedWeatherInformationDTOs: [PersistencyModel<WeatherInformationDTO>], sortingWeights: [WeatherStationSortingOrientationDTO]?) -> [PersistencyModel<WeatherInformationDTO>] {
+  static func sortBookmarkedResults(_ persistedWeatherInformationDTOs: [PersistencyModel<WeatherInformationDTO>], sortingWeights: [Int: Int]?) -> [PersistencyModel<WeatherInformationDTO>] {
     persistedWeatherInformationDTOs.sorted { lhsModel, rhsModel -> Bool in
-      let lhsSortingWeight = (sortingWeights?.first { $0.stationIdentifier == lhsModel.entity.cityID })?.stationIndex ?? 999
-      let rhsSortingWeight = (sortingWeights?.first { $0.stationIdentifier == rhsModel.entity.cityID })?.stationIndex ?? 999
+      let lhsSortingWeight = sortingWeights?[lhsModel.entity.cityID] ?? 999
+      let rhsSortingWeight = sortingWeights?[rhsModel.entity.cityID] ?? 999
+      if lhsSortingWeight == rhsSortingWeight {
+        return lhsModel.entity.cityName < rhsModel.entity.cityName
+      }
       return lhsSortingWeight < rhsSortingWeight
     }
   }

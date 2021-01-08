@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherInformationErrorDTO: Codable {
+struct WeatherInformationErrorDTO: Codable { // TODO: Probably can be deleted
   var errorType: ErrorType
   var httpStatusCode: Int?
   

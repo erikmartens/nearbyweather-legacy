@@ -41,24 +41,21 @@ private extension WeatherListAlertTableViewCellViewModel {
   static func createDataSourceObserver(error: Error) -> Driver<WeatherListAlertTableViewCellModel> {
     var errorMessage: String
     
-    switch error {
-    case let error as UserLocationService2.DomainError:
-      if error == .authorizationError {
+    if let error = error as? UserLocationService2.DomainError {
+      switch error {
+      case .authorizationError:
         errorMessage = R.string.localizable.location_denied_error()
-      }
-      if error == .locationUndeterminableError {
+      case .locationUndeterminableError:
         errorMessage = R.string.localizable.location_unavailable_error()
       }
-      errorMessage = R.string.localizable.unknown_location_error()
-    case let error as ApiKeyService2.DomainError:
-      if error == .apiKeyMissingError {
+    } else if let error = error as? ApiKeyService2.DomainError {
+      switch error {
+      case .apiKeyMissingError:
         errorMessage = R.string.localizable.missing_api_key_error()
-      }
-      if error == .apiKeyInvalidError {
+      case .apiKeyInvalidError:
         errorMessage = R.string.localizable.unauthorized_api_key_error()
       }
-      errorMessage = R.string.localizable.unknown_api_key_error()
-    default:
+    } else {
       errorMessage = R.string.localizable.unknown_error()
     }
     

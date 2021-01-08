@@ -644,6 +644,7 @@
 			children = (
 				F28F180B25A74C0700AEA99A /* Api Key Data Transfer Objects */,
 				F284DDC7245A12FE00445BFF /* Contributor Data Transfer Object */,
+				F28F182B25A8895C00AEA99A /* Weather Station Data Transfer Objects */,
 				F284DDC5245A12A100445BFF /* Weather Information Data Transfer Objects */,
 				F27A121A24425BF200A2CE8D /* Preference Option Data Transfer Objects */,
 			);
@@ -917,10 +918,8 @@
 		F284DDC5245A12A100445BFF /* Weather Information Data Transfer Objects */ = {
 			isa = PBXGroup;
 			children = (
-				F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */,
 				F2B8E9FF1EA11BA800704E90 /* WeatherInformationDTO.swift */,
 				F2F1553D244278D4007A3E90 /* WeatherInformationErrorDTO.swift */,
-				F28F182625A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift */,
 			);
 			path = "Weather Information Data Transfer Objects";
 			sourceTree = "<group>";
@@ -971,6 +970,15 @@
 				F28F180C25A74C3600AEA99A /* ApiKeyDTO.swift */,
 			);
 			path = "Api Key Data Transfer Objects";
+			sourceTree = "<group>";
+		};
+		F28F182B25A8895C00AEA99A /* Weather Station Data Transfer Objects */ = {
+			isa = PBXGroup;
+			children = (
+				F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */,
+				F28F182625A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift */,
+			);
+			path = "Weather Station Data Transfer Objects";
 			sourceTree = "<group>";
 		};
 		F2D1990225A10CD8004C7753 /* ViewController */ = {

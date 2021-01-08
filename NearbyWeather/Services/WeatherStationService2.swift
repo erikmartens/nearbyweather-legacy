@@ -85,8 +85,8 @@ protocol WeatherStationBookmarkSettings {
   func createRemoveBookmarkCompletable(_ weatherStationDto: WeatherStationDTO) -> Completable
   func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
   
-  func createSetBookmarksSortingCompletable(_ sorting: [WeatherStationSortingOrientationDTO]) -> Completable
-  func createGetBookmarksSortingObservable() -> Observable<[WeatherStationSortingOrientationDTO]?>
+  func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
+  func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?>
   
   func createSetPreferredBookmarkCompletable(_ weatherStationDto: PreferredBookmarkOption) -> Completable
   func createRemovePreferredBookmarkCompletable() -> Completable
@@ -122,7 +122,7 @@ extension WeatherStationService2: WeatherStationBookmarkSettings {
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.deleteResource(with: $0) }
   }
   
-  func createSetBookmarksSortingCompletable(_ sorting: [WeatherStationSortingOrientationDTO]) -> Completable {
+  func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable {
     Single
       .just(sorting)
       .map {
@@ -131,13 +131,13 @@ extension WeatherStationService2: WeatherStationBookmarkSettings {
             collection: WeatherStationService2.PersistencyKeys.weatherStationBookmarksSorting.collection,
             identifier: WeatherStationService2.PersistencyKeys.weatherStationBookmarksSorting.identifier
           ),
-          entity: $0
+          entity: $0.toArray()
         )
       }
       .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: [WeatherStationSortingOrientationDTO].self) }
   }
   
-  func createGetBookmarksSortingObservable() -> Observable<[WeatherStationSortingOrientationDTO]?> {
+  func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?> {
     persistencyWorker
       .observeResource(
         with: PersistencyModelIdentity(
@@ -146,7 +146,7 @@ extension WeatherStationService2: WeatherStationBookmarkSettings {
         ),
         type: [WeatherStationSortingOrientationDTO].self
       )
-      .map { $0?.entity }
+      .map { $0?.entity.toDictionary() }
   }
   
   func createBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]> {
@@ -223,5 +223,25 @@ extension WeatherStationService2: WeatherStationLookup {
           .map { bookmarkedWeatherStations in weatherStationDtos.filter { !bookmarkedWeatherStations.contains($0) } }
       }
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+  }
+}
+
+// MARK: - Helper Extensions
+
+private extension Dictionary where Key == Int, Value == Int {
+  
+  func toArray() -> [WeatherStationSortingOrientationDTO] {
+    keys.map { WeatherStationSortingOrientationDTO(stationIdentifier: $0, stationIndex: self[$0] ?? 999) }
+  }
+}
+
+private extension Array where Element == WeatherStationSortingOrientationDTO {
+  
+  func toDictionary() -> [Int: Int] {
+    reduce([Int: Int]()) { nextResult, nextValue -> [Int: Int] in
+      var mutableNextResult = nextResult
+      mutableNextResult[nextValue.stationIdentifier] = nextValue.stationIndex
+      return mutableNextResult
+    }
   }
 }

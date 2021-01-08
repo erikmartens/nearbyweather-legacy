@@ -43,7 +43,7 @@ private extension WeatherListAlertTableViewCellViewModel {
     
     if let error = error as? UserLocationService2.DomainError {
       switch error {
-      case .authorizationError:
+      case .locationAuthorizationError:
         errorMessage = R.string.localizable.location_denied_error()
       case .locationUndeterminableError:
         errorMessage = R.string.localizable.location_unavailable_error()

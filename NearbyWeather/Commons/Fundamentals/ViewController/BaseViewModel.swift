@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol BaseViewModel: NSObject {
+protocol BaseViewModel: NSObject, ViewControllerLifeCycleRelay {
   associatedtype Dependencies
   init(dependencies: Dependencies)
 }

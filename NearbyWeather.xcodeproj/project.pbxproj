@@ -17,6 +17,7 @@
 		F204B79B1DF2EFA3000F4371 /* NearbyWeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204B79A1DF2EFA3000F4371 /* NearbyWeatherUITests.swift */; };
 		F204B7B01DF2F1BC000F4371 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F204B7B21DF2F1BC000F4371 /* Localizable.strings */; };
 		F204B7BD1DF35610000F4371 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204B7BC1DF35610000F4371 /* SettingsTableViewController.swift */; };
+		F210B19E25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F210B19D25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift */; };
 		F213FA2D23F9EE1100F094D8 /* PreferencesOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F213FA2C23F9EE1100F094D8 /* PreferencesOption.swift */; };
 		F213FA2F23F9EE4200F094D8 /* PreferredBookmarkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F213FA2E23F9EE4200F094D8 /* PreferredBookmarkOption.swift */; };
 		F213FA3223F9EEE300F094D8 /* SortingOrientationOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F213FA3123F9EEE300F094D8 /* SortingOrientationOption.swift */; };
@@ -231,6 +232,7 @@
 		F204B7B11DF2F1BC000F4371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F204B7B31DF2F1BD000F4371 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F204B7BC1DF35610000F4371 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		F210B19D25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListAlertItemsSection.swift; sourceTree = "<group>"; };
 		F213FA2C23F9EE1100F094D8 /* PreferencesOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesOption.swift; sourceTree = "<group>"; };
 		F213FA2E23F9EE4200F094D8 /* PreferredBookmarkOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredBookmarkOption.swift; sourceTree = "<group>"; };
 		F213FA3123F9EEE300F094D8 /* SortingOrientationOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrientationOption.swift; sourceTree = "<group>"; };
@@ -1021,6 +1023,7 @@
 			children = (
 				F2D1995D25A204FA004C7753 /* WeatherListNearbyItemsSection.swift */,
 				F2D1996225A2050C004C7753 /* WeatherListBookmarkedItemsSection.swift */,
+				F210B19D25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift */,
 			);
 			path = "Table Sections";
 			sourceTree = "<group>";
@@ -1454,6 +1457,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F274FC3B2030ED5A00049144 /* PreferencesService.swift in Sources */,
+				F210B19E25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift in Sources */,
 				F283D26E1DF39095001B879D /* DualLabelCell.swift in Sources */,
 				F23728612444AEAC00964C49 /* ImagedDualLabelCell.swift in Sources */,
 				F237288A244C934100964C49 /* WeatherDetailFlow.swift in Sources */,

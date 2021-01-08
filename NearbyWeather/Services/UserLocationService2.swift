@@ -17,7 +17,7 @@ extension UserLocationService2 {
     
     var domain: String { "UserLocationService" }
     
-    case authorizationError = "Trying access the user location, but sufficient authorization was not granted."
+    case locationAuthorizationError = "Trying access the user location, but sufficient authorization was not granted."
     case locationUndeterminableError = "Trying access the user location, but it could not be determined."
   }
 }
@@ -50,7 +50,7 @@ extension UserLocationService2: LocationObserving {
   
   func createDidUpdateLocationObservable() -> Observable<CLLocation> {
     createAuthorizationStatusObservable()
-      .map { if !$0 { throw DomainError.authorizationError } }
+      .map { if !$0 { throw DomainError.locationAuthorizationError } }
       .flatMapLatest { [locationManager] in
         locationManager.rx
           .location
@@ -75,7 +75,7 @@ extension UserLocationService2: LocationObserving {
         createAuthorizationStatusObservable(),
         resultSelector: { currentLocation, currentAuthorizationStatus -> CLLocation? in
           guard currentAuthorizationStatus == true else {
-            throw UserLocationService2.DomainError.authorizationError
+            throw UserLocationService2.DomainError.locationAuthorizationError
           }
           guard let currentLocation = currentLocation else {
             throw UserLocationService2.DomainError.locationUndeterminableError

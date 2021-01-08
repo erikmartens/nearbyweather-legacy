@@ -15,3 +15,17 @@ protocol ViewControllerLifeCycleRelay {
   func viewWillDisappear()
   func viewDidDisappear()
 }
+
+/// defualt implementation to make functions optional
+extension ViewControllerLifeCycleRelay {
+  
+  func viewDidLoad() {}
+  
+  func viewWillAppear() {}
+  
+  func viewDidAppear() {}
+  
+  func viewWillDisappear() {}
+  
+  func viewDidDisappear() {}
+}

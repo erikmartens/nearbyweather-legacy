@@ -149,12 +149,11 @@ private extension WeatherListViewModel {
       .combineLatest(
         dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
         dependencies.weatherStationService.createGetBookmarksSortingObservable(),
-        resultSelector:  Self.sortBookmarkedResults
+        resultSelector: Self.sortBookmarkedResults
       )
       .map { [dependencies] listItems -> [BaseCellViewModelProtocol] in
         listItems.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false)
       }
-      .catchError { .just([WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(error: $0))]) }
       .share(replay: 1)
     
     let bookmarkedListItemsObservable = Observable
@@ -165,7 +164,6 @@ private extension WeatherListViewModel {
         resultSelector: Self.sortNearbyResults
       )
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
-      .catchError { .just([WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(error: $0))]) }
       .share(replay: 1)
     
     Observable
@@ -182,6 +180,11 @@ private extension WeatherListViewModel {
           }
         }
       )
+      .catchError {
+        Observable
+          .just([WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(error: $0))])
+          .map { [WeatherListAlertItemsSection(sectionCellsIdentifier: WeatherListAlertTableViewCell.reuseIdentifier, sectionItems: $0)] }
+      }
       .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .userInteractive))
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
@@ -211,21 +214,6 @@ extension WeatherListViewModel: BaseTableViewSelectionDelegate {
       .subscribe(onSuccess: steps.accept)
       .disposed(by: disposeBag)
   }
-}
-
-// MARK: - Scene Lifecycle
-
-extension WeatherListViewModel: ViewControllerLifeCycleRelay {
-  
-  func viewDidLoad() {}
-  
-  func viewWillAppear() {}
-  
-  func viewDidAppear() {}
-  
-  func viewWillDisappear() {}
-  
-  func viewDidDisappear() {}
 }
 
 // MARK: - Helpers

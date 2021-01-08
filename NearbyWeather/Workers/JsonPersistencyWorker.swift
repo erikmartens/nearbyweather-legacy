@@ -60,4 +60,14 @@ final class JsonPersistencyWorker {
     let model = try JSONDecoder().decode(type, from: data)
     return model
   }
+  
+  func removeFile(with fileName: String, fromStorageLocation location: FileManager.StorageLocationType) throws {
+    let fileDirectoryURL = try fileManager.directoryUrl(for: location, fileName: fileName, fileExtension: JsonPersistencyWorker.fileExtension)
+    let fileUrl = fileDirectoryURL.appendingPathComponent(fileName).appendingPathExtension(Self.fileExtension)
+    
+    guard fileManager.fileExists(atPath: fileUrl.path) else {
+      return
+    }
+    try fileManager.removeItem(at: fileUrl)
+  }
 }

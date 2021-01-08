@@ -243,7 +243,6 @@ protocol WeatherStationBookmarkMigration {
   func createSetBookmarkedStationsCompletable(_ weatherStationDTOs: [WeatherStationDTO]) -> Completable
   func createSetPreferredBookmarkCompletable(_ weatherStationDTO: PreferredBookmarkOption) -> Completable
   func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
-  
 }
 
 extension WeatherStationService2: WeatherStationBookmarkMigration {}

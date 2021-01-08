@@ -138,8 +138,22 @@ extension MigrationService {
         migratePreferencesCompletable,
         migrateWeatherInformationCompletable
       ])
-      .subscribe(onCompleted: { UserDefaults.standard.set(true, forKey: Constants.Keys.UserDefaults.kMigratedToVersion230) })
-    
-    // TODO: on success delete all old files
+      .subscribe(onCompleted: {
+        // store that the migration was completed
+        UserDefaults.standard.set(true, forKey: Constants.Keys.UserDefaults.kMigratedToVersion230)
+        
+        // delete previous data
+        UserDefaults.standard.removeObject(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
+        
+        try? JsonPersistencyWorker().removeFile(
+          with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
+          fromStorageLocation: .applicationSupport
+        )
+        
+        try? JsonPersistencyWorker().removeFile(
+          with: Constants.Keys.Storage.kWeatherDataManagerStoredContentsFileName,
+          fromStorageLocation: .documents
+        )
+      })
   }
 }

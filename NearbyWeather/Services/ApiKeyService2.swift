@@ -51,18 +51,27 @@ private extension ApiKeyService2 {
   }
 }
 
+// MARK: - Dependencies
+
+extension ApiKeyService2 {
+  struct Dependencies {
+    let persistencyService: PersistencyProtocol
+  }
+}
+
 // MARK: - Class Definition
 
 final class ApiKeyService2 {
   
-  // MARK: - Assets
+  // MARK: - Properties
   
-  private lazy var persistencyWorker: RealmPersistencyWorker = {
-    try! RealmPersistencyWorker( // swiftlint:disable:this force_try
-      storageLocation: .documents,
-      dataBaseFileName: "ApiKeyServiceDataBase"
-    )
-  }()
+  private let dependencies: Dependencies
+  
+  // MARK: - Initialization
+  
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
+  }
 }
 
 // MARK: - API Key Validity
@@ -78,7 +87,8 @@ extension ApiKeyService2: ApiKeyValidity {
       collection: PersistencyKeys.userApiKey.collection,
       identifier: PersistencyKeys.userApiKey.identifier
     )
-    return persistencyWorker
+    return dependencies
+      .persistencyService
       .observeResource(with: identity, type: ApiKeyDTO.self)
       .map { $0?.entity.apiKey }
       .flatMapLatest { apiKey -> Observable<ApiKeyService2.ApiKeyValidity> in
@@ -117,7 +127,7 @@ extension ApiKeyService2: ApiKeyPersistence {
                                                             identifier: PersistencyKeys.userApiKey.identifier),
                          entity: $0)
       }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: ApiKeyDTO.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: ApiKeyDTO.self) }
   }
   
   func createGetApiKeyObservable() -> Observable<String> {

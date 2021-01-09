@@ -77,9 +77,19 @@ private extension AppDelegate {
     let dependencyContainer = Container()
 
     dependencyContainer.register(PersistencyService2.self) { _ in PersistencyService2() }
-    dependencyContainer.register(PreferencesService2.self) { _ in PreferencesService2() }
     dependencyContainer.register(UserLocationService2.self) { _ in UserLocationService2() }
-    dependencyContainer.register(ApiKeyService2.self) { _ in ApiKeyService2() }
+    
+    dependencyContainer.register(PreferencesService2.self) { resolver in
+      PreferencesService2(dependencies: PreferencesService2.Dependencies(
+        persistencyService: resolver.resolve(PersistencyService2.self)!
+      ))
+    }
+    
+    dependencyContainer.register(ApiKeyService2.self) { resolver in
+      ApiKeyService2(dependencies: ApiKeyService2.Dependencies(
+        persistencyService: resolver.resolve(PersistencyService2.self)!
+      ))
+    }
     
     dependencyContainer.register(WeatherStationService2.self) { resolver in
       WeatherStationService2(dependencies: WeatherStationService2.Dependencies(

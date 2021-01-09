@@ -45,18 +45,27 @@ private extension PreferencesService2 {
   }
 }
 
+// MARK: - Dependencies
+
+extension PreferencesService2 {
+  struct Dependencies {
+    let persistencyService: PersistencyProtocol
+  }
+}
+
 // MARK: - Class Definition
 
 final class PreferencesService2 {
   
-  // MARK: - Computed Properties
+  // MARK: - Properties
   
-  private lazy var persistencyWorker: RealmPersistencyWorker = {
-    try! RealmPersistencyWorker( // swiftlint:disable:this force_try
-      storageLocation: .documents,
-      dataBaseFileName: "PreferencesServiceDataBase"
-    )
-  }()
+  private let dependencies: Dependencies
+  
+  // MARK: - Initialization
+  
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
+  }
 }
 
 // MARK: - General Preference Persistence
@@ -95,11 +104,12 @@ extension PreferencesService2: GeneralPreferencePersistence {
           entity: $0
         )
       }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: AmountOfResultsOption.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: AmountOfResultsOption.self) }
   }
   
   func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption> {
-    persistencyWorker
+    dependencies
+      .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
           collection: PreferencesService2.PersistencyKeys.amountOfNearbyResultsOption.collection,
@@ -123,11 +133,12 @@ extension PreferencesService2: GeneralPreferencePersistence {
           entity: $0
         )
       }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: TemperatureUnitOption.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: TemperatureUnitOption.self) }
   }
   
   func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption> {
-    persistencyWorker
+    dependencies
+      .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
           collection: PreferencesService2.PersistencyKeys.temperatureUnitOption.collection,
@@ -151,11 +162,12 @@ extension PreferencesService2: GeneralPreferencePersistence {
           entity: $0
         )
       }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: DimensionalUnitsOption.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: DimensionalUnitsOption.self) }
   }
   
   func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption> {
-    persistencyWorker
+    dependencies
+      .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
           collection: PreferencesService2.PersistencyKeys.dimensionalUnitOption.collection,
@@ -179,11 +191,12 @@ extension PreferencesService2: GeneralPreferencePersistence {
           entity: $0
         )
       }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: SortingOrientationOption.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: SortingOrientationOption.self) }
   }
   
   func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption> {
-    persistencyWorker
+    dependencies
+      .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
           collection: PreferencesService2.PersistencyKeys.sortingOrientationOption.collection,
@@ -207,11 +220,12 @@ extension PreferencesService2: GeneralPreferencePersistence {
           entity: $0
         )
       }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: ListTypeOption.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: ListTypeOption.self) }
   }
   
   func createGetListTypeOptionObservable() -> Observable<ListTypeOption> {
-    persistencyWorker
+    dependencies
+      .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
           collection: PreferencesService2.PersistencyKeys.preferredListTypeOption.collection,
@@ -235,11 +249,12 @@ extension PreferencesService2: GeneralPreferencePersistence {
           entity: $0
         )
       }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: MapTypeOption.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: MapTypeOption.self) }
   }
   
   func createGetMapTypeOptionObservable() -> Observable<MapTypeOption> {
-    persistencyWorker
+    dependencies
+      .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
           collection: PreferencesService2.PersistencyKeys.preferredMapTypeOption.collection,

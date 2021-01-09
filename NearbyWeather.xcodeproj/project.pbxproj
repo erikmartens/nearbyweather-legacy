@@ -629,9 +629,9 @@
 				86830391217BBA5D00B7122E /* BadgeService.swift */,
 				86830393217BBAE400B7122E /* PermissionsService.swift */,
 				F284DDD3245CF37800445BFF /* PermissionsService2.swift */,
+				F210B1A525A9D6BD00BF8DAA /* PersistencyService2.swift */,
 				F274FC3A2030ED5A00049144 /* PreferencesService.swift */,
 				F284DDD5245CF38800445BFF /* PreferencesService2.swift */,
-				F2F15544244389E8007A3E90 /* SettingsBundleTransferWorker.swift */,
 				F26699591E9ADBC300498F99 /* UserLocationService.swift */,
 				F284DDCD245A40F500445BFF /* UserLocationService2.swift */,
 				F26699571E9AD0F100498F99 /* WeatherInformationService.swift */,
@@ -639,7 +639,6 @@
 				F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */,
 				F2FE3F00200285B100EBC429 /* WeatherStationService.swift */,
 				F284DDCF245A414B00445BFF /* WeatherStationService2.swift */,
-				F210B1A525A9D6BD00BF8DAA /* PersistencyService2.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1065,6 +1064,7 @@
 				F2A5CAA52005762A0071BFFB /* ConversionWorker.swift */,
 				F2D2B1DF2004171500C810EF /* JsonPersistencyWorker.swift */,
 				F260BDAD244F7BA700B4357A /* RealmPersistencyWorker.swift */,
+				F2F15544244389E8007A3E90 /* SettingsBundleTransferWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";

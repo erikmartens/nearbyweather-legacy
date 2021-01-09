@@ -209,7 +209,7 @@ extension WeatherListViewModel: BaseTableViewSelectionDelegate {
     guard let cellViewModel = tableDataSource.sectionDataSources[indexPath] as? WeatherListInformationTableViewCellViewModel else {
       return
     }
-    Observable
+    _ = Observable
       .combineLatest(
         preferredListTypeObservable,
         Observable.just(cellViewModel.weatherInformationIdentity),
@@ -220,9 +220,9 @@ extension WeatherListViewModel: BaseTableViewSelectionDelegate {
           )
         }
       )
+      .take(1)
       .asSingle()
       .subscribe(onSuccess: steps.accept)
-      .disposed(by: disposeBag)
   }
 }
 

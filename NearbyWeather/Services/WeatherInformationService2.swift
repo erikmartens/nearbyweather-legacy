@@ -51,6 +51,7 @@ private extension WeatherInformationService2 {
 
 extension WeatherInformationService2 {
   struct Dependencies {
+    let persistencyService: PersistencyProtocol
     let preferencesService: WeatherListPreferenceReading
     let weatherStationService: WeatherStationBookmarkReading
     let userLocationService: UserLocationReading
@@ -61,19 +62,6 @@ extension WeatherInformationService2 {
 // MARK: - Class Definition
 
 final class WeatherInformationService2 {
-  
-  // MARK: - Assets
-  
-  private lazy var persistencyWorker: RealmPersistencyWorker = {
-    try! RealmPersistencyWorker( // swiftlint:disable:this force_try
-      storageLocation: .documents,
-      dataBaseFileName: "WeatherInformationServiceDataBase"
-    )
-  }()
-  
-  private static let persistencyWriteScheduler = SerialDispatchQueueScheduler(
-    internalSerialQueueName: "WeatherInformationService.PersistencyWriteScheduler"
-  )
   
   // MARK: - Properties
   
@@ -109,11 +97,11 @@ extension WeatherInformationService2: WeatherInformationPersistence {
                            entity: weatherInformationDto)
         }
       }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createGetBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
-    persistencyWorker.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
+    dependencies.persistencyService.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
   }
   
   func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>> {
@@ -121,7 +109,8 @@ extension WeatherInformationService2: WeatherInformationPersistence {
       collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
       identifier: identifier
     )
-    return persistencyWorker
+    return dependencies
+      .persistencyService
       .observeResource(with: identity, type: WeatherInformationDTO.self)
       .errorOnNil(DomainError.bookmarkedWeatherInformationMissing)
   }
@@ -136,11 +125,11 @@ extension WeatherInformationService2: WeatherInformationPersistence {
                            entity: weatherInformationDto)
         }
       }
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createGetNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
-    persistencyWorker.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
+    dependencies.persistencyService.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
   }
   
   func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>> {
@@ -148,7 +137,8 @@ extension WeatherInformationService2: WeatherInformationPersistence {
       collection: PersistencyKeys.nearbyWeatherInformation.collection,
       identifier: identifier
     )
-    return persistencyWorker
+    return dependencies
+      .persistencyService
       .observeResource(with: identity, type: WeatherInformationDTO.self)
       .errorOnNil(DomainError.nearbyWeatherInformationMissing)
   }
@@ -194,11 +184,9 @@ extension WeatherInformationService2: WeatherInformationUpdating {
           }
         )
       }
-      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-      .observeOn(Self.persistencyWriteScheduler)
       .take(1)
       .asSingle()
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int) -> Completable {
@@ -209,14 +197,14 @@ extension WeatherInformationService2: WeatherInformationUpdating {
         resultSelector: { apiKey, identifier -> URL in Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier) }
       )
       .asSingle()
-      .flatMapCompletable { [unowned persistencyWorker] url -> Completable in
+      .flatMapCompletable { [dependencies] url -> Completable in
         RxAlamofire
           .requestData(.get, url)
           .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
           .filterNil()
           .take(1)
           .asSingle()
-          .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResource($0, type: WeatherInformationDTO.self) }
+          .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: WeatherInformationDTO.self) }
       }
   }
   
@@ -240,11 +228,9 @@ extension WeatherInformationService2: WeatherInformationUpdating {
           .map { Self.mapMultiInformationResponseToPersistencyModel($0) }
           .filterNil()
       }
-      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-      .observeOn(Self.persistencyWriteScheduler)
       .take(1)
       .asSingle()
-      .flatMapCompletable { [unowned persistencyWorker] in persistencyWorker.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
   }
 }
 

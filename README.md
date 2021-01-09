@@ -85,11 +85,11 @@ NearbyWeather was created to help you as a reference for developing your skills.
 
 Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects). There you can get an overview of planned features. If you want to suggest a feature, you can submit a new issue for triage.
 
-| Version | Tag |
-|:--|:--|
-| Current Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.3.0)
-| Next Release | [v2.4.0](https://github.com/erikmartens/NearbyWeather/projects/8) |
-| Future Releases | [v?.?.?](https://github.com/erikmartens/NearbyWeather/projects) |
+| Type | Project | Release |
+|:--|:--|:--|
+| Current Release | [Project 3.0.0](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.3.0) | _N/A_ |
+| Next Release | [Project 3.1.0](https://github.com/erikmartens/NearbyWeather/projects/8) | _N/A_ |
+| Future Releases | [Future Backlog Project](https://github.com/erikmartens/NearbyWeather/projects) | _N/A_ |
 
 ## How to Get Started
 

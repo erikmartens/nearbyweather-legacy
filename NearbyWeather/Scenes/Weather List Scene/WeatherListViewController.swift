@@ -55,13 +55,13 @@ final class WeatherListViewController: UIViewController, BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     viewModel.viewDidLoad()
-    setupLayout()
+    setupUiComponents()
     setupBindings()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    setupAppearance()
+    setupUiAppearance()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -151,7 +151,7 @@ private extension WeatherListViewController {
 
 private extension WeatherListViewController {
   
-  func setupLayout() {
+  func setupUiComponents() {
     tableView.dataSource = viewModel.tableDataSource
     tableView.delegate = viewModel.tableDelegate
     tableView.estimatedRowHeight = Definitions.weatherInformationCellHeight
@@ -170,7 +170,7 @@ private extension WeatherListViewController {
       right: .zero
     )
     
-    view?.addSubview(tableView, constraints: [
+    view.addSubview(tableView, constraints: [
       tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -178,7 +178,7 @@ private extension WeatherListViewController {
     ])
   }
   
-  func setupAppearance() {
+  func setupUiAppearance() {
     view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
   }
 }

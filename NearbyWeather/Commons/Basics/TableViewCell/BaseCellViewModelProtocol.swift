@@ -1,5 +1,5 @@
 //
-//  TableCellViewModelProtocol.swift
+//  BaseCellViewModelProtocol.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 02.01.21.

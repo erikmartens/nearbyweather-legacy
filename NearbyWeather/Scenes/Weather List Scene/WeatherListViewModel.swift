@@ -88,14 +88,74 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   // MARK: - Functions
   
   public func observeEvents() {
-    observeUserTapEvents()
     observeDataSource()
+    observeUserTapEvents()
   }
 }
 
 // MARK: - Observations
 
 private extension WeatherListViewModel {
+
+  func observeDataSource() {
+    let apiKeyValidObservable = dependencies
+      .apiKeyService
+      .createGetApiKeyObservable()
+      .share(replay: 1)
+    
+    let preferredSortingOrientationObservable = dependencies
+      .preferencesService
+      .createGetSortingOrientationOptionObservable()
+      .map { $0.value }
+      .share(replay: 1)
+    
+    let nearbyListItemsObservable = Observable
+      .combineLatest(
+        dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
+        preferredSortingOrientationObservable,
+        dependencies.userLocationService.createGetCurrentLocationObservable(),
+        apiKeyValidObservable,
+        resultSelector: { weatherInformationItems, sortingOrientation, currentLocation, _ in
+          Self.sortNearbyResults(weatherInformationItems, sortingOrientationValue: sortingOrientation, currentLocation: currentLocation)
+        }
+      )
+      .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
+      .map { [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
+      .catchError { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
+      .share(replay: 1)
+    
+    let bookmarkedListItemsObservable = Observable
+      .combineLatest(
+        dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
+        dependencies.weatherStationService.createGetBookmarksSortingObservable(),
+        apiKeyValidObservable,
+        resultSelector: { weatherInformationItems, sortingWeights, _ in
+          Self.sortBookmarkedResults(weatherInformationItems, sortingWeights: sortingWeights)
+        }
+      )
+      .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
+      .map { [WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
+      .catchError { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
+      .share(replay: 1)
+    
+    Observable
+      .combineLatest(
+        nearbyListItemsObservable,
+        bookmarkedListItemsObservable,
+        preferredListTypeObservable,
+        resultSelector: { nearbyListSections, bookmarkedListSections, preferredListType -> [TableViewSectionData] in
+          switch preferredListType {
+          case .nearby:
+            return nearbyListSections
+          case .bookmarked:
+            return bookmarkedListSections
+          }
+        }
+      )
+      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+      .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
+      .disposed(by: disposeBag)
+  }
   
   func observeUserTapEvents() {
     let preferredSortingOrientationObservable = dependencies
@@ -139,66 +199,6 @@ private extension WeatherListViewModel {
       }
       .disposed(by: disposeBag)
   }
-  
-  func observeDataSource() {
-    let apiKeyValidObservable = dependencies
-      .apiKeyService
-      .createGetApiKeyObservable()
-      .share(replay: 1)
-    
-    let preferredSortingOrientationObservable = dependencies
-      .preferencesService
-      .createGetSortingOrientationOptionObservable()
-      .map { $0.value }
-      .share(replay: 1)
-    
-    let nearbyListItemsObservable = Observable
-      .combineLatest(
-        dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
-        dependencies.weatherStationService.createGetBookmarksSortingObservable(),
-        apiKeyValidObservable,
-        resultSelector: { weatherInformationItems, sortingWeights, _ in Self.sortBookmarkedResults(weatherInformationItems, sortingWeights: sortingWeights) }
-      )
-      .map { [dependencies] listItems -> [BaseCellViewModelProtocol] in
-        listItems.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false)
-      }
-      .map { [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
-      .catchError { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
-      .share(replay: 1)
-    
-    let bookmarkedListItemsObservable = Observable
-      .combineLatest(
-        dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
-        preferredSortingOrientationObservable,
-        dependencies.userLocationService.createGetCurrentLocationObservable(),
-        apiKeyValidObservable,
-        resultSelector: { weatherInformationItems, sortingOrientation, currentLocation, _ in
-          Self.sortNearbyResults(weatherInformationItems, sortingOrientationValue: sortingOrientation, currentLocation: currentLocation)
-        }
-      )
-      .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
-      .map { [WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
-      .catchError { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
-      .share(replay: 1)
-    
-    Observable
-      .combineLatest(
-        nearbyListItemsObservable,
-        bookmarkedListItemsObservable,
-        preferredListTypeObservable,
-        resultSelector: { nearbyListSections, bookmarkedListSections, preferredListType -> [TableViewSectionData] in
-          switch preferredListType {
-          case .nearby:
-            return nearbyListSections
-          case .bookmarked:
-            return bookmarkedListSections
-          }
-        }
-      )
-      .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .userInteractive))
-      .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
-      .disposed(by: disposeBag)
-  }
 }
 
 // MARK: - Delegate Extensions
@@ -211,12 +211,12 @@ extension WeatherListViewModel: BaseTableViewSelectionDelegate {
     }
     _ = Observable
       .combineLatest(
-        preferredListTypeObservable,
         Observable.just(cellViewModel.weatherInformationIdentity),
-        resultSelector: { preferredListTypeValue, weatherInformationIdentity -> ListStep in
+        Observable.just(cellViewModel.isBookmark),
+        resultSelector: { weatherInformationIdentity, isBookmark -> ListStep in
           ListStep.weatherDetails2(
             identity: weatherInformationIdentity,
-            isBookmark: preferredListTypeValue == .bookmarked
+            isBookmark: isBookmark
           )
         }
       )

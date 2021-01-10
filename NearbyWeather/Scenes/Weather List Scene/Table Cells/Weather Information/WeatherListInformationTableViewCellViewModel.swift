@@ -30,6 +30,10 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
     dependencies.weatherInformationIdentity
   }
   
+  var isBookmark: Bool {
+    dependencies.isBookmark
+  }
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies
@@ -99,7 +103,7 @@ private extension WeatherListInformationTableViewCellViewModel {
   static func borderColor(for isBookmark: Bool) -> UIColor {
     isBookmark
       ? Constants.Theme.Color.ViewElement.borderBookmark
-      : Constants.Theme.Color.ViewElement.borderBookmark
+      : Constants.Theme.Color.ViewElement.borderNearby
   }
   
   static func backgroundColor(for isBookmark: Bool, isDayTime: Bool) -> UIColor {

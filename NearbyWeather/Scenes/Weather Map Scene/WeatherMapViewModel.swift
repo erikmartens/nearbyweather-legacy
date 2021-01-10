@@ -1,0 +1,203 @@
+//
+//  WeatherMapViewModel.swift
+//  NearbyWeather
+//
+//  Created by Erik Maximilian Martens on 10.01.21.
+//  Copyright © 2021 Erik Maximilian Martens. All rights reserved.
+//
+
+import CoreLocation
+import RxSwift
+import RxCocoa
+import RxOptional
+import RxFlow
+
+// MARK: - Dependencies
+
+extension WeatherMapViewModel { // TODO : check which are needed
+  struct Dependencies {
+    let weatherInformationService: WeatherInformationPersistence & WeatherInformationUpdating
+    let weatherStationService: WeatherStationBookmarkReading
+    let userLocationService: UserLocationReading
+    let preferencesService: WeatherMapPreferencePersistence & UnitSettingsPreferenceReading
+    let apiKeyService: ApiKeyReading
+  }
+}
+
+// MARK: - Class Definition
+
+final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
+  
+  // MARK: - Routing
+  
+  let steps = PublishRelay<Step>()
+  
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
+  
+  // MARK: - Properties
+  
+  private let dependencies: Dependencies
+  
+  var mapDelegate: WeatherMapMapViewDelegate? // swiftlint:disable:this weak_delegate
+  
+  // MARK: - Events
+  
+  let onDidTapMapTypeBarButtonSubject = PublishSubject<Void>()
+  let onDidTapAmountOfResultsBarButtonSubject = PublishSubject<Void>()
+  let onDidTapFocusOnLocationBarButtonSubject = PublishSubject<Void>()
+  
+  // MARK: - Drivers
+  
+  // MARK: - Observables
+  
+  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsValue>  = { [dependencies] in
+    dependencies
+      .preferencesService
+      .createGetAmountOfNearbyResultsOptionObservable()
+      .map { $0.value }
+      .share(replay: 1)
+  }()
+  
+  // MARK: - Initialization
+  
+  required init(dependencies: Dependencies) {
+    self.dependencies = dependencies
+    super.init()
+    
+    mapDelegate = WeatherMapMapViewDelegate(annotationSelectionDelegate: self)
+  }
+  
+  // MARK: - Functions
+  
+  public func observeEvents() {
+    observeDataSource()
+    observeUserTapEvents()
+  }
+}
+
+private extension WeatherMapViewModel {
+  
+  func observeDataSource() {
+    let apiKeyValidObservable = dependencies
+      .apiKeyService
+      .createGetApiKeyObservable()
+      .share(replay: 1)
+    
+    let nearbyMapItemsObservable = Observable
+      .combineLatest(
+        dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
+        apiKeyValidObservable,
+        resultSelector: { [dependencies] weatherInformationList, _ in
+          weatherInformationList.mapToWeatherMapAnnotationViewModel(dependencies: dependencies, isBookmark: false)
+        }
+      )
+      .catchErrorJustReturn([])
+      .share(replay: 1)
+    
+    let bookmarkedMapItemsObservable = Observable
+      .combineLatest(
+        dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
+        apiKeyValidObservable,
+        resultSelector: { [dependencies] weatherInformationList, _ in
+          weatherInformationList.mapToWeatherMapAnnotationViewModel(dependencies: dependencies, isBookmark: false)
+        }
+      )
+      .catchErrorJustReturn([])
+      .share(replay: 1)
+    
+    Observable
+      .combineLatest(
+        nearbyMapItemsObservable,
+        bookmarkedMapItemsObservable,
+        resultSelector: {
+          WeatherMapAnnotationData(
+            annotationViewReuseIdentifier: WeatherMapAnnotationView.reuseIdentifier,
+            annotationItems: $0 + $1
+          )
+        }
+      )
+      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+      .bind { [weak mapDelegate] in mapDelegate?.dataSource.accept($0) }
+      .disposed(by: disposeBag)
+  }
+  
+  func observeUserTapEvents() {
+    let preferredMapTypeObservable = dependencies
+      .preferencesService
+      .createGetMapTypeOptionObservable()
+      .map { $0.value }
+      .share(replay: 1)
+    
+    onDidTapMapTypeBarButtonSubject
+      .flatMapLatest { [unowned preferredMapTypeObservable] in preferredMapTypeObservable }
+      .subscribe(onNext: { [weak steps] preferredMapType in
+        steps?.accept(MapStep.changeMapTypeAlert(currentSelectedOptionValue: preferredMapType))
+      })
+      .disposed(by: disposeBag)
+    
+    onDidTapAmountOfResultsBarButtonSubject
+      .flatMapLatest { [unowned preferredAmountOfResultsObservable] in preferredAmountOfResultsObservable }
+      .subscribe(onNext: { [weak steps] preferredAmountOfResults in
+        steps?.accept(MapStep.changeAmountOfResultsAlert(currentSelectedOptionValue: preferredAmountOfResults))
+      })
+      .disposed(by: disposeBag)
+    
+    onDidTapFocusOnLocationBarButtonSubject
+      .subscribe(onNext: { [weak steps] preferredSortingOrientation in
+        steps?.accept(MapStep.focusOnLocationAlert)
+      })
+      .disposed(by: disposeBag)
+  }
+}
+
+// MARK: - Delegate Extensions
+
+extension WeatherMapViewModel: BaseMapViewSelectionDelegate {
+  
+  func didSelectView(for annotationViewModel: BaseAnnotationViewModelProtocol) {
+    guard let annotationViewModel = annotationViewModel as? WeatherMapAnnotationViewModel else {
+      return
+    }
+    _ = Observable
+      .combineLatest(
+        Observable.just(annotationViewModel.weatherInformationIdentity),
+        Observable.just(annotationViewModel.isBookmark),
+        resultSelector: { weatherInformationIdentity, isBookmark -> MapStep in
+          MapStep.weatherDetails2(
+            identity: weatherInformationIdentity,
+            isBookmark: isBookmark
+          )
+        }
+      )
+      .take(1)
+      .asSingle()
+      .subscribe(onSuccess: steps.accept)
+  }
+}
+
+// MARK: - Helper Extensions
+
+private extension Array where Element == PersistencyModel<WeatherInformationDTO> {
+  
+  func mapToWeatherMapAnnotationViewModel(dependencies: WeatherMapViewModel.Dependencies, isBookmark: Bool) -> [BaseAnnotationViewModelProtocol] {
+    compactMap { weatherInformationPersistencyModel -> WeatherMapAnnotationViewModel? in
+      guard let latitude = weatherInformationPersistencyModel.entity.coordinates.latitude,
+            let longitude = weatherInformationPersistencyModel.entity.coordinates.longitude else {
+        return nil
+      }
+      return WeatherMapAnnotationViewModel(
+        dependencies: WeatherMapAnnotationViewModel.Dependencies(
+          weatherInformationIdentity: weatherInformationPersistencyModel.identity,
+          isBookmark: isBookmark,
+          coordinate: CLLocationCoordinate2D(
+            latitude: latitude,
+            longitude: longitude
+          ),
+          weatherInformationService: dependencies.weatherInformationService,
+          preferencesService: dependencies.preferencesService)
+      )
+    }
+  }
+}

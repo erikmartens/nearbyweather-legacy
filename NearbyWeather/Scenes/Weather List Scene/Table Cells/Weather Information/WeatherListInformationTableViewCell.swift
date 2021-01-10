@@ -9,6 +9,8 @@
 import UIKit
 import RxSwift
 
+// MARK: - Definitions
+
 private extension WeatherListInformationTableViewCell {
   
   struct Definitions {
@@ -20,9 +22,11 @@ private extension WeatherListInformationTableViewCell {
   }
 }
 
+// MARK: - Class Definition
+
 final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
   
-  typealias BaseCellViewModel = WeatherListInformationTableViewCellViewModel
+  typealias CellViewModel = WeatherListInformationTableViewCellViewModel
   
   // MARK: - UIComponents
   
@@ -58,7 +62,7 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
   
   // MARK: - Properties
   
-  internal var cellViewModel: BaseCellViewModel?
+  var cellViewModel: CellViewModel?
   
   // MARK: - Initialization
   
@@ -88,13 +92,13 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
 
 extension WeatherListInformationTableViewCell {
   
-  internal func bindInputFromViewModel(_ cellViewModel: BaseCellViewModel) {
+  internal func bindInputFromViewModel(_ cellViewModel: CellViewModel) {
     cellViewModel.cellModelDriver
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
   
-  internal func bindOutputToViewModel(_ cellViewModel: BaseCellViewModel) {} // nothing to do
+  internal func bindOutputToViewModel(_ cellViewModel: CellViewModel) {} // nothing to do
 }
 
 // MARK: - Cell Composition

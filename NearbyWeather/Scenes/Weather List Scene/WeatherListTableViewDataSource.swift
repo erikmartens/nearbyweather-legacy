@@ -6,7 +6,6 @@
 //  Copyright © 2021 Erik Maximilian Martens. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
+import Foundation
 
 final class WeatherListTableViewDataSource: BaseTableViewDataSource {}

@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 
 class BaseTableViewDataSource: NSObject {
-  
   var sectionDataSources: BehaviorRelay<[TableViewSectionData]?> = BehaviorRelay(value: nil)
 }
 

@@ -343,6 +343,9 @@ extension PreferencesService2: WeatherListPreferenceReading {}
 // MARK: - WeatherMap Preference Persistence
 
 protocol WeatherMapPreferencePersistence {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  
   func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
   func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
 }

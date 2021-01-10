@@ -19,6 +19,7 @@ extension WeatherMapAnnotationViewModel {
     let coordinate: CLLocationCoordinate2D
     let weatherInformationService: WeatherInformationPersistence
     let preferencesService: UnitSettingsPreferenceReading
+    weak var annotationSelectionDelegate: BaseMapViewSelectionDelegate?
   }
 }
 
@@ -40,6 +41,10 @@ final class WeatherMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
     dependencies.coordinate
   }
   
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies
@@ -58,13 +63,28 @@ final class WeatherMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
     self.dependencies = dependencies
     annotationModelDriver = Self.createDataSourceObserver(with: dependencies)
   }
+  
+  // MARK: - Functions
+  
+  func observeEvents() {
+    observeDataSource()
+    observeUserTapEvents()
+  }
 }
 
 // MARK: - Observations
 
-private extension WeatherMapAnnotationViewModel {
+extension WeatherMapAnnotationViewModel {
   
-  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherMapAnnotationModel> {
+  func observeUserTapEvents() {
+    onDidTapAnnotationView
+      .subscribe(onNext: { [dependencies] _ in
+        dependencies.annotationSelectionDelegate?.didSelectView(for: self)
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  private static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherMapAnnotationModel> {
     let weatherInformationModelObservable = Observable
       .just(dependencies.isBookmark)
       .flatMapLatest { [dependencies] isBookmark -> Observable<PersistencyModel<WeatherInformationDTO>> in

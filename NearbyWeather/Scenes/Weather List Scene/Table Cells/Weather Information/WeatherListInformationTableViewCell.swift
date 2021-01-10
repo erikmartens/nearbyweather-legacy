@@ -83,6 +83,7 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
       return
     }
     self.cellViewModel = cellViewModel
+    cellViewModel.observeEvents()
     bindContentFromViewModel(cellViewModel)
     bindUserInputToViewModel(cellViewModel)
   }

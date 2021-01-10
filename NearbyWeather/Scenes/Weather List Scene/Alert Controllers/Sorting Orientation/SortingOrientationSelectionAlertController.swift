@@ -55,9 +55,30 @@ final class SortingOrientationSelectionAlertController: UIAlertController, BaseV
     fatalError("init(coder:) has not been implemented")
   }
   
-  // MARK: - Functions
+  // MARK: - AlertController LifeCycle
   
-  private func setCheckmarkForOption(with value: SortingOrientationValue) {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setupBindings()
+  }
+}
+
+// MARK: - ViewModel Bindings
+
+extension SortingOrientationSelectionAlertController {
+  
+  func setupBindings() {
+    viewModel.observeEvents()
+    bindContentFromViewModel(viewModel)
+    bindUserInputToViewModel(viewModel)
+  }
+}
+
+// MARK: - Private Helpers
+
+private extension SortingOrientationSelectionAlertController {
+  
+  func setCheckmarkForOption(with value: SortingOrientationValue) {
     var action: UIAlertAction
     
     switch viewModel.dependencies.selectedOptionValue {

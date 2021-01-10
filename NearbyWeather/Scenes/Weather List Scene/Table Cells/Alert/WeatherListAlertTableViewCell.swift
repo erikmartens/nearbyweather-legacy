@@ -59,6 +59,7 @@ final class WeatherListAlertTableViewCell: UITableViewCell, BaseCell {
       return
     }
     self.cellViewModel = cellViewModel
+    cellViewModel.observeEvents()
     bindContentFromViewModel(cellViewModel)
     bindUserInputToViewModel(cellViewModel)
   }

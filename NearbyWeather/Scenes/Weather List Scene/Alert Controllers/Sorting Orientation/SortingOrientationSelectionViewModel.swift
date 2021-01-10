@@ -43,14 +43,15 @@ final class SortingOrientationSelectionViewModel: NSObject, Stepper, BaseViewMod
   
   // MARK: - Functions
   
-  public func observeEvents() {
+  func observeEvents() {
+    observeDataSource()
     observeUserTapEvents()
   }
 }
 
 // MARK: - Observations
 
-private extension SortingOrientationSelectionViewModel {
+extension SortingOrientationSelectionViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject

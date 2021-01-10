@@ -63,9 +63,30 @@ final class AmountOfNearbyResultsSelectionAlertController: UIAlertController, Ba
     fatalError("init(coder:) has not been implemented")
   }
   
-  // MARK: - Functions
+  // MARK: - AlertController LifeCycle
   
-  private func setCheckmarkForOption(with value: AmountOfResultsValue) {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setupBindings()
+  }
+}
+
+// MARK: - ViewModel Bindings
+
+extension AmountOfNearbyResultsSelectionAlertController {
+  
+  func setupBindings() {
+    viewModel.observeEvents()
+    bindContentFromViewModel(viewModel)
+    bindUserInputToViewModel(viewModel)
+  }
+}
+  
+// MARK: - Helpers
+  
+private extension AmountOfNearbyResultsSelectionAlertController {
+  
+  func setCheckmarkForOption(with value: AmountOfResultsValue) {
     var action: UIAlertAction
     
     switch viewModel.dependencies.selectedOptionValue {

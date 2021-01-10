@@ -11,4 +11,12 @@ import Foundation
 protocol BaseCellViewModel: NSObject, BaseCellViewModelProtocol {
   associatedtype Dependencies
   init(dependencies: Dependencies)
+  func observeDataSource()
+  func observeUserTapEvents()
+}
+
+/// functions are optional
+extension BaseCellViewModel {
+  func observeDataSource() {}
+  func observeUserTapEvents() {}
 }

@@ -29,7 +29,11 @@ struct WeatherMapAnnotationModel {
     self.backgroundColor = backgroundColor
   }
   
-  init(weatherInformationDTO: WeatherInformationDTO, temperatureUnitOption: TemperatureUnitOption, isBookmark: Bool) {
+  init(
+    weatherInformationDTO: WeatherInformationDTO,
+    temperatureUnitOption: TemperatureUnitOption,
+    isBookmark: Bool
+  ) {
     let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.daytimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
     
     var weatherConditionSymbol: String?

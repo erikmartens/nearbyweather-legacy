@@ -11,4 +11,12 @@ import Foundation
 protocol BaseViewModel: NSObject, ViewControllerLifeCycleRelay {
   associatedtype Dependencies
   init(dependencies: Dependencies)
+  func observeDataSource()
+  func observeUserTapEvents()
+}
+
+/// functions are optional
+extension BaseViewModel {
+  func observeDataSource() {}
+  func observeUserTapEvents() {}
 }

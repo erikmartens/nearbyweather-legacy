@@ -35,6 +35,13 @@ final class WeatherListAlertTableViewCellViewModel: NSObject, BaseCellViewModel 
     self.dependencies = dependencies
     cellModelDriver = Self.createDataSourceObserver(error: dependencies.error)
   }
+  
+  // MARK: - Functions
+  
+  func observeEvents() {
+    observeDataSource()
+    observeUserTapEvents()
+  }
 }
 
 // MARK: - Observations

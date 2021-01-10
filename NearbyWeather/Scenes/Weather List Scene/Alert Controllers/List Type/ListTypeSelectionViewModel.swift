@@ -43,14 +43,15 @@ final class ListTypeSelectionViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Functions
   
-  public func observeEvents() {
+  func observeEvents() {
+    observeDataSource()
     observeUserTapEvents()
   }
 }
 
 // MARK: - Observations
 
-private extension ListTypeSelectionViewModel {
+extension ListTypeSelectionViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject

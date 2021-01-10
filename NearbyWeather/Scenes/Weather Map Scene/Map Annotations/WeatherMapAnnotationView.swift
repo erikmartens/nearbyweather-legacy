@@ -44,15 +44,15 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   
   private lazy var titleLabel = Factory.Label.make(fromType: .mapAnnotation(
     fontSize: Definitions.titleLabelFontSize,
-    width: Definitions.width - 2 * Definitions.margin,
-    height: (Definitions.height - 2 * Definitions.margin - Definitions.triangleHeight)/2,
+    width: Definitions.width - 2*Definitions.margin,
+    height: (Definitions.height - 2*Definitions.margin - Definitions.triangleHeight)/2,
     yOffset: -Definitions.height/2
   ))
   
   private lazy var subtitleLabel = Factory.Label.make(fromType: .mapAnnotation(
     fontSize: Definitions.subtitleLabelFontSize,
-    width: Definitions.width - 2 * Definitions.margin,
-    height: (Definitions.height - 2 * Definitions.margin - Definitions.triangleHeight)/2,
+    width: Definitions.width - 2*Definitions.margin,
+    height: (Definitions.height - 2*Definitions.margin - Definitions.triangleHeight)/2,
     yOffset: -Definitions.height/2
   ))
   
@@ -64,7 +64,7 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   
   // MARK: - Properties
   
-  var viewModel: AnnotationViewModel?
+  var annotationViewModel: AnnotationViewModel?
   
   // MARK: - Initialization
   
@@ -80,13 +80,14 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   
   // MARK: - Cell Life Cycle
   
-  func configure(with viewModel: BaseAnnotationViewModelProtocol?) {
-    guard let viewModel = viewModel as? WeatherMapAnnotationViewModel else {
+  func configure(with annotationViewModel: BaseAnnotationViewModelProtocol?) {
+    guard let annotationViewModel = annotationViewModel as? WeatherMapAnnotationViewModel else {
       return
     }
-    self.viewModel = viewModel
-    bindContentFromViewModel(viewModel)
-    bindUserInputToViewModel(viewModel)
+    self.annotationViewModel = annotationViewModel
+    annotationViewModel.observeEvents()
+    bindContentFromViewModel(annotationViewModel)
+    bindUserInputToViewModel(annotationViewModel)
   }
 }
 
@@ -94,17 +95,17 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
 
 extension WeatherMapAnnotationView {
   
-  func bindContentFromViewModel(_ viewModel: AnnotationViewModel) {
-    viewModel.annotationModelDriver
+  func bindContentFromViewModel(_ annotationViewModel: AnnotationViewModel) {
+    annotationViewModel.annotationModelDriver
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
   
-  func bindUserInputToViewModel(_ viewModel: WeatherMapAnnotationViewModel) {
+  func bindUserInputToViewModel(_ annotationViewModel: WeatherMapAnnotationViewModel) {
     tapGestureRecognizer.rx
       .event
-      .bind { [weak viewModel] _ in
-        viewModel?.onDidTapAnnotationView.onNext(())
+      .bind { _ in
+        annotationViewModel.onDidTapAnnotationView.onNext(())
       }
       .disposed(by: disposeBag)
   }

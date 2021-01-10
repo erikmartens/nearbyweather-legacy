@@ -87,7 +87,7 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Functions
   
-  public func observeEvents() {
+  func observeEvents() {
     observeDataSource()
     observeUserTapEvents()
   }
@@ -95,7 +95,7 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
 
 // MARK: - Observations
 
-private extension WeatherListViewModel {
+extension WeatherListViewModel {
 
   func observeDataSource() {
     let apiKeyValidObservable = dependencies

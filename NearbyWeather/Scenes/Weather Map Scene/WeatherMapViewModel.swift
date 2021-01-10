@@ -71,13 +71,13 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Functions
   
-  public func observeEvents() {
+  func observeEvents() {
     observeDataSource()
     observeUserTapEvents()
   }
 }
 
-private extension WeatherMapViewModel {
+extension WeatherMapViewModel {
   
   func observeDataSource() {
     let apiKeyValidObservable = dependencies
@@ -206,7 +206,9 @@ private extension Array where Element == PersistencyModel<WeatherInformationDTO>
             longitude: longitude
           ),
           weatherInformationService: dependencies.weatherInformationService,
-          preferencesService: dependencies.preferencesService)
+          preferencesService: dependencies.preferencesService,
+          annotationSelectionDelegate: self
+        )
       )
     }
   }

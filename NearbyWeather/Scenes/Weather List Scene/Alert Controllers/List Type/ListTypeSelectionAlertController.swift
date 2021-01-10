@@ -51,7 +51,28 @@ final class ListTypeSelectionAlertController: UIAlertController, BaseViewControl
     fatalError("init(coder:) has not been implemented")
   }
   
-  // MARK: - Functions
+  // MARK: - AlertController LifeCycle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setupBindings()
+  }
+}
+
+// MARK: - ViewModel Bindings
+
+extension ListTypeSelectionAlertController {
+  
+  func setupBindings() {
+    viewModel.observeEvents()
+    bindContentFromViewModel(viewModel)
+    bindUserInputToViewModel(viewModel)
+  }
+}
+  
+// MARK: - Helpers
+  
+private extension ListTypeSelectionAlertController {
   
   private func setCheckmarkForOption(with value: ListTypeValue) {
     var action: UIAlertAction

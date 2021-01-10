@@ -43,14 +43,15 @@ final class AmountOfNearbyResultsSelectionViewModel: NSObject, Stepper, BaseView
   
   // MARK: - Functions
   
-  public func observeEvents() {
+  func observeEvents() {
+    observeDataSource()
     observeUserTapEvents()
   }
 }
 
 // MARK: - Observations
 
-private extension AmountOfNearbyResultsSelectionViewModel {
+extension AmountOfNearbyResultsSelectionViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject

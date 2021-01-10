@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class EmptyListViewController: UIViewController {
+final class EmptyListViewController: UIViewController { // TODO: SCHEDULED FOR DELETION
 
   // MARK: - IBOutlets
 

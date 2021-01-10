@@ -11,7 +11,7 @@ import MapKit
 import RxFlow
 import RxCocoa
 
-final class ListViewController: UITableViewController, Stepper {
+final class ListViewController: UITableViewController, Stepper {  // TODO: SCHEDULED FOR DELETION
   
   private lazy var listTypeBarButton = {
     UIBarButtonItem(

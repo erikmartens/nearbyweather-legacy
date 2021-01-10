@@ -37,6 +37,8 @@
 		F22F99552034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22F99542034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift */; };
 		F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F22F99562037676B00B7CB6B /* locationsSQLite.sqlite */; };
 		F2370FFC25AB25B10072AF29 /* RefreshOnAppStartOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2370FFB25AB25B10072AF29 /* RefreshOnAppStartOption.swift */; };
+		F237100425AB34830072AF29 /* WeatherMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237100325AB34830072AF29 /* WeatherMapViewModel.swift */; };
+		F237100F25AB34950072AF29 /* WeatherMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237100E25AB34950072AF29 /* WeatherMapViewController.swift */; };
 		F237285B2444A72100964C49 /* Constants+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285A2444A72100964C49 /* Constants+Dimensions.swift */; };
 		F237285D2444A9AD00964C49 /* Factory+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */; };
 		F237285F2444AA5600964C49 /* Factory+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285E2444AA5600964C49 /* Factory+UILabel.swift */; };
@@ -254,6 +256,8 @@
 		F22F99542034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationMapAnnotationView.swift; sourceTree = "<group>"; };
 		F22F99562037676B00B7CB6B /* locationsSQLite.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = locationsSQLite.sqlite; sourceTree = "<group>"; };
 		F2370FFB25AB25B10072AF29 /* RefreshOnAppStartOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshOnAppStartOption.swift; sourceTree = "<group>"; };
+		F237100325AB34830072AF29 /* WeatherMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapViewModel.swift; sourceTree = "<group>"; };
+		F237100E25AB34950072AF29 /* WeatherMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapViewController.swift; sourceTree = "<group>"; };
 		F237285A2444A72100964C49 /* Constants+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Dimensions.swift"; sourceTree = "<group>"; };
 		F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIImageView.swift"; sourceTree = "<group>"; };
 		F237285E2444AA5600964C49 /* Factory+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UILabel.swift"; sourceTree = "<group>"; };
@@ -760,6 +764,8 @@
 		F27A122324425DB300A2CE8D /* Map Scene */ = {
 			isa = PBXGroup;
 			children = (
+				F237100325AB34830072AF29 /* WeatherMapViewModel.swift */,
+				F237100E25AB34950072AF29 /* WeatherMapViewController.swift */,
 				F28CA5382016A1BA00209397 /* MapViewController.swift */,
 			);
 			path = "Map Scene";
@@ -1538,6 +1544,7 @@
 				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,
 				F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */,
 				F2D1990625A10D2E004C7753 /* BaseTableViewDataSource.swift in Sources */,
+				F237100F25AB34950072AF29 /* WeatherMapViewController.swift in Sources */,
 				F210B1A625A9D6BD00BF8DAA /* PersistencyService2.swift in Sources */,
 				F28F182725A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift in Sources */,
 				F2F15545244389E8007A3E90 /* SettingsBundleTransferWorker.swift in Sources */,
@@ -1612,6 +1619,7 @@
 				F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */,
 				F274FC39202F9A9300049144 /* WeatherNetworkingService.swift in Sources */,
 				F237285D2444A9AD00964C49 /* Factory+UIImageView.swift in Sources */,
+				F237100425AB34830072AF29 /* WeatherMapViewModel.swift in Sources */,
 				F28DA8612042258500879E6C /* WeatherLocationManagementTableViewController.swift in Sources */,
 				F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */,
 				F237286F244C7D8200964C49 /* MainFlow.swift in Sources */,

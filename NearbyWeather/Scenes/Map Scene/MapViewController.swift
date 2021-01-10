@@ -11,7 +11,7 @@ import MapKit
 import RxFlow
 import RxCocoa
 
-final class MapViewController: UIViewController, Stepper {
+final class MapViewController: UIViewController, Stepper { // TODO: SCHEDULED FOR DELETION
 
   private lazy var mapTypeBarButton = {
     UIBarButtonItem(

@@ -9,11 +9,15 @@
 import UIKit
 import RxSwift
 
+// MARK: - Definitions
+
 private extension WeatherListViewController {
   struct Definitions {
     static let weatherInformationCellHeight: CGFloat = 100
   }
 }
+
+// MARK: - Class Definition
 
 final class WeatherListViewController: UIViewController, BaseViewController {
   
@@ -27,11 +31,13 @@ final class WeatherListViewController: UIViewController, BaseViewController {
   
   fileprivate lazy var tableView = Factory.TableView.make(fromType: .standard(frame: view.frame))
   
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
+  
   // MARK: - Properties
   
   let viewModel: ViewModel
-  
-  private let disposeBag = DisposeBag()
   
   // MARK: - Initialization
   

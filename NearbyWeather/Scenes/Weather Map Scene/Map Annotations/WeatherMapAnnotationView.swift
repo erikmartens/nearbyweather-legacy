@@ -85,8 +85,8 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
       return
     }
     self.viewModel = viewModel
-    bindInputFromViewModel(viewModel)
-    bindOutputToViewModel(viewModel)
+    bindContentFromViewModel(viewModel)
+    bindUserInputToViewModel(viewModel)
   }
 }
 
@@ -94,13 +94,13 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
 
 extension WeatherMapAnnotationView {
   
-  func bindInputFromViewModel(_ viewModel: AnnotationViewModel) {
+  func bindContentFromViewModel(_ viewModel: AnnotationViewModel) {
     viewModel.annotationModelDriver
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
   
-  func bindOutputToViewModel(_ viewModel: WeatherMapAnnotationViewModel) {
+  func bindUserInputToViewModel(_ viewModel: WeatherMapAnnotationViewModel) {
     tapGestureRecognizer.rx
       .event
       .bind { [weak viewModel] _ in

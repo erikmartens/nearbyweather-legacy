@@ -11,12 +11,12 @@ import Foundation
 protocol BaseCell: BaseCellProtocol {
   associatedtype CellViewModel: BaseCellViewModelProtocol
   var cellViewModel: CellViewModel? { get set }
-  func bindInputFromViewModel(_ cellViewModel: CellViewModel)
-  func bindOutputToViewModel(_ cellViewModel: CellViewModel)
+  func bindContentFromViewModel(_ cellViewModel: CellViewModel)
+  func bindUserInputToViewModel(_ cellViewModel: CellViewModel)
 }
 
 /// functions are optional
 extension BaseCell {
-  func bindInputFromViewModel(_ cellViewModel: CellViewModel) {}
-  func bindOutputToViewModel(_ cellViewModel: CellViewModel) {}
+  func bindContentFromViewModel(_ cellViewModel: CellViewModel) {}
+  func bindUserInputToViewModel(_ cellViewModel: CellViewModel) {}
 }

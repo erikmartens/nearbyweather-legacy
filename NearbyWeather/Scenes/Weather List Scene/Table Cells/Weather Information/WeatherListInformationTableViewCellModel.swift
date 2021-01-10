@@ -34,4 +34,50 @@ struct WeatherListInformationTableViewCellModel {
     self.backgroundColor = backgroundColor
     self.borderColor = borderColor
   }
+  
+  init(
+    weatherInformationDTO: WeatherInformationDTO,
+    temperatureUnitOption: TemperatureUnitOption,
+    dimensionalUnitsOption: DimensionalUnitsOption,
+    isBookmark: Bool
+  ){
+    let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.daytimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
+    
+    self.init(
+      weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
+        fromWeatherCode: weatherInformationDTO.weatherCondition.first?.identifier,
+        isDayTime: isDayTime
+      ),
+      temperature: ConversionWorker.temperatureDescriptor(
+        forTemperatureUnit: temperatureUnitOption,
+        fromRawTemperature: weatherInformationDTO.atmosphericInformation.temperatureKelvin
+      ),
+      cloudCoverage: weatherInformationDTO.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
+      humidity: weatherInformationDTO.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none),
+      windspeed: ConversionWorker.windspeedDescriptor(
+        forDistanceSpeedUnit: dimensionalUnitsOption,
+        forWindspeed: weatherInformationDTO.windInformation.windspeed
+      ),
+      backgroundColor: Self.backgroundColor(for: isBookmark, isDayTime: isDayTime),
+      borderColor: Self.borderColor(for: isBookmark)
+    )
+  }
 }
+
+// MARK: - Helpers
+
+private extension WeatherListInformationTableViewCellModel {
+  
+  static func borderColor(for isBookmark: Bool) -> UIColor {
+    isBookmark
+      ? Constants.Theme.Color.ViewElement.borderBookmark
+      : Constants.Theme.Color.ViewElement.borderNearby
+  }
+  
+  static func backgroundColor(for isBookmark: Bool, isDayTime: Bool) -> UIColor {
+    isBookmark
+      ? (isDayTime ? Constants.Theme.Color.MarqueColors.bookmarkDay : Constants.Theme.Color.MarqueColors.bookmarkNight)
+      : (isDayTime ? Constants.Theme.Color.MarqueColors.nearbyDay : Constants.Theme.Color.MarqueColors.nearbyNight)
+  }
+}
+

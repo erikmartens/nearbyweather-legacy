@@ -46,7 +46,7 @@ extension Factory {
         label.font = .systemFont(ofSize: 70)
         label.textAlignment = .center
         label.numberOfLines = 1
-      case let .mapAnnotationTitle(fontSize, width, height, yOffset):
+      case let .mapAnnotation(fontSize, width, height, yOffset):
         label.frame.size = CGSize(width: width, height: height)
         label.frame = label.frame.offsetBy(dx: 0, dy: yOffset)
         label.numberOfLines = 1

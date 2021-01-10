@@ -70,45 +70,14 @@ private extension WeatherListInformationTableViewCellViewModel {
         dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
         dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
         resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherListInformationTableViewCellModel in
-          let isDayTime = ConversionWorker.isDayTime(for: weatherInformationModel.daytimeInformation, coordinates: weatherInformationModel.coordinates) ?? true
-          
-          return WeatherListInformationTableViewCellModel(
-            weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
-              fromWeatherCode: weatherInformationModel.weatherCondition.first?.identifier,
-              isDayTime: isDayTime
-            ),
-            temperature: ConversionWorker.temperatureDescriptor(
-              forTemperatureUnit: temperatureUnitOption,
-              fromRawTemperature: weatherInformationModel.atmosphericInformation.temperatureKelvin
-            ),
-            cloudCoverage: weatherInformationModel.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
-            humidity: weatherInformationModel.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none),
-            windspeed: ConversionWorker.windspeedDescriptor(
-              forDistanceSpeedUnit: dimensionalUnitsOption,
-              forWindspeed: weatherInformationModel.windInformation.windspeed
-            ),
-            backgroundColor: Self.backgroundColor(for: dependencies.isBookmark, isDayTime: isDayTime),
-            borderColor: Self.borderColor(for: dependencies.isBookmark)
+          WeatherListInformationTableViewCellModel(
+            weatherInformationDTO: weatherInformationModel,
+            temperatureUnitOption: temperatureUnitOption,
+            dimensionalUnitsOption: dimensionalUnitsOption,
+            isBookmark: dependencies.isBookmark
           )
         }
       )
       .asDriver(onErrorJustReturn: WeatherListInformationTableViewCellModel())
-  }
-}
-
-// MARK: - Helpers
-
-private extension WeatherListInformationTableViewCellViewModel {
-  
-  static func borderColor(for isBookmark: Bool) -> UIColor {
-    isBookmark
-      ? Constants.Theme.Color.ViewElement.borderBookmark
-      : Constants.Theme.Color.ViewElement.borderNearby
-  }
-  
-  static func backgroundColor(for isBookmark: Bool, isDayTime: Bool) -> UIColor {
-    isBookmark
-      ? (isDayTime ? Constants.Theme.Color.MarqueColors.bookmarkDay : Constants.Theme.Color.MarqueColors.bookmarkNight)
-      : (isDayTime ? Constants.Theme.Color.MarqueColors.nearbyDay : Constants.Theme.Color.MarqueColors.nearbyNight)
   }
 }

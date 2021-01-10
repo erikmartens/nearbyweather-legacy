@@ -83,8 +83,8 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
       return
     }
     self.cellViewModel = cellViewModel
-    bindInputFromViewModel(cellViewModel)
-    bindOutputToViewModel(cellViewModel)
+    bindContentFromViewModel(cellViewModel)
+    bindUserInputToViewModel(cellViewModel)
   }
 }
 
@@ -92,7 +92,7 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
 
 extension WeatherListInformationTableViewCell {
   
-  func bindInputFromViewModel(_ cellViewModel: CellViewModel) {
+  func bindContentFromViewModel(_ cellViewModel: CellViewModel) {
     cellViewModel.cellModelDriver
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)

@@ -22,7 +22,7 @@ struct TemperatureUnitOption: Codable, PreferencesOption {
   typealias PreferencesOptionType = TemperatureUnitValue
   
   private lazy var count: Int = {
-    return TemperatureUnitValue.allCases.count
+    TemperatureUnitValue.allCases.count
   }()
   
   var value: TemperatureUnitValue

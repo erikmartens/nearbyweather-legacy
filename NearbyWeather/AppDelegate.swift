@@ -20,10 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var welcomeWindow: UIWindow?
 
-  private var dependencyContainer: Container?
-  private var flowCoordinator: FlowCoordinator?
+  private var dependencyContainer: Container!
+  private var flowCoordinator: FlowCoordinator!
 
-  private var backgroundTaskId: UIBackgroundTaskIdentifier = .invalid
+  private var backgroundFetchTaskId: UIBackgroundTaskIdentifier = .invalid
 
   // MARK: - Functions
 
@@ -50,19 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    self.backgroundTaskId = application.beginBackgroundTask { [weak self] in
-      self?.endBackgroundTask()
-    }
-
-    WeatherInformationService.shared.updatePreferredBookmark { [weak self] result in
-      switch result {
-      case .success:
-        completionHandler(.newData)
-      case .failure:
-        completionHandler(.failed)
-      }
-      self?.endBackgroundTask()
-    }
+    beginBackgroundFetchTask(for: application, performFetchWithCompletionHandler: completionHandler)
   }
 }
 
@@ -74,7 +62,7 @@ private extension AppDelegate {
     PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()
 
-    let dependencyContainer = Container()
+    dependencyContainer = Container()
 
     dependencyContainer.register(PersistencyService2.self) { _ in PersistencyService2() }
     dependencyContainer.register(UserLocationService2.self) { _ in UserLocationService2() }
@@ -106,10 +94,6 @@ private extension AppDelegate {
         apiKeyService: resolver.resolve(ApiKeyService2.self)!
       ))
     }
-    
-    // TODO: register remaining services
-
-    self.dependencyContainer = dependencyContainer
   }
 
   func instantiateApplicationUserInterface() {
@@ -128,36 +112,60 @@ private extension AppDelegate {
   }
 
   func refreshWeatherDataIfNeeded() {
-    guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil,
-      UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true,
-      let weatherInformationService = dependencyContainer?.resolve(WeatherInformationService2.self) else {
-        return
-    }
-    _ = Completable.zip([
-        weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
-        weatherInformationService.createUpdateNearbyWeatherInformationCompletable()
-      ])
+    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)! as AppDelegatePreferenceReading
+    let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self)! as WeatherInformationUpdating
+    
+    _ = preferencesService
+      .createGetRefreshOnAppStartOptionObservable()
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { [weatherInformationService] refreshOnAppStartOption -> Completable in
+        guard refreshOnAppStartOption.value == .yes else {
+          return Completable.create { handler in
+            handler(.completed)
+            return Disposables.create()
+          }
+        }
+        return Completable.zip([
+          weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
+          weatherInformationService.createUpdateNearbyWeatherInformationCompletable()
+        ])
+      }
       .subscribe()
   }
+  
+  func beginBackgroundFetchTask(for application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    let taskName = "de.erikmaximilianmartens.nearbyweather.bookmarked_weather_information_background_fetch"
+    backgroundFetchTaskId = application.beginBackgroundTask(withName: taskName, expirationHandler: { [weak self] in
+      self?.endBackgroundFetchTask()
+    })
+    
+    _ = dependencyContainer
+      .resolve(WeatherInformationService2.self)!
+      .createUpdateBookmarkedWeatherInformationCompletable()
+      .subscribe(
+        onCompleted: { [weak self] in
+          completionHandler(.newData)
+          self?.endBackgroundFetchTask()
+        },
+        onError: { [weak self] _ in
+          completionHandler(.failed)
+          self?.endBackgroundFetchTask()
+        }
+      )
+  }
 
-  func endBackgroundTask() {
-    UIApplication.shared.endBackgroundTask(backgroundTaskId)
-    backgroundTaskId = .invalid
+  func endBackgroundFetchTask() {
+    UIApplication.shared.endBackgroundTask(backgroundFetchTaskId)
+    backgroundFetchTaskId = .invalid
   }
 
   func runMigrationIfNeeded() {
-    guard let dependencyContainer = dependencyContainer,
-      let preferencesService = dependencyContainer.resolve(PreferencesService2.self),
-      let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self),
-      let weatherStationService = dependencyContainer.resolve(WeatherStationService2.self),
-      let apiKeyService = dependencyContainer.resolve(ApiKeyService2.self) else {
-        return
-    }
     MigrationService(dependencies: MigrationService.Dependencies(
-      preferencesService: preferencesService,
-      weatherInformationService: weatherInformationService,
-      weatherStationService: weatherStationService,
-      apiKeyService: apiKeyService
+      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!,
+      weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!,
+      weatherStationService: dependencyContainer.resolve(WeatherStationService2.self)!,
+      apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!
     ))
     .runMigrationIfNeeded()
   }

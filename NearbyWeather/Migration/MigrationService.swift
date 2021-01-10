@@ -61,32 +61,35 @@ extension MigrationService {
       }
     
     // migrate preferences
-    let migratePreferencesCompletable = Observable<PreferencesManagerStoredContentsWrapper?>
+    let migratePreferencesCompletable = Observable<(PreferencesManagerStoredContentsWrapper?, RefreshOnAppStartValue)>
       .create { handler in
         let preferencesStoredContentsWrapper = try? JsonPersistencyWorker().retrieveJsonFromFile(
           with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
           andDecodeAsType: PreferencesManagerStoredContentsWrapper.self,
           fromStorageLocation: .applicationSupport
         )
-        handler.on(.next(preferencesStoredContentsWrapper))
+        
+        let refreshOnAppStartValue =  UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true
+          ? RefreshOnAppStartValue.yes
+          : RefreshOnAppStartValue.no
+          
+        handler.on(.next((preferencesStoredContentsWrapper, refreshOnAppStartValue)))
         return Disposables.create()
       }
       .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] preferencesStoredContentsWrapper -> Completable in
-        guard let preferencesStoredContentsWrapper = preferencesStoredContentsWrapper else {
-          // previous data does not exist or could not be read -> do not try to migrate any further
-          return Completable.create { handler in
-            handler(.completed)
-            return Disposables.create()
-          }
+      .flatMapCompletable { [dependencies] preferences -> Completable in
+        guard let preferencesStoredContentsWrapper = preferences.0 else {
+          // previous data does not exist or could not be read -> do not try to migrate these option any further
+          return dependencies.preferencesService.createSetRefreshOnAppStartOptionCompletable(RefreshOnAppStartOption(value: preferences.1))
         }
         return Completable.zip([
           dependencies.weatherStationService.createSetPreferredBookmarkCompletable(preferencesStoredContentsWrapper.preferredBookmark),
           dependencies.preferencesService.createSetAmountOfNearbyResultsOptionCompletable(preferencesStoredContentsWrapper.amountOfResults),
           dependencies.preferencesService.createSetTemperatureUnitOptionCompletable(preferencesStoredContentsWrapper.temperatureUnit),
           dependencies.preferencesService.createSetDimensionalUnitsOptionCompletable(preferencesStoredContentsWrapper.windspeedUnit),
-          dependencies.preferencesService.createSetSortingOrientationOptionCompletable(preferencesStoredContentsWrapper.sortingOrientation)
+          dependencies.preferencesService.createSetSortingOrientationOptionCompletable(preferencesStoredContentsWrapper.sortingOrientation),
+          dependencies.preferencesService.createSetRefreshOnAppStartOptionCompletable(RefreshOnAppStartOption(value: preferences.1))
         ])
       }
     

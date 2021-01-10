@@ -27,7 +27,7 @@ struct AmountOfResultsOption: Codable, PreferencesOption {
   typealias PreferencesOptionType = AmountOfResultsValue
   
   private lazy var count = {
-    return AmountOfResultsValue.allCases.count
+    AmountOfResultsValue.allCases.count
   }()
   
   var value: AmountOfResultsValue

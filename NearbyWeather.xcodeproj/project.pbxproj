@@ -36,6 +36,7 @@
 		F22A222D25A4C17200C97844 /* UIStackView+AddArrangedSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A222C25A4C17200C97844 /* UIStackView+AddArrangedSubview.swift */; };
 		F22F99552034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22F99542034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift */; };
 		F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F22F99562037676B00B7CB6B /* locationsSQLite.sqlite */; };
+		F2370FFC25AB25B10072AF29 /* RefreshOnAppStartOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2370FFB25AB25B10072AF29 /* RefreshOnAppStartOption.swift */; };
 		F237285B2444A72100964C49 /* Constants+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285A2444A72100964C49 /* Constants+Dimensions.swift */; };
 		F237285D2444A9AD00964C49 /* Factory+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */; };
 		F237285F2444AA5600964C49 /* Factory+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237285E2444AA5600964C49 /* Factory+UILabel.swift */; };
@@ -252,6 +253,7 @@
 		F22A222C25A4C17200C97844 /* UIStackView+AddArrangedSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+AddArrangedSubview.swift"; sourceTree = "<group>"; };
 		F22F99542034E4B500B7CB6B /* WeatherLocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationMapAnnotationView.swift; sourceTree = "<group>"; };
 		F22F99562037676B00B7CB6B /* locationsSQLite.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = locationsSQLite.sqlite; sourceTree = "<group>"; };
+		F2370FFB25AB25B10072AF29 /* RefreshOnAppStartOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshOnAppStartOption.swift; sourceTree = "<group>"; };
 		F237285A2444A72100964C49 /* Constants+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Dimensions.swift"; sourceTree = "<group>"; };
 		F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIImageView.swift"; sourceTree = "<group>"; };
 		F237285E2444AA5600964C49 /* Factory+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UILabel.swift"; sourceTree = "<group>"; };
@@ -659,13 +661,14 @@
 			isa = PBXGroup;
 			children = (
 				F213FA2C23F9EE1100F094D8 /* PreferencesOption.swift */,
-				F213FA2E23F9EE4200F094D8 /* PreferredBookmarkOption.swift */,
-				F213FA3123F9EEE300F094D8 /* SortingOrientationOption.swift */,
-				F213FA3323F9EF2400F094D8 /* TemperatureUnitOption.swift */,
-				F213FA3623F9EF6E00F094D8 /* DimensionalUnitsOption.swift */,
 				F213FA3823F9EF9A00F094D8 /* AmountOfResultsOption.swift */,
+				F213FA3623F9EF6E00F094D8 /* DimensionalUnitsOption.swift */,
 				F284DDD7245E4AFC00445BFF /* ListTypeOption.swift */,
 				F284DDD9245E4B1600445BFF /* MapTypeOption.swift */,
+				F213FA2E23F9EE4200F094D8 /* PreferredBookmarkOption.swift */,
+				F2370FFB25AB25B10072AF29 /* RefreshOnAppStartOption.swift */,
+				F213FA3123F9EEE300F094D8 /* SortingOrientationOption.swift */,
+				F213FA3323F9EF2400F094D8 /* TemperatureUnitOption.swift */,
 			);
 			path = "Preference Option Data Transfer Objects";
 			sourceTree = "<group>";
@@ -1584,6 +1587,7 @@
 				F2D1995025A1F1A4004C7753 /* Factory+UITableView.swift in Sources */,
 				F2DBEB3023F038BE00CD513B /* Constants+Theme.swift in Sources */,
 				F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */,
+				F2370FFC25AB25B10072AF29 /* RefreshOnAppStartOption.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationController+Extensions.swift in Sources */,
 				F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */,
 				F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */,

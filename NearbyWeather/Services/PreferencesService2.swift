@@ -20,6 +20,7 @@ private extension PreferencesService2 {
     case sortingOrientationOption
     case preferredListTypeOption
     case preferredMapTypeOption
+    case refreshOnAppStartOption
     
     var collection: String {
       switch self {
@@ -29,6 +30,7 @@ private extension PreferencesService2 {
       case .sortingOrientationOption: return "/general_preferences/sorting_orientation/"
       case .preferredListTypeOption: return "/general_preferences/preferred_list_type/"
       case .preferredMapTypeOption: return "/general_preferences/preferred_map_type/"
+      case .refreshOnAppStartOption: return "/general_preferences/refresh_on_app_start/"
       }
     }
     
@@ -40,6 +42,7 @@ private extension PreferencesService2 {
       case .sortingOrientationOption: return "default"
       case .preferredListTypeOption: return "default"
       case .preferredMapTypeOption: return "default"
+      case .refreshOnAppStartOption: return "default"
       }
     }
   }
@@ -88,6 +91,9 @@ protocol GeneralPreferencePersistence: WeatherListPreferencePersistence, Weather
   
   func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
   func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
+  
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
 }
 
 extension PreferencesService2: GeneralPreferencePersistence {
@@ -265,6 +271,35 @@ extension PreferencesService2: GeneralPreferencePersistence {
       .map { $0?.entity }
       .replaceNilWith(MapTypeOption(value: .standard)) // default value
   }
+  
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<RefreshOnAppStartOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService2.PersistencyKeys.refreshOnAppStartOption.collection,
+            identifier: PreferencesService2.PersistencyKeys.refreshOnAppStartOption.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: RefreshOnAppStartOption.self) }
+  }
+  
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService2.PersistencyKeys.refreshOnAppStartOption.collection,
+          identifier: PreferencesService2.PersistencyKeys.refreshOnAppStartOption.identifier
+        ),
+        type: RefreshOnAppStartOption.self
+      )
+      .map { $0?.entity }
+      .replaceNilWith(RefreshOnAppStartOption(value: .yes)) // default value
+  }
 }
 
 // MARK: - WeatherList Preference Persistence
@@ -278,6 +313,9 @@ protocol WeatherListPreferencePersistence: WeatherListPreferenceSetting, Weather
   
   func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
   func createGetListTypeOptionObservable() -> Observable<ListTypeOption>
+  
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
 }
 
 extension PreferencesService2: WeatherListPreferencePersistence {}
@@ -320,6 +358,14 @@ protocol UnitSettingsPreferenceReading {
 
 extension PreferencesService2: UnitSettingsPreferenceReading {}
 
+// MARK: - AppDelegate Preferences Reading
+
+protocol AppDelegatePreferenceReading {
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
+}
+
+extension PreferencesService2: AppDelegatePreferenceReading {}
+
 // MARK: - Preference Migration
 
 protocol PreferenceMigration {
@@ -327,6 +373,7 @@ protocol PreferenceMigration {
   func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
   func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
   func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
 }
 
 extension PreferencesService2: PreferenceMigration {}

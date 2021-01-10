@@ -20,7 +20,7 @@ struct DimensionalUnitsOption: Codable, PreferencesOption {
   typealias PreferencesOptionType = DistanceVelocityUnitValue
   
   private lazy var count = {
-    return DistanceVelocityUnitValue.allCases.count
+    DistanceVelocityUnitValue.allCases.count
   }()
   
   var value: DistanceVelocityUnitValue

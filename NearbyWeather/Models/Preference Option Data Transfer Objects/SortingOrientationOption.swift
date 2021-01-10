@@ -22,7 +22,7 @@ struct SortingOrientationOption: Codable, PreferencesOption {
   typealias PreferencesOptionType = SortingOrientationValue
   
   private lazy var count = {
-    return SortingOrientationValue.allCases.count
+    SortingOrientationValue.allCases.count
   }
   
   var value: SortingOrientationValue

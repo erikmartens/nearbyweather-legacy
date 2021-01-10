@@ -15,3 +15,8 @@ protocol PreferencesOption {
   init?(rawValue: Int)
   var stringValue: String { get }
 }
+
+/// `stringValue: String` is optional
+extension PreferencesOption {
+  var stringValue: String { "" }
+}

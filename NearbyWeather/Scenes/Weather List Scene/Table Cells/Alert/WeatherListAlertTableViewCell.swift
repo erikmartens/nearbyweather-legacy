@@ -38,7 +38,7 @@ final class WeatherListAlertTableViewCell: UITableViewCell, BaseCell {
   
   // MARK: - Properties
   
-  internal var cellViewModel: CellViewModel?
+  var cellViewModel: CellViewModel?
   
   // MARK: - Initialization
   
@@ -68,13 +68,11 @@ final class WeatherListAlertTableViewCell: UITableViewCell, BaseCell {
 
 extension WeatherListAlertTableViewCell {
   
-  internal func bindInputFromViewModel(_ cellViewModel: CellViewModel) {
+  func bindInputFromViewModel(_ cellViewModel: CellViewModel) {
     cellViewModel.cellModelDriver
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
-  
-  internal func bindOutputToViewModel(_ cellViewModel: CellViewModel) {} // nothing to do
 }
 
 // MARK: - Cell Composition

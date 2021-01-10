@@ -59,7 +59,7 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
 
 // MARK: - ViewModel Bindings
 
-private extension WeatherMapViewController {
+extension WeatherMapViewController {
   
   func setupBindings() {
     viewModel.observeEvents()
@@ -67,7 +67,7 @@ private extension WeatherMapViewController {
     bindUserInputToViewModel(viewModel)
   }
   
-  private func bindContentFromViewModel(_ viewModel: ViewModel) {
+  func bindContentFromViewModel(_ viewModel: ViewModel) {
     viewModel
       .mapDelegate?
       .dataSource
@@ -80,7 +80,7 @@ private extension WeatherMapViewController {
       .disposed(by: disposeBag)
   }
   
-  private func bindUserInputToViewModel(_ viewModel: ViewModel) {
+  func bindUserInputToViewModel(_ viewModel: ViewModel) {
     mapTypeBarButton.rx
       .tap
       .bind(to: viewModel.onDidTapMapTypeBarButtonSubject)

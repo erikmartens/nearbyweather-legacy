@@ -10,7 +10,13 @@ import Foundation
 
 protocol BaseAnnotationView: BaseAnnotationViewProtocol {
   associatedtype AnnotationViewModel: BaseAnnotationViewModelProtocol
-  var annotationViewModel: AnnotationViewModel? { get set }
-  func bindInputFromViewModel(_ annotationViewModel: AnnotationViewModel)
-  func bindOutputToViewModel(_ annotationViewModel: AnnotationViewModel)
+  var viewModel: AnnotationViewModel? { get set }
+  func bindInputFromViewModel(_ viewModel: AnnotationViewModel)
+  func bindOutputToViewModel(_ viewModel: AnnotationViewModel)
+}
+
+/// functions are optional
+extension BaseAnnotationView {
+  func bindInputFromViewModel(_ viewModel: AnnotationViewModel) {}
+  func bindOutputToViewModel(_ viewModel: AnnotationViewModel) {}
 }

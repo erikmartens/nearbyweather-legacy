@@ -46,6 +46,10 @@ final class WeatherMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
 
   // MARK: - Events
   
+  let onDidTapAnnotationView = PublishSubject<Void>()
+  
+  // MARK: - Drivers
+  
   let annotationModelDriver: Driver<WeatherMapAnnotationModel>
 
   // MARK: - Initialization

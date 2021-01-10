@@ -11,4 +11,13 @@ import Foundation
 protocol BaseViewController {
   associatedtype ViewModel: BaseViewModel
   init(dependencies: ViewModel.Dependencies)
+  func bindContentFromViewModel(_ viewModel: ViewModel)
+  func bindUserInputToViewModel(_ viewModel: ViewModel)
+}
+
+
+/// functions are optional
+extension BaseViewController {
+  func bindContentFromViewModel(_ viewModel: ViewModel) {}
+  func bindUserInputToViewModel(_ viewModel: ViewModel) {}
 }

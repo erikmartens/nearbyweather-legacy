@@ -13,11 +13,14 @@ import RxSwift
 
 private extension WeatherMapAnnotationView {
   struct Definitions {
-    static let backgroundColorViewLeadingInset: CGFloat = 48
-    static let mainContentStackViewTopBottomInset: CGFloat = 20
-    static let mainContentStackViewTrailingInset: CGFloat = 40
-    static let weatherConditionSymbolHeight: CGFloat = 80
-    static let conditionDetailSymbolHeightWidth: CGFloat = 15
+    static let margin: CGFloat = 4
+    static let width: CGFloat = 110
+    static let height: CGFloat = 50
+    static let triangleHeight: CGFloat = 10
+    static let radius: CGFloat = 10
+    static let borderWidth: CGFloat = 4
+    static let titleLabelFontSize: CGFloat = 12
+    static let subtitleLabelFontSize: CGFloat = 10
   }
 }
 
@@ -29,31 +32,31 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   
   // MARK: - UIComponents
   
-  private lazy var backgroundColorView: UIView = {
-    let view = UIView()
-    view.layer.cornerRadius = Constants.Dimensions.Size.CornerRadiusSize.from(weight: .medium)
-    return view
-  }()
+  private lazy var circleLayer = Factory.ShapeLayer.make(fromType: .circle(radius: Definitions.radius, borderWidth: Definitions.borderWidth))
+  private lazy var speechBubbleLayer = Factory.ShapeLayer.make(fromType: .speechBubble(
+    size: CGSize(width: Definitions.width, height: Definitions.height),
+    height: Definitions.height,
+    radius: Definitions.radius,
+    borderWidth: Definitions.borderWidth,
+    margin: Definitions.margin,
+    triangleHeight: Definitions.triangleHeight
+  ))
   
-  private lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .fillEqually, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .medium)))
-  private lazy var lineOneStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillEqually, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .medium)))
-  private lazy var lineTwoStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillEqually, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .medium)))
+  private lazy var titleLabel = Factory.Label.make(fromType: .mapAnnotation(
+    fontSize: Definitions.titleLabelFontSize,
+    width: Definitions.width - 2 * Definitions.margin,
+    height: (Definitions.height - 2 * Definitions.margin - Definitions.triangleHeight)/2,
+    yOffset: -Definitions.height/2
+  ))
   
-  private lazy var temperatureStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .small)))
-  private lazy var cloudCoverageStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .small)))
-  private lazy var humidityStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .small)))
-  private lazy var windspeedStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .small)))
+  private lazy var subtitleLabel = Factory.Label.make(fromType: .mapAnnotation(
+    fontSize: Definitions.subtitleLabelFontSize,
+    width: Definitions.width - 2 * Definitions.margin,
+    height: (Definitions.height - 2 * Definitions.margin - Definitions.triangleHeight)/2,
+    yOffset: -Definitions.height/2
+  ))
   
-  private lazy var weatherConditionSymbolLabel = Factory.Label.make(fromType: .weatherSymbol)
-  private lazy var placeNameLabel = Factory.Label.make(fromType: .title(numberOfLines: 1))
-  private lazy var temperatureSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.temperature()))
-  private lazy var temperatureLabel = Factory.Label.make(fromType: .body(numberOfLines: 1))
-  private lazy var cloudCoverageSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.cloudCoverFilled()))
-  private lazy var cloudCoverageLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
-  private lazy var humiditySymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.humidity()))
-  private lazy var humidityLabel = Factory.Label.make(fromType: .body(numberOfLines: 1))
-  private lazy var windspeedSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.windSpeed()))
-  private lazy var windspeedLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
+  private lazy var tapGestureRecognizer = UITapGestureRecognizer()
   
   // MARK: - Assets
   
@@ -61,7 +64,7 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   
   // MARK: - Properties
   
-  var annotationViewModel: AnnotationViewModel?
+  var viewModel: AnnotationViewModel?
   
   // MARK: - Initialization
   
@@ -77,13 +80,13 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   
   // MARK: - Cell Life Cycle
   
-  func configure(with annotationViewModel: BaseAnnotationViewModelProtocol?) {
-    guard let annotationViewModel = annotationViewModel as? WeatherMapAnnotationViewModel else {
+  func configure(with viewModel: BaseAnnotationViewModelProtocol?) {
+    guard let viewModel = viewModel as? WeatherMapAnnotationViewModel else {
       return
     }
-    self.annotationViewModel = annotationViewModel
-    bindInputFromViewModel(annotationViewModel)
-    bindOutputToViewModel(annotationViewModel)
+    self.viewModel = viewModel
+    bindInputFromViewModel(viewModel)
+    bindOutputToViewModel(viewModel)
   }
 }
 
@@ -91,27 +94,58 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
 
 extension WeatherMapAnnotationView {
   
-  internal func bindInputFromViewModel(_ annotationViewModel: AnnotationViewModel) {
-    annotationViewModel.annotationModelDriver
+  func bindInputFromViewModel(_ viewModel: AnnotationViewModel) {
+    viewModel.annotationModelDriver
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
   
-  internal func bindOutputToViewModel(_ annotationViewModel: AnnotationViewModel) {} // nothing to do
+  func bindOutputToViewModel(_ viewModel: WeatherMapAnnotationViewModel) {
+    tapGestureRecognizer.rx
+      .event
+      .bind { [weak viewModel] _ in
+        viewModel?.onDidTapAnnotationView.onNext(())
+      }
+      .disposed(by: disposeBag)
+  }
 }
 
-// MARK: - Cell Composition
+// MARK: - Annotation Composition
 
 private extension WeatherMapAnnotationView {
   
   func setContent(for annotationModel: WeatherMapAnnotationModel) {
+    circleLayer.fillColor = annotationModel.backgroundColor?.cgColor
+    circleLayer.strokeColor = annotationModel.borderColor?.cgColor
+    
+    speechBubbleLayer.fillColor = annotationModel.backgroundColor?.cgColor
+    speechBubbleLayer.strokeColor = annotationModel.borderColor?.cgColor
+    
+    titleLabel.text = annotationModel.title
+    titleLabel.textColor = annotationModel.borderColor
+    
+    subtitleLabel.text = annotationModel.subtitle
+    subtitleLabel.textColor = annotationModel.borderColor
   }
   
   func layoutUserInterface() {
+    circleLayer.bounds.origin = CGPoint(x: -frame.width/2 + Definitions.radius, y: -frame.height/2 + Definitions.radius)
+    layer.addSublayer(circleLayer)
     
+    speechBubbleLayer.position = .zero
+    layer.addSublayer(speechBubbleLayer)
+
+    titleLabel.center = CGPoint(x: frame.size.width/2, y: titleLabel.frame.size.height/2 + Definitions.margin)
+    addSubview(titleLabel)
+
+    subtitleLabel.center = CGPoint(x: frame.size.width/2, y: titleLabel.frame.size.height/2 + Definitions.margin + titleLabel.frame.size.height)
+    addSubview(subtitleLabel)
+    
+    addGestureRecognizer(tapGestureRecognizer)
   }
   
   func setupAppearance() {
+    clipsToBounds = false
     backgroundColor = .clear
   }
 }

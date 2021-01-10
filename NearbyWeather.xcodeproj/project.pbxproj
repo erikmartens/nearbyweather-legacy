@@ -121,6 +121,8 @@
 		F28CE9681F9A9893008319C4 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9671F9A9893008319C4 /* ListViewController.swift */; };
 		F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */; };
 		F28DA8612042258500879E6C /* WeatherLocationManagementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */; };
+		F28EE8C925AB91530045AE6A /* Factory+UIBezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */; };
+		F28EE8CE25AB94390045AE6A /* Factory+CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28EE8CD25AB94390045AE6A /* Factory+CAShapeLayer.swift */; };
 		F28F180425A7354500AEA99A /* ApiKeyService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28F180325A7354500AEA99A /* ApiKeyService2.swift */; };
 		F28F180D25A74C3600AEA99A /* ApiKeyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28F180C25A74C3600AEA99A /* ApiKeyDTO.swift */; };
 		F28F182725A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28F182625A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift */; };
@@ -355,6 +357,8 @@
 		F28CE9671F9A9893008319C4 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationManagementTableViewController.swift; sourceTree = "<group>"; };
+		F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIBezierPath.swift"; sourceTree = "<group>"; };
+		F28EE8CD25AB94390045AE6A /* Factory+CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+CAShapeLayer.swift"; sourceTree = "<group>"; };
 		F28F180325A7354500AEA99A /* ApiKeyService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyService2.swift; sourceTree = "<group>"; };
 		F28F180C25A74C3600AEA99A /* ApiKeyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyDTO.swift; sourceTree = "<group>"; };
 		F28F182625A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationSortingOrientationDTO.swift; sourceTree = "<group>"; };
@@ -907,6 +911,8 @@
 				F2D1994F25A1F1A4004C7753 /* Factory+UITableView.swift */,
 				F22A222725A4BE9500C97844 /* Factory+UIStackView.swift */,
 				F237101625AB43080072AF29 /* Factory+MKMapView.swift */,
+				F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */,
+				F28EE8CD25AB94390045AE6A /* Factory+CAShapeLayer.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -1576,6 +1582,7 @@
 				F2DB5E7B25AB510600E21A56 /* MapAnnotationData.swift in Sources */,
 				F213FA3723F9EF6E00F094D8 /* DimensionalUnitsOption.swift in Sources */,
 				F2372882244C82B200964C49 /* Constants+Theme.Color.swift in Sources */,
+				F28EE8C925AB91530045AE6A /* Factory+UIBezierPath.swift in Sources */,
 				F2372878244C7F2E00964C49 /* MapFlow.swift in Sources */,
 				F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */,
 				F2D1998525A274ED004C7753 /* Factory+UIAlertAction.swift in Sources */,
@@ -1660,6 +1667,7 @@
 				F28CE9681F9A9893008319C4 /* ListViewController.swift in Sources */,
 				F22B0F9825AB78AE0037F957 /* WeatherMapAnnotationData.swift in Sources */,
 				F2F7BA1D23E373DD00B4D2EB /* Constants+Labels.swift in Sources */,
+				F28EE8CE25AB94390045AE6A /* Factory+CAShapeLayer.swift in Sources */,
 				F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */,
 				F284DDD0245A414B00445BFF /* WeatherStationService2.swift in Sources */,
 				F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */,

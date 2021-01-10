@@ -17,6 +17,7 @@ extension Factory {
       case body(alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
       case description(alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
       case weatherSymbol
+      case mapAnnotation(fontSize: CGFloat, width: CGFloat, height: CGFloat, yOffset: CGFloat)
     }
     
     typealias InputType = LabelType
@@ -45,6 +46,14 @@ extension Factory {
         label.font = .systemFont(ofSize: 70)
         label.textAlignment = .center
         label.numberOfLines = 1
+      case let .mapAnnotationTitle(fontSize, width, height, yOffset):
+        label.frame.size = CGSize(width: width, height: height)
+        label.frame = label.frame.offsetBy(dx: 0, dy: yOffset)
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: fontSize)
+        label.textAlignment = .center
+        label.minimumScaleFactor = 0.8
+        label.backgroundColor = .clear
       }
       
       return label

@@ -72,7 +72,7 @@ final class WeatherListViewController: UIViewController, BaseViewController {
 
 // MARK: - ViewModel Bindings
 
-private extension WeatherListViewController {
+extension WeatherListViewController {
   
   func setupBindings() {
     viewModel.observeEvents()
@@ -80,7 +80,7 @@ private extension WeatherListViewController {
     bindUserInputToViewModel(viewModel)
   }
   
-  private func bindContentFromViewModel(_ viewModel: ViewModel) {
+  func bindContentFromViewModel(_ viewModel: ViewModel) {
     viewModel
       .tableDataSource
       .sectionDataSources
@@ -124,7 +124,7 @@ private extension WeatherListViewController {
       .disposed(by: disposeBag)
   }
   
-  private func bindUserInputToViewModel(_ viewModel: ViewModel) {
+  func bindUserInputToViewModel(_ viewModel: ViewModel) {
     listTypeBarButton.rx
       .tap
       .bind(to: viewModel.onDidTapListTypeBarButtonSubject)

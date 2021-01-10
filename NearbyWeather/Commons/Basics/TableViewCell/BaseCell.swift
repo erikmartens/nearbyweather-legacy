@@ -14,3 +14,9 @@ protocol BaseCell: BaseCellProtocol {
   func bindInputFromViewModel(_ cellViewModel: CellViewModel)
   func bindOutputToViewModel(_ cellViewModel: CellViewModel)
 }
+
+/// functions are optional
+extension BaseCell {
+  func bindInputFromViewModel(_ cellViewModel: CellViewModel) {}
+  func bindOutputToViewModel(_ cellViewModel: CellViewModel) {}
+}

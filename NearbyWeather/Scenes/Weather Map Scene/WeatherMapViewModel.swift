@@ -50,7 +50,18 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Drivers
   
+  lazy var preferredMapTypeDriver = preferredMapTypeObservable.asDriver(onErrorJustReturn: .standard)
+  lazy var preferredAmountOfResultsDriver = preferredAmountOfResultsObservable.asDriver(onErrorJustReturn: .ten)
+  
   // MARK: - Observables
+  
+  private lazy var preferredMapTypeObservable: Observable<MapTypeValue>  = { [dependencies] in
+    dependencies
+      .preferencesService
+      .createGetMapTypeOptionObservable()
+      .map { $0.value }
+      .share(replay: 1)
+  }()
   
   private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsValue>  = { [dependencies] in
     dependencies

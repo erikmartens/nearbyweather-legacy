@@ -78,6 +78,31 @@ extension WeatherMapViewController {
         self?.mapView.addAnnotations(mapAnnotationData.annotationItems)
       })
       .disposed(by: disposeBag)
+    
+    viewModel
+      .preferredMapTypeDriver
+      .drive(onNext: { [weak mapView] mapTypeValue in
+        switch mapTypeValue {
+        case .standard:
+          mapView?.mapType = .standard
+        case .satellite:
+          mapView?.mapType = .satellite
+        case .hybrid:
+          mapView?.mapType = .hybrid
+        }
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel
+      .preferredAmountOfResultsDriver
+      .drive(onNext: { [weak amountOfResultsBarButton] amountOfResultsValue in
+        amountOfResultsBarButton?.setBackgroundImage(
+          AmountOfResultsOption(value: amountOfResultsValue).imageValue,
+          for: UIControl.State(),
+          barMetrics: .default
+        )
+      })
+      .disposed(by: disposeBag)
   }
   
   func bindUserInputToViewModel(_ viewModel: ViewModel) {
@@ -103,6 +128,8 @@ extension WeatherMapViewController {
 private extension WeatherMapViewController {
   
   func setupUiLayout() {
+    navigationItem.rightBarButtonItems = [amountOfResultsBarButton, focusOnLocationBarButton]
+    
     view.addSubview(mapView, constraints: [
       mapView.topAnchor.constraint(equalTo: view.topAnchor),
       mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

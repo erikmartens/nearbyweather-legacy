@@ -111,10 +111,20 @@ private extension WeatherMapViewModel {
       .combineLatest(
         nearbyMapItemsObservable,
         bookmarkedMapItemsObservable,
-        resultSelector: {
-          WeatherMapAnnotationData(
+        resultSelector: { nearbyAnnotations, bookmarkedAnnotations in
+          var mutableNearbyAnnotations = nearbyAnnotations
+          
+          mutableNearbyAnnotations.removeAll { nearbyAnnotation -> Bool in
+            bookmarkedAnnotations.contains { bookmarkedAnnotation -> Bool in
+              let nearbyIdentifier = (nearbyAnnotation as? WeatherMapAnnotationViewModel)?.weatherInformationIdentity.identifier
+              let bookmarkedIdentifier = (bookmarkedAnnotation as? WeatherMapAnnotationViewModel)?.weatherInformationIdentity.identifier
+              return nearbyIdentifier == bookmarkedIdentifier
+            }
+          }
+          
+          return WeatherMapAnnotationData(
             annotationViewReuseIdentifier: WeatherMapAnnotationView.reuseIdentifier,
-            annotationItems: $0 + $1
+            annotationItems: mutableNearbyAnnotations + bookmarkedAnnotations
           )
         }
       )

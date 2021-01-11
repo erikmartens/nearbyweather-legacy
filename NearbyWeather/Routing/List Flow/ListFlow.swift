@@ -124,7 +124,7 @@ private extension ListFlow {
   func summonChangeListTypeAlert(currentSelectedOptionValue: ListTypeValue) -> FlowContributors { // TODO: test cancel action works properly
     let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
     
-    let alertController = ListTypeSelectionAlertController(dependencies: ListTypeSelectionViewModel.Dependencies(
+    let alertController = ListTypeSelectionAlertController(dependencies: ListTypeSelectionAlertViewModel.Dependencies(
       selectedOptionValue: currentSelectedOptionValue,
       preferencesService: preferencesService
     ))
@@ -135,7 +135,7 @@ private extension ListFlow {
   func summonChangeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
     let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
     
-    let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionViewModel.Dependencies(
+    let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionAlertViewModel.Dependencies(
       selectedOptionValue: currentSelectedOptionValue,
       preferencesService: preferencesService
     ))
@@ -146,7 +146,7 @@ private extension ListFlow {
   func summonChangeSortingOrientationAlert(currentSelectedOptionValue: SortingOrientationValue) -> FlowContributors {
     let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
     
-    let alertController = SortingOrientationSelectionAlertController(dependencies: SortingOrientationSelectionViewModel.Dependencies(
+    let alertController = SortingOrientationSelectionAlertController(dependencies: SortingOrientationSelectionAlertViewModel.Dependencies(
       selectedOptionValue: currentSelectedOptionValue,
       preferencesService: preferencesService
     ))

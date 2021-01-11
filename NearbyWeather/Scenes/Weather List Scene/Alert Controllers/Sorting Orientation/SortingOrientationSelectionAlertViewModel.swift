@@ -1,8 +1,8 @@
 //
-//  ListTypeSelectionViewModel.swift
+//  SortingOrientationSelectionViewModel.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 03.01.21.
+//  Created by Erik Maximilian Martens on 04.01.21.
 //  Copyright © 2021 Erik Maximilian Martens. All rights reserved.
 //
 
@@ -12,16 +12,16 @@ import RxFlow
 
 // MARK: - Dependencies
 
-extension ListTypeSelectionViewModel {
+extension SortingOrientationSelectionAlertViewModel {
   struct Dependencies {
-    let selectedOptionValue: ListTypeValue
+    let selectedOptionValue: SortingOrientationValue
     let preferencesService: WeatherListPreferenceSetting
   }
 }
 
 // MARK: - Class Definition
 
-final class ListTypeSelectionViewModel: NSObject, Stepper, BaseViewModel {
+final class SortingOrientationSelectionAlertViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Routing
   
@@ -33,7 +33,7 @@ final class ListTypeSelectionViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Events
   
-  let onDidSelectOptionSubject = PublishSubject<ListTypeOption>()
+  let onDidSelectOptionSubject = PublishSubject<SortingOrientationOption>()
   
   // MARK: - Initialization
   
@@ -51,13 +51,13 @@ final class ListTypeSelectionViewModel: NSObject, Stepper, BaseViewModel {
 
 // MARK: - Observations
 
-extension ListTypeSelectionViewModel {
+extension SortingOrientationSelectionAlertViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject
       .asSingle()
-      .flatMapCompletable { [dependencies] listTypeOption -> Completable in
-        dependencies.preferencesService.createSetListTypeOptionCompletable(listTypeOption)
+      .flatMapCompletable { [dependencies] sortingOrientationOption -> Completable in
+        dependencies.preferencesService.createSetSortingOrientationOptionCompletable(sortingOrientationOption)
       }
       .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
   }

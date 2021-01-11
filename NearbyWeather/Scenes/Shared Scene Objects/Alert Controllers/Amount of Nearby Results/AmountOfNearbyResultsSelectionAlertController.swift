@@ -12,7 +12,7 @@ import RxFlow
 
 final class AmountOfNearbyResultsSelectionAlertController: UIAlertController, BaseViewController {
   
-  typealias ViewModel = AmountOfNearbyResultsSelectionViewModel
+  typealias ViewModel = AmountOfNearbyResultsSelectionAlertViewModel
   
   // MARK: - Actions
   
@@ -50,7 +50,7 @@ final class AmountOfNearbyResultsSelectionAlertController: UIAlertController, Ba
   // MARK: - Initialization
   
   required init(dependencies: ViewModel.Dependencies) {
-    viewModel = AmountOfNearbyResultsSelectionViewModel(dependencies: dependencies)
+    viewModel = AmountOfNearbyResultsSelectionAlertViewModel(dependencies: dependencies)
     
     super.init(nibName: nil, bundle: nil)
     title = R.string.localizable.amount_of_results().capitalized

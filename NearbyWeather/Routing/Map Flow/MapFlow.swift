@@ -116,7 +116,7 @@ private extension MapFlow {
   func summonChangeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
     let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
     
-    let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionViewModel.Dependencies(
+    let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionAlertViewModel.Dependencies(
       selectedOptionValue: currentSelectedOptionValue,
       preferencesService: preferencesService
     ))

@@ -12,7 +12,7 @@ import RxFlow
 
 final class ListTypeSelectionAlertController: UIAlertController, BaseViewController {  
   
-  typealias ViewModel = ListTypeSelectionViewModel
+  typealias ViewModel = ListTypeSelectionAlertViewModel
   
   // MARK: - Actions
   
@@ -38,7 +38,7 @@ final class ListTypeSelectionAlertController: UIAlertController, BaseViewControl
   // MARK: - Initialization
   
   required init(dependencies: ViewModel.Dependencies) {
-    viewModel = ListTypeSelectionViewModel(dependencies: dependencies)
+    viewModel = ListTypeSelectionAlertViewModel(dependencies: dependencies)
     
     super.init(nibName: nil, bundle: nil)
     title = R.string.localizable.select_list_type().capitalized

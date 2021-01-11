@@ -12,7 +12,7 @@ import RxFlow
 
 // MARK: - Dependencies
 
-extension AmountOfNearbyResultsSelectionViewModel {
+extension AmountOfNearbyResultsSelectionAlertViewModel {
   struct Dependencies {
     let selectedOptionValue: AmountOfResultsValue
     let preferencesService: WeatherListPreferenceSetting
@@ -21,7 +21,7 @@ extension AmountOfNearbyResultsSelectionViewModel {
 
 // MARK: - Class Definition
 
-final class AmountOfNearbyResultsSelectionViewModel: NSObject, Stepper, BaseViewModel {
+final class AmountOfNearbyResultsSelectionAlertViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Routing
   
@@ -51,7 +51,7 @@ final class AmountOfNearbyResultsSelectionViewModel: NSObject, Stepper, BaseView
 
 // MARK: - Observations
 
-extension AmountOfNearbyResultsSelectionViewModel {
+extension AmountOfNearbyResultsSelectionAlertViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject

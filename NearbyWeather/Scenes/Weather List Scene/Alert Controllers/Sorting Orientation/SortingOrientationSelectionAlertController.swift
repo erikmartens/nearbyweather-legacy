@@ -12,7 +12,7 @@ import RxFlow
 
 final class SortingOrientationSelectionAlertController: UIAlertController, BaseViewController {
   
-  typealias ViewModel = SortingOrientationSelectionViewModel
+  typealias ViewModel = SortingOrientationSelectionAlertViewModel
   
   // MARK: - Actions
   
@@ -42,7 +42,7 @@ final class SortingOrientationSelectionAlertController: UIAlertController, BaseV
   // MARK: - Initialization
   
   required init(dependencies: ViewModel.Dependencies) {
-    viewModel = SortingOrientationSelectionViewModel(dependencies: dependencies)
+    viewModel = SortingOrientationSelectionAlertViewModel(dependencies: dependencies)
     
     super.init(nibName: nil, bundle: nil)
     title = R.string.localizable.select_list_type().capitalized

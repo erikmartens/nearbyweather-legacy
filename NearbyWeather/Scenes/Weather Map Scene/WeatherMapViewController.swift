@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import RxSwift
 
 // MARK: - Class Definition
@@ -101,6 +102,28 @@ extension WeatherMapViewController {
           for: UIControl.State(),
           barMetrics: .default
         )
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel
+      .focusOnWeatherStationDriver
+      .drive(onNext: { [weak mapView] location in
+        guard let location = location else {
+          return
+        }
+        let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1500, longitudinalMeters: 1500)
+        mapView?.setRegion(region, animated: true)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel
+      .focusOnUserLocationDriver
+      .drive(onNext: { [weak mapView] userLocation in
+        guard let userLocation = userLocation else {
+          return
+        }
+        let region = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: 1500, longitudinalMeters: 1500)
+        mapView?.setRegion(region, animated: true)
       })
       .disposed(by: disposeBag)
   }

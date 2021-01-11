@@ -48,14 +48,24 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
   let onDidTapAmountOfResultsBarButtonSubject = PublishSubject<Void>()
   let onDidTapFocusOnLocationBarButtonSubject = PublishSubject<Void>()
   
+  let onDidSelectFocusOnWeatherStationSubject = PublishSubject<CLLocation?>()
+  let onDidSelectFocusOnUserLocationSubject = PublishSubject<Void>()
+  
   // MARK: - Drivers
   
   lazy var preferredMapTypeDriver = preferredMapTypeObservable.asDriver(onErrorJustReturn: .standard)
   lazy var preferredAmountOfResultsDriver = preferredAmountOfResultsObservable.asDriver(onErrorJustReturn: .ten)
+  lazy var focusOnWeatherStationDriver = onDidSelectFocusOnWeatherStationSubject.asDriver(onErrorJustReturn: nil)
+  lazy var focusOnUserLocationDriver: Driver<CLLocation?> = { [dependencies] in
+    onDidSelectFocusOnUserLocationSubject
+      .asObservable()
+      .flatMapLatest { _ in dependencies.userLocationService.createGetCurrentLocationOptionalObservable() }
+      .asDriver(onErrorJustReturn: nil)
+  }()
   
   // MARK: - Observables
   
-  private lazy var preferredMapTypeObservable: Observable<MapTypeValue>  = { [dependencies] in
+  private lazy var preferredMapTypeObservable: Observable<MapTypeValue> = { [dependencies] in
     dependencies
       .preferencesService
       .createGetMapTypeOptionObservable()

@@ -41,6 +41,14 @@ final class ListTypeSelectionAlertViewModel: NSObject, Stepper, BaseViewModel {
     self.dependencies = dependencies
   }
   
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
   // MARK: - Functions
   
   func observeEvents() {

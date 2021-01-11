@@ -85,6 +85,14 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
     tableDelegate = WeatherListTableViewDelegate(cellSelectionDelegate: self)
   }
   
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
   // MARK: - Functions
   
   func observeEvents() {

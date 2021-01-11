@@ -61,6 +61,14 @@ final class SortingOrientationSelectionAlertController: UIAlertController, BaseV
     super.viewDidLoad()
     setupBindings()
   }
+  
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
 }
 
 // MARK: - ViewModel Bindings

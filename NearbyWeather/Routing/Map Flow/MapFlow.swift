@@ -62,7 +62,7 @@ final class MapFlow: Flow {
       return summonChangeMapTypeAlert(currentSelectedOptionValue: currentSelectedOptionValue)
     case let .changeAmountOfResultsAlert(currentSelectedOptionValue):
       return summonChangeAmountOfResultsAlert(currentSelectedOptionValue: currentSelectedOptionValue)
-    case let .focusOnLocationAlert:
+    case .focusOnLocationAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .focusOnLocationAlertAdapted(selectionDelegate, weatherInformationDTOs):
       return summonFocusOnLocationAlert(selectionDelegate: selectionDelegate, bookmarkedLocations: weatherInformationDTOs)

@@ -43,6 +43,14 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
   // MARK: - ViewController LifeCycle
   
   override func viewDidLoad() {

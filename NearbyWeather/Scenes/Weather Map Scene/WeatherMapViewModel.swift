@@ -90,6 +90,14 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
     mapDelegate = WeatherMapMapViewDelegate(annotationSelectionDelegate: self)
   }
   
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
   // MARK: - Functions
   
   func observeEvents() {

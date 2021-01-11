@@ -41,6 +41,14 @@ final class SortingOrientationSelectionAlertViewModel: NSObject, Stepper, BaseVi
     self.dependencies = dependencies
   }
   
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
   // MARK: - Functions
   
   func observeEvents() {

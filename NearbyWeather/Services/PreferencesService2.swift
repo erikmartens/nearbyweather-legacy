@@ -352,6 +352,15 @@ protocol WeatherMapPreferencePersistence {
 
 extension PreferencesService2: WeatherMapPreferencePersistence {}
 
+// MARK: - WeatherMap Preference Setting
+
+protocol WeatherMapPreferenceSetting {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
+}
+
+extension PreferencesService2: WeatherMapPreferenceSetting {}
+
 // MARK: - UnitSettings Preference Reading
 
 protocol UnitSettingsPreferenceReading {

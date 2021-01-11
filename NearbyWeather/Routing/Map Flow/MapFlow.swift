@@ -110,7 +110,14 @@ private extension MapFlow {
   }
   
   func summonChangeMapTypeAlert(currentSelectedOptionValue: MapTypeValue) -> FlowContributors { // TODO: test cancel action works properly
-    .none // TODO
+    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
+    
+    let alertController = MapTypeSelectionAlertController(dependencies: MapTypeSelectionAlertViewModel.Dependencies(
+      selectedOptionValue: currentSelectedOptionValue,
+      preferencesService: preferencesService
+    ))
+    rootViewController.present(alertController, animated: true, completion: nil)
+    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
   }
   
   func summonChangeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {

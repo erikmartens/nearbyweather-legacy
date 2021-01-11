@@ -107,24 +107,12 @@ extension WeatherMapViewController {
     
     viewModel
       .focusOnWeatherStationDriver
-      .drive(onNext: { [weak mapView] location in
-        guard let location = location else {
-          return
-        }
-        let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1500, longitudinalMeters: 1500)
-        mapView?.setRegion(region, animated: true)
-      })
+      .drive(onNext: { [focus] location in focus(location) })
       .disposed(by: disposeBag)
     
     viewModel
       .focusOnUserLocationDriver
-      .drive(onNext: { [weak mapView] userLocation in
-        guard let userLocation = userLocation else {
-          return
-        }
-        let region = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: 1500, longitudinalMeters: 1500)
-        mapView?.setRegion(region, animated: true)
-      })
+      .drive(onNext: { [focus] userLocation in focus(userLocation) })
       .disposed(by: disposeBag)
   }
   
@@ -163,5 +151,18 @@ private extension WeatherMapViewController {
   
   func setupUiAppearance() {
     view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+  }
+}
+
+// MARK: - Helpers
+
+private extension WeatherMapViewController {
+  
+  func focus(onLocation location: CLLocation?) {
+    guard let location = location else {
+      return
+    }
+    let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1500, longitudinalMeters: 1500)
+    mapView.setRegion(region, animated: true)
   }
 }

@@ -111,7 +111,7 @@ extension WeatherMapViewModel {
         dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
         apiKeyValidObservable,
         resultSelector: { [dependencies] weatherInformationList, _ in
-          weatherInformationList.mapToWeatherMapAnnotationViewModel(dependencies: dependencies, isBookmark: false)
+          weatherInformationList.mapToWeatherMapAnnotationViewModel(dependencies: dependencies, isBookmark: false, selectionDelegate: self)
         }
       )
       .catchErrorJustReturn([])
@@ -122,7 +122,7 @@ extension WeatherMapViewModel {
         dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
         apiKeyValidObservable,
         resultSelector: { [dependencies] weatherInformationList, _ in
-          weatherInformationList.mapToWeatherMapAnnotationViewModel(dependencies: dependencies, isBookmark: false)
+          weatherInformationList.mapToWeatherMapAnnotationViewModel(dependencies: dependencies, isBookmark: false, selectionDelegate: self)
         }
       )
       .catchErrorJustReturn([])
@@ -176,7 +176,7 @@ extension WeatherMapViewModel {
       .disposed(by: disposeBag)
     
     onDidTapFocusOnLocationBarButtonSubject
-      .subscribe(onNext: { [weak steps] preferredSortingOrientation in
+      .subscribe(onNext: { [weak steps] _ in
         steps?.accept(MapStep.focusOnLocationAlert)
       })
       .disposed(by: disposeBag)
@@ -212,25 +212,23 @@ extension WeatherMapViewModel: BaseMapViewSelectionDelegate {
 
 private extension Array where Element == PersistencyModel<WeatherInformationDTO> {
   
-  func mapToWeatherMapAnnotationViewModel(dependencies: WeatherMapViewModel.Dependencies, isBookmark: Bool) -> [BaseAnnotationViewModelProtocol] {
+  func mapToWeatherMapAnnotationViewModel(dependencies: WeatherMapViewModel.Dependencies, isBookmark: Bool, selectionDelegate: BaseMapViewSelectionDelegate) -> [BaseAnnotationViewModelProtocol] {
     compactMap { weatherInformationPersistencyModel -> WeatherMapAnnotationViewModel? in
       guard let latitude = weatherInformationPersistencyModel.entity.coordinates.latitude,
             let longitude = weatherInformationPersistencyModel.entity.coordinates.longitude else {
         return nil
       }
-      return WeatherMapAnnotationViewModel(
-        dependencies: WeatherMapAnnotationViewModel.Dependencies(
-          weatherInformationIdentity: weatherInformationPersistencyModel.identity,
-          isBookmark: isBookmark,
-          coordinate: CLLocationCoordinate2D(
-            latitude: latitude,
-            longitude: longitude
-          ),
-          weatherInformationService: dependencies.weatherInformationService,
-          preferencesService: dependencies.preferencesService,
-          annotationSelectionDelegate: self
-        )
-      )
+      return WeatherMapAnnotationViewModel(dependencies: WeatherMapAnnotationViewModel.Dependencies(
+        weatherInformationIdentity: weatherInformationPersistencyModel.identity,
+        isBookmark: isBookmark,
+        coordinate: CLLocationCoordinate2D(
+          latitude: latitude,
+          longitude: longitude
+        ),
+        weatherInformationService: dependencies.weatherInformationService,
+        preferencesService: dependencies.preferencesService,
+        annotationSelectionDelegate: selectionDelegate
+      ))
     }
   }
 }

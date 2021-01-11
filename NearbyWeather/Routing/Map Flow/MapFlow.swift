@@ -54,8 +54,15 @@ final class MapFlow: Flow {
     case .map:
       return summonWeatherMapController()
     case let .weatherDetails(identifier, isBookmark):
-      return summonWeatherDetailsController(identifier: identifier,
-                                            isBookmark: isBookmark)
+      return summonWeatherDetailsController(identifier: identifier, isBookmark: isBookmark)
+    case let .weatherDetails2(identity, isBookmark):
+      return summonWeatherDetailsController2(identity: identity, isBookmark: isBookmark)
+    case let .changeMapTypeAlert(currentSelectedOptionValue):
+      return summonChangeMapTypeAlert(currentSelectedOptionValue: currentSelectedOptionValue)
+    case let .changeAmountOfResultsAlert(currentSelectedOptionValue):
+      return summonChangeAmountOfResultsAlert(currentSelectedOptionValue: currentSelectedOptionValue)
+    case .focusOnLocationAlert:
+      return summonFocusOnLocationAlert()
     case .dismissChildFlow:
       return dismissChildFlow()
     }
@@ -96,6 +103,29 @@ private extension MapFlow {
     }
     
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: WeatherDetailStepper()))
+  }
+  
+  func summonWeatherDetailsController2(identity: PersistencyModelIdentityProtocol, isBookmark: Bool) -> FlowContributors {
+    .none // TODO
+  }
+  
+  func summonChangeMapTypeAlert(currentSelectedOptionValue: MapTypeValue) -> FlowContributors { // TODO: test cancel action works properly
+    .none // TODO
+  }
+  
+  func summonChangeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
+    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
+    
+    let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionViewModel.Dependencies(
+      selectedOptionValue: currentSelectedOptionValue,
+      preferencesService: preferencesService
+    ))
+    rootViewController.present(alertController, animated: true, completion: nil)
+    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
+  }
+  
+  func summonFocusOnLocationAlert() -> FlowContributors {
+    .none // TODO
   }
   
   func dismissChildFlow() -> FlowContributors {

@@ -523,7 +523,7 @@
 				F27A121D24425CCE00A2CE8D /* Scenes */,
 				F27A121824425ABC00A2CE8D /* Services */,
 				F2F1554124432D77007A3E90 /* Workers */,
-				F27A121924425BC600A2CE8D /* Models */,
+				F27A121924425BC600A2CE8D /* Persistency Models */,
 				F27A122924425E8800A2CE8D /* Commons */,
 				F284DDDD245F5A8C00445BFF /* Migration */,
 			);
@@ -699,7 +699,7 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		F27A121924425BC600A2CE8D /* Models */ = {
+		F27A121924425BC600A2CE8D /* Persistency Models */ = {
 			isa = PBXGroup;
 			children = (
 				F28F180B25A74C0700AEA99A /* Api Key Data Transfer Objects */,
@@ -708,7 +708,7 @@
 				F284DDC5245A12A100445BFF /* Weather Information Data Transfer Objects */,
 				F27A121A24425BF200A2CE8D /* Preference Option Data Transfer Objects */,
 			);
-			path = Models;
+			path = "Persistency Models";
 			sourceTree = "<group>";
 		};
 		F27A121A24425BF200A2CE8D /* Preference Option Data Transfer Objects */ = {
@@ -744,6 +744,7 @@
 		F27A121D24425CCE00A2CE8D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F2926CEE25AC8E2800413512 /* Shared Scene Objects */,
 				F204B7831DF2EFA3000F4371 /* LaunchScreen.storyboard */,
 				F27A121E24425D0300A2CE8D /* Set API Key Scene */,
 				F27A121F24425D2A00A2CE8D /* Set Permissions Scene */,
@@ -1050,6 +1051,13 @@
 				F28F182625A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift */,
 			);
 			path = "Weather Station Data Transfer Objects";
+			sourceTree = "<group>";
+		};
+		F2926CEE25AC8E2800413512 /* Shared Scene Objects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Shared Scene Objects";
 			sourceTree = "<group>";
 		};
 		F2D1990225A10CD8004C7753 /* ViewController */ = {

@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxOptional
 import RxFlow
 import Swinject
 import Firebase
@@ -50,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    beginBackgroundFetchTask(for: application, performFetchWithCompletionHandler: completionHandler)
+    beginAppIconUpdateBackgroundFetchTask(for: application, performFetchWithCompletionHandler: completionHandler)
   }
 }
 
@@ -134,28 +135,37 @@ private extension AppDelegate {
       .subscribe()
   }
   
-  func beginBackgroundFetchTask(for application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+  func beginAppIconUpdateBackgroundFetchTask(for application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
     let taskName = "de.erikmaximilianmartens.nearbyweather.bookmarked_weather_information_background_fetch"
     backgroundFetchTaskId = application.beginBackgroundTask(withName: taskName, expirationHandler: { [weak self] in
-      self?.endBackgroundFetchTask()
+      self?.endAppIconUpdateBackgroundFetchTask()
     })
     
     _ = dependencyContainer
-      .resolve(WeatherInformationService2.self)!
-      .createUpdateBookmarkedWeatherInformationCompletable()
+      .resolve(WeatherStationService2.self)!
+      .createGetPreferredBookmarkObservable()
+      .map { $0?.value }
+      .errorOnNil()
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { [unowned dependencyContainer] preferredBookmark -> Completable in
+        dependencyContainer!
+          .resolve(WeatherInformationService2.self)!
+          .createUpdateBookmarkedWeatherInformationCompletable(forStationWith: preferredBookmark)
+      }
       .subscribe(
         onCompleted: { [weak self] in
           completionHandler(.newData)
-          self?.endBackgroundFetchTask()
+          self?.endAppIconUpdateBackgroundFetchTask()
         },
         onError: { [weak self] _ in
           completionHandler(.failed)
-          self?.endBackgroundFetchTask()
+          self?.endAppIconUpdateBackgroundFetchTask()
         }
       )
   }
 
-  func endBackgroundFetchTask() {
+  func endAppIconUpdateBackgroundFetchTask() {
     UIApplication.shared.endBackgroundTask(backgroundFetchTaskId)
     backgroundFetchTaskId = .invalid
   }

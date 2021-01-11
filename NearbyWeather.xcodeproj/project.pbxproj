@@ -90,6 +90,7 @@
 		F277E7E025AC9F570009D59B /* MapTypeSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277E7DF25AC9F570009D59B /* MapTypeSelectionAlertController.swift */; };
 		F277E7E525AC9F700009D59B /* FocusOnLocationSelectionAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277E7E425AC9F700009D59B /* FocusOnLocationSelectionAlertViewModel.swift */; };
 		F277E7EA25AC9F7F0009D59B /* FocusOnLocationSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277E7E925AC9F7F0009D59B /* FocusOnLocationSelectionAlertController.swift */; };
+		F277E7EF25ACDE620009D59B /* FocusOnLocationSelectionAlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277E7EE25ACDE620009D59B /* FocusOnLocationSelectionAlertDelegate.swift */; };
 		F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */; };
 		F27AFDEC1DF4C089003957EB /* WeatherDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AFDEB1DF4C089003957EB /* WeatherDataCell.swift */; };
 		F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */; };
@@ -329,6 +330,7 @@
 		F277E7DF25AC9F570009D59B /* MapTypeSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeSelectionAlertController.swift; sourceTree = "<group>"; };
 		F277E7E425AC9F700009D59B /* FocusOnLocationSelectionAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnLocationSelectionAlertViewModel.swift; sourceTree = "<group>"; };
 		F277E7E925AC9F7F0009D59B /* FocusOnLocationSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnLocationSelectionAlertController.swift; sourceTree = "<group>"; };
+		F277E7EE25ACDE620009D59B /* FocusOnLocationSelectionAlertDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnLocationSelectionAlertDelegate.swift; sourceTree = "<group>"; };
 		F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F27AFDEB1DF4C089003957EB /* WeatherDataCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDataCell.swift; sourceTree = "<group>"; };
 		F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsInputTableViewController.swift; sourceTree = "<group>"; };
@@ -883,7 +885,7 @@
 				F27A122C24425F0700A2CE8D /* Extensions */,
 				F273EF65244496C40085DB3F /* Views */,
 				F2F155472443BAE4007A3E90 /* Records */,
-				F284DDCC245A275B00445BFF /* Basics */,
+				F284DDCC245A275B00445BFF /* Foundational Building Elements */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -1012,7 +1014,7 @@
 			path = "Contributor Data Transfer Object";
 			sourceTree = "<group>";
 		};
-		F284DDCC245A275B00445BFF /* Basics */ = {
+		F284DDCC245A275B00445BFF /* Foundational Building Elements */ = {
 			isa = PBXGroup;
 			children = (
 				F2D1990225A10CD8004C7753 /* ViewController */,
@@ -1021,7 +1023,7 @@
 				F2DB5E6025AB4CB500E21A56 /* MapView */,
 				F2DB5E7625AB501800E21A56 /* MapViewAnnotation */,
 			);
-			path = Basics;
+			path = "Foundational Building Elements";
 			sourceTree = "<group>";
 		};
 		F284DDDD245F5A8C00445BFF /* Migration */ = {
@@ -1101,6 +1103,7 @@
 			children = (
 				F277E7E425AC9F700009D59B /* FocusOnLocationSelectionAlertViewModel.swift */,
 				F277E7E925AC9F7F0009D59B /* FocusOnLocationSelectionAlertController.swift */,
+				F277E7EE25ACDE620009D59B /* FocusOnLocationSelectionAlertDelegate.swift */,
 			);
 			path = "Focus On Location";
 			sourceTree = "<group>";
@@ -1765,6 +1768,7 @@
 				F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */,
 				F284DDE9245F77A300445BFF /* BaseViewModel.swift in Sources */,
 				F284DDD6245CF38800445BFF /* PreferencesService2.swift in Sources */,
+				F277E7EF25ACDE620009D59B /* FocusOnLocationSelectionAlertDelegate.swift in Sources */,
 				F213FA2F23F9EE4200F094D8 /* PreferredBookmarkOption.swift in Sources */,
 				F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */,
 				F28CA54120279EE300209397 /* WeatherDetailViewController.swift in Sources */,

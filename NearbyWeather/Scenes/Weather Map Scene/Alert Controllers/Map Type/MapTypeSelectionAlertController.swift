@@ -45,7 +45,7 @@ final class MapTypeSelectionAlertController: UIAlertController, BaseViewControll
     viewModel = MapTypeSelectionAlertViewModel(dependencies: dependencies)
     
     super.init(nibName: nil, bundle: nil)
-    title = R.string.localizable.select_list_type().capitalized
+    title = R.string.localizable.select_map_type().capitalized
     message = nil
     
     setCheckmarkForOption(with: viewModel.dependencies.selectedOptionValue)
@@ -53,6 +53,14 @@ final class MapTypeSelectionAlertController: UIAlertController, BaseViewControll
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
   }
   
   // MARK: - AlertController LifeCycle

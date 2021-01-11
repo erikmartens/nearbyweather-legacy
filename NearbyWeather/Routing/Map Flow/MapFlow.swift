@@ -6,6 +6,7 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
+import RxSwift
 import RxFlow
 import Swinject
 
@@ -61,11 +62,32 @@ final class MapFlow: Flow {
       return summonChangeMapTypeAlert(currentSelectedOptionValue: currentSelectedOptionValue)
     case let .changeAmountOfResultsAlert(currentSelectedOptionValue):
       return summonChangeAmountOfResultsAlert(currentSelectedOptionValue: currentSelectedOptionValue)
-    case .focusOnLocationAlert:
-      return summonFocusOnLocationAlert()
+    case let .focusOnLocationAlert:
+      return .none // will be handled via `func adapt(step:)`
+    case let .focusOnLocationAlertAdapted(selectionDelegate, weatherInformationDTOs):
+      return summonFocusOnLocationAlert(selectionDelegate: selectionDelegate, bookmarkedLocations: weatherInformationDTOs)
     case .dismissChildFlow:
       return dismissChildFlow()
     }
+  }
+  
+  func adapt(step: Step) -> Single<Step> {
+    if let step = step as? MapStep {
+      switch step {
+      case let .focusOnLocationAlert(selectionDelegate):
+        return Observable
+          .combineLatest(
+            Observable.just(selectionDelegate),
+            dependencyContainer.resolve(WeatherInformationService2.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } },
+            resultSelector: MapStep.focusOnLocationAlertAdapted
+          )
+          .take(1)
+          .asSingle()
+      default:
+        return .just(step)
+      }
+    }
+    return .just(step)
   }
   
   private func transform(step: Step) -> Step? {
@@ -131,8 +153,13 @@ private extension MapFlow {
     return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
   }
   
-  func summonFocusOnLocationAlert() -> FlowContributors {
-    .none // TODO
+  func summonFocusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate, bookmarkedLocations: [WeatherInformationDTO]) -> FlowContributors {
+    let alertController = FocusOnLocationSelectionAlertController(dependencies: FocusOnLocationSelectionAlertViewModel.Dependencies(
+      bookmarkedLocations: bookmarkedLocations,
+      selectionDelegate: selectionDelegate
+    ))
+    rootViewController.present(alertController, animated: true, completion: nil)
+    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
   }
   
   func dismissChildFlow() -> FlowContributors {

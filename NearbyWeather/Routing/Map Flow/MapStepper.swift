@@ -15,7 +15,8 @@ enum MapStep: Step {
   case weatherDetails2(identity: PersistencyModelIdentityProtocol, isBookmark: Bool)
   case changeMapTypeAlert(currentSelectedOptionValue: MapTypeValue)
   case changeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue)
-  case focusOnLocationAlert
+  case focusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate)
+  case focusOnLocationAlertAdapted(selectionDelegate: FocusOnLocationSelectionAlertDelegate, weatherInformationDTOs: [WeatherInformationDTO])
   case dismissChildFlow
 }
 

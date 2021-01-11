@@ -177,7 +177,7 @@ extension WeatherMapViewModel {
     
     onDidTapFocusOnLocationBarButtonSubject
       .subscribe(onNext: { [weak steps] _ in
-        steps?.accept(MapStep.focusOnLocationAlert)
+        steps?.accept(MapStep.focusOnLocationAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
   }
@@ -205,6 +205,18 @@ extension WeatherMapViewModel: BaseMapViewSelectionDelegate {
       .take(1)
       .asSingle()
       .subscribe(onSuccess: steps.accept)
+  }
+}
+
+extension WeatherMapViewModel: FocusOnLocationSelectionAlertDelegate {
+  
+  func didSelectFocusOnLocationOption(_ option: FocusOnLocationOption) {
+    switch option {
+    case .userLocation:
+      onDidSelectFocusOnUserLocationSubject.onNext(())
+    case let .weatherStation(location):
+      onDidSelectFocusOnWeatherStationSubject.onNext(location)
+    }
   }
 }
 

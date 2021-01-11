@@ -41,6 +41,14 @@ final class MapTypeSelectionAlertViewModel: NSObject, Stepper, BaseViewModel {
     self.dependencies = dependencies
   }
   
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
   // MARK: - Functions
   
   func observeEvents() {
@@ -59,6 +67,6 @@ extension MapTypeSelectionAlertViewModel {
       .flatMapCompletable { [dependencies] mapTypeOption -> Completable in
         dependencies.preferencesService.createSetPreferredMapTypeOptionCompletable(mapTypeOption)
       }
-      .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
+      .subscribe { [weak steps] _ in steps?.accept(MapStep.dismissChildFlow) }
   }
 }

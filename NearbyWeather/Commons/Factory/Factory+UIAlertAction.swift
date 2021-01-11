@@ -14,6 +14,7 @@ extension Factory {
     
     enum AlertActionType {
       case standard(title: String, handler: ((UIAlertAction) -> Void)?)
+      case image(title: String, image: UIImage?, handler: ((UIAlertAction) -> Void)?)
       case cancel
     }
     
@@ -24,6 +25,10 @@ extension Factory {
       switch type {
       case let .standard(title, handler):
         return UIAlertAction(title: title, style: .default, handler: handler)
+      case let .image(title, image, handler):
+        let action = UIAlertAction(title: title, style: .default, handler: handler)
+        action.setValue(image, forKey: Constants.Keys.KeyValueBindings.kImage)
+        return action
       case .cancel:
         return UIAlertAction(title: R.string.localizable.cancel(), style: .cancel)
       }

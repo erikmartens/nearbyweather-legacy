@@ -92,7 +92,11 @@ private extension ListFlow {
       apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!
     ))
     rootViewController.setViewControllers([weatherListViewController], animated: false)
-    return .one(flowContributor: .contribute(withNextPresentable: weatherListViewController, withNextStepper: weatherListViewController.viewModel))
+    return .one(flowContributor: .contribute(
+      withNextPresentable: weatherListViewController,
+      withNextStepper: weatherListViewController.viewModel,
+      allowStepWhenNotPresented: true
+    ))
   }
   
   func summonEmptyWeatherListController() -> FlowContributors {

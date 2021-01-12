@@ -106,9 +106,19 @@ final class MapFlow: Flow {
 private extension MapFlow {
   
   func summonWeatherMapController() -> FlowContributors {
-    let mapViewController = MapViewController()
-    rootViewController.setViewControllers([mapViewController], animated: false)
-    return .one(flowContributor: .contribute(withNext: mapViewController))
+    let weatherMapViewController = WeatherMapViewController(dependencies: WeatherMapViewController.ViewModel.Dependencies(
+      weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!,
+      weatherStationService: dependencyContainer.resolve(WeatherStationService2.self)!,
+      userLocationService: dependencyContainer.resolve(UserLocationService2.self)!,
+      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!,
+      apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!
+    ))
+    rootViewController.setViewControllers([weatherMapViewController], animated: false)
+    return .one(flowContributor: .contribute(
+      withNextPresentable: weatherMapViewController,
+      withNextStepper: weatherMapViewController.viewModel,
+      allowStepWhenNotPresented: true
+    ))
   }
   
   func summonWeatherDetailsController(identifier: Int?, isBookmark: Bool) -> FlowContributors {

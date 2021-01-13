@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var welcomeWindow: UIWindow?
 
   private var dependencyContainer: Container!
+  private var daemonContainer: Container!
   private var flowCoordinator: FlowCoordinator!
 
   private var backgroundFetchTaskId: UIBackgroundTaskIdentifier = .invalid
@@ -93,6 +94,20 @@ private extension AppDelegate {
         weatherStationService: resolver.resolve(WeatherStationService2.self)!,
         userLocationService: resolver.resolve(UserLocationService2.self)!,
         apiKeyService: resolver.resolve(ApiKeyService2.self)!
+      ))
+    }
+  }
+  
+  func instantiateSubscribers() {
+    daemonContainer = Container()
+    
+    let weatherStationService = dependencyContainer.resolve(WeatherStationService2.self)!
+    let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self)!
+    
+    daemonContainer.register(WeatherInformationUpdateDaemon.self) { [weak weatherStationService, weak weatherInformationService] _ in
+      WeatherInformationUpdateDaemon(dependencies: WeatherInformationUpdateDaemon.Dependencies(
+        weatherStationService: weatherStationService,
+        weatherInformationService: weatherInformationService
       ))
     }
   }

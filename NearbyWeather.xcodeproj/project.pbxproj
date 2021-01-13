@@ -72,6 +72,9 @@
 		F25A39712187AA5A0054BC7A /* ProjectContributors.json in Resources */ = {isa = PBXBuildFile; fileRef = F25A39702187AA5A0054BC7A /* ProjectContributors.json */; };
 		F25A39732187B1B00054BC7A /* ThirdPartyLibraryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25A39722187B1B00054BC7A /* ThirdPartyLibraryDTO.swift */; };
 		F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */ = {isa = PBXBuildFile; fileRef = F25A39742187B3F80054BC7A /* ThirdPartyLibraries.json */; };
+		F25E125725AE140900342EFE /* WeatherStationCurrentInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25E125625AE140900342EFE /* WeatherStationCurrentInformationViewModel.swift */; };
+		F25E125C25AE141D00342EFE /* WeatherStationCurrentInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25E125B25AE141D00342EFE /* WeatherStationCurrentInformationViewController.swift */; };
+		F25E126225AF27B800342EFE /* WeatherInformationUpdateDaemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25E126125AF27B800342EFE /* WeatherInformationUpdateDaemon.swift */; };
 		F260BDA8244CF0DD00B4357A /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260BDA7244CF0DD00B4357A /* AppVersionCell.swift */; };
 		F260BDAA244CF3CB00B4357A /* UITableViewCell+TableViewCellReuseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260BDA9244CF3CB00B4357A /* UITableViewCell+TableViewCellReuseIdentifiable.swift */; };
 		F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260BDAB244CFAE500B4357A /* Bundle+AppIcon.swift */; };
@@ -306,6 +309,9 @@
 		F25A39702187AA5A0054BC7A /* ProjectContributors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectContributors.json; sourceTree = "<group>"; };
 		F25A39722187B1B00054BC7A /* ThirdPartyLibraryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyLibraryDTO.swift; sourceTree = "<group>"; };
 		F25A39742187B3F80054BC7A /* ThirdPartyLibraries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ThirdPartyLibraries.json; sourceTree = "<group>"; };
+		F25E125625AE140900342EFE /* WeatherStationCurrentInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationCurrentInformationViewModel.swift; sourceTree = "<group>"; };
+		F25E125B25AE141D00342EFE /* WeatherStationCurrentInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationCurrentInformationViewController.swift; sourceTree = "<group>"; };
+		F25E126125AF27B800342EFE /* WeatherInformationUpdateDaemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationUpdateDaemon.swift; sourceTree = "<group>"; };
 		F260BDA7244CF0DD00B4357A /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		F260BDA9244CF3CB00B4357A /* UITableViewCell+TableViewCellReuseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+TableViewCellReuseIdentifiable.swift"; sourceTree = "<group>"; };
 		F260BDAB244CFAE500B4357A /* Bundle+AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIcon.swift"; sourceTree = "<group>"; };
@@ -520,6 +526,7 @@
 				F27A121B24425C6D00A2CE8D /* Routing */,
 				F27A121D24425CCE00A2CE8D /* Scenes */,
 				F27A121824425ABC00A2CE8D /* Services */,
+				F25E126025AF278600342EFE /* Daemons */,
 				F2F1554124432D77007A3E90 /* Workers */,
 				F27A121924425BC600A2CE8D /* Persistency Models */,
 				F27A122924425E8800A2CE8D /* Commons */,
@@ -644,6 +651,14 @@
 				F2372892244CAB0A00964C49 /* RootStepper.swift */,
 			);
 			path = "Root Flow";
+			sourceTree = "<group>";
+		};
+		F25E126025AF278600342EFE /* Daemons */ = {
+			isa = PBXGroup;
+			children = (
+				F25E126125AF27B800342EFE /* WeatherInformationUpdateDaemon.swift */,
+			);
+			path = Daemons;
 			sourceTree = "<group>";
 		};
 		F26A6D5C20FB6E520033BC49 /* External */ = {
@@ -803,6 +818,8 @@
 		F27A122224425D9D00A2CE8D /* Weather Detail Scene */ = {
 			isa = PBXGroup;
 			children = (
+				F25E125625AE140900342EFE /* WeatherStationCurrentInformationViewModel.swift */,
+				F25E125B25AE141D00342EFE /* WeatherStationCurrentInformationViewController.swift */,
 				F26A6D5F20FB70DD0033BC49 /* WeatherDetail.storyboard */,
 				F28CA54020279EE300209397 /* WeatherDetailViewController.swift */,
 			);
@@ -1599,6 +1616,8 @@
 				F277E7DB25AC9F450009D59B /* MapTypeSelectionAlertViewModel.swift in Sources */,
 				F284DDDF245F5EC600445BFF /* WeatherDataContainer.swift in Sources */,
 				F2D198FE25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift in Sources */,
+				F25E125725AE140900342EFE /* WeatherStationCurrentInformationViewModel.swift in Sources */,
+				F25E125C25AE141D00342EFE /* WeatherStationCurrentInformationViewController.swift in Sources */,
 				F2D1994525A1EED1004C7753 /* Factory+UIBarButtonItem.swift in Sources */,
 				F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */,
 				F2F7BA1F23E3792F00B4D2EB /* Constants+Mocks.swift in Sources */,
@@ -1739,6 +1758,7 @@
 				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,
 				F2D2B1E02004171500C810EF /* JsonPersistencyWorker.swift in Sources */,
 				F260BDAA244CF3CB00B4357A /* UITableViewCell+TableViewCellReuseIdentifiable.swift in Sources */,
+				F25E126225AF27B800342EFE /* WeatherInformationUpdateDaemon.swift in Sources */,
 				F2D1993825A1E482004C7753 /* WeatherListTableViewDataSource.swift in Sources */,
 				F2D1991525A11D89004C7753 /* BaseCellViewModelProtocol.swift in Sources */,
 				F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */,

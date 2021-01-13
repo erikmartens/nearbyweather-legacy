@@ -10,6 +10,79 @@ import Foundation
 import MapKit
 import APTimeZones
 
+// MARK: - Public Type
+
+extension ConversionWorker {
+  struct DayCycleLocalizedTimeStrings {
+    let currentTimeString: String
+    let sunriseTimeString: String
+    let sunsetTimeString: String
+  }
+}
+
+// MARK: - Local Types
+
+private extension ConversionWorker {
+  struct DayCycleDateComponents {
+    let currentTimeDateComponentsHour: Int
+    let currentTimeDateComponentsMinute: Int
+    let sunriseTimeDateComponentsHour: Int
+    let sunriseTimeDateComponentsMinute: Int
+    let sunsetTimeDateComponentsHour: Int
+    let sunsetTimeDateComponentsMinute: Int
+    let timeZone: TimeZone
+    
+    init(
+      currentTimeDateComponentsHour: Int,
+      currentTimeDateComponentsMinute: Int,
+      sunriseTimeDateComponentsHour: Int,
+      sunriseTimeDateComponentsMinute: Int,
+      sunsetTimeDateComponentsHour: Int,
+      sunsetTimeDateComponentsMinute: Int,
+      timeZone: TimeZone
+    ) {
+      self.currentTimeDateComponentsHour = currentTimeDateComponentsHour
+      self.currentTimeDateComponentsMinute = currentTimeDateComponentsMinute
+      self.sunriseTimeDateComponentsHour = sunriseTimeDateComponentsHour
+      self.sunriseTimeDateComponentsMinute = sunriseTimeDateComponentsMinute
+      self.sunsetTimeDateComponentsHour = sunsetTimeDateComponentsHour
+      self.sunsetTimeDateComponentsMinute = sunsetTimeDateComponentsMinute
+      self.timeZone = timeZone
+    }
+    
+    init?(
+      currentTimeDateComponentsHour: Int?,
+      currentTimeDateComponentsMinute: Int?,
+      sunriseTimeDateComponentsHour: Int?,
+      sunriseTimeDateComponentsMinute: Int?,
+      sunsetTimeDateComponentsHour: Int?,
+      sunsetTimeDateComponentsMinute: Int?,
+      timeZone: TimeZone?
+    ) {
+      guard let currentTimeDateComponentHour = currentTimeDateComponentsHour,
+            let currentTimeDateComponentMinute = currentTimeDateComponentsMinute,
+            let sunriseTimeDateComponentsHour = sunriseTimeDateComponentsHour,
+            let sunriseTimeDateComponentsMinute = sunriseTimeDateComponentsMinute,
+            let sunsetTimeDateComponentsHour = sunsetTimeDateComponentsHour,
+            let sunsetTimeDateComponentsMinute = sunsetTimeDateComponentsMinute,
+            let timeZone = timeZone else {
+        return nil
+      }
+      self.init(
+        currentTimeDateComponentsHour: currentTimeDateComponentHour,
+        currentTimeDateComponentsMinute: currentTimeDateComponentMinute,
+        sunriseTimeDateComponentsHour: sunriseTimeDateComponentsHour,
+        sunriseTimeDateComponentsMinute: sunriseTimeDateComponentsMinute,
+        sunsetTimeDateComponentsHour: sunsetTimeDateComponentsHour,
+        sunsetTimeDateComponentsMinute: sunsetTimeDateComponentsMinute,
+        timeZone: timeZone
+      )
+    }
+  }
+}
+
+// MARK: - Class Definition
+
 final class ConversionWorker {
   
   static func weatherConditionSymbol(fromWeatherCode code: Int?, isDayTime: Bool?) -> String {
@@ -118,14 +191,70 @@ final class ConversionWorker {
   
   static func isDayTime(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> Bool? {
     
+    guard let cycle = dayCycleDateComponents(for: dayTimeInformation, coordinates: coordinates) else {
+      return nil
+    }
+    
+    return ((cycle.currentTimeDateComponentsHour == cycle.sunriseTimeDateComponentsHour
+              && cycle.currentTimeDateComponentsMinute >= cycle.sunriseTimeDateComponentsMinute)
+              || cycle.currentTimeDateComponentsHour > cycle.sunriseTimeDateComponentsHour)
+      && ((cycle.currentTimeDateComponentsHour == cycle.sunsetTimeDateComponentsHour
+            && cycle.currentTimeDateComponentsMinute <= cycle.sunsetTimeDateComponentsMinute)
+            || cycle.currentTimeDateComponentsHour < cycle.sunsetTimeDateComponentsHour)
+  }
+  
+  static func isDayTimeString(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> String? {
+    guard let isDayTime = isDayTime(for: dayTimeInformation, coordinates: coordinates) else {
+      return nil
+    }
+    return isDayTime ? R.string.localizable.dayTime() : R.string.localizable.nightTime()
+  }
+  
+  static func dayCycleTimeStrings(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> DayCycleLocalizedTimeStrings? {
+    
+    guard let cycle = dayCycleDateComponents(for: dayTimeInformation, coordinates: coordinates),
+          let sunriseDate = Calendar.current.date(from: DateComponents(hour: cycle.sunriseTimeDateComponentsHour, minute: cycle.sunriseTimeDateComponentsMinute)),
+          let sunsetDate = Calendar.current.date(from: DateComponents(hour: cycle.sunsetTimeDateComponentsHour, minute: cycle.sunsetTimeDateComponentsMinute)) else {
+      return nil
+    }
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.calendar = .current
+    dateFormatter.timeZone = cycle.timeZone
+    dateFormatter.dateStyle = .none
+    dateFormatter.timeStyle = .short
+    
+    return DayCycleLocalizedTimeStrings(
+      currentTimeString: dateFormatter.string(from: Date()),
+      sunriseTimeString: dateFormatter.string(from: sunriseDate),
+      sunsetTimeString: dateFormatter.string(from: sunsetDate)
+    )
+  }
+  
+  static func countryName(for countryCode: String) -> String? {
+    Locale.current.localizedString(forRegionCode: countryCode)
+  }
+  
+  static func usStateName(for stateCode: String) -> String? {
+    UnitedStatesOfAmericaStatesList.statesDictionary[stateCode]
+  }
+}
+
+// MARK: - Helpers
+
+private extension ConversionWorker {
+  
+  static func dayCycleDateComponents(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> DayCycleDateComponents? {
+    
     guard let sunrise =  dayTimeInformation?.sunrise,
-      let sunset =  dayTimeInformation?.sunset,
-      let latitude = coordinates.latitude,
-      let longitude = coordinates.longitude else {
-        return nil
+          let sunset =  dayTimeInformation?.sunset,
+          let latitude = coordinates.latitude,
+          let longitude = coordinates.longitude else {
+      return nil
     }
     
     let location = CLLocation(latitude: latitude, longitude: longitude)
+    let timeZone = location.timeZone()
     
     var calendar = Calendar.current
     calendar.timeZone = location.timeZone()
@@ -136,28 +265,14 @@ final class ConversionWorker {
     let sunsetDate = Date(timeIntervalSince1970: sunset)
     let sunsetDateComponents = calendar.dateComponents([.hour, .minute], from: sunsetDate)
     
-    guard let currentTimeDateComponentHour = currentTimeDateComponents.hour,
-      let currentTimeDateComponentMinute = currentTimeDateComponents.minute,
-      let sunriseDateComponentHour = sunriseDateComponents.hour,
-      let sunriseDateComponentMinute = sunriseDateComponents.minute,
-      let sunsetDateComponentHour = sunsetDateComponents.hour,
-      let sunsetDateComponentMinute = sunsetDateComponents.minute else {
-        return nil
-    }
-    
-    return ((currentTimeDateComponentHour == sunriseDateComponentHour
-      && currentTimeDateComponentMinute >= sunriseDateComponentMinute)
-      || currentTimeDateComponentHour > sunriseDateComponentHour)
-      && ((currentTimeDateComponentHour == sunsetDateComponentHour
-        && currentTimeDateComponentMinute <= sunsetDateComponentMinute)
-        || currentTimeDateComponentHour < sunsetDateComponentHour)
-  }
-  
-  static func countryName(for countryCode: String) -> String? {
-    Locale.current.localizedString(forRegionCode: countryCode)
-  }
-  
-  static func usStateName(for stateCode: String) -> String? {
-    UnitedStatesOfAmericaStatesList.statesDictionary[stateCode]
+    return DayCycleDateComponents(
+      currentTimeDateComponentsHour: currentTimeDateComponents.hour,
+      currentTimeDateComponentsMinute: currentTimeDateComponents.minute,
+      sunriseTimeDateComponentsHour: sunriseDateComponents.hour,
+      sunriseTimeDateComponentsMinute: sunriseDateComponents.minute,
+      sunsetTimeDateComponentsHour: sunsetDateComponents.hour,
+      sunsetTimeDateComponentsMinute: sunsetDateComponents.minute,
+      timeZone: timeZone
+    )
   }
 }

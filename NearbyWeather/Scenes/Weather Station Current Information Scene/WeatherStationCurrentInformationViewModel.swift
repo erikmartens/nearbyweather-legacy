@@ -15,6 +15,10 @@ import CoreLocation
 
 extension WeatherStationCurrentInformationViewModel {
   struct Dependencies {
+    let weatherInformationIdentity: PersistencyModelIdentityProtocol
+    let isBookmark: Bool
+    let weatherInformationService: WeatherInformationReading
+    let preferencesService: UnitSettingsPreferenceReading
   }
 }
 
@@ -34,8 +38,8 @@ final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseVi
   
   private let dependencies: Dependencies
   
-  var tableDelegate: WeatherListTableViewDelegate? // swiftlint:disable:this weak_delegate
-  let tableDataSource: WeatherListTableViewDataSource
+  var tableDelegate: WeatherStationCurrentInformationTableViewDelegate? // swiftlint:disable:this weak_delegate
+  let tableDataSource: WeatherStationCurrentInformationTableViewDataSource
   
   // MARK: - Events
   
@@ -47,10 +51,10 @@ final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseVi
   
   required init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    tableDataSource = WeatherListTableViewDataSource()
+    tableDataSource = WeatherStationCurrentInformationTableViewDataSource()
     super.init()
     
-    tableDelegate = WeatherListTableViewDelegate(cellSelectionDelegate: self)
+    tableDelegate = WeatherStationCurrentInformationTableViewDelegate(cellSelectionDelegate: self)
   }
   
   deinit {
@@ -60,7 +64,7 @@ final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseVi
       type: .info
     )
   }
-  
+
   // MARK: - Functions
   
   func observeEvents() {
@@ -90,4 +94,3 @@ extension WeatherStationCurrentInformationViewModel: BaseTableViewSelectionDeleg
     
   }
 }
-

@@ -30,6 +30,10 @@ enum Delimiter {
 
 extension String {
   
+  static func begin(with string: String?, defaultTo replacement: String = "") -> String {
+    string ?? replacement
+  }
+  
   func append(contentsOf string: String?, delimiter: Delimiter) -> String {
     guard let string = string else {
       return self
@@ -48,7 +52,7 @@ extension String {
   }
   
   func ifEmpty(justReturn string: String?) -> String? {
-    guard !isEmpty else {
+    if isEmpty {
       return string
     }
     return self

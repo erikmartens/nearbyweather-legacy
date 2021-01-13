@@ -10,16 +10,6 @@ import RxSwift
 import RxOptional
 import RxAlamofire
 
-// MARK: - Domain-Specific Errors
-
-extension PersistencyService2 {
-  enum DomainError: String, Error {
-    var domain: String { "PersistencyService" }
-    
-    case someError = "" // TODO
-  }
-}
-
 // MARK: - Persistency Keys
 
 private extension PersistencyService2 {

@@ -1,9 +1,9 @@
 //
-//  ListWeatherInformationTableCellViewModel.swift
+//  WeatherStationCurrentInformationHeaderCellViewModel.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 04.05.20.
-//  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
+//  Created by Erik Maximilian Martens on 13.01.21.
+//  Copyright © 2021 Erik Maximilian Martens. All rights reserved.
 //
 
 import RxSwift
@@ -11,7 +11,7 @@ import RxCocoa
 
 // MARK: - Dependencies
 
-extension WeatherListInformationTableViewCellViewModel {
+extension WeatherStationCurrentInformationHeaderCellViewModel {
   struct Dependencies {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
     let isBookmark: Bool
@@ -22,17 +22,9 @@ extension WeatherListInformationTableViewCellViewModel {
 
 // MARK: - Class Definition
 
-final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellViewModel {
+final class WeatherStationCurrentInformationHeaderCellViewModel: NSObject, BaseCellViewModel { // swiftlint:disable:this type_length_violation
   
   // MARK: - Public Access
-  
-  var weatherInformationIdentity: PersistencyModelIdentityProtocol {
-    dependencies.weatherInformationIdentity
-  }
-  
-  var isBookmark: Bool {
-    dependencies.isBookmark
-  }
   
   // MARK: - Properties
   
@@ -40,7 +32,7 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
 
   // MARK: - Events
   
-  let cellModelDriver: Driver<WeatherListInformationTableViewCellModel>
+  let cellModelDriver: Driver<WeatherStationCurrentInformationHeaderCellModel>
 
   // MARK: - Initialization
   
@@ -59,9 +51,9 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
 
 // MARK: - Observations
 
-private extension WeatherListInformationTableViewCellViewModel {
+private extension WeatherStationCurrentInformationHeaderCellViewModel {
   
-  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherListInformationTableViewCellModel> {
+  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherStationCurrentInformationHeaderCellModel> {
     let weatherInformationModelObservable = dependencies.weatherInformationService
       .createGetWeatherInformationItemObservable(
         for: dependencies.weatherInformationIdentity.identifier,
@@ -74,8 +66,8 @@ private extension WeatherListInformationTableViewCellViewModel {
         weatherInformationModelObservable,
         dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
         dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
-        resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherListInformationTableViewCellModel in
-          WeatherListInformationTableViewCellModel(
+        resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherStationCurrentInformationHeaderCellModel in
+          WeatherStationCurrentInformationHeaderCellModel(
             weatherInformationDTO: weatherInformationModel,
             temperatureUnitOption: temperatureUnitOption,
             dimensionalUnitsOption: dimensionalUnitsOption,
@@ -83,6 +75,6 @@ private extension WeatherListInformationTableViewCellViewModel {
           )
         }
       )
-      .asDriver(onErrorJustReturn: WeatherListInformationTableViewCellModel())
+      .asDriver(onErrorJustReturn: WeatherStationCurrentInformationHeaderCellModel())
   }
 }

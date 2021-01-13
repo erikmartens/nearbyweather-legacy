@@ -76,13 +76,14 @@ final class WeatherInformationService2 {
 
 // MARK: - Weather Information Provisioning
 
-protocol WeatherInformationPersistence {
+protocol WeatherInformationPersistence: WeatherInformationReading, WeatherInformationSetting {
   func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
   func createGetBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
   func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>>
   func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
   func createGetNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
   func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>>
+  func createGetWeatherInformationItemObservable(for identifier: String, isBookmark: Bool) -> Observable<PersistencyModel<WeatherInformationDTO>>
 }
 
 extension WeatherInformationService2: WeatherInformationPersistence {
@@ -142,7 +143,38 @@ extension WeatherInformationService2: WeatherInformationPersistence {
       .observeResource(with: identity, type: WeatherInformationDTO.self)
       .errorOnNil(DomainError.nearbyWeatherInformationMissing)
   }
+  
+  func createGetWeatherInformationItemObservable(for identifier: String, isBookmark: Bool) -> Observable<PersistencyModel<WeatherInformationDTO>> {
+    Observable
+      .just(isBookmark)
+      .flatMapLatest { [unowned self] isBookmark -> Observable<PersistencyModel<WeatherInformationDTO>> in
+        isBookmark
+          ? self.createGetBookmarkedWeatherInformationItemObservable(for: identifier)
+          : self.createGetNearbyWeatherInformationObservable(for: identifier)
+      }
+  }
 }
+
+// MARK: - Weather Information Setting
+
+protocol WeatherInformationSetting {
+  func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
+  func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
+}
+
+extension WeatherInformationService2: WeatherInformationSetting {}
+
+// MARK: - Weather Information Reading
+
+protocol WeatherInformationReading {
+  func createGetBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
+  func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>>
+  func createGetNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]>
+  func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>>
+  func createGetWeatherInformationItemObservable(for identifier: String, isBookmark: Bool) -> Observable<PersistencyModel<WeatherInformationDTO>>
+}
+
+extension WeatherInformationService2: WeatherInformationReading {}
 
 // MARK: - Weather Information Updating
 

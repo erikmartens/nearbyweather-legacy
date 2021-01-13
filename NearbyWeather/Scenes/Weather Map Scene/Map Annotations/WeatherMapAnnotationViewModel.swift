@@ -85,13 +85,11 @@ extension WeatherMapAnnotationViewModel {
   }
   
   private static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherMapAnnotationModel> {
-    let weatherInformationModelObservable = Observable
-      .just(dependencies.isBookmark)
-      .flatMapLatest { [dependencies] isBookmark -> Observable<PersistencyModel<WeatherInformationDTO>> in
-        isBookmark
-          ? dependencies.weatherInformationService.createGetBookmarkedWeatherInformationItemObservable(for: dependencies.weatherInformationIdentity.identifier)
-          : dependencies.weatherInformationService.createGetNearbyWeatherInformationObservable(for: dependencies.weatherInformationIdentity.identifier)
-      }
+    let weatherInformationModelObservable = dependencies.weatherInformationService
+      .createGetWeatherInformationItemObservable(
+        for: dependencies.weatherInformationIdentity.identifier,
+        isBookmark: dependencies.isBookmark
+      )
       .map { $0.entity }
       
     return Observable

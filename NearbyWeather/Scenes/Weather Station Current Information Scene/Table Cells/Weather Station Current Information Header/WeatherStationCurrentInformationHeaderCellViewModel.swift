@@ -13,16 +13,16 @@ import RxCocoa
 
 extension WeatherStationCurrentInformationHeaderCellViewModel {
   struct Dependencies {
-    let weatherInformationIdentity: PersistencyModelIdentityProtocol
+    let weatherInformationDTO: WeatherInformationDTO
+    let temperatureUnitOption: TemperatureUnitOption
+    let dimensionalUnitsOption: DimensionalUnitsOption
     let isBookmark: Bool
-    let weatherInformationService: WeatherInformationReading
-    let preferencesService: UnitSettingsPreferenceReading
   }
 }
 
 // MARK: - Class Definition
 
-final class WeatherStationCurrentInformationHeaderCellViewModel: NSObject, BaseCellViewModel { // swiftlint:disable:this type_length_violation
+final class WeatherStationCurrentInformationHeaderCellViewModel: NSObject, BaseCellViewModel {
   
   // MARK: - Public Access
   
@@ -54,26 +54,14 @@ final class WeatherStationCurrentInformationHeaderCellViewModel: NSObject, BaseC
 private extension WeatherStationCurrentInformationHeaderCellViewModel {
   
   static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherStationCurrentInformationHeaderCellModel> {
-    let weatherInformationModelObservable = dependencies.weatherInformationService
-      .createGetWeatherInformationItemObservable(
-        for: dependencies.weatherInformationIdentity.identifier,
-        isBookmark: dependencies.isBookmark
-      )
-      .map { $0.entity }
-      
-    return Observable
-      .combineLatest(
-        weatherInformationModelObservable,
-        dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
-        dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
-        resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherStationCurrentInformationHeaderCellModel in
-          WeatherStationCurrentInformationHeaderCellModel(
-            weatherInformationDTO: weatherInformationModel,
-            temperatureUnitOption: temperatureUnitOption,
-            dimensionalUnitsOption: dimensionalUnitsOption,
-            isBookmark: dependencies.isBookmark
-          )
-        }
+    Observable
+      .just(
+        WeatherStationCurrentInformationHeaderCellModel(
+          weatherInformationDTO: dependencies.weatherInformationDTO,
+          temperatureUnitOption: dependencies.temperatureUnitOption,
+          dimensionalUnitsOption: dependencies.dimensionalUnitsOption,
+          isBookmark: dependencies.isBookmark
+        )
       )
       .asDriver(onErrorJustReturn: WeatherStationCurrentInformationHeaderCellModel())
   }

@@ -12,7 +12,6 @@ import RxSwift
 // MARK: - Definitions
 
 private extension WeatherListInformationTableViewCell {
-  
   struct Definitions {
     static let backgroundColorViewLeadingInset: CGFloat = 48
     static let mainContentStackViewTopBottomInset: CGFloat = 20

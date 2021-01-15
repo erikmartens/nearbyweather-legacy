@@ -25,20 +25,21 @@ struct WeatherStationCurrentInformationAtmosphericDetailsCellModel { // swiftlin
   }
   
   init(
-    cloudCoverageDTO: WeatherInformationDTO.CloudCoverageDTO,
-    atmosphericInformationDTO: WeatherInformationDTO.AtmosphericInformationDTO
+    cloudCoverage: Double,
+    humidity: Double,
+    pressurePsi: Double
   ) {
     self.init(
       cloudCoverageString: String
-        .begin(with: cloudCoverageDTO.coverage)
+        .begin(with: cloudCoverage)
         .append(contentsOf: "%", delimiter: .none, emptyIfPredecessorWasEmpty: true)
         .ifEmpty(justReturn: nil),
       humidityString: String
-        .begin(with: atmosphericInformationDTO.humidity)
+        .begin(with: humidity)
         .append(contentsOf: "%", delimiter: .none, emptyIfPredecessorWasEmpty: true)
         .ifEmpty(justReturn: nil),
       airPressureString: String
-        .begin(with: atmosphericInformationDTO.pressurePsi)
+        .begin(with: pressurePsi)
         .append(contentsOf: "hpa", delimiter: .none, emptyIfPredecessorWasEmpty: true)
         .ifEmpty(justReturn: nil)
     )

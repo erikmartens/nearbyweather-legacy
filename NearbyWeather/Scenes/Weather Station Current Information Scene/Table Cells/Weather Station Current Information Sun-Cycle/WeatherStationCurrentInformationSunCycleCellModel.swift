@@ -20,16 +20,4 @@ struct WeatherStationCurrentInformationSunCycleCellModel {
     self.sunriseTimeString = sunriseTimeString
     self.sunsetTimeString = sunsetTimeString
   }
-  
-  init(
-    dayTimeInformationDTO: WeatherInformationDTO.DayTimeInformationDTO,
-    coordinatesDTO: WeatherInformationDTO.CoordinatesDTO
-  ) {
-    let dayCycleStrings = ConversionWorker.dayCycleTimeStrings(for: dayTimeInformationDTO, coordinates: coordinatesDTO)
-    
-    self.init(
-      sunriseTimeString: dayCycleStrings?.sunriseTimeString,
-      sunsetTimeString: dayCycleStrings?.sunsetTimeString
-    )
-  }
 }

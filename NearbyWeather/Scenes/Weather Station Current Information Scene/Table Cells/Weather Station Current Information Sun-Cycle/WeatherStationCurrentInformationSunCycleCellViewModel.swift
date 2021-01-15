@@ -13,14 +13,14 @@ import RxCocoa
 
 extension WeatherStationCurrentInformationSunCycleCellViewModel {
   struct Dependencies {
-    let dayTimeInformationDTO: WeatherInformationDTO.DayTimeInformationDTO
-    let coordinatesDTO: WeatherInformationDTO.CoordinatesDTO
+    let sunriseTimeString: String
+    let sunsetTimeString: String
   }
 }
 
 // MARK: - Class Definition
 
-final class WeatherStationCurrentInformationSunCycleCellViewModel: NSObject, BaseCellViewModel {
+final class WeatherStationCurrentInformationSunCycleCellViewModel: NSObject, BaseCellViewModel { // swiftlint:disable:this type_name
   
   // MARK: - Public Access
   
@@ -55,8 +55,8 @@ private extension WeatherStationCurrentInformationSunCycleCellViewModel {
     Observable
       .just(
         WeatherStationCurrentInformationSunCycleCellModel(
-          dayTimeInformationDTO: dependencies.dayTimeInformationDTO,
-          coordinatesDTO: dependencies.coordinatesDTO
+          sunriseTimeString: dependencies.sunriseTimeString,
+          sunsetTimeString: dependencies.sunsetTimeString
         )
       )
       .asDriver(onErrorJustReturn: WeatherStationCurrentInformationSunCycleCellModel())

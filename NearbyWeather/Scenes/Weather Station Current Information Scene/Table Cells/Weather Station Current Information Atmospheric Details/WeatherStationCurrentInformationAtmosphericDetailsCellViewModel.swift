@@ -13,14 +13,15 @@ import RxCocoa
 
 extension WeatherStationCurrentInformationAtmosphericDetailsCellViewModel {
   struct Dependencies {
-    let cloudCoverageDTO: WeatherInformationDTO.CloudCoverageDTO
-    let atmosphericInformationDTO: WeatherInformationDTO.AtmosphericInformationDTO
+    let cloudCoverage: Double
+    let humidity: Double
+    let pressurePsi: Double
   }
 }
 
 // MARK: - Class Definition
 
-final class WeatherStationCurrentInformationAtmosphericDetailsCellViewModel: NSObject, BaseCellViewModel {
+final class WeatherStationCurrentInformationAtmosphericDetailsCellViewModel: NSObject, BaseCellViewModel { // swiftlint:disable:this type_name
   
   // MARK: - Public Access
   
@@ -55,8 +56,9 @@ private extension WeatherStationCurrentInformationAtmosphericDetailsCellViewMode
     Observable
       .just(
         WeatherStationCurrentInformationAtmosphericDetailsCellModel(
-          cloudCoverageDTO: dependencies.cloudCoverageDTO,
-          atmosphericInformationDTO: dependencies.atmosphericInformationDTO
+          cloudCoverage: dependencies.cloudCoverage,
+          humidity: dependencies.humidity,
+          pressurePsi: dependencies.pressurePsi
         )
       )
       .asDriver(onErrorJustReturn: WeatherStationCurrentInformationAtmosphericDetailsCellModel())

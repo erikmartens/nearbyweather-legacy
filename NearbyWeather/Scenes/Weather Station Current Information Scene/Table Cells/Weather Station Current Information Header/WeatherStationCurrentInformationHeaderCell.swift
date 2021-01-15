@@ -16,9 +16,9 @@ private extension WeatherStationCurrentInformationHeaderCell {
     static let weatherConditionSymbolWidthHeight: CGFloat = 80
     static var trailingLeadingContentInsets: CGFloat {
       if #available(iOS 13, *) {
-        return 8
+        return Constants.Dimensions.Spacing.ContentInsets.leading(from: .small)
       }
-      return Constants.Dimensions.Spacing.ContentInsets.leading
+      return Constants.Dimensions.Spacing.ContentInsets.leading(from: .medium)
     }
   }
 }

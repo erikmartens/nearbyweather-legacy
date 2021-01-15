@@ -13,8 +13,8 @@ extension Factory {
   struct StackView: FactoryFunction {
     
     enum StackViewType {
-      case vertical(alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill, spacing: CGFloat = 0)
-      case horizontal(alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill, spacing: CGFloat = 0)
+      case vertical(alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill, spacingWeight: Weight? = nil)
+      case horizontal(alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill, spacingWeight: Weight? = nil)
     }
     
     typealias InputType = StackViewType
@@ -24,16 +24,20 @@ extension Factory {
       let stackView = UIStackView()
       
       switch type {
-      case let .vertical(alignment, distribution, spacing):
+      case let .vertical(alignment, distribution, spacingWeight):
         stackView.axis = .vertical
         stackView.distribution = distribution
         stackView.alignment = alignment
-        stackView.spacing = spacing
-      case let .horizontal(alignment, distribution, spacing):
+        if let spacingWeight = spacingWeight {
+          stackView.spacing = Constants.Dimensions.Spacing.InterElementSpacing.yDistance(from: spacingWeight)
+        }
+      case let .horizontal(alignment, distribution, spacingWeight):
         stackView.axis = .horizontal
         stackView.distribution = distribution
         stackView.alignment = alignment
-        stackView.spacing = spacing
+        if let spacingWeight = spacingWeight {
+          stackView.spacing = Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: spacingWeight)
+        }
       }
       
       return stackView

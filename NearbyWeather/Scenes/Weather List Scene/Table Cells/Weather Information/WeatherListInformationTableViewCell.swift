@@ -26,23 +26,21 @@ private extension WeatherListInformationTableViewCell {
 final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
   
   typealias CellViewModel = WeatherListInformationTableViewCellViewModel
+  private typealias CellContentInsets = Constants.Dimensions.Spacing.ContentInsets
+  private typealias CellInterelementSpacing = Constants.Dimensions.Spacing.InterElementSpacing
   
   // MARK: - UIComponents
   
-  private lazy var backgroundColorView: UIView = {
-    let view = UIView()
-    view.layer.cornerRadius = Constants.Dimensions.Size.CornerRadiusSize.from(weight: .medium)
-    return view
-  }()
+  private lazy var backgroundColorView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
   
-  private lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .fillEqually, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .medium)))
-  private lazy var lineOneStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillEqually, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .medium)))
-  private lazy var lineTwoStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillEqually, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .medium)))
+  private lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .fillEqually, spacingWeight: .medium))
+  private lazy var lineOneStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillEqually, spacingWeight: .medium))
+  private lazy var lineTwoStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillEqually, spacingWeight: .medium))
   
-  private lazy var temperatureStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .small)))
-  private lazy var cloudCoverageStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .small)))
-  private lazy var humidityStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .small)))
-  private lazy var windspeedStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .small)))
+  private lazy var temperatureStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacingWeight: .small))
+  private lazy var cloudCoverageStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacingWeight: .small))
+  private lazy var humidityStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacingWeight: .small))
+  private lazy var windspeedStackView = Factory.StackView.make(fromType: .horizontal(distribution: .fillProportionally, spacingWeight: .small))
   
   private lazy var weatherConditionSymbolLabel = Factory.Label.make(fromType: .weatherSymbol)
   private lazy var placeNameLabel = Factory.Label.make(fromType: .title(numberOfLines: 1))
@@ -152,25 +150,25 @@ private extension WeatherListInformationTableViewCell {
     
     // compose final view
     contentView.addSubview(backgroundColorView, constraints: [
-      backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
-      backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
+      backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
+      backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.backgroundColorViewLeadingInset),
-      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.trailing)
+      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
     ])
     
     contentView.addSubview(weatherConditionSymbolLabel, constraints: [
       weatherConditionSymbolLabel.heightAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolHeight),
       weatherConditionSymbolLabel.widthAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolHeight),
-      weatherConditionSymbolLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
-      weatherConditionSymbolLabel.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
-      weatherConditionSymbolLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.leading),
+      weatherConditionSymbolLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
+      weatherConditionSymbolLabel.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
+      weatherConditionSymbolLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
       weatherConditionSymbolLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     
     contentView.addSubview(mainContentStackView, constraints: [
       mainContentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Definitions.mainContentStackViewTopBottomInset),
       mainContentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Definitions.mainContentStackViewTopBottomInset),
-      mainContentStackView.leadingAnchor.constraint(equalTo: weatherConditionSymbolLabel.leadingAnchor, constant: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .large)),
+      mainContentStackView.leadingAnchor.constraint(equalTo: weatherConditionSymbolLabel.leadingAnchor, constant: CellInterelementSpacing.xDistance(from: .large)),
       mainContentStackView.trailingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -Definitions.mainContentStackViewTrailingInset)
     ])
   }

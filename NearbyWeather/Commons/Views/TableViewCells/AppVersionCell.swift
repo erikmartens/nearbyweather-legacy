@@ -10,6 +10,9 @@ import UIKit
 
 class AppVersionCell: UITableViewCell {
   
+  private typealias CellContentInsets = Constants.Dimensions.Spacing.ContentInsets
+  private typealias CellInterelementSpacing = Constants.Dimensions.Spacing.InterElementSpacing
+  
   private lazy var mainImageView = Factory.ImageView.make(fromType: .appIcon)
   private lazy var titleLabel = Factory.Label.make(fromType: .title(alignment: .center))
   private lazy var subtitleLabel = Factory.Label.make(fromType: .description(alignment: .center))
@@ -46,24 +49,24 @@ private extension AppVersionCell {
     contentView.addSubview(mainImageView, constraints: [
       mainImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.Size.AppIconImageSize.height),
       mainImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.Size.AppIconImageSize.width),
-      mainImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
-      mainImageView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.leading),
-      mainImageView.trailingAnchor.constraint(greaterThanOrEqualTo: contentView.trailingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.trailing),
+      mainImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
+      mainImageView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
+      mainImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
       mainImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
     ])
     
     contentView.addSubview(titleLabel, constraints: [
       titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
-      titleLabel.topAnchor.constraint(equalTo: mainImageView.bottomAnchor, constant: Constants.Dimensions.Spacing.InterElementSpacing.yDistance(from: .medium)),
-      titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.leading),
-      titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.trailing)
+      titleLabel.topAnchor.constraint(equalTo: mainImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
+      titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
+      titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
     ])
     
     contentView.addSubview(subtitleLabel, constraints: [
-      subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constants.Dimensions.Spacing.InterElementSpacing.yDistance(from: .medium)),
-      subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
-      subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.leading),
-      subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.trailing)
+      subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
+      subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
+      subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
+      subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
     ])
   }
 }

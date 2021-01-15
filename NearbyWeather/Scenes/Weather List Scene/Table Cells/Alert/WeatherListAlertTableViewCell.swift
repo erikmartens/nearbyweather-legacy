@@ -19,16 +19,12 @@ private extension WeatherListAlertTableViewCell {
 final class WeatherListAlertTableViewCell: UITableViewCell, BaseCell {
   
   typealias CellViewModel = WeatherListAlertTableViewCellViewModel
+  private typealias CellContentInsets = Constants.Dimensions.Spacing.ContentInsets
   
   // MARK: - UIComponents
   
-  private lazy var backgroundColorView: UIView = {
-    let view = UIView()
-    view.layer.cornerRadius = Constants.Dimensions.Size.CornerRadiusSize.from(weight: .medium)
-    return view
-  }()
-  
-  private lazy var contentStackView = Factory.StackView.make(fromType: .horizontal(spacing: Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .large)))
+  private lazy var backgroundColorView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
+  private lazy var contentStackView = Factory.StackView.make(fromType: .horizontal(spacingWeight: .large))
   private lazy var alertImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.temperature()))
   private lazy var alertInformationLabel = Factory.Label.make(fromType: .title(numberOfLines: 1))
   
@@ -88,10 +84,10 @@ private extension WeatherListAlertTableViewCell {
   
   func layoutUserInterface() {
     contentView.addSubview(backgroundColorView, constraints: [
-      backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.top),
-      backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.bottom),
-      backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.Spacing.TableCellContentInsets.leading),
-      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.Spacing.TableCellContentInsets.trailing)
+      backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
+      backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
+      backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
+      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
     ])
     
     contentStackView.addArrangedSubview(alertImageView, constraints: [
@@ -103,10 +99,10 @@ private extension WeatherListAlertTableViewCell {
     ])
     
     backgroundColorView.addSubview(contentStackView, constraints: [
-      contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Dimensions.Spacing.ContentInsets.top),
-      contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Dimensions.Spacing.ContentInsets.bottom),
-      contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Dimensions.Spacing.ContentInsets.leading),
-      contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Dimensions.Spacing.ContentInsets.trailing)
+      contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
+      contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
+      contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
+      contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
     ])
   }
   

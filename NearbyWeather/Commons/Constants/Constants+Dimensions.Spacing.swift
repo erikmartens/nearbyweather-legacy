@@ -14,26 +14,51 @@ extension Constants.Dimensions {
 
 extension Constants.Dimensions.Spacing {
   
-  enum TableCellContentInsets {
-    /// constant: 16
-    static let leading: CGFloat = 16
-    /// constant: 16
-    static let trailing: CGFloat = 16
-    /// constant: 4
-    static let top: CGFloat = 4
-    /// constant: 4
-    static let bottom: CGFloat = 4
-  }
-  
   enum ContentInsets {
-    /// constant: 16
-    static let leading: CGFloat = 16
-    /// constant: 16
-    static let trailing: CGFloat = 16
-    /// constant: 4
-    static let top: CGFloat = 12
-    /// constant: 4
-    static let bottom: CGFloat = 12
+    /// value: 8, 12 or 16
+    static func leading(from weight: Weight) -> CGFloat {
+      switch weight {
+      case .small:
+        return 8
+      case .medium:
+        return 12
+      case .large:
+        return 16
+      }
+    }
+    /// value: 8, 12 or 16
+    static func trailing(from weight: Weight) -> CGFloat {
+      switch weight {
+      case .small:
+        return 8
+      case .medium:
+        return 12
+      case .large:
+        return 16
+      }
+    }
+    /// value: 4, 8 or 12
+    static func top(from weight: Weight) -> CGFloat {
+      switch weight {
+      case .small:
+        return 4
+      case .medium:
+        return 8
+      case .large:
+        return 12
+      }
+    }
+    /// value: 4, 8 or 12
+    static func bottom(from weight: Weight) -> CGFloat {
+      switch weight {
+      case .small:
+        return 4
+      case .medium:
+        return 8
+      case .large:
+        return 12
+      }
+    }
   }
   
   enum InterElementSpacing {

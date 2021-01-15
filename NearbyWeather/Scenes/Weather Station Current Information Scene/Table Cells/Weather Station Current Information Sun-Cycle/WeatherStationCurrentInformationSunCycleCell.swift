@@ -135,7 +135,7 @@ private extension WeatherStationCurrentInformationSunCycleCell {
     ])
     
     contentView.addSubview(sunsetTimeLabel, constraints: [
-      sunsetTimeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
+      sunsetTimeLabel.topAnchor.constraint(equalTo: sunriseTimeLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       sunsetTimeLabel.leadingAnchor.constraint(equalTo: sunsetDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       sunsetTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Definitions.trailingLeadingContentInsets),
       sunsetTimeLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),

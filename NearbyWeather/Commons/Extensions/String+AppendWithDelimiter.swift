@@ -34,21 +34,31 @@ extension String {
     string ?? replacement
   }
   
-  func append(contentsOf string: String?, delimiter: Delimiter) -> String {
+  static func begin(with convertible: CustomStringConvertible?, defaultTo replacement: String = "") -> String {
+    guard let convertible = convertible else {
+      return replacement
+    }
+    return String(describing: convertible)
+  }
+  
+  func append(contentsOf string: String?, delimiter: Delimiter, emptyIfPredecessorWasEmpty: Bool = false) -> String {
     guard let string = string else {
       return self
     }
-    guard !self.isEmpty else {
+    if self.isEmpty {
+      if emptyIfPredecessorWasEmpty {
+        return ""
+      }
       return string
     }
     return "\(self)\(delimiter.stringValue)\(string)"
   }
   
-  func append(contentsOfConvertible convertible: CustomStringConvertible?, delimiter: Delimiter) -> String {
+  func append(contentsOfConvertible convertible: CustomStringConvertible?, delimiter: Delimiter, emptyIfPredecessorWasEmpty: Bool = false) -> String {
     guard let convertible = convertible else {
       return self
     }
-    return append(contentsOf: String(describing: convertible), delimiter: delimiter)
+    return append(contentsOf: String(describing: convertible), delimiter: delimiter, emptyIfPredecessorWasEmpty: emptyIfPredecessorWasEmpty)
   }
   
   func ifEmpty(justReturn string: String?) -> String? {

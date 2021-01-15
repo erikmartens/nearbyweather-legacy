@@ -22,9 +22,7 @@ extension WeatherStationCurrentInformationHeaderCellViewModel {
 
 // MARK: - Class Definition
 
-final class WeatherStationCurrentInformationHeaderCellViewModel: NSObject, BaseCellViewModel {
-  
-  // MARK: - Public Access
+final class WeatherStationCurrentInformationHeaderCellViewModel: NSObject, BaseCellViewModel { // swiftlint:disable:this type_name
   
   // MARK: - Properties
   

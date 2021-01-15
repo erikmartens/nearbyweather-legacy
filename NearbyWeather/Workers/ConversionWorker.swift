@@ -189,7 +189,7 @@ final class ConversionWorker {
     return String(format: "%.02f", degrees).append(contentsOf: "°", delimiter: .none)
   }
   
-  static func isDayTime(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> Bool? {
+  static func isDayTime(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> Bool? {
     
     guard let cycle = dayCycleDateComponents(for: dayTimeInformation, coordinates: coordinates) else {
       return nil
@@ -203,14 +203,14 @@ final class ConversionWorker {
             || cycle.currentTimeDateComponentsHour < cycle.sunsetTimeDateComponentsHour)
   }
   
-  static func isDayTimeString(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> String? {
+  static func isDayTimeString(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> String? {
     guard let isDayTime = isDayTime(for: dayTimeInformation, coordinates: coordinates) else {
       return nil
     }
     return isDayTime ? R.string.localizable.dayTime() : R.string.localizable.nightTime()
   }
   
-  static func dayCycleTimeStrings(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> DayCycleLocalizedTimeStrings? {
+  static func dayCycleTimeStrings(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> DayCycleLocalizedTimeStrings? {
     
     guard let cycle = dayCycleDateComponents(for: dayTimeInformation, coordinates: coordinates),
           let sunriseDate = Calendar.current.date(from: DateComponents(hour: cycle.sunriseTimeDateComponentsHour, minute: cycle.sunriseTimeDateComponentsMinute)),
@@ -244,7 +244,7 @@ final class ConversionWorker {
 
 private extension ConversionWorker {
   
-  static func dayCycleDateComponents(for dayTimeInformation: WeatherInformationDTO.DaytimeInformation?, coordinates: WeatherInformationDTO.Coordinates) -> DayCycleDateComponents? {
+  static func dayCycleDateComponents(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> DayCycleDateComponents? {
     
     guard let sunrise =  dayTimeInformation?.sunrise,
           let sunset =  dayTimeInformation?.sunset,

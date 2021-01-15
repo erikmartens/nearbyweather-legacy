@@ -25,7 +25,7 @@ struct WeatherInformationListDTO: Codable {
 
 struct WeatherInformationDTO: Codable {
   
-  struct Coordinates: Codable {
+  struct CoordinatesDTO: Codable {
     var latitude: Double?
     var longitude: Double?
     
@@ -42,7 +42,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct WeatherCondition: Codable {
+  struct WeatherConditionDTO: Codable {
     var identifier: Int?
     var conditionName: String?
     var conditionDescription: String?
@@ -65,7 +65,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct AtmosphericInformation: Codable {
+  struct AtmosphericInformationDTO: Codable {
     var temperatureKelvin: Double?
     var pressurePsi: Double?
     var humidity: Double?
@@ -85,7 +85,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct WindInformation: Codable {
+  struct WindInformationDTO: Codable {
     var windspeed: Double?
     var degrees: Double?
     
@@ -102,7 +102,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct CloudCoverage: Codable {
+  struct CloudCoverageDTO: Codable {
     var coverage: Double?
     
     enum CodingKeys: String, CodingKey {
@@ -116,7 +116,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct DaytimeInformation: Codable {
+  struct DayTimeInformationDTO: Codable {
     /// multi location weather data does not contain this information
     
     var sunrise: Double?
@@ -137,12 +137,12 @@ struct WeatherInformationDTO: Codable {
   
   var stationIdentifier: Int
   var stationName: String
-  var coordinates: Coordinates
-  var weatherCondition: [WeatherCondition]
-  var atmosphericInformation: AtmosphericInformation
-  var windInformation: WindInformation
-  var cloudCoverage: CloudCoverage
-  var daytimeInformation: DaytimeInformation
+  var coordinates: CoordinatesDTO
+  var weatherCondition: [WeatherConditionDTO]
+  var atmosphericInformation: AtmosphericInformationDTO
+  var windInformation: WindInformationDTO
+  var cloudCoverage: CloudCoverageDTO
+  var daytimeInformation: DayTimeInformationDTO
   
   enum CodingKeys: String, CodingKey {
     case stationIdentifier = "id"
@@ -160,11 +160,11 @@ struct WeatherInformationDTO: Codable {
     
     self.stationIdentifier = try values.decode(Int.self, forKey: .stationIdentifier)
     self.stationName = try values.decode(String.self, forKey: .stationName)
-    self.coordinates = try values.decode(Coordinates.self, forKey: .coordinates)
-    self.weatherCondition = try values.decode([WeatherCondition].self, forKey: .weatherCondition)
-    self.atmosphericInformation = try values.decode(AtmosphericInformation.self, forKey: .atmosphericInformation)
-    self.windInformation = try values.decode(WindInformation.self, forKey: .windInformation)
-    self.cloudCoverage = try values.decode(CloudCoverage.self, forKey: .cloudCoverage)
-    self.daytimeInformation = try values.decode(DaytimeInformation.self, forKey: .daytimeInformation)
+    self.coordinates = try values.decode(CoordinatesDTO.self, forKey: .coordinates)
+    self.weatherCondition = try values.decode([WeatherConditionDTO].self, forKey: .weatherCondition)
+    self.atmosphericInformation = try values.decode(AtmosphericInformationDTO.self, forKey: .atmosphericInformation)
+    self.windInformation = try values.decode(WindInformationDTO.self, forKey: .windInformation)
+    self.cloudCoverage = try values.decode(CloudCoverageDTO.self, forKey: .cloudCoverage)
+    self.daytimeInformation = try values.decode(DayTimeInformationDTO.self, forKey: .daytimeInformation)
   }
 }

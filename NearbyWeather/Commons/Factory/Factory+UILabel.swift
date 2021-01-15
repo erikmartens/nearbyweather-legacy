@@ -13,9 +13,9 @@ extension Factory {
   struct Label: FactoryFunction {
     
     enum LabelType {
-      case title(alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
-      case body(alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
-      case description(alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
+      case title(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
+      case body(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
+      case description(text: String? = nil,  alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
       case weatherSymbol
       case mapAnnotation(fontSize: CGFloat, width: CGFloat, height: CGFloat, yOffset: CGFloat)
     }
@@ -27,19 +27,22 @@ extension Factory {
       let label = UILabel()
       
       switch type {
-      case let .title(alignment, numberOfLines):
+      case let .title(text, alignment, numberOfLines):
         label.textColor = Constants.Theme.Color.ViewElement.title
         label.font = .preferredFont(forTextStyle: .title3)
+        label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
-      case let .body(alignment, numberOfLines):
+      case let .body(text, alignment, numberOfLines):
         label.textColor = Constants.Theme.Color.ViewElement.title
         label.font = .preferredFont(forTextStyle: .body)
+        label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
-      case let .description(alignment, numberOfLines):
+      case let .description(text, alignment, numberOfLines):
         label.textColor = Constants.Theme.Color.ViewElement.subtitle
         label.font = .preferredFont(forTextStyle: .subheadline)
+        label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
       case .weatherSymbol:

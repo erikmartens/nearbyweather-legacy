@@ -7,3 +7,29 @@
 //
 
 import Foundation
+
+struct WeatherStationCurrentInformationSunCycleCellModel {
+  
+  let sunriseTimeString: String?
+  let sunsetTimeString: String?
+  
+  init(
+    sunriseTimeString: String? = nil,
+    sunsetTimeString: String? = nil
+  ) {
+    self.sunriseTimeString = sunriseTimeString
+    self.sunsetTimeString = sunsetTimeString
+  }
+  
+  init(
+    dayTimeInformationDTO: WeatherInformationDTO.DayTimeInformationDTO,
+    coordinatesDTO: WeatherInformationDTO.CoordinatesDTO
+  ) {
+    let dayCycleStrings = ConversionWorker.dayCycleTimeStrings(for: dayTimeInformationDTO, coordinates: coordinatesDTO)
+    
+    self.init(
+      sunriseTimeString: dayCycleStrings?.sunriseTimeString,
+      sunsetTimeString: dayCycleStrings?.sunsetTimeString
+    )
+  }
+}

@@ -54,10 +54,8 @@ final class MapFlow: Flow {
     switch step {
     case .map:
       return summonWeatherMapController()
-    case let .weatherDetails(identifier, isBookmark):
-      return summonWeatherDetailsController(identifier: identifier, isBookmark: isBookmark)
-    case let .weatherDetails2(identity, isBookmark):
-      return summonWeatherDetailsController2(identity: identity, isBookmark: isBookmark)
+    case let .weatherDetails2(identity):
+      return summonWeatherDetailsController2(identity: identity)
     case let .changeMapTypeAlert(currentSelectedOptionValue):
       return summonChangeMapTypeAlert(currentSelectedOptionValue: currentSelectedOptionValue)
     case let .changeAmountOfResultsAlert(currentSelectedOptionValue):
@@ -93,7 +91,7 @@ final class MapFlow: Flow {
   private func transform(step: Step) -> Step? {
     if let weatherDetailStep = step as? WeatherDetailStep {
       switch weatherDetailStep {
-      case .weatherDetail:
+      case .weatherDetails:
         return nil
       case .dismiss:
         return MapStep.dismissChildFlow
@@ -121,13 +119,10 @@ private extension MapFlow {
     ))
   }
   
-  func summonWeatherDetailsController(identifier: Int?, isBookmark: Bool) -> FlowContributors {
-    guard let identifier = identifier else {
-      return .none
-    }
+  func summonWeatherDetailsController2(identity: PersistencyModelIdentityProtocol) -> FlowContributors {
     let weatherDetailFlow = WeatherDetailFlow(dependencies: WeatherDetailFlow.Dependencies(
-      identifier: identifier,
-      isBookmark: isBookmark
+      weatherInformationIdentity: identity,
+      dependencyContainer: dependencyContainer
     ))
     
     Flows.whenReady(flow1: weatherDetailFlow) { [rootViewController] (weatherDetailRoot: UINavigationController) in
@@ -135,10 +130,6 @@ private extension MapFlow {
     }
     
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: WeatherDetailStepper()))
-  }
-  
-  func summonWeatherDetailsController2(identity: PersistencyModelIdentityProtocol, isBookmark: Bool) -> FlowContributors {
-    .none // TODO
   }
   
   func summonChangeMapTypeAlert(currentSelectedOptionValue: MapTypeValue) -> FlowContributors { // TODO: test cancel action works properly

@@ -218,16 +218,8 @@ extension WeatherListViewModel: BaseTableViewSelectionDelegate {
       return
     }
     _ = Observable
-      .combineLatest(
-        Observable.just(cellViewModel.weatherInformationIdentity),
-        Observable.just(cellViewModel.isBookmark),
-        resultSelector: { weatherInformationIdentity, isBookmark -> ListStep in
-          ListStep.weatherDetails2(
-            identity: weatherInformationIdentity,
-            isBookmark: isBookmark
-          )
-        }
-      )
+      .just(cellViewModel.weatherInformationIdentity)
+      .map(ListStep.weatherDetails2)
       .take(1)
       .asSingle()
       .subscribe(onSuccess: steps.accept)

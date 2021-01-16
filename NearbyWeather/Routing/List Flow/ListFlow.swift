@@ -53,10 +53,8 @@ final class ListFlow: Flow {
       return summonWeatherListController()
     case .emptyList:
       return summonEmptyWeatherListController()
-    case let .weatherDetails(identifier, isBookmark):
-      return summonWeatherDetailsController(identifier: identifier, isBookmark: isBookmark)
-    case let .weatherDetails2(identity, isBookmark):
-      return summonWeatherDetailsController2(identity: identity, isBookmark: isBookmark)
+    case let .weatherDetails2(identity):
+      return summonWeatherDetailsController2(identity: identity)
     case let .changeListTypeAlert(currentSelectedOptionValue):
       return summonChangeListTypeAlert(currentSelectedOptionValue: currentSelectedOptionValue)
     case let .changeAmountOfResultsAlert(currentSelectedOptionValue):
@@ -71,7 +69,7 @@ final class ListFlow: Flow {
   private func transform(step: Step) -> Step? {
     if let weatherDetailStep = step as? WeatherDetailStep {
       switch weatherDetailStep {
-      case .weatherDetail:
+      case .weatherDetails:
         return nil
       case .dismiss:
         return ListStep.dismissChildFlow
@@ -105,13 +103,10 @@ private extension ListFlow {
     return .none
   }
   
-  func summonWeatherDetailsController(identifier: Int?, isBookmark: Bool) -> FlowContributors {
-    guard let identifier = identifier else {
-      return .none
-    }
+  func summonWeatherDetailsController2(identity: PersistencyModelIdentityProtocol) -> FlowContributors {
     let weatherDetailFlow = WeatherDetailFlow(dependencies: WeatherDetailFlow.Dependencies(
-      identifier: identifier,
-      isBookmark: isBookmark
+      weatherInformationIdentity: identity,
+      dependencyContainer: dependencyContainer
     ))
     
     Flows.whenReady(flow1: weatherDetailFlow) { [rootViewController] (weatherDetailRoot: UINavigationController) in
@@ -119,10 +114,6 @@ private extension ListFlow {
     }
     
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: WeatherDetailStepper()))
-  }
-  
-  func summonWeatherDetailsController2(identity: PersistencyModelIdentityProtocol, isBookmark: Bool) -> FlowContributors {
-    .none // TODO
   }
   
   func summonChangeListTypeAlert(currentSelectedOptionValue: ListTypeValue) -> FlowContributors { // TODO: test cancel action works properly

@@ -204,16 +204,8 @@ extension WeatherMapViewModel: BaseMapViewSelectionDelegate {
       return
     }
     _ = Observable
-      .combineLatest(
-        Observable.just(annotationViewModel.weatherInformationIdentity),
-        Observable.just(annotationViewModel.isBookmark),
-        resultSelector: { weatherInformationIdentity, isBookmark -> MapStep in
-          MapStep.weatherDetails2(
-            identity: weatherInformationIdentity,
-            isBookmark: isBookmark
-          )
-        }
-      )
+      .just(annotationViewModel.weatherInformationIdentity)
+      .map(MapStep.weatherDetails2)
       .take(1)
       .asSingle()
       .subscribe(onSuccess: steps.accept)

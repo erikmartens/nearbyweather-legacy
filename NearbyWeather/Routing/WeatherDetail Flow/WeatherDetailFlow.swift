@@ -7,13 +7,14 @@
 //
 
 import RxFlow
+import Swinject
 
 // MARK: - Dependencies
 
 extension WeatherDetailFlow {
   struct Dependencies {
-    let identifier: Int
-    let isBookmark: Bool
+    let weatherInformationIdentity: PersistencyModelIdentityProtocol
+    let dependencyContainer: Container
   }
 }
 
@@ -27,9 +28,7 @@ final class WeatherDetailFlow: Flow {
     rootViewController
   }
   
-  private lazy var rootViewController: UINavigationController = {
-    Factory.NavigationController.make(fromType: .standard)
-  }()
+  private lazy var rootViewController = Factory.NavigationController.make(fromType: .standard)
   
   // MARK: - Dependencies
   
@@ -56,9 +55,8 @@ final class WeatherDetailFlow: Flow {
       return .none
     }
     switch step {
-    case .weatherDetail:
-      return summonWeatherDetailController(weatherDataIdentifier: dependencies.identifier,
-                                           isBookmark: dependencies.isBookmark)
+    case .weatherDetails:
+      return summonWeatherDetailController()
     case .dismiss:
       return dismissWeatherDetailController()
     }
@@ -67,18 +65,17 @@ final class WeatherDetailFlow: Flow {
 
 private extension WeatherDetailFlow {
   
-  func summonWeatherDetailController(weatherDataIdentifier: Int?, isBookmark: Bool) -> FlowContributors {
-    guard let weatherDataIdentifier = weatherDataIdentifier,
-      let weatherDTO = WeatherInformationService.shared.weatherDTO(forIdentifier: weatherDataIdentifier) else {
-        return .none
-    }
-    let weatherDetailViewController = WeatherDetailViewController.instantiateFromStoryBoard(
-      weatherDTO: weatherDTO,
-      isBookmark: isBookmark
-    )
+  func summonWeatherDetailController() -> FlowContributors {
+    let weatherDetailViewController = WeatherStationCurrentInformationViewController(dependencies: WeatherStationCurrentInformationViewModel.Dependencies(
+      weatherInformationIdentity: dependencies.weatherInformationIdentity,
+      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
+      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,
+      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService2.self)!,
+      userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!
+    ))
     
     rootViewController.setViewControllers([weatherDetailViewController], animated: false)
-    return .one(flowContributor: .contribute(withNext: weatherDetailViewController))
+    return .one(flowContributor: .contribute(withNextPresentable: weatherDetailViewController, withNextStepper: weatherDetailViewController.viewModel))
   }
   
   func dismissWeatherDetailController() -> FlowContributors {

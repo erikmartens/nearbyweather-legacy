@@ -23,8 +23,6 @@ extension WeatherStationCurrentInformationAtmosphericDetailsCellViewModel {
 
 final class WeatherStationCurrentInformationAtmosphericDetailsCellViewModel: NSObject, BaseCellViewModel { // swiftlint:disable:this type_name
   
-  // MARK: - Public Access
-  
   // MARK: - Properties
   
   private let dependencies: Dependencies

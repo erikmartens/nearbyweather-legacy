@@ -40,13 +40,14 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
 
   // MARK: - Events
   
-  let cellModelDriver: Driver<WeatherListInformationTableViewCellModel>
+  lazy var cellModelDriver: Driver<WeatherListInformationTableViewCellModel> = { [dependencies] in
+    Self.createCellModelDriver(with: dependencies)
+  }()
 
   // MARK: - Initialization
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    cellModelDriver = Self.createDataSourceObserver(with: dependencies)
   }
   
   // MARK: - Functions
@@ -57,11 +58,11 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
   }
 }
 
-// MARK: - Observations
+// MARK: - Observation Helpers
 
 private extension WeatherListInformationTableViewCellViewModel {
   
-  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherListInformationTableViewCellModel> {
+  static func createCellModelDriver(with dependencies: Dependencies) -> Driver<WeatherListInformationTableViewCellModel> {
     let weatherInformationModelObservable = dependencies.weatherInformationService
       .createGetWeatherInformationItemObservable(
         for: dependencies.weatherInformationIdentity.identifier,

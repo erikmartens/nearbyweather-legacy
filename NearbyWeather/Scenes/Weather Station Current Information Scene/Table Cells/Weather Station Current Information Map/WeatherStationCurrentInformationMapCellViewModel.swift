@@ -14,11 +14,11 @@ import CoreLocation
 
 extension WeatherStationCurrentInformationMapCellViewModel {
   struct Dependencies {
+    let weatherInformationIdentity: PersistencyModelIdentityProtocol
+    let isBookmark: Bool
     let weatherInformationService: WeatherInformationReading
     let preferencesService: WeatherMapPreferenceReading
     let userLocationService: UserLocationReading
-    let weatherInformationIdentity: PersistencyModelIdentityProtocol
-    let isBookmark: Bool
   }
 }
 
@@ -38,7 +38,9 @@ final class WeatherStationCurrentInformationMapCellViewModel: NSObject, BaseCell
 
   // MARK: - Events
   
-  let cellModelDriver: Driver<WeatherStationCurrentInformationMapCellModel>
+  lazy var cellModelDriver: Driver<WeatherStationCurrentInformationMapCellModel> = { [dependencies] in
+    Self.createCellModelDriver(with: dependencies)
+  }()
   
   // MARK: - Observables
   
@@ -50,7 +52,6 @@ final class WeatherStationCurrentInformationMapCellViewModel: NSObject, BaseCell
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    cellModelDriver = Self.createDataSourceObserver(with: dependencies)
   }
   
   // MARK: - Functions
@@ -87,9 +88,11 @@ extension WeatherStationCurrentInformationMapCellViewModel {
   }
 }
 
+// MARK: - Observation Helpers
+
 private extension WeatherStationCurrentInformationMapCellViewModel {
   
-  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherStationCurrentInformationMapCellModel> {
+  static func createCellModelDriver(with dependencies: Dependencies) -> Driver<WeatherStationCurrentInformationMapCellModel> {
     Observable
       .combineLatest(
         createGetWeatherInformationDtoObservable(with: dependencies).map { $0.entity },
@@ -116,6 +119,7 @@ private extension WeatherStationCurrentInformationMapCellViewModel {
         for: dependencies.weatherInformationIdentity.identifier,
         isBookmark: dependencies.isBookmark
       )
+      .share(replay: 1)
   }
 }
 

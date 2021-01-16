@@ -111,7 +111,7 @@ final class WeatherDetailViewController: UIViewController, Stepper {
 
   private func configure() {
 
-    let isDayTime = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
+    let isDayTime = ConversionWorker.isDayTime(for: weatherDTO.dayTimeInformation, coordinates: weatherDTO.coordinates) ?? true
 
     var navigationBarTintColor: UIColor
     var navigationTintColor: UIColor
@@ -141,8 +141,8 @@ final class WeatherDetailViewController: UIViewController, Stepper {
       temperatureLabel.text = nil
     }
 
-    if let sunriseTimeSinceReferenceDate = weatherDTO.daytimeInformation.sunrise,
-      let sunsetTimeSinceReferenceDate = weatherDTO.daytimeInformation.sunset,
+    if let sunriseTimeSinceReferenceDate = weatherDTO.dayTimeInformation.sunrise,
+      let sunsetTimeSinceReferenceDate = weatherDTO.dayTimeInformation.sunset,
       let latitude = weatherDTO.coordinates.latitude,
       let longitude = weatherDTO.coordinates.longitude {
       let sunriseDate = Date(timeIntervalSince1970: sunriseTimeSinceReferenceDate)

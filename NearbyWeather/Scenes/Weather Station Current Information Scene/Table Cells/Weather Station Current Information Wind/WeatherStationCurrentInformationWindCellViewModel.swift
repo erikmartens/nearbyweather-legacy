@@ -29,13 +29,14 @@ final class WeatherStationCurrentInformationWindCellViewModel: NSObject, BaseCel
 
   // MARK: - Events
   
-  let cellModelDriver: Driver<WeatherStationCurrentInformationWindCellModel>
+  lazy var cellModelDriver: Driver<WeatherStationCurrentInformationWindCellModel> = { [dependencies] in
+    Self.createCellModelDriver(with: dependencies)
+  }()
 
   // MARK: - Initialization
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    cellModelDriver = Self.createDataSourceObserver(with: dependencies)
   }
   
   // MARK: - Functions
@@ -46,11 +47,11 @@ final class WeatherStationCurrentInformationWindCellViewModel: NSObject, BaseCel
   }
 }
 
-// MARK: - Observations
+// MARK: - Observation Helpers
 
 private extension WeatherStationCurrentInformationWindCellViewModel {
   
-  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherStationCurrentInformationWindCellModel> {
+  static func createCellModelDriver(with dependencies: Dependencies) -> Driver<WeatherStationCurrentInformationWindCellModel> {
     Observable
       .just(
         WeatherStationCurrentInformationWindCellModel(

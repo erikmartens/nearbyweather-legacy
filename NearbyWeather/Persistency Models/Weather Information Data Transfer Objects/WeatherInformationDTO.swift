@@ -142,7 +142,7 @@ struct WeatherInformationDTO: Codable {
   var atmosphericInformation: AtmosphericInformationDTO
   var windInformation: WindInformationDTO
   var cloudCoverage: CloudCoverageDTO
-  var daytimeInformation: DayTimeInformationDTO
+  var dayTimeInformation: DayTimeInformationDTO
   
   enum CodingKeys: String, CodingKey {
     case stationIdentifier = "id"
@@ -152,7 +152,7 @@ struct WeatherInformationDTO: Codable {
     case atmosphericInformation = "main"
     case windInformation = "wind"
     case cloudCoverage = "clouds"
-    case daytimeInformation = "sys"
+    case dayTimeInformation = "sys"
   }
   
   init(from decoder: Decoder) throws {
@@ -165,6 +165,6 @@ struct WeatherInformationDTO: Codable {
     self.atmosphericInformation = try values.decode(AtmosphericInformationDTO.self, forKey: .atmosphericInformation)
     self.windInformation = try values.decode(WindInformationDTO.self, forKey: .windInformation)
     self.cloudCoverage = try values.decode(CloudCoverageDTO.self, forKey: .cloudCoverage)
-    self.daytimeInformation = try values.decode(DayTimeInformationDTO.self, forKey: .daytimeInformation)
+    self.dayTimeInformation = try values.decode(DayTimeInformationDTO.self, forKey: .dayTimeInformation)
   }
 }

@@ -40,7 +40,7 @@ final class WeatherLocationMapAnnotation: NSObject, MKAnnotation {
         return nil
     }
     
-    let isDayTime = ConversionWorker.isDayTime(for: weatherDTO.daytimeInformation, coordinates: weatherDTO.coordinates) ?? true
+    let isDayTime = ConversionWorker.isDayTime(for: weatherDTO.dayTimeInformation, coordinates: weatherDTO.coordinates) ?? true
     
     var weatherConditionSymbol: String?
     if let weatherConditionIdentifier = weatherDTO.weatherCondition.first?.identifier {

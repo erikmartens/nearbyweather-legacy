@@ -19,6 +19,7 @@ extension WeatherStationCurrentInformationViewModel {
     let isBookmark: Bool
     let weatherInformationService: WeatherInformationReading
     let preferencesService: WeatherMapPreferenceReading
+    let userLocationService: UserLocationReading
   }
 }
 
@@ -46,6 +47,18 @@ final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseVi
   // MARK: - Drivers
   
   // MARK: - Observables
+  
+  private lazy var weatherInformationDtoObservable: Observable<PersistencyModel<WeatherInformationDTO>> = { [dependencies] in
+    Self.createGetWeatherInformationDtoObservable(with: dependencies)
+  }()
+  
+  private lazy var temperatureUnitOptionObservable: Observable<TemperatureUnitOption> = { [dependencies] in
+    dependencies.preferencesService.createGetTemperatureUnitOptionObservable().share(replay: 1)
+  }()
+  
+  private lazy var dimensionalUnitsOptionObservable: Observable<DimensionalUnitsOption> = { [dependencies] in
+    dependencies.preferencesService.createGetDimensionalUnitsOptionObservable().share(replay: 1)
+  }()
   
   // MARK: - Initialization
   
@@ -78,11 +91,143 @@ final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseVi
 extension WeatherStationCurrentInformationViewModel {
 
   func observeDataSource() {
+    let weatherStationCurrentInformationHeaderSectionItemsObservable = Observable
+      .combineLatest(
+        weatherInformationDtoObservable.map { $0.entity },
+        temperatureUnitOptionObservable,
+        dimensionalUnitsOptionObservable,
+        resultSelector: { [dependencies] weatherInformationDTO, temperatureUnitOption, dimensionalUnitsOption -> BaseCellViewModelProtocol in
+          WeatherStationCurrentInformationHeaderCellViewModel(dependencies: WeatherStationCurrentInformationHeaderCellViewModel.Dependencies(
+            weatherInformationDTO: weatherInformationDTO,
+            temperatureUnitOption: temperatureUnitOption,
+            dimensionalUnitsOption: dimensionalUnitsOption,
+            isBookmark: dependencies.isBookmark
+          ))
+        }
+      )
+      .map { headerCell -> [TableViewSectionData] in
+        [WeatherStationCurrentInformationHeaderItemsSection(
+          sectionCellsIdentifier: WeatherStationCurrentInformationHeaderCell.reuseIdentifier,
+          sectionItems: [headerCell]
+        )]
+      }
     
+    let weatherStationCurrentInformationSunCycleSectionItemsObservable = weatherInformationDtoObservable
+      .map { $0.entity }
+      .map { weatherInformationDTO -> [BaseCellViewModelProtocol] in
+        guard let dayCycleStrings = ConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) else {
+          return []
+        }
+        return [WeatherStationCurrentInformationSunCycleCellViewModel(dependencies: WeatherStationCurrentInformationSunCycleCellViewModel.Dependencies(
+          sunriseTimeString: dayCycleStrings.sunriseTimeString,
+          sunsetTimeString: dayCycleStrings.sunsetTimeString
+        ))]
+      }
+      .map { sunCycleCellItems -> [TableViewSectionData] in
+        [WeatherStationCurrentInformationHeaderItemsSection(
+          sectionCellsIdentifier: WeatherStationCurrentInformationSunCycleCell.reuseIdentifier,
+          sectionItems: sunCycleCellItems
+        )]
+      }
+    
+    let weatherStationCurrentInformationAtmosphericDetailsSectionItemsObservable = weatherInformationDtoObservable
+      .map { $0.entity }
+      .map { weatherInformationDTO -> [BaseCellViewModelProtocol] in
+        guard let cloudCoverage = weatherInformationDTO.cloudCoverage.coverage,
+              let humidity = weatherInformationDTO.atmosphericInformation.humidity,
+              let pressurePsi =  weatherInformationDTO.atmosphericInformation.pressurePsi else {
+          return []
+        }
+        
+        return [WeatherStationCurrentInformationAtmosphericDetailsCellViewModel(dependencies: WeatherStationCurrentInformationAtmosphericDetailsCellViewModel.Dependencies(
+          cloudCoverage: cloudCoverage,
+          humidity: humidity,
+          pressurePsi: pressurePsi
+        ))]
+      }
+      .map { atmosphericDetailsCellItems -> [TableViewSectionData] in
+        [WeatherStationCurrentInformationAtmosphericDetailsItemsSection(
+          sectionCellsIdentifier: WeatherStationCurrentInformationAtmosphericDetailsCell.reuseIdentifier,
+          sectionItems: atmosphericDetailsCellItems
+        )]
+      }
+    
+    let weatherStationCurrentInformationWindSectionItemsObservable = Observable
+      .combineLatest(
+        weatherInformationDtoObservable.map { $0.entity },
+        dimensionalUnitsOptionObservable,
+        resultSelector: { weatherInformationDTO, dimensionalUnitsOption -> [BaseCellViewModelProtocol] in
+          guard let windspeed = weatherInformationDTO.windInformation.windspeed,
+                let windDirectionDegrees = weatherInformationDTO.windInformation.degrees else {
+            return []
+          }
+          return [WeatherStationCurrentInformationWindCellViewModel(dependencies: WeatherStationCurrentInformationWindCellViewModel.Dependencies(
+            windSpeed: windspeed,
+            windDirectionDegrees: windDirectionDegrees,
+            dimensionaUnitsPreference: dimensionalUnitsOption
+          ))]
+        }
+      )
+      .map { windCellItems -> [TableViewSectionData] in
+        [WeatherStationCurrentInformationWindItemsSection(
+          sectionCellsIdentifier: WeatherStationCurrentInformationWindCell.reuseIdentifier,
+          sectionItems: windCellItems
+        )]
+      }
+    
+    let weatherStationCurrentInformationMapSectionItemsObservable = weatherInformationDtoObservable
+      .map { [dependencies] weatherInformationPersistencyModel -> [BaseCellViewModelProtocol] in
+        guard weatherInformationPersistencyModel.entity.coordinates.latitude != nil,
+              weatherInformationPersistencyModel.entity.coordinates.longitude != nil else {
+          return []
+        }
+        return [WeatherStationCurrentInformationMapCellViewModel(dependencies: WeatherStationCurrentInformationMapCellViewModel.Dependencies(
+          weatherInformationIdentity: weatherInformationPersistencyModel.identity,
+          isBookmark: dependencies.isBookmark,
+          weatherInformationService: dependencies.weatherInformationService,
+          preferencesService: dependencies.preferencesService,
+          userLocationService: dependencies.userLocationService
+        ))]
+      }
+      .map { mapCellItems -> [TableViewSectionData] in
+        [WeatherStationCurrentInformationMapItemsSection(
+          sectionCellsIdentifier: WeatherStationCurrentInformationMapCell.reuseIdentifier,
+          sectionItems: mapCellItems
+        )]
+      }
+      
+    Observable
+      .combineLatest(
+        weatherStationCurrentInformationHeaderSectionItemsObservable,
+        weatherStationCurrentInformationSunCycleSectionItemsObservable,
+        weatherStationCurrentInformationAtmosphericDetailsSectionItemsObservable,
+        weatherStationCurrentInformationWindSectionItemsObservable,
+        weatherStationCurrentInformationMapSectionItemsObservable,
+        resultSelector: { headerSectionItems, sunCycleSectionItems, atmosphericDetailsSectionItems, windSectionItems, mapSectionItems -> [TableViewSectionData] in
+          headerSectionItems + sunCycleSectionItems + atmosphericDetailsSectionItems + windSectionItems + mapSectionItems
+        }
+      )
+      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+      .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
+      .disposed(by: disposeBag)
   }
   
   func observeUserTapEvents() {
     
+  }
+}
+
+// MARK: - Observation Helpers
+
+private extension WeatherStationCurrentInformationViewModel {
+  
+  static func createGetWeatherInformationDtoObservable(with dependencies: Dependencies) -> Observable<PersistencyModel<WeatherInformationDTO>> {
+    dependencies.weatherInformationService
+      .createGetWeatherInformationItemObservable(
+        for: dependencies.weatherInformationIdentity.identifier,
+        isBookmark: dependencies.isBookmark
+      )
+      .share(replay: 1)
   }
 }
 

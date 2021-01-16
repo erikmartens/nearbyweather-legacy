@@ -36,9 +36,9 @@ struct WeatherStationCurrentInformationHeaderCellModel {
     dimensionalUnitsOption: DimensionalUnitsOption,
     isBookmark: Bool
   ) {
-    let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.daytimeInformation, coordinates: weatherInformationDTO.coordinates)
-    let isDayTimeString = ConversionWorker.isDayTimeString(for: weatherInformationDTO.daytimeInformation, coordinates: weatherInformationDTO.coordinates)
-    let dayCycleStrings = ConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.daytimeInformation, coordinates: weatherInformationDTO.coordinates)
+    let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
+    let isDayTimeString = ConversionWorker.isDayTimeString(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
+    let dayCycleStrings = ConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
     
     self.init(
       weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(

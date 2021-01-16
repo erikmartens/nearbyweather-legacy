@@ -23,7 +23,9 @@ final class WeatherListAlertTableViewCellViewModel: NSObject, BaseCellViewModel 
 
   // MARK: - Events
   
-  let cellModelDriver: Driver<WeatherListAlertTableViewCellModel>
+  lazy var cellModelDriver: Driver<WeatherListAlertTableViewCellModel> = { [dependencies] in
+    Self.createCellModelDriver(error: dependencies.error)
+  }()
   
   // MARK: - Properties
   
@@ -33,7 +35,6 @@ final class WeatherListAlertTableViewCellViewModel: NSObject, BaseCellViewModel 
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    cellModelDriver = Self.createDataSourceObserver(error: dependencies.error)
   }
   
   // MARK: - Functions
@@ -44,11 +45,11 @@ final class WeatherListAlertTableViewCellViewModel: NSObject, BaseCellViewModel 
   }
 }
 
-// MARK: - Observations
+// MARK: - Observation Helpers
 
 private extension WeatherListAlertTableViewCellViewModel {
   
-  static func createDataSourceObserver(error: Error) -> Driver<WeatherListAlertTableViewCellModel> {
+  static func createCellModelDriver(error: Error) -> Driver<WeatherListAlertTableViewCellModel> {
     var errorMessage: String
     
     if let error = error as? WeatherInformationService2.DomainError {

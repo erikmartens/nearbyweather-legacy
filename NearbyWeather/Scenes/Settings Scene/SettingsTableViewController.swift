@@ -122,7 +122,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch indexPath.section {
     case 0:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell // swiftlint:disable:this force_cast
       cell.configure(
         withTitle: R.string.localizable.about(),
         image: R.image.info(),
@@ -132,7 +132,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       return cell
     case 1:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell // swiftlint:disable:this force_cast
         cell.configure(
           withTitle: R.string.localizable.apiKey(),
           image: R.image.seal(),
@@ -141,7 +141,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
         cell.accessoryType = .disclosureIndicator
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell // swiftlint:disable:this force_cast
       cell.configure(
         withTitle: R.string.localizable.get_started_with_openweathermap(),
         image: R.image.start(),
@@ -151,7 +151,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       return cell
     case 2:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell // swiftlint:disable:this force_cast
         
         let entriesCount = WeatherInformationService.shared.bookmarkedLocations.count
         let description: String
@@ -178,7 +178,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
         )
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedSingleLabelCell.reuseIdentifier, for: indexPath) as! ImagedSingleLabelCell // swiftlint:disable:this force_cast
       cell.configure(
         withTitle: R.string.localizable.add_location(),
         image: R.image.add_bookmark(),
@@ -188,7 +188,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       return cell
     case 3:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedToggleCell.reuseIdentifier, for: indexPath) as! ImagedToggleCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedToggleCell.reuseIdentifier, for: indexPath) as! ImagedToggleCell // swiftlint:disable:this force_cast
         cell.configure(
           withTitle: R.string.localizable.show_temp_on_icon(),
           image: R.image.badge(),
@@ -217,7 +217,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
         return cell
       }
       
-      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell // swiftlint:disable:this force_cast
       
       // TODO: fix this
       if let preferredBookmarkId = PreferencesService.shared.preferredBookmark.value,
@@ -234,7 +234,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       
       return cell
     case 4:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedToggleCell.reuseIdentifier, for: indexPath) as! ImagedToggleCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedToggleCell.reuseIdentifier, for: indexPath) as! ImagedToggleCell // swiftlint:disable:this force_cast
       cell.configure(
         withTitle: R.string.localizable.refresh_on_app_start(),
         image: R.image.reload(),
@@ -249,7 +249,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
       return cell
     case 5:
       if indexPath.row == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell // swiftlint:disable:this force_cast
         cell.configure(
           withTitle: R.string.localizable.temperature_unit(),
           description: PreferencesService.shared.temperatureUnit.stringValue,
@@ -258,7 +258,7 @@ final class SettingsTableViewController: UITableViewController, Stepper {
         )
         return cell
       }
-      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: ImagedDualLabelCell.reuseIdentifier, for: indexPath) as! ImagedDualLabelCell // swiftlint:disable:this force_cast
       cell.configure(
         withTitle: R.string.localizable.distanceSpeed_unit(),
         description: PreferencesService.shared.distanceSpeedUnit.stringValue,

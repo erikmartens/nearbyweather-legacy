@@ -11,10 +11,10 @@ import RxRealm
 import RxSwift
 
 protocol PersistencyModelProtocol {
-  associatedtype T: Codable
+  associatedtype PersistencyModelEntity: Codable
   var identity: PersistencyModelIdentityProtocol { get }
-  var entity: T { get }
-  init(identity: PersistencyModelIdentityProtocol, entity: T)
+  var entity: PersistencyModelEntity { get }
+  init(identity: PersistencyModelIdentityProtocol, entity: PersistencyModelEntity)
   init?(collection: String, identifier: String, data: Data?)
   func toRealmModel() -> RealmModel
 }

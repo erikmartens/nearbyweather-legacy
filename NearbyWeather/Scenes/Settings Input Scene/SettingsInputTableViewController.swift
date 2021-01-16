@@ -67,7 +67,7 @@ final class SettingsInputTableViewController: UITableViewController, Stepper {
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.textInputCell.identifier) as! TextInputCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.textInputCell.identifier) as! TextInputCell // swiftlint:disable:this force_cast
     cell.inputTextField.delegate = self
     cell.inputTextField.text = UserDefaults.standard.string(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
 

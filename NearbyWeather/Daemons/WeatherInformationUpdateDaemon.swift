@@ -83,9 +83,9 @@ private extension WeatherInformationUpdateDaemon {
       }
       .filter {
         switch $0 {
-        case .next():
+        case .next:
           return true
-        case .error(_), .completed:
+        case .error, .completed:
           return false
         }
       }

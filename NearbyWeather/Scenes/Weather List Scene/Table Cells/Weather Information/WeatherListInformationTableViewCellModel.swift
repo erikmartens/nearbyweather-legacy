@@ -80,4 +80,3 @@ private extension WeatherListInformationTableViewCellModel {
       : (isDayTime ? Constants.Theme.Color.MarqueColors.nearbyDay : Constants.Theme.Color.MarqueColors.nearbyNight)
   }
 }
-

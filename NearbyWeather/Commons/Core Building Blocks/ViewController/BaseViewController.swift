@@ -15,7 +15,6 @@ protocol BaseViewController {
   func bindUserInputToViewModel(_ viewModel: ViewModel)
 }
 
-
 /// functions are optional
 extension BaseViewController {
   func bindContentFromViewModel(_ viewModel: ViewModel) {}

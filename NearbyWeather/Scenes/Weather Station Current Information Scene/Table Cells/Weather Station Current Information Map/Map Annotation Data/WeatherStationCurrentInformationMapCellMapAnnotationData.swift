@@ -6,7 +6,7 @@
 //  Copyright © 2021 Erik Maximilian Martens. All rights reserved.
 //
 
-final class WeatherStationCurrentInformationMapCellMapAnnotationData: MapAnnotationData {
+final class WeatherStationCurrentInformationMapCellMapAnnotationData: MapAnnotationData { // swiftlint:disable:this type_name
   
   var annotationViewReuseIdentifier: String
   var annotationItems: [BaseAnnotationViewModelProtocol]

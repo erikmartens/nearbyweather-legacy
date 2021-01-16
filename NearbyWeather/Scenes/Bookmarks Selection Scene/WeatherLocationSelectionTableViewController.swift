@@ -76,7 +76,7 @@ final class WeatherLocationSelectionTableViewController: UITableViewController, 
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell // swiftlint:disable:this force_cast
     
     var usStateName: String?
     if let usStateCode = filteredCities[indexPath.row].state {

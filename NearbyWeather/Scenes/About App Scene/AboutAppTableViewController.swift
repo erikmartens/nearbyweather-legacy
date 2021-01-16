@@ -166,9 +166,9 @@ final class AboutAppTableViewController: UITableViewController, Stepper {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let singleLabelCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
-    let subtitleCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell
-    let buttonCell = tableView.dequeueReusableCell(withIdentifier: ButtonCell.reuseIdentifier, for: indexPath) as! ButtonCell
+    let singleLabelCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell // swiftlint:disable:this force_cast
+    let subtitleCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.subtitleCell.identifier, for: indexPath) as! SubtitleCell // swiftlint:disable:this force_cast
+    let buttonCell = tableView.dequeueReusableCell(withIdentifier: ButtonCell.reuseIdentifier, for: indexPath) as! ButtonCell // swiftlint:disable:this force_cast
     
     [singleLabelCell, subtitleCell].forEach {
       $0.selectionStyle = .default
@@ -179,7 +179,7 @@ final class AboutAppTableViewController: UITableViewController, Stepper {
     
     switch indexPath.section {
     case 0:
-      let appVersionCell = tableView.dequeueReusableCell(withIdentifier: AppVersionCell.reuseIdentifier, for: indexPath) as! AppVersionCell
+      let appVersionCell = tableView.dequeueReusableCell(withIdentifier: AppVersionCell.reuseIdentifier, for: indexPath) as! AppVersionCell // swiftlint:disable:this force_cast
       appVersionCell.configure(
         withImage: Bundle.main.appIcon,
         title: R.string.localizable.app_name().append(contentsOf: R.string.localizable.app_name_subtitle(), delimiter: .custom(string: " - ")),

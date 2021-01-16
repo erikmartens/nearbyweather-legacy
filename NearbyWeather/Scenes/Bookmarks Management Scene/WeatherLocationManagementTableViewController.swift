@@ -59,7 +59,7 @@ final class WeatherLocationManagementTableViewController: UITableViewController,
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch indexPath.section {
     case 0:
-      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.singleLabelCell.identifier, for: indexPath) as! SingleLabelCell // swiftlint:disable:this force_cast
       let location = WeatherInformationService.shared.bookmarkedLocations[indexPath.row]
       cell.contentLabel.text = location.name.append(contentsOf: location.country, delimiter: .comma)
       cell.selectionStyle = .none

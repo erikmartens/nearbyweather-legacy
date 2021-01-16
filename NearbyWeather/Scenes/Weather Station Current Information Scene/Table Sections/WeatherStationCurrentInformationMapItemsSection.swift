@@ -27,4 +27,3 @@ final class WeatherStationCurrentInformationMapItemsSection: TableViewSectionDat
     self.sectionItems = sectionItems
   }
 }
-

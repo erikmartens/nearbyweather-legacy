@@ -25,7 +25,7 @@ private extension WeatherStationCurrentInformationAtmosphericDetailsCell {
 
 // MARK: - Class Definition
 
-final class WeatherStationCurrentInformationAtmosphericDetailsCell: UITableViewCell, BaseCell {
+final class WeatherStationCurrentInformationAtmosphericDetailsCell: UITableViewCell, BaseCell { // swiftlint:disable:this type_name
   
   typealias CellViewModel = WeatherStationCurrentInformationAtmosphericDetailsCellViewModel
   private typealias CellContentInsets = Constants.Dimensions.Spacing.ContentInsets

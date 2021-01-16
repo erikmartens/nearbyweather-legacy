@@ -8,4 +8,4 @@
 
 import Foundation
 
-final class WeatherStationCurrentInformationTableViewDataSource: BaseTableViewDataSource {}
+final class WeatherStationCurrentInformationTableViewDataSource: BaseTableViewDataSource {} // swiftlint:disable:this type_name

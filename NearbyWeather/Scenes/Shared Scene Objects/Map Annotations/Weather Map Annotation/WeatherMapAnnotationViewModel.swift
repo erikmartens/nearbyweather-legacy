@@ -15,8 +15,8 @@ import RxCocoa
 extension WeatherMapAnnotationViewModel {
   struct Dependencies {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
-    let isBookmark: Bool
     let coordinate: CLLocationCoordinate2D
+    let weatherStationService: WeatherStationBookmarkReading
     let weatherInformationService: WeatherInformationReading
     let preferencesService: WeatherMapPreferenceReading
     weak var annotationSelectionDelegate: BaseMapViewSelectionDelegate?
@@ -31,10 +31,6 @@ final class WeatherMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
   
   var weatherInformationIdentity: PersistencyModelIdentityProtocol {
     dependencies.weatherInformationIdentity
-  }
-  
-  var isBookmark: Bool {
-    dependencies.isBookmark
   }
   
   var coordinate: CLLocationCoordinate2D {
@@ -55,13 +51,14 @@ final class WeatherMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
   
   // MARK: - Drivers
   
-  let annotationModelDriver: Driver<WeatherMapAnnotationModel>
+  lazy var annotationModelDriver: Driver<WeatherMapAnnotationModel> = { [dependencies] in
+    Self.createDataSourceObserver(with: dependencies)
+  }()
 
   // MARK: - Initialization
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    annotationModelDriver = Self.createDataSourceObserver(with: dependencies)
   }
   
   // MARK: - Functions
@@ -83,27 +80,40 @@ extension WeatherMapAnnotationViewModel {
       })
       .disposed(by: disposeBag)
   }
+}
+
+// MARK: - Observation Helpers
+
+private extension WeatherMapAnnotationViewModel {
   
-  private static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherMapAnnotationModel> {
-    let weatherInformationModelObservable = dependencies.weatherInformationService
-      .createGetWeatherInformationItemObservable(
-        for: dependencies.weatherInformationIdentity.identifier,
-        isBookmark: dependencies.isBookmark
+  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherMapAnnotationModel> {
+    let weatherStationIsBookmarkedObservable = Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies).share(replay: 1)
+    
+    let weatherInformationDtoObservable = Observable
+      .combineLatest(
+        Observable.just(dependencies.weatherInformationIdentity.identifier),
+        weatherStationIsBookmarkedObservable
       )
+      .flatMapLatest(dependencies.weatherInformationService.createGetWeatherInformationItemObservable)
       .map { $0.entity }
       
     return Observable
       .combineLatest(
-        weatherInformationModelObservable,
+        weatherInformationDtoObservable,
         dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
-        resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption -> WeatherMapAnnotationModel in
+        weatherStationIsBookmarkedObservable,
+        resultSelector: { weatherInformationModel, temperatureUnitOption, isBookmark -> WeatherMapAnnotationModel in
           WeatherMapAnnotationModel(
             weatherInformationDTO: weatherInformationModel,
             temperatureUnitOption: temperatureUnitOption,
-            isBookmark: dependencies.isBookmark
+            isBookmark: isBookmark
           )
         }
       )
       .asDriver(onErrorJustReturn: WeatherMapAnnotationModel())
+  }
+  
+  static func createGetWeatherStationIsBookmarkedObservable(with dependencies: Dependencies) -> Observable<Bool> {
+    dependencies.weatherStationService.createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
   }
 }

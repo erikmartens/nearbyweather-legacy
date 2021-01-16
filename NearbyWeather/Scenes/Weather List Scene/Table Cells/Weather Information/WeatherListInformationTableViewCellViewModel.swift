@@ -14,7 +14,7 @@ import RxCocoa
 extension WeatherListInformationTableViewCellViewModel {
   struct Dependencies {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
-    let isBookmark: Bool
+    let weatherStationService: WeatherStationBookmarkReading
     let weatherInformationService: WeatherInformationReading
     let preferencesService: WeatherMapPreferenceReading
   }
@@ -28,10 +28,6 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
   
   var weatherInformationIdentity: PersistencyModelIdentityProtocol {
     dependencies.weatherInformationIdentity
-  }
-  
-  var isBookmark: Bool {
-    dependencies.isBookmark
   }
   
   // MARK: - Properties
@@ -63,27 +59,35 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
 private extension WeatherListInformationTableViewCellViewModel {
   
   static func createCellModelDriver(with dependencies: Dependencies) -> Driver<WeatherListInformationTableViewCellModel> {
-    let weatherInformationModelObservable = dependencies.weatherInformationService
-      .createGetWeatherInformationItemObservable(
-        for: dependencies.weatherInformationIdentity.identifier,
-        isBookmark: dependencies.isBookmark
+    let weatherStationIsBookmarkedObservable = Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies).share(replay: 1)
+    
+    let weatherInformationDtoObservable = Observable
+      .combineLatest(
+        Observable.just(dependencies.weatherInformationIdentity.identifier),
+        weatherStationIsBookmarkedObservable
       )
+      .flatMapLatest(dependencies.weatherInformationService.createGetWeatherInformationItemObservable)
       .map { $0.entity }
       
     return Observable
       .combineLatest(
-        weatherInformationModelObservable,
+        weatherInformationDtoObservable,
         dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
         dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
-        resultSelector: { [dependencies] weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption -> WeatherListInformationTableViewCellModel in
+        weatherStationIsBookmarkedObservable,
+        resultSelector: { weatherInformationModel, temperatureUnitOption, dimensionalUnitsOption, isBookmark -> WeatherListInformationTableViewCellModel in
           WeatherListInformationTableViewCellModel(
             weatherInformationDTO: weatherInformationModel,
             temperatureUnitOption: temperatureUnitOption,
             dimensionalUnitsOption: dimensionalUnitsOption,
-            isBookmark: dependencies.isBookmark
+            isBookmark: isBookmark
           )
         }
       )
       .asDriver(onErrorJustReturn: WeatherListInformationTableViewCellModel())
+  }
+  
+  static func createGetWeatherStationIsBookmarkedObservable(with dependencies: Dependencies) -> Observable<Bool> {
+    dependencies.weatherStationService.createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
   }
 }

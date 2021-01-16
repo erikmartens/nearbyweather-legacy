@@ -71,11 +71,11 @@ final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseVi
   // MARK: - Observables
   
   private lazy var weatherInformationDtoObservable: Observable<PersistencyModel<WeatherInformationDTO>> = { [dependencies] in
-    Self.createGetWeatherInformationDtoObservable(with: dependencies)
+    Self.createGetWeatherInformationDtoObservable(with: dependencies).share(replay: 1)
   }()
   
   private lazy var weatherStationIsBookmarkedObservable: Observable<Bool> = { [dependencies] in
-    Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies)
+    Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies).share(replay: 1)
   }()
   
   private lazy var temperatureUnitOptionObservable: Observable<TemperatureUnitOption> = { [dependencies] in
@@ -202,24 +202,20 @@ extension WeatherStationCurrentInformationViewModel {
         )]
       }
     
-    let weatherStationCurrentInformationMapSectionItemsObservable = Observable
-      .combineLatest(
-        weatherInformationDtoObservable,
-        weatherStationIsBookmarkedObservable,
-        resultSelector: { [dependencies] weatherInformationPersistencyModel, isBookmark -> [BaseCellViewModelProtocol] in
-          guard weatherInformationPersistencyModel.entity.coordinates.latitude != nil,
-                weatherInformationPersistencyModel.entity.coordinates.longitude != nil else {
-            return []
-          }
-          return [WeatherStationCurrentInformationMapCellViewModel(dependencies: WeatherStationCurrentInformationMapCellViewModel.Dependencies(
-            weatherInformationIdentity: weatherInformationPersistencyModel.identity,
-            isBookmark: isBookmark,
-            weatherInformationService: dependencies.weatherInformationService,
-            preferencesService: dependencies.preferencesService,
-            userLocationService: dependencies.userLocationService
-          ))]
+    let weatherStationCurrentInformationMapSectionItemsObservable = weatherInformationDtoObservable
+      .map { [dependencies] weatherInformationPersistencyModel -> [BaseCellViewModelProtocol] in
+        guard weatherInformationPersistencyModel.entity.coordinates.latitude != nil,
+              weatherInformationPersistencyModel.entity.coordinates.longitude != nil else {
+          return []
         }
-      )
+        return [WeatherStationCurrentInformationMapCellViewModel(dependencies: WeatherStationCurrentInformationMapCellViewModel.Dependencies(
+          weatherInformationIdentity: weatherInformationPersistencyModel.identity,
+          weatherStationService: dependencies.weatherStationService,
+          weatherInformationService: dependencies.weatherInformationService,
+          preferencesService: dependencies.preferencesService,
+          userLocationService: dependencies.userLocationService
+        ))]
+      }
       .map { mapCellItems -> [TableViewSectionData] in
         [WeatherStationCurrentInformationMapItemsSection(
           sectionCellsIdentifier: WeatherStationCurrentInformationMapCell.reuseIdentifier,
@@ -257,14 +253,10 @@ private extension WeatherStationCurrentInformationViewModel {
         Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies)
       )
       .flatMapLatest(dependencies.weatherInformationService.createGetWeatherInformationItemObservable)
-      .share(replay: 1)
   }
   
   static func createGetWeatherStationIsBookmarkedObservable(with dependencies: Dependencies) -> Observable<Bool> {
-    dependencies.weatherStationService
-      .createGetBookmarkedStationsObservable()
-      .map { [dependencies] in $0.contains(where: { String($0.identifier) == dependencies.weatherInformationIdentity.identifier }) }
-      .share(replay: 1)
+    dependencies.weatherStationService.createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
   }
 }
 

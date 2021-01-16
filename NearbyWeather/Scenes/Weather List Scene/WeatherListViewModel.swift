@@ -293,7 +293,7 @@ private extension Array where Element == PersistencyModel<WeatherInformationDTO>
       WeatherListInformationTableViewCellViewModel(
         dependencies: WeatherListInformationTableViewCellViewModel.Dependencies(
           weatherInformationIdentity: weatherInformationPersistencyModel.identity,
-          isBookmark: isBookmark,
+          weatherStationService: dependencies.weatherStationService,
           weatherInformationService: dependencies.weatherInformationService,
           preferencesService: dependencies.preferencesService
         )

@@ -15,7 +15,7 @@ import CoreLocation
 extension WeatherStationCurrentInformationMapCellViewModel {
   struct Dependencies {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
-    let isBookmark: Bool
+    let weatherStationService: WeatherStationBookmarkReading
     let weatherInformationService: WeatherInformationReading
     let preferencesService: WeatherMapPreferenceReading
     let userLocationService: UserLocationReading
@@ -45,7 +45,7 @@ final class WeatherStationCurrentInformationMapCellViewModel: NSObject, BaseCell
   // MARK: - Observables
   
   private lazy var weatherInformationDtoObservable: Observable<PersistencyModel<WeatherInformationDTO>> = { [dependencies] in
-    Self.createGetWeatherInformationDtoObservable(with: dependencies)
+    Self.createGetWeatherInformationDtoObservable(with: dependencies).share(replay: 1)
   }()
 
   // MARK: - Initialization
@@ -70,9 +70,9 @@ extension WeatherStationCurrentInformationMapCellViewModel {
     weatherInformationDtoObservable
       .map { [dependencies] weatherInformationDTO in
         [weatherInformationDTO].mapToWeatherMapAnnotationViewModel(
+          weatherStationService: dependencies.weatherStationService,
           weatherInformationService: dependencies.weatherInformationService,
           preferencesService: dependencies.preferencesService,
-          isBookmark: dependencies.isBookmark,
           selectionDelegate: nil
         )
       }
@@ -113,13 +113,17 @@ private extension WeatherStationCurrentInformationMapCellViewModel {
       .asDriver(onErrorJustReturn: WeatherStationCurrentInformationMapCellModel())
   }
   
+  static func createGetWeatherStationIsBookmarkedObservable(with dependencies: Dependencies) -> Observable<Bool> {
+    dependencies.weatherStationService.createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
+  }
+  
   static func createGetWeatherInformationDtoObservable(with dependencies: Dependencies) -> Observable<PersistencyModel<WeatherInformationDTO>> {
-    dependencies.weatherInformationService
-      .createGetWeatherInformationItemObservable(
-        for: dependencies.weatherInformationIdentity.identifier,
-        isBookmark: dependencies.isBookmark
+    Observable
+      .combineLatest(
+        Observable.just(dependencies.weatherInformationIdentity.identifier),
+        Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies)
       )
-      .share(replay: 1)
+      .flatMapLatest(dependencies.weatherInformationService.createGetWeatherInformationItemObservable)
   }
 }
 

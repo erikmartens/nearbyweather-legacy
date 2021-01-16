@@ -73,12 +73,13 @@ final class WeatherStationService2 {
 
 // MARK: - Weather Station Bookmark Settings
 
-protocol WeatherStationBookmarkPersistence {
+protocol WeatherStationBookmarkPersistence: WeatherStationBookmarkReading {
   func createAddBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable
   func createRemoveBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable
  
   func createSetBookmarkedStationsCompletable(_ weatherStationDTOs: [WeatherStationDTO]) -> Completable
   func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
+  func createGetIsStationBookmarkedObservable(for identity: PersistencyModelIdentityProtocol) -> Observable<Bool>
   
   func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
   func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?>
@@ -139,6 +140,11 @@ extension WeatherStationService2: WeatherStationBookmarkPersistence {
       .persistencyService
       .observeResources(in: WeatherStationService2.PersistencyKeys.weatherStationBookmarks.collection, type: WeatherStationDTO.self)
       .map { $0.map { $0.entity } }
+  }
+  
+  func createGetIsStationBookmarkedObservable(for identity: PersistencyModelIdentityProtocol) -> Observable<Bool> {
+    createGetBookmarkedStationsObservable()
+      .map { $0.contains(where: { String($0.identifier) == identity.identifier }) }
   }
   
   func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable {
@@ -215,6 +221,7 @@ protocol WeatherStationBookmarkReading {
   func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
   func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?>
   func createGetPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
+  func createGetIsStationBookmarkedObservable(for identity: PersistencyModelIdentityProtocol) -> Observable<Bool>
 }
 
 extension WeatherStationService2: WeatherStationBookmarkReading {}

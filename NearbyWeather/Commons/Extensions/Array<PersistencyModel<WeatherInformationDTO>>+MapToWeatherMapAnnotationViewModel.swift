@@ -11,9 +11,9 @@ import CoreLocation
 extension Array where Element == PersistencyModel<WeatherInformationDTO> {
   
   func mapToWeatherMapAnnotationViewModel(
+    weatherStationService: WeatherStationBookmarkReading,
     weatherInformationService: WeatherInformationReading,
     preferencesService: WeatherMapPreferenceReading,
-    isBookmark: Bool,
     selectionDelegate: BaseMapViewSelectionDelegate?
   ) -> [BaseAnnotationViewModelProtocol] {
     compactMap { weatherInformationPersistencyModel -> WeatherMapAnnotationViewModel? in
@@ -23,11 +23,11 @@ extension Array where Element == PersistencyModel<WeatherInformationDTO> {
       }
       return WeatherMapAnnotationViewModel(dependencies: WeatherMapAnnotationViewModel.Dependencies(
         weatherInformationIdentity: weatherInformationPersistencyModel.identity,
-        isBookmark: isBookmark,
         coordinate: CLLocationCoordinate2D(
           latitude: latitude,
           longitude: longitude
         ),
+        weatherStationService: weatherStationService,
         weatherInformationService: weatherInformationService,
         preferencesService: preferencesService,
         annotationSelectionDelegate: selectionDelegate

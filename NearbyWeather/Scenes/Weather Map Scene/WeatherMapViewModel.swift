@@ -120,9 +120,9 @@ extension WeatherMapViewModel {
         apiKeyValidObservable,
         resultSelector: { [dependencies] weatherInformationList, _ in
           weatherInformationList.mapToWeatherMapAnnotationViewModel(
+            weatherStationService: dependencies.weatherStationService,
             weatherInformationService: dependencies.weatherInformationService,
             preferencesService: dependencies.preferencesService,
-            isBookmark: false,
             selectionDelegate: self
           )
         }
@@ -136,9 +136,9 @@ extension WeatherMapViewModel {
         apiKeyValidObservable,
         resultSelector: { [dependencies] weatherInformationList, _ in
           weatherInformationList.mapToWeatherMapAnnotationViewModel(
+            weatherStationService: dependencies.weatherStationService,
             weatherInformationService: dependencies.weatherInformationService,
             preferencesService: dependencies.preferencesService,
-            isBookmark: true,
             selectionDelegate: self
           )
         }

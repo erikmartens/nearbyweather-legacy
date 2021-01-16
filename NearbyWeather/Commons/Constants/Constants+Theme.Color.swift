@@ -50,12 +50,21 @@ extension Constants.Theme.Color {
 
   enum ViewElement {
 
-    static var title: UIColor {
+    static var titleLight: UIColor {
       UIColor.from(dark: .init(hex: 0xFFFFFF),
                    light: .init(hex: 0x000000))
     }
+    
+    static var titleDark: UIColor {
+      UIColor.from(dark: .init(hex: 0x000000),
+                   light: .init(hex: 0xFFFFFF))
+    }
 
-    static var subtitle: UIColor {
+    static var subtitleLight: UIColor {
+      Constants.Theme.Color.SystemColor.gray
+    }
+    
+    static var subtitleDark: UIColor {
       Constants.Theme.Color.SystemColor.gray
     }
     

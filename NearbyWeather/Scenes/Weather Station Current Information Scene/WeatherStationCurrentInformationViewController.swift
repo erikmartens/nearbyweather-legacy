@@ -66,11 +66,6 @@ final class WeatherStationCurrentInformationViewController: UIViewController, Ba
     super.viewWillAppear(animated)
     setupUiAppearance()
   }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    tableView.refreshControl?.endRefreshing()
-  }
 }
 
 // MARK: - ViewModel Bindings
@@ -84,21 +79,34 @@ extension WeatherStationCurrentInformationViewController {
   }
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {
-   
+    viewModel
+      .navigationBarColorDriver
+      .drive { [weak navigationController] colorTuple in
+        guard let barTintColor = colorTuple.0,
+              let tintColor = colorTuple.1 else {
+          return
+        }
+        navigationController?.navigationBar.style(withBarTintColor: barTintColor, tintColor: tintColor)
+      }
+      .disposed(by: disposeBag)
+    
+    viewModel
+      .tableDataSource
+      .sectionDataSources
+      .map { _ in () }
+      .asDriver(onErrorJustReturn: ())
+      .drive(onNext: { [weak self] in self?.tableView.reloadData() })
+      .disposed(by: disposeBag)
   }
   
-  func bindUserInputToViewModel(_ viewModel: ViewModel) {
-    
-  }
+  func bindUserInputToViewModel(_ viewModel: ViewModel) {} // nothing to do - will be used in the future
 }
 
 // MARK: - Setup
 
 private extension WeatherStationCurrentInformationViewController {
   
-  func setupUiComponents() {
-    
-  }
+  func setupUiComponents() {} // nothing to do - will be used in the future
   
   func setupUiAppearance() {
     view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground

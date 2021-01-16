@@ -28,19 +28,19 @@ extension Factory {
       
       switch type {
       case let .title(text, alignment, numberOfLines):
-        label.textColor = Constants.Theme.Color.ViewElement.title
+        label.textColor = Constants.Theme.Color.ViewElement.titleLight
         label.font = .preferredFont(forTextStyle: .title3)
         label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
       case let .body(text, alignment, numberOfLines):
-        label.textColor = Constants.Theme.Color.ViewElement.title
+        label.textColor = Constants.Theme.Color.ViewElement.titleLight
         label.font = .preferredFont(forTextStyle: .body)
         label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
       case let .description(text, alignment, numberOfLines):
-        label.textColor = Constants.Theme.Color.ViewElement.subtitle
+        label.textColor = Constants.Theme.Color.ViewElement.subtitleLight
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.text = text
         label.textAlignment = alignment

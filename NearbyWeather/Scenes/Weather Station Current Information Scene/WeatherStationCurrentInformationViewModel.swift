@@ -18,7 +18,7 @@ extension WeatherStationCurrentInformationViewModel {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
     let isBookmark: Bool
     let weatherInformationService: WeatherInformationReading
-    let preferencesService: UnitSettingsPreferenceReading
+    let preferencesService: WeatherMapPreferenceReading
   }
 }
 

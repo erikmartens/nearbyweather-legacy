@@ -18,7 +18,7 @@ extension WeatherListViewModel {
     let weatherInformationService: WeatherInformationPersistence & WeatherInformationUpdating
     let weatherStationService: WeatherStationBookmarkReading
     let userLocationService: UserLocationReading
-    let preferencesService: WeatherListPreferencePersistence & UnitSettingsPreferenceReading
+    let preferencesService: WeatherListPreferencePersistence & WeatherMapPreferenceReading
     let apiKeyService: ApiKeyReading
   }
 }

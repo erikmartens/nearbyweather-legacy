@@ -18,11 +18,11 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
   
   // MARK: - UIComponents
   
+  fileprivate lazy var mapView = Factory.MapView.make(fromType: .standard(frame: view.frame))
+  
   fileprivate lazy var mapTypeBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.layerType()))
   fileprivate lazy var amountOfResultsBarButton = Factory.BarButtonItem.make(fromType: .standard())
   fileprivate lazy var focusOnLocationBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.marker()))
-  
-  fileprivate lazy var mapView = Factory.MapView.make(fromType: .standard(frame: view.frame))
   
   // MARK: - Assets
   

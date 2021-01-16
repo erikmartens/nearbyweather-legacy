@@ -34,8 +34,10 @@ final class WeatherStationCurrentInformationHeaderCell: UITableViewCell, BaseCel
   // MARK: - UIComponents
   
   private lazy var weatherConditionSymbolLabel = Factory.Label.make(fromType: .weatherSymbol)
+  
   private lazy var weatherConditionTitleLabel = Factory.Label.make(fromType: .title(numberOfLines: 1))
   private lazy var temperatureLabelLabel = Factory.Label.make(fromType: .title(alignment: .right, numberOfLines: 1))
+  
   private lazy var weatherConditionSubtitleLabel = Factory.Label.make(fromType: .body(numberOfLines: 1))
   private lazy var dayTimeStatusLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
   

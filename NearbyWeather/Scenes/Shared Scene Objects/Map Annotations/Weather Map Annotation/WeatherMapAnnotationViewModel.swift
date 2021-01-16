@@ -17,8 +17,8 @@ extension WeatherMapAnnotationViewModel {
     let weatherInformationIdentity: PersistencyModelIdentityProtocol
     let isBookmark: Bool
     let coordinate: CLLocationCoordinate2D
-    let weatherInformationService: WeatherInformationPersistence
-    let preferencesService: UnitSettingsPreferenceReading
+    let weatherInformationService: WeatherInformationReading
+    let preferencesService: WeatherMapPreferenceReading
     weak var annotationSelectionDelegate: BaseMapViewSelectionDelegate?
   }
 }

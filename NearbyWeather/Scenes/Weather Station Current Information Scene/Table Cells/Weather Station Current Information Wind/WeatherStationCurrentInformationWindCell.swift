@@ -36,6 +36,7 @@ final class WeatherStationCurrentInformationWindCell: UITableViewCell, BaseCell 
   private lazy var windSpeedSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.windSpeed()))
   private lazy var windSpeedDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.windspeed(), numberOfLines: 1))
   private lazy var windSpeedLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
+  
   private lazy var windDirectionSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.windDirection()))
   private lazy var windDirectionDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.wind_direction(), numberOfLines: 1))
   private lazy var windDirectionLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
@@ -101,14 +102,15 @@ private extension WeatherStationCurrentInformationWindCell {
     contentView.addSubview(windSpeedSymbolImageView, constraints: [
       windSpeedSymbolImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       windSpeedSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
-      windSpeedSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth)
+      windSpeedSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
+      windSpeedSymbolImageView.heightAnchor.constraint(equalTo: windSpeedSymbolImageView.widthAnchor)
     ])
     
     contentView.addSubview(windSpeedDescriptionLabel, constraints: [
       windSpeedDescriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       windSpeedDescriptionLabel.leadingAnchor.constraint(equalTo: windSpeedSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       windSpeedDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
-      windSpeedDescriptionLabel.heightAnchor.constraint(equalTo: windSpeedSymbolImageView.heightAnchor)
+      windSpeedDescriptionLabel.centerYAnchor.constraint(equalTo: windSpeedSymbolImageView.centerYAnchor)
     ])
     
     contentView.addSubview(windSpeedLabel, constraints: [
@@ -118,7 +120,8 @@ private extension WeatherStationCurrentInformationWindCell {
       windSpeedLabel.widthAnchor.constraint(equalTo: windSpeedDescriptionLabel.widthAnchor),
       windSpeedLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
       windSpeedLabel.heightAnchor.constraint(equalTo: windSpeedDescriptionLabel.heightAnchor),
-      windSpeedLabel.heightAnchor.constraint(equalTo: windSpeedSymbolImageView.heightAnchor)
+      windSpeedLabel.centerYAnchor.constraint(equalTo: windSpeedDescriptionLabel.centerYAnchor),
+      windSpeedLabel.centerYAnchor.constraint(equalTo: windSpeedSymbolImageView.centerYAnchor)
     ])
     
     // line 2
@@ -126,7 +129,8 @@ private extension WeatherStationCurrentInformationWindCell {
       windDirectionSymbolImageView.topAnchor.constraint(equalTo: windSpeedSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       windDirectionSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
       windDirectionSymbolImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      windDirectionSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth)
+      windDirectionSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
+      windDirectionSymbolImageView.heightAnchor.constraint(equalTo: windDirectionSymbolImageView.widthAnchor)
     ])
     
     contentView.addSubview(windDirectionDescriptionLabel, constraints: [
@@ -134,7 +138,7 @@ private extension WeatherStationCurrentInformationWindCell {
       windDirectionDescriptionLabel.leadingAnchor.constraint(equalTo: windDirectionSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       windDirectionDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       windDirectionDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
-      windDirectionDescriptionLabel.heightAnchor.constraint(equalTo: windDirectionSymbolImageView.heightAnchor)
+      windDirectionDescriptionLabel.centerYAnchor.constraint(equalTo: windDirectionSymbolImageView.centerYAnchor)
     ])
     
     contentView.addSubview(windDirectionLabel, constraints: [
@@ -145,7 +149,8 @@ private extension WeatherStationCurrentInformationWindCell {
       windDirectionLabel.widthAnchor.constraint(equalTo: windDirectionDescriptionLabel.widthAnchor),
       windDirectionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
       windDirectionLabel.heightAnchor.constraint(equalTo: windDirectionDescriptionLabel.heightAnchor),
-      windDirectionLabel.heightAnchor.constraint(equalTo: windDirectionSymbolImageView.heightAnchor)
+      windDirectionLabel.centerYAnchor.constraint(equalTo: windDirectionDescriptionLabel.centerYAnchor),
+      windDirectionLabel.centerYAnchor.constraint(equalTo: windDirectionSymbolImageView.centerYAnchor)
     ])
   }
   

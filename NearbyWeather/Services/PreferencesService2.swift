@@ -73,7 +73,7 @@ final class PreferencesService2 {
 
 // MARK: - General Preference Persistence
 
-protocol GeneralPreferencePersistence: WeatherListPreferencePersistence, WeatherMapPreferencePersistence, UnitSettingsPreferenceReading, PreferenceMigration {
+protocol GeneralPreferencePersistence: WeatherListPreferencePersistence, WeatherMapPreferencePersistence, PreferenceMigration {
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
   func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
   
@@ -342,7 +342,7 @@ extension PreferencesService2: WeatherListPreferenceReading {}
 
 // MARK: - WeatherMap Preference Persistence
 
-protocol WeatherMapPreferencePersistence {
+protocol WeatherMapPreferencePersistence: WeatherMapPreferenceSetting, WeatherMapPreferenceReading {
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
   func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
   
@@ -361,14 +361,16 @@ protocol WeatherMapPreferenceSetting {
 
 extension PreferencesService2: WeatherMapPreferenceSetting {}
 
-// MARK: - UnitSettings Preference Reading
+// MARK: - WeatherMap Preference Reading
 
-protocol UnitSettingsPreferenceReading {
+protocol WeatherMapPreferenceReading {
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
   func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
   func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
 }
 
-extension PreferencesService2: UnitSettingsPreferenceReading {}
+extension PreferencesService2: WeatherMapPreferenceReading {}
 
 // MARK: - AppDelegate Preferences Reading
 

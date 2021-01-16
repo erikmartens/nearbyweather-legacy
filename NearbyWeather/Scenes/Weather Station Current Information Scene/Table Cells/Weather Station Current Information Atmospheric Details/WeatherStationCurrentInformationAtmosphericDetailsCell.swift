@@ -104,14 +104,15 @@ private extension WeatherStationCurrentInformationAtmosphericDetailsCell {
     contentView.addSubview(cloudCoverageSymbolImageView, constraints: [
       cloudCoverageSymbolImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       cloudCoverageSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
-      cloudCoverageSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth)
+      cloudCoverageSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
+      cloudCoverageSymbolImageView.heightAnchor.constraint(equalTo: cloudCoverageSymbolImageView.widthAnchor)
     ])
     
     contentView.addSubview(cloudCoverageDescriptionLabel, constraints: [
       cloudCoverageDescriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       cloudCoverageDescriptionLabel.leadingAnchor.constraint(equalTo: cloudCoverageSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       cloudCoverageDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
-      cloudCoverageDescriptionLabel.heightAnchor.constraint(equalTo: cloudCoverageSymbolImageView.heightAnchor)
+      cloudCoverageDescriptionLabel.centerYAnchor.constraint(equalTo: cloudCoverageSymbolImageView.centerYAnchor)
     ])
     
     contentView.addSubview(cloudCoverageLabel, constraints: [
@@ -121,21 +122,23 @@ private extension WeatherStationCurrentInformationAtmosphericDetailsCell {
       cloudCoverageLabel.widthAnchor.constraint(equalTo: cloudCoverageDescriptionLabel.widthAnchor),
       cloudCoverageLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
       cloudCoverageLabel.heightAnchor.constraint(equalTo: cloudCoverageDescriptionLabel.heightAnchor),
-      cloudCoverageLabel.heightAnchor.constraint(equalTo: cloudCoverageSymbolImageView.heightAnchor)
+      cloudCoverageLabel.centerYAnchor.constraint(equalTo: cloudCoverageDescriptionLabel.centerYAnchor),
+      cloudCoverageLabel.centerYAnchor.constraint(equalTo: cloudCoverageSymbolImageView.centerYAnchor)
     ])
     
     // line 2
     contentView.addSubview(humiditySymbolImageView, constraints: [
       humiditySymbolImageView.topAnchor.constraint(equalTo: cloudCoverageSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       humiditySymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
-      humiditySymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth)
+      humiditySymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
+      humiditySymbolImageView.heightAnchor.constraint(equalTo: humiditySymbolImageView.widthAnchor)
     ])
     
     contentView.addSubview(humidityDescriptionLabel, constraints: [
       humidityDescriptionLabel.topAnchor.constraint(equalTo: cloudCoverageDescriptionLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       humidityDescriptionLabel.leadingAnchor.constraint(equalTo: humiditySymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       humidityDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
-      humidityDescriptionLabel.heightAnchor.constraint(equalTo: humiditySymbolImageView.heightAnchor)
+      humidityDescriptionLabel.centerYAnchor.constraint(equalTo: humiditySymbolImageView.centerYAnchor)
     ])
     
     contentView.addSubview(humidityLabel, constraints: [
@@ -145,7 +148,8 @@ private extension WeatherStationCurrentInformationAtmosphericDetailsCell {
       humidityLabel.widthAnchor.constraint(equalTo: humidityDescriptionLabel.widthAnchor),
       humidityLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
       humidityLabel.heightAnchor.constraint(equalTo: humidityDescriptionLabel.heightAnchor),
-      humidityLabel.heightAnchor.constraint(equalTo: humiditySymbolImageView.heightAnchor)
+      humidityLabel.centerYAnchor.constraint(equalTo: humidityDescriptionLabel.centerYAnchor),
+      humidityLabel.centerYAnchor.constraint(equalTo: humiditySymbolImageView.centerYAnchor)
     ])
     
     // line 3
@@ -153,7 +157,8 @@ private extension WeatherStationCurrentInformationAtmosphericDetailsCell {
       airPressureSymbolImageView.topAnchor.constraint(equalTo: humiditySymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       airPressureSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
       airPressureSymbolImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      airPressureSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth)
+      airPressureSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
+      airPressureSymbolImageView.centerYAnchor.constraint(equalTo: airPressureSymbolImageView.centerYAnchor)
     ])
     
     contentView.addSubview(airPressureDescriptionLabel, constraints: [
@@ -161,7 +166,7 @@ private extension WeatherStationCurrentInformationAtmosphericDetailsCell {
       airPressureDescriptionLabel.leadingAnchor.constraint(equalTo: airPressureSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       airPressureDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       airPressureDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
-      airPressureDescriptionLabel.heightAnchor.constraint(equalTo: airPressureSymbolImageView.heightAnchor)
+      airPressureDescriptionLabel.centerYAnchor.constraint(equalTo: airPressureSymbolImageView.centerYAnchor)
     ])
     
     contentView.addSubview(airPressureLabel, constraints: [
@@ -172,7 +177,8 @@ private extension WeatherStationCurrentInformationAtmosphericDetailsCell {
       airPressureLabel.widthAnchor.constraint(equalTo: airPressureDescriptionLabel.widthAnchor),
       airPressureLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
       airPressureLabel.heightAnchor.constraint(equalTo: airPressureDescriptionLabel.heightAnchor),
-      airPressureLabel.heightAnchor.constraint(equalTo: airPressureSymbolImageView.heightAnchor)
+      airPressureLabel.centerYAnchor.constraint(equalTo: airPressureDescriptionLabel.centerYAnchor),
+      airPressureLabel.centerYAnchor.constraint(equalTo: airPressureSymbolImageView.centerYAnchor)
     ])
   }
   

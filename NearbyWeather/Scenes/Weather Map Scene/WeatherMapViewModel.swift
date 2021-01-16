@@ -19,7 +19,7 @@ extension WeatherMapViewModel { // TODO : check which are needed
     let weatherInformationService: WeatherInformationPersistence & WeatherInformationUpdating
     let weatherStationService: WeatherStationBookmarkReading
     let userLocationService: UserLocationReading
-    let preferencesService: WeatherMapPreferencePersistence & UnitSettingsPreferenceReading
+    let preferencesService: WeatherMapPreferencePersistence
     let apiKeyService: ApiKeyReading
   }
 }
@@ -119,7 +119,12 @@ extension WeatherMapViewModel {
         dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
         apiKeyValidObservable,
         resultSelector: { [dependencies] weatherInformationList, _ in
-          weatherInformationList.mapToWeatherMapAnnotationViewModel(dependencies: dependencies, isBookmark: false, selectionDelegate: self)
+          weatherInformationList.mapToWeatherMapAnnotationViewModel(
+            weatherInformationService: dependencies.weatherInformationService,
+            preferencesService: dependencies.preferencesService,
+            isBookmark: false,
+            selectionDelegate: self
+          )
         }
       )
       .catchErrorJustReturn([])
@@ -130,7 +135,12 @@ extension WeatherMapViewModel {
         dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
         apiKeyValidObservable,
         resultSelector: { [dependencies] weatherInformationList, _ in
-          weatherInformationList.mapToWeatherMapAnnotationViewModel(dependencies: dependencies, isBookmark: false, selectionDelegate: self)
+          weatherInformationList.mapToWeatherMapAnnotationViewModel(
+            weatherInformationService: dependencies.weatherInformationService,
+            preferencesService: dependencies.preferencesService,
+            isBookmark: true,
+            selectionDelegate: self
+          )
         }
       )
       .catchErrorJustReturn([])
@@ -162,13 +172,7 @@ extension WeatherMapViewModel {
       .disposed(by: disposeBag)
   }
   
-  func observeUserTapEvents() {
-    let preferredMapTypeObservable = dependencies
-      .preferencesService
-      .createGetMapTypeOptionObservable()
-      .map { $0.value }
-      .share(replay: 1)
-    
+  func observeUserTapEvents() {    
     onDidTapMapTypeBarButtonSubject
       .flatMapLatest { [unowned preferredMapTypeObservable] in preferredMapTypeObservable }
       .subscribe(onNext: { [weak steps] preferredMapType in
@@ -224,31 +228,6 @@ extension WeatherMapViewModel: FocusOnLocationSelectionAlertDelegate {
       onDidSelectFocusOnUserLocationSubject.onNext(())
     case let .weatherStation(location):
       onDidSelectFocusOnWeatherStationSubject.onNext(location)
-    }
-  }
-}
-
-// MARK: - Helper Extensions
-
-private extension Array where Element == PersistencyModel<WeatherInformationDTO> {
-  
-  func mapToWeatherMapAnnotationViewModel(dependencies: WeatherMapViewModel.Dependencies, isBookmark: Bool, selectionDelegate: BaseMapViewSelectionDelegate) -> [BaseAnnotationViewModelProtocol] {
-    compactMap { weatherInformationPersistencyModel -> WeatherMapAnnotationViewModel? in
-      guard let latitude = weatherInformationPersistencyModel.entity.coordinates.latitude,
-            let longitude = weatherInformationPersistencyModel.entity.coordinates.longitude else {
-        return nil
-      }
-      return WeatherMapAnnotationViewModel(dependencies: WeatherMapAnnotationViewModel.Dependencies(
-        weatherInformationIdentity: weatherInformationPersistencyModel.identity,
-        isBookmark: isBookmark,
-        coordinate: CLLocationCoordinate2D(
-          latitude: latitude,
-          longitude: longitude
-        ),
-        weatherInformationService: dependencies.weatherInformationService,
-        preferencesService: dependencies.preferencesService,
-        annotationSelectionDelegate: selectionDelegate
-      ))
     }
   }
 }

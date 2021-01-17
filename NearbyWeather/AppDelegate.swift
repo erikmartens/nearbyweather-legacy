@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     runMigrationIfNeeded()
 
+    // TODO: create secrets sub-repo and git-ignore
     if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
       let firebaseOptions = FirebaseOptions(contentsOfFile: filePath) {
       FirebaseApp.configure(options: firebaseOptions)
@@ -158,7 +159,7 @@ private extension AppDelegate {
   }
   
   func beginAppIconUpdateBackgroundFetchTask(for application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    let taskName = "de.erikmaximilianmartens.nearbyweather.bookmarked_weather_information_background_fetch"
+    let taskName = "de.erikmaximilianmartens.nearbyweather.bookmarked_weather_information_background_fetch" // Move to constants
     backgroundFetchTaskId = application.beginBackgroundTask(withName: taskName, expirationHandler: { [weak self] in
       self?.endAppIconUpdateBackgroundFetchTask()
     })

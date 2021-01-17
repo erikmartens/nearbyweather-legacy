@@ -9,6 +9,16 @@
 import RxFlow
 import Swinject
 
+// MARK: - Dependencies
+
+extension MainFlow {
+  struct Dependencies {
+    let dependencyContainer: Container
+  }
+}
+
+// MARK: - Class Definition
+
 final class MainFlow: Flow {
 
   // MARK: - Assets
@@ -27,12 +37,12 @@ final class MainFlow: Flow {
   
   // MARK: - Properties
   
-  let dependencyContainer: Container
+  let dependencies: Dependencies
 
   // MARK: - Initialization
 
-  init(dependencyContainer: Container) {
-    self.dependencyContainer = dependencyContainer
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
   }
 
   deinit {
@@ -56,13 +66,15 @@ final class MainFlow: Flow {
   }
 }
 
+// MARK: - Summoning Functions
+
 private extension MainFlow {
 
   func summonRootTabBar() -> FlowContributors {
 
-    let listFlow = ListFlow(dependencyContainer: dependencyContainer)
-    let mapFlow = MapFlow(dependencyContainer: dependencyContainer)
-    let settingsFlow = SettingsFlow(dependencyContainer: dependencyContainer)
+    let listFlow = ListFlow(dependencies: ListFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+    let mapFlow = MapFlow(dependencies: MapFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+    let settingsFlow = SettingsFlow(dependencies: SettingsFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
 
     Flows.whenReady(
       flow1: listFlow,
@@ -77,7 +89,7 @@ private extension MainFlow {
     }
 
     return .multiple(flowContributors: [
-      .contribute(withNextPresentable: listFlow, withNextStepper: ListStepper(dependencyContainer: dependencyContainer)),
+      .contribute(withNextPresentable: listFlow, withNextStepper: ListStepper(dependencyContainer: dependencies.dependencyContainer)),
       .contribute(withNextPresentable: mapFlow, withNextStepper: MapStepper()),
       .contribute(withNextPresentable: settingsFlow, withNextStepper: SettingsStepper())
     ])

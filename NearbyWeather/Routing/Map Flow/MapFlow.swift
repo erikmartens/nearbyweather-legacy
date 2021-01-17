@@ -10,6 +10,16 @@ import RxSwift
 import RxFlow
 import Swinject
 
+// MARK: - Dependencies
+
+extension MapFlow {
+  struct Dependencies {
+    let dependencyContainer: Container
+  }
+}
+
+// MARK: - Class Definition
+
 final class MapFlow: Flow {
   
   // MARK: - Assets
@@ -29,12 +39,12 @@ final class MapFlow: Flow {
   
   // MARK: - Properties
   
-  let dependencyContainer: Container
+  let dependencies: Dependencies
 
   // MARK: - Initialization
 
-  init(dependencyContainer: Container) {
-    self.dependencyContainer = dependencyContainer
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
   }
   
   deinit {
@@ -76,7 +86,7 @@ final class MapFlow: Flow {
         return Observable
           .combineLatest(
             Observable.just(selectionDelegate),
-            dependencyContainer.resolve(WeatherInformationService2.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } },
+            dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } },
             resultSelector: MapStep.focusOnLocationAlertAdapted
           )
           .take(1)
@@ -101,15 +111,17 @@ final class MapFlow: Flow {
   }
 }
 
+// MARK: - Summoning Functions
+
 private extension MapFlow {
   
   func summonWeatherMapController() -> FlowContributors {
     let weatherMapViewController = WeatherMapViewController(dependencies: WeatherMapViewController.ViewModel.Dependencies(
-      weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!,
-      weatherStationService: dependencyContainer.resolve(WeatherStationService2.self)!,
-      userLocationService: dependencyContainer.resolve(UserLocationService2.self)!,
-      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!,
-      apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!
+      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,
+      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
+      userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!,
+      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService2.self)!,
+      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!
     ))
     rootViewController.setViewControllers([weatherMapViewController], animated: false)
     return .one(flowContributor: .contribute(
@@ -122,7 +134,7 @@ private extension MapFlow {
   func summonWeatherDetailsController2(identity: PersistencyModelIdentityProtocol) -> FlowContributors {
     let weatherDetailFlow = WeatherDetailFlow(dependencies: WeatherDetailFlow.Dependencies(
       weatherInformationIdentity: identity,
-      dependencyContainer: dependencyContainer
+      dependencyContainer: dependencies.dependencyContainer
     ))
     
     Flows.whenReady(flow1: weatherDetailFlow) { [rootViewController] (weatherDetailRoot: UINavigationController) in
@@ -133,7 +145,7 @@ private extension MapFlow {
   }
   
   func summonChangeMapTypeAlert(currentSelectedOptionValue: MapTypeValue) -> FlowContributors { // TODO: test cancel action works properly
-    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
+    let preferencesService = dependencies.dependencyContainer.resolve(PreferencesService2.self)!
     
     let alertController = MapTypeSelectionAlertController(dependencies: MapTypeSelectionAlertViewModel.Dependencies(
       selectedOptionValue: currentSelectedOptionValue,
@@ -144,7 +156,7 @@ private extension MapFlow {
   }
   
   func summonChangeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
-    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
+    let preferencesService = dependencies.dependencyContainer.resolve(PreferencesService2.self)!
     
     let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionAlertViewModel.Dependencies(
       selectedOptionValue: currentSelectedOptionValue,

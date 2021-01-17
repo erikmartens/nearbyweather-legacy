@@ -14,6 +14,7 @@ extension Factory {
     
     enum NavigationControllerType {
       case standard
+      case standardTabbed(tabTitle: String? = nil, tabImage: UIImage? = nil)
     }
     
     typealias InputType = NavigationControllerType
@@ -22,14 +23,19 @@ extension Factory {
     static func make(fromType type: InputType) -> ResultType {
       let navigationController = UINavigationController()
       
+      navigationController.navigationBar.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+      navigationController.navigationBar.barTintColor = Constants.Theme.Color.ViewElement.primaryBackground
+      navigationController.navigationBar.tintColor = Constants.Theme.Color.ViewElement.titleLight
+      navigationController.navigationBar.isTranslucent = false
+      navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+      navigationController.navigationBar.barStyle = .default
+      
       switch type {
       case .standard:
-        navigationController.navigationBar.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
-        navigationController.navigationBar.barTintColor = Constants.Theme.Color.ViewElement.primaryBackground
-        navigationController.navigationBar.tintColor = Constants.Theme.Color.ViewElement.titleLight
-        navigationController.navigationBar.isTranslucent = false
-        navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
-        navigationController.navigationBar.barStyle = .default
+        break
+      case let .standardTabbed(tabTitle, tabImage):
+        navigationController.tabBarItem.title = tabTitle
+        navigationController.tabBarItem.image = tabImage
       }
       
       return navigationController

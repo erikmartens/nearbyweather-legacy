@@ -115,16 +115,13 @@ private extension AppDelegate {
   func instantiateApplicationUserInterface() {
     let window = UIWindow(frame: UIScreen.main.bounds)
     self.window = window
-    let rootFlow = RootFlow(
+    let rootFlow = RootFlow(dependencies: RootFlow.Dependencies(
       rootWindow: window,
       dependencyContainer: dependencyContainer!
-    )
+    ))
 
     flowCoordinator = FlowCoordinator()
-    flowCoordinator?.coordinate(
-      flow: rootFlow,
-      with: RootStepper()
-    )
+    flowCoordinator?.coordinate(flow: rootFlow, with: RootStepper())
   }
 
   func refreshWeatherDataIfNeeded() {
@@ -192,6 +189,6 @@ private extension AppDelegate {
       weatherStationService: dependencyContainer.resolve(WeatherStationService2.self)!,
       apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!
     ))
-    .runMigrationIfNeeded()
+    .runMigrationIfNeeded_v2_2_2_to_3_0_0()
   }
 }

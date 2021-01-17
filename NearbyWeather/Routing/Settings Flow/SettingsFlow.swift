@@ -9,6 +9,16 @@
 import RxFlow
 import Swinject
 
+// MARK: - Dependencies
+
+extension SettingsFlow {
+  struct Dependencies {
+    let dependencyContainer: Container
+  }
+}
+
+// MARK: - Class Definition
+
 final class SettingsFlow: Flow {
   
   // MARK: - Assets
@@ -17,23 +27,19 @@ final class SettingsFlow: Flow {
     rootViewController
   }
   
-  private lazy var rootViewController: UINavigationController = {
-    let navigationController = Factory.NavigationController.make(fromType: .standard)
-    
-    navigationController.tabBarItem.image = R.image.tabbar_settings_ios11()
-    navigationController.tabBarItem.title = R.string.localizable.tab_settings()
-    
-    return navigationController
-  }()
+  private lazy var rootViewController = Factory.NavigationController.make(fromType: .standardTabbed(
+    tabTitle: R.string.localizable.tab_settings(),
+    tabImage: R.image.tabbar_settings_ios11()
+  ))
   
   // MARK: - Properties
   
-  let dependencyContainer: Container
+  let dependencies: Dependencies
 
   // MARK: - Initialization
 
-  init(dependencyContainer: Container) {
-    self.dependencyContainer = dependencyContainer
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
   }
   
   deinit {
@@ -66,6 +72,8 @@ final class SettingsFlow: Flow {
     }
   }
 }
+
+// MARK: - Summoning Functions
 
 private extension SettingsFlow {
   

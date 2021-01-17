@@ -9,6 +9,16 @@
 import RxFlow
 import Swinject
 
+// MARK: - Dependencies
+
+extension ListFlow {
+  struct Dependencies {
+    let dependencyContainer: Container
+  }
+}
+
+// MARK: - Class Definition
+
 final class ListFlow: Flow {
   
   // MARK: - Assets
@@ -26,12 +36,12 @@ final class ListFlow: Flow {
   
   // MARK: - Properties
   
-  let dependencyContainer: Container
+  let dependencies: Dependencies
   
   // MARK: - Initialization
   
-  init(dependencyContainer: Container) {
-    self.dependencyContainer = dependencyContainer
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
   }
   
   deinit {
@@ -79,15 +89,17 @@ final class ListFlow: Flow {
   }
 }
 
+// MARK: - Summoning Functions
+
 private extension ListFlow {
   
   func summonWeatherListController() -> FlowContributors {
     let weatherListViewController = WeatherListViewController(dependencies: WeatherListViewController.ViewModel.Dependencies(
-      weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!,
-      weatherStationService: dependencyContainer.resolve(WeatherStationService2.self)!,
-      userLocationService: dependencyContainer.resolve(UserLocationService2.self)!,
-      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!,
-      apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!
+      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,
+      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
+      userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!,
+      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService2.self)!,
+      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!
     ))
     rootViewController.setViewControllers([weatherListViewController], animated: false)
     return .one(flowContributor: .contribute(
@@ -106,7 +118,7 @@ private extension ListFlow {
   func summonWeatherDetailsController2(identity: PersistencyModelIdentityProtocol) -> FlowContributors {
     let weatherDetailFlow = WeatherDetailFlow(dependencies: WeatherDetailFlow.Dependencies(
       weatherInformationIdentity: identity,
-      dependencyContainer: dependencyContainer
+      dependencyContainer: dependencies.dependencyContainer
     ))
     
     Flows.whenReady(flow1: weatherDetailFlow) { [rootViewController] (weatherDetailRoot: UINavigationController) in
@@ -117,7 +129,7 @@ private extension ListFlow {
   }
   
   func summonChangeListTypeAlert(currentSelectedOptionValue: ListTypeValue) -> FlowContributors { // TODO: test cancel action works properly
-    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
+    let preferencesService = dependencies.dependencyContainer.resolve(PreferencesService2.self)!
     
     let alertController = ListTypeSelectionAlertController(dependencies: ListTypeSelectionAlertViewModel.Dependencies(
       selectedOptionValue: currentSelectedOptionValue,
@@ -128,7 +140,7 @@ private extension ListFlow {
   }
   
   func summonChangeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
-    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
+    let preferencesService = dependencies.dependencyContainer.resolve(PreferencesService2.self)!
     
     let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionAlertViewModel.Dependencies(
       selectedOptionValue: currentSelectedOptionValue,
@@ -139,7 +151,7 @@ private extension ListFlow {
   }
   
   func summonChangeSortingOrientationAlert(currentSelectedOptionValue: SortingOrientationValue) -> FlowContributors {
-    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
+    let preferencesService = dependencies.dependencyContainer.resolve(PreferencesService2.self)!
     
     let alertController = SortingOrientationSelectionAlertController(dependencies: SortingOrientationSelectionAlertViewModel.Dependencies(
       selectedOptionValue: currentSelectedOptionValue,

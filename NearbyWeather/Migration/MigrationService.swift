@@ -35,7 +35,7 @@ final class MigrationService { // TODO: move all Constants-Keys and DTOs (that a
 
 extension MigrationService {
   
-  func runMigrationIfNeeded() {
+  func runMigrationIfNeeded_v2_2_2_to_3_0_0() {
     guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kMigratedToVersion230) == nil else {
       return
     }
@@ -69,7 +69,7 @@ extension MigrationService {
           fromStorageLocation: .applicationSupport
         )
         
-        let refreshOnAppStartValue =  UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true
+        let refreshOnAppStartValue = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true
           ? RefreshOnAppStartValue.yes
           : RefreshOnAppStartValue.no
           
@@ -135,8 +135,7 @@ extension MigrationService {
       }
     
     // execute migration
-    _ = Completable
-      .zip([
+    _ = Completable.zip([
         migrateApiKeyCompletable,
         migratePreferencesCompletable,
         migrateWeatherInformationCompletable

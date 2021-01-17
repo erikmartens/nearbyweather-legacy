@@ -8,6 +8,8 @@
 
 import RxFlow
 
+// MARK: - Class Definition
+
 final class WelcomeFlow: Flow {
   
   // MARK: - Assets
@@ -16,9 +18,7 @@ final class WelcomeFlow: Flow {
     rootViewController
   }
   
-  private lazy var rootViewController: UINavigationController = {
-    Factory.NavigationController.make(fromType: .standard)
-  }()
+  private lazy var rootViewController = Factory.NavigationController.make(fromType: .standard)
   
   // MARK: - Initialization
   

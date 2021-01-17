@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    FirebaseApp.configure()
 
     instantiateServices()
+    instantiateDaemons()
     instantiateApplicationUserInterface()
 
     runMigrationIfNeeded()
@@ -53,6 +54,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
     beginAppIconUpdateBackgroundFetchTask(for: application, performFetchWithCompletionHandler: completionHandler)
+  }
+  
+  func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
+    daemonContainer = nil
+    instantiateDaemons()
   }
 }
 
@@ -98,14 +104,18 @@ private extension AppDelegate {
     }
   }
   
-  func instantiateSubscribers() {
+  func instantiateDaemons() {
     daemonContainer = Container()
     
+    let apiKeyService = dependencyContainer.resolve(ApiKeyService2.self)!
+    let userLocationService = dependencyContainer.resolve(UserLocationService2.self)!
     let weatherStationService = dependencyContainer.resolve(WeatherStationService2.self)!
     let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self)!
     
-    daemonContainer.register(WeatherInformationUpdateDaemon.self) { [weak weatherStationService, weak weatherInformationService] _ in
+    daemonContainer.register(WeatherInformationUpdateDaemon.self) { [weak apiKeyService, weak userLocationService, weak weatherStationService, weak weatherInformationService] _ in
       WeatherInformationUpdateDaemon(dependencies: WeatherInformationUpdateDaemon.Dependencies(
+        apiKeyService: apiKeyService,
+        userLocationService: userLocationService,
         weatherStationService: weatherStationService,
         weatherInformationService: weatherInformationService
       ))

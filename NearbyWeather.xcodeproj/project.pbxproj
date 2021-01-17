@@ -877,7 +877,7 @@
 				F27A121E24425D0300A2CE8D /* Set API Key Scene */,
 				F27A121F24425D2A00A2CE8D /* Set Permissions Scene */,
 				F27A122024425D4E00A2CE8D /* Weather List Scene */,
-				F27A122124425D6800A2CE8D /* Empty Weather List Scene */,
+				F27A122124425D6800A2CE8D /* Weather List Error Scene */,
 				F27A122224425D9D00A2CE8D /* Weather Station Current Information Scene */,
 				F27A122324425DB300A2CE8D /* Weather Map Scene */,
 				F27A122424425DE100A2CE8D /* Settings Scene */,
@@ -921,13 +921,13 @@
 			path = "Weather List Scene";
 			sourceTree = "<group>";
 		};
-		F27A122124425D6800A2CE8D /* Empty Weather List Scene */ = {
+		F27A122124425D6800A2CE8D /* Weather List Error Scene */ = {
 			isa = PBXGroup;
 			children = (
 				F2C4E14A23F98AA50008B0F7 /* EmptyList.storyboard */,
 				F2C4E14823F98A4C0008B0F7 /* EmptyListViewController.swift */,
 			);
-			path = "Empty Weather List Scene";
+			path = "Weather List Error Scene";
 			sourceTree = "<group>";
 		};
 		F27A122224425D9D00A2CE8D /* Weather Station Current Information Scene */ = {

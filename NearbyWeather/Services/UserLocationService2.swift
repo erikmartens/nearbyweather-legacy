@@ -42,7 +42,6 @@ final class UserLocationService2 {
 protocol UserLocationAccessing {
   func createGetAuthorizationStatusObservable() -> Observable<Bool>
   func createGetCurrentLocationObservable() -> Observable<CLLocation>
-  func createGetCurrentLocationOptionalObservable() -> Observable<CLLocation?>
 }
 
 extension UserLocationService2: UserLocationAccessing {
@@ -73,29 +72,12 @@ extension UserLocationService2: UserLocationAccessing {
       .do(onSubscribe: { [locationManager] in locationManager.startUpdatingLocation() },
           onDispose: { [locationManager] in locationManager.stopUpdatingLocation() })
   }
-  
-  func createGetCurrentLocationOptionalObservable() -> Observable<CLLocation?> {
-    Observable
-      .combineLatest(
-        locationManager.rx.location,
-        createGetAuthorizationStatusObservable(),
-        resultSelector: { currentLocation, currentAuthorizationStatus -> CLLocation? in
-          guard currentAuthorizationStatus == true else {
-            throw UserLocationService2.DomainError.locationAuthorizationError
-          }
-          return currentLocation
-        }
-      )
-      .do(onSubscribe: { [locationManager] in locationManager.startUpdatingLocation() },
-          onDispose: { [locationManager] in locationManager.stopUpdatingLocation() })
-  }
 }
 
 // MARK: - User Location Reading
 
 protocol UserLocationReading {
   func createGetCurrentLocationObservable() -> Observable<CLLocation>
-  func createGetCurrentLocationOptionalObservable() -> Observable<CLLocation?>
 }
 
 extension UserLocationService2: UserLocationReading {}

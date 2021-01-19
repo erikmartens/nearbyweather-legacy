@@ -22,7 +22,7 @@ Thank you for considering to allocate some of your precious time to moving this 
 
 #### Before You Begin Coding
 
-1. Select an issue-ticket that is labeled `Contributable` from the next release project as detailed in the [README.md](README.md/#app-releases)
+1. Select an issue-ticket that is labeled `Contributable` from the next release project as detailed in the [README.md](README.md/#app-releases). Issues from future releases are not open for submission.
 
 ```
 ❗️ There are many reasons for issue-tickets not being labeled with `Contributable`. 

@@ -53,6 +53,8 @@ final class WeatherInformationUpdateDaemon {
 
 private extension WeatherInformationUpdateDaemon {
   
+  // TODO: listen to application became active for refreshing
+  
   func observeBookmarkedStationsChanges() {
     guard let weatherStationService = dependencies.weatherStationService,
           let weatherInformationService = dependencies.weatherInformationService else {

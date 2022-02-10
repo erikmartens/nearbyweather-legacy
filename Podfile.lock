@@ -121,24 +121,24 @@ PODS:
   - TextFieldCounter (1.1.0)
 
 DEPENDENCIES:
-  - Alamofire
+  - Alamofire (~> 4.9.1)
   - APTimeZones (from `https://github.com/Alterplay/APTimeZones.git`, commit `9ffd147`, branch `master`)
-  - Firebase/Analytics
-  - Firebase/Crashlytics
-  - FMDB
-  - PKHUD
-  - R.swift
-  - RealmSwift
-  - RxAlamofire
-  - RxCocoa
-  - RxCoreLocation
-  - RxFlow
-  - RxOptional
-  - RxRealm
-  - RxSwift
-  - SwiftLint
-  - Swinject
-  - TextFieldCounter
+  - Firebase/Analytics (~> 6.21.0)
+  - Firebase/Crashlytics (~> 6.21.0)
+  - FMDB (~> 2.7.5)
+  - PKHUD (~> 5.3.0)
+  - R.swift (= 5.0.3)
+  - RealmSwift (~> 4.4.1)
+  - RxAlamofire (~> 5.1.0)
+  - RxCocoa (~> 5.1.1)
+  - RxCoreLocation (~> 1.4.2)
+  - RxFlow (~> 2.7.0)
+  - RxOptional (~> 4.1.0)
+  - RxRealm (~> 2.0.0)
+  - RxSwift (~> 5.1.1)
+  - SwiftLint (~> 0.38.2)
+  - Swinject (~> 2.7.1)
+  - TextFieldCounter (~> 1.1.0)
 
 SPEC REPOS:
   trunk:
@@ -221,6 +221,6 @@ SPEC CHECKSUMS:
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   TextFieldCounter: 0f20630c8fe6f02b657bd883674829edfc40d845
 
-PODFILE CHECKSUM: 5712c9bf43165986ec4eae7e6c8c0783360bcbb5
+PODFILE CHECKSUM: 5861189025f55d139cbe93a3b8f8eb64623eaf2c
 
 COCOAPODS: 1.11.2

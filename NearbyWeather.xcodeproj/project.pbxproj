@@ -848,8 +848,8 @@
 		F27A121D24425CCE00A2CE8D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				F204B7831DF2EFA3000F4371 /* LaunchScreen.storyboard */,
 				F2926CEE25AC8E2800413512 /* Shared Scene Objects */,
+				F204B7831DF2EFA3000F4371 /* LaunchScreen.storyboard */,
 				F27A121E24425D0300A2CE8D /* Set API Key Scene */,
 				F27A121F24425D2A00A2CE8D /* Set Permissions Scene */,
 				F27A122024425D4E00A2CE8D /* Weather List Scene */,
@@ -1514,7 +1514,7 @@
 			);
 			name = "R.Swift Generate File";
 			outputPaths = (
-				"$SRCROOT/R.generated.swift",
+				$SRCROOT/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

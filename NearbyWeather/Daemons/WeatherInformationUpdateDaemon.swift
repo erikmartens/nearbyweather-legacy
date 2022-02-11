@@ -104,7 +104,7 @@ private extension WeatherInformationUpdateDaemon {
         if apiKey.isEmpty {
           return Observable.just(())
         }
-        // key exist (was change, is valid) -> signal to update weather information
+        // key exists (was changed, is valid) -> signal to update weather information
         return Completable.zip([
           weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
           weatherInformationService.createUpdateNearbyWeatherInformationCompletable()

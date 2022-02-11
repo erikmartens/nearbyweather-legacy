@@ -14,8 +14,8 @@ class ButtonCell: UITableViewCell {
   private typealias CellInterelementSpacing = Constants.Dimensions.Spacing.InterElementSpacing
   
   private lazy var contentLabel = Factory.Label.make(fromType: .body())
-  private lazy var leftButton = Factory.Button.make(fromType: .standard(height: Constants.Dimensions.Size.InteractableElementSize.height))
-  private lazy var rightButton = Factory.Button.make(fromType: .standard(height: Constants.Dimensions.Size.InteractableElementSize.height))
+  private lazy var leftButton = Factory.Button.make(fromType: .standard(height: Constants.Dimensions.InteractableElement.height))
+  private lazy var rightButton = Factory.Button.make(fromType: .standard(height: Constants.Dimensions.InteractableElement.height))
   
   private var leftButtonHandler: ((UIButton) -> Void)?
   private var rightButtonHandler: ((UIButton) -> Void)?
@@ -75,21 +75,21 @@ private extension ButtonCell {
   
   func composeCell() {
     contentView.addSubview(contentLabel, constraints: [
-      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
       contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
       contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
     ])
     
     contentView.addSubview(leftButton, constraints: [
-      leftButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.Size.InteractableElementSize.height),
+      leftButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height),
       leftButton.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
       leftButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellInterelementSpacing.xDistance(from: .medium)),
       leftButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large))
     ])
     
     contentView.addSubview(rightButton, constraints: [
-      rightButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.Size.InteractableElementSize.height),
+      rightButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height),
       rightButton.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
       rightButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellInterelementSpacing.yDistance(from: .medium)),
       rightButton.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .large)),

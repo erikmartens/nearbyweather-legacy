@@ -108,13 +108,13 @@ private extension WeatherStationCurrentInformationHeaderCell {
     ])
     
     contentView.addSubview(weatherConditionTitleLabel, constraints: [
-      weatherConditionTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      weatherConditionTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       weatherConditionTitleLabel.topAnchor.constraint(equalTo: weatherConditionSymbolLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
       weatherConditionTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets)
     ])
     
     contentView.addSubview(temperatureLabelLabel, constraints: [
-      temperatureLabelLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      temperatureLabelLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       temperatureLabelLabel.widthAnchor.constraint(equalTo: weatherConditionTitleLabel.widthAnchor),
       temperatureLabelLabel.topAnchor.constraint(equalTo: weatherConditionSymbolLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
       temperatureLabelLabel.leadingAnchor.constraint(equalTo: weatherConditionTitleLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
@@ -122,14 +122,14 @@ private extension WeatherStationCurrentInformationHeaderCell {
     ])
     
     contentView.addSubview(weatherConditionSubtitleLabel, constraints: [
-      weatherConditionSubtitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      weatherConditionSubtitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       weatherConditionSubtitleLabel.topAnchor.constraint(equalTo: weatherConditionTitleLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
       weatherConditionSubtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
       weatherConditionSubtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
     ])
     
     contentView.addSubview(dayTimeStatusLabel, constraints: [
-      dayTimeStatusLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      dayTimeStatusLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       dayTimeStatusLabel.topAnchor.constraint(equalTo: temperatureLabelLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
       dayTimeStatusLabel.leadingAnchor.constraint(equalTo: weatherConditionSubtitleLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       dayTimeStatusLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Definitions.trailingLeadingContentInsets),

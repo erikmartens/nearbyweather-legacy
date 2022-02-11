@@ -30,16 +30,7 @@ extension Constants.Dimensions {
     static let height: CGFloat = 34
   }
 
-  enum AppIconImageSize {
-    /// constant: 75
-    static let width: CGFloat = 75
-    /// constant: 75
-    static let height: CGFloat = 75
-    /// constant: 4
-    static let cornerRadius: CGFloat = 13
-  }
-
-  enum TableCellImageSize {
+  enum TableCellImage {
     /// constant: 28
     static let width: CGFloat = 28
     /// constant: 28
@@ -85,5 +76,28 @@ extension Constants.Dimensions {
         return 16
       }
     }
+  }
+  
+  enum CornerRadius {
+    /// values: 8, 12 and 16
+    static func from(weight: Weight) -> CGFloat {
+      switch weight {
+      case .small:
+        return 8
+      case .medium:
+        return 12
+      case .large:
+        return 16
+      }
+    }
+  }
+  
+  enum AppIconImage {
+    /// constant: 75
+    static let width: CGFloat = 75
+    /// constant: 75
+    static let height: CGFloat = 75
+    /// constant: 4
+    static let cornerRadius: CGFloat = 13
   }
 }

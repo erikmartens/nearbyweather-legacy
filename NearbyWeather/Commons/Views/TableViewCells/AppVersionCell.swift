@@ -47,8 +47,8 @@ private extension AppVersionCell {
   
   func composeCell() {
     contentView.addSubview(mainImageView, constraints: [
-      mainImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.Size.AppIconImageSize.height),
-      mainImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.Size.AppIconImageSize.width),
+      mainImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.AppIconImage.height),
+      mainImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.AppIconImage.width),
       mainImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
       mainImageView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
       mainImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
@@ -56,7 +56,7 @@ private extension AppVersionCell {
     ])
     
     contentView.addSubview(titleLabel, constraints: [
-      titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       titleLabel.topAnchor.constraint(equalTo: mainImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
       titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))

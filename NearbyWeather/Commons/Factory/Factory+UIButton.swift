@@ -14,6 +14,7 @@ extension Factory {
 
     enum ButtonType {
       case standard(title: String? = nil, height: CGFloat)
+      case plain(title: String? = nil)
     }
 
     typealias InputType = ButtonType
@@ -30,6 +31,14 @@ extension Factory {
         button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
         button.setTitleColor(.white, for: UIControl.State())
 
+        if let title = title {
+          button.setTitle(title, for: UIControl.State())
+        }
+        
+      case let .plain(title):
+        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+        button.setTitleColor(Constants.Theme.Color.ViewElement.titleLight, for: UIControl.State())
+        
         if let title = title {
           button.setTitle(title, for: UIControl.State())
         }

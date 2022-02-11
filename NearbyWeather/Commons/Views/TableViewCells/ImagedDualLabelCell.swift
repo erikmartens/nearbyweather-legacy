@@ -48,15 +48,15 @@ private extension ImagedDualLabelCell {
     separatorInset = UIEdgeInsets(
       top: 0,
       left: CellContentInsets.leading(from: .large)
-        + Constants.Dimensions.Size.TableCellImageSize.width
+        + Constants.Dimensions.TableCellImage.width
         + CellInterelementSpacing.xDistance(from: .small),
       bottom: 0,
       right: 0
     )
     
     contentView.addSubview(leadingImageView, constraints: [
-      leadingImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.Size.TableCellImageSize.height),
-      leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.Size.TableCellImageSize.width),
+      leadingImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.height),
+      leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.width),
       leadingImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
       leadingImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
@@ -64,7 +64,7 @@ private extension ImagedDualLabelCell {
     ])
     
     contentView.addSubview(contentLabel, constraints: [
-      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
       contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
@@ -72,7 +72,7 @@ private extension ImagedDualLabelCell {
     ])
     
     contentView.addSubview(descriptionLabel, constraints: [
-      descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
       descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       descriptionLabel.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),

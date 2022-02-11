@@ -31,12 +31,12 @@ extension Factory {
         imageView.image = image
       case .appIcon:
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = Constants.Dimensions.Size.AppIconImageSize.cornerRadius
+        imageView.layer.cornerRadius = Constants.Dimensions.AppIconImage.cornerRadius
         imageView.layer.masksToBounds = true
       case .cellPrefix:
         imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = Constants.Dimensions.Size.TableCellImageSize.cornerRadius
+        imageView.layer.cornerRadius = Constants.Dimensions.TableCellImage.cornerRadius
         imageView.layer.masksToBounds = true
       }
       

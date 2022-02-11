@@ -25,7 +25,7 @@ extension Factory {
       switch type {
       case let .standard(cornerRadiusWeight):
         if let cornerRadiusWeight = cornerRadiusWeight {
-          view.layer.cornerRadius = Constants.Dimensions.Size.CornerRadiusSize.from(weight: cornerRadiusWeight)
+          view.layer.cornerRadius = Constants.Dimensions.CornerRadius.from(weight: cornerRadiusWeight)
         }
       }
 

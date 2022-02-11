@@ -1,0 +1,160 @@
+//
+//  SetApiKeyViewController.swift
+//  NearbyWeather
+//
+//  Created by Erik Maximilian Martens on 11.02.22.
+//  Copyright © 2022 Erik Maximilian Martens. All rights reserved.
+//
+
+import UIKit
+import RxSwift
+
+// MARK: - Definitions
+
+private extension SetApiKeyViewController2 {
+  struct Definitions {
+    static let apiKeyLength: Int = 32
+  }
+}
+
+// MARK: - Class Definition
+
+final class SetApiKeyViewController2: UIViewController, BaseViewController {
+  
+  typealias ViewModel = SetApiKeyViewModel
+  private typealias ContentInsets = Constants.Dimensions.Spacing.ContentInsets
+  
+  // MARK: - UIComponents
+  
+  fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .fill, spacingWeight: .large))
+  fileprivate lazy var bubbleView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
+  fileprivate lazy var bubbleContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .fill, spacingWeight: .medium))
+  fileprivate lazy var bubbleDescriptionLabel = Factory.Label.make(fromType: .description(text: R.string.localizable.welcome_api_key_description()))
+  fileprivate lazy var apiKeyInputTextField = Factory.TextField.make(fromType: .counter(count: Definitions.apiKeyLength, cornerRadiusWeight: .medium))
+  fileprivate lazy var saveButton = Factory.Button.make(fromType: .standard(title: R.string.localizable.save(), height: Constants.Dimensions.InteractableElement.height))
+  fileprivate lazy var instructionsButton = Factory.Button.make(fromType: .plain(title: R.string.localizable.get_api_key_description()))
+  
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
+  
+  // MARK: - Properties
+  
+  let viewModel: ViewModel
+  
+  // MARK: - Initialization
+  
+  required init(dependencies: ViewModel.Dependencies) {
+    viewModel = SetApiKeyViewModel(dependencies: dependencies)
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
+  // MARK: - ViewController LifeCycle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    viewModel.viewDidLoad()
+    setupUiComponents()
+    setupBindings()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    setupUiAppearance()
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+  }
+}
+
+// MARK: - ViewModel Bindings
+
+extension SetApiKeyViewController2 {
+  
+  func setupBindings() {
+    viewModel.observeEvents()
+    bindContentFromViewModel(viewModel)
+    bindUserInputToViewModel(viewModel)
+  }
+  
+  func bindContentFromViewModel(_ viewModel: ViewModel) {
+    viewModel.isSaveButtonActiveDriver
+      .drive { [weak self] isEnabled in
+        self?.saveButton.isEnabled = isEnabled
+      }
+      .disposed(by: disposeBag)
+  }
+  
+  func bindUserInputToViewModel(_ viewModel: ViewModel) {
+    apiKeyInputTextField.rx
+      .text
+      .filterNil()
+      .bind(to: viewModel.apiInputTextFieldRelay)
+      .disposed(by: disposeBag)
+    
+    saveButton.rx
+      .tap
+      .bind(to: viewModel.onDidTapSaveButtonSubject)
+      .disposed(by: disposeBag)
+    
+    instructionsButton.rx
+      .tap
+      .bind(to: viewModel.onDidTapInstructionButtonSubject)
+      .disposed(by: disposeBag)
+  }
+}
+
+// MARK: - Setup
+
+private extension SetApiKeyViewController2 {
+  
+  func setupUiComponents() {
+    // compose stackviews
+    bubbleContentStackView.addArrangedSubview(bubbleDescriptionLabel)
+    bubbleContentStackView.addArrangedSubview(apiKeyInputTextField, constraints: [
+      apiKeyInputTextField.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
+    ])
+    
+    bubbleView.addSubview(bubbleContentStackView, constraints: [
+      bubbleContentStackView.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: ContentInsets.top(from: .large)),
+      bubbleContentStackView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: -ContentInsets.bottom(from: .large)),
+      bubbleContentStackView.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: ContentInsets.leading(from: .large)),
+      bubbleContentStackView.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: -ContentInsets.trailing(from: .large))
+    ])
+    
+    mainContentStackView.addArrangedSubview(bubbleView)
+    mainContentStackView.addArrangedSubview(saveButton, constraints: [
+      saveButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
+    ])
+    mainContentStackView.addArrangedSubview(instructionsButton, constraints: [
+      instructionsButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
+    ])
+    
+    // compose final view
+    view.addSubview(mainContentStackView, constraints: [
+      mainContentStackView.topAnchor.constraint(equalTo: view.topAnchor),
+      mainContentStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      mainContentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      mainContentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+    ])
+  }
+  
+  func setupUiAppearance() {
+    view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+  }
+}
+

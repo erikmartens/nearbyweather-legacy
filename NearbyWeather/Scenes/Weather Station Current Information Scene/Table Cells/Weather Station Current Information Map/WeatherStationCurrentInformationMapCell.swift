@@ -143,7 +143,7 @@ private extension WeatherStationCurrentInformationMapCell {
     contentView.addSubview(coordinatesDescriptionLabel, constraints: [
       coordinatesDescriptionLabel.topAnchor.constraint(equalTo: mapView.topAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       coordinatesDescriptionLabel.leadingAnchor.constraint(equalTo: coordinatesSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      coordinatesDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      coordinatesDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       coordinatesDescriptionLabel.centerYAnchor.constraint(equalTo: coordinatesSymbolImageView.centerYAnchor)
     ])
     
@@ -152,7 +152,7 @@ private extension WeatherStationCurrentInformationMapCell {
       coordinatesLabel.leadingAnchor.constraint(equalTo: coordinatesDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       coordinatesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Definitions.trailingLeadingContentInsets),
       coordinatesLabel.widthAnchor.constraint(equalTo: coordinatesDescriptionLabel.widthAnchor),
-      coordinatesLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      coordinatesLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       coordinatesLabel.heightAnchor.constraint(equalTo: coordinatesDescriptionLabel.heightAnchor),
       coordinatesLabel.centerYAnchor.constraint(equalTo: coordinatesDescriptionLabel.centerYAnchor),
       coordinatesLabel.centerYAnchor.constraint(equalTo: coordinatesSymbolImageView.centerYAnchor)
@@ -171,7 +171,7 @@ private extension WeatherStationCurrentInformationMapCell {
       distanceDescriptionLabel.topAnchor.constraint(equalTo: coordinatesDescriptionLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       distanceDescriptionLabel.leadingAnchor.constraint(equalTo: distanceSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       distanceDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      distanceDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      distanceDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       distanceDescriptionLabel.centerYAnchor.constraint(equalTo: distanceSymbolImageView.centerYAnchor)
     ])
     
@@ -181,7 +181,7 @@ private extension WeatherStationCurrentInformationMapCell {
       distanceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Definitions.trailingLeadingContentInsets),
       distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       distanceLabel.widthAnchor.constraint(equalTo: distanceDescriptionLabel.widthAnchor),
-      distanceLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.Size.ContentElementSize.height),
+      distanceLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       distanceLabel.heightAnchor.constraint(equalTo: distanceDescriptionLabel.heightAnchor),
       distanceLabel.centerYAnchor.constraint(equalTo: distanceDescriptionLabel.centerYAnchor),
       distanceLabel.centerYAnchor.constraint(equalTo: distanceSymbolImageView.centerYAnchor)

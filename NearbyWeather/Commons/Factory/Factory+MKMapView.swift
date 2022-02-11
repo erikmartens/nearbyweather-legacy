@@ -24,7 +24,7 @@ extension Factory {
       case let .standard(frame, cornerRadiusWeight):
         let mapView = MKMapView(frame: frame)
         if let cornerRadiusWeight = cornerRadiusWeight {
-          mapView.layer.cornerRadius = Constants.Dimensions.Size.CornerRadiusSize.from(weight: cornerRadiusWeight)
+          mapView.layer.cornerRadius = Constants.Dimensions.CornerRadius.from(weight: cornerRadiusWeight)
         }
         mapView.showsUserLocation = true
         mapView.isUserInteractionEnabled = true

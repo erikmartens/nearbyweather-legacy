@@ -154,8 +154,18 @@ private extension SetApiKeyViewController2 {
   }
   
   func setupUiAppearance() {
+    title = R.string.localizable.welcome()
+    
     view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
     bubbleView.backgroundColor = Constants.Theme.Color.ViewElement.alert
     apiKeyInputTextField.layer.backgroundColor = Constants.Theme.Color.ViewElement.alert.cgColor
   }
+}
+
+// MARK: - Extensions
+
+extension SetApiKeyViewController2: UINavigationBarDelegate {
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        UIBarPosition.topAttached
+    }
 }

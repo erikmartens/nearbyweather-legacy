@@ -25,7 +25,7 @@ extension WeatherStationCurrentInformationViewModel {
 
 // MARK: - Class Definition
 
-final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseViewModel {
+final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseViewModel { // TODO: Rename everything to WeatherStationDetailedInformation
   
   // MARK: - Routing
   

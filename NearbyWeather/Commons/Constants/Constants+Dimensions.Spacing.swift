@@ -15,7 +15,7 @@ extension Constants.Dimensions {
 extension Constants.Dimensions.Spacing {
   
   enum ContentInsets {
-    /// value: 8, 12 or 16
+    /// value: 8, 12, 16 or 20
     static func leading(from weight: Weight) -> CGFloat {
       switch weight {
       case .small:
@@ -24,9 +24,11 @@ extension Constants.Dimensions.Spacing {
         return 12
       case .large:
         return 16
+      case .extraLarge:
+        return 20
       }
     }
-    /// value: 8, 12 or 16
+    /// value: 8, 12, 16 or 20
     static func trailing(from weight: Weight) -> CGFloat {
       switch weight {
       case .small:
@@ -35,9 +37,11 @@ extension Constants.Dimensions.Spacing {
         return 12
       case .large:
         return 16
+      case .extraLarge:
+        return 20
       }
     }
-    /// value: 4, 8 or 12
+    /// value: 4, 8, 12 or 16
     static func top(from weight: Weight) -> CGFloat {
       switch weight {
       case .small:
@@ -46,9 +50,11 @@ extension Constants.Dimensions.Spacing {
         return 8
       case .large:
         return 12
+      case .extraLarge:
+        return 16
       }
     }
-    /// value: 4, 8 or 12
+    /// value: 4, 8, 12 or 16
     static func bottom(from weight: Weight) -> CGFloat {
       switch weight {
       case .small:
@@ -57,12 +63,14 @@ extension Constants.Dimensions.Spacing {
         return 8
       case .large:
         return 12
+      case .extraLarge:
+        return 16
       }
     }
   }
   
   enum InterElementSpacing {
-    /// values: 4, 8 or 12
+    /// values: 4, 8, 12 or 16
     static func yDistance(from weight: Weight) -> CGFloat {
       switch weight {
       case .small:
@@ -71,9 +79,11 @@ extension Constants.Dimensions.Spacing {
         return 8
       case .large:
         return 12
+      case .extraLarge:
+        return 16
       }
     }
-    /// values: 8, 12 and 16
+    /// values: 8, 12, 16 or 20
     static func xDistance(from weight: Weight) -> CGFloat {
       switch weight {
       case .small:
@@ -82,6 +92,8 @@ extension Constants.Dimensions.Spacing {
         return 12
       case .large:
         return 16
+      case .extraLarge:
+        return 20
       }
     }
   }

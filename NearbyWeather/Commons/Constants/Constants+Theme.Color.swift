@@ -51,8 +51,7 @@ extension Constants.Theme.Color {
   enum ViewElement {
 
     static var titleLight: UIColor {
-      UIColor.from(dark: .init(hex: 0xFFFFFF),
-                   light: .init(hex: 0x000000))
+      Constants.Theme.Color.MarqueColors.bookmarkDay
     }
     
     static var titleDark: UIColor {
@@ -79,38 +78,26 @@ extension Constants.Theme.Color {
     }
 
     static var primaryBackground: UIColor {
-      guard #available(iOS 13, *) else {
-        return UIColor(red: 0, green: 0, blue: 0) // TODO
-      }
       return UIColor.systemBackground
     }
 
     static var secondaryBackground: UIColor {
-      guard #available(iOS 13, *) else {
-        return UIColor(red: 0, green: 0, blue: 0) // TODO
-      }
       return UIColor.secondarySystemBackground
     }
 
     static var tertiaryBackground: UIColor {
-      guard #available(iOS 13, *) else {
-        return UIColor(red: 0, green: 0, blue: 0) // TODO
-      }
       return UIColor.tertiarySystemBackground
     }
     
     static var alert: UIColor {
-      UIColor.from(dark: .init(hex: 0x000000),
-                   light: .init(hex: 0xFFFFFF))
+      UIColor.from(dark: .init(hex: 0xFFFFFF),
+                   light: .init(hex: 0x000000))
     }
   }
 
   enum SystemColor {
 
     static var blue: UIColor {
-      guard #available(iOS 13, *) else {
-        return UIColor(red: 0, green: 122, blue: 255)
-      }
       return UIColor.systemBlue
     }
 

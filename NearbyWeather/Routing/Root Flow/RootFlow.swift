@@ -83,7 +83,7 @@ private extension RootFlow {
   }
   
   func summonWelcomeWindow() -> FlowContributors {
-    let welcomeFlow = WelcomeFlow()
+    let welcomeFlow = WelcomeFlow(dependencies: WelcomeFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
     
     Flows.whenReady(flow1: welcomeFlow) { [dependencies] (welcomeRoot: UINavigationController) in
       dependencies.rootWindow.rootViewController = welcomeRoot

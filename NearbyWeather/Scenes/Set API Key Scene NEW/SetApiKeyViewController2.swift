@@ -26,9 +26,9 @@ final class SetApiKeyViewController2: UIViewController, BaseViewController {
   
   // MARK: - UIComponents
   
-  fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .fill, spacingWeight: .large))
+  fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .extraLarge))
   fileprivate lazy var bubbleView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
-  fileprivate lazy var bubbleContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .fill, spacingWeight: .medium))
+  fileprivate lazy var bubbleContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .large))
   fileprivate lazy var bubbleDescriptionLabel = Factory.Label.make(fromType: .description(text: R.string.localizable.welcome_api_key_description()))
   fileprivate lazy var apiKeyInputTextField = Factory.TextField.make(fromType: .counter(count: Definitions.apiKeyLength, cornerRadiusWeight: .medium))
   fileprivate lazy var saveButton = Factory.Button.make(fromType: .standard(title: R.string.localizable.save(), height: Constants.Dimensions.InteractableElement.height))
@@ -146,15 +146,16 @@ private extension SetApiKeyViewController2 {
     
     // compose final view
     view.addSubview(mainContentStackView, constraints: [
-      mainContentStackView.topAnchor.constraint(equalTo: view.topAnchor),
-      mainContentStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-      mainContentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      mainContentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+      mainContentStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: ContentInsets.top(from: .large)),
+      mainContentStackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -ContentInsets.bottom(from: .large)),
+      mainContentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: ContentInsets.leading(from: .large)),
+      mainContentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -ContentInsets.trailing(from: .large))
     ])
   }
   
   func setupUiAppearance() {
     view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    bubbleView.backgroundColor = Constants.Theme.Color.ViewElement.alert
+    apiKeyInputTextField.layer.backgroundColor = Constants.Theme.Color.ViewElement.alert.cgColor
   }
 }
-

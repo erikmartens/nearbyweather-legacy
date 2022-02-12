@@ -108,21 +108,24 @@ extension SetApiKeyViewModel {
     _ = shouldSaveApiKeyObservable
       .take(1)
       .asSingle()
-      .flatMapCompletable({ [dependencies] apiKey in
+      .flatMapCompletable { [dependencies] apiKey in
         dependencies.apiKeyService.createSetApiKeyCompletable(apiKey)
-      })
+      }
       .subscribe(onCompleted: { [unowned steps] in
         steps.accept(WelcomeStep.setPermissions)
       })
+    
+    onDidTapInstructionButtonSubject
+      .asObservable()
+      .subscribe(onNext: { [unowned steps] () in
+        steps.accept(WelcomeStep.apiInstructions)
+      })
+      .disposed(by: disposeBag)
   }
 }
 
 // MARK: - Delegate Extensions
 
 // MARK: - Helpers
-
-private extension SetApiKeyViewModel {
-  
-}
 
 // MARK: - Helper Extensions

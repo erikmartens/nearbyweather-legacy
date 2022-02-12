@@ -14,6 +14,7 @@ import RxSwift
 private extension SetApiKeyViewController2 {
   struct Definitions {
     static let apiKeyLength: Int = 32
+    static let mainStackViewInterElementYSpacing: CGFloat = 48
   }
 }
 
@@ -26,11 +27,12 @@ final class SetApiKeyViewController2: UIViewController, BaseViewController {
   
   // MARK: - UIComponents
   
-  fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .extraLarge))
+  fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .custom(value: Definitions.mainStackViewInterElementYSpacing)))
   fileprivate lazy var bubbleView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
   fileprivate lazy var bubbleContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .large))
   fileprivate lazy var bubbleDescriptionLabel = Factory.Label.make(fromType: .description(text: R.string.localizable.welcome_api_key_description()))
   fileprivate lazy var apiKeyInputTextField = Factory.TextField.make(fromType: .counter(count: Definitions.apiKeyLength, cornerRadiusWeight: .medium))
+  fileprivate lazy var buttonStackView = Factory.StackView.make(fromType: .vertical(distribution: .fillProportionally, spacingWeight: .large))
   fileprivate lazy var saveButton = Factory.Button.make(fromType: .standard(title: R.string.localizable.save(), height: Constants.Dimensions.InteractableElement.height))
   fileprivate lazy var instructionsButton = Factory.Button.make(fromType: .plain(title: R.string.localizable.get_api_key_description()))
   
@@ -128,7 +130,7 @@ private extension SetApiKeyViewController2 {
     bubbleContentStackView.addArrangedSubview(apiKeyInputTextField, constraints: [
       apiKeyInputTextField.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
     ])
-    
+  
     bubbleView.addSubview(bubbleContentStackView, constraints: [
       bubbleContentStackView.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: ContentInsets.top(from: .large)),
       bubbleContentStackView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: -ContentInsets.bottom(from: .large)),
@@ -136,13 +138,15 @@ private extension SetApiKeyViewController2 {
       bubbleContentStackView.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: -ContentInsets.trailing(from: .large))
     ])
     
-    mainContentStackView.addArrangedSubview(bubbleView)
-    mainContentStackView.addArrangedSubview(saveButton, constraints: [
+    buttonStackView.addArrangedSubview(saveButton, constraints: [
       saveButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
     ])
-    mainContentStackView.addArrangedSubview(instructionsButton, constraints: [
+    buttonStackView.addArrangedSubview(instructionsButton, constraints: [
       instructionsButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
     ])
+    
+    mainContentStackView.addArrangedSubview(bubbleView)
+    mainContentStackView.addArrangedSubview(buttonStackView)
     
     // compose final view
     view.addSubview(mainContentStackView, constraints: [
@@ -158,7 +162,6 @@ private extension SetApiKeyViewController2 {
     
     view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
     bubbleView.backgroundColor = Constants.Theme.Color.ViewElement.alert
-    apiKeyInputTextField.layer.backgroundColor = Constants.Theme.Color.ViewElement.alert.cgColor
   }
 }
 

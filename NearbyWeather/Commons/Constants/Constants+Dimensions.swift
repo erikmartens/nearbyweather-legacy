@@ -13,6 +13,7 @@ enum Weight {
   case medium
   case large
   case extraLarge
+  case custom(value: CGFloat)
 }
 
 extension Constants {
@@ -64,6 +65,8 @@ extension Constants.Dimensions {
         /// constant: 16
       case .extraLarge:
         return 16
+      case let .custom(value):
+        return value
       }
     }
     /// values: 8, 12 and 16
@@ -81,6 +84,8 @@ extension Constants.Dimensions {
         /// constant: 20
       case .extraLarge:
         return 20
+      case let .custom(value):
+        return value
       }
     }
   }
@@ -101,6 +106,8 @@ extension Constants.Dimensions {
         /// constant: 20
       case .extraLarge:
         return 20
+      case let .custom(value):
+        return value
       }
     }
   }

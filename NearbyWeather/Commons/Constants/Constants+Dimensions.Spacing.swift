@@ -26,6 +26,8 @@ extension Constants.Dimensions.Spacing {
         return 16
       case .extraLarge:
         return 20
+      case let .custom(value):
+        return value
       }
     }
     /// value: 8, 12, 16 or 20
@@ -39,6 +41,8 @@ extension Constants.Dimensions.Spacing {
         return 16
       case .extraLarge:
         return 20
+      case let .custom(value):
+        return value
       }
     }
     /// value: 4, 8, 12 or 16
@@ -52,6 +56,8 @@ extension Constants.Dimensions.Spacing {
         return 12
       case .extraLarge:
         return 16
+      case let .custom(value):
+        return value
       }
     }
     /// value: 4, 8, 12 or 16
@@ -65,6 +71,8 @@ extension Constants.Dimensions.Spacing {
         return 12
       case .extraLarge:
         return 16
+      case let .custom(value):
+        return value
       }
     }
   }
@@ -81,6 +89,8 @@ extension Constants.Dimensions.Spacing {
         return 12
       case .extraLarge:
         return 16
+      case let .custom(value):
+        return value
       }
     }
     /// values: 8, 12, 16 or 20
@@ -94,6 +104,8 @@ extension Constants.Dimensions.Spacing {
         return 16
       case .extraLarge:
         return 20
+      case let .custom(value):
+        return value
       }
     }
   }

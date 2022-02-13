@@ -31,6 +31,23 @@ extension ApiKeyService2 {
   }
 }
 
+extension ApiKeyService2.ApiKeyValidity: Equatable {
+  static func == (lhs: Self, rhs: Self) -> Bool {
+    switch (lhs, rhs) {
+    case (let .valid(lhsVal), let .valid(rhsVal)):
+      return lhsVal == rhsVal
+    case (let .unknown(lhsVal), let .unknown(rhsVal)):
+      return lhsVal == rhsVal
+    case (.invalid, .invalid):
+      return true
+    case (.missing, .missing):
+      return true
+    default:
+      return false
+    }
+  }
+}
+
 // MARK: - Persistency Keys
  
 private extension ApiKeyService2 {
@@ -159,6 +176,7 @@ extension ApiKeyService2: ApiKeySetting {}
 
 protocol ApiKeyReading {
   func createGetApiKeyObservable() -> Observable<String>
+  func createApiKeyIsValidObservable() -> Observable<ApiKeyService2.ApiKeyValidity>
 }
 
 extension ApiKeyService2: ApiKeyReading {}

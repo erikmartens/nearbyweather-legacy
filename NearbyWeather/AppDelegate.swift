@@ -132,7 +132,12 @@ private extension AppDelegate {
     ))
 
     flowCoordinator = FlowCoordinator()
-    flowCoordinator?.coordinate(flow: rootFlow, with: RootStepper())
+    flowCoordinator?.coordinate(
+      flow: rootFlow,
+      with: RootStepper(
+        dependencies: RootStepper.Dependencies(apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!)
+      )
+    )
   }
 
   func refreshWeatherDataIfNeeded() {

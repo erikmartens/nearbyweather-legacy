@@ -11,7 +11,7 @@ import RxSwift
 
 // MARK: - Definitions
 
-private extension SetApiKeyViewController2 {
+private extension SetApiKeyViewController {
   struct Definitions {
     static let apiKeyLength: Int = 32
     static let mainStackViewInterElementYSpacing: CGFloat = 48
@@ -20,9 +20,10 @@ private extension SetApiKeyViewController2 {
 
 // MARK: - Class Definition
 
-final class SetApiKeyViewController2: UIViewController, BaseViewController {
+final class SetApiKeyViewController: UIViewController, BaseViewController {
   
   typealias ViewModel = SetApiKeyViewModel
+  
   private typealias ContentInsets = Constants.Dimensions.Spacing.ContentInsets
   
   // MARK: - UIComponents
@@ -85,7 +86,7 @@ final class SetApiKeyViewController2: UIViewController, BaseViewController {
 
 // MARK: - ViewModel Bindings
 
-extension SetApiKeyViewController2 {
+extension SetApiKeyViewController {
   
   func setupBindings() {
     viewModel.observeEvents()
@@ -122,7 +123,7 @@ extension SetApiKeyViewController2 {
 
 // MARK: - Setup
 
-private extension SetApiKeyViewController2 {
+private extension SetApiKeyViewController {
   
   func setupUiComponents() {
     // compose stackviews
@@ -163,12 +164,4 @@ private extension SetApiKeyViewController2 {
     view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
     bubbleView.backgroundColor = Constants.Theme.Color.ViewElement.alert
   }
-}
-
-// MARK: - Extensions
-
-extension SetApiKeyViewController2: UINavigationBarDelegate {
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        UIBarPosition.topAttached
-    }
 }

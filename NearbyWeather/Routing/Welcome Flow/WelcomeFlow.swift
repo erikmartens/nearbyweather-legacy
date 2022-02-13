@@ -70,8 +70,8 @@ private extension WelcomeFlow {
   
   private func summonWelcomeWindow() -> FlowContributors {
    
-    let setApiKeyViewController = SetApiKeyViewController2(
-      dependencies: SetApiKeyViewController2.ViewModel.Dependencies(apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!
+    let setApiKeyViewController = SetApiKeyViewController(
+      dependencies: SetApiKeyViewController.ViewModel.Dependencies(apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!
     ))
     rootViewController.setViewControllers([setApiKeyViewController], animated: false)
     return .one(flowContributor: .contribute(

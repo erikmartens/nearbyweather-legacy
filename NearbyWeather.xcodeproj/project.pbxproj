@@ -19,7 +19,7 @@
 		F2060E5227B69AFE0066DC8C /* SetApiKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5127B69AFE0066DC8C /* SetApiKeyViewModel.swift */; };
 		F2060E5427B69B170066DC8C /* SetApiKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5327B69B170066DC8C /* SetApiKeyViewController.swift */; };
 		F2060E5627B6B7CE0066DC8C /* Factory+UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5527B6B7CE0066DC8C /* Factory+UITextField.swift */; };
-		F2060E5927B9A9A80066DC8C /* SetPermissionsViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5827B9A9A80066DC8C /* SetPermissionsViewController2.swift */; };
+		F2060E5927B9A9A80066DC8C /* SetPermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5827B9A9A80066DC8C /* SetPermissionsViewController.swift */; };
 		F2060E5B27B9A9BB0066DC8C /* SetPermissionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5A27B9A9BB0066DC8C /* SetPermissionsViewModel.swift */; };
 		F20CA0D725B1C75700153E47 /* Factory+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20CA0D625B1C75700153E47 /* Factory+UIView.swift */; };
 		F20CA0E025B1FC2500153E47 /* WeatherStationCurrentInformationAtmosphericDetailsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20CA0DF25B1FC2500153E47 /* WeatherStationCurrentInformationAtmosphericDetailsCellViewModel.swift */; };
@@ -151,7 +151,6 @@
 		F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */; };
 		F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */; };
 		F2B8EA001EA11BA800704E90 /* WeatherInformationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8E9FF1EA11BA800704E90 /* WeatherInformationDTO.swift */; };
-		F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */; };
 		F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */; };
 		F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14523F355370008B0F7 /* Date+String.swift */; };
 		F2C4E14923F98A4C0008B0F7 /* EmptyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14823F98A4C0008B0F7 /* EmptyListViewController.swift */; };
@@ -191,7 +190,6 @@
 		F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF023E5F98200CD513B /* TextInputCell.swift */; };
 		F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */; };
 		F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */; };
-		F2DBEB0B23E8DE0E00CD513B /* SetPermissions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEB0A23E8DE0E00CD513B /* SetPermissions.storyboard */; };
 		F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2D23F0386B00CD513B /* Factory.swift */; };
 		F2DBEB3023F038BE00CD513B /* Constants+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */; };
 		F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */; };
@@ -273,7 +271,7 @@
 		F2060E5127B69AFE0066DC8C /* SetApiKeyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetApiKeyViewModel.swift; sourceTree = "<group>"; };
 		F2060E5327B69B170066DC8C /* SetApiKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetApiKeyViewController.swift; sourceTree = "<group>"; };
 		F2060E5527B6B7CE0066DC8C /* Factory+UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UITextField.swift"; sourceTree = "<group>"; };
-		F2060E5827B9A9A80066DC8C /* SetPermissionsViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewController2.swift; sourceTree = "<group>"; };
+		F2060E5827B9A9A80066DC8C /* SetPermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewController.swift; sourceTree = "<group>"; };
 		F2060E5A27B9A9BB0066DC8C /* SetPermissionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewModel.swift; sourceTree = "<group>"; };
 		F20CA0D625B1C75700153E47 /* Factory+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIView.swift"; sourceTree = "<group>"; };
 		F20CA0DF25B1FC2500153E47 /* WeatherStationCurrentInformationAtmosphericDetailsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationCurrentInformationAtmosphericDetailsCellViewModel.swift; sourceTree = "<group>"; };
@@ -406,7 +404,6 @@
 		F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		F2B8E9FF1EA11BA800704E90 /* WeatherInformationDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInformationDTO.swift; sourceTree = "<group>"; };
-		F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewController.swift; sourceTree = "<group>"; };
 		F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppTableViewController.swift; sourceTree = "<group>"; };
 		F2C4E14523F355370008B0F7 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		F2C4E14823F98A4C0008B0F7 /* EmptyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListViewController.swift; sourceTree = "<group>"; };
@@ -446,7 +443,6 @@
 		F2DBEAF023E5F98200CD513B /* TextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextInputCell.xib; sourceTree = "<group>"; };
 		F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AppendSafe.swift"; sourceTree = "<group>"; };
-		F2DBEB0A23E8DE0E00CD513B /* SetPermissions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SetPermissions.storyboard; sourceTree = "<group>"; };
 		F2DBEB2D23F0386B00CD513B /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Theme.swift"; sourceTree = "<group>"; };
 		F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SemanticInitializer.swift"; sourceTree = "<group>"; };
@@ -586,13 +582,13 @@
 			path = "Set API Key Scene";
 			sourceTree = "<group>";
 		};
-		F2060E5727B9A9780066DC8C /* Set Permissions Scene NEW */ = {
+		F2060E5727B9A9780066DC8C /* Set Permissions Scene */ = {
 			isa = PBXGroup;
 			children = (
 				F2060E5A27B9A9BB0066DC8C /* SetPermissionsViewModel.swift */,
-				F2060E5827B9A9A80066DC8C /* SetPermissionsViewController2.swift */,
+				F2060E5827B9A9A80066DC8C /* SetPermissionsViewController.swift */,
 			);
-			path = "Set Permissions Scene NEW";
+			path = "Set Permissions Scene";
 			sourceTree = "<group>";
 		};
 		F20CA0DE25B1FB9A00153E47 /* Weather Station Current Information Atmospheric Details */ = {
@@ -873,8 +869,7 @@
 				F2926CEE25AC8E2800413512 /* Shared Scene Objects */,
 				F204B7831DF2EFA3000F4371 /* LaunchScreen.storyboard */,
 				F2060E5027B6900D0066DC8C /* Set API Key Scene */,
-				F27A121F24425D2A00A2CE8D /* Set Permissions Scene */,
-				F2060E5727B9A9780066DC8C /* Set Permissions Scene NEW */,
+				F2060E5727B9A9780066DC8C /* Set Permissions Scene */,
 				F27A122024425D4E00A2CE8D /* Weather List Scene */,
 				F27A122124425D6800A2CE8D /* Weather List Error Scene */,
 				F27A122224425D9D00A2CE8D /* Weather Station Current Information Scene */,
@@ -886,15 +881,6 @@
 				F27A122824425E3900A2CE8D /* Bookmarks Management Scene */,
 			);
 			path = Scenes;
-			sourceTree = "<group>";
-		};
-		F27A121F24425D2A00A2CE8D /* Set Permissions Scene */ = {
-			isa = PBXGroup;
-			children = (
-				F2DBEB0A23E8DE0E00CD513B /* SetPermissions.storyboard */,
-				F2B8EA071EA2A7AB00704E90 /* SetPermissionsViewController.swift */,
-			);
-			path = "Set Permissions Scene";
 			sourceTree = "<group>";
 		};
 		F27A122024425D4E00A2CE8D /* Weather List Scene */ = {
@@ -1490,7 +1476,6 @@
 				F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */,
 				F2C4E14B23F98AA50008B0F7 /* EmptyList.storyboard in Resources */,
 				F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */,
-				F2DBEB0B23E8DE0E00CD513B /* SetPermissions.storyboard in Resources */,
 				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
 				F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */,
 				F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */,
@@ -1706,7 +1691,7 @@
 				F2D1995825A1F5C1004C7753 /* UITableView+RegisterCells.swift in Sources */,
 				F213FA3423F9EF2400F094D8 /* TemperatureUnitOption.swift in Sources */,
 				F20CA0F825B21B8600153E47 /* WeatherStationCurrentInformationWindCellViewModel.swift in Sources */,
-				F2060E5927B9A9A80066DC8C /* SetPermissionsViewController2.swift in Sources */,
+				F2060E5927B9A9A80066DC8C /* SetPermissionsViewController.swift in Sources */,
 				F2DB5E6225AB4CFB00E21A56 /* BaseMapViewDelegate.swift in Sources */,
 				F237287A244C7FDD00964C49 /* SettingsFlow.swift in Sources */,
 				F22A222825A4BE9500C97844 /* Factory+UIStackView.swift in Sources */,
@@ -1721,7 +1706,6 @@
 				F2D1995025A1F1A4004C7753 /* Factory+UITableView.swift in Sources */,
 				F2DBEB3023F038BE00CD513B /* Constants+Theme.swift in Sources */,
 				F2E12F6025B0997F00176087 /* WeatherStationCurrentInformationSunCycleItemsSection.swift in Sources */,
-				F2B8EA081EA2A7AB00704E90 /* SetPermissionsViewController.swift in Sources */,
 				F2370FFC25AB25B10072AF29 /* RefreshOnAppStartOption.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationController+Extensions.swift in Sources */,
 				F2DB5E8825AB55A100E21A56 /* MKAnnotationView+AnnotationViewReuseIdentifiable.swift in Sources */,

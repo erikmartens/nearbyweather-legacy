@@ -88,8 +88,8 @@ private extension WelcomeFlow {
   
   private func summonSetPermissions() -> FlowContributors {
     
-    let setPermissionsViewController = SetPermissionsViewController2(
-      dependencies: SetPermissionsViewController2.ViewModel.Dependencies(userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!
+    let setPermissionsViewController = SetPermissionsViewController(
+      dependencies: SetPermissionsViewController.ViewModel.Dependencies(userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!
     ))
     rootViewController.pushViewController(setPermissionsViewController, animated: true)
     return .one(flowContributor: .contribute(

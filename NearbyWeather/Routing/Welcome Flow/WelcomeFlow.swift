@@ -87,9 +87,15 @@ private extension WelcomeFlow {
   }
   
   private func summonSetPermissions() -> FlowContributors {
-    let setPermissionsController = R.storyboard.setPermissions.setPermissionsVC()!
-    rootViewController.pushViewController(setPermissionsController, animated: true)
-    return .one(flowContributor: .contribute(withNext: setPermissionsController))
+    
+    let setPermissionsViewController = SetPermissionsViewController2(
+      dependencies: SetPermissionsViewController2.ViewModel.Dependencies(userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!
+    ))
+    rootViewController.pushViewController(setPermissionsViewController, animated: true)
+    return .one(flowContributor: .contribute(
+      withNextPresentable: setPermissionsViewController,
+      withNextStepper: setPermissionsViewController.viewModel
+    ))
   }
   
   private func dismissWelcomeWindow() -> FlowContributors {

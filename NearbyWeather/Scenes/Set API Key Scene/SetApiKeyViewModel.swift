@@ -9,7 +9,6 @@
 import RxSwift
 import RxCocoa
 import RxFlow
-import CoreLocation
 
 // MARK: - Dependencies
 
@@ -34,8 +33,6 @@ final class SetApiKeyViewModel: NSObject, Stepper, BaseViewModel {
   // MARK: - Properties
   
   private let dependencies: Dependencies
-  
-  var textFieldDelegate: UITextFieldDelegate? // swiftlint:disable:this weak_delegate
   
   // MARK: - Events
   

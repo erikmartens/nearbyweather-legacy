@@ -37,6 +37,40 @@ final class UserLocationService2 {
   }
 }
 
+// MARK: - User Location Permissions Requesting
+
+protocol UserLocationPermissionRequesting {
+  func requestWhenImUseLocationAccess() -> Completable
+}
+
+extension UserLocationService2: UserLocationPermissionRequesting {
+  
+  func requestWhenImUseLocationAccess() -> Completable {
+    guard locationManager.authorizationStatus == .notDetermined else {
+      return Completable.create { handler in
+        handler(.completed)
+        return Disposables.create()
+      }
+    }
+    
+    return Observable<Void>
+      .create { [unowned locationManager] subscriber in
+        locationManager.requestWhenInUseAuthorization()
+        subscriber.on(.next(()))
+        return Disposables.create()
+      }
+      .flatMapLatest { [unowned locationManager] () in
+        locationManager.rx
+          .didChangeAuthorization
+          .map { $0.status }
+          .filter { $0 != .notDetermined }
+      }
+      .take(1)
+      .asSingle()
+      .asCompletable()
+  }
+}
+
 // MARK: - User Location Accessing
 
 protocol UserLocationAccessing {
@@ -50,7 +84,7 @@ extension UserLocationService2: UserLocationAccessing {
     locationManager.rx
       .didChangeAuthorization
       .map { $0.status }
-      .startWith(CLLocationManager.authorizationStatus())
+      .startWith(locationManager.authorizationStatus)
       .map { Self.authorizationStatusIsSufficient($0) }
   }
   

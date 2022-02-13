@@ -60,7 +60,7 @@ final class EmptyListViewController: UIViewController { // TODO: SCHEDULED FOR D
   }
   
   private func configureButtons() {
-    reloadButton.isHidden = WeatherNetworkingService.shared.reachabilityStatus != .connected
+//    reloadButton.isHidden = WeatherNetworkingService.shared.reachabilityStatus != .connected //TODO
 
     reloadButton.setTitle(R.string.localizable.reload().uppercased(), for: .normal)
     reloadButton.setTitleColor(.white, for: UIControl.State())

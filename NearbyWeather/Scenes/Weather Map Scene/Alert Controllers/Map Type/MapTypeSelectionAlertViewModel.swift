@@ -63,10 +63,9 @@ extension MapTypeSelectionAlertViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject
+      .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] mapTypeOption -> Completable in
-        dependencies.preferencesService.createSetPreferredMapTypeOptionCompletable(mapTypeOption)
-      }
+      .flatMapCompletable(dependencies.preferencesService.createSetPreferredMapTypeOptionCompletable)
       .subscribe { [weak steps] _ in steps?.accept(MapStep.dismissChildFlow) }
   }
 }

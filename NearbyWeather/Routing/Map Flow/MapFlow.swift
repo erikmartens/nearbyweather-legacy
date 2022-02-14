@@ -146,7 +146,7 @@ private extension MapFlow {
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: WeatherDetailStepper()))
   }
   
-  func summonChangeMapTypeAlert(currentSelectedOptionValue: MapTypeValue) -> FlowContributors { // TODO: test cancel action works properly
+  func summonChangeMapTypeAlert(currentSelectedOptionValue: MapTypeValue) -> FlowContributors {
     let preferencesService = dependencies.dependencyContainer.resolve(PreferencesService2.self)!
     
     let alertController = MapTypeSelectionAlertController(dependencies: MapTypeSelectionAlertViewModel.Dependencies(

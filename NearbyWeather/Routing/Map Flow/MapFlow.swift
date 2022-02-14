@@ -147,12 +147,12 @@ private extension MapFlow {
   }
   
   func summonChangeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeValue) -> FlowContributors {
-    let alertController = MapTypeSelectionAlertController(dependencies: MapTypeSelectionAlertViewModel.Dependencies(
+    let alertController = MapTypeSelectionAlert(dependencies: MapTypeSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
     ))
     
-    rootViewController.present(alertController, animated: true, completion: nil)
+    rootViewController.present(alertController.alertController, animated: true, completion: nil)
     return .none
   }
   

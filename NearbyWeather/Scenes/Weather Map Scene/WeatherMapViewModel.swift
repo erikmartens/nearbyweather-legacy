@@ -177,14 +177,14 @@ extension WeatherMapViewModel {
     onDidTapMapTypeBarButtonSubject
       .flatMapLatest { [unowned preferredMapTypeObservable] in preferredMapTypeObservable }
       .subscribe(onNext: { [weak steps] preferredMapType in
-        steps?.accept(MapStep.changeMapTypeAlert(currentSelectedOptionValue: preferredMapType))
+        steps?.accept(MapStep.changeMapTypeAlert(selectionDelegate: self, currentSelectedOptionValue: preferredMapType))
       })
       .disposed(by: disposeBag)
     
     onDidTapAmountOfResultsBarButtonSubject
       .flatMapLatest { [unowned preferredAmountOfResultsObservable] in preferredAmountOfResultsObservable }
       .subscribe(onNext: { [weak steps] preferredAmountOfResults in
-        steps?.accept(MapStep.changeAmountOfResultsAlert(currentSelectedOptionValue: preferredAmountOfResults))
+        steps?.accept(MapStep.changeAmountOfResultsAlert(selectionDelegate: self, currentSelectedOptionValue: preferredAmountOfResults))
       })
       .disposed(by: disposeBag)
     
@@ -222,5 +222,23 @@ extension WeatherMapViewModel: FocusOnLocationSelectionAlertDelegate {
     case let .weatherStation(location):
       onDidSelectFocusOnWeatherStationSubject.onNext(location)
     }
+  }
+}
+
+extension WeatherMapViewModel: MapTypeSelectionAlertDelegate {
+  
+  func didSelectMapTypeOption(_ selectedOption: MapTypeOption) {
+    _ = dependencies.preferencesService
+      .createSetPreferredMapTypeOptionCompletable(selectedOption)
+      .subscribe()
+  }
+}
+
+extension WeatherMapViewModel: AmountOfResultsSelectionAlertDelegate {
+  
+  func didSelectAmountOfResultsOption(_ selectedOption: AmountOfResultsOption) {
+    _ = dependencies.preferencesService
+      .createSetAmountOfNearbyResultsOptionCompletable(selectedOption)
+      .subscribe()
   }
 }

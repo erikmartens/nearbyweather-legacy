@@ -182,7 +182,7 @@ extension WeatherListViewModel {
     onDidTapAmountOfResultsBarButtonSubject
       .flatMapLatest { [unowned preferredAmountOfResultsObservable] in preferredAmountOfResultsObservable }
       .subscribe(onNext: { [weak steps] preferredAmountOfResults in
-        steps?.accept(ListStep.changeAmountOfResultsAlert(currentSelectedOptionValue: preferredAmountOfResults))
+        steps?.accept(ListStep.changeAmountOfResultsAlert(selectionDelegate: self, currentSelectedOptionValue: preferredAmountOfResults))
       })
       .disposed(by: disposeBag)
     
@@ -272,6 +272,17 @@ private extension WeatherListViewModel {
         return lhsLocation.distance(from: currentLocation) < rhsLocation.distance(from: currentLocation)
       }
     }
+  }
+}
+
+// MARK: - Delegate Extensions
+
+extension WeatherListViewModel: AmountOfResultsSelectionAlertDelegate {
+  
+  func didSelectAmountOfResultsOption(_ selectedOption: AmountOfResultsOption) {
+    _ = dependencies.preferencesService
+      .createSetAmountOfNearbyResultsOptionCompletable(selectedOption)
+      .subscribe()
   }
 }
 

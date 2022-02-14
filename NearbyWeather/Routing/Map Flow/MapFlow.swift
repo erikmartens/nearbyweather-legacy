@@ -66,10 +66,10 @@ final class MapFlow: Flow {
       return summonWeatherMapController()
     case let .weatherDetails2(identity):
       return summonWeatherDetailsController2(identity: identity)
-    case let .changeMapTypeAlert(currentSelectedOptionValue):
-      return summonChangeMapTypeAlert(currentSelectedOptionValue: currentSelectedOptionValue)
-    case let .changeAmountOfResultsAlert(currentSelectedOptionValue):
-      return summonChangeAmountOfResultsAlert(currentSelectedOptionValue: currentSelectedOptionValue)
+    case let .changeMapTypeAlert(selectionDelegate, currentSelectedOptionValue):
+      return summonChangeMapTypeAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
+    case let .changeAmountOfResultsAlert(selectionDelegate, currentSelectedOptionValue):
+      return summonChangeAmountOfResultsAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
     case .focusOnLocationAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .focusOnLocationAlertAdapted(selectionDelegate, weatherInformationDTOs):
@@ -146,26 +146,22 @@ private extension MapFlow {
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: WeatherDetailStepper()))
   }
   
-  func summonChangeMapTypeAlert(currentSelectedOptionValue: MapTypeValue) -> FlowContributors {
-    let preferencesService = dependencies.dependencyContainer.resolve(PreferencesService2.self)!
-    
+  func summonChangeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeValue) -> FlowContributors {
     let alertController = MapTypeSelectionAlertController(dependencies: MapTypeSelectionAlertViewModel.Dependencies(
-      selectedOptionValue: currentSelectedOptionValue,
-      preferencesService: preferencesService
+      selectionDelegate: selectionDelegate,
+      selectedOptionValue: currentSelectedOptionValue
     ))
     rootViewController.present(alertController, animated: true, completion: nil)
-    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
+    return .none
   }
   
-  func summonChangeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
-    let preferencesService = dependencies.dependencyContainer.resolve(PreferencesService2.self)!
-    
+  func summonChangeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
     let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionAlertViewModel.Dependencies(
-      selectedOptionValue: currentSelectedOptionValue,
-      preferencesService: preferencesService
+      selectionDelegate: selectionDelegate,
+      selectedOptionValue: currentSelectedOptionValue
     ))
     rootViewController.present(alertController, animated: true, completion: nil)
-    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
+    return .none
   }
   
   func summonFocusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate, bookmarkedLocations: [WeatherInformationDTO]) -> FlowContributors {
@@ -174,7 +170,7 @@ private extension MapFlow {
       selectionDelegate: selectionDelegate
     ))
     rootViewController.present(alertController, animated: true, completion: nil)
-    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
+    return .none
   }
   
   func dismissChildFlow() -> FlowContributors {

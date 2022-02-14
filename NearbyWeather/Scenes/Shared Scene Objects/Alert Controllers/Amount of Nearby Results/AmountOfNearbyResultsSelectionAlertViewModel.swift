@@ -10,12 +10,18 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
+// MARK: - Delegate
+
+protocol AmountOfResultsSelectionAlertDelegate: class {
+  func didSelectAmountOfResultsOption(_ selectedOption: AmountOfResultsOption)
+}
+
 // MARK: - Dependencies
 
 extension AmountOfNearbyResultsSelectionAlertViewModel {
   struct Dependencies {
+    weak var selectionDelegate: AmountOfResultsSelectionAlertDelegate?
     let selectedOptionValue: AmountOfResultsValue
-    let preferencesService: WeatherListPreferenceSetting
   }
 }
 
@@ -41,6 +47,14 @@ final class AmountOfNearbyResultsSelectionAlertViewModel: NSObject, Stepper, Bas
     self.dependencies = dependencies
   }
   
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
   // MARK: - Functions
   
   func observeEvents() {
@@ -55,10 +69,8 @@ extension AmountOfNearbyResultsSelectionAlertViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject
+      .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] amountOfResultsOption -> Completable in
-        dependencies.preferencesService.createSetAmountOfNearbyResultsOptionCompletable(amountOfResultsOption)
-      }
-      .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
+      .subscribe(onSuccess: dependencies.selectionDelegate?.didSelectAmountOfResultsOption)
   }
 }

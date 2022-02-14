@@ -233,7 +233,6 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
         }
         return Disposables.create()
     }
-      .debug("👠👠👠👠👠👠👠👠")
   }
   
   /// returns a single containing all resources within a specified collection
@@ -241,24 +240,6 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
     createGetResourcesObservable(in: collection, type: type)
       .take(1)
       .asSingle()
-    
-//    Single<Results<RealmModel>>
-//      .create { [configuration] handler in
-//        do {
-//          let realm = try Realm(configuration: configuration)
-//          let predicate = NSPredicate(format: Definitions.predicateFormatCollection, collection)
-//          let results = realm
-//            .objects(RealmModel.self)
-//            .filter(predicate)
-//          handler(.success(results))
-//        } catch {
-//          handler(.error(error))
-//        }
-//        return Disposables.create()
-//      }
-//      .map { results -> [PersistencyModel<T>] in
-//        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
-//      }
   }
   
   /// returns a single containing a specified resource for a specified identity

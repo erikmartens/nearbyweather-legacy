@@ -10,22 +10,24 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
+// MARK: - Delegate
+
+protocol MapTypeSelectionAlertDelegate: class {
+  func didSelectMapTypeOption(_ selectedOption: MapTypeOption)
+}
+
 // MARK: - Dependencies
 
 extension MapTypeSelectionAlertViewModel {
   struct Dependencies {
+    weak var selectionDelegate: MapTypeSelectionAlertDelegate?
     let selectedOptionValue: MapTypeValue
-    let preferencesService: WeatherMapPreferenceSetting
   }
 }
 
 // MARK: - Class Definition
 
-final class MapTypeSelectionAlertViewModel: NSObject, Stepper, BaseViewModel {
-  
-  // MARK: - Routing
-  
-  let steps = PublishRelay<Step>()
+final class MapTypeSelectionAlertViewModel: NSObject, BaseViewModel {
   
   // MARK: - Properties
   
@@ -65,7 +67,6 @@ extension MapTypeSelectionAlertViewModel {
     _ = onDidSelectOptionSubject
       .take(1)
       .asSingle()
-      .flatMapCompletable(dependencies.preferencesService.createSetPreferredMapTypeOptionCompletable)
-      .subscribe { [weak steps] _ in steps?.accept(MapStep.dismissChildFlow) }
+      .subscribe(onSuccess: dependencies.selectionDelegate?.didSelectMapTypeOption)
   }
 }

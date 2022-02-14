@@ -12,8 +12,8 @@ import RxFlow
 enum MapStep: Step {
   case map
   case weatherDetails2(identity: PersistencyModelIdentityProtocol)
-  case changeMapTypeAlert(currentSelectedOptionValue: MapTypeValue)
-  case changeAmountOfResultsAlert(currentSelectedOptionValue: AmountOfResultsValue)
+  case changeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeValue)
+  case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue)
   case focusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate)
   case focusOnLocationAlertAdapted(selectionDelegate: FocusOnLocationSelectionAlertDelegate, weatherInformationDTOs: [WeatherInformationDTO])
   case dismissChildFlow

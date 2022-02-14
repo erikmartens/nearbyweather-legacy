@@ -60,6 +60,14 @@ final class AmountOfNearbyResultsSelectionAlertController: UIAlertController, Ba
     fatalError("init(coder:) has not been implemented")
   }
   
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
   // MARK: - AlertController LifeCycle
   
   override func viewDidLoad() {

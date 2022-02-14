@@ -31,9 +31,6 @@ final class FocusOnLocationSelectionAlertController: UIAlertController, BaseView
   let viewModel: ViewModel
   
   override var preferredStyle: UIAlertController.Style { .alert }
-  override var actions: [UIAlertAction] {
-    viewModel.bookmarkedLocations.mapToAlertAction(viewModel: viewModel) + [focusOnUserLocationAction, cancelAction]
-  }
   
   // MARK: - Initialization
   
@@ -43,6 +40,9 @@ final class FocusOnLocationSelectionAlertController: UIAlertController, BaseView
     super.init(nibName: nil, bundle: nil)
     title = R.string.localizable.focus_on_location().capitalized
     message = nil
+    
+    let actions = viewModel.bookmarkedLocations.mapToAlertAction(viewModel: viewModel) + [focusOnUserLocationAction, cancelAction]
+    actions.forEach { addAction($0) }
   }
   
   required init?(coder: NSCoder) {

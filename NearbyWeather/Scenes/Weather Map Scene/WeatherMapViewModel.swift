@@ -129,6 +129,7 @@ extension WeatherMapViewModel {
       )
       .catchErrorJustReturn([])
       .share(replay: 1)
+      .debug()
     
     let bookmarkedMapItemsObservable = Observable
       .combineLatest(

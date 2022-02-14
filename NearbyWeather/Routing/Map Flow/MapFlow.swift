@@ -86,7 +86,9 @@ final class MapFlow: Flow {
         return Observable
           .combineLatest(
             Observable.just(selectionDelegate),
-            dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } },
+            dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!
+              .createGetBookmarkedWeatherInformationListObservable()
+              .map { $0.map { $0.entity } },
             resultSelector: MapStep.focusOnLocationAlertAdapted
           )
           .take(1)

@@ -22,6 +22,7 @@ extension Factory {
     static func make(fromType type: InputType) -> ResultType {
       let button = UIBarButtonItem()
       button.style = .plain
+      button.tintColor = Constants.Theme.Color.InteractableElement.standardBarButtonTint
 
       switch type {
       case let .standard(title, image):

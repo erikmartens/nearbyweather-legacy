@@ -21,7 +21,7 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
   fileprivate lazy var mapView = Factory.MapView.make(fromType: .standard(frame: view.frame))
   
   fileprivate lazy var mapTypeBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.layerType()))
-  fileprivate lazy var amountOfResultsBarButton = Factory.BarButtonItem.make(fromType: .standard())
+  fileprivate lazy var amountOfResultsBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.ten())) // set image for layouting to work
   fileprivate lazy var focusOnLocationBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.marker()))
   
   // MARK: - Assets
@@ -147,6 +147,8 @@ extension WeatherMapViewController {
 private extension WeatherMapViewController {
   
   func setupUiLayout() {
+    
+    navigationItem.leftBarButtonItems = [mapTypeBarButton]
     navigationItem.rightBarButtonItems = [amountOfResultsBarButton, focusOnLocationBarButton]
     
     view.addSubview(mapView, constraints: [
@@ -158,6 +160,8 @@ private extension WeatherMapViewController {
   }
   
   func setupUiAppearance() {
+    title = R.string.localizable.tab_weatherMap()
+    
     view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
   }
 }

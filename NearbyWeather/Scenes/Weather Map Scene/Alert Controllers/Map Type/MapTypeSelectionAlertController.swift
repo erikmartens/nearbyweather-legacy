@@ -32,12 +32,6 @@ final class MapTypeSelectionAlertController: UIAlertController, BaseViewControll
   let viewModel: ViewModel
   
   override var preferredStyle: UIAlertController.Style { .alert }
-  override var actions: [UIAlertAction] {
-    [standardSelectionAction,
-     satelliteSelectionAction,
-     hybridSelectionAction,
-     cancelAction]
-  }
   
   // MARK: - Initialization
   
@@ -48,7 +42,10 @@ final class MapTypeSelectionAlertController: UIAlertController, BaseViewControll
     title = R.string.localizable.select_map_type().capitalized
     message = nil
     
-    setCheckmarkForOption(with: viewModel.dependencies.selectedOptionValue)
+    addAction(standardSelectionAction)
+    addAction(satelliteSelectionAction)
+    addAction(hybridSelectionAction)
+    addAction(cancelAction)
   }
   
   required init?(coder: NSCoder) {
@@ -68,6 +65,7 @@ final class MapTypeSelectionAlertController: UIAlertController, BaseViewControll
   override func viewDidLoad() {
     super.viewDidLoad()
     setupBindings()
+    setCheckmarkForOption(with: viewModel.dependencies.selectedOptionValue)
   }
 }
 

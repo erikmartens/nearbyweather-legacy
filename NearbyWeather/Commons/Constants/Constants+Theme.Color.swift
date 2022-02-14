@@ -46,6 +46,10 @@ extension Constants.Theme.Color {
     static var standardButtonTint: UIColor {
       Constants.Theme.Color.MarqueColors.bookmarkDay
     }
+    
+    static var standardBarButtonTint: UIColor {
+      Constants.Theme.Color.ViewElement.alert
+    }
   }
 
   enum ViewElement {

@@ -38,14 +38,6 @@ final class AmountOfNearbyResultsSelectionAlertController: UIAlertController, Ba
   let viewModel: ViewModel
   
   override var preferredStyle: UIAlertController.Style { .alert }
-  override var actions: [UIAlertAction] {
-    [tenNearbyResultsSelectionAction,
-     twentyNearbyResultsSelectionAction,
-     thirtyNearbyResultsSelectionAction,
-     fortyNearbyResultsSelectionAction,
-     fiftyNearbyResultsSelectionAction,
-     cancelAction]
-  }
   
   // MARK: - Initialization
   
@@ -56,7 +48,12 @@ final class AmountOfNearbyResultsSelectionAlertController: UIAlertController, Ba
     title = R.string.localizable.amount_of_results().capitalized
     message = nil
     
-    setCheckmarkForOption(with: viewModel.dependencies.selectedOptionValue)
+    addAction(tenNearbyResultsSelectionAction)
+    addAction(twentyNearbyResultsSelectionAction)
+    addAction(thirtyNearbyResultsSelectionAction)
+    addAction(fortyNearbyResultsSelectionAction)
+    addAction(fiftyNearbyResultsSelectionAction)
+    addAction(cancelAction)
   }
   
   required init?(coder: NSCoder) {
@@ -68,6 +65,7 @@ final class AmountOfNearbyResultsSelectionAlertController: UIAlertController, Ba
   override func viewDidLoad() {
     super.viewDidLoad()
     setupBindings()
+    setCheckmarkForOption(with: viewModel.dependencies.selectedOptionValue)
   }
 }
 
@@ -81,9 +79,9 @@ extension AmountOfNearbyResultsSelectionAlertController {
     bindUserInputToViewModel(viewModel)
   }
 }
-  
+
 // MARK: - Helpers
-  
+
 private extension AmountOfNearbyResultsSelectionAlertController {
   
   func setCheckmarkForOption(with value: AmountOfResultsValue) {

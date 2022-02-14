@@ -32,12 +32,6 @@ final class SortingOrientationSelectionAlertController: UIAlertController, BaseV
   let viewModel: ViewModel
   
   override var preferredStyle: UIAlertController.Style { .alert }
-  override var actions: [UIAlertAction] {
-    [nameSortingSelectionAction,
-     temperatureSortingSelectionAction,
-     distanceSortingSelectionAction,
-     cancelAction]
-  }
   
   // MARK: - Initialization
   
@@ -48,7 +42,10 @@ final class SortingOrientationSelectionAlertController: UIAlertController, BaseV
     title = R.string.localizable.select_list_type().capitalized
     message = nil
     
-    setCheckmarkForOption(with: viewModel.dependencies.selectedOptionValue)
+    addAction(nameSortingSelectionAction)
+    addAction(temperatureSortingSelectionAction)
+    addAction(distanceSortingSelectionAction)
+    addAction(cancelAction)
   }
   
   required init?(coder: NSCoder) {
@@ -60,6 +57,7 @@ final class SortingOrientationSelectionAlertController: UIAlertController, BaseV
   override func viewDidLoad() {
     super.viewDidLoad()
     setupBindings()
+    setCheckmarkForOption(with: viewModel.dependencies.selectedOptionValue)
   }
   
   deinit {

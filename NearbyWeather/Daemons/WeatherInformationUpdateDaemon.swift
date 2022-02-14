@@ -46,6 +46,7 @@ final class WeatherInformationUpdateDaemon {
     observeBookmarkedStationsChanges()
     observeApiKeyChanges()
     observeLocationAccessAuthorization()
+    observeAppDidBecomeActive()
   }
 }
 
@@ -132,5 +133,9 @@ private extension WeatherInformationUpdateDaemon {
       }
       .subscribe()
       .disposed(by: disposeBag)
+  }
+  
+  func observeAppDidBecomeActive() {
+    // TODO
   }
 }

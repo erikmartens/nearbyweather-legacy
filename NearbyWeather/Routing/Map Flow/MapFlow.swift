@@ -139,7 +139,7 @@ private extension MapFlow {
       dependencyContainer: dependencies.dependencyContainer
     ))
     
-    Flows.whenReady(flow1: weatherDetailFlow) { [rootViewController] (weatherDetailRoot: UINavigationController) in
+    Flows.whenReady(flow1: weatherDetailFlow) { [unowned rootViewController] (weatherDetailRoot: UINavigationController) in
       rootViewController.present(weatherDetailRoot, animated: true)
     }
     
@@ -151,6 +151,7 @@ private extension MapFlow {
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
     ))
+    
     rootViewController.present(alertController, animated: true, completion: nil)
     return .none
   }

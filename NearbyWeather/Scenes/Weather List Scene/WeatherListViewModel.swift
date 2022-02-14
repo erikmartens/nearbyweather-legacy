@@ -175,7 +175,7 @@ extension WeatherListViewModel {
     onDidTapListTypeBarButtonSubject
       .flatMapLatest { [unowned preferredListTypeObservable] in preferredListTypeObservable }
       .subscribe(onNext: { [weak steps] preferredListType in
-        steps?.accept(ListStep.changeListTypeAlert(currentSelectedOptionValue: preferredListType))
+        steps?.accept(ListStep.changeListTypeAlert(selectionDelegate: self, currentSelectedOptionValue: preferredListType))
       })
       .disposed(by: disposeBag)
     
@@ -189,7 +189,7 @@ extension WeatherListViewModel {
     onDidTapSortingOrientationBarButtonSubject
       .flatMapLatest { [unowned preferredSortingOrientationObservable] in preferredSortingOrientationObservable }
       .subscribe(onNext: { [weak steps] preferredSortingOrientation in
-        steps?.accept(ListStep.changeSortingOrientationAlert(currentSelectedOptionValue: preferredSortingOrientation))
+        steps?.accept(ListStep.changeSortingOrientationAlert(selectionDelegate: self, currentSelectedOptionValue: preferredSortingOrientation))
       })
       .disposed(by: disposeBag)
     
@@ -282,6 +282,24 @@ extension WeatherListViewModel: AmountOfResultsSelectionAlertDelegate {
   func didSelectAmountOfResultsOption(_ selectedOption: AmountOfResultsOption) {
     _ = dependencies.preferencesService
       .createSetAmountOfNearbyResultsOptionCompletable(selectedOption)
+      .subscribe()
+  }
+}
+
+extension WeatherListViewModel: ListTypeSelectionAlertDelegate {
+  
+  func didSelectListTypeOption(_ selectedOption: ListTypeOption) {
+    _ = dependencies.preferencesService
+      .createSetListTypeOptionCompletable(selectedOption)
+      .subscribe()
+  }
+}
+
+extension WeatherListViewModel: SortingOrientationSelectionAlertDelegate {
+  
+  func didSortingOrientationOption(_ selectedOption: SortingOrientationOption) {
+    _ = dependencies.preferencesService
+      .createSetSortingOrientationOptionCompletable(selectedOption)
       .subscribe()
   }
 }

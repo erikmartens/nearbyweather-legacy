@@ -10,12 +10,18 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
+// MARK: - Delegate
+
+protocol SortingOrientationSelectionAlertDelegate: class {
+  func didSortingOrientationOption(_ selectedOption: SortingOrientationOption)
+}
+
 // MARK: - Dependencies
 
 extension SortingOrientationSelectionAlertViewModel {
   struct Dependencies {
+    weak var selectionDelegate: SortingOrientationSelectionAlertDelegate?
     let selectedOptionValue: SortingOrientationValue
-    let preferencesService: WeatherListPreferenceSetting
   }
 }
 
@@ -63,10 +69,8 @@ extension SortingOrientationSelectionAlertViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject
+      .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] sortingOrientationOption -> Completable in
-        dependencies.preferencesService.createSetSortingOrientationOptionCompletable(sortingOrientationOption)
-      }
-      .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
+      .subscribe(onSuccess: dependencies.selectionDelegate?.didSortingOrientationOption)
   }
 }

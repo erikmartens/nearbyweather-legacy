@@ -10,12 +10,18 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
+// MARK: - Delegate
+
+protocol ListTypeSelectionAlertDelegate: class {
+  func didSelectListTypeOption(_ selectedOption: ListTypeOption)
+}
+
 // MARK: - Dependencies
 
 extension ListTypeSelectionAlertViewModel {
   struct Dependencies {
+    weak var selectionDelegate: ListTypeSelectionAlertDelegate?
     let selectedOptionValue: ListTypeValue
-    let preferencesService: WeatherListPreferenceSetting
   }
 }
 
@@ -63,10 +69,8 @@ extension ListTypeSelectionAlertViewModel {
   
   func observeUserTapEvents() {
     _ = onDidSelectOptionSubject
+      .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] listTypeOption -> Completable in
-        dependencies.preferencesService.createSetListTypeOptionCompletable(listTypeOption)
-      }
-      .subscribe { [weak steps] _ in steps?.accept(ListStep.dismissChildFlow) }
+      .subscribe(onSuccess: dependencies.selectionDelegate?.didSelectListTypeOption)
   }
 }

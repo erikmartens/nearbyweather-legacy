@@ -13,7 +13,7 @@ extension Factory {
   struct ImageView: FactoryFunction {
     
     enum ImageViewType {
-      case symbol(image: UIImage? = nil)
+      case symbol(image: UIImage? = nil, tintColor: UIColor? = nil)
       case appIcon
       case cellPrefix
     }
@@ -25,10 +25,11 @@ extension Factory {
       let imageView = UIImageView()
       
       switch type {
-      case let .symbol(image):
+      case let .symbol(image, tintColor):
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
-        imageView.image = image
+        imageView.image = image?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = tintColor ?? Constants.Theme.Color.ViewElement.symbolImage
       case .appIcon:
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = Constants.Dimensions.AppIconImage.cornerRadius

@@ -28,6 +28,15 @@ extension ApiKeyService2 {
     case invalid
     case missing
     case unknown(apiKey: String)
+    
+    var isValid: Bool {
+      switch self {
+      case .valid:
+        return true
+      case .invalid, .missing, .unknown:
+        return false
+      }
+    }
   }
 }
 

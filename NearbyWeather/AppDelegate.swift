@@ -103,6 +103,8 @@ private extension AppDelegate {
         apiKeyService: resolver.resolve(ApiKeyService2.self)!
       ))
     }
+    
+    dependencyContainer.register(NetworkReachabilityService.self) { _ in NetworkReachabilityService() }
   }
   
   func instantiateDaemons() {

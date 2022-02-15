@@ -110,8 +110,12 @@ private extension ListFlow {
   }
   
   func summonEmptyWeatherListController() -> FlowContributors {
-    let emptyWeatherListViewController = R.storyboard.emptyList.emptyListViewController()!
-    rootViewController.setViewControllers([emptyWeatherListViewController], animated: false)
+    let listErrorViewController = ListErrorViewController(dependencies: ListErrorViewController.ViewModel.Dependencies(
+      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!,
+      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,
+      networkReachabilityService: dependencies.dependencyContainer.resolve(NetworkReachabilityService.self)!
+    ))
+    rootViewController.setViewControllers([listErrorViewController], animated: false)
     return .none
   }
   

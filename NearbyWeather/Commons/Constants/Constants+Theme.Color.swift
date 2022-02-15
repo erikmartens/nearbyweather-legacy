@@ -97,6 +97,11 @@ extension Constants.Theme.Color {
       UIColor.from(dark: .init(hex: 0xFFFFFF),
                    light: .init(hex: 0x000000))
     }
+    
+    static var symbolImage: UIColor {
+      UIColor.from(dark: .init(hex: 0xFFFFFF),
+                   light: .init(hex: 0x000000))
+    }
   }
 
   enum SystemColor {

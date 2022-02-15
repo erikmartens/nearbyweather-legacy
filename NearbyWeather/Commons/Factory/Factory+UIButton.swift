@@ -25,7 +25,7 @@ extension Factory {
 
       switch type {
       case let .standard(title, height):
-        button.layer.cornerRadius = height/2
+        button.layer.cornerRadius = height/4
         button.layer.backgroundColor = Constants.Theme.Color.MarqueColors.bookmarkDay.cgColor
 
         button.titleLabel?.font = .preferredFont(forTextStyle: .headline)

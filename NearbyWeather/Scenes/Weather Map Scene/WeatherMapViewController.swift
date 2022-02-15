@@ -21,8 +21,13 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
   fileprivate lazy var mapView = Factory.MapView.make(fromType: .standard(frame: view.frame))
   
   fileprivate lazy var mapTypeBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.layerType()))
-  fileprivate lazy var amountOfResultsBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.ten())) // set image for layouting to work
   fileprivate lazy var focusOnLocationBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.marker()))
+  
+  fileprivate lazy var amountOfResultsBarButton10 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.ten()))
+  fileprivate lazy var amountOfResultsBarButton20 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.twenty()))
+  fileprivate lazy var amountOfResultsBarButton30 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.thirty()))
+  fileprivate lazy var amountOfResultsBarButton40 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.forty()))
+  fileprivate lazy var amountOfResultsBarButton50 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.fifty()))
   
   // MARK: - Assets
   
@@ -104,12 +109,19 @@ extension WeatherMapViewController {
     
     viewModel
       .preferredAmountOfResultsDriver
-      .drive(onNext: { [weak amountOfResultsBarButton] amountOfResultsValue in
-        amountOfResultsBarButton?.setBackgroundImage(
-          AmountOfResultsOption(value: amountOfResultsValue).imageValue,
-          for: UIControl.State(),
-          barMetrics: .default
-        )
+      .drive(onNext: { [unowned self] amountOfResultsValue in
+        switch amountOfResultsValue {
+        case .ten:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton10, self.focusOnLocationBarButton]
+        case .twenty:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton20, self.focusOnLocationBarButton]
+        case .thirty:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton30, self.focusOnLocationBarButton]
+        case .forty:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton40, self.focusOnLocationBarButton]
+        case .fifty:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton50, self.focusOnLocationBarButton]
+        }
       })
       .disposed(by: disposeBag)
     
@@ -130,8 +142,14 @@ extension WeatherMapViewController {
       .bind(to: viewModel.onDidTapMapTypeBarButtonSubject)
       .disposed(by: disposeBag)
     
-    amountOfResultsBarButton.rx
-      .tap
+    Observable
+      .merge(
+        amountOfResultsBarButton10.rx.tap.asObservable(),
+        amountOfResultsBarButton20.rx.tap.asObservable(),
+        amountOfResultsBarButton30.rx.tap.asObservable(),
+        amountOfResultsBarButton40.rx.tap.asObservable(),
+        amountOfResultsBarButton50.rx.tap.asObservable()
+      )
       .bind(to: viewModel.onDidTapAmountOfResultsBarButtonSubject)
       .disposed(by: disposeBag)
     
@@ -147,9 +165,7 @@ extension WeatherMapViewController {
 private extension WeatherMapViewController {
   
   func setupUiLayout() {
-    
     navigationItem.leftBarButtonItems = [mapTypeBarButton]
-    navigationItem.rightBarButtonItems = [amountOfResultsBarButton, focusOnLocationBarButton]
     
     view.addSubview(mapView, constraints: [
       mapView.topAnchor.constraint(equalTo: view.topAnchor),

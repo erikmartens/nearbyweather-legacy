@@ -27,7 +27,7 @@ extension Factory {
       switch type {
       case let .standard(title, image):
         button.title = title
-        button.image = image
+        button.image = image?.withRenderingMode(.alwaysTemplate)
       }
 
       return button

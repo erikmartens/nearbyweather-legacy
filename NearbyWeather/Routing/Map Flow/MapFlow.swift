@@ -147,30 +147,30 @@ private extension MapFlow {
   }
   
   func summonChangeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeValue) -> FlowContributors {
-    let alertController = MapTypeSelectionAlert(dependencies: MapTypeSelectionAlert.Dependencies(
+    let alert = MapTypeSelectionAlert(dependencies: MapTypeSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
     ))
     
-    rootViewController.present(alertController.alertController, animated: true, completion: nil)
+    rootViewController.present(alert.alertController, animated: true, completion: nil)
     return .none
   }
   
   func summonChangeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
-    let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionAlertViewModel.Dependencies(
+    let alert = AmountOfNearbyResultsSelectionAlert(dependencies: AmountOfNearbyResultsSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
     ))
-    rootViewController.present(alertController, animated: true, completion: nil)
+    rootViewController.present(alert.alertController, animated: true, completion: nil)
     return .none
   }
   
   func summonFocusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate, bookmarkedLocations: [WeatherInformationDTO]) -> FlowContributors {
-    let alertController = FocusOnLocationSelectionAlertController(dependencies: FocusOnLocationSelectionAlertViewModel.Dependencies(
+    let alert = FocusOnLocationSelectionAlert(dependencies: FocusOnLocationSelectionAlert.Dependencies(
       bookmarkedLocations: bookmarkedLocations,
       selectionDelegate: selectionDelegate
     ))
-    rootViewController.present(alertController, animated: true, completion: nil)
+    rootViewController.present(alert.alertController, animated: true, completion: nil)
     return .none
   }
   

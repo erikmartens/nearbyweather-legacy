@@ -66,7 +66,7 @@ final class ListFlow: Flow {
     case let .weatherDetails2(identity):
       return summonWeatherDetailsController2(identity: identity)
     case let .changeListTypeAlert(selectionDelegate, currentSelectedOptionValue):
-      return summonChangeListTypeAlert(selectionDelegate: selectionDelegate,currentSelectedOptionValue: currentSelectedOptionValue)
+      return summonChangeListTypeAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
     case let .changeAmountOfResultsAlert(selectionDelegate, currentSelectedOptionValue):
       return summonChangeAmountOfResultsAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
     case let .changeSortingOrientationAlert(selectionDelegate, currentSelectedOptionValue):
@@ -129,30 +129,30 @@ private extension ListFlow {
   }
   
   func summonChangeListTypeAlert(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeValue) -> FlowContributors {
-    let alertController = ListTypeSelectionAlertController(dependencies: ListTypeSelectionAlertViewModel.Dependencies(
+    let alert = ListTypeSelectionAlert(dependencies: ListTypeSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
     ))
-    rootViewController.present(alertController, animated: true, completion: nil)
+    rootViewController.present(alert.alertController, animated: true, completion: nil)
     return .none
   }
   
   func summonChangeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
-    let alertController = AmountOfNearbyResultsSelectionAlertController(dependencies: AmountOfNearbyResultsSelectionAlertViewModel.Dependencies(
+    let alert = AmountOfNearbyResultsSelectionAlert(dependencies: AmountOfNearbyResultsSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
     ))
-    rootViewController.present(alertController, animated: true, completion: nil)
+    rootViewController.present(alert.alertController, animated: true, completion: nil)
     return .none
   }
   
   func summonChangeSortingOrientationAlert(selectionDelegate: SortingOrientationSelectionAlertDelegate, currentSelectedOptionValue: SortingOrientationValue) -> FlowContributors {
-    let alertController = SortingOrientationSelectionAlertController(dependencies: SortingOrientationSelectionAlertViewModel.Dependencies(
+    let alert = SortingOrientationSelectionAlert(dependencies: SortingOrientationSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
     ))
-    rootViewController.present(alertController, animated: true, completion: nil)
-    return .one(flowContributor: .contribute(withNextPresentable: alertController, withNextStepper: alertController.viewModel))
+    rootViewController.present(alert.alertController, animated: true, completion: nil)
+    return .none
   }
   
   func dismissChildFlow() -> FlowContributors {

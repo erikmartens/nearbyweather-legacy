@@ -67,10 +67,6 @@ final class MapTypeSelectionAlert {
     setCheckmarkForOption(with: dependencies.selectedOptionValue)
   }
   
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
   deinit {
     printDebugMessage(
       domain: String(describing: self),

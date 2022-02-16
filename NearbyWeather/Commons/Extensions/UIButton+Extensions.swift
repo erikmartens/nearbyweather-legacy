@@ -13,24 +13,28 @@ extension UIButton {
   func setIsRefreshing(_ isRefreshing: Bool) {
     let refreshControlTag = 1010
     
-    titleLabel?.isHidden = isRefreshing
     if isRefreshing {
-      let refreshSpinner = UIRefreshControl()
+      titleLabel?.layer.opacity = 0
+      
+      let refreshSpinner = UIActivityIndicatorView(style: .medium)
       refreshSpinner.tag = refreshControlTag
       
       addSubview(refreshSpinner, constraints: [
         refreshSpinner.topAnchor.constraint(equalTo: topAnchor, constant: Constants.Dimensions.Spacing.InterElementSpacing.yDistance(from: .small)),
         refreshSpinner.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Constants.Dimensions.Spacing.InterElementSpacing.yDistance(from: .small)),
+        refreshSpinner.centerXAnchor.constraint(equalTo: centerXAnchor),
         refreshSpinner.widthAnchor.constraint(equalTo: refreshSpinner.heightAnchor)
       ])
-      refreshSpinner.beginRefreshing()
+      refreshSpinner.startAnimating()
       return
     }
     
-    guard let refreshControl = viewWithTag(refreshControlTag) as? UIRefreshControl else {
+    titleLabel?.layer.opacity = 1
+    
+    guard let refreshControl = viewWithTag(refreshControlTag) as? UIActivityIndicatorView else {
       return
     }
-    refreshControl.endRefreshing()
+    refreshControl.stopAnimating()
     refreshControl.removeFromSuperview()
   }
   

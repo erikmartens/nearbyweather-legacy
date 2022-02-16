@@ -104,7 +104,9 @@ private extension AppDelegate {
       ))
     }
     
-    dependencyContainer.register(NetworkReachabilityService.self) { _ in NetworkReachabilityService() }
+    dependencyContainer.register(NetworkReachabilityService.self) { _ in
+      NetworkReachabilityService()
+    }
   }
   
   func instantiateDaemons() {

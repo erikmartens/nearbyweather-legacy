@@ -106,7 +106,6 @@ final class ListErrorViewModel: NSObject, Stepper, BaseViewModel {
   private lazy var isNetworkReachableObservable: Observable<Bool> = { [dependencies] in
     dependencies.networkReachabilityService
       .createIsNetworkReachableObservable()
-      .startWith(false) // TODO: Alamofire Observable does not work
       .share(replay: 1)
   }()
   
@@ -144,16 +143,15 @@ extension ListErrorViewModel {
   func observeUserTapEvents() {
     onDidTapRefreshButtonSubject
       .do(onNext: { [weak isRefreshingSubject] in isRefreshingSubject?.onNext(true) })
-      .flatMapLatest { [dependencies] _ -> Observable<Void> in
+      .flatMapLatest { [weak isRefreshingSubject, dependencies] _ -> Observable<Void> in
         Completable
           .zip([dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable(),
                 dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()])
+          .do(onCompleted: { isRefreshingSubject?.onNext(false) })
           .asObservable()
           .map { _ in () }
       }
-      .subscribe { [weak isRefreshingSubject] _ in
-        isRefreshingSubject?.onNext(false)
-      }
+      .subscribe()
       .disposed(by: disposeBag)
   }
 }

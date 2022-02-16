@@ -144,7 +144,7 @@ extension WeatherInformationService2: WeatherInformationPersistence {
   }
   
   func createGetNearbyWeatherInformationListObservable() -> Observable<[PersistencyModel<WeatherInformationDTO>]> {
-    dependencies.persistencyService.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
+    dependencies.persistencyService.observeResources(in: PersistencyKeys.nearbyWeatherInformation.collection, type: WeatherInformationDTO.self).debug("🧢🧢🧢🧢🧢")
   }
   
   func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModel<WeatherInformationDTO>> {
@@ -203,7 +203,6 @@ protocol WeatherInformationUpdating {
 
 extension WeatherInformationService2: WeatherInformationUpdating {
   
-  // TODO : remove this function
   func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationAvailability> {
     Observable<WeatherInformationAvailability>
       .combineLatest(
@@ -223,7 +222,10 @@ extension WeatherInformationService2: WeatherInformationUpdating {
         }
       )
       .flatMapLatest { urls -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
-        Observable.zip(
+        guard !urls.isEmpty else {
+          return Observable.just([])
+        }
+        return Observable.zip(
           urls.map { url -> Observable<PersistencyModel<WeatherInformationDTO>> in
             RxAlamofire
               .requestData(.get, url)

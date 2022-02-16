@@ -92,7 +92,7 @@ extension ListErrorViewController {
      viewModel
       .isRefreshingDriver
       .drive(onNext: { [unowned refreshButton] isRefreshing in
-        refreshButton.setIsRefreshing(isRefreshing) // TODO: fix this func
+        refreshButton.setIsRefreshing(isRefreshing)
       })
       .disposed(by: disposeBag)
     
@@ -127,9 +127,11 @@ private extension ListErrorViewController {
     mainContentStackView.addArrangedSubview(imageView)
     mainContentStackView.addArrangedSubview(textStackView)
     mainContentStackView.addArrangedSubview(refreshButton, constraints: [
-      refreshButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
+      refreshButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height),
+      refreshButton.widthAnchor.constraint(equalToConstant: view.frame.size.width - ContentInsets.leading(from: .large) - ContentInsets.trailing(from: .large))
     ])
     
+    // compose final view
     view.addSubview(mainContentStackView, constraints: [
       mainContentStackView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: ContentInsets.top(from: .large)),
       mainContentStackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -ContentInsets.bottom(from: .large) - (tabBarController?.tabBar.frame.size.height ?? 0)),

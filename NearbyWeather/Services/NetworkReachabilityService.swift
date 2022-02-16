@@ -25,6 +25,8 @@ final class NetworkReachabilityService {
   
   // MARK: - Properties
   
+  private let reachabilityManager = NetworkReachabilityManager()
+  
   // MARK: - Initialization
   
   init() {}
@@ -40,8 +42,8 @@ extension NetworkReachabilityService: NetworkReachability {
   
   func createIsNetworkReachableObservable() -> Observable<Bool> {
     Observable<Bool>
-      .create { subscriber in
-        guard let reachabilityManager = NetworkReachabilityManager() else {
+      .create { [weak self] subscriber in
+        guard let reachabilityManager = self?.reachabilityManager else {
           subscriber.on(.error(DomainError.reachabilityManagerUnavailableError))
           return Disposables.create()
         }
@@ -55,5 +57,10 @@ extension NetworkReachabilityService: NetworkReachability {
         }
         return Disposables.create()
       }
+      .do(onSubscribe: { [weak self] in
+        self?.reachabilityManager?.startListening()
+      }, onDispose: { [weak self] in
+        self?.reachabilityManager?.stopListening()
+      })
   }
 }

@@ -8,25 +8,25 @@ use_frameworks!
 def nearbyweather_pods
     pod 'PKHUD', '~> 5.3.0'
     pod 'TextFieldCounter', '~> 1.1.0'
-    pod 'Alamofire', '~> 4.9.1'
+    pod 'Alamofire', '~> 5.5.0'
     pod 'APTimeZones', :git => 'https://github.com/Alterplay/APTimeZones.git', :branch => 'master', :commit => '9ffd147'
     pod 'FMDB', '~> 2.7.5'
-    pod 'RealmSwift', '~> 4.4.1'
-    pod 'Swinject', '~> 2.7.1'
+    pod 'RealmSwift', '~> 10.22.0'
+    pod 'Swinject', '~> 2.8.1'
 
-    pod 'RxSwift', '~> 5.1.1'
-    pod 'RxCocoa', '~> 5.1.1'
-    pod 'RxOptional', '~> 4.1.0'
-    pod 'RxFlow', '~> 2.7.0'
-    pod 'RxRealm', '~> 2.0.0'
-    pod 'RxAlamofire', '~> 5.1.0'
-    pod 'RxCoreLocation', '~> 1.4.2'
+    pod 'RxSwift', '~> 6.5.0'
+    pod 'RxCocoa', '~> 6.5.0'
+    pod 'RxOptional', '~> 5.0.2'
+    pod 'RxFlow', '~> 2.12.4'
+    pod 'RxRealm', '~> 5.0.4'
+    pod 'RxAlamofire', '~> 6.1.1'
+    pod 'RxCoreLocation', '~> 1.5.1'
 
-    pod 'SwiftLint', '~> 0.38.2'
-    pod 'R.swift', '5.0.3'
+    pod 'SwiftLint', '~> 0.46.2'
+    pod 'R.swift', '5.3.0'
 
-    pod 'Firebase/Analytics', '~> 6.21.0'
-    pod 'Firebase/Crashlytics', '~> 6.21.0'
+    pod 'Firebase/Analytics', '~> 8.12.0'
+    pod 'Firebase/Crashlytics', '~> 8.12.0'
 end
 
 target 'NearbyWeather' do

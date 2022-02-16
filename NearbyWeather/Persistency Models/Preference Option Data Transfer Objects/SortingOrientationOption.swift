@@ -12,6 +12,14 @@ enum SortingOrientationValue: Int, CaseIterable, Codable {
   case name
   case temperature
   case distance
+  
+  var title: String {
+    switch self {
+    case .name: return R.string.localizable.sortByName()
+    case .temperature: return R.string.localizable.sortByTemperature()
+    case .distance: return R.string.localizable.sortByDistance()
+    }
+  }
 }
 
 struct SortingOrientationOption: Codable, PreferencesOption {
@@ -39,10 +47,6 @@ struct SortingOrientationOption: Codable, PreferencesOption {
   }
   
   var stringValue: String {
-    switch value {
-    case .name: return R.string.localizable.sortByName()
-    case .temperature: return R.string.localizable.sortByTemperature()
-    case .distance: return R.string.localizable.sortByDistance()
-    }
+    value.title
   }
 }

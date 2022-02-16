@@ -31,13 +31,13 @@ final class SortingOrientationSelectionAlert {
   
   // MARK: - Actions
   
-  fileprivate lazy var nameSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.nearby.title, handler: { [dependencies] _ in
+  fileprivate lazy var nameSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: SortingOrientationValue.name.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSortingOrientationOption(SortingOrientationOption(value: .name))
   }))
-  fileprivate lazy var temperatureSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.bookmarked.title, handler: { [dependencies] _ in
+  fileprivate lazy var temperatureSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: SortingOrientationValue.temperature.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSortingOrientationOption(SortingOrientationOption(value: .temperature))
   }))
-  fileprivate lazy var distanceSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.bookmarked.title, handler: { [dependencies] _ in
+  fileprivate lazy var distanceSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: SortingOrientationValue.distance.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSortingOrientationOption(SortingOrientationOption(value: .distance))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
@@ -53,7 +53,7 @@ final class SortingOrientationSelectionAlert {
     self.dependencies = dependencies
     
     alertController = UIAlertController(
-      title: R.string.localizable.select_list_type().capitalized,
+      title: R.string.localizable.sorting_orientation().capitalized,
       message: nil,
       preferredStyle: .alert
     )

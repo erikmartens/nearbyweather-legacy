@@ -6,6 +6,8 @@
 //  Copyright © 2018 Erik Maximilian Martens. All rights reserved.
 //
 
+// TODO: FILE SCHEDULED FOR DELETION
+
 import Foundation
 import Alamofire
 
@@ -50,18 +52,18 @@ final class WeatherNetworkingService {
   // MARK: - Private Methods
 
   func beginListeningNetworkReachability() {
-    reachabilityManager?.listener = { [weak self] status in
-      switch status {
-      case .unknown: self?.reachabilityStatus = .unknown
-      case .notReachable: self?.reachabilityStatus = .disconnected
-      case .reachable(.ethernetOrWiFi), .reachable(.wwan): self?.reachabilityStatus = .connected
-      }
-      NotificationCenter.default.post(
-        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
-        object: nil
-      )
-    }
-    reachabilityManager?.startListening()
+//    reachabilityManager?.listener = { [weak self] status in
+//      switch status {
+//      case .unknown: self?.reachabilityStatus = .unknown
+//      case .notReachable: self?.reachabilityStatus = .disconnected
+//      case .reachable(.ethernetOrWiFi), .reachable(.wwan): self?.reachabilityStatus = .connected
+//      }
+//      NotificationCenter.default.post(
+//        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kNetworkReachabilityChanged),
+//        object: nil
+//      )
+//    }
+//    reachabilityManager?.startListening()
   }
 
   // MARK: - Public Methods
@@ -72,67 +74,67 @@ final class WeatherNetworkingService {
 
   func fetchWeatherInformationForStation(withIdentifier identifier: Int, completionHandler: @escaping ((WeatherDataContainer) -> Void)) {
 
-    guard let apiKey = self.apiKey else {
-      let errorDataDTO = WeatherInformationErrorDTO(
-        errorType: WeatherInformationErrorDTO.ErrorType(value: .malformedUrlError),
-        httpStatusCode: nil
-      )
-      return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
-    }
-
-    Alamofire
-      .request(
-        Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier),
-        method: .get,
-        parameters: nil,
-        encoding: JSONEncoding.default,
-        headers: nil
-    )
-      .responseData(queue: weatherFetchQueue) { [weak self] response in
-        guard let self = self,
-          let data = response.result.value,
-          response.result.error == nil else {
-            let errorType = (response.response?.statusCode == 401) ? WeatherInformationErrorDTO.ErrorType(value: .unrecognizedApiKeyError) : WeatherInformationErrorDTO.ErrorType(value: .httpError)
-            let errorDataDTO = WeatherInformationErrorDTO(errorType: errorType, httpStatusCode: response.response?.statusCode)
-            return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
-        }
-        completionHandler(self.extractWeatherInformation(data, identifier: identifier))
-    }
+//    guard let apiKey = self.apiKey else {
+//      let errorDataDTO = WeatherInformationErrorDTO(
+//        errorType: WeatherInformationErrorDTO.ErrorType(value: .malformedUrlError),
+//        httpStatusCode: nil
+//      )
+//      return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
+//    }
+//
+//    Alamofire
+//      .request(
+//        Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier),
+//        method: .get,
+//        parameters: nil,
+//        encoding: JSONEncoding.default,
+//        headers: nil
+//    )
+//      .responseData(queue: weatherFetchQueue) { [weak self] response in
+//        guard let self = self,
+//          let data = response.result.value,
+//          response.result.error == nil else {
+//            let errorType = (response.response?.statusCode == 401) ? WeatherInformationErrorDTO.ErrorType(value: .unrecognizedApiKeyError) : WeatherInformationErrorDTO.ErrorType(value: .httpError)
+//            let errorDataDTO = WeatherInformationErrorDTO(errorType: errorType, httpStatusCode: response.response?.statusCode)
+//            return completionHandler(WeatherDataContainer(locationId: identifier, errorDataDTO: errorDataDTO, weatherInformationDTO: nil))
+//        }
+//        completionHandler(self.extractWeatherInformation(data, identifier: identifier))
+//    }
   }
 
   func fetchBulkWeatherInformation(completionHandler: @escaping (BulkWeatherDataContainer) -> Void) {
-    guard let currentLatitude = UserLocationService.shared.currentLatitude, let currentLongitude = UserLocationService.shared.currentLongitude else {
-      let errorDataDTO = WeatherInformationErrorDTO(errorType: WeatherInformationErrorDTO.ErrorType(value: .locationUnavailableError), httpStatusCode: nil)
-      return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
-    }
-
-    guard let apiKey = self.apiKey else {
-      let errorDataDTO = WeatherInformationErrorDTO(errorType: WeatherInformationErrorDTO.ErrorType(value: .malformedUrlError), httpStatusCode: nil)
-      return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
-    }
-
-    Alamofire
-      .request(
-        Constants.Urls.kOpenWeatherMapNearbyStationsDataRequestUrl(
-          with: apiKey,
-          currentLatitude: currentLatitude,
-          currentLongitude: currentLongitude
-        ),
-        method: .get,
-        parameters: nil,
-        encoding: JSONEncoding.default,
-        headers: nil
-    )
-      .responseData(queue: weatherFetchQueue) { [weak self] response in
-        guard let self = self,
-          let data = response.result.value,
-          response.result.error == nil else {
-            let errorType = (response.response?.statusCode == 401) ? WeatherInformationErrorDTO.ErrorType(value: .unrecognizedApiKeyError) : WeatherInformationErrorDTO.ErrorType(value: .httpError)
-            let errorDataDTO = WeatherInformationErrorDTO(errorType: errorType, httpStatusCode: response.response?.statusCode)
-            return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
-        }
-        completionHandler(self.extractBulkWeatherInformation(data))
-    }
+//    guard let currentLatitude = UserLocationService.shared.currentLatitude, let currentLongitude = UserLocationService.shared.currentLongitude else {
+//      let errorDataDTO = WeatherInformationErrorDTO(errorType: WeatherInformationErrorDTO.ErrorType(value: .locationUnavailableError), httpStatusCode: nil)
+//      return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
+//    }
+//
+//    guard let apiKey = self.apiKey else {
+//      let errorDataDTO = WeatherInformationErrorDTO(errorType: WeatherInformationErrorDTO.ErrorType(value: .malformedUrlError), httpStatusCode: nil)
+//      return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
+//    }
+//
+//    Alamofire
+//      .request(
+//        Constants.Urls.kOpenWeatherMapNearbyStationsDataRequestUrl(
+//          with: apiKey,
+//          currentLatitude: currentLatitude,
+//          currentLongitude: currentLongitude
+//        ),
+//        method: .get,
+//        parameters: nil,
+//        encoding: JSONEncoding.default,
+//        headers: nil
+//    )
+//      .responseData(queue: weatherFetchQueue) { [weak self] response in
+//        guard let self = self,
+//          let data = response.result.value,
+//          response.result.error == nil else {
+//            let errorType = (response.response?.statusCode == 401) ? WeatherInformationErrorDTO.ErrorType(value: .unrecognizedApiKeyError) : WeatherInformationErrorDTO.ErrorType(value: .httpError)
+//            let errorDataDTO = WeatherInformationErrorDTO(errorType: errorType, httpStatusCode: response.response?.statusCode)
+//            return completionHandler(BulkWeatherDataContainer(errorDataDTO: errorDataDTO, weatherInformationDTOs: nil))
+//        }
+//        completionHandler(self.extractBulkWeatherInformation(data))
+//    }
   }
 
   // MARK: - Private Helpers

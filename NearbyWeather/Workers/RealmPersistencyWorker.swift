@@ -10,6 +10,16 @@ import RealmSwift
 import RxRealm
 import RxSwift
 
+protocol PersistencyModelIdentityProtocol {
+  var collection: String { get }
+  var identifier: String { get }
+}
+
+struct PersistencyModelIdentity: PersistencyModelIdentityProtocol {
+  let collection: String
+  let identifier: String
+}
+
 protocol PersistencyModelProtocol {
   associatedtype PersistencyModelEntity: Codable
   var identity: PersistencyModelIdentityProtocol { get }
@@ -17,6 +27,7 @@ protocol PersistencyModelProtocol {
   init(identity: PersistencyModelIdentityProtocol, entity: PersistencyModelEntity)
   init?(collection: String, identifier: String, data: Data?)
   func toRealmModel() -> RealmModel
+  func toThreadSafeModel() -> PersistencyModelThreadSafe<PersistencyModelEntity>
 }
 
 class PersistencyModel<T: Codable>: PersistencyModelProtocol {
@@ -47,16 +58,15 @@ class PersistencyModel<T: Codable>: PersistencyModelProtocol {
       data: try? JSONEncoder().encode(entity)
     )
   }
+  
+  func toThreadSafeModel() -> PersistencyModelThreadSafe<T> {
+    PersistencyModelThreadSafe(identity: identity, entity: entity)
+  }
 }
 
-protocol PersistencyModelIdentityProtocol {
-  var collection: String { get }
-  var identifier: String { get }
-}
-
-struct PersistencyModelIdentity: PersistencyModelIdentityProtocol {
-  let collection: String
-  let identifier: String
+struct PersistencyModelThreadSafe<T: Codable> {
+  let identity: PersistencyModelIdentityProtocol
+  let entity: T
 }
 
 internal class RealmModel: Object {
@@ -76,6 +86,8 @@ internal class RealmModel: Object {
     ["collection", "identifier"]
   }
 }
+
+// MARK: - Domain Errors
 
 enum RealmPersistencyWorkerError: String, Error {
   
@@ -146,10 +158,10 @@ final class RealmPersistencyWorker {
 protocol RealmPersistencyWorkerCRUD {
   func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable
   func saveResource<T: Codable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable
-  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModel<T>]>
-  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModel<T>?>
-  func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]>
-  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModel<T>?>
+  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]>
+  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?>
+  func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]>
+  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?>
   func deleteResources(with identities: [PersistencyModelIdentityProtocol]) -> Completable
   func deleteResources(in collection: String) -> Completable
   func deleteResource(with identity: PersistencyModelIdentityProtocol) -> Completable
@@ -236,26 +248,26 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   }
   
   /// returns a single containing all resources within a specified collection
-  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModel<T>]> {
+  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]> {
     createGetResourcesObservable(in: collection, type: type)
       .take(1)
       .asSingle()
   }
   
   /// returns a single containing a specified resource for a specified identity
-  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModel<T>?> {
+  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?> {
     createGetResourceObservable(with: identity, type: type)
       .take(1)
       .asSingle()
   }
   
   /// observes all resources within a specified collection
-  func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]> {
+  func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]> {
     createGetResourcesObservable(in: collection, type: type)
   }
   
   /// observes a specified resource for a specified identity
-  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModel<T>?> {
+  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
     createGetResourceObservable(with: identity, type: type)
   }
   
@@ -329,30 +341,84 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
 
 private extension RealmPersistencyWorker {
   
-  private func createGetPersistencyModelsObservable<T: Codable>(type: T.Type) -> Observable<[PersistencyModel<T>]> {
-    Observable<[RealmModel]>
+//  private func createGetPersistencyModelsObservable<T: Codable>(type: T.Type) -> Observable<[PersistencyModel<T>]> {
+////    guard let realm = try? Realm(configuration: configuration) else {
+////      return Observable.just([]) // TODO: Error handling
+////    }
+////    let results = realm.objects(RealmModel.self)
+////    return Observable
+//    Observable
+//      .create { [configuration] subscriber in
+//        do {
+//          let realm = try Realm(configuration: configuration)
+//          let predicate = NSPredicate(format: Definitions.predicateFormatIdentity, )
+//          let results = realm.objects(RealmModel.self)
+//          subscriber.on(.next(results))
+//        } catch {
+//          subscriber.on(.error(RealmPersistencyWorkerError.realmConfigurationError))
+//        }
+//        return Disposables.create()
+//      }
+////      .array(from: results)
+//      .map { (results: Results<RealmModel>) -> [PersistencyModel<T>] in
+//        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
+//      }
+//      .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
+//      .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
+//  }
+  
+  func createGetResourcesObservable<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]> {
+//    guard let realm = try? Realm(configuration: configuration) else {
+//      return Observable.just([]) // TODO: Error handling
+//    }
+//    let predicate = NSPredicate(format: Definitions.predicateFormatCollection, collection)
+//    let results = realm.objects(RealmModel.self).filter(predicate)
+//    return Observable.array(from: results)
+    
+    Observable
       .create { [configuration] subscriber in
-        guard let realm = try? Realm(configuration: configuration) else {
-          subscriber.on(.next([])) // TODO: error handling
-          return Disposables.create()
+        do {
+          let realm = try Realm(configuration: configuration)
+          let predicate = NSPredicate(format: Definitions.predicateFormatCollection, collection)
+          let results = realm.objects(RealmModel.self).filter(predicate)
+          subscriber.on(.next(results))
+        } catch {
+          subscriber.on(.error(RealmPersistencyWorkerError.realmConfigurationError))
         }
-        let results = realm.objects(RealmModel.self).toArray()
-        subscriber.on(.next(results))
         return Disposables.create()
       }
-      .map { results -> [PersistencyModel<T>] in
-        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
+      .map { (results: Results<RealmModel>) -> [PersistencyModelThreadSafe<T>] in
+        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.toThreadSafeModel() }
       }
-      .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
-      .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
+      .map { $0.compactMap { $0.identity.collection == collection ? $0 : nil } }
+      .subscribe(on: MainScheduler.instance) // need to subscribe on a thread with runloop
+      .observe(on: SerialDispatchQueueScheduler.init(qos: .default))
   }
   
-  func createGetResourcesObservable<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]> {
-    createGetPersistencyModelsObservable(type: type).map { $0.compactMap { $0.identity.collection == collection ? $0 : nil } }
-  }
-  
-  func createGetResourceObservable<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModel<T>?> {
-    createGetPersistencyModelsObservable(type: type)
+  func createGetResourceObservable<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
+    
+//    guard let realm = try? Realm(configuration: configuration) else {
+//      return Observable.just(nil) // TODO: Error handling
+//    }
+//    let predicate = NSPredicate(format: Definitions.predicateFormatIdentity, identity.collection, identity.identifier)
+//    let results = realm.objects(RealmModel.self).filter(predicate)
+//    return Observable.array(from: results)
+    
+    Observable
+      .create { [configuration] subscriber in
+        do {
+          let realm = try Realm(configuration: configuration)
+          let predicate = NSPredicate(format: Definitions.predicateFormatIdentity, identity.collection, identity.identifier)
+          let results = realm.objects(RealmModel.self).filter(predicate)
+          subscriber.on(.next(results))
+        } catch {
+          subscriber.on(.error(RealmPersistencyWorkerError.realmConfigurationError))
+        }
+        return Disposables.create()
+      }
+      .map { (results: Results<RealmModel>) -> [PersistencyModelThreadSafe<T>] in
+        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.toThreadSafeModel() }
+      }
       .map {
         $0.compactMap {
           ($0.identity.collection == identity.collection
@@ -361,5 +427,7 @@ private extension RealmPersistencyWorker {
         }
         .first
       }
+      .subscribe(on: MainScheduler.instance) // need to subscribe on a thread with runloop
+      .observe(on: SerialDispatchQueueScheduler.init(qos: .default))
   }
 }

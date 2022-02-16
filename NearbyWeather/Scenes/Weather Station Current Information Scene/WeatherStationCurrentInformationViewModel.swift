@@ -70,7 +70,7 @@ final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseVi
   
   // MARK: - Observables
   
-  private lazy var weatherInformationDtoObservable: Observable<PersistencyModel<WeatherInformationDTO>> = { [dependencies] in
+  private lazy var weatherInformationDtoObservable: Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> = { [dependencies] in
     Self.createGetWeatherInformationDtoObservable(with: dependencies).share(replay: 1)
   }()
   
@@ -234,7 +234,7 @@ extension WeatherStationCurrentInformationViewModel {
           headerSectionItems + sunCycleSectionItems + atmosphericDetailsSectionItems + windSectionItems + mapSectionItems
         }
       )
-      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
   }
@@ -246,7 +246,7 @@ extension WeatherStationCurrentInformationViewModel {
 
 private extension WeatherStationCurrentInformationViewModel {
   
-  static func createGetWeatherInformationDtoObservable(with dependencies: Dependencies) -> Observable<PersistencyModel<WeatherInformationDTO>> {
+  static func createGetWeatherInformationDtoObservable(with dependencies: Dependencies) -> Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> {
     Observable
       .combineLatest(
         Observable.just(dependencies.weatherInformationIdentity.identifier),

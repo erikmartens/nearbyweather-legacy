@@ -74,7 +74,7 @@ private extension RootFlow {
   func summonMainWindow() -> FlowContributors {
     let mainFlow = MainFlow(dependencies: MainFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
     
-    Flows.whenReady(flow1: mainFlow) { [dependencies] (mainRoot: UITabBarController) in
+    Flows.use(mainFlow, when: .ready) { [dependencies] (mainRoot: UITabBarController) in
       dependencies.rootWindow.rootViewController = mainRoot
       dependencies.rootWindow.makeKeyAndVisible()
     }
@@ -85,7 +85,7 @@ private extension RootFlow {
   func summonWelcomeWindow() -> FlowContributors {
     let welcomeFlow = WelcomeFlow(dependencies: WelcomeFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
     
-    Flows.whenReady(flow1: welcomeFlow) { [dependencies] (welcomeRoot: UINavigationController) in
+    Flows.use(welcomeFlow, when: .ready) { [dependencies] (welcomeRoot: UINavigationController) in
       dependencies.rootWindow.rootViewController = welcomeRoot
       dependencies.rootWindow.makeKeyAndVisible()
     }
@@ -96,7 +96,7 @@ private extension RootFlow {
   func dismissWelcomeWindow() -> FlowContributors {
     let mainFlow = MainFlow(dependencies: MainFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
     
-    Flows.whenReady(flow1: mainFlow) { [dependencies] (mainRoot: UITabBarController) in
+    Flows.use(mainFlow, when: .ready) { [dependencies] (mainRoot: UITabBarController) in
       UIView.animate(withDuration: 0.2, animations: {
         dependencies.rootWindow.alpha = 0
         dependencies.rootWindow.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)

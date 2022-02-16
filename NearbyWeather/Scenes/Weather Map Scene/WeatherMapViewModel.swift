@@ -127,7 +127,7 @@ extension WeatherMapViewModel {
           )
         }
       )
-      .catchErrorJustReturn([])
+      .catchAndReturn([])
       .share(replay: 1)
     
     let bookmarkedMapItemsObservable = Observable
@@ -143,7 +143,7 @@ extension WeatherMapViewModel {
           )
         }
       )
-      .catchErrorJustReturn([])
+      .catchAndReturn([])
       .share(replay: 1)
     
     Observable
@@ -167,7 +167,7 @@ extension WeatherMapViewModel {
           )
         }
       )
-      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
       .bind { [weak mapDelegate] in mapDelegate?.dataSource.accept($0) }
       .disposed(by: disposeBag)
   }

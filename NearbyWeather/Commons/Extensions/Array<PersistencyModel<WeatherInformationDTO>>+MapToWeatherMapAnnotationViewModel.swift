@@ -8,7 +8,7 @@
 
 import CoreLocation
 
-extension Array where Element == PersistencyModel<WeatherInformationDTO> {
+extension Array where Element == PersistencyModelThreadSafe<WeatherInformationDTO> {
   
   func mapToWeatherMapAnnotationViewModel(
     weatherStationService: WeatherStationBookmarkReading,

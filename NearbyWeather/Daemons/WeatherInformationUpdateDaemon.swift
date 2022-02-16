@@ -65,7 +65,7 @@ private extension WeatherInformationUpdateDaemon {
     weatherStationService
       .createGetBookmarkedStationsObservable()
       .distinctUntilChanged()
-      .catchError { _ -> Observable<[WeatherStationDTO]> in Observable.just([]) }
+      .catch { _ -> Observable<[WeatherStationDTO]> in Observable.just([]) }
       .flatMapLatest { _ -> Observable<Void> in
         weatherInformationService
           .createUpdateBookmarkedWeatherInformationCompletable()
@@ -85,7 +85,7 @@ private extension WeatherInformationUpdateDaemon {
       .createGetApiKeyObservable()
       .map { apiKey -> String? in apiKey }
       .distinctUntilChanged()
-      .catchError { error -> Observable<String?> in
+      .catch { error -> Observable<String?> in
         if error as? ApiKeyService2.DomainError != nil {
           return Observable.just(nil) // key is missing or invalid -> return nil to delete previously downloaded weather information
         }

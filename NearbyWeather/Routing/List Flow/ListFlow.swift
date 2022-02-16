@@ -124,8 +124,7 @@ private extension ListFlow {
       weatherInformationIdentity: identity,
       dependencyContainer: dependencies.dependencyContainer
     ))
-    
-    Flows.whenReady(flow1: weatherDetailFlow) { [rootViewController] (weatherDetailRoot: UINavigationController) in
+    Flows.use(weatherDetailFlow, when: .ready) { [rootViewController] (weatherDetailRoot: UINavigationController) in
       rootViewController.present(weatherDetailRoot, animated: true)
     }
     

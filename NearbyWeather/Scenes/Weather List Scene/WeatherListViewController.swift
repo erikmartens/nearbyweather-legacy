@@ -26,8 +26,13 @@ final class WeatherListViewController: UIViewController, BaseViewController {
   // MARK: - UIComponents
   
   fileprivate lazy var listTypeBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.layerType()))
-  fileprivate lazy var amountOfResultsBarButton = Factory.BarButtonItem.make(fromType: .standard())
   fileprivate lazy var sortingOrientationBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.sort()))
+  
+  fileprivate lazy var amountOfResultsBarButton10 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.ten()))
+  fileprivate lazy var amountOfResultsBarButton20 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.twenty()))
+  fileprivate lazy var amountOfResultsBarButton30 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.thirty()))
+  fileprivate lazy var amountOfResultsBarButton40 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.forty()))
+  fileprivate lazy var amountOfResultsBarButton50 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.fifty()))
   
   fileprivate lazy var tableView = Factory.TableView.make(fromType: .standard(frame: view.frame))
   
@@ -97,28 +102,30 @@ extension WeatherListViewController {
       .drive(onNext: { [weak self] in self?.tableView.reloadData() })
       .disposed(by: disposeBag)
     
-    viewModel
-      .preferredListTypeDriver
-      .drive(onNext: { [weak navigationItem, weak amountOfResultsBarButton, weak sortingOrientationBarButton] listTypeValue in
-        switch listTypeValue {
-        case .bookmarked:
-          navigationItem?.rightBarButtonItems = []
-        case .nearby:
-          if let amountOfResultsBarButton = amountOfResultsBarButton, let sortingOrientationBarButton = sortingOrientationBarButton {
-            navigationItem?.rightBarButtonItems = [amountOfResultsBarButton, sortingOrientationBarButton]
-          }
+    Observable
+      .combineLatest(
+        viewModel.preferredListTypeDriver.asObservable(),
+        viewModel.preferredAmountOfResultsDriver.asObservable(),
+        resultSelector: { ($0, $1) }
+      )
+      .asDriver(onErrorJustReturn: (ListTypeValue.bookmarked, AmountOfResultsValue.ten))
+      .drive(onNext: { [unowned self] result in
+        guard result.0 != .bookmarked else {
+          self.navigationItem.rightBarButtonItems = []
+          return
         }
-      })
-      .disposed(by: disposeBag)
-    
-    viewModel
-      .preferredAmountOfResultsDriver
-      .drive(onNext: { [weak amountOfResultsBarButton] amountOfResultsValue in
-        amountOfResultsBarButton?.setBackgroundImage(
-          AmountOfResultsOption(value: amountOfResultsValue).imageValue,
-          for: UIControl.State(),
-          barMetrics: .default
-        )
+        switch result.1 {
+        case .ten:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton10, self.sortingOrientationBarButton]
+        case .twenty:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton20, self.sortingOrientationBarButton]
+        case .thirty:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton30, self.sortingOrientationBarButton]
+        case .forty:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton40, self.sortingOrientationBarButton]
+        case .fifty:
+          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton50, self.sortingOrientationBarButton]
+        }
       })
       .disposed(by: disposeBag)
     
@@ -138,8 +145,14 @@ extension WeatherListViewController {
       .bind(to: viewModel.onDidTapListTypeBarButtonSubject)
       .disposed(by: disposeBag)
     
-    amountOfResultsBarButton.rx
-      .tap
+    Observable
+      .merge(
+        amountOfResultsBarButton10.rx.tap.asObservable(),
+        amountOfResultsBarButton20.rx.tap.asObservable(),
+        amountOfResultsBarButton30.rx.tap.asObservable(),
+        amountOfResultsBarButton40.rx.tap.asObservable(),
+        amountOfResultsBarButton50.rx.tap.asObservable()
+      )
       .bind(to: viewModel.onDidTapAmountOfResultsBarButtonSubject)
       .disposed(by: disposeBag)
     
@@ -160,6 +173,8 @@ extension WeatherListViewController {
 private extension WeatherListViewController {
   
   func setupUiComponents() {
+    navigationItem.leftBarButtonItems = [listTypeBarButton]
+    
     tableView.dataSource = viewModel.tableDataSource
     tableView.delegate = viewModel.tableDelegate
     tableView.estimatedRowHeight = Definitions.weatherInformationCellHeight

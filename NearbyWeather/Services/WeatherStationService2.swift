@@ -211,7 +211,7 @@ extension WeatherStationService2: WeatherStationBookmarkPersistence {
       .map { $0.first }
       .errorOnNil()
       .map { $0.entity }
-      .catchErrorJustReturn(nil)
+      .catchAndReturn(nil)
   }
 }
 
@@ -258,7 +258,7 @@ extension WeatherStationService2: WeatherStationLookup {
           .createGetBookmarkedStationsObservable()
           .map { bookmarkedWeatherStations in weatherStationDTOs.filter { !bookmarkedWeatherStations.contains($0) } }
       }
-      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
   }
 }
 

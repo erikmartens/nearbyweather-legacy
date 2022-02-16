@@ -59,21 +59,23 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Observables
   
-  private lazy var preferredListTypeObservable: Observable<ListTypeValue> = { [dependencies] in
-    dependencies
-      .preferencesService
-      .createGetListTypeOptionObservable()
-      .map { $0.value }
-      .share(replay: 1)
-  }()
+  private lazy var preferredListTypeObservable: Observable<ListTypeValue> = dependencies
+    .preferencesService
+    .createGetListTypeOptionObservable()
+    .map { $0.value }
+    .share(replay: 1)
   
-  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsValue>  = { [dependencies] in
-    dependencies
-      .preferencesService
-      .createGetAmountOfNearbyResultsOptionObservable()
-      .map { $0.value }
-      .share(replay: 1)
-  }()
+  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsValue> = dependencies
+    .preferencesService
+    .createGetAmountOfNearbyResultsOptionObservable()
+    .map { $0.value }
+    .share(replay: 1)
+  
+  private lazy var preferredSortingOrientationObservable: Observable<SortingOrientationValue> = dependencies
+    .preferencesService
+    .createGetSortingOrientationOptionObservable()
+    .map { $0.value }
+    .share(replay: 1)
   
   // MARK: - Initialization
   
@@ -111,12 +113,6 @@ extension WeatherListViewModel {
       .createGetApiKeyObservable()
       .share(replay: 1)
     
-    let preferredSortingOrientationObservable = dependencies
-      .preferencesService
-      .createGetSortingOrientationOptionObservable()
-      .map { $0.value }
-      .share(replay: 1)
-    
     let nearbyListItemsObservable = Observable
       .combineLatest(
         dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
@@ -129,7 +125,7 @@ extension WeatherListViewModel {
       )
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
       .map { [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
-      .catchError { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
+      .catch { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
     let bookmarkedListItemsObservable = Observable
@@ -143,7 +139,7 @@ extension WeatherListViewModel {
       )
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
       .map { [WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
-      .catchError { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
+      .catch { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
     Observable
@@ -160,18 +156,12 @@ extension WeatherListViewModel {
           }
         }
       )
-      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
   }
   
   func observeUserTapEvents() {
-    let preferredSortingOrientationObservable = dependencies
-      .preferencesService
-      .createGetSortingOrientationOptionObservable()
-      .map { $0.value }
-      .share(replay: 1)
-    
     onDidTapListTypeBarButtonSubject
       .flatMapLatest { [unowned preferredListTypeObservable] in preferredListTypeObservable.take(1) } // take 1 so the observable does not retrigger from the user selection
       .subscribe(onNext: { [weak steps] preferredListType in
@@ -195,16 +185,15 @@ extension WeatherListViewModel {
     
     onDidPullToRefreshSubject
       .do(onNext: { [weak isRefreshingSubject] in isRefreshingSubject?.onNext(true) })
-      .flatMapLatest { [dependencies] _ -> Observable<Void> in
+      .flatMapLatest { [dependencies, weak isRefreshingSubject] _ -> Observable<Void> in
         Completable
           .zip([dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable(),
                 dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()])
+          .do(onCompleted: { isRefreshingSubject?.onNext(false) })
           .asObservable()
-          .map { _ in () }
+          .map { _ in () } // swiftlint:disable:this will_never_be_executed
       }
-      .subscribe { [weak isRefreshingSubject] _ in
-        isRefreshingSubject?.onNext(false)
-      }
+      .subscribe()
       .disposed(by: disposeBag)
   }
 }
@@ -230,7 +219,7 @@ extension WeatherListViewModel: BaseTableViewSelectionDelegate {
 
 private extension WeatherListViewModel {
   
-  static func sortBookmarkedResults(_ persistedWeatherInformationDTOs: [PersistencyModel<WeatherInformationDTO>], sortingWeights: [Int: Int]?) -> [PersistencyModel<WeatherInformationDTO>] {
+  static func sortBookmarkedResults(_ persistedWeatherInformationDTOs: [PersistencyModelThreadSafe<WeatherInformationDTO>], sortingWeights: [Int: Int]?) -> [PersistencyModelThreadSafe<WeatherInformationDTO>] {
     persistedWeatherInformationDTOs.sorted { lhsModel, rhsModel -> Bool in
       let lhsSortingWeight = sortingWeights?[lhsModel.entity.stationIdentifier] ?? 999
       let rhsSortingWeight = sortingWeights?[rhsModel.entity.stationIdentifier] ?? 999
@@ -241,7 +230,7 @@ private extension WeatherListViewModel {
     }
   }
   
-  static func sortNearbyResults(_ results: [PersistencyModel<WeatherInformationDTO>], sortingOrientationValue: SortingOrientationValue, currentLocation: CLLocation?) -> [PersistencyModel<WeatherInformationDTO>] {
+  static func sortNearbyResults(_ results: [PersistencyModelThreadSafe<WeatherInformationDTO>], sortingOrientationValue: SortingOrientationValue, currentLocation: CLLocation?) -> [PersistencyModelThreadSafe<WeatherInformationDTO>] {
     results.sorted { lhsValue, rhsValue -> Bool in
       let lhsEntity = lhsValue.entity
       let rhsEntity = rhsValue.entity
@@ -315,7 +304,7 @@ private extension Error {
   }
 }
 
-private extension Array where Element == PersistencyModel<WeatherInformationDTO> {
+private extension Array where Element == PersistencyModelThreadSafe<WeatherInformationDTO> {
   
   func mapToWeatherInformationTableViewCellViewModel(dependencies: WeatherListViewModel.Dependencies, isBookmark: Bool) -> [BaseCellViewModelProtocol] {
     map { weatherInformationPersistencyModel -> WeatherListInformationTableViewCellViewModel in

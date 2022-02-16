@@ -48,18 +48,16 @@ extension NetworkReachabilityService: NetworkReachability {
           return Disposables.create()
         }
         
-        reachabilityManager.listener = { status in
+        reachabilityManager.startListening(onUpdatePerforming: { status in
           switch status {
           case .unknown: subscriber.on(.next(false))
           case .notReachable: subscriber.on(.next(false))
-          case .reachable(.ethernetOrWiFi), .reachable(.wwan): subscriber.on(.next(true))
+          case .reachable(.ethernetOrWiFi), .reachable(.cellular): subscriber.on(.next(true))
           }
-        }
+        })
         return Disposables.create()
       }
-      .do(onSubscribe: { [weak self] in
-        self?.reachabilityManager?.startListening()
-      }, onDispose: { [weak self] in
+      .do(onDispose: { [weak self] in
         self?.reachabilityManager?.stopListening()
       })
   }

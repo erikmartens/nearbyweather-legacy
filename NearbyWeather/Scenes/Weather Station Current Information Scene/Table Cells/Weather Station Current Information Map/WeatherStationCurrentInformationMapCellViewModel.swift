@@ -44,7 +44,7 @@ final class WeatherStationCurrentInformationMapCellViewModel: NSObject, BaseCell
   
   // MARK: - Observables
   
-  private lazy var weatherInformationDtoObservable: Observable<PersistencyModel<WeatherInformationDTO>> = { [dependencies] in
+  private lazy var weatherInformationDtoObservable: Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> = { [dependencies] in
     Self.createGetWeatherInformationDtoObservable(with: dependencies).share(replay: 1)
   }()
 
@@ -82,7 +82,7 @@ extension WeatherStationCurrentInformationMapCellViewModel {
           annotationItems: $0
         )
       }
-      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
       .bind { [weak mapDelegate] in mapDelegate?.dataSource.accept($0) }
       .disposed(by: disposeBag)
   }
@@ -117,7 +117,7 @@ private extension WeatherStationCurrentInformationMapCellViewModel {
     dependencies.weatherStationService.createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
   }
   
-  static func createGetWeatherInformationDtoObservable(with dependencies: Dependencies) -> Observable<PersistencyModel<WeatherInformationDTO>> {
+  static func createGetWeatherInformationDtoObservable(with dependencies: Dependencies) -> Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> {
     Observable
       .combineLatest(
         Observable.just(dependencies.weatherInformationIdentity.identifier),

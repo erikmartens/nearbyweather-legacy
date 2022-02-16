@@ -329,7 +329,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
 
 private extension RealmPersistencyWorker {
   
-  func createGetResourcesObservable<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]> {
+  private func createGetPersistencyModelsObservable<T: Codable>(type: T.Type) -> Observable<[PersistencyModel<T>]> {
     Observable<[RealmModel]>
       .create { [configuration] subscriber in
         guard let realm = try? Realm(configuration: configuration) else {
@@ -343,25 +343,16 @@ private extension RealmPersistencyWorker {
       .map { results -> [PersistencyModel<T>] in
         results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
       }
-      .map { $0.compactMap { $0.identity.collection == collection ? $0 : nil } }
       .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
       .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
   }
   
+  func createGetResourcesObservable<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]> {
+    createGetPersistencyModelsObservable(type: type).map { $0.compactMap { $0.identity.collection == collection ? $0 : nil } }
+  }
+  
   func createGetResourceObservable<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModel<T>?> {
-    Observable<[RealmModel]>
-      .create { [configuration] subscriber in
-        guard let realm = try? Realm(configuration: configuration) else {
-          subscriber.on(.next([])) // TODO: error handling
-          return Disposables.create()
-        }
-        let results = realm.objects(RealmModel.self).toArray()
-        subscriber.on(.next(results))
-        return Disposables.create()
-      }
-      .map { results -> [PersistencyModel<T>] in
-        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
-      }
+    createGetPersistencyModelsObservable(type: type)
       .map {
         $0.compactMap {
           ($0.identity.collection == identity.collection
@@ -370,7 +361,5 @@ private extension RealmPersistencyWorker {
         }
         .first
       }
-      .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
-      .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
   }
 }

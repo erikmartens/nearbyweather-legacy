@@ -123,9 +123,9 @@ final class RealmPersistencyWorker {
     baseDirectory.appendingPathComponent("\(databaseFileName).realm")
   }()
   
-  private var realm: Realm? {
-    try? Realm(configuration: configuration)
-  }
+//  private var realm: Realm? {
+//    try? Realm(configuration: configuration)
+//  }
   
   // MARK: - Initialization
   
@@ -330,13 +330,16 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
 private extension RealmPersistencyWorker {
   
   func createGetResourcesObservable<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModel<T>]> {
-    guard let realm = try? Realm(configuration: configuration) else {
-      return Observable.just([]) // TODO: error handling
-    }
-    let results = realm.objects(RealmModel.self)
-    
-    return Observable
-      .array(from: results)
+    Observable<[RealmModel]>
+      .create { [configuration] subscriber in
+        guard let realm = try? Realm(configuration: configuration) else {
+          subscriber.on(.next([])) // TODO: error handling
+          return Disposables.create()
+        }
+        let results = realm.objects(RealmModel.self).toArray()
+        subscriber.on(.next(results))
+        return Disposables.create()
+      }
       .map { results -> [PersistencyModel<T>] in
         results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
       }
@@ -346,13 +349,16 @@ private extension RealmPersistencyWorker {
   }
   
   func createGetResourceObservable<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModel<T>?> {
-    guard let realm = try? Realm(configuration: configuration) else {
-      return Observable.just(nil) // TODO: error handling
-    }
-    let results = realm.objects(RealmModel.self)
-    
-    return Observable
-      .array(from: results)
+    Observable<[RealmModel]>
+      .create { [configuration] subscriber in
+        guard let realm = try? Realm(configuration: configuration) else {
+          subscriber.on(.next([])) // TODO: error handling
+          return Disposables.create()
+        }
+        let results = realm.objects(RealmModel.self).toArray()
+        subscriber.on(.next(results))
+        return Disposables.create()
+      }
       .map { results -> [PersistencyModel<T>] in
         results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
       }

@@ -149,7 +149,7 @@ extension ListErrorViewModel {
                 dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()])
           .do(onCompleted: { isRefreshingSubject?.onNext(false) })
           .asObservable()
-          .map { _ in () }
+          .map { _ in () } // swiftlint:disable:this never_executed
       }
       .subscribe()
       .disposed(by: disposeBag)

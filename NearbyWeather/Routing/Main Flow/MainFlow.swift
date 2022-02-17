@@ -76,16 +76,8 @@ private extension MainFlow {
     let mapFlow = MapFlow(dependencies: MapFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
     let settingsFlow = SettingsFlow(dependencies: SettingsFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
 
-    Flows.whenReady(
-      flow1: listFlow,
-      flow2: mapFlow,
-      flow3: settingsFlow
-    ) { [rootViewController] (listRoot: UINavigationController, mapRoot: UINavigationController, settingsRoot: UINavigationController) in
-      rootViewController.viewControllers = [
-        listRoot,
-        mapRoot,
-        settingsRoot
-      ]
+    Flows.use([listFlow, mapFlow, settingsFlow], when: .ready) { [unowned rootViewController] rootViewControllers in
+      rootViewController.viewControllers = rootViewControllers
     }
 
     return .multiple(flowContributors: [

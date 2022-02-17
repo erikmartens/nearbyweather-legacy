@@ -341,40 +341,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
 
 private extension RealmPersistencyWorker {
   
-//  private func createGetPersistencyModelsObservable<T: Codable>(type: T.Type) -> Observable<[PersistencyModel<T>]> {
-////    guard let realm = try? Realm(configuration: configuration) else {
-////      return Observable.just([]) // TODO: Error handling
-////    }
-////    let results = realm.objects(RealmModel.self)
-////    return Observable
-//    Observable
-//      .create { [configuration] subscriber in
-//        do {
-//          let realm = try Realm(configuration: configuration)
-//          let predicate = NSPredicate(format: Definitions.predicateFormatIdentity, )
-//          let results = realm.objects(RealmModel.self)
-//          subscriber.on(.next(results))
-//        } catch {
-//          subscriber.on(.error(RealmPersistencyWorkerError.realmConfigurationError))
-//        }
-//        return Disposables.create()
-//      }
-////      .array(from: results)
-//      .map { (results: Results<RealmModel>) -> [PersistencyModel<T>] in
-//        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data) }
-//      }
-//      .subscribeOn(MainScheduler.instance) // need to subscribe on a thread with runloop
-//      .observeOn(SerialDispatchQueueScheduler.init(qos: .default))
-//  }
-  
   func createGetResourcesObservable<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]> {
-//    guard let realm = try? Realm(configuration: configuration) else {
-//      return Observable.just([]) // TODO: Error handling
-//    }
-//    let predicate = NSPredicate(format: Definitions.predicateFormatCollection, collection)
-//    let results = realm.objects(RealmModel.self).filter(predicate)
-//    return Observable.array(from: results)
-    
     Observable
       .create { [configuration] subscriber in
         do {
@@ -387,23 +354,16 @@ private extension RealmPersistencyWorker {
         }
         return Disposables.create()
       }
-      .map { (results: Results<RealmModel>) -> [PersistencyModelThreadSafe<T>] in
+      .flatMapLatest { (results: Results<RealmModel>) in Observable.array(from: results) }
+      .map { (results: [Results<RealmModel>.ElementType]) -> [PersistencyModelThreadSafe<T>] in
         results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.toThreadSafeModel() }
       }
       .map { $0.compactMap { $0.identity.collection == collection ? $0 : nil } }
       .subscribe(on: MainScheduler.instance) // need to subscribe on a thread with runloop
-      .observe(on: SerialDispatchQueueScheduler(qos: .default)).debug("👠👠👠👠👠")
+      .observe(on: SerialDispatchQueueScheduler(qos: .default))
   }
   
   func createGetResourceObservable<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
-    
-//    guard let realm = try? Realm(configuration: configuration) else {
-//      return Observable.just(nil) // TODO: Error handling
-//    }
-//    let predicate = NSPredicate(format: Definitions.predicateFormatIdentity, identity.collection, identity.identifier)
-//    let results = realm.objects(RealmModel.self).filter(predicate)
-//    return Observable.array(from: results)
-
     Observable
       .create { [configuration] subscriber in
         do {
@@ -416,7 +376,8 @@ private extension RealmPersistencyWorker {
         }
         return Disposables.create()
       }
-      .map {  (results: Results<RealmModel>) -> [PersistencyModelThreadSafe<T>] in
+      .flatMapLatest { (results: Results<RealmModel>) in Observable.array(from: results) }
+      .map {  (results: [Results<RealmModel>.ElementType]) -> [PersistencyModelThreadSafe<T>] in
         results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.toThreadSafeModel() }
       }
       .map {
@@ -428,6 +389,6 @@ private extension RealmPersistencyWorker {
         .first
       }
       .subscribe(on: MainScheduler.instance) // need to subscribe on a thread with runloop
-      .observe(on: SerialDispatchQueueScheduler(qos: .default)).debug("🧢🧢🧢🧢🧢")
+      .observe(on: SerialDispatchQueueScheduler(qos: .default))
   }
 }

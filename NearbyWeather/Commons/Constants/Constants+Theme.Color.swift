@@ -27,13 +27,13 @@ extension Constants.Theme.Color {
     }
     
     static var nearbyDay: UIColor { // TODO correct actual colors
-      UIColor.from(dark: .init(hex: 0xFFFFFF),
-                   light: .init(hex: 0x000000))
+      UIColor.from(dark: .init(hex: 0x000000),
+                   light: .init(hex: 0xFFFFFF))
     }
     
     static var nearbyNight: UIColor { // TODO correct actual colors
-      UIColor.from(dark: .init(hex: 0xFFFFFF),
-                   light: .init(hex: 0x000000))
+      UIColor.from(dark: .init(hex: 0x000000),
+                   light: .init(hex: 0xFFFFFF))
     }
   }
 

@@ -13,7 +13,7 @@ import RxSwift
 
 private extension WeatherListViewController {
   struct Definitions {
-    static let weatherInformationCellHeight: CGFloat = 100
+    static let weatherInformationCellHeight: CGFloat = 156
   }
 }
 
@@ -202,6 +202,8 @@ private extension WeatherListViewController {
   }
   
   func setupUiAppearance() {
-    view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    tableView.separatorStyle = .none
+    tableView.backgroundColor = .clear
   }
 }

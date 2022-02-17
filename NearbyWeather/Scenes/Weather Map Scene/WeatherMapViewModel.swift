@@ -167,7 +167,6 @@ extension WeatherMapViewModel {
           )
         }
       )
-      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
       .bind { [weak mapDelegate] in mapDelegate?.dataSource.accept($0) }
       .disposed(by: disposeBag)
   }

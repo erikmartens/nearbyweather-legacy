@@ -258,7 +258,6 @@ extension WeatherStationService2: WeatherStationLookup {
           .createGetBookmarkedStationsObservable()
           .map { bookmarkedWeatherStations in weatherStationDTOs.filter { !bookmarkedWeatherStations.contains($0) } }
       }
-      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
   }
 }
 

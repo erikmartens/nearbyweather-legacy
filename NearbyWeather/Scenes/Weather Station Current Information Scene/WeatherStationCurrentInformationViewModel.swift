@@ -234,7 +234,6 @@ extension WeatherStationCurrentInformationViewModel {
           headerSectionItems + sunCycleSectionItems + atmosphericDetailsSectionItems + windSectionItems + mapSectionItems
         }
       )
-      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
   }

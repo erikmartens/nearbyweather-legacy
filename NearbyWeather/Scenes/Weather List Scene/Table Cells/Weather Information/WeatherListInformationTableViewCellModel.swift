@@ -10,6 +10,7 @@ import UIKit
 
 struct WeatherListInformationTableViewCellModel {
   let weatherConditionSymbol: String?
+  let placeName: String?
   let temperature: String?
   let cloudCoverage: String?
   let humidity: String?
@@ -19,6 +20,7 @@ struct WeatherListInformationTableViewCellModel {
   
   init(
     weatherConditionSymbol: String? = nil,
+    placeName: String? =  nil,
     temperature: String? = nil,
     cloudCoverage: String? = nil,
     humidity: String? = nil,
@@ -27,6 +29,7 @@ struct WeatherListInformationTableViewCellModel {
     borderColor: UIColor? = nil
   ) {
     self.weatherConditionSymbol = weatherConditionSymbol
+    self.placeName = placeName
     self.temperature = temperature
     self.cloudCoverage = cloudCoverage
     self.humidity = humidity
@@ -48,6 +51,7 @@ struct WeatherListInformationTableViewCellModel {
         fromWeatherCode: weatherInformationDTO.weatherCondition.first?.identifier,
         isDayTime: isDayTime
       ),
+      placeName: weatherInformationDTO.stationName,
       temperature: ConversionWorker.temperatureDescriptor(
         forTemperatureUnit: temperatureUnitOption,
         fromRawTemperature: weatherInformationDTO.atmosphericInformation.temperatureKelvin

@@ -156,7 +156,6 @@ extension WeatherListViewModel {
           }
         }
       )
-      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
   }
@@ -191,7 +190,7 @@ extension WeatherListViewModel {
                 dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()])
           .do(onCompleted: { isRefreshingSubject?.onNext(false) })
           .asObservable()
-          .map { _ in () } // swiftlint:disable:this will_never_be_executed
+          .map { _ in () } // swiftlint:disable:this
       }
       .subscribe()
       .disposed(by: disposeBag)

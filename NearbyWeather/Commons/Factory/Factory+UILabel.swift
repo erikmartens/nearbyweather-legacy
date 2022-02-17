@@ -46,7 +46,7 @@ extension Factory {
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
       case .weatherSymbol:
-        label.font = .systemFont(ofSize: 70)
+        label.font = .systemFont(ofSize: 60)
         label.textAlignment = .center
         label.numberOfLines = 1
       case let .mapAnnotation(fontSize, width, height, yOffset):

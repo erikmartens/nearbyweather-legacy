@@ -392,7 +392,7 @@ private extension RealmPersistencyWorker {
       }
       .map { $0.compactMap { $0.identity.collection == collection ? $0 : nil } }
       .subscribe(on: MainScheduler.instance) // need to subscribe on a thread with runloop
-      .observe(on: SerialDispatchQueueScheduler.init(qos: .default))
+      .observe(on: SerialDispatchQueueScheduler(qos: .default)).debug("👠👠👠👠👠")
   }
   
   func createGetResourceObservable<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
@@ -403,7 +403,7 @@ private extension RealmPersistencyWorker {
 //    let predicate = NSPredicate(format: Definitions.predicateFormatIdentity, identity.collection, identity.identifier)
 //    let results = realm.objects(RealmModel.self).filter(predicate)
 //    return Observable.array(from: results)
-    
+
     Observable
       .create { [configuration] subscriber in
         do {
@@ -416,7 +416,7 @@ private extension RealmPersistencyWorker {
         }
         return Disposables.create()
       }
-      .map { (results: Results<RealmModel>) -> [PersistencyModelThreadSafe<T>] in
+      .map {  (results: Results<RealmModel>) -> [PersistencyModelThreadSafe<T>] in
         results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.toThreadSafeModel() }
       }
       .map {
@@ -428,6 +428,6 @@ private extension RealmPersistencyWorker {
         .first
       }
       .subscribe(on: MainScheduler.instance) // need to subscribe on a thread with runloop
-      .observe(on: SerialDispatchQueueScheduler.init(qos: .default))
+      .observe(on: SerialDispatchQueueScheduler(qos: .default)).debug("🧢🧢🧢🧢🧢")
   }
 }

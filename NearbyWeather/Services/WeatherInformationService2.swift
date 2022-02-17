@@ -23,7 +23,6 @@ extension WeatherInformationService2 {
 
 // MARK: - Domain-Specific Types
 
-// TODO : remove this type
 extension WeatherInformationService2 {
   enum WeatherInformationAvailability {
     case available

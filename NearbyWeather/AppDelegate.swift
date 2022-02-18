@@ -22,8 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var welcomeWindow: UIWindow?
 
   private var dependencyContainer: Container!
-  private var daemonContainer: Container!
   private var flowCoordinator: FlowCoordinator!
+  
+  private var daemons: [Daemon] = []
 
   private var backgroundFetchTaskId: UIBackgroundTaskIdentifier = .invalid
 
@@ -32,11 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 //    FirebaseApp.configure()
 
-    instantiateServices()
-    instantiateDaemons()
-    instantiateApplicationUserInterface()
-
+    // TODO: Handle via NSOperations
+    registerServices()
     runMigrationIfNeeded()
+    
+    instantiateApplicationUserInterface()
 
     // TODO: create secrets sub-repo and git-ignore
     if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
@@ -50,7 +51,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applicationDidBecomeActive(_ application: UIApplication) {
+    instantiateDaemons()
     refreshWeatherDataIfNeeded()
+  }
+  
+  func applicationWillResignActive(_ application: UIApplication) {
+    daemons.forEach { $0.stopObservations() }
+    daemons = []
   }
 
   func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -58,7 +65,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
-    daemonContainer = nil
+    daemons.forEach { $0.stopObservations() }
+    daemons = []
     instantiateDaemons()
   }
 }
@@ -67,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
 
-  func instantiateServices() {
+  func registerServices() {
     PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()
 
@@ -110,21 +118,23 @@ private extension AppDelegate {
   }
   
   func instantiateDaemons() {
-    daemonContainer = Container()
-    
     let apiKeyService = dependencyContainer.resolve(ApiKeyService2.self)!
+    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
     let userLocationService = dependencyContainer.resolve(UserLocationService2.self)!
     let weatherStationService = dependencyContainer.resolve(WeatherStationService2.self)!
     let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self)!
     
-    daemonContainer.register(WeatherInformationUpdateDaemon.self) { [weak apiKeyService, weak userLocationService, weak weatherStationService, weak weatherInformationService] _ in
+    daemons.append(
       WeatherInformationUpdateDaemon(dependencies: WeatherInformationUpdateDaemon.Dependencies(
         apiKeyService: apiKeyService,
+        preferencesService: preferencesService,
         userLocationService: userLocationService,
         weatherStationService: weatherStationService,
         weatherInformationService: weatherInformationService
       ))
-    }
+    )
+    
+    daemons.forEach { $0.startObservations() }
   }
 
   func instantiateApplicationUserInterface() {

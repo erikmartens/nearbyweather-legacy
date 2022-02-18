@@ -14,39 +14,59 @@ import RxAlamofire
 
 extension WeatherInformationUpdateDaemon {
   struct Dependencies { // TODO: create protocols for all
-    weak var apiKeyService: ApiKeyService2?
-    weak var userLocationService: UserLocationService2?
-    weak var weatherStationService: WeatherStationService2?
-    weak var weatherInformationService: WeatherInformationService2?
+    var apiKeyService: ApiKeyService2
+    var preferencesService: PreferencesService2
+    var userLocationService: UserLocationService2
+    var weatherStationService: WeatherStationService2
+    var weatherInformationService: WeatherInformationService2
   }
 }
 
 // MARK: - Class Definition
 
-final class WeatherInformationUpdateDaemon {
+final class WeatherInformationUpdateDaemon: Daemon {
   
   // MARK: - Assets
   
-  let disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   // MARK: - Properties
   
   private let dependencies: Dependencies
   
+  // MARK: - Observables
+  
+//  private var bookmarkedStationChangesObservable: Observable<Void>?
+//  private var apiKeyChangesObservable: Observable<Void>?
+//  private var amountOfNearbyResultsPreferenceChangesObservable: Observable<Void>?
+//  private var locationAccessAuthorizationChangesObservable: Observable<Void>?
+  
   // MARK: - Initialization
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    startObservations()
+  }
+  
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized🤢",
+      type: .info
+    )
   }
   
   // MARK: - Functions
   
-  private func startObservations() {
-    observeBookmarkedStationsChanges()
-    observeApiKeyChanges()
-    observeLocationAccessAuthorization()
-    observeAppDidBecomeActive()
+  func startObservations() {
+    self.observeBookmarkedStationsChanges()
+    self.observeApiKeyChanges()
+    self.observeAmountOfNearbyResultsPreferenceChanges()
+    self.observeLocationAccessAuthorization()
+    self.observeAppDidBecomeActive()
+  }
+  
+  func stopObservations() {
+    disposeBag = DisposeBag()
   }
 }
 
@@ -54,20 +74,13 @@ final class WeatherInformationUpdateDaemon {
 
 private extension WeatherInformationUpdateDaemon {
   
-  // TODO: listen to application became active for refreshing
-  
   func observeBookmarkedStationsChanges() {
-    guard let weatherStationService = dependencies.weatherStationService,
-          let weatherInformationService = dependencies.weatherInformationService else {
-      return // TODO: error logging
-    }
-    
-    weatherStationService
+    dependencies.weatherStationService
       .createGetBookmarkedStationsObservable()
       .distinctUntilChanged()
       .catch { _ -> Observable<[WeatherStationDTO]> in Observable.just([]) }
-      .flatMapLatest { _ -> Observable<Void> in
-        weatherInformationService
+      .flatMapLatest { [dependencies] _ -> Observable<Void> in
+        dependencies.weatherInformationService
           .createUpdateBookmarkedWeatherInformationCompletable()
           .asObservable()
           .map { _ in () }
@@ -77,11 +90,7 @@ private extension WeatherInformationUpdateDaemon {
   }
   
   func observeApiKeyChanges() {
-    guard let weatherInformationService = dependencies.weatherInformationService else {
-      return // TODO: error logging
-    }
-    
-    dependencies.apiKeyService?
+    dependencies.apiKeyService
       .createGetApiKeyObservable()
       .map { apiKey -> String? in apiKey }
       .distinctUntilChanged()
@@ -91,12 +100,12 @@ private extension WeatherInformationUpdateDaemon {
         }
         return Observable.just("") // some other error occured -> do not return nil to delete previously downloaded weather information
       }
-      .flatMapLatest { apiKey -> Observable<Void> in
+      .flatMapLatest { [dependencies] apiKey -> Observable<Void> in
         // key is nil (invalid or missing) -> signal to delete previously downloaded weather information
         guard let apiKey = apiKey else {
           return Completable.zip([
-            weatherInformationService.createDeleteBookmarkedWeatherInformationListCompletable(),
-            weatherInformationService.createDeleteNearbyWeatherInformationListCompletable()
+            dependencies.weatherInformationService.createDeleteBookmarkedWeatherInformationListCompletable(),
+            dependencies.weatherInformationService.createDeleteNearbyWeatherInformationListCompletable()
           ])
           .asObservable()
           .map { _ in () }
@@ -107,26 +116,30 @@ private extension WeatherInformationUpdateDaemon {
         }
         // key exists (was changed, is valid) -> signal to update weather information
         return Completable.zip([
-          weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
-          weatherInformationService.createUpdateNearbyWeatherInformationCompletable()
+          dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
+          dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable()
         ])
         .asObservable()
         .map { _ in () }
-      }
+      }.debug("🤢🤢🤢🤢🤢")
+      .subscribe()
+      .disposed(by: disposeBag)
+  }
+  
+  func observeAmountOfNearbyResultsPreferenceChanges() {
+    dependencies.preferencesService
+      .createGetAmountOfNearbyResultsOptionObservable()
+      .flatMapLatest { [dependencies] _ in dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable().asObservable().map { _ in () } }
       .subscribe()
       .disposed(by: disposeBag)
   }
   
   func observeLocationAccessAuthorization() {
-    guard let weatherInformationService = dependencies.weatherInformationService else {
-      return // TODO: error logging
-    }
-    
-    dependencies.userLocationService?
+    dependencies.userLocationService
       .createGetAuthorizationStatusObservable()
       .filter { !$0 } // keep going when not authorized
-      .flatMapLatest { _ -> Observable<Void> in
-        weatherInformationService
+      .flatMapLatest { [dependencies] _ -> Observable<Void> in
+        dependencies.weatherInformationService
           .createDeleteNearbyWeatherInformationListCompletable()
           .asObservable()
           .map { _ in () }

@@ -33,7 +33,7 @@ final class UserLocationService2 {
   
   init() {
     locationManager = CLLocationManager()
-    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+    locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
   }
 }
 
@@ -81,30 +81,31 @@ protocol UserLocationAccessing {
 extension UserLocationService2: UserLocationAccessing {
   
   func createGetAuthorizationStatusObservable() -> Observable<Bool> {
-    locationManager.rx
-      .didChangeAuthorization
-      .map { $0.status }
-      .startWith(locationManager.authorizationStatus)
-      .map { Self.authorizationStatusIsSufficient($0) }
+//    locationManager.rx
+//      .didChangeAuthorization
+//      .map { $0.status }
+//      .startWith(locationManager.authorizationStatus)
+//      .map { Self.authorizationStatusIsSufficient($0) }
+    Observable.just(true).share(replay: 1)
   }
   
   func createGetCurrentLocationObservable() -> Observable<CLLocation> {
-    Observable
-      .combineLatest(
-        locationManager.rx.location,
-        createGetAuthorizationStatusObservable(),
-        resultSelector: { currentLocation, currentAuthorizationStatus -> CLLocation in
-          guard currentAuthorizationStatus == true else {
-            throw UserLocationService2.DomainError.locationAuthorizationError
-          }
-          guard let currentLocation = currentLocation else {
-            throw UserLocationService2.DomainError.locationUndeterminableError
-          }
-          return currentLocation
-        }
-      )
-      .do(onSubscribe: { [locationManager] in locationManager.startUpdatingLocation() },
-          onDispose: { [locationManager] in locationManager.stopUpdatingLocation() })
+//    createGetAuthorizationStatusObservable()
+//      .flatMapLatest { [unowned locationManager] authorized -> Observable<CLLocation?> in
+//        guard authorized else {
+//          throw UserLocationService2.DomainError.locationAuthorizationError
+//        }
+//        return locationManager.rx.location
+//      }
+//      .map { location -> CLLocation in
+//        guard let location = location else {
+//          throw UserLocationService2.DomainError.locationUndeterminableError
+//        }
+//        return location
+//      }
+//      .do(onSubscribe: { [locationManager] in locationManager.startUpdatingLocation() },
+//          onDispose: { [locationManager] in locationManager.stopUpdatingLocation() })
+    Observable.just(CLLocation(latitude: 49.37516443130754, longitude: 8.150853842090196)).share(replay: 1)
   }
 }
 

@@ -68,6 +68,14 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
     fatalError("init(coder:) has not been implemented")
   }
   
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
+  
   // MARK: - Cell Life Cycle
   
   func configure(with cellViewModel: BaseCellViewModelProtocol?) {

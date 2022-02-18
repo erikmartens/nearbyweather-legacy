@@ -279,7 +279,11 @@ extension WeatherInformationService2: WeatherInformationUpdating {
       }
       .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [dependencies] in
+        dependencies.persistencyService
+          .deleteResources(in: PersistencyKeys.nearbyWeatherInformation.collection)
+          .andThen(dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self))
+      }
   }
 }
 

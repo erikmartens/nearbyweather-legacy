@@ -119,7 +119,7 @@ private extension ListFlow {
     return .none
   }
   
-  func summonWeatherDetailsController2(identity: PersistencyModelIdentityProtocol) -> FlowContributors {
+  func summonWeatherDetailsController2(identity: PersistencyModelIdentity) -> FlowContributors {
     let weatherDetailFlow = WeatherDetailFlow(dependencies: WeatherDetailFlow.Dependencies(
       weatherInformationIdentity: identity,
       dependencyContainer: dependencies.dependencyContainer

@@ -14,7 +14,7 @@ import RxCocoa
 
 extension WeatherMapAnnotationViewModel {
   struct Dependencies {
-    let weatherInformationIdentity: PersistencyModelIdentityProtocol
+    let weatherInformationIdentity: PersistencyModelIdentity
     let coordinate: CLLocationCoordinate2D
     let weatherStationService: WeatherStationBookmarkReading
     let weatherInformationService: WeatherInformationReading
@@ -29,7 +29,7 @@ final class WeatherMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
   
   // MARK: - Public Access
   
-  var weatherInformationIdentity: PersistencyModelIdentityProtocol {
+  var weatherInformationIdentity: PersistencyModelIdentity {
     dependencies.weatherInformationIdentity
   }
   

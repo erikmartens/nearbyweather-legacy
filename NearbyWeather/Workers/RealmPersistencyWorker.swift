@@ -10,32 +10,18 @@ import RealmSwift
 import RxRealm
 import RxSwift
 
-protocol PersistencyModelIdentityProtocol {
-  var collection: String { get }
-  var identifier: String { get }
-}
-
-struct PersistencyModelIdentity: PersistencyModelIdentityProtocol {
+struct PersistencyModelIdentity: Equatable {
   let collection: String
   let identifier: String
 }
 
-protocol PersistencyModelProtocol {
-  associatedtype PersistencyModelEntity: Codable
-  var identity: PersistencyModelIdentityProtocol { get }
-  var entity: PersistencyModelEntity { get }
-  init(identity: PersistencyModelIdentityProtocol, entity: PersistencyModelEntity)
-  init?(collection: String, identifier: String, data: Data?)
-  func toRealmModel() -> RealmModel
-  func toThreadSafeModel() -> PersistencyModelThreadSafe<PersistencyModelEntity>
-}
-
-class PersistencyModel<T: Codable>: PersistencyModelProtocol {
-  let identity: PersistencyModelIdentityProtocol
+class PersistencyModel<T: Codable & Equatable> {
+  
+  let identity: PersistencyModelIdentity
   let entity: T
   
   required init(
-    identity: PersistencyModelIdentityProtocol,
+    identity: PersistencyModelIdentity,
     entity: T
   ) {
     self.identity = identity
@@ -64,8 +50,8 @@ class PersistencyModel<T: Codable>: PersistencyModelProtocol {
   }
 }
 
-struct PersistencyModelThreadSafe<T: Codable> {
-  let identity: PersistencyModelIdentityProtocol
+struct PersistencyModelThreadSafe<T: Codable & Equatable>: Equatable {
+  let identity: PersistencyModelIdentity
   let entity: T
 }
 
@@ -135,10 +121,6 @@ final class RealmPersistencyWorker {
     baseDirectory.appendingPathComponent("\(databaseFileName).realm")
   }()
   
-//  private var realm: Realm? {
-//    try? Realm(configuration: configuration)
-//  }
-  
   // MARK: - Initialization
   
   init(
@@ -156,21 +138,21 @@ final class RealmPersistencyWorker {
 // MARK: - Public CRUD Functions
 
 protocol RealmPersistencyWorkerCRUD {
-  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable
-  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable
-  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]>
-  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?>
-  func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]>
-  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?>
-  func deleteResources(with identities: [PersistencyModelIdentityProtocol]) -> Completable
+  func saveResources<T: Codable & Equatable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable
+  func saveResource<T: Codable & Equatable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable
+  func readResources<T: Codable & Equatable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]>
+  func readResource<T: Codable & Equatable>(with identity: PersistencyModelIdentity, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?>
+  func observeResources<T: Codable & Equatable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]>
+  func observeResource<T: Codable & Equatable>(with identity: PersistencyModelIdentity, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?>
+  func deleteResources(with identities: [PersistencyModelIdentity]) -> Completable
   func deleteResources(in collection: String) -> Completable
-  func deleteResource(with identity: PersistencyModelIdentityProtocol) -> Completable
+  func deleteResource(with identity: PersistencyModelIdentity) -> Completable
 }
 
 extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   
   /// save a new set of resources or update already existing resources for the specified identities
-  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable {
+  func saveResources<T: Codable & Equatable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable {
     Completable
       .create { [configuration] completable in
         do {
@@ -210,7 +192,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   }
   
   /// save a new resource or update an already existing resource for the specified identity
-  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable {
+  func saveResource<T: Codable & Equatable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable {
     Completable
       .create { [configuration] completable in
         let newModel = resource.toRealmModel()
@@ -248,30 +230,30 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   }
   
   /// returns a single containing all resources within a specified collection
-  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]> {
+  func readResources<T: Codable & Equatable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]> {
     createGetResourcesObservable(in: collection, type: type)
       .take(1)
       .asSingle()
   }
   
   /// returns a single containing a specified resource for a specified identity
-  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?> {
+  func readResource<T: Codable & Equatable>(with identity: PersistencyModelIdentity, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?> {
     createGetResourceObservable(with: identity, type: type)
       .take(1)
       .asSingle()
   }
   
   /// observes all resources within a specified collection
-  func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]> {
+  func observeResources<T: Codable & Equatable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]> {
     createGetResourcesObservable(in: collection, type: type)
   }
   
   /// observes a specified resource for a specified identity
-  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
+  func observeResource<T: Codable & Equatable>(with identity: PersistencyModelIdentity, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
     createGetResourceObservable(with: identity, type: type)
   }
   
-  func deleteResources(with identities: [PersistencyModelIdentityProtocol]) -> Completable {
+  func deleteResources(with identities: [PersistencyModelIdentity]) -> Completable {
     Completable
       .create { [configuration] handler -> Disposable in
         do {
@@ -314,7 +296,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
     }
   }
   
-  func deleteResource(with identity: PersistencyModelIdentityProtocol) -> Completable {
+  func deleteResource(with identity: PersistencyModelIdentity) -> Completable {
     Completable
       .create { [configuration] handler -> Disposable in
         do {
@@ -341,7 +323,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
 
 private extension RealmPersistencyWorker {
   
-  func createGetResourcesObservable<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]> {
+  func createGetResourcesObservable<T: Codable & Equatable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]> {
     Observable
       .create { [configuration] subscriber in
         do {
@@ -359,11 +341,12 @@ private extension RealmPersistencyWorker {
         results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.toThreadSafeModel() }
       }
       .map { $0.compactMap { $0.identity.collection == collection ? $0 : nil } }
+      .distinctUntilChanged()
       .subscribe(on: MainScheduler.instance) // need to subscribe on a thread with runloop
       .observe(on: SerialDispatchQueueScheduler(qos: .default))
   }
   
-  func createGetResourceObservable<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
+  func createGetResourceObservable<T: Codable & Equatable>(with identity: PersistencyModelIdentity, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
     Observable
       .create { [configuration] subscriber in
         do {
@@ -388,6 +371,7 @@ private extension RealmPersistencyWorker {
         }
         .first
       }
+      .distinctUntilChanged()
       .subscribe(on: MainScheduler.instance) // need to subscribe on a thread with runloop
       .observe(on: SerialDispatchQueueScheduler(qos: .default))
   }

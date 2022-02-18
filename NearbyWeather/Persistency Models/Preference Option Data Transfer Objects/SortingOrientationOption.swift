@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SortingOrientationValue: Int, CaseIterable, Codable {
+enum SortingOrientationValue: Int, CaseIterable, Codable, Equatable {
   case name
   case temperature
   case distance
@@ -22,7 +22,7 @@ enum SortingOrientationValue: Int, CaseIterable, Codable {
   }
 }
 
-struct SortingOrientationOption: Codable, PreferencesOption {
+struct SortingOrientationOption: Codable, Equatable, PreferencesOption {
   static let availableOptions = [SortingOrientationOption(value: .name),
                                  SortingOrientationOption(value: .temperature),
                                  SortingOrientationOption(value: .distance)]

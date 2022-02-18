@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherStationSortingOrientationDTO: Codable {
+struct WeatherStationSortingOrientationDTO: Codable, Equatable {
   var stationIdentifier: Int
   var stationIndex: Int
 }

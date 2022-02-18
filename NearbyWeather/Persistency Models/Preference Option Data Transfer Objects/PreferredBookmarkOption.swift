@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PreferredBookmarkOption: Codable, PreferencesOption {
+struct PreferredBookmarkOption: Codable, Equatable, PreferencesOption {
   typealias WrappedEnumType = Int?
   
   var value: Int?

@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct ApiKeyDTO: Codable {
+struct ApiKeyDTO: Codable, Equatable {
   var apiKey: String
 }

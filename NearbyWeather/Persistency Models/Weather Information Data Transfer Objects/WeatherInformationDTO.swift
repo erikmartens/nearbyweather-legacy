@@ -23,9 +23,9 @@ struct WeatherInformationListDTO: Codable {
   }
 }
 
-struct WeatherInformationDTO: Codable {
-  
-  struct CoordinatesDTO: Codable {
+struct WeatherInformationDTO: Codable, Equatable {
+
+  struct CoordinatesDTO: Codable, Equatable {
     var latitude: Double?
     var longitude: Double?
     
@@ -42,7 +42,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct WeatherConditionDTO: Codable {
+  struct WeatherConditionDTO: Codable, Equatable {
     var identifier: Int?
     var conditionName: String?
     var conditionDescription: String?
@@ -65,7 +65,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct AtmosphericInformationDTO: Codable {
+  struct AtmosphericInformationDTO: Codable, Equatable {
     var temperatureKelvin: Double?
     var pressurePsi: Double?
     var humidity: Double?
@@ -85,7 +85,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct WindInformationDTO: Codable {
+  struct WindInformationDTO: Codable, Equatable {
     var windspeed: Double?
     var degrees: Double?
     
@@ -102,7 +102,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct CloudCoverageDTO: Codable {
+  struct CloudCoverageDTO: Codable, Equatable {
     var coverage: Double?
     
     enum CodingKeys: String, CodingKey {
@@ -116,7 +116,7 @@ struct WeatherInformationDTO: Codable {
     }
   }
   
-  struct DayTimeInformationDTO: Codable {
+  struct DayTimeInformationDTO: Codable, Equatable {
     /// multi location weather data does not contain this information
     
     var sunrise: Double?

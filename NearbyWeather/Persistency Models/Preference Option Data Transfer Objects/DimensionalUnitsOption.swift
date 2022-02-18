@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum DistanceVelocityUnitValue: Int, CaseIterable, Codable {
+enum DistanceVelocityUnitValue: Int, CaseIterable, Codable, Equatable {
   case metric
   case imperial
 }
 
-struct DimensionalUnitsOption: Codable, PreferencesOption {
+struct DimensionalUnitsOption: Codable, Equatable, PreferencesOption {
   static let availableOptions = [DimensionalUnitsOption(value: .metric),
                                  DimensionalUnitsOption(value: .imperial)]
   

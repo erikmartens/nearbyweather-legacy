@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ListTypeValue: Int, CaseIterable, Codable {
+enum ListTypeValue: Int, CaseIterable, Codable, Equatable {
   case bookmarked
   case nearby
   
@@ -22,7 +22,7 @@ enum ListTypeValue: Int, CaseIterable, Codable {
   }
 }
 
-struct ListTypeOption: Codable, PreferencesOption {
+struct ListTypeOption: Codable, Equatable, PreferencesOption {
   
   static let availableOptions = [ListTypeOption(value: .bookmarked),
                                  ListTypeOption(value: .nearby)]

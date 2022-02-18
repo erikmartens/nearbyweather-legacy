@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum AmountOfResultsValue: Int, CaseIterable, Codable {
+enum AmountOfResultsValue: Int, CaseIterable, Codable, Equatable {
   case ten = 10
   case twenty = 20
   case thirty = 30
@@ -16,7 +16,7 @@ enum AmountOfResultsValue: Int, CaseIterable, Codable {
   case fifty = 50
 }
 
-struct AmountOfResultsOption: Codable, PreferencesOption {
+struct AmountOfResultsOption: Codable, Equatable, PreferencesOption {
   
   static let availableOptions = [AmountOfResultsOption(value: .ten),
                                  AmountOfResultsOption(value: .twenty),

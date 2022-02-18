@@ -14,7 +14,7 @@ import Swinject
 enum ListStep: Step {
   case list
   case emptyList
-  case weatherDetails2(identity: PersistencyModelIdentityProtocol)
+  case weatherDetails2(identity: PersistencyModelIdentity)
   case changeListTypeAlert(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeValue)
   case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue)
   case changeSortingOrientationAlert(selectionDelegate: SortingOrientationSelectionAlertDelegate, currentSelectedOptionValue: SortingOrientationValue)

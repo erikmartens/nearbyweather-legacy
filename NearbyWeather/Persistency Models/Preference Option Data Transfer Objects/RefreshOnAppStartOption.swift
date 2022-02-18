@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum RefreshOnAppStartValue: Int, CaseIterable, Codable {
+enum RefreshOnAppStartValue: Int, CaseIterable, Codable, Equatable {
   case no
   case yes
 }
 
-struct RefreshOnAppStartOption: Codable, PreferencesOption {
+struct RefreshOnAppStartOption: Codable, Equatable, PreferencesOption {
   static let availableOptions = [RefreshOnAppStartOption(value: .no),
                                  RefreshOnAppStartOption(value: .yes)]
   

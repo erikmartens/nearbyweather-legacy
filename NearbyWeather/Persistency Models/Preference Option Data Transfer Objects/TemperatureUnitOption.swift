@@ -8,13 +8,13 @@
 
 import Foundation
 
-enum TemperatureUnitValue: Int, CaseIterable, Codable {
+enum TemperatureUnitValue: Int, CaseIterable, Codable, Equatable {
   case celsius
   case fahrenheit
   case kelvin
 }
 
-struct TemperatureUnitOption: Codable, PreferencesOption {
+struct TemperatureUnitOption: Codable, Equatable, PreferencesOption {
   static let availableOptions = [TemperatureUnitOption(value: .celsius),
                                  TemperatureUnitOption(value: .fahrenheit),
                                  TemperatureUnitOption(value: .kelvin)]

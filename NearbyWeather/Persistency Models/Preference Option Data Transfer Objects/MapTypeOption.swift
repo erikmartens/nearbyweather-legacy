@@ -8,7 +8,7 @@
 
 import MapKit
 
-enum MapTypeValue: Int, CaseIterable, Codable {
+enum MapTypeValue: Int, CaseIterable, Codable, Equatable {
   case standard
   case satellite
   case hybrid
@@ -36,7 +36,7 @@ enum MapTypeValue: Int, CaseIterable, Codable {
   }
 }
 
-struct MapTypeOption: Codable, PreferencesOption {
+struct MapTypeOption: Codable, Equatable, PreferencesOption {
   static let availableOptions = [MapTypeOption(value: .standard),
                                  MapTypeOption(value: .satellite),
                                  MapTypeOption(value: .hybrid)]

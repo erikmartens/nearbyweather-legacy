@@ -15,7 +15,7 @@ import CoreLocation
 
 extension WeatherStationCurrentInformationViewModel {
   struct Dependencies {
-    let weatherInformationIdentity: PersistencyModelIdentityProtocol
+    let weatherInformationIdentity: PersistencyModelIdentity
     let weatherStationService: WeatherStationBookmarkReading
     let weatherInformationService: WeatherInformationReading
     let preferencesService: WeatherMapPreferenceReading

@@ -43,58 +43,58 @@ final class PersistencyService2 {
 // MARK: - Weather Information Provisioning
 
 protocol PersistencyProtocol {
-  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable
-  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable
-  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]>
-  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?>
-  func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]>
-  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?>
-  func deleteResources(with identities: [PersistencyModelIdentityProtocol]) -> Completable
+  func saveResources<T: Codable & Equatable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable
+  func saveResource<T: Codable & Equatable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable
+  func readResources<T: Codable & Equatable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]>
+  func readResource<T: Codable & Equatable>(with identity: PersistencyModelIdentity, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?>
+  func observeResources<T: Codable & Equatable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]>
+  func observeResource<T: Codable & Equatable>(with identity: PersistencyModelIdentity, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?>
+  func deleteResources(with identities: [PersistencyModelIdentity]) -> Completable
   func deleteResources(in collection: String) -> Completable
-  func deleteResource(with identity: PersistencyModelIdentityProtocol) -> Completable
+  func deleteResource(with identity: PersistencyModelIdentity) -> Completable
 }
 
 extension PersistencyService2: PersistencyProtocol {
   
-  func saveResources<T: Codable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable {
+  func saveResources<T: Codable & Equatable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable {
     persistencyWorker
       .saveResources(resources, type: T.self)
       .subscribe(on: Self.persistencyWriteScheduler)
       .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
   }
   
-  func saveResource<T: Codable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable {
+  func saveResource<T: Codable & Equatable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable {
     persistencyWorker
       .saveResource(resource, type: T.self)
       .subscribe(on: Self.persistencyWriteScheduler)
       .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
   }
   
-  func readResources<T: Codable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]> {
+  func readResources<T: Codable & Equatable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]> {
     persistencyWorker
       .readResources(in: collection, type: T.self)
       .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
   }
   
-  func readResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?> {
+  func readResource<T: Codable & Equatable>(with identity: PersistencyModelIdentity, type: T.Type) -> Single<PersistencyModelThreadSafe<T>?> {
     persistencyWorker
       .readResource(with: identity, type: T.self)
       .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
   }
   
-  func observeResources<T: Codable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]> {
+  func observeResources<T: Codable & Equatable>(in collection: String, type: T.Type) -> Observable<[PersistencyModelThreadSafe<T>]> {
     persistencyWorker
       .observeResources(in: collection, type: T.self)
       .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
   }
   
-  func observeResource<T: Codable>(with identity: PersistencyModelIdentityProtocol, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
+  func observeResource<T: Codable & Equatable>(with identity: PersistencyModelIdentity, type: T.Type) -> Observable<PersistencyModelThreadSafe<T>?> {
     persistencyWorker
       .observeResource(with: identity, type: T.self)
       .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
   }
   
-  func deleteResources(with identities: [PersistencyModelIdentityProtocol]) -> Completable {
+  func deleteResources(with identities: [PersistencyModelIdentity]) -> Completable {
     persistencyWorker
       .deleteResources(with: identities)
       .subscribe(on: Self.persistencyWriteScheduler)
@@ -108,7 +108,7 @@ extension PersistencyService2: PersistencyProtocol {
       .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
   }
   
-  func deleteResource(with identity: PersistencyModelIdentityProtocol) -> Completable {
+  func deleteResource(with identity: PersistencyModelIdentity) -> Completable {
     persistencyWorker
       .deleteResource(with: identity)
       .subscribe(on: Self.persistencyWriteScheduler)

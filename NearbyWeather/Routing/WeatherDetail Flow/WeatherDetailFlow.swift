@@ -13,7 +13,7 @@ import Swinject
 
 extension WeatherDetailFlow {
   struct Dependencies {
-    let weatherInformationIdentity: PersistencyModelIdentityProtocol
+    let weatherInformationIdentity: PersistencyModelIdentity
     let dependencyContainer: Container
   }
 }

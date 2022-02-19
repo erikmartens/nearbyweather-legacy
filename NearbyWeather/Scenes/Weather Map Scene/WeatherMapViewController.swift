@@ -87,9 +87,9 @@ extension WeatherMapViewController {
       .dataSource
       .asDriver(onErrorJustReturn: nil)
       .filterNil()
-      .drive(onNext: { [weak self] mapAnnotationData in
-        self?.mapView.annotations.forEach { self?.mapView.removeAnnotation($0) }
-        self?.mapView.addAnnotations(mapAnnotationData.annotationItems)
+      .drive(onNext: { [unowned mapView] mapAnnotationData in
+        mapView.annotations.forEach { mapView.removeAnnotation($0) }
+        mapView.addAnnotations(mapAnnotationData.annotationItems)
       })
       .disposed(by: disposeBag)
     
@@ -167,6 +167,8 @@ private extension WeatherMapViewController {
   func setupUiLayout() {
     navigationItem.leftBarButtonItems = [mapTypeBarButton]
     
+    mapView.delegate = viewModel.mapDelegate
+    
     view.addSubview(mapView, constraints: [
       mapView.topAnchor.constraint(equalTo: view.topAnchor),
       mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -177,8 +179,7 @@ private extension WeatherMapViewController {
   
   func setupUiAppearance() {
     title = R.string.localizable.tab_weatherMap()
-    
-    view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }
 

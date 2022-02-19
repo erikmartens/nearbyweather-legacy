@@ -86,7 +86,7 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
     self.dependencies = dependencies
     super.init()
     
-    mapDelegate = WeatherMapMapViewDelegate(annotationSelectionDelegate: self)
+    mapDelegate = WeatherMapMapViewDelegate(annotationSelectionDelegate: self, annotationViewType: WeatherMapAnnotationView.self)
   }
   
   deinit {

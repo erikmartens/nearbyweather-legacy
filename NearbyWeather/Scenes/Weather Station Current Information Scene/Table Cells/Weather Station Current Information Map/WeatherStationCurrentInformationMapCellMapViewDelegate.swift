@@ -8,4 +8,4 @@
 
 import Foundation
 
-final class WeatherStationCurrentInformationMapCellMapViewDelegate: BaseMapViewDelegate {}  // swiftlint:disable:this type_name
+final class WeatherStationCurrentInformationMapCellMapViewDelegate: BaseMapViewDelegate<WeatherMapAnnotationView> {}  // swiftlint:disable:this type_name

@@ -992,7 +992,7 @@
 				F27A122C24425F0700A2CE8D /* Extensions */,
 				F273EF65244496C40085DB3F /* Views */,
 				F2F155472443BAE4007A3E90 /* Records */,
-				F284DDCC245A275B00445BFF /* Core User Interface Building Blocks */,
+				F284DDCC245A275B00445BFF /* Core UI Building Blocks */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -1111,7 +1111,7 @@
 			path = "Contributor Models";
 			sourceTree = "<group>";
 		};
-		F284DDCC245A275B00445BFF /* Core User Interface Building Blocks */ = {
+		F284DDCC245A275B00445BFF /* Core UI Building Blocks */ = {
 			isa = PBXGroup;
 			children = (
 				F2D1990225A10CD8004C7753 /* ViewController */,
@@ -1120,7 +1120,7 @@
 				F2DB5E6025AB4CB500E21A56 /* MapView */,
 				F2DB5E7625AB501800E21A56 /* MapViewAnnotation */,
 			);
-			path = "Core User Interface Building Blocks";
+			path = "Core UI Building Blocks";
 			sourceTree = "<group>";
 		};
 		F284DDDD245F5A8C00445BFF /* Migration */ = {

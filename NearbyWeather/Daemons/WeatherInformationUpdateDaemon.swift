@@ -8,7 +8,6 @@
 
 import RxSwift
 import RxOptional
-import RxAlamofire
 
 // MARK: - Dependencies
 
@@ -50,7 +49,7 @@ final class WeatherInformationUpdateDaemon: Daemon {
   deinit {
     printDebugMessage(
       domain: String(describing: self),
-      message: "was deinitialized🤢",
+      message: "was deinitialized",
       type: .info
     )
   }
@@ -121,7 +120,7 @@ private extension WeatherInformationUpdateDaemon {
         ])
         .asObservable()
         .map { _ in () }
-      }.debug("🤢🤢🤢🤢🤢")
+      }
       .subscribe()
       .disposed(by: disposeBag)
   }
@@ -136,8 +135,8 @@ private extension WeatherInformationUpdateDaemon {
   
   func observeLocationAccessAuthorization() {
     dependencies.userLocationService
-      .createGetAuthorizationStatusObservable()
-      .filter { !$0 } // keep going when not authorized
+      .createGetLocationAuthorizationStatusObservable()
+      .filter { !($0?.authorizationStatusIsSufficient ?? false) } // keep going when not authorized
       .flatMapLatest { [dependencies] _ -> Observable<Void> in
         dependencies.weatherInformationService
           .createDeleteNearbyWeatherInformationListCompletable()

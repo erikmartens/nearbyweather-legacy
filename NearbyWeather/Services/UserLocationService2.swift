@@ -16,8 +16,43 @@ extension UserLocationService2 {
   enum DomainError: String, Error {
     var domain: String { "UserLocationService" }
     
-    case locationAuthorizationError = "Trying access the user location, but sufficient authorization was not granted."
+    case locationAuthorizationError = "Trying access the user location, but sufficient authorization was not granted or the user location is not accessible."
     case locationUndeterminableError = "Trying access the user location, but it could not be determined."
+  }
+}
+
+// MARK: - Persistency Keys
+
+private extension UserLocationService2 {
+  enum PersistencyKeys {
+    case userLocation
+    case authorizationStatus
+    
+    var collection: String {
+      switch self {
+      case .userLocation: return "/user_location/user_location/"
+      case .authorizationStatus: return "/user_location/authorization_status/"
+      }
+    }
+    
+    var identifier: String {
+      switch self {
+      case .userLocation: return "default"
+      case .authorizationStatus: return "default"
+      }
+    }
+    
+    var identity: PersistencyModelIdentity {
+      PersistencyModelIdentity(collection: collection, identifier: identifier)
+    }
+  }
+}
+
+// MARK: - Dependencies
+
+extension UserLocationService2 {
+  struct Dependencies {
+    let persistencyService: PersistencyProtocol
   }
 }
 
@@ -27,11 +62,13 @@ final class UserLocationService2 {
   
   // MARK: - Properties
   
+  private let dependencies: Dependencies
   private let locationManager: CLLocationManager
   
   // MARK: - Initialization
   
-  init() {
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
     locationManager = CLLocationManager()
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
   }
@@ -41,88 +78,121 @@ final class UserLocationService2 {
 
 protocol UserLocationPermissionRequesting {
   func requestWhenImUseLocationAccess() -> Completable
+  func createSaveLocationAuthorizationStatusCompletable(_ authorizationStatus: UserLocationAuthorizationStatus) -> Completable
+  func createGetLocationAuthorizationStatusObservable() -> Observable<UserLocationAuthorizationStatus?>
 }
 
 extension UserLocationService2: UserLocationPermissionRequesting {
-  
+ 
   func requestWhenImUseLocationAccess() -> Completable {
-    guard locationManager.authorizationStatus == .notDetermined else {
-      return Completable.create { handler in
+    Completable
+      .create { handler in
+        let locationManager = CLLocationManager()
+        guard locationManager.authorizationStatus == .notDetermined else {
+          handler(.completed)
+          return Disposables.create()
+        }
+        locationManager.requestWhenInUseAuthorization()
         handler(.completed)
         return Disposables.create()
       }
-    }
-    
-    return Observable<Void>
-      .create { [unowned locationManager] subscriber in
-        locationManager.requestWhenInUseAuthorization()
-        subscriber.on(.next(()))
-        return Disposables.create()
-      }
-      .flatMapLatest { [unowned locationManager] () in
-        locationManager.rx
-          .didChangeAuthorization
-          .map { $0.status }
-          .filter { $0 != .notDetermined }
-      }
-      .take(1)
-      .asSingle()
-      .asCompletable()
+  }
+  
+  func createSaveLocationAuthorizationStatusCompletable(_ authorizationStatus: UserLocationAuthorizationStatus) -> Completable {
+    dependencies.persistencyService
+      .saveResource(
+        PersistencyModel(identity: PersistencyKeys.authorizationStatus.identity, entity: authorizationStatus),
+        type: UserLocationAuthorizationStatus.self
+      )
+  }
+  
+  func createGetLocationAuthorizationStatusObservable() -> Observable<UserLocationAuthorizationStatus?> {
+    dependencies.persistencyService
+      .observeResource(
+        with: PersistencyKeys.authorizationStatus.identity,
+        type: UserLocationAuthorizationStatus.self
+      )
+      .map { $0?.entity }
   }
 }
 
 // MARK: - User Location Accessing
 
 protocol UserLocationAccessing {
-  func createGetAuthorizationStatusObservable() -> Observable<Bool>
-  func createGetCurrentLocationObservable() -> Observable<CLLocation>
+  
+  func createDeleteUserLocationCompletable() -> Completable
+  func createSaveUserLocationCompletable(location: CLLocation?) -> Completable
+  func createGetUserLocationObservable() -> Observable<CLLocation>
 }
 
 extension UserLocationService2: UserLocationAccessing {
   
-  func createGetAuthorizationStatusObservable() -> Observable<Bool> {
-//    locationManager.rx
-//      .didChangeAuthorization
-//      .map { $0.status }
-//      .startWith(locationManager.authorizationStatus)
-//      .map { Self.authorizationStatusIsSufficient($0) }
-    Observable.just(true).share(replay: 1)
+  func createDeleteUserLocationCompletable() -> Completable {
+    dependencies.persistencyService.deleteResource(with: PersistencyKeys.userLocation.identity)
   }
   
-  func createGetCurrentLocationObservable() -> Observable<CLLocation> {
-//    createGetAuthorizationStatusObservable()
-//      .flatMapLatest { [unowned locationManager] authorized -> Observable<CLLocation?> in
-//        guard authorized else {
-//          throw UserLocationService2.DomainError.locationAuthorizationError
-//        }
-//        return locationManager.rx.location
-//      }
-//      .map { location -> CLLocation in
-//        guard let location = location else {
-//          throw UserLocationService2.DomainError.locationUndeterminableError
-//        }
-//        return location
-//      }
-//      .do(onSubscribe: { [locationManager] in locationManager.startUpdatingLocation() },
-//          onDispose: { [locationManager] in locationManager.stopUpdatingLocation() })
-    Observable.just(CLLocation(latitude: 49.37516443130754, longitude: 8.150853842090196)).share(replay: 1)
+  func createSaveUserLocationCompletable(location: CLLocation?) -> Completable {
+    guard let location = location else {
+      return Completable.create { handler in
+        handler(.completed)
+        return Disposables.create()
+      }
+    }
+    return dependencies.persistencyService.saveResource(
+      PersistencyModel(
+        identity: PersistencyKeys.userLocation.identity,
+        entity: UserLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+      ),
+      type: UserLocation.self)
+  }
+  
+  func createGetUserLocationObservable() -> Observable<CLLocation> {
+    dependencies.persistencyService
+      .observeResource(with: PersistencyKeys.userLocation.identity, type: UserLocation.self)
+      .map { userLocation in
+        guard let userLocation = userLocation else {
+          throw DomainError.locationAuthorizationError
+        }
+        return CLLocation(latitude: userLocation.entity.latitude, longitude: userLocation.entity.longitude)
+      }
   }
 }
+
+// MARK: - User Location Writing
+
+protocol UserLocationWriting {
+  func createDeleteUserLocationCompletable() -> Completable
+  func createSaveUserLocationCompletable(location: CLLocation?) -> Completable
+}
+
+extension UserLocationService2: UserLocationWriting {}
 
 // MARK: - User Location Reading
 
 protocol UserLocationReading {
-  func createGetCurrentLocationObservable() -> Observable<CLLocation>
+  func createGetUserLocationObservable() -> Observable<CLLocation>
 }
 
 extension UserLocationService2: UserLocationReading {}
 
 // MARK: - Helpers
 
-private extension UserLocationService2 {
+extension UserLocationAuthorizationStatus {
   
-  static func authorizationStatusIsSufficient(_ authorizationStatus: CLAuthorizationStatus) -> Bool {
-    switch authorizationStatus {
+  var authorizationStatusIsSufficient: Bool {
+    switch self.authorizationStatus {
+    case .undetermined, .systemRevoked, .userRevoked:
+      return false
+    case .authorizedWhileUsing, .authorizedAnytime:
+      return true
+    }
+  }
+}
+
+extension CLAuthorizationStatus {
+  
+  var authorizationStatusIsSufficient: Bool {
+    switch self {
     case .notDetermined, .restricted, .denied:
       return false
     case .authorizedWhenInUse, .authorizedAlways:

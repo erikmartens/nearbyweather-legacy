@@ -15,41 +15,41 @@ import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+  
   // MARK: - Properties
-
+  
   var window: UIWindow?
   var welcomeWindow: UIWindow?
-
+  
   private var dependencyContainer: Container!
   private var flowCoordinator: FlowCoordinator!
   
   private var daemons: [Daemon] = []
-
+  
   private var backgroundFetchTaskId: UIBackgroundTaskIdentifier = .invalid
-
+  
   // MARK: - Functions
-
+  
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//    FirebaseApp.configure()
-
+    //    FirebaseApp.configure()
+    
     // TODO: Handle via NSOperations
     registerServices()
     runMigrationIfNeeded()
     
     instantiateApplicationUserInterface()
-
+    
     // TODO: create secrets sub-repo and git-ignore
     if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
-      let firebaseOptions = FirebaseOptions(contentsOfFile: filePath) {
+       let firebaseOptions = FirebaseOptions(contentsOfFile: filePath) {
       FirebaseApp.configure(options: firebaseOptions)
     }
-
+    
     SettingsBundleTransferWorker.updateSystemSettings()
-
+    
     return true
   }
-
+  
   func applicationDidBecomeActive(_ application: UIApplication) {
     instantiateDaemons()
     refreshWeatherDataIfNeeded()
@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     daemons.forEach { $0.stopObservations() }
     daemons = []
   }
-
+  
   func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
     beginAppIconUpdateBackgroundFetchTask(for: application, performFetchWithCompletionHandler: completionHandler)
   }
@@ -74,15 +74,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - Private Helper Functions
 
 private extension AppDelegate {
-
+  
   func registerServices() {
     PermissionsService.instantiateSharedInstance()
     BadgeService.instantiateSharedInstance()
-
+    
     dependencyContainer = Container()
-
+    
     dependencyContainer.register(PersistencyService2.self) { _ in PersistencyService2() }
-    dependencyContainer.register(UserLocationService2.self) { _ in UserLocationService2() }
+    dependencyContainer.register(UserLocationService2.self) { resolver in
+      UserLocationService2(
+        dependencies: UserLocationService2.Dependencies(persistencyService: resolver.resolve(PersistencyService2.self)!
+                                                       ))
+    }
     
     dependencyContainer.register(PreferencesService2.self) { resolver in
       PreferencesService2(dependencies: PreferencesService2.Dependencies(
@@ -133,10 +137,15 @@ private extension AppDelegate {
         weatherInformationService: weatherInformationService
       ))
     )
+    daemons.append(
+      UserLocationUpdateDaemon(dependencies: UserLocationUpdateDaemon.Dependencies(
+        userLocationService: userLocationService
+      ))
+    )
     
     daemons.forEach { $0.startObservations() }
   }
-
+  
   func instantiateApplicationUserInterface() {
     let window = UIWindow(frame: UIScreen.main.bounds)
     self.window = window
@@ -144,7 +153,7 @@ private extension AppDelegate {
       rootWindow: window,
       dependencyContainer: dependencyContainer!
     ))
-
+    
     flowCoordinator = FlowCoordinator()
     flowCoordinator?.coordinate(
       flow: rootFlow,
@@ -153,7 +162,7 @@ private extension AppDelegate {
       )
     )
   }
-
+  
   func refreshWeatherDataIfNeeded() {
     let preferencesService = dependencyContainer.resolve(PreferencesService2.self)! as AppDelegatePreferenceReading
     let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self)! as WeatherInformationUpdating
@@ -206,12 +215,12 @@ private extension AppDelegate {
         }
       )
   }
-
+  
   func endAppIconUpdateBackgroundFetchTask() {
     UIApplication.shared.endBackgroundTask(backgroundFetchTaskId)
     backgroundFetchTaskId = .invalid
   }
-
+  
   func runMigrationIfNeeded() {
     MigrationService(dependencies: MigrationService.Dependencies(
       preferencesService: dependencyContainer.resolve(PreferencesService2.self)!,
@@ -219,6 +228,6 @@ private extension AppDelegate {
       weatherStationService: dependencyContainer.resolve(WeatherStationService2.self)!,
       apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!
     ))
-    .runMigrationIfNeeded_v2_2_2_to_3_0_0()
+      .runMigrationIfNeeded_v2_2_2_to_3_0_0()
   }
 }

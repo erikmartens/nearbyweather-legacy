@@ -97,7 +97,7 @@ private extension WeatherStationCurrentInformationMapCellViewModel {
         createGetWeatherInformationDtoObservable(with: dependencies).map { $0.entity },
         dependencies.preferencesService.createGetMapTypeOptionObservable(),
         dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
-        dependencies.userLocationService.createGetCurrentLocationObservable().map { location -> CLLocation? in location },
+        dependencies.userLocationService.createGetUserLocationObservable(),
         resultSelector: { weatherInformationDTO, preferredMapTypeOption, preferredDimensionalUnitsOption, currentLocation -> WeatherStationCurrentInformationMapCellModel in
           WeatherStationCurrentInformationMapCellModel(
             preferredMapTypeOption: preferredMapTypeOption,

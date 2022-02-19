@@ -117,7 +117,7 @@ extension WeatherListViewModel {
       .combineLatest(
         dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
         preferredSortingOrientationObservable,
-        dependencies.userLocationService.createGetCurrentLocationObservable(),
+        dependencies.userLocationService.createGetUserLocationObservable(),
         apiKeyValidObservable,
         resultSelector: { weatherInformationItems, sortingOrientation, currentLocation, _ in
           Self.sortNearbyResults(weatherInformationItems, sortingOrientationValue: sortingOrientation, currentLocation: currentLocation)

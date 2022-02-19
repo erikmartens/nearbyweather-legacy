@@ -116,6 +116,22 @@ extension UserLocationService2: UserLocationPermissionRequesting {
   }
 }
 
+// MARK: - User Location Permissions Writing
+
+protocol UserLocationPermissionWriting {
+  func createSaveLocationAuthorizationStatusCompletable(_ authorizationStatus: UserLocationAuthorizationStatus) -> Completable
+}
+
+extension UserLocationService2: UserLocationPermissionWriting {}
+
+// MARK: - User Location Permissions Reading
+
+protocol UserLocationPermissionReading {
+  func createGetLocationAuthorizationStatusObservable() -> Observable<UserLocationAuthorizationStatus?>
+}
+
+extension UserLocationService2: UserLocationPermissionReading {}
+
 // MARK: - User Location Accessing
 
 protocol UserLocationAccessing {

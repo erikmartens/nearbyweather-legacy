@@ -13,8 +13,8 @@ import CoreLocation
 // MARK: - Dependencies
 
 extension UserLocationUpdateDaemon {
-  struct Dependencies { // TODO: create protocols for all
-    var userLocationService: UserLocationService2
+  struct Dependencies {
+    var userLocationService: UserLocationWriting & UserLocationPermissionWriting
   }
 }
 
@@ -63,17 +63,17 @@ final class UserLocationUpdateDaemon: NSObject, Daemon {
   }
 }
 
-// MARK: - Observations
-
-private extension UserLocationUpdateDaemon {
-  
-}
-
 // MARK: - Delegate Extensions
 
 extension UserLocationUpdateDaemon: CLLocationManagerDelegate {
   
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    
+    _ = dependencies.userLocationService
+      .createSaveLocationAuthorizationStatusCompletable(
+        UserLocationAuthorizationStatus(authorizationStatus: UserLocationAuthorizationStatusOption(clAuthorizationStatus: status))
+      )
+    
     if status == .authorizedWhenInUse || status == .authorizedAlways {
       locationManager.startUpdatingLocation()
       return

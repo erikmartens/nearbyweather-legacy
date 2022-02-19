@@ -14,7 +14,7 @@ extension Factory {
     
     enum ShapeLayerType {
       case circle(radius: CGFloat, borderWidth: CGFloat)
-      case speechBubble(size: CGSize, height: CGFloat, radius: CGFloat, borderWidth: CGFloat, margin: CGFloat, triangleHeight: CGFloat)
+      case speechBubble(size: CGSize, radius: CGFloat, borderWidth: CGFloat, margin: CGFloat, triangleHeight: CGFloat)
     }
     
     typealias InputType = ShapeLayerType
@@ -28,10 +28,9 @@ extension Factory {
         shapeLayer.path = Factory.BezierPath.make(fromType: .circle(radius: radius, borderWidth: borderWidth)).cgPath
         shapeLayer.frame.size = CGSize(width: radius*2, height: radius*2)
         shapeLayer.lineWidth = borderWidth/2
-      case let .speechBubble(size, height, radius, borderWidth, margin, triangleHeight):
+      case let .speechBubble(size, radius, borderWidth, margin, triangleHeight):
         shapeLayer.path = Factory.BezierPath.make(fromType: .speechBubble(
           size: size,
-          height: height,
           radius: radius,
           borderWidth: borderWidth,
           margin: margin,

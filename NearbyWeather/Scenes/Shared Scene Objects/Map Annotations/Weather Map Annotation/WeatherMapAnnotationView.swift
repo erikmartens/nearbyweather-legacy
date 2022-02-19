@@ -35,7 +35,6 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   private lazy var circleLayer = Factory.ShapeLayer.make(fromType: .circle(radius: Definitions.radius, borderWidth: Definitions.borderWidth))
   private lazy var speechBubbleLayer = Factory.ShapeLayer.make(fromType: .speechBubble(
     size: CGSize(width: Definitions.width, height: Definitions.height),
-    height: Definitions.height,
     radius: Definitions.radius,
     borderWidth: Definitions.borderWidth,
     margin: Definitions.margin,
@@ -104,9 +103,7 @@ extension WeatherMapAnnotationView {
   func bindUserInputToViewModel(_ annotationViewModel: WeatherMapAnnotationViewModel) {
     tapGestureRecognizer.rx
       .event
-      .bind { _ in
-        annotationViewModel.onDidTapAnnotationView.onNext(())
-      }
+      .bind { _ in annotationViewModel.onDidTapAnnotationView.onNext(()) }
       .disposed(by: disposeBag)
   }
 }

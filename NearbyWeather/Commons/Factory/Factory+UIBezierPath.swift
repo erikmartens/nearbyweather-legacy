@@ -14,7 +14,7 @@ extension Factory {
     
     enum BezierPathType {
       case circle(radius: CGFloat, borderWidth: CGFloat)
-      case speechBubble(size: CGSize, height: CGFloat, radius: CGFloat, borderWidth: CGFloat, margin: CGFloat, triangleHeight: CGFloat)
+      case speechBubble(size: CGSize, radius: CGFloat, borderWidth: CGFloat, margin: CGFloat, triangleHeight: CGFloat)
     }
     
     typealias InputType = BezierPathType
@@ -30,10 +30,10 @@ extension Factory {
           endAngle: CGFloat.pi * 2,
           clockwise: true
         )
-      case let .speechBubble(size, height, radius, borderWidth, margin, triangleHeight):
+      case let .speechBubble(size, radius, borderWidth, margin, triangleHeight):
         let path = UIBezierPath()
         
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height).offsetBy(dx: 0, dy: -height/2)
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height).offsetBy(dx: 0, dy: -size.height/2)
         let radiusBorderAdjusted = radius - borderWidth/2
         
         path.move(to: CGPoint(x: rect.width/2, y: rect.maxY))

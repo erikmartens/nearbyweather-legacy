@@ -79,12 +79,28 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   
   // MARK: - Cell Life Cycle
   
+//  override func draw(_ rect: CGRect) {
+//    super.draw(rect)
+//    layoutUserInterface()
+//    setupAppearance()
+//  }
+  
+  override func prepareForDisplay() {
+    super.prepareForDisplay()
+    annotationViewModel?.observeEvents()
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    disposeBag = DisposeBag()
+  }
+  
   func configure(with annotationViewModel: BaseAnnotationViewModelProtocol?) {
     guard let annotationViewModel = annotationViewModel as? WeatherMapAnnotationViewModel else {
       return
     }
     self.annotationViewModel = annotationViewModel
-    annotationViewModel.observeEvents()
+//    annotationViewModel.observeEvents()
     bindContentFromViewModel(annotationViewModel)
     bindUserInputToViewModel(annotationViewModel)
   }
@@ -129,7 +145,7 @@ private extension WeatherMapAnnotationView {
   func layoutUserInterface() {
     circleLayer.bounds.origin = CGPoint(x: -frame.width/2 + Definitions.radius, y: -frame.height/2 + Definitions.radius)
     layer.addSublayer(circleLayer)
-    
+
     speechBubbleLayer.position = .zero
     layer.addSublayer(speechBubbleLayer)
 
@@ -138,8 +154,22 @@ private extension WeatherMapAnnotationView {
 
     subtitleLabel.center = CGPoint(x: frame.size.width/2, y: titleLabel.frame.size.height/2 + Definitions.margin + titleLabel.frame.size.height)
     addSubview(subtitleLabel)
-    
+
     addGestureRecognizer(tapGestureRecognizer)
+    
+//    circleLayer.position = CGPoint(x: Definitions.radius + frame.size.width/2, y: Definitions.radius + frame.size.height)
+//    layer.addSublayer(circleLayer)
+//
+//    speechBubbleLayer.position = CGPoint(x: Definitions.width/2 - frame.size.width/2, y: Definitions.height/2 - frame.size.height)
+//    layer.addSublayer(speechBubbleLayer)
+//
+//    titleLabel.center = CGPoint(x: frame.size.width/2, y: Definitions.margin + titleLabel.bounds.size.height/2)
+//    addSubview(titleLabel)
+//
+//    subtitleLabel.center = CGPoint(x: frame.size.width/2, y: Definitions.margin + titleLabel.bounds.size.height/2 + titleLabel.bounds.size.height)
+//    addSubview(subtitleLabel)
+//
+//    addGestureRecognizer(tapGestureRecognizer)
   }
   
   func setupAppearance() {

@@ -36,17 +36,21 @@ class BaseMapViewDelegate<AnnotationViewType: BaseAnnotationViewProtocol>: NSObj
   // MARK: - MKMapViewDelegate Functions
   
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    guard annotation as? MKUserLocation == nil else {
+      return nil
+    }
+    
     guard let annotationIdentifier = dataSource.value?.annotationViewReuseIdentifier else {
       fatalError("Could not determine reuse-identifier for annotation views.")
     }
     let annotationView: BaseAnnotationViewProtocol
-    
+
     if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? BaseAnnotationViewProtocol {
       annotationView = dequeuedAnnotationView
     } else {
       annotationView = AnnotationViewType(annotation: annotation, reuseIdentifier: AnnotationViewType.reuseIdentifier)
     }
-    
+
     annotationView.configure(with: annotation as? BaseAnnotationViewModelProtocol)
     return annotationView
   }

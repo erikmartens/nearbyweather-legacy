@@ -10,11 +10,16 @@ import UIKit
 
 extension UIViewController {
   
-  func addBarButton(atPosition position: UIBarButtonItem.Position, touchupInsideHandler handler: @escaping (() -> Void)) {
-    let closeButton = UIBarButtonItem(image: R.image.verticalCloseButton(), style: .plain) { [unowned self] _ in
+  func addCloseButton(atPosition position: UIBarButtonItem.Position = .left, touchupInsideHandler handler: @escaping (() -> Void)) {
+    let closeButton = UIBarButtonItem(
+      image: R.image.verticalCloseButton()?.withRenderingMode(.alwaysTemplate),
+      style: .plain
+    ) { [unowned self] _ in
       self.view.endEditing(true)
       handler()
     }
+    closeButton.tintColor = Constants.Theme.Color.InteractableElement.standardBarButtonTint
+    
     switch position {
     case .left:
       navigationItem.leftBarButtonItem = closeButton

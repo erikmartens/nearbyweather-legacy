@@ -99,7 +99,7 @@ extension WeatherListViewController {
       .sectionDataSources
       .map { _ in () }
       .asDriver(onErrorJustReturn: ())
-      .drive(onNext: { [weak self] in self?.tableView.reloadData() })
+      .drive(onNext: { [weak tableView] in tableView?.reloadData() })
       .disposed(by: disposeBag)
     
     Observable
@@ -202,6 +202,8 @@ private extension WeatherListViewController {
   }
   
   func setupUiAppearance() {
+    title = R.string.localizable.tab_weatherList()
+    
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
     tableView.separatorStyle = .none
     tableView.backgroundColor = .clear

@@ -46,45 +46,32 @@ final class WeatherStationCurrentInformationViewModel: NSObject, Stepper, BaseVi
   
   // MARK: - Drivers
   
-  lazy var navigationBarColorDriver: Driver<(UIColor?, UIColor?)> = { [unowned self] in
-    Observable
-      .combineLatest(
-        self.weatherInformationDtoObservable.map { $0.entity },
-        self.weatherStationIsBookmarkedObservable,
-        resultSelector: { (weatherInformationDTO, isBookmark) -> (UIColor?, UIColor?) in
-          let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
-          
-          let navigationBarTintColor = isBookmark
-            ? isDayTime ? Constants.Theme.Color.MarqueColors.bookmarkDay : Constants.Theme.Color.MarqueColors.bookmarkNight
-            : isDayTime ? Constants.Theme.Color.MarqueColors.nearbyDay : Constants.Theme.Color.MarqueColors.nearbyNight
-          
-          let navigationTintColor = isBookmark
-            ? Constants.Theme.Color.ViewElement.titleLight
-            : Constants.Theme.Color.ViewElement.titleDark
-          
-          return (navigationBarTintColor, navigationTintColor)
-        }
-      )
-      .asDriver(onErrorJustReturn: (nil, nil))
-  }()
+  lazy var navigationBarDriver: Driver<(String?, UIColor?, UIColor?)> = Observable
+    .combineLatest(
+      weatherInformationDtoObservable.map { $0.entity },
+      weatherStationIsBookmarkedObservable,
+      resultSelector: { (weatherInformationDTO, isBookmark) -> (String?, UIColor?, UIColor?) in
+        let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
+        
+        let navigationBarTintColor = isBookmark
+          ? isDayTime ? Constants.Theme.Color.MarqueColors.bookmarkDay : Constants.Theme.Color.MarqueColors.bookmarkNight
+          : isDayTime ? Constants.Theme.Color.MarqueColors.nearbyDay : Constants.Theme.Color.MarqueColors.nearbyNight
+        
+        let navigationTintColor = isBookmark
+          ? Constants.Theme.Color.ViewElement.titleLight
+          : Constants.Theme.Color.ViewElement.titleDark
+        
+        return (weatherInformationDTO.stationName, navigationBarTintColor, navigationTintColor)
+      }
+    )
+    .asDriver(onErrorJustReturn: (nil, nil, nil))
   
   // MARK: - Observables
   
-  private lazy var weatherInformationDtoObservable: Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> = { [dependencies] in
-    Self.createGetWeatherInformationDtoObservable(with: dependencies).share(replay: 1)
-  }()
-  
-  private lazy var weatherStationIsBookmarkedObservable: Observable<Bool> = { [dependencies] in
-    Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies).share(replay: 1)
-  }()
-  
-  private lazy var temperatureUnitOptionObservable: Observable<TemperatureUnitOption> = { [dependencies] in
-    dependencies.preferencesService.createGetTemperatureUnitOptionObservable().share(replay: 1)
-  }()
-  
-  private lazy var dimensionalUnitsOptionObservable: Observable<DimensionalUnitsOption> = { [dependencies] in
-    dependencies.preferencesService.createGetDimensionalUnitsOptionObservable().share(replay: 1)
-  }()
+  private lazy var weatherInformationDtoObservable: Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> = Self.createGetWeatherInformationDtoObservable(with: dependencies).share(replay: 1)
+  private lazy var weatherStationIsBookmarkedObservable: Observable<Bool> = Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies).share(replay: 1)
+  private lazy var temperatureUnitOptionObservable: Observable<TemperatureUnitOption> = dependencies.preferencesService.createGetTemperatureUnitOptionObservable().share(replay: 1)
+  private lazy var dimensionalUnitsOptionObservable: Observable<DimensionalUnitsOption> = dependencies.preferencesService.createGetDimensionalUnitsOptionObservable().share(replay: 1)
   
   // MARK: - Initialization
   
@@ -238,7 +225,9 @@ extension WeatherStationCurrentInformationViewModel {
       .disposed(by: disposeBag)
   }
   
-  func observeUserTapEvents() {} // nothing to do - will be used in the future
+  func observeUserTapEvents() {
+    // nothing to do - will be used in the future
+  }
 }
 
 // MARK: - Observation Helpers
@@ -263,5 +252,7 @@ private extension WeatherStationCurrentInformationViewModel {
 
 extension WeatherStationCurrentInformationViewModel: BaseTableViewSelectionDelegate {
   
-  func didSelectRow(at indexPath: IndexPath) {} // nothing to do - will be used in the future
+  func didSelectRow(at indexPath: IndexPath) {
+    // nothing to do - will be used in the future
+  }
 }

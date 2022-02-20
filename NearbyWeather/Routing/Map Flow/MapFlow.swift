@@ -138,12 +138,16 @@ private extension MapFlow {
       weatherInformationIdentity: identity,
       dependencyContainer: dependencies.dependencyContainer
     ))
+    let weatherDetailStepper = WeatherDetailStepper()
     
     Flows.use(weatherDetailFlow, when: .ready) { [unowned rootViewController] (weatherDetailRoot: UINavigationController) in
+      weatherDetailRoot.viewControllers.first?.addCloseButton {
+        weatherDetailStepper.steps.accept(WeatherDetailStep.dismiss)
+      }
       rootViewController.present(weatherDetailRoot, animated: true)
     }
     
-    return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: WeatherDetailStepper()))
+    return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: weatherDetailStepper))
   }
   
   func summonChangeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeValue) -> FlowContributors {

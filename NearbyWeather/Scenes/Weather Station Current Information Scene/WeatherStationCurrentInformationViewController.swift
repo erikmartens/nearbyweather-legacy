@@ -64,6 +64,7 @@ final class WeatherStationCurrentInformationViewController: UIViewController, Ba
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    viewModel.viewWillAppear()
     setupUiAppearance()
   }
 }
@@ -80,13 +81,15 @@ extension WeatherStationCurrentInformationViewController {
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {
     viewModel
-      .navigationBarColorDriver
-      .drive { [weak navigationController] colorTuple in
-        guard let barTintColor = colorTuple.0,
-              let tintColor = colorTuple.1 else {
+      .navigationBarDriver
+      .drive { [weak self] navigationBarInformation in
+        guard let navigationTitle = navigationBarInformation.0,
+              let barTintColor = navigationBarInformation.1,
+              let tintColor = navigationBarInformation.2 else {
           return
         }
-        navigationController?.navigationBar.style(withBarTintColor: barTintColor, tintColor: tintColor)
+        self?.title = navigationTitle
+        self?.navigationController?.navigationBar.style(withBarTintColor: barTintColor, tintColor: tintColor)
       }
       .disposed(by: disposeBag)
     
@@ -95,20 +98,48 @@ extension WeatherStationCurrentInformationViewController {
       .sectionDataSources
       .map { _ in () }
       .asDriver(onErrorJustReturn: ())
-      .drive(onNext: { [weak self] in self?.tableView.reloadData() })
+      .drive(onNext: { [weak tableView] in tableView?.reloadData() })
       .disposed(by: disposeBag)
   }
   
-  func bindUserInputToViewModel(_ viewModel: ViewModel) {} // nothing to do - will be used in the future
+  func bindUserInputToViewModel(_ viewModel: ViewModel) {
+    // nothing to do - will be used in the future
+  }
 }
 
 // MARK: - Setup
 
 private extension WeatherStationCurrentInformationViewController {
   
-  func setupUiComponents() {} // nothing to do - will be used in the future
+  func setupUiComponents() {
+    tableView.dataSource = viewModel.tableDataSource
+    tableView.delegate = viewModel.tableDelegate
+    
+    tableView.registerCells([
+      WeatherStationCurrentInformationHeaderCell.self,
+      WeatherStationCurrentInformationSunCycleCell.self,
+      WeatherStationCurrentInformationAtmosphericDetailsCell.self,
+      WeatherStationCurrentInformationWindCell.self,
+      WeatherStationCurrentInformationMapCell.self
+    ])
+    
+    tableView.contentInset = UIEdgeInsets(
+      top: Constants.Dimensions.TableCellContentInsets.top,
+      left: .zero,
+      bottom: Constants.Dimensions.TableCellContentInsets.bottom,
+      right: .zero
+    )
+    
+    view.addSubview(tableView, constraints: [
+      tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      tableView.topAnchor.constraint(equalTo: view.topAnchor),
+      tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    ])
+  }
   
   func setupUiAppearance() {
-    view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    tableView.backgroundColor = .clear
   }
 }

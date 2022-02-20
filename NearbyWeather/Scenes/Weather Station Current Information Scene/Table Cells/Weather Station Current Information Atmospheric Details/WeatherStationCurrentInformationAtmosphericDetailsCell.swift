@@ -185,6 +185,6 @@ private extension WeatherStationCurrentInformationAtmosphericDetailsCell {
   func setupAppearance() {
     selectionStyle = .none
     backgroundColor = .clear
-    contentView.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    contentView.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
   }
 }

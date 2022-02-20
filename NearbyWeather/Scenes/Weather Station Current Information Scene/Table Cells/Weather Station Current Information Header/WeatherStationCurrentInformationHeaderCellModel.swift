@@ -45,8 +45,8 @@ struct WeatherStationCurrentInformationHeaderCellModel {
         fromWeatherCode: weatherInformationDTO.weatherCondition.first?.identifier,
         isDayTime: isDayTime
       ),
-      weatherConditionTitle: weatherInformationDTO.weatherCondition.first?.conditionName,
-      weatherConditionSubtitle: weatherInformationDTO.weatherCondition.first?.conditionDescription,
+      weatherConditionTitle: weatherInformationDTO.weatherCondition.first?.conditionName?.capitalized,
+      weatherConditionSubtitle: weatherInformationDTO.weatherCondition.first?.conditionDescription?.capitalized,
       temperature: ConversionWorker.temperatureDescriptor(
         forTemperatureUnit: temperatureUnitOption,
         fromRawTemperature: weatherInformationDTO.atmosphericInformation.temperatureKelvin

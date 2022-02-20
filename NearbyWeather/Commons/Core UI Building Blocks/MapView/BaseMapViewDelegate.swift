@@ -43,8 +43,8 @@ class BaseMapViewDelegate<AnnotationViewType: BaseAnnotationViewProtocol>: NSObj
     guard let annotationIdentifier = dataSource.value?.annotationViewReuseIdentifier else {
       fatalError("Could not determine reuse-identifier for annotation views.")
     }
+    
     let annotationView: BaseAnnotationViewProtocol
-
     if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? BaseAnnotationViewProtocol {
       annotationView = dequeuedAnnotationView
     } else {

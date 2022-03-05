@@ -68,7 +68,7 @@ final class WeatherDetailFlow: Flow {
 private extension WeatherDetailFlow {
   
   func summonWeatherDetailController() -> FlowContributors {
-    let weatherDetailViewController = WeatherStationCurrentInformationViewController(dependencies: WeatherStationCurrentInformationViewModel.Dependencies(
+    let weatherDetailViewController = WeatherStationMeteorologyDetailsViewController(dependencies: WeatherStationMeteorologyDetailsViewModel.Dependencies(
       weatherInformationIdentity: dependencies.weatherInformationIdentity,
       weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
       weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,

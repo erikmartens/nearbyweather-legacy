@@ -96,7 +96,7 @@ extension WeatherStationMeteorologyDetailsMapCell {
       .drive(onNext: { [unowned mapView] mapAnnotationData in
         mapView.annotations.forEach { mapView.removeAnnotation($0) }
         mapView.addAnnotations(mapAnnotationData.annotationItems)
-        mapView.focus(onLocation: mapAnnotationData.annotationItems.first?.coordinate)
+        mapView.focus(onCoordinate: mapAnnotationData.annotationItems.first?.coordinate)
       })
       .disposed(by: disposeBag)
   }

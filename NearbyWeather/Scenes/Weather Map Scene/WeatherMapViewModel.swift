@@ -97,6 +97,14 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
     )
   }
   
+  func viewWillAppear() {
+    _ = dependencies.userLocationService
+      .createGetUserLocationObservable()
+      .take(1)
+      .asSingle()
+      .subscribe(onSuccess: { [unowned onDidSelectFocusOnUserLocationSubject] _ in onDidSelectFocusOnUserLocationSubject.onNext(()) })
+  }
+  
   // MARK: - Functions
   
   func observeEvents() {

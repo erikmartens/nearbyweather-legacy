@@ -54,4 +54,14 @@ class BaseMapViewDelegate<AnnotationViewType: BaseAnnotationViewProtocol>: NSObj
     annotationView.configure(with: annotation as? BaseAnnotationViewModelProtocol)
     return annotationView
   }
+  
+  func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+    views.forEach { view in
+      if let weatherAnnotationView = view as? WeatherMapAnnotationView {
+        weatherAnnotationView.zPriority = MKAnnotationViewZPriority(0)
+      } else {
+        view.zPriority = MKAnnotationViewZPriority(1)
+      }
+    }
+  }
 }

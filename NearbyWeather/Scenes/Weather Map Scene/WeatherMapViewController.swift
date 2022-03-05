@@ -67,6 +67,7 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    viewModel.viewWillAppear()
     setupUiAppearance()
   }
 }
@@ -128,12 +129,12 @@ extension WeatherMapViewController {
     
     viewModel
       .focusOnWeatherStationDriver
-      .drive(onNext: { [weak mapView] location in mapView?.focus(onLocation: location) })
+      .drive(onNext: { [weak mapView] location in mapView?.focus(onCoordinate: location?.coordinate) })
       .disposed(by: disposeBag)
     
     viewModel
       .focusOnUserLocationDriver
-      .drive(onNext: { [weak mapView] userLocation in mapView?.focus(onLocation: userLocation) })
+      .drive(onNext: { [weak mapView] userLocation in mapView?.focus(onCoordinate: userLocation?.coordinate, latitudinalMeters: 20000, longitudinalMeters: 20000) })
       .disposed(by: disposeBag)
   }
   

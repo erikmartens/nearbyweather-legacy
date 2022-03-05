@@ -76,6 +76,7 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
 extension WeatherMapViewController {
   
   func setupBindings() {
+    mapView.delegate = viewModel.mapDelegate
     viewModel.observeEvents()
     bindContentFromViewModel(viewModel)
     bindUserInputToViewModel(viewModel)
@@ -127,12 +128,12 @@ extension WeatherMapViewController {
     
     viewModel
       .focusOnWeatherStationDriver
-      .drive(onNext: { [focus] location in focus(location) })
+      .drive(onNext: { [weak mapView] location in mapView?.focus(onLocation: location) })
       .disposed(by: disposeBag)
     
     viewModel
       .focusOnUserLocationDriver
-      .drive(onNext: { [focus] userLocation in focus(userLocation) })
+      .drive(onNext: { [weak mapView] userLocation in mapView?.focus(onLocation: userLocation) })
       .disposed(by: disposeBag)
   }
   
@@ -167,8 +168,6 @@ private extension WeatherMapViewController {
   func setupUiLayout() {
     navigationItem.leftBarButtonItems = [mapTypeBarButton]
     
-    mapView.delegate = viewModel.mapDelegate
-    
     view.addSubview(mapView, constraints: [
       mapView.topAnchor.constraint(equalTo: view.topAnchor),
       mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -180,18 +179,5 @@ private extension WeatherMapViewController {
   func setupUiAppearance() {
     title = R.string.localizable.tab_weatherMap()
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
-  }
-}
-
-// MARK: - Helpers
-
-private extension WeatherMapViewController {
-  
-  func focus(onLocation location: CLLocation?) {
-    guard let location = location else {
-      return
-    }
-    let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1500, longitudinalMeters: 1500)
-    mapView.setRegion(region, animated: true)
   }
 }

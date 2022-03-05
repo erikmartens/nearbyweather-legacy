@@ -13,7 +13,7 @@ extension Factory {
   struct MapView: FactoryFunction {
     
     enum MapViewType {
-      case standard(frame: CGRect, cornerRadiusWeight: Weight? = nil)
+      case standard(frame: CGRect, cornerRadiusWeight: Weight? = nil, showsUserLocation: Bool = true, isUserInteractionEnabled: Bool = true)
     }
     
     typealias InputType = MapViewType
@@ -21,13 +21,13 @@ extension Factory {
     
     static func make(fromType type: InputType) -> ResultType {
       switch type {
-      case let .standard(frame, cornerRadiusWeight):
+      case let .standard(frame, cornerRadiusWeight, showsUserLocation, isUserInteractionEnabled):
         let mapView = MKMapView(frame: frame)
         if let cornerRadiusWeight = cornerRadiusWeight {
           mapView.layer.cornerRadius = Constants.Dimensions.CornerRadius.from(weight: cornerRadiusWeight)
         }
-        mapView.showsUserLocation = true
-        mapView.isUserInteractionEnabled = true
+        mapView.showsUserLocation = showsUserLocation
+        mapView.isUserInteractionEnabled = isUserInteractionEnabled
         mapView.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
         return mapView
       }

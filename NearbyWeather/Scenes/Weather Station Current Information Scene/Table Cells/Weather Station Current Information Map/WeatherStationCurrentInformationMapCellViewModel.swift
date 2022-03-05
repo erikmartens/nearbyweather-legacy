@@ -52,6 +52,9 @@ final class WeatherStationCurrentInformationMapCellViewModel: NSObject, BaseCell
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
+    super.init()
+    
+    mapDelegate = WeatherStationCurrentInformationMapCellMapViewDelegate(annotationSelectionDelegate: self, annotationViewType: WeatherMapAnnotationView.self)
   }
   
   // MARK: - Functions
@@ -123,6 +126,15 @@ private extension WeatherStationCurrentInformationMapCellViewModel {
         Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies)
       )
       .flatMapLatest(dependencies.weatherInformationService.createGetWeatherInformationItemObservable)
+  }
+}
+
+// MARK: - Delegate Extensions
+
+extension WeatherStationCurrentInformationMapCellViewModel: BaseMapViewSelectionDelegate {
+  
+  func didSelectView(for annotationViewModel: BaseAnnotationViewModelProtocol) {
+    // nothing to do - nothing should happen when the annotation is tapped
   }
 }
 

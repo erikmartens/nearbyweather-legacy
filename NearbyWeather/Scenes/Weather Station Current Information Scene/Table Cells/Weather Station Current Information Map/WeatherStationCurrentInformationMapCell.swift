@@ -13,12 +13,6 @@ import RxSwift
 
 private extension WeatherStationCurrentInformationMapCell {
   struct Definitions {
-    static var trailingLeadingContentInsets: CGFloat {
-      if #available(iOS 13, *) {
-        return CellContentInsets.leading(from: .small)
-      }
-      return CellContentInsets.leading(from: .medium)
-    }
     static let mapViewHeight: CGFloat = 200
     static let symbolWidth: CGFloat = 20
   }
@@ -37,17 +31,18 @@ final class WeatherStationCurrentInformationMapCell: UITableViewCell, BaseCell {
   private lazy var mapView = Factory.MapView.make(fromType: .standard(
     frame: CGRect(
       origin: .zero,
-      size: CGSize(width: contentView.frame.size.width - 2*Definitions.trailingLeadingContentInsets, height: Definitions.mapViewHeight)
+      size: CGSize(width: contentView.frame.size.width - 2*CellContentInsets.leading(from: .medium), height: Definitions.mapViewHeight)
     ),
-    cornerRadiusWeight: .large
+    cornerRadiusWeight: .small,
+    isUserInteractionEnabled: false
   ))
   
-  private lazy var coordinatesSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.sunrise()))
-  private lazy var coordinatesDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunrise(), numberOfLines: 1))
+  private lazy var coordinatesSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.location()))
+  private lazy var coordinatesDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.coordinates(), numberOfLines: 1))
   private lazy var coordinatesLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
   
-  private lazy var distanceSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.sunset()))
-  private lazy var distanceDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunset(), numberOfLines: 1))
+  private lazy var distanceSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.distance()))
+  private lazy var distanceDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.distance(), numberOfLines: 1))
   private lazy var distanceLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
   
   // MARK: - Assets
@@ -77,6 +72,8 @@ final class WeatherStationCurrentInformationMapCell: UITableViewCell, BaseCell {
       return
     }
     self.cellViewModel = cellViewModel
+    mapView.delegate = cellViewModel.mapDelegate
+    
     cellViewModel.observeEvents()
     bindContentFromViewModel(cellViewModel)
     bindUserInputToViewModel(cellViewModel)
@@ -96,9 +93,10 @@ extension WeatherStationCurrentInformationMapCell {
       .dataSource
       .asDriver(onErrorJustReturn: nil)
       .filterNil()
-      .drive(onNext: { [weak self] mapAnnotationData in
-        self?.mapView.annotations.forEach { self?.mapView.removeAnnotation($0) }
-        self?.mapView.addAnnotations(mapAnnotationData.annotationItems)
+      .drive(onNext: { [unowned mapView] mapAnnotationData in
+        mapView.annotations.forEach { mapView.removeAnnotation($0) }
+        mapView.addAnnotations(mapAnnotationData.annotationItems)
+        mapView.focus(onLocation: mapAnnotationData.annotationItems.first?.coordinate)
       })
       .disposed(by: disposeBag)
   }
@@ -126,31 +124,31 @@ private extension WeatherStationCurrentInformationMapCell {
   func layoutUserInterface() {
     // map view
     contentView.addSubview(mapView, constraints: [
-      mapView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
-      mapView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
-      mapView.trailingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
+      mapView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
+      mapView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
+      mapView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
       mapView.heightAnchor.constraint(equalToConstant: Definitions.mapViewHeight)
     ])
     
     // line 1
     contentView.addSubview(coordinatesSymbolImageView, constraints: [
-      coordinatesSymbolImageView.topAnchor.constraint(equalTo: mapView.topAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
-      coordinatesSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
+      coordinatesSymbolImageView.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
+      coordinatesSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
       coordinatesSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
       coordinatesSymbolImageView.heightAnchor.constraint(equalTo: coordinatesSymbolImageView.widthAnchor)
     ])
     
     contentView.addSubview(coordinatesDescriptionLabel, constraints: [
-      coordinatesDescriptionLabel.topAnchor.constraint(equalTo: mapView.topAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
+      coordinatesDescriptionLabel.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
       coordinatesDescriptionLabel.leadingAnchor.constraint(equalTo: coordinatesSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       coordinatesDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       coordinatesDescriptionLabel.centerYAnchor.constraint(equalTo: coordinatesSymbolImageView.centerYAnchor)
     ])
     
     contentView.addSubview(coordinatesLabel, constraints: [
-      coordinatesLabel.topAnchor.constraint(equalTo: mapView.topAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
+      coordinatesLabel.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
       coordinatesLabel.leadingAnchor.constraint(equalTo: coordinatesDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      coordinatesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Definitions.trailingLeadingContentInsets),
+      coordinatesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
       coordinatesLabel.widthAnchor.constraint(equalTo: coordinatesDescriptionLabel.widthAnchor),
       coordinatesLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       coordinatesLabel.heightAnchor.constraint(equalTo: coordinatesDescriptionLabel.heightAnchor),
@@ -161,7 +159,7 @@ private extension WeatherStationCurrentInformationMapCell {
     // line 2
     contentView.addSubview(distanceSymbolImageView, constraints: [
       distanceSymbolImageView.topAnchor.constraint(equalTo: coordinatesSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
-      distanceSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
+      distanceSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
       distanceSymbolImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       distanceSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
       distanceSymbolImageView.heightAnchor.constraint(equalTo: distanceSymbolImageView.widthAnchor)
@@ -178,7 +176,7 @@ private extension WeatherStationCurrentInformationMapCell {
     contentView.addSubview(distanceLabel, constraints: [
       distanceLabel.topAnchor.constraint(equalTo: coordinatesLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       distanceLabel.leadingAnchor.constraint(equalTo: distanceDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      distanceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Definitions.trailingLeadingContentInsets),
+      distanceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
       distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       distanceLabel.widthAnchor.constraint(equalTo: distanceDescriptionLabel.widthAnchor),
       distanceLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),

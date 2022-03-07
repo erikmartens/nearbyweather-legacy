@@ -59,6 +59,11 @@ final class WeatherListAlertTableViewCell: UITableViewCell, BaseCell {
     bindContentFromViewModel(cellViewModel)
     bindUserInputToViewModel(cellViewModel)
   }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    disposeBag = DisposeBag()
+  }
 }
 
 // MARK: - ViewModel Bindings

@@ -25,7 +25,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
 
 // MARK: - Class Definition
 
-final class WeatherStationMeteorologyDetailsViewModel: NSObject, Stepper, BaseViewModel { // TODO: Rename everything to WeatherStationDetailedInformation
+final class WeatherStationMeteorologyDetailsViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Routing
   
@@ -119,7 +119,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
           ))
         }
       )
-      .map { headerCell -> [TableViewSectionData] in
+      .map { headerCell -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsHeaderItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsHeaderCell.reuseIdentifier,
           sectionItems: [headerCell]
@@ -137,7 +137,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
           sunsetTimeString: dayCycleStrings.sunsetTimeString
         ))]
       }
-      .map { sunCycleCellItems -> [TableViewSectionData] in
+      .map { sunCycleCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsHeaderItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsSunCycleCell.reuseIdentifier,
           sectionItems: sunCycleCellItems
@@ -159,7 +159,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
           pressurePsi: pressurePsi
         ))]
       }
-      .map { atmosphericDetailsCellItems -> [TableViewSectionData] in
+      .map { atmosphericDetailsCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsAtmosphericDetailsItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsAtmosphericDetailsCell.reuseIdentifier,
           sectionItems: atmosphericDetailsCellItems
@@ -182,7 +182,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
           ))]
         }
       )
-      .map { windCellItems -> [TableViewSectionData] in
+      .map { windCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsWindItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsWindCell.reuseIdentifier,
           sectionItems: windCellItems
@@ -203,7 +203,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
           userLocationService: dependencies.userLocationService
         ))]
       }
-      .map { mapCellItems -> [TableViewSectionData] in
+      .map { mapCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsMapItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsMapCell.reuseIdentifier,
           sectionItems: mapCellItems
@@ -217,7 +217,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
         weatherStationCurrentInformationAtmosphericDetailsSectionItemsObservable,
         weatherStationCurrentInformationWindSectionItemsObservable,
         weatherStationCurrentInformationMapSectionItemsObservable,
-        resultSelector: { headerSectionItems, sunCycleSectionItems, atmosphericDetailsSectionItems, windSectionItems, mapSectionItems -> [TableViewSectionData] in
+        resultSelector: { headerSectionItems, sunCycleSectionItems, atmosphericDetailsSectionItems, windSectionItems, mapSectionItems -> [TableViewSectionDataProtocol] in
           headerSectionItems + sunCycleSectionItems + atmosphericDetailsSectionItems + windSectionItems + mapSectionItems
         }
       )

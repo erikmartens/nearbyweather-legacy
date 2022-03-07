@@ -1,21 +1,21 @@
 //
-//  WeatherListNearbyItemsSection.swift
+//  BaseTableViewSectionData.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 03.01.21.
-//  Copyright © 2021 Erik Maximilian Martens. All rights reserved.
+//  Created by Erik Maximilian Martens on 06.03.22.
+//  Copyright © 2022 Erik Maximilian Martens. All rights reserved.
 //
 
 import Foundation
 
-final class WeatherListNearbyItemsSection: TableViewSectionData {
+class BaseTableViewSectionData: TableViewSectionDataProtocol {
   
   var sectionHeaderTitle: String?
   var sectionFooterTitle: String?
   let sectionCellsIdentifier: String
   let sectionItems: [BaseCellViewModelProtocol]
   
-  init(
+  required init(
     sectionHeaderTitle: String? = nil,
     sectionFooterTitle: String? = nil,
     sectionCellsIdentifier: String,

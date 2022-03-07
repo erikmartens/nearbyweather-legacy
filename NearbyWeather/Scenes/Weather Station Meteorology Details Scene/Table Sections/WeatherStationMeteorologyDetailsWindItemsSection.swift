@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class WeatherStationMeteorologyDetailsWindItemsSection: TableViewSectionData {
+final class WeatherStationMeteorologyDetailsWindItemsSection: TableViewSectionDataProtocol {
   
   var sectionHeaderTitle: String?
   var sectionFooterTitle: String?

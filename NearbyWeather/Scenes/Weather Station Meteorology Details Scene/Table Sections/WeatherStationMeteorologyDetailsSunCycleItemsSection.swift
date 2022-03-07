@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class WeatherStationMeteorologyDetailsSunCycleItemsSection: TableViewSectionData { // swiftlint:disable:this type_name
+final class WeatherStationMeteorologyDetailsSunCycleItemsSection: TableViewSectionDataProtocol { // swiftlint:disable:this type_name
   
   var sectionHeaderTitle: String?
   var sectionFooterTitle: String?

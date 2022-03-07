@@ -71,25 +71,7 @@ final class WeatherStationService2 {
   }
 }
 
-// MARK: - Weather Station Bookmark Settings
-
-protocol WeatherStationBookmarkPersistence: WeatherStationBookmarkReading {
-  func createAddBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable
-  func createRemoveBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable
- 
-  func createSetBookmarkedStationsCompletable(_ weatherStationDTOs: [WeatherStationDTO]) -> Completable
-  func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
-  func createGetIsStationBookmarkedObservable(for identity: PersistencyModelIdentity) -> Observable<Bool>
-  
-  func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
-  func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?>
-  
-  func createSetPreferredBookmarkCompletable(_ weatherStationDTO: PreferredBookmarkOption) -> Completable
-  func createRemovePreferredBookmarkCompletable() -> Completable
-  func createGetPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
-}
-
-extension WeatherStationService2: WeatherStationBookmarkPersistence {
+extension WeatherStationService2 {
   
   func createAddBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable {
     Single
@@ -213,26 +195,6 @@ extension WeatherStationService2: WeatherStationBookmarkPersistence {
       .map { $0.entity }
       .catchAndReturn(nil)
   }
-}
-
-// MARK: - Weather Station Bookmark Sorting Reading
-
-protocol WeatherStationBookmarkReading {
-  func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
-  func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?>
-  func createGetPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
-  func createGetIsStationBookmarkedObservable(for identity: PersistencyModelIdentity) -> Observable<Bool>
-}
-
-extension WeatherStationService2: WeatherStationBookmarkReading {}
-
-// MARK: - Weather Station Lookup
-
-protocol WeatherStationLookup {
-  func createWeatherStationsLocalLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]>
-}
-
-extension WeatherStationService2: WeatherStationLookup {
   
   func createWeatherStationsLocalLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]> {
     Observable<[WeatherStationDTO]?>
@@ -260,6 +222,56 @@ extension WeatherStationService2: WeatherStationLookup {
       }
   }
 }
+
+// MARK: - Weather Station Bookmarks
+
+protocol WeatherStationBookmarkPersistence: WeatherStationBookmarkSetting, WeatherStationBookmarkReading {}
+extension WeatherStationService2: WeatherStationBookmarkPersistence {}
+
+protocol WeatherStationBookmarkSetting {
+  func createAddBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable
+  func createSetBookmarkedStationsCompletable(_ weatherStationDTOs: [WeatherStationDTO]) -> Completable
+  func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
+  func createSetPreferredBookmarkCompletable(_ weatherStationDTO: PreferredBookmarkOption) -> Completable
+  func createRemovePreferredBookmarkCompletable() -> Completable
+}
+
+extension WeatherStationService2: WeatherStationBookmarkSetting {}
+
+protocol WeatherStationBookmarkReading {
+  func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]>
+  func createGetBookmarksSortingObservable() -> Observable<[Int: Int]?>
+  func createGetPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
+  func createGetIsStationBookmarkedObservable(for identity: PersistencyModelIdentity) -> Observable<Bool>
+}
+
+extension WeatherStationService2: WeatherStationBookmarkReading {}
+
+// MARK: - Weather Station Lookup
+
+protocol WeatherStationLookup {
+  func createWeatherStationsLocalLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]>
+}
+
+extension WeatherStationService2: WeatherStationLookup {}
+
+// MARK: Settings Preferences
+/// Preferences that are available in the Settings Scene
+
+protocol SettingsWeatherStationPersistence: SettingsWeatherStationSetting, SettingsWeatherStationReading {}
+extension WeatherStationService2: SettingsWeatherStationPersistence {}
+
+protocol SettingsWeatherStationSetting {
+  func createSetPreferredBookmarkCompletable(_ weatherStationDTO: PreferredBookmarkOption) -> Completable
+}
+
+extension WeatherStationService2: SettingsWeatherStationSetting {}
+
+protocol SettingsWeatherStationReading {
+  func createGetPreferredBookmarkObservable() -> Observable<PreferredBookmarkOption?>
+}
+
+extension WeatherStationService2: SettingsWeatherStationReading {}
 
 // MARK: - Weather Station Bookmark Migration
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol TableViewSectionData {
+protocol TableViewSectionDataProtocol {
   var sectionHeaderTitle: String? { get set }
   var sectionFooterTitle: String? { get set }
   
@@ -25,6 +25,6 @@ protocol TableViewSectionData {
   )
 }
 
-extension TableViewSectionData {
+extension TableViewSectionDataProtocol {
   var sectionCellsCount: Int { sectionItems.count }
 }

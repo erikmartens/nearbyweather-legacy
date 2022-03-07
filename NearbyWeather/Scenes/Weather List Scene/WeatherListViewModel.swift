@@ -125,7 +125,7 @@ extension WeatherListViewModel {
       )
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
       .map { [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
-      .catch { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
+      .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
     let bookmarkedListItemsObservable = Observable
@@ -139,7 +139,7 @@ extension WeatherListViewModel {
       )
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
       .map { [WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionItems: $0)] }
-      .catch { error -> Observable<[TableViewSectionData]> in error.mapToObservableTableSectionData() }
+      .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
     Observable
@@ -147,7 +147,7 @@ extension WeatherListViewModel {
         nearbyListItemsObservable,
         bookmarkedListItemsObservable,
         preferredListTypeObservable,
-        resultSelector: { nearbyListSections, bookmarkedListSections, preferredListType -> [TableViewSectionData] in
+        resultSelector: { nearbyListSections, bookmarkedListSections, preferredListType -> [TableViewSectionDataProtocol] in
           switch preferredListType {
           case .nearby:
             return nearbyListSections
@@ -296,7 +296,7 @@ extension WeatherListViewModel: SortingOrientationSelectionAlertDelegate {
 
 private extension Error {
   
-  func mapToObservableTableSectionData() -> Observable<[TableViewSectionData]> {
+  func mapToObservableTableSectionData() -> Observable<[TableViewSectionDataProtocol]> {
     Observable
       .just([WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(error: self))])
       .map { [WeatherListAlertItemsSection(sectionCellsIdentifier: WeatherListAlertTableViewCell.reuseIdentifier, sectionItems: $0)] }

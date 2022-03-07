@@ -94,7 +94,7 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
       return
     }
     self.annotationViewModel = annotationViewModel
-//    annotationViewModel.observeEvents()
+    annotationViewModel.observeEvents()
     bindContentFromViewModel(annotationViewModel)
     bindUserInputToViewModel(annotationViewModel)
   }

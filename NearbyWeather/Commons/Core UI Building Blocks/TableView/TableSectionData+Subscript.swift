@@ -9,7 +9,7 @@
 import RxSwift
 import RxCocoa
 
-extension BehaviorRelay where Element == [TableViewSectionData]? {
+extension BehaviorRelay where Element == [TableViewSectionDataProtocol]? {
   subscript (indexPath: IndexPath) -> BaseCellViewModelProtocol? {
     return value?[safe: indexPath.section]?.sectionItems[safe: indexPath.row]
   }

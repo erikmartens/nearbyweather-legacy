@@ -302,25 +302,11 @@ extension PreferencesService2: GeneralPreferencePersistence {
   }
 }
 
-// MARK: - WeatherList Preference Persistence
+// MARK: - WeatherList Preferences
+/// Preferences that are available in the WeatherList Scene
 
-protocol WeatherListPreferencePersistence: WeatherListPreferenceSetting, WeatherListPreferenceReading {
-  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
-  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
-  
-  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
-  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
-  
-  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
-  func createGetListTypeOptionObservable() -> Observable<ListTypeOption>
-  
-  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
-  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
-}
-
+protocol WeatherListPreferencePersistence: WeatherListPreferenceSetting, WeatherListPreferenceReading {}
 extension PreferencesService2: WeatherListPreferencePersistence {}
-
-// MARK: - WeatherList Preference Setting
 
 protocol WeatherListPreferenceSetting {
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
@@ -330,8 +316,6 @@ protocol WeatherListPreferenceSetting {
 
 extension PreferencesService2: WeatherListPreferenceSetting {}
 
-// MARK: - WeatherList Preference Reading
-
 protocol WeatherListPreferenceReading {
   func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
   func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
@@ -340,19 +324,11 @@ protocol WeatherListPreferenceReading {
 
 extension PreferencesService2: WeatherListPreferenceReading {}
 
-// MARK: - WeatherMap Preference Persistence
+// MARK: - WeatherMap Preferences
+/// Preferences that are available in the WeatherMap Scene
 
-protocol WeatherMapPreferencePersistence: WeatherMapPreferenceSetting, WeatherMapPreferenceReading {
-  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
-  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
-  
-  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
-  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
-}
-
+protocol WeatherMapPreferencePersistence: WeatherMapPreferenceSetting, WeatherMapPreferenceReading {}
 extension PreferencesService2: WeatherMapPreferencePersistence {}
-
-// MARK: - WeatherMap Preference Setting
 
 protocol WeatherMapPreferenceSetting {
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
@@ -360,8 +336,6 @@ protocol WeatherMapPreferenceSetting {
 }
 
 extension PreferencesService2: WeatherMapPreferenceSetting {}
-
-// MARK: - WeatherMap Preference Reading
 
 protocol WeatherMapPreferenceReading {
   func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
@@ -372,7 +346,38 @@ protocol WeatherMapPreferenceReading {
 
 extension PreferencesService2: WeatherMapPreferenceReading {}
 
-// MARK: - AppDelegate Preferences Reading
+// MARK: Settings Preferences
+/// Preferences that are available in the Settings Scene
+
+protocol SettingsPreferencesPersistence: SettingsPreferencesSetting, SettingsPreferencesReading {}
+extension PreferencesService2: SettingsPreferencesPersistence {}
+
+protocol SettingsPreferencesSetting {
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
+}
+
+extension PreferencesService2: SettingsPreferencesSetting {}
+
+protocol SettingsPreferencesReading {
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
+  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
+}
+
+extension PreferencesService2: SettingsPreferencesReading {}
+
+// MARK: - AppDelegate Preferences
+
+protocol AppDelegatePreferencePersistence: AppDelegatePreferenceSetting, AppDelegatePreferenceReading {}
+extension PreferencesService2: AppDelegatePreferencePersistence {}
+
+protocol AppDelegatePreferenceSetting {
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+}
+
+extension PreferencesService2: AppDelegatePreferenceSetting {}
 
 protocol AppDelegatePreferenceReading {
   func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
@@ -380,7 +385,7 @@ protocol AppDelegatePreferenceReading {
 
 extension PreferencesService2: AppDelegatePreferenceReading {}
 
-// MARK: - Preference Migration
+// MARK: - Preferences Migration
 
 protocol PreferenceMigration {
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable

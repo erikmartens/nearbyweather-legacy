@@ -36,9 +36,7 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
 
   // MARK: - Events
   
-  lazy var cellModelDriver: Driver<WeatherListInformationTableViewCellModel> = { [dependencies] in
-    Self.createCellModelDriver(with: dependencies)
-  }()
+  lazy var cellModelDriver: Driver<WeatherListInformationTableViewCellModel> = Self.createCellModelDriver(with: dependencies)
 
   // MARK: - Initialization
   

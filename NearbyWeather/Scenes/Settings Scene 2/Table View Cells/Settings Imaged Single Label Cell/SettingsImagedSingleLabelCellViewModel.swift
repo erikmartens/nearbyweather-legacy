@@ -14,7 +14,7 @@ import RxCocoa
 extension SettingsImagedSingleLabelCellViewModel {
   struct Dependencies {
     let symbolImageBackgroundColor: UIColor
-    let symbolImage: UIImage
+    let symbolImage: UIImage?
     let labelText: String
     let selectable: Bool
     let disclosable: Bool

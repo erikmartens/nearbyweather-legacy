@@ -38,7 +38,7 @@ extension MigrationService {
   func runMigrationIfNeeded_v2_2_2_to_3_0_0() {
     guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kMigratedToVersion230) == nil else {
       return
-    }
+    } // TODO: better watertight logic for migration
     
     // mirgrate api key
     let migrateApiKeyCompletable = Observable<String?>
@@ -61,7 +61,7 @@ extension MigrationService {
       }
     
     // migrate preferences
-    let migratePreferencesCompletable = Observable<(PreferencesManagerStoredContentsWrapper?, RefreshOnAppStartValue)>
+    let migratePreferencesCompletable = Observable<(PreferencesManagerStoredContentsWrapper?, RefreshOnAppStartValue, ShowTemperatureOnAppIconValue)>
       .create { handler in
         let preferencesStoredContentsWrapper = try? JsonPersistencyWorker().retrieveJsonFromFile(
           with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
@@ -72,8 +72,12 @@ extension MigrationService {
         let refreshOnAppStartValue = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true
           ? RefreshOnAppStartValue.yes
           : RefreshOnAppStartValue.no
+        
+        let showTemperatureAsAppIconBadgeValue = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) == true
+        ? ShowTemperatureOnAppIconValue.yes
+        : ShowTemperatureOnAppIconValue.no
           
-        handler.on(.next((preferencesStoredContentsWrapper, refreshOnAppStartValue)))
+        handler.on(.next((preferencesStoredContentsWrapper, refreshOnAppStartValue, showTemperatureAsAppIconBadgeValue)))
         return Disposables.create()
       }
       .take(1)
@@ -89,7 +93,8 @@ extension MigrationService {
           dependencies.preferencesService.createSetTemperatureUnitOptionCompletable(preferencesStoredContentsWrapper.temperatureUnit),
           dependencies.preferencesService.createSetDimensionalUnitsOptionCompletable(preferencesStoredContentsWrapper.windspeedUnit),
           dependencies.preferencesService.createSetSortingOrientationOptionCompletable(preferencesStoredContentsWrapper.sortingOrientation),
-          dependencies.preferencesService.createSetRefreshOnAppStartOptionCompletable(RefreshOnAppStartOption(value: preferences.1))
+          dependencies.preferencesService.createSetRefreshOnAppStartOptionCompletable(RefreshOnAppStartOption(value: preferences.1)),
+          dependencies.preferencesService.createSetShowTemperatureOnAppIconOptionCompletable(ShowTemperatureOnAppIconOption(value: preferences.2))
         ])
       }
     

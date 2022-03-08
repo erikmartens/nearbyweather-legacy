@@ -9,6 +9,8 @@
 import UIKit
 import UserNotifications
 
+// TODO: SCHEDULED FOR DELETION (REPLACEMENT PENDING)
+
 final class BadgeService {
   
   // MARK: - Types

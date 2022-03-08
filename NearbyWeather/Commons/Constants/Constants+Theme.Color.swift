@@ -102,6 +102,8 @@ extension Constants.Theme.Color {
       UIColor.from(dark: .init(hex: 0xFFFFFF),
                    light: .init(hex: 0x000000))
     }
+    
+    enum CellImage {}
   }
 
   enum SystemColor {
@@ -179,5 +181,24 @@ extension Constants.Theme.Color {
       UIColor.from(dark: .init(red: 28, green: 28, blue: 30),
                    light: .init(red: 242, green: 242, blue: 247))
     }
+  }
+}
+
+extension Constants.Theme.Color.ViewElement.CellImage {
+  
+  // TODO: Finalize Colors
+  
+  static var blue: UIColor {
+    return UIColor.systemBlue
+  }
+  
+  static var green: UIColor {
+    UIColor.from(dark: .init(red: 48, green: 209, blue: 88),
+                 light: .init(red: 52, green: 199, blue: 89))
+  }
+  
+  static var red: UIColor {
+    UIColor.from(dark: .init(red: 255, green: 69, blue: 58),
+                 light: .init(red: 255, green: 59, blue: 48))
   }
 }

@@ -21,16 +21,19 @@ private extension PreferencesService2 {
     case preferredListTypeOption
     case preferredMapTypeOption
     case refreshOnAppStartOption
+    case showTemperatureAsAppIconBadge
     
     var collection: String {
       switch self {
-      case .amountOfNearbyResultsOption: return "/general_preferences/amount_of_results/"
-      case .temperatureUnitOption: return "/general_preferences/temperature_unit/"
-      case .dimensionalUnitOption: return "/general_preferences/dimensional_unit/"
-      case .sortingOrientationOption: return "/general_preferences/sorting_orientation/"
-      case .preferredListTypeOption: return "/general_preferences/preferred_list_type/"
-      case .preferredMapTypeOption: return "/general_preferences/preferred_map_type/"
-      case .refreshOnAppStartOption: return "/general_preferences/refresh_on_app_start/"
+      case .amountOfNearbyResultsOption: return "/general_preferences/cross_platform/amount_of_results/"
+      case .temperatureUnitOption: return "/general_preferences/cross_platform/temperature_unit/"
+      case .dimensionalUnitOption: return "/general_preferences/cross_platform/dimensional_unit/"
+      case .sortingOrientationOption: return "/general_preferences/cross_platform/sorting_orientation/"
+      case .preferredListTypeOption: return "/general_preferences/ios/preferred_list_type/"
+      case .preferredMapTypeOption: return "/general_preferences/cross_platform/preferred_map_type/"
+      case .refreshOnAppStartOption: return "/general_preferences/ios/refresh_on_app_start/"
+      
+      case .showTemperatureAsAppIconBadge: return "/notification_preferences/ios/show_temperature_as_app_icon_badge/"
       }
     }
     
@@ -43,6 +46,8 @@ private extension PreferencesService2 {
       case .preferredListTypeOption: return "default"
       case .preferredMapTypeOption: return "default"
       case .refreshOnAppStartOption: return "default"
+      
+      case .showTemperatureAsAppIconBadge: return "default"
       }
     }
   }
@@ -71,32 +76,7 @@ final class PreferencesService2 {
   }
 }
 
-// MARK: - General Preference Persistence
-
-protocol GeneralPreferencePersistence: WeatherListPreferencePersistence, WeatherMapPreferencePersistence, PreferenceMigration {
-  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
-  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
-  
-  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
-  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
-  
-  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
-  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
-  
-  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
-  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
-  
-  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
-  func createGetListTypeOptionObservable() -> Observable<ListTypeOption>
-  
-  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
-  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
-  
-  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
-  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
-}
-
-extension PreferencesService2: GeneralPreferencePersistence {
+extension PreferencesService2 {
   
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable {
     Single
@@ -300,7 +280,63 @@ extension PreferencesService2: GeneralPreferencePersistence {
       .map { $0?.entity }
       .replaceNilWith(RefreshOnAppStartOption(value: .yes)) // default value
   }
+  
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<ShowTemperatureOnAppIconOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService2.PersistencyKeys.showTemperatureAsAppIconBadge.collection,
+            identifier: PreferencesService2.PersistencyKeys.showTemperatureAsAppIconBadge.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: ShowTemperatureOnAppIconOption.self) }
+  }
+  
+  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService2.PersistencyKeys.showTemperatureAsAppIconBadge.collection,
+          identifier: PreferencesService2.PersistencyKeys.showTemperatureAsAppIconBadge.identifier
+        ),
+        type: ShowTemperatureOnAppIconOption.self
+      )
+      .map { $0?.entity }
+      .replaceNilWith(ShowTemperatureOnAppIconOption(value: .no)) // default value
+  }
 }
+
+// MARK: - General Preference Persistence
+
+protocol GeneralPreferencePersistence: WeatherListPreferencePersistence, WeatherMapPreferencePersistence, PreferenceMigration {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  
+  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
+  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
+  
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
+  
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
+  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
+  
+  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
+  func createGetListTypeOptionObservable() -> Observable<ListTypeOption>
+  
+  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
+  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
+  
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
+}
+
+extension PreferencesService2: GeneralPreferencePersistence {}
 
 // MARK: - WeatherList Preferences
 /// Preferences that are available in the WeatherList Scene
@@ -368,6 +404,23 @@ protocol SettingsPreferencesReading {
 
 extension PreferencesService2: SettingsPreferencesReading {}
 
+// MARK: - Notification Preferences
+
+protocol NotificationPreferencesPersistence: NotificationPreferencesSetting, NotificationPreferencesReading {}
+extension PreferencesService2: NotificationPreferencesPersistence {}
+
+protocol NotificationPreferencesSetting {
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
+}
+
+extension PreferencesService2: NotificationPreferencesSetting {}
+
+protocol NotificationPreferencesReading {
+  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption>
+}
+
+extension PreferencesService2: NotificationPreferencesReading {}
+
 // MARK: - AppDelegate Preferences
 
 protocol AppDelegatePreferencePersistence: AppDelegatePreferenceSetting, AppDelegatePreferenceReading {}
@@ -393,6 +446,7 @@ protocol PreferenceMigration {
   func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
   func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
   func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
 }
 
 extension PreferencesService2: PreferenceMigration {}

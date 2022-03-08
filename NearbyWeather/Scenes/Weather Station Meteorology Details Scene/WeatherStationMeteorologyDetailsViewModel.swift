@@ -122,6 +122,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
       .map { headerCell -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsHeaderItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsHeaderCell.reuseIdentifier,
+          sectionCellsIdentifiers: nil,
           sectionItems: [headerCell]
         )]
       }
@@ -140,6 +141,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
       .map { sunCycleCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsHeaderItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsSunCycleCell.reuseIdentifier,
+          sectionCellsIdentifiers: nil,
           sectionItems: sunCycleCellItems
         )]
       }
@@ -162,6 +164,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
       .map { atmosphericDetailsCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsAtmosphericDetailsItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsAtmosphericDetailsCell.reuseIdentifier,
+          sectionCellsIdentifiers: nil,
           sectionItems: atmosphericDetailsCellItems
         )]
       }
@@ -185,6 +188,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
       .map { windCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsWindItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsWindCell.reuseIdentifier,
+          sectionCellsIdentifiers: nil,
           sectionItems: windCellItems
         )]
       }
@@ -206,6 +210,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
       .map { mapCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsMapItemsSection(
           sectionCellsIdentifier: WeatherStationMeteorologyDetailsMapCell.reuseIdentifier,
+          sectionCellsIdentifiers: nil,
           sectionItems: mapCellItems
         )]
       }

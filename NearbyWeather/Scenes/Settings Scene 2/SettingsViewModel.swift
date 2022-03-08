@@ -74,11 +74,41 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
 extension SettingsViewModel {
 
   func observeDataSource() {
+    let generalSectionItems: [BaseCellViewModelProtocol] = [
+      SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
+        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.blue,
+        symbolImage: R.image.info(),
+        labelText: R.string.localizable.about(),
+        selectable: true,
+        disclosable: true
+      ))
+    ]
     
+    let generalSectionObservable = Observable.just(SettingsGeneralItemsSection(
+      sectionHeaderTitle: R.string.localizable.general(),
+      sectionCellsIdentifier: nil,
+      sectionCellsIdentifiers: [SettingsImagedSingleLabelCell.reuseIdentifier],
+      sectionItems: generalSectionItems
+    ))
+    
+//    Observable
+//      .combineLatest(
+//        generalSectionObservable,
+//        Observable.just([]),
+//        Observable.just([]),
+//        Observable.just([]),
+//        Observable.just([]),
+//        Observable.just([]),
+//        resultSelector: { sect0, sect1, sect2, sect3, sect4, sect5 -> [TableViewSectionDataProtocol] in
+//          [sect0, sect1, sect2, sect3, sect4, sect5]
+//        }
+//      )
+//      .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
+//      .disposed(by: disposeBag)
   }
   
   func observeUserTapEvents() {
-    
+    // nothing to do
   }
 }
 
@@ -91,12 +121,12 @@ extension SettingsViewModel: BaseTableViewSelectionDelegate {
   }
 }
 
+// MARK: - Delegates
+
 // MARK: - Helpers
 
 private extension SettingsViewModel {
   
 }
-
-// MARK: - Delegate Extensions
 
 // MARK: - Helper Extensions

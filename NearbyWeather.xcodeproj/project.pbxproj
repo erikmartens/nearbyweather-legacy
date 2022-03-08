@@ -72,6 +72,7 @@
 		F217CB8427D50DE700DAC947 /* SettingsImagedSingleLabelToggleCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8327D50DE700DAC947 /* SettingsImagedSingleLabelToggleCellViewModel.swift */; };
 		F217CB8627D50DF700DAC947 /* SettingsImagedSingleLabelToggleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8527D50DF700DAC947 /* SettingsImagedSingleLabelToggleCellModel.swift */; };
 		F217CB8827D50E2D00DAC947 /* SettingsImagedSingleLabelToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8727D50E2D00DAC947 /* SettingsImagedSingleLabelToggleCell.swift */; };
+		F217CB8C27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8B27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift */; };
 		F22A21F625A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */; };
 		F22A220425A36B5500C97844 /* SortingOrientationSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */; };
 		F22A221625A4A57B00C97844 /* WeatherListAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */; };
@@ -343,6 +344,7 @@
 		F217CB8327D50DE700DAC947 /* SettingsImagedSingleLabelToggleCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedSingleLabelToggleCellViewModel.swift; sourceTree = "<group>"; };
 		F217CB8527D50DF700DAC947 /* SettingsImagedSingleLabelToggleCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedSingleLabelToggleCellModel.swift; sourceTree = "<group>"; };
 		F217CB8727D50E2D00DAC947 /* SettingsImagedSingleLabelToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedSingleLabelToggleCell.swift; sourceTree = "<group>"; };
+		F217CB8B27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTemperatureOnAppIconOption.swift; sourceTree = "<group>"; };
 		F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfNearbyResultsSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrientationSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListAlertTableViewCell.swift; sourceTree = "<group>"; };
@@ -586,7 +588,7 @@
 				F27A121824425ABC00A2CE8D /* Services */,
 				F25E126025AF278600342EFE /* Daemons */,
 				F2F1554124432D77007A3E90 /* Workers */,
-				F27A121924425BC600A2CE8D /* Persistency Models */,
+				F27A121924425BC600A2CE8D /* Data Models */,
 				F27A122924425E8800A2CE8D /* Commons */,
 				F284DDDD245F5A8C00445BFF /* Migration */,
 			);
@@ -943,7 +945,7 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		F27A121924425BC600A2CE8D /* Persistency Models */ = {
+		F27A121924425BC600A2CE8D /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
 				F28F180B25A74C0700AEA99A /* Api Key Models */,
@@ -953,7 +955,7 @@
 				F284DDC5245A12A100445BFF /* Weather Information Models */,
 				F28F182B25A8895C00AEA99A /* Weather Station Models */,
 			);
-			path = "Persistency Models";
+			path = "Data Models";
 			sourceTree = "<group>";
 		};
 		F27A121A24425BF200A2CE8D /* Preference Option Models */ = {
@@ -968,6 +970,7 @@
 				F2370FFB25AB25B10072AF29 /* RefreshOnAppStartOption.swift */,
 				F213FA3123F9EEE300F094D8 /* SortingOrientationOption.swift */,
 				F213FA3323F9EF2400F094D8 /* TemperatureUnitOption.swift */,
+				F217CB8B27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift */,
 			);
 			path = "Preference Option Models";
 			sourceTree = "<group>";
@@ -1701,6 +1704,7 @@
 				F277E7E025AC9F570009D59B /* MapTypeSelectionAlert.swift in Sources */,
 				F2F7BA2123E37A9C00B4D2EB /* Constants+Values.swift in Sources */,
 				F2DB5E7B25AB510600E21A56 /* MapAnnotationData.swift in Sources */,
+				F217CB8C27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift in Sources */,
 				F213FA3723F9EF6E00F094D8 /* DimensionalUnitsOption.swift in Sources */,
 				F2372882244C82B200964C49 /* Constants+Theme.Color.swift in Sources */,
 				F28EE8C925AB91530045AE6A /* Factory+UIBezierPath.swift in Sources */,

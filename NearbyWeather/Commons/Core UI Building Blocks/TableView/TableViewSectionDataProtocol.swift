@@ -12,7 +12,10 @@ protocol TableViewSectionDataProtocol {
   var sectionHeaderTitle: String? { get set }
   var sectionFooterTitle: String? { get set }
   
-  var sectionCellsIdentifier: String { get }
+  /// a cell identifier must be supplied one way or the other - use sectionCellsIdentifiers when using multiple cell types within the same section
+  var sectionCellsIdentifier: String? { get }
+  var sectionCellsIdentifiers: [String]? { get }
+  
   var sectionItems: [BaseCellViewModelProtocol] { get }
   
   var sectionCellsCount: Int { get }
@@ -20,7 +23,8 @@ protocol TableViewSectionDataProtocol {
   init(
     sectionHeaderTitle: String?,
     sectionFooterTitle: String?,
-    sectionCellsIdentifier: String,
+    sectionCellsIdentifier: String?,
+    sectionCellsIdentifiers: [String]?,
     sectionItems: [BaseCellViewModelProtocol]
   )
 }

@@ -14,7 +14,7 @@ import RxCocoa
 extension SettingsImagedSingleLabelToggleCellViewModel {
   struct Dependencies {
     let symbolImageBackgroundColor: UIColor
-    let symbolImage: UIImage
+    let symbolImage: UIImage?
     let labelText: String
     let isToggleOnObservable: Observable<Bool>
   }

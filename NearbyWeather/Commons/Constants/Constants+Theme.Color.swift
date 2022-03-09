@@ -201,4 +201,9 @@ extension Constants.Theme.Color.ViewElement.CellImage {
     UIColor.from(dark: .init(red: 255, green: 69, blue: 58),
                  light: .init(red: 255, green: 59, blue: 48))
   }
+  
+  static var gray: UIColor {
+    UIColor.from(dark: .init(red: 142, green: 142, blue: 147),
+                 light: .init(red: 142, green: 142, blue: 147))
+  }
 }

@@ -61,8 +61,8 @@
 		F217CB6E27D504DA00DAC947 /* BaseTableViewSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB6D27D504DA00DAC947 /* BaseTableViewSectionData.swift */; };
 		F217CB7027D5091800DAC947 /* SettingsGeneralItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB6F27D5091800DAC947 /* SettingsGeneralItemsSection.swift */; };
 		F217CB7227D5094100DAC947 /* SettingsOpenWeatherMapApiItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB7127D5094100DAC947 /* SettingsOpenWeatherMapApiItemsSection.swift */; };
-		F217CB7427D5097200DAC947 /* SettingsBookmarksItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB7327D5097200DAC947 /* SettingsBookmarksItemsSection.swift */; };
-		F217CB7627D50A2000DAC947 /* SettingsPreferencesItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB7527D50A2000DAC947 /* SettingsPreferencesItemsSection.swift */; };
+		F217CB7427D5097200DAC947 /* SettingsBookmarksItemsMainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB7327D5097200DAC947 /* SettingsBookmarksItemsMainSection.swift */; };
+		F217CB7627D50A2000DAC947 /* SettingsPreferencesItemsMainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB7527D50A2000DAC947 /* SettingsPreferencesItemsMainSection.swift */; };
 		F217CB7827D50C1A00DAC947 /* SettingsImagedSingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB7727D50C1A00DAC947 /* SettingsImagedSingleLabelCell.swift */; };
 		F217CB7A27D50C2900DAC947 /* SettingsImagedSingleLabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB7927D50C2900DAC947 /* SettingsImagedSingleLabelCellModel.swift */; };
 		F217CB7C27D50C4100DAC947 /* SettingsImagedSingleLabelCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB7B27D50C4100DAC947 /* SettingsImagedSingleLabelCellViewModel.swift */; };
@@ -73,6 +73,8 @@
 		F217CB8627D50DF700DAC947 /* SettingsImagedSingleLabelToggleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8527D50DF700DAC947 /* SettingsImagedSingleLabelToggleCellModel.swift */; };
 		F217CB8827D50E2D00DAC947 /* SettingsImagedSingleLabelToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8727D50E2D00DAC947 /* SettingsImagedSingleLabelToggleCell.swift */; };
 		F217CB8C27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8B27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift */; };
+		F217CB8E27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8D27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift */; };
+		F217CB9027D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8F27D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift */; };
 		F22A21F625A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */; };
 		F22A220425A36B5500C97844 /* SortingOrientationSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */; };
 		F22A221625A4A57B00C97844 /* WeatherListAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */; };
@@ -333,8 +335,8 @@
 		F217CB6D27D504DA00DAC947 /* BaseTableViewSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewSectionData.swift; sourceTree = "<group>"; };
 		F217CB6F27D5091800DAC947 /* SettingsGeneralItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsGeneralItemsSection.swift; sourceTree = "<group>"; };
 		F217CB7127D5094100DAC947 /* SettingsOpenWeatherMapApiItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOpenWeatherMapApiItemsSection.swift; sourceTree = "<group>"; };
-		F217CB7327D5097200DAC947 /* SettingsBookmarksItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBookmarksItemsSection.swift; sourceTree = "<group>"; };
-		F217CB7527D50A2000DAC947 /* SettingsPreferencesItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPreferencesItemsSection.swift; sourceTree = "<group>"; };
+		F217CB7327D5097200DAC947 /* SettingsBookmarksItemsMainSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBookmarksItemsMainSection.swift; sourceTree = "<group>"; };
+		F217CB7527D50A2000DAC947 /* SettingsPreferencesItemsMainSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPreferencesItemsMainSection.swift; sourceTree = "<group>"; };
 		F217CB7727D50C1A00DAC947 /* SettingsImagedSingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedSingleLabelCell.swift; sourceTree = "<group>"; };
 		F217CB7927D50C2900DAC947 /* SettingsImagedSingleLabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedSingleLabelCellModel.swift; sourceTree = "<group>"; };
 		F217CB7B27D50C4100DAC947 /* SettingsImagedSingleLabelCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedSingleLabelCellViewModel.swift; sourceTree = "<group>"; };
@@ -345,6 +347,8 @@
 		F217CB8527D50DF700DAC947 /* SettingsImagedSingleLabelToggleCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedSingleLabelToggleCellModel.swift; sourceTree = "<group>"; };
 		F217CB8727D50E2D00DAC947 /* SettingsImagedSingleLabelToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedSingleLabelToggleCell.swift; sourceTree = "<group>"; };
 		F217CB8B27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTemperatureOnAppIconOption.swift; sourceTree = "<group>"; };
+		F217CB8D27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBookmarksItemsSubSection1.swift; sourceTree = "<group>"; };
+		F217CB8F27D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPreferencesItemsSubSection1.swift; sourceTree = "<group>"; };
 		F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfNearbyResultsSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrientationSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListAlertTableViewCell.swift; sourceTree = "<group>"; };
@@ -715,8 +719,10 @@
 			children = (
 				F217CB6F27D5091800DAC947 /* SettingsGeneralItemsSection.swift */,
 				F217CB7127D5094100DAC947 /* SettingsOpenWeatherMapApiItemsSection.swift */,
-				F217CB7327D5097200DAC947 /* SettingsBookmarksItemsSection.swift */,
-				F217CB7527D50A2000DAC947 /* SettingsPreferencesItemsSection.swift */,
+				F217CB7327D5097200DAC947 /* SettingsBookmarksItemsMainSection.swift */,
+				F217CB8D27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift */,
+				F217CB7527D50A2000DAC947 /* SettingsPreferencesItemsMainSection.swift */,
+				F217CB8F27D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift */,
 			);
 			path = "Table View Sections";
 			sourceTree = "<group>";
@@ -1711,9 +1717,10 @@
 				F2372878244C7F2E00964C49 /* MapFlow.swift in Sources */,
 				F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */,
 				F20CA10825B3114B00153E47 /* WeatherStationMeteorologyDetailsMapCellViewModel.swift in Sources */,
+				F217CB9027D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift in Sources */,
 				F2D1998525A274ED004C7753 /* Factory+UIAlertAction.swift in Sources */,
 				86830394217BBAE400B7122E /* PermissionsService.swift in Sources */,
-				F217CB7427D5097200DAC947 /* SettingsBookmarksItemsSection.swift in Sources */,
+				F217CB7427D5097200DAC947 /* SettingsBookmarksItemsMainSection.swift in Sources */,
 				F2F1554D2443C842007A3E90 /* UIView+AddSubview.swift in Sources */,
 				F237101725AB43080072AF29 /* Factory+MKMapView.swift in Sources */,
 				F22A21F625A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift in Sources */,
@@ -1756,7 +1763,7 @@
 				F2372893244CAB0A00964C49 /* RootStepper.swift in Sources */,
 				F2D1993325A1E330004C7753 /* TableSectionData+Subscript.swift in Sources */,
 				F20CA0D725B1C75700153E47 /* Factory+UIView.swift in Sources */,
-				F217CB7627D50A2000DAC947 /* SettingsPreferencesItemsSection.swift in Sources */,
+				F217CB7627D50A2000DAC947 /* SettingsPreferencesItemsMainSection.swift in Sources */,
 				F22A220425A36B5500C97844 /* SortingOrientationSelectionAlert.swift in Sources */,
 				F284DDDC245F3FDB00445BFF /* MigrationService.swift in Sources */,
 				F277E7EA25AC9F7F0009D59B /* FocusOnLocationSelectionAlert.swift in Sources */,
@@ -1766,6 +1773,7 @@
 				F22B0F8A25AB64D40037F957 /* WeatherMapAnnotationModel.swift in Sources */,
 				F2D1990625A10D2E004C7753 /* BaseTableViewDataSource.swift in Sources */,
 				F237100F25AB34950072AF29 /* WeatherMapViewController.swift in Sources */,
+				F217CB8E27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift in Sources */,
 				F2DB5E7225AB4F2000E21A56 /* BaseAnnotationViewProtocol.swift in Sources */,
 				F210B1A625A9D6BD00BF8DAA /* PersistencyService2.swift in Sources */,
 				F28F182725A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift in Sources */,

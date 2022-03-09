@@ -14,7 +14,7 @@ import RxCocoa
 extension SettingsImagedDualLabelCellViewModel {
   struct Dependencies {
     let symbolImageBackgroundColor: UIColor
-    let symbolImage: UIImage
+    let symbolImage: UIImage?
     let contentLabelText: String
     let descriptionLabelTextObservable: Observable<String>
     let selectable: Bool

@@ -1,5 +1,5 @@
 //
-//  SettingsOpenWeatherMapApiItemsSection.swift
+//  SettingsBookmarksItemsMainSection.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 06.03.22.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-final class SettingsOpenWeatherMapApiItemsSection: BaseTableViewSectionData {
+final class SettingsBookmarksItemsMainSection: BaseTableViewSectionData {
   
   init(sectionItems: [BaseCellViewModelProtocol]) {
     super.init(
-      sectionHeaderTitle: R.string.localizable.openWeatherMap_api(),
+      sectionHeaderTitle: R.string.localizable.bookmarks(),
       sectionFooterTitle: nil,
       sectionCellsIdentifier: nil,
       sectionCellsIdentifiers: [
-        SettingsImagedSingleLabelCell.reuseIdentifier,
+        SettingsImagedDualLabelCell.reuseIdentifier,
         SettingsImagedSingleLabelCell.reuseIdentifier
       ],
       sectionItems: sectionItems

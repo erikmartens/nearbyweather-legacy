@@ -8,4 +8,31 @@
 
 import Foundation
 
-final class SettingsGeneralItemsSection: BaseTableViewSectionData {}
+final class SettingsGeneralItemsSection: BaseTableViewSectionData {
+  
+  init(sectionItems: [BaseCellViewModelProtocol]) {
+    super.init(
+      sectionHeaderTitle: R.string.localizable.general(),
+      sectionFooterTitle: nil,
+      sectionCellsIdentifier: nil,
+      sectionCellsIdentifiers: [SettingsImagedSingleLabelCell.reuseIdentifier],
+      sectionItems: sectionItems
+    )
+  }
+  
+  required init(
+    sectionHeaderTitle: String? = nil,
+    sectionFooterTitle: String? = nil,
+    sectionCellsIdentifier: String?,
+    sectionCellsIdentifiers: [String]?,
+    sectionItems: [BaseCellViewModelProtocol]
+  ) {
+    super.init(
+      sectionHeaderTitle: sectionHeaderTitle,
+      sectionFooterTitle: sectionFooterTitle,
+      sectionCellsIdentifier: sectionCellsIdentifier,
+      sectionCellsIdentifiers: sectionCellsIdentifiers,
+      sectionItems: sectionItems
+    )
+  }
+}

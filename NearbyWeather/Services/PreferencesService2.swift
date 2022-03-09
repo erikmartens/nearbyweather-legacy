@@ -389,6 +389,7 @@ protocol SettingsPreferencesPersistence: SettingsPreferencesSetting, SettingsPre
 extension PreferencesService2: SettingsPreferencesPersistence {}
 
 protocol SettingsPreferencesSetting {
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
   func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
   func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
   func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
@@ -397,6 +398,7 @@ protocol SettingsPreferencesSetting {
 extension PreferencesService2: SettingsPreferencesSetting {}
 
 protocol SettingsPreferencesReading {
+  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption>
   func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
   func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
   func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>

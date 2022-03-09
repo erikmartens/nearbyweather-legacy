@@ -1,23 +1,23 @@
 //
-//  SettingsOpenWeatherMapApiItemsSection.swift
+//  SettingsPreferencesItemsSubSection1.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 06.03.22.
+//  Created by Erik Maximilian Martens on 09.03.22.
 //  Copyright © 2022 Erik Maximilian Martens. All rights reserved.
 //
 
 import Foundation
 
-final class SettingsOpenWeatherMapApiItemsSection: BaseTableViewSectionData {
+final class SettingsPreferencesItemsSubSection1: BaseTableViewSectionData {
   
   init(sectionItems: [BaseCellViewModelProtocol]) {
     super.init(
-      sectionHeaderTitle: R.string.localizable.openWeatherMap_api(),
+      sectionHeaderTitle: nil,
       sectionFooterTitle: nil,
       sectionCellsIdentifier: nil,
       sectionCellsIdentifiers: [
-        SettingsImagedSingleLabelCell.reuseIdentifier,
-        SettingsImagedSingleLabelCell.reuseIdentifier
+        SettingsImagedDualLabelCell.reuseIdentifier,
+        SettingsImagedDualLabelCell.reuseIdentifier
       ],
       sectionItems: sectionItems
     )

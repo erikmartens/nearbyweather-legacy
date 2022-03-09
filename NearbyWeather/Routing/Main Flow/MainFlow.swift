@@ -72,8 +72,8 @@ private extension MainFlow {
 
   func summonRootTabBar() -> FlowContributors {
 
-    let listFlow = ListFlow(dependencies: ListFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
-    let mapFlow = MapFlow(dependencies: MapFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+    let listFlow = WeatherListFlow(dependencies: WeatherListFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+    let mapFlow = WeatherMapFlow(dependencies: WeatherMapFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
     let settingsFlow = SettingsFlow(dependencies: SettingsFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
 
     Flows.use([listFlow, mapFlow, settingsFlow], when: .ready) { [unowned rootViewController] rootViewControllers in
@@ -81,8 +81,8 @@ private extension MainFlow {
     }
 
     return .multiple(flowContributors: [
-      .contribute(withNextPresentable: listFlow, withNextStepper: ListStepper(dependencyContainer: dependencies.dependencyContainer)),
-      .contribute(withNextPresentable: mapFlow, withNextStepper: MapStepper()),
+      .contribute(withNextPresentable: listFlow, withNextStepper: WeatherListStepper(dependencyContainer: dependencies.dependencyContainer)),
+      .contribute(withNextPresentable: mapFlow, withNextStepper: WeatherMapStepper()),
       .contribute(withNextPresentable: settingsFlow, withNextStepper: SettingsStepper())
     ])
   }

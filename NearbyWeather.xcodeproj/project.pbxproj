@@ -20,8 +20,8 @@
 		F2060E5627B6B7CE0066DC8C /* Factory+UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5527B6B7CE0066DC8C /* Factory+UITextField.swift */; };
 		F2060E5927B9A9A80066DC8C /* SetPermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5827B9A9A80066DC8C /* SetPermissionsViewController.swift */; };
 		F2060E5B27B9A9BB0066DC8C /* SetPermissionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5A27B9A9BB0066DC8C /* SetPermissionsViewModel.swift */; };
-		F2060E5E27BC17DB0066DC8C /* ListErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5D27BC17DB0066DC8C /* ListErrorViewController.swift */; };
-		F2060E6027BC18060066DC8C /* ListErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5F27BC18060066DC8C /* ListErrorViewModel.swift */; };
+		F2060E5E27BC17DB0066DC8C /* WeatherListErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5D27BC17DB0066DC8C /* WeatherListErrorViewController.swift */; };
+		F2060E6027BC18060066DC8C /* WeatherListErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E5F27BC18060066DC8C /* WeatherListErrorViewModel.swift */; };
 		F2060E6227BC1D7F0066DC8C /* NetworkReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E6127BC1D7F0066DC8C /* NetworkReachabilityService.swift */; };
 		F2060E6427BC3A5E0066DC8C /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E6327BC3A5E0066DC8C /* UIButton+Extensions.swift */; };
 		F2060E6627BFF1150066DC8C /* Daemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2060E6527BFF1150066DC8C /* Daemon.swift */; };
@@ -101,11 +101,11 @@
 		F237286C2445024D00964C49 /* Collection+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237286B2445024D00964C49 /* Collection+SafeIndex.swift */; };
 		F237286F244C7D8200964C49 /* MainFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237286E244C7D8200964C49 /* MainFlow.swift */; };
 		F2372871244C7D8C00964C49 /* MainStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372870244C7D8C00964C49 /* MainStepper.swift */; };
-		F2372876244C7F1B00964C49 /* ListFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372875244C7F1B00964C49 /* ListFlow.swift */; };
-		F2372878244C7F2E00964C49 /* MapFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372877244C7F2E00964C49 /* MapFlow.swift */; };
+		F2372876244C7F1B00964C49 /* WeatherListFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372875244C7F1B00964C49 /* WeatherListFlow.swift */; };
+		F2372878244C7F2E00964C49 /* WeatherMapFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372877244C7F2E00964C49 /* WeatherMapFlow.swift */; };
 		F237287A244C7FDD00964C49 /* SettingsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372879244C7FDD00964C49 /* SettingsFlow.swift */; };
-		F237287C244C800400964C49 /* ListStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237287B244C800400964C49 /* ListStepper.swift */; };
-		F237287E244C801000964C49 /* MapStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237287D244C801000964C49 /* MapStepper.swift */; };
+		F237287C244C800400964C49 /* WeatherListStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237287B244C800400964C49 /* WeatherListStepper.swift */; };
+		F237287E244C801000964C49 /* WeatherMapStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237287D244C801000964C49 /* WeatherMapStepper.swift */; };
 		F2372880244C802900964C49 /* SettingsStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237287F244C802900964C49 /* SettingsStepper.swift */; };
 		F2372882244C82B200964C49 /* Constants+Theme.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372881244C82B200964C49 /* Constants+Theme.Color.swift */; };
 		F2372885244C90EE00964C49 /* WelcomeFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372884244C90EE00964C49 /* WelcomeFlow.swift */; };
@@ -293,8 +293,8 @@
 		F2060E5527B6B7CE0066DC8C /* Factory+UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UITextField.swift"; sourceTree = "<group>"; };
 		F2060E5827B9A9A80066DC8C /* SetPermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewController.swift; sourceTree = "<group>"; };
 		F2060E5A27B9A9BB0066DC8C /* SetPermissionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPermissionsViewModel.swift; sourceTree = "<group>"; };
-		F2060E5D27BC17DB0066DC8C /* ListErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListErrorViewController.swift; sourceTree = "<group>"; };
-		F2060E5F27BC18060066DC8C /* ListErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListErrorViewModel.swift; sourceTree = "<group>"; };
+		F2060E5D27BC17DB0066DC8C /* WeatherListErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListErrorViewController.swift; sourceTree = "<group>"; };
+		F2060E5F27BC18060066DC8C /* WeatherListErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListErrorViewModel.swift; sourceTree = "<group>"; };
 		F2060E6127BC1D7F0066DC8C /* NetworkReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityService.swift; sourceTree = "<group>"; };
 		F2060E6327BC3A5E0066DC8C /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		F2060E6527BFF1150066DC8C /* Daemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Daemon.swift; sourceTree = "<group>"; };
@@ -374,11 +374,11 @@
 		F237286B2445024D00964C49 /* Collection+SafeIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeIndex.swift"; sourceTree = "<group>"; };
 		F237286E244C7D8200964C49 /* MainFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlow.swift; sourceTree = "<group>"; };
 		F2372870244C7D8C00964C49 /* MainStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStepper.swift; sourceTree = "<group>"; };
-		F2372875244C7F1B00964C49 /* ListFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFlow.swift; sourceTree = "<group>"; };
-		F2372877244C7F2E00964C49 /* MapFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlow.swift; sourceTree = "<group>"; };
+		F2372875244C7F1B00964C49 /* WeatherListFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListFlow.swift; sourceTree = "<group>"; };
+		F2372877244C7F2E00964C49 /* WeatherMapFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapFlow.swift; sourceTree = "<group>"; };
 		F2372879244C7FDD00964C49 /* SettingsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFlow.swift; sourceTree = "<group>"; };
-		F237287B244C800400964C49 /* ListStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStepper.swift; sourceTree = "<group>"; };
-		F237287D244C801000964C49 /* MapStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStepper.swift; sourceTree = "<group>"; };
+		F237287B244C800400964C49 /* WeatherListStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListStepper.swift; sourceTree = "<group>"; };
+		F237287D244C801000964C49 /* WeatherMapStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapStepper.swift; sourceTree = "<group>"; };
 		F237287F244C802900964C49 /* SettingsStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStepper.swift; sourceTree = "<group>"; };
 		F2372881244C82B200964C49 /* Constants+Theme.Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Theme.Color.swift"; sourceTree = "<group>"; };
 		F2372884244C90EE00964C49 /* WelcomeFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeFlow.swift; sourceTree = "<group>"; };
@@ -633,13 +633,13 @@
 			path = "Set Permissions Scene";
 			sourceTree = "<group>";
 		};
-		F2060E5C27BC17BD0066DC8C /* List Error Scene */ = {
+		F2060E5C27BC17BD0066DC8C /* Weather List Error Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F2060E5D27BC17DB0066DC8C /* ListErrorViewController.swift */,
-				F2060E5F27BC18060066DC8C /* ListErrorViewModel.swift */,
+				F2060E5D27BC17DB0066DC8C /* WeatherListErrorViewController.swift */,
+				F2060E5F27BC18060066DC8C /* WeatherListErrorViewModel.swift */,
 			);
-			path = "List Error Scene";
+			path = "Weather List Error Scene";
 			sourceTree = "<group>";
 		};
 		F2060E6927C06C710066DC8C /* User Location Models */ = {
@@ -845,22 +845,22 @@
 			path = "Main Flow";
 			sourceTree = "<group>";
 		};
-		F2372872244C7EE600964C49 /* List Flow */ = {
+		F2372872244C7EE600964C49 /* Weather List Flow */ = {
 			isa = PBXGroup;
 			children = (
-				F2372875244C7F1B00964C49 /* ListFlow.swift */,
-				F237287B244C800400964C49 /* ListStepper.swift */,
+				F2372875244C7F1B00964C49 /* WeatherListFlow.swift */,
+				F237287B244C800400964C49 /* WeatherListStepper.swift */,
 			);
-			path = "List Flow";
+			path = "Weather List Flow";
 			sourceTree = "<group>";
 		};
-		F2372873244C7EF400964C49 /* Map Flow */ = {
+		F2372873244C7EF400964C49 /* Weather Map Flow */ = {
 			isa = PBXGroup;
 			children = (
-				F2372877244C7F2E00964C49 /* MapFlow.swift */,
-				F237287D244C801000964C49 /* MapStepper.swift */,
+				F2372877244C7F2E00964C49 /* WeatherMapFlow.swift */,
+				F237287D244C801000964C49 /* WeatherMapStepper.swift */,
 			);
-			path = "Map Flow";
+			path = "Weather Map Flow";
 			sourceTree = "<group>";
 		};
 		F2372874244C7F0100964C49 /* Settings Flow */ = {
@@ -1020,8 +1020,8 @@
 				F237288F244CAAE600964C49 /* Root Flow */,
 				F2372883244C8F5800964C49 /* Welcome Flow */,
 				F237286D244C7D6800964C49 /* Main Flow */,
-				F2372872244C7EE600964C49 /* List Flow */,
-				F2372873244C7EF400964C49 /* Map Flow */,
+				F2372872244C7EE600964C49 /* Weather List Flow */,
+				F2372873244C7EF400964C49 /* Weather Map Flow */,
 				F2372874244C7F0100964C49 /* Settings Flow */,
 				F2372888244C931300964C49 /* WeatherDetail Flow */,
 			);
@@ -1036,7 +1036,7 @@
 				F2060E5027B6900D0066DC8C /* Set API Key Scene */,
 				F2060E5727B9A9780066DC8C /* Set Permissions Scene */,
 				F27A122024425D4E00A2CE8D /* Weather List Scene */,
-				F2060E5C27BC17BD0066DC8C /* List Error Scene */,
+				F2060E5C27BC17BD0066DC8C /* Weather List Error Scene */,
 				F27A122224425D9D00A2CE8D /* Weather Station Meteorology Details Scene */,
 				F27A122324425DB300A2CE8D /* Weather Map Scene */,
 				F217CB5D27D4F89D00DAC947 /* Settings Scene */,
@@ -1688,7 +1688,7 @@
 				F217CB5C27D3B04700DAC947 /* MKMapView+Focus.swift in Sources */,
 				F274FC3B2030ED5A00049144 /* PreferencesService.swift in Sources */,
 				F20CA11525B3117200153E47 /* WeatherStationMeteorologyDetailsMapCell.swift in Sources */,
-				F2060E5E27BC17DB0066DC8C /* ListErrorViewController.swift in Sources */,
+				F2060E5E27BC17DB0066DC8C /* WeatherListErrorViewController.swift in Sources */,
 				F210B19E25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift in Sources */,
 				F283D26E1DF39095001B879D /* DualLabelCell.swift in Sources */,
 				F217CB7027D5091800DAC947 /* SettingsGeneralItemsSection.swift in Sources */,
@@ -1734,7 +1734,7 @@
 				F213FA3723F9EF6E00F094D8 /* DimensionalUnitOption.swift in Sources */,
 				F2372882244C82B200964C49 /* Constants+Theme.Color.swift in Sources */,
 				F28EE8C925AB91530045AE6A /* Factory+UIBezierPath.swift in Sources */,
-				F2372878244C7F2E00964C49 /* MapFlow.swift in Sources */,
+				F2372878244C7F2E00964C49 /* WeatherMapFlow.swift in Sources */,
 				F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */,
 				F20CA10825B3114B00153E47 /* WeatherStationMeteorologyDetailsMapCellViewModel.swift in Sources */,
 				F217CB9027D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift in Sources */,
@@ -1767,7 +1767,7 @@
 				F2060E6227BC1D7F0066DC8C /* NetworkReachabilityService.swift in Sources */,
 				F284DDD4245CF37800445BFF /* PermissionsService2.swift in Sources */,
 				F2DBEB3423F0427000CD513B /* Factory+UIAlertController.swift in Sources */,
-				F237287C244C800400964C49 /* ListStepper.swift in Sources */,
+				F237287C244C800400964C49 /* WeatherListStepper.swift in Sources */,
 				F22A222D25A4C17200C97844 /* UIStackView+AddArrangedSubview.swift in Sources */,
 				F20CA0EF25B1FCBB00153E47 /* WeatherStationMeteorologyDetailsAtmosphericDetailsItemsSection.swift in Sources */,
 				F20CA13125B35A1B00153E47 /* WeatherStationMeteorologyDetailsWindItemsSection.swift in Sources */,
@@ -1799,7 +1799,7 @@
 				F2DB5E7225AB4F2000E21A56 /* BaseAnnotationViewProtocol.swift in Sources */,
 				F210B1A625A9D6BD00BF8DAA /* PersistencyService2.swift in Sources */,
 				F28F182725A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift in Sources */,
-				F2060E6027BC18060066DC8C /* ListErrorViewModel.swift in Sources */,
+				F2060E6027BC18060066DC8C /* WeatherListErrorViewModel.swift in Sources */,
 				F2F15545244389E8007A3E90 /* SettingsBundleTransferWorker.swift in Sources */,
 				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F2E12F3D25AF64A300176087 /* WeatherStationMeteorologyDetailsHeaderCellViewModel.swift in Sources */,
@@ -1858,7 +1858,7 @@
 				F284DDCE245A40F500445BFF /* UserLocationService2.swift in Sources */,
 				F2DB5E8325AB535600E21A56 /* BaseAnnotationProtocol.swift in Sources */,
 				F217CB8027D50CE700DAC947 /* SettingsImagedDualLabelCellModel.swift in Sources */,
-				F237287E244C801000964C49 /* MapStepper.swift in Sources */,
+				F237287E244C801000964C49 /* WeatherMapStepper.swift in Sources */,
 				F2E12F4625B0989F00176087 /* WeatherStationMeteorologyDetailsSunCycleCellViewModel.swift in Sources */,
 				F20CA0E525B1FC4D00153E47 /* WeatherStationMeteorologyDetailsAtmosphericDetailsCellModel.swift in Sources */,
 				F2372880244C802900964C49 /* SettingsStepper.swift in Sources */,
@@ -1874,7 +1874,7 @@
 				F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */,
 				F217CB7A27D50C2900DAC947 /* SettingsImagedSingleLabelCellModel.swift in Sources */,
 				F217CB7827D50C1A00DAC947 /* SettingsImagedSingleLabelCell.swift in Sources */,
-				F2372876244C7F1B00964C49 /* ListFlow.swift in Sources */,
+				F2372876244C7F1B00964C49 /* WeatherListFlow.swift in Sources */,
 				F217CB8827D50E2D00DAC947 /* SettingsImagedSingleLabelToggleCell.swift in Sources */,
 				F2E12F3025AF647D00176087 /* WeatherStationMeteorologyDetailsHeaderCell.swift in Sources */,
 				F22A222025A4A5A900C97844 /* WeatherListAlertTableViewCellModel.swift in Sources */,

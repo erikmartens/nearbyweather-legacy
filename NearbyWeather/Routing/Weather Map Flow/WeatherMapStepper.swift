@@ -9,7 +9,7 @@
 import RxCocoa
 import RxFlow
 
-enum MapStep: Step { // TODO: rename to WeatherMapStep
+enum WeatherMapStep: Step {
   case map
   case weatherDetails2(identity: PersistencyModelIdentity)
   case changeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate)
@@ -21,9 +21,9 @@ enum MapStep: Step { // TODO: rename to WeatherMapStep
   case dismissChildFlow
 }
 
-final class MapStepper: Stepper { // TODO: rename to WeatherMapStepper
+final class WeatherMapStepper: Stepper {
   
   var steps = PublishRelay<Step>()
   
-  let initialStep: Step = MapStep.map
+  let initialStep: Step = WeatherMapStep.map
 }

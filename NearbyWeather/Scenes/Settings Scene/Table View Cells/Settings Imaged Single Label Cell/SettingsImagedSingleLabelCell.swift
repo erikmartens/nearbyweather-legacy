@@ -100,6 +100,15 @@ private extension SettingsImagedSingleLabelCell {
   }
   
   func layoutUserInterface() {
+    separatorInset = UIEdgeInsets(
+      top: 0,
+      left: CellContentInsets.leading(from: .large)
+        + Constants.Dimensions.TableCellImage.width
+        + CellInterelementSpacing.xDistance(from: .small),
+      bottom: 0,
+      right: 0
+    )
+    
     contentView.addSubview(leadingImageView, constraints: [
       leadingImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.height),
       leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.width),

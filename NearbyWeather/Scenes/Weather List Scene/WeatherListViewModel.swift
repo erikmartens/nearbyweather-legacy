@@ -163,19 +163,19 @@ extension WeatherListViewModel {
   func observeUserTapEvents() {
     onDidTapListTypeBarButtonSubject
       .subscribe(onNext: { [weak steps] _ in
-        steps?.accept(ListStep.changeListTypeAlert(selectionDelegate: self))
+        steps?.accept(WeatherListStep.changeListTypeAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapAmountOfResultsBarButtonSubject
       .subscribe(onNext: { [weak steps] _ in
-        steps?.accept(ListStep.changeAmountOfResultsAlert(selectionDelegate: self))
+        steps?.accept(WeatherListStep.changeAmountOfResultsAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapSortingOrientationBarButtonSubject
       .subscribe(onNext: { [weak steps] _ in
-        steps?.accept(ListStep.changeSortingOrientationAlert(selectionDelegate: self))
+        steps?.accept(WeatherListStep.changeSortingOrientationAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
@@ -204,7 +204,7 @@ extension WeatherListViewModel: BaseTableViewSelectionDelegate {
     }
     _ = Observable
       .just(cellViewModel.weatherInformationIdentity)
-      .map(ListStep.weatherDetails2)
+      .map(WeatherListStep.weatherDetails2)
       .take(1)
       .asSingle()
       .subscribe(onSuccess: steps.accept)

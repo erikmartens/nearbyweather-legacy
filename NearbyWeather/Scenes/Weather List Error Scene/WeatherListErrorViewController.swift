@@ -11,7 +11,7 @@ import RxSwift
 
 // MARK: - Definitions
 
-private extension ListErrorViewController {
+private extension WeatherListErrorViewController {
   struct Definitions {
     static let mainStackViewInterElementYSpacing: CGFloat = 48
   }
@@ -19,9 +19,9 @@ private extension ListErrorViewController {
 
 // MARK: - Class Definition
 
-final class ListErrorViewController: UIViewController, BaseViewController {
+final class WeatherListErrorViewController: UIViewController, BaseViewController {
   
-  typealias ViewModel = ListErrorViewModel
+  typealias ViewModel = WeatherListErrorViewModel
   
   private typealias ContentInsets = Constants.Dimensions.Spacing.ContentInsets
   
@@ -47,7 +47,7 @@ final class ListErrorViewController: UIViewController, BaseViewController {
   // MARK: - Initialization
   
   required init(dependencies: ViewModel.Dependencies) {
-    viewModel = ListErrorViewModel(dependencies: dependencies)
+    viewModel = WeatherListErrorViewModel(dependencies: dependencies)
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -80,7 +80,7 @@ final class ListErrorViewController: UIViewController, BaseViewController {
 
 // MARK: - ViewModel Bindings
 
-extension ListErrorViewController {
+extension WeatherListErrorViewController {
   
   func setupBindings() {
     viewModel.observeEvents()
@@ -117,7 +117,7 @@ extension ListErrorViewController {
 
 // MARK: - Setup
 
-private extension ListErrorViewController {
+private extension WeatherListErrorViewController {
   
   func setupUiComponents() {
     // compose stackviews

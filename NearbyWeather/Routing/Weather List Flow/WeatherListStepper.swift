@@ -11,7 +11,7 @@ import RxCocoa
 import RxFlow
 import Swinject
 
-enum ListStep: Step { // TODO: rename to WeatherListStep
+enum WeatherListStep: Step {
   case list
   case emptyList
   case weatherDetails2(identity: PersistencyModelIdentity)
@@ -24,7 +24,7 @@ enum ListStep: Step { // TODO: rename to WeatherListStep
   case dismissChildFlow
 }
 
-final class ListStepper: Stepper { // TODO: rename to WeatherListStepper
+final class WeatherListStepper: Stepper {
   
   // MARK: - Assets
   
@@ -47,7 +47,7 @@ final class ListStepper: Stepper { // TODO: rename to WeatherListStepper
       .createDidUpdateWeatherInformationObservable()
       .subscribe { [weak steps] informationAvailable in
         steps?.accept(
-          (informationAvailable == .available) ? ListStep.list : ListStep.emptyList
+          (informationAvailable == .available) ? WeatherListStep.list : WeatherListStep.emptyList
         )
       }
       .disposed(by: disposeBag)

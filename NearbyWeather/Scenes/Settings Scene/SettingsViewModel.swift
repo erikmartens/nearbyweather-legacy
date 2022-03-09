@@ -125,7 +125,7 @@ extension SettingsViewModel {
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
         symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
         symbolImage: R.image.add_bookmark(),
-        labelText: R.string.localizable.manage_locations(),
+        labelText: R.string.localizable.add_location(),
         selectable: true,
         disclosable: true
       ))

@@ -12,7 +12,7 @@ import Swinject
 
 // MARK: - Dependencies
 
-extension ListFlow {
+extension WeatherListFlow {
   struct Dependencies {
     let dependencyContainer: Container
   }
@@ -20,7 +20,7 @@ extension ListFlow {
 
 // MARK: - Class Definition
 
-final class ListFlow: Flow {  // TODO: rename to WeatherListFlow
+final class WeatherListFlow: Flow {
   
   // MARK: - Assets
   
@@ -56,7 +56,7 @@ final class ListFlow: Flow {  // TODO: rename to WeatherListFlow
   // MARK: - Functions
   
   func navigate(to step: Step) -> FlowContributors {
-    guard let step = transform(step: step) as? ListStep else {
+    guard let step = transform(step: step) as? WeatherListStep else {
       return .none
     }
     switch step {
@@ -84,7 +84,7 @@ final class ListFlow: Flow {  // TODO: rename to WeatherListFlow
   }
   
   func adapt(step: Step) -> Single<Step> {
-    guard let step = step as? ListStep else {
+    guard let step = step as? WeatherListStep else {
       return .just(step)
     }
     switch step {
@@ -93,7 +93,7 @@ final class ListFlow: Flow {  // TODO: rename to WeatherListFlow
         .combineLatest(
           Observable.just(selectionDelegate),
           dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetListTypeOptionObservable().map { $0.value }.take(1),
-          resultSelector: ListStep.changeListTypeAlertAdapted
+          resultSelector: WeatherListStep.changeListTypeAlertAdapted
         )
         .take(1)
         .asSingle()
@@ -102,7 +102,7 @@ final class ListFlow: Flow {  // TODO: rename to WeatherListFlow
         .combineLatest(
           Observable.just(selectionDelegate),
           dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetAmountOfNearbyResultsOptionObservable().map { $0.value }.take(1),
-          resultSelector: ListStep.changeAmountOfResultsAlertAdapted
+          resultSelector: WeatherListStep.changeAmountOfResultsAlertAdapted
         )
         .take(1)
         .asSingle()
@@ -111,7 +111,7 @@ final class ListFlow: Flow {  // TODO: rename to WeatherListFlow
         .combineLatest(
           Observable.just(selectionDelegate),
           dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetSortingOrientationOptionObservable().map { $0.value }.take(1),
-          resultSelector: ListStep.changeSortingOrientationAlertAdapted
+          resultSelector: WeatherListStep.changeSortingOrientationAlertAdapted
         )
         .take(1)
         .asSingle()
@@ -126,7 +126,7 @@ final class ListFlow: Flow {  // TODO: rename to WeatherListFlow
       case .weatherDetails:
         return nil
       case .dismiss:
-        return ListStep.dismissChildFlow
+        return WeatherListStep.dismissChildFlow
       }
     }
     return step
@@ -135,7 +135,7 @@ final class ListFlow: Flow {  // TODO: rename to WeatherListFlow
 
 // MARK: - Summoning Functions
 
-private extension ListFlow {
+private extension WeatherListFlow {
   
   func summonWeatherListController() -> FlowContributors {
     let weatherListViewController = WeatherListViewController(dependencies: WeatherListViewController.ViewModel.Dependencies(
@@ -154,7 +154,7 @@ private extension ListFlow {
   }
   
   func summonEmptyWeatherListController() -> FlowContributors {
-    let listErrorViewController = ListErrorViewController(dependencies: ListErrorViewController.ViewModel.Dependencies(
+    let listErrorViewController = WeatherListErrorViewController(dependencies: WeatherListErrorViewController.ViewModel.Dependencies(
       apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!,
       weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,
       networkReachabilityService: dependencies.dependencyContainer.resolve(NetworkReachabilityService.self)!

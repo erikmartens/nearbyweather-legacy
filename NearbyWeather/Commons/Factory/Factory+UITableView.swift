@@ -13,7 +13,7 @@ extension Factory {
   struct TableView: FactoryFunction {
     
     enum TableViewType {
-      case standard(frame: CGRect)
+      case standard(frame: CGRect, style: UITableView.Style = .insetGrouped)
     }
     
     typealias InputType = TableViewType
@@ -21,18 +21,13 @@ extension Factory {
     
     static func make(fromType type: InputType) -> ResultType {
       switch type {
-      case let .standard(frame):
-        let tableView: UITableView
-        if #available(iOS 13, *) {
-          tableView = UITableView(frame: frame, style: .insetGrouped)
-        } else {
-          tableView = UITableView(frame: frame, style: .grouped)
-        }
+      case let .standard(frame, style):
+        let tableView = UITableView(frame: frame, style: style)
         
         tableView.separatorStyle = .singleLine
         tableView.showsVerticalScrollIndicator = false
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+        tableView.backgroundColor = .clear
         
         return tableView
       }

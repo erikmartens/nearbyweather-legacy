@@ -12,7 +12,7 @@ import Swinject
 
 // MARK: - Dependencies
 
-extension MapFlow {
+extension WeatherMapFlow {
   struct Dependencies {
     let dependencyContainer: Container
   }
@@ -20,7 +20,7 @@ extension MapFlow {
 
 // MARK: - Class Definition
 
-final class MapFlow: Flow { // TODO: rename to WeatherMapFlow
+final class WeatherMapFlow: Flow { // TODO: rename to WeatherMapFlow
   
   // MARK: - Assets
   
@@ -58,7 +58,7 @@ final class MapFlow: Flow { // TODO: rename to WeatherMapFlow
   // MARK: - Functions
   
   func navigate(to step: Step) -> FlowContributors {
-    guard let step = transform(step: step) as? MapStep else {
+    guard let step = transform(step: step) as? WeatherMapStep else {
       return .none
     }
     switch step {
@@ -84,7 +84,7 @@ final class MapFlow: Flow { // TODO: rename to WeatherMapFlow
   }
   
   func adapt(step: Step) -> Single<Step> {
-    guard let step = step as? MapStep else {
+    guard let step = step as? WeatherMapStep else {
       return .just(step)
     }
     switch step {
@@ -93,7 +93,7 @@ final class MapFlow: Flow { // TODO: rename to WeatherMapFlow
         .combineLatest(
           Observable.just(selectionDelegate),
           dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetMapTypeOptionObservable().map { $0.value }.take(1),
-          resultSelector: MapStep.changeMapTypeAlertAdapted
+          resultSelector: WeatherMapStep.changeMapTypeAlertAdapted
         )
         .take(1)
         .asSingle()
@@ -102,7 +102,7 @@ final class MapFlow: Flow { // TODO: rename to WeatherMapFlow
         .combineLatest(
           Observable.just(selectionDelegate),
           dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetAmountOfNearbyResultsOptionObservable().map { $0.value }.take(1),
-          resultSelector: MapStep.changeAmountOfResultsAlertAdapted
+          resultSelector: WeatherMapStep.changeAmountOfResultsAlertAdapted
         )
         .take(1)
         .asSingle()
@@ -111,7 +111,7 @@ final class MapFlow: Flow { // TODO: rename to WeatherMapFlow
         .combineLatest(
           Observable.just(selectionDelegate),
           dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } }.take(1),
-          resultSelector: MapStep.focusOnLocationAlertAdapted
+          resultSelector: WeatherMapStep.focusOnLocationAlertAdapted
         )
         .take(1)
         .asSingle()
@@ -128,14 +128,14 @@ final class MapFlow: Flow { // TODO: rename to WeatherMapFlow
     case .weatherDetails:
       return nil
     case .dismiss:
-      return MapStep.dismissChildFlow
+      return WeatherMapStep.dismissChildFlow
     }
   }
 }
 
 // MARK: - Summoning Functions
 
-private extension MapFlow {
+private extension WeatherMapFlow {
   
   func summonWeatherMapController() -> FlowContributors {
     let weatherMapViewController = WeatherMapViewController(dependencies: WeatherMapViewController.ViewModel.Dependencies(

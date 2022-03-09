@@ -13,7 +13,7 @@ import RxSwift
 
 private extension SettingsViewController {
   struct Definitions {
-    static let settingsCellHeight: CGFloat = 32
+    static let settingsCellHeight: CGFloat = 20
   }
 }
 
@@ -129,7 +129,5 @@ private extension SettingsViewController {
     title = R.string.localizable.tab_settings()
     
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
-    tableView.separatorStyle = .none
-    tableView.backgroundColor = .clear
   }
 }

@@ -13,7 +13,8 @@ import CoreLocation
 
 // MARK: - Domain Specific Types
 
-extension ListErrorViewModel {
+extension WeatherListErrorViewModel {
+  
   enum ListErrorType: Int {
     case network
     case apiKey
@@ -31,7 +32,7 @@ extension ListErrorViewModel {
     var title: String {
       switch self {
       case .network:
-        return R.string.localizable.no_weather_data() // TODO: write different texts for different
+        return R.string.localizable.no_weather_data() // TODO: write different descriptions for different error
       case .apiKey:
         return R.string.localizable.no_weather_data()
       case .noData:
@@ -42,7 +43,7 @@ extension ListErrorViewModel {
     var message: String {
       switch self {
       case .network:
-        return R.string.localizable.no_data_description() // TODO: write different texts for different
+        return R.string.localizable.no_data_description() // TODO: write different descriptions for different error
       case .apiKey:
         return R.string.localizable.no_data_description()
       case .noData:
@@ -54,7 +55,8 @@ extension ListErrorViewModel {
 
 // MARK: - Dependencies
 
-extension ListErrorViewModel {
+extension WeatherListErrorViewModel {
+  
   struct Dependencies {
     let apiKeyService: ApiKeyReading
     let weatherInformationService: WeatherInformationUpdating
@@ -64,7 +66,7 @@ extension ListErrorViewModel {
 
 // MARK: - Class Definition
 
-final class ListErrorViewModel: NSObject, Stepper, BaseViewModel {
+final class WeatherListErrorViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Routing
   
@@ -134,7 +136,7 @@ final class ListErrorViewModel: NSObject, Stepper, BaseViewModel {
 
 // MARK: - Observations
 
-extension ListErrorViewModel {
+extension WeatherListErrorViewModel {
 
   func observeDataSource() {
       // nothing to do
@@ -149,7 +151,7 @@ extension ListErrorViewModel {
                 dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()])
           .do(onCompleted: { isRefreshingSubject?.onNext(false) })
           .asObservable()
-          .map { _ in () } // swiftlint:disable:this never_executed
+          .map { _ in () }
       }
       .subscribe()
       .disposed(by: disposeBag)

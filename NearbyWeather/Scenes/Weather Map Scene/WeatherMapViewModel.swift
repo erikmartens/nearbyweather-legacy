@@ -183,19 +183,19 @@ extension WeatherMapViewModel {
   func observeUserTapEvents() {    
     onDidTapMapTypeBarButtonSubject
       .subscribe(onNext: { [weak steps] _ in
-        steps?.accept(MapStep.changeMapTypeAlert(selectionDelegate: self))
+        steps?.accept(WeatherMapStep.changeMapTypeAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapAmountOfResultsBarButtonSubject
       .subscribe(onNext: { [weak steps] _ in
-        steps?.accept(MapStep.changeAmountOfResultsAlert(selectionDelegate: self))
+        steps?.accept(WeatherMapStep.changeAmountOfResultsAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapFocusOnLocationBarButtonSubject
       .subscribe(onNext: { [weak steps] _ in
-        steps?.accept(MapStep.focusOnLocationAlert(selectionDelegate: self))
+        steps?.accept(WeatherMapStep.focusOnLocationAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
   }
@@ -211,7 +211,7 @@ extension WeatherMapViewModel: BaseMapViewSelectionDelegate {
     }
     _ = Observable
       .just(annotationViewModel.weatherInformationIdentity)
-      .map(MapStep.weatherDetails2)
+      .map(WeatherMapStep.weatherDetails2)
       .take(1)
       .asSingle()
       .subscribe(onSuccess: steps.accept)

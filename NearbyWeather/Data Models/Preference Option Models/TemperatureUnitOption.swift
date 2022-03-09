@@ -8,38 +8,13 @@
 
 import Foundation
 
-enum TemperatureUnitValue: Int, CaseIterable, Codable, Equatable {
+enum TemperatureUnitOptionValue: Int, CaseIterable, Codable, Equatable {
   case celsius
   case fahrenheit
   case kelvin
-}
-
-struct TemperatureUnitOption: Codable, Equatable, PreferencesOption {
-  static let availableOptions = [TemperatureUnitOption(value: .celsius),
-                                 TemperatureUnitOption(value: .fahrenheit),
-                                 TemperatureUnitOption(value: .kelvin)]
   
-  typealias PreferencesOptionType = TemperatureUnitValue
-  
-  private lazy var count: Int = {
-    TemperatureUnitValue.allCases.count
-  }()
-  
-  var value: TemperatureUnitValue
-  
-  init(value: TemperatureUnitValue) {
-    self.value = value
-  }
-  
-  init?(rawValue: Int) {
-    guard let value = TemperatureUnitValue(rawValue: rawValue) else {
-      return nil
-    }
-    self.init(value: value)
-  }
-  
-  var stringValue: String {
-    switch value {
+  var title: String {
+    switch self {
     case .celsius: return Constants.Values.TemperatureName.kCelsius
     case .fahrenheit: return Constants.Values.TemperatureName.kFahrenheit
     case .kelvin: return Constants.Values.TemperatureName.kKelvin
@@ -47,10 +22,39 @@ struct TemperatureUnitOption: Codable, Equatable, PreferencesOption {
   }
   
   var abbreviation: String {
-    switch value {
+    switch self {
     case .celsius: return Constants.Values.TemperatureUnit.kCelsius
     case .fahrenheit: return Constants.Values.TemperatureUnit.kFahrenheit
     case .kelvin: return Constants.Values.TemperatureUnit.kKelvin
     }
+  }
+}
+
+struct TemperatureUnitOption: Codable, Equatable, PreferencesOption {
+  static let availableOptions = [TemperatureUnitOption(value: .celsius),
+                                 TemperatureUnitOption(value: .fahrenheit),
+                                 TemperatureUnitOption(value: .kelvin)]
+  
+  typealias PreferencesOptionType = TemperatureUnitOptionValue
+  
+  private lazy var count: Int = {
+    TemperatureUnitOptionValue.allCases.count
+  }()
+  
+  var value: TemperatureUnitOptionValue
+  
+  init(value: TemperatureUnitOptionValue) {
+    self.value = value
+  }
+  
+  init?(rawValue: Int) {
+    guard let value = TemperatureUnitOptionValue(rawValue: rawValue) else {
+      return nil
+    }
+    self.init(value: value)
+  }
+  
+  var stringValue: String {
+    value.title
   }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SortingOrientationValue: Int, CaseIterable, Codable, Equatable {
+enum SortingOrientationOptionValue: Int, CaseIterable, Codable, Equatable {
   case name
   case temperature
   case distance
@@ -27,20 +27,20 @@ struct SortingOrientationOption: Codable, Equatable, PreferencesOption {
                                  SortingOrientationOption(value: .temperature),
                                  SortingOrientationOption(value: .distance)]
   
-  typealias PreferencesOptionType = SortingOrientationValue
+  typealias PreferencesOptionType = SortingOrientationOptionValue
   
   private lazy var count = {
-    SortingOrientationValue.allCases.count
+    SortingOrientationOptionValue.allCases.count
   }
   
-  var value: SortingOrientationValue
+  var value: SortingOrientationOptionValue
   
-  init(value: SortingOrientationValue) {
+  init(value: SortingOrientationOptionValue) {
     self.value = value
   }
   
   init?(rawValue: Int) {
-    guard let value = SortingOrientationValue(rawValue: rawValue) else {
+    guard let value = SortingOrientationOptionValue(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)

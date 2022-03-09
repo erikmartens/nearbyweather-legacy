@@ -13,12 +13,12 @@ protocol StoredPreferencesProvider {
   var preferredBookmark: PreferredBookmarkOption { get set }
   var amountOfResults: AmountOfResultsOption { get set }
   var temperatureUnit: TemperatureUnitOption { get set }
-  var distanceSpeedUnit: DimensionalUnitsOption { get set }
+  var distanceSpeedUnit: DimensionalUnitOption { get set }
   var sortingOrientation: SortingOrientationOption { get set }
 }
 
 protocol InMemoryPreferencesProvider {
-  var preferredListType: ListTypeValue { get set }
+  var preferredListType: ListTypeOptionValue { get set }
   var preferredMapType: MKMapType { get set }
 }
 
@@ -42,7 +42,7 @@ final class PreferencesService: StoredPreferencesProvider, InMemoryPreferencesPr
   
   // MARK: - Initialization
   
-  private init(preferredBookmark: PreferredBookmarkOption, amountOfResults: AmountOfResultsOption, temperatureUnit: TemperatureUnitOption, windspeedUnit: DimensionalUnitsOption, sortingOrientation: SortingOrientationOption) {
+  private init(preferredBookmark: PreferredBookmarkOption, amountOfResults: AmountOfResultsOption, temperatureUnit: TemperatureUnitOption, windspeedUnit: DimensionalUnitOption, sortingOrientation: SortingOrientationOption) {
     self.preferredBookmark = preferredBookmark
     self.amountOfResults = amountOfResults
     self.temperatureUnit = temperatureUnit
@@ -60,7 +60,7 @@ final class PreferencesService: StoredPreferencesProvider, InMemoryPreferencesPr
     shared = PreferencesService.loadData() ?? PreferencesService(preferredBookmark: PreferredBookmarkOption(value: .none),
                                                                          amountOfResults: AmountOfResultsOption(value: .ten),
                                                                          temperatureUnit: TemperatureUnitOption(value: .celsius),
-                                                                         windspeedUnit: DimensionalUnitsOption(value: .metric),
+                                                                         windspeedUnit: DimensionalUnitOption(value: .metric),
                                                                          sortingOrientation: SortingOrientationOption(value: .name))
   }
   
@@ -87,7 +87,7 @@ final class PreferencesService: StoredPreferencesProvider, InMemoryPreferencesPr
     }
   }
   
-  var distanceSpeedUnit: DimensionalUnitsOption {
+  var distanceSpeedUnit: DimensionalUnitOption {
     didSet {
       PreferencesService.storeData()
     }
@@ -105,7 +105,7 @@ final class PreferencesService: StoredPreferencesProvider, InMemoryPreferencesPr
   
   // MARK: - In Memory Preferences
   
-  var preferredListType: ListTypeValue = .bookmarked
+  var preferredListType: ListTypeOptionValue = .bookmarked
   
   var preferredMapType: MKMapType = .standard
 }

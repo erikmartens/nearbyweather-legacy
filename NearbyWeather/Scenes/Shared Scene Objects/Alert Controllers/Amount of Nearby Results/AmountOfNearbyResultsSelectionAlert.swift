@@ -21,7 +21,7 @@ protocol AmountOfResultsSelectionAlertDelegate: class {
 extension AmountOfNearbyResultsSelectionAlert {
   struct Dependencies {
     weak var selectionDelegate: AmountOfResultsSelectionAlertDelegate?
-    let selectedOptionValue: AmountOfResultsValue
+    let selectedOptionValue: AmountOfResultsOptionValue
   }
 }
 
@@ -31,19 +31,19 @@ final class AmountOfNearbyResultsSelectionAlert {
   
   // MARK: - Actions
   
-  fileprivate lazy var tenNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsValue.ten.rawValue)", handler: { [dependencies] _ in
+  fileprivate lazy var tenNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsOptionValue.ten.rawValue)", handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectAmountOfResultsOption(AmountOfResultsOption(value: .ten))
   }))
-  fileprivate lazy var twentyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsValue.twenty.rawValue)", handler: { [dependencies] _ in
+  fileprivate lazy var twentyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsOptionValue.twenty.rawValue)", handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectAmountOfResultsOption(AmountOfResultsOption(value: .twenty))
   }))
-  fileprivate lazy var thirtyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsValue.thirty.rawValue)", handler: { [dependencies] _ in
+  fileprivate lazy var thirtyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsOptionValue.thirty.rawValue)", handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectAmountOfResultsOption(AmountOfResultsOption(value: .thirty))
   }))
-  fileprivate lazy var fortyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsValue.forty.rawValue)", handler: { [dependencies] _ in
+  fileprivate lazy var fortyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsOptionValue.forty.rawValue)", handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectAmountOfResultsOption(AmountOfResultsOption(value: .forty))
   }))
-  fileprivate lazy var fiftyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsValue.fifty.rawValue)", handler: { [dependencies] _ in
+  fileprivate lazy var fiftyNearbyResultsSelectionAction = Factory.AlertAction.make(fromType: .standard(title: "\(AmountOfResultsOptionValue.fifty.rawValue)", handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectAmountOfResultsOption(AmountOfResultsOption(value: .fifty))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
@@ -87,7 +87,7 @@ final class AmountOfNearbyResultsSelectionAlert {
 
 private extension AmountOfNearbyResultsSelectionAlert {
   
-  func setCheckmarkForOption(with value: AmountOfResultsValue) {
+  func setCheckmarkForOption(with value: AmountOfResultsOptionValue) {
     var action: UIAlertAction
     
     switch dependencies.selectedOptionValue {

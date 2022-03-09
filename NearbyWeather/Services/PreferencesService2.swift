@@ -136,11 +136,11 @@ extension PreferencesService2 {
       .replaceNilWith(TemperatureUnitOption(value: .celsius)) // default value
   }
   
-  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable {
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable {
     Single
       .just(option)
       .map {
-        PersistencyModel<DimensionalUnitsOption>(
+        PersistencyModel<DimensionalUnitOption>(
           identity: PersistencyModelIdentity(
             collection: PreferencesService2.PersistencyKeys.dimensionalUnitOption.collection,
             identifier: PreferencesService2.PersistencyKeys.dimensionalUnitOption.identifier
@@ -148,10 +148,10 @@ extension PreferencesService2 {
           entity: $0
         )
       }
-      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: DimensionalUnitsOption.self) }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: DimensionalUnitOption.self) }
   }
   
-  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption> {
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitOption> {
     dependencies
       .persistencyService
       .observeResource(
@@ -159,10 +159,10 @@ extension PreferencesService2 {
           collection: PreferencesService2.PersistencyKeys.dimensionalUnitOption.collection,
           identifier: PreferencesService2.PersistencyKeys.dimensionalUnitOption.identifier
         ),
-        type: DimensionalUnitsOption.self
+        type: DimensionalUnitOption.self
       )
       .map { $0?.entity }
-      .replaceNilWith(DimensionalUnitsOption(value: .metric)) // default value
+      .replaceNilWith(DimensionalUnitOption(value: .metric)) // default value
   }
   
   func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable {
@@ -320,8 +320,8 @@ protocol GeneralPreferencePersistence: WeatherListPreferencePersistence, Weather
   func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
   func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
   
-  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
-  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitOption>
   
   func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
   func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
@@ -377,7 +377,7 @@ protocol WeatherMapPreferenceReading {
   func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
   func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
   func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
-  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitOption>
 }
 
 extension PreferencesService2: WeatherMapPreferenceReading {}
@@ -392,7 +392,7 @@ protocol SettingsPreferencesSetting {
   func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
   func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
   func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
-  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable
 }
 
 extension PreferencesService2: SettingsPreferencesSetting {}
@@ -401,7 +401,7 @@ protocol SettingsPreferencesReading {
   func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption>
   func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
   func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
-  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitsOption>
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitOption>
 }
 
 extension PreferencesService2: SettingsPreferencesReading {}
@@ -445,7 +445,7 @@ extension PreferencesService2: AppDelegatePreferenceReading {}
 protocol PreferenceMigration {
   func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
   func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
-  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitsOption) -> Completable
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable
   func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
   func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
   func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable

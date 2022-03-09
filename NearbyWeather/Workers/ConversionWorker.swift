@@ -164,7 +164,7 @@ final class ConversionWorker {
     }
   }
   
-  static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitsOption, forWindspeed windspeed: Double?) -> String? {
+  static func windspeedDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitOption, forWindspeed windspeed: Double?) -> String? {
     guard let windspeed = windspeed else {
       return nil
     }
@@ -176,7 +176,7 @@ final class ConversionWorker {
     }
   }
   
-  static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitsOption, forDistanceInMetres distance: Double) -> String {
+  static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitOption, forDistanceInMetres distance: Double) -> String {
     switch distanceSpeedUnit.value {
     case .metric:
       return String(format: "%.02f", distance/1000).append(contentsOf: R.string.localizable.km(), delimiter: .space)

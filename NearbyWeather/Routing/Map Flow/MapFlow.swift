@@ -170,7 +170,7 @@ private extension MapFlow {
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: weatherDetailStepper))
   }
   
-  func summonChangeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeValue) -> FlowContributors {
+  func summonChangeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeOptionValue) -> FlowContributors {
     let alert = MapTypeSelectionAlert(dependencies: MapTypeSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
@@ -180,7 +180,7 @@ private extension MapFlow {
     return .none
   }
   
-  func summonChangeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
+  func summonChangeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsOptionValue) -> FlowContributors {
     let alert = AmountOfNearbyResultsSelectionAlert(dependencies: AmountOfNearbyResultsSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue

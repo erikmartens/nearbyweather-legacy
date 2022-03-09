@@ -13,9 +13,9 @@ enum MapStep: Step { // TODO: rename to WeatherMapStep
   case map
   case weatherDetails2(identity: PersistencyModelIdentity)
   case changeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate)
-  case changeMapTypeAlertAdapted(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeValue)
+  case changeMapTypeAlertAdapted(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeOptionValue)
   case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate)
-  case changeAmountOfResultsAlertAdapted(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue)
+  case changeAmountOfResultsAlertAdapted(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsOptionValue)
   case focusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate)
   case focusOnLocationAlertAdapted(selectionDelegate: FocusOnLocationSelectionAlertDelegate, weatherInformationDTOs: [WeatherInformationDTO])
   case dismissChildFlow

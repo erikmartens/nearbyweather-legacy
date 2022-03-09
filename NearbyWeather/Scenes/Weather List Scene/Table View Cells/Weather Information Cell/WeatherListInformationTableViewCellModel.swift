@@ -41,7 +41,7 @@ struct WeatherListInformationTableViewCellModel {
   init(
     weatherInformationDTO: WeatherInformationDTO,
     temperatureUnitOption: TemperatureUnitOption,
-    dimensionalUnitsOption: DimensionalUnitsOption,
+    dimensionalUnitsOption: DimensionalUnitOption,
     isBookmark: Bool
   ) {
     let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true

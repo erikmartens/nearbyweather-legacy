@@ -21,7 +21,7 @@ protocol MapTypeSelectionAlertDelegate: class {
 extension MapTypeSelectionAlert {
   struct Dependencies {
     weak var selectionDelegate: MapTypeSelectionAlertDelegate?
-    let selectedOptionValue: MapTypeValue
+    let selectedOptionValue: MapTypeOptionValue
   }
 }
 
@@ -31,13 +31,13 @@ final class MapTypeSelectionAlert {
   
   // MARK: - Actions
   
-  fileprivate lazy var standardSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeValue.standard.title, handler: { [dependencies] _ in
+  fileprivate lazy var standardSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeOptionValue.standard.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectMapTypeOption(MapTypeOption(value: .standard))
   }))
-  fileprivate lazy var satelliteSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeValue.satellite.title, handler: { [dependencies] _ in
+  fileprivate lazy var satelliteSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeOptionValue.satellite.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectMapTypeOption(MapTypeOption(value: .satellite))
   }))
-  fileprivate lazy var hybridSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeValue.hybrid.title, handler: { [dependencies] _ in
+  fileprivate lazy var hybridSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeOptionValue.hybrid.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectMapTypeOption(MapTypeOption(value: .hybrid))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
@@ -78,7 +78,7 @@ final class MapTypeSelectionAlert {
   
 private extension MapTypeSelectionAlert {
   
-  private func setCheckmarkForOption(with value: MapTypeValue) {
+  private func setCheckmarkForOption(with value: MapTypeOptionValue) {
     var action: UIAlertAction
     
     switch dependencies.selectedOptionValue {

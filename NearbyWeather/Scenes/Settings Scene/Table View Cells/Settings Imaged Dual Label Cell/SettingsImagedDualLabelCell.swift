@@ -1,5 +1,5 @@
 //
-//  SettingsImagedSingleLabelCell.swift
+//  SettingsImagedDualLabelCell.swift
 //  NearbyWeather
 //
 //  Created by Erik Maximilian Martens on 06.03.22.
@@ -11,15 +11,15 @@ import RxSwift
 
 // MARK: - Definitions
 
-private extension SettingsImagedSingleLabelCell {
+private extension SettingsImagedDualLabelCell {
   struct Definitions {}
 }
 
 // MARK: - Class Definition
 
-final class SettingsImagedSingleLabelCell: UITableViewCell, BaseCell {
+final class SettingsImagedDualLabelCell: UITableViewCell, BaseCell {
   
-  typealias CellViewModel = SettingsImagedSingleLabelCellViewModel
+  typealias CellViewModel = SettingsImagedDualLabelCellViewModel
   private typealias CellContentInsets = Constants.Dimensions.Spacing.ContentInsets
   private typealias CellInterelementSpacing = Constants.Dimensions.Spacing.InterElementSpacing
   
@@ -27,6 +27,7 @@ final class SettingsImagedSingleLabelCell: UITableViewCell, BaseCell {
   
   private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
   private lazy var contentLabel = Factory.Label.make(fromType: .body())
+  private lazy var descriptionLabel = Factory.Label.make(fromType: .description(alignment: .right, numberOfLines: 1))
   
   // MARK: - Assets
   
@@ -59,7 +60,7 @@ final class SettingsImagedSingleLabelCell: UITableViewCell, BaseCell {
   // MARK: - Cell Life Cycle
   
   func configure(with cellViewModel: BaseCellViewModelProtocol?) {
-    guard let cellViewModel = cellViewModel as? SettingsImagedSingleLabelCellViewModel else {
+    guard let cellViewModel = cellViewModel as? SettingsImagedDualLabelCellViewModel else {
       return
     }
     
@@ -77,7 +78,7 @@ final class SettingsImagedSingleLabelCell: UITableViewCell, BaseCell {
 
 // MARK: - ViewModel Bindings
 
-extension SettingsImagedSingleLabelCell {
+extension SettingsImagedDualLabelCell {
   
   func bindContentFromViewModel(_ cellViewModel: CellViewModel) {
     cellViewModel.cellModelDriver
@@ -88,18 +89,28 @@ extension SettingsImagedSingleLabelCell {
 
 // MARK: - Cell Composition
 
-private extension SettingsImagedSingleLabelCell {
+private extension SettingsImagedDualLabelCell {
   
-  func setContent(for cellModel: SettingsImagedSingleLabelCellModel) {
+  func setContent(for cellModel: SettingsImagedDualLabelCellModel) {
     leadingImageView.backgroundColor = cellModel.symbolImageBackgroundColor
     leadingImageView.image = cellModel.symbolImage
-    contentLabel.text = cellModel.labelText
+    contentLabel.text = cellModel.contentLabelText
+    descriptionLabel.text = cellModel.descriptionLabelText
     
     selectionStyle = (cellModel.isSelectable ?? false) ? .default : .none
     accessoryType = (cellModel.isDisclosable ?? false) ? .disclosureIndicator : .none
   }
   
   func layoutUserInterface() {
+    separatorInset = UIEdgeInsets(
+      top: 0,
+      left: CellContentInsets.leading(from: .large)
+        + Constants.Dimensions.TableCellImage.width
+        + CellInterelementSpacing.xDistance(from: .small),
+      bottom: 0,
+      right: 0
+    )
+    
     contentView.addSubview(leadingImageView, constraints: [
       leadingImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.height),
       leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.width),
@@ -114,13 +125,23 @@ private extension SettingsImagedSingleLabelCell {
       contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
       contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
       contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+    ])
+    
+    contentView.addSubview(descriptionLabel, constraints: [
+      descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
+      descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
+      descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
+      descriptionLabel.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .large)),
+      descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
+      descriptionLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      descriptionLabel.heightAnchor.constraint(equalTo: contentLabel.heightAnchor, multiplier: 1),
+      descriptionLabel.widthAnchor.constraint(equalTo: contentLabel.widthAnchor, multiplier: 3/4)
     ])
   }
   
   func setupAppearance() {
-    backgroundColor = .clear
-    contentView.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    contentView.backgroundColor = .clear
   }
 }

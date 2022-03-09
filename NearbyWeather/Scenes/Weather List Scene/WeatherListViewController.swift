@@ -108,7 +108,7 @@ extension WeatherListViewController {
         viewModel.preferredAmountOfResultsDriver.asObservable(),
         resultSelector: { ($0, $1) }
       )
-      .asDriver(onErrorJustReturn: (ListTypeValue.bookmarked, AmountOfResultsValue.ten))
+      .asDriver(onErrorJustReturn: (ListTypeOptionValue.bookmarked, AmountOfResultsOptionValue.ten))
       .drive(onNext: { [unowned self] result in
         guard result.0 != .bookmarked else {
           self.navigationItem.rightBarButtonItems = []

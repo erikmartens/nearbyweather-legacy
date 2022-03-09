@@ -61,7 +61,7 @@ extension MigrationService {
       }
     
     // migrate preferences
-    let migratePreferencesCompletable = Observable<(PreferencesManagerStoredContentsWrapper?, RefreshOnAppStartValue, ShowTemperatureOnAppIconValue)>
+    let migratePreferencesCompletable = Observable<(PreferencesManagerStoredContentsWrapper?, RefreshOnAppStartOptionValue, ShowTemperatureOnAppIconOptionValue)>
       .create { handler in
         let preferencesStoredContentsWrapper = try? JsonPersistencyWorker().retrieveJsonFromFile(
           with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
@@ -70,12 +70,12 @@ extension MigrationService {
         )
         
         let refreshOnAppStartValue = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kRefreshOnAppStartKey) == true
-          ? RefreshOnAppStartValue.yes
-          : RefreshOnAppStartValue.no
+          ? RefreshOnAppStartOptionValue.yes
+          : RefreshOnAppStartOptionValue.no
         
         let showTemperatureAsAppIconBadgeValue = UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) == true
-        ? ShowTemperatureOnAppIconValue.yes
-        : ShowTemperatureOnAppIconValue.no
+        ? ShowTemperatureOnAppIconOptionValue.yes
+        : ShowTemperatureOnAppIconOptionValue.no
           
         handler.on(.next((preferencesStoredContentsWrapper, refreshOnAppStartValue, showTemperatureAsAppIconBadgeValue)))
         return Disposables.create()

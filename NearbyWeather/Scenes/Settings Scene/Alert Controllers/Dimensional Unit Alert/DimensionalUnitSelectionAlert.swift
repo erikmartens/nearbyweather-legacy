@@ -13,7 +13,7 @@ import RxFlow
 // MARK: - Delegate
 
 protocol DimensionalUnitSelectionAlertDelegate: class {
-  func didSelectDimensionalUnitOption(_ selectedOption: DimensionalUnitsOption)
+  func didSelectDimensionalUnitOption(_ selectedOption: DimensionalUnitOption)
 }
 
 // MARK: - Dependencies
@@ -21,7 +21,7 @@ protocol DimensionalUnitSelectionAlertDelegate: class {
 extension DimensionalUnitSelectionAlert {
   struct Dependencies {
     weak var selectionDelegate: DimensionalUnitSelectionAlertDelegate?
-    let selectedOptionValue: DistanceVelocityUnitValue
+    let selectedOptionValue: DimensionalUnitOptionValue
   }
 }
 
@@ -31,11 +31,11 @@ final class DimensionalUnitSelectionAlert {
   
   // MARK: - Actions
   
-  fileprivate lazy var metricSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeValue.standard.title, handler: { [dependencies] _ in
-    dependencies.selectionDelegate?.didSelectDimensionalUnitOption(DimensionalUnitsOption(value: .metric))
+  fileprivate lazy var metricSelectionAction = Factory.AlertAction.make(fromType: .standard(title: DimensionalUnitOptionValue.metric.title, handler: { [dependencies] _ in
+    dependencies.selectionDelegate?.didSelectDimensionalUnitOption(DimensionalUnitOption(value: .metric))
   }))
-  fileprivate lazy var imperialSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeValue.satellite.title, handler: { [dependencies] _ in
-    dependencies.selectionDelegate?.didSelectDimensionalUnitOption(DimensionalUnitsOption(value: .imperial))
+  fileprivate lazy var imperialSelectionAction = Factory.AlertAction.make(fromType: .standard(title: DimensionalUnitOptionValue.imperial.title, handler: { [dependencies] _ in
+    dependencies.selectionDelegate?.didSelectDimensionalUnitOption(DimensionalUnitOption(value: .imperial))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
   
@@ -74,7 +74,7 @@ final class DimensionalUnitSelectionAlert {
   
 private extension DimensionalUnitSelectionAlert {
   
-  private func setCheckmarkForOption(with value: DistanceVelocityUnitValue) {
+  private func setCheckmarkForOption(with value: DimensionalUnitOptionValue) {
     var action: UIAlertAction
     
     switch dependencies.selectedOptionValue {

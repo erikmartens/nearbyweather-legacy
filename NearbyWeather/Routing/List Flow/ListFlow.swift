@@ -180,7 +180,7 @@ private extension ListFlow {
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: weatherDetailStepper))
   }
   
-  func summonChangeListTypeAlert(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeValue) -> FlowContributors {
+  func summonChangeListTypeAlert(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeOptionValue) -> FlowContributors {
     let alert = ListTypeSelectionAlert(dependencies: ListTypeSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
@@ -189,7 +189,7 @@ private extension ListFlow {
     return .none
   }
   
-  func summonChangeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue) -> FlowContributors {
+  func summonChangeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsOptionValue) -> FlowContributors {
     let alert = AmountOfNearbyResultsSelectionAlert(dependencies: AmountOfNearbyResultsSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
@@ -198,7 +198,7 @@ private extension ListFlow {
     return .none
   }
   
-  func summonChangeSortingOrientationAlert(selectionDelegate: SortingOrientationSelectionAlertDelegate, currentSelectedOptionValue: SortingOrientationValue) -> FlowContributors {
+  func summonChangeSortingOrientationAlert(selectionDelegate: SortingOrientationSelectionAlertDelegate, currentSelectedOptionValue: SortingOrientationOptionValue) -> FlowContributors {
     let alert = SortingOrientationSelectionAlert(dependencies: SortingOrientationSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue

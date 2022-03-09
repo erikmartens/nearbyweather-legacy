@@ -100,7 +100,7 @@ extension SettingsViewModel {
         disclosable: true
       )),
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.blue,
+        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.green,
         symbolImage: R.image.start(),
         labelText: R.string.localizable.get_started_with_openweathermap(),
         selectable: true,
@@ -249,7 +249,7 @@ extension SettingsViewModel: TemperatureUnitSelectionAlertDelegate {
 
 extension SettingsViewModel: DimensionalUnitSelectionAlertDelegate {
   
-  func didSelectDimensionalUnitOption(_ selectedOption: DimensionalUnitsOption) {
+  func didSelectDimensionalUnitOption(_ selectedOption: DimensionalUnitOption) {
     _ = dependencies.preferencesService
       .createSetDimensionalUnitsOptionCompletable(selectedOption)
       .subscribe()
@@ -312,7 +312,7 @@ private extension SettingsViewModel {
     case 5:
       switch indexPath.row {
       case 0:
-        return SettingsStep.changeDimensionalUnitAlert(selectionDelegate: self)
+        return SettingsStep.changeTemperatureUnitAlert(selectionDelegate: self)
       case 1:
         return SettingsStep.changeDimensionalUnitAlert(selectionDelegate: self)
       default:

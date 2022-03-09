@@ -21,7 +21,7 @@ protocol TemperatureUnitSelectionAlertDelegate: class {
 extension TemperatureUnitSelectionAlert {
   struct Dependencies {
     weak var selectionDelegate: TemperatureUnitSelectionAlertDelegate?
-    let selectedOptionValue: TemperatureUnitValue
+    let selectedOptionValue: TemperatureUnitOptionValue
   }
 }
 
@@ -31,13 +31,13 @@ final class TemperatureUnitSelectionAlert {
   
   // MARK: - Actions
   
-  fileprivate lazy var celsiusSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeValue.standard.title, handler: { [dependencies] _ in
+  fileprivate lazy var celsiusSelectionAction = Factory.AlertAction.make(fromType: .standard(title: TemperatureUnitOptionValue.celsius.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectTemperatureUnitOption(TemperatureUnitOption(value: .celsius))
   }))
-  fileprivate lazy var fahrenheitSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeValue.satellite.title, handler: { [dependencies] _ in
+  fileprivate lazy var fahrenheitSelectionAction = Factory.AlertAction.make(fromType: .standard(title: TemperatureUnitOptionValue.fahrenheit.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectTemperatureUnitOption(TemperatureUnitOption(value: .fahrenheit))
   }))
-  fileprivate lazy var kelvinSelectionAction = Factory.AlertAction.make(fromType: .standard(title: MapTypeValue.hybrid.title, handler: { [dependencies] _ in
+  fileprivate lazy var kelvinSelectionAction = Factory.AlertAction.make(fromType: .standard(title: TemperatureUnitOptionValue.kelvin.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectTemperatureUnitOption(TemperatureUnitOption(value: .kelvin))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
@@ -78,7 +78,7 @@ final class TemperatureUnitSelectionAlert {
   
 private extension TemperatureUnitSelectionAlert {
   
-  private func setCheckmarkForOption(with value: TemperatureUnitValue) {
+  private func setCheckmarkForOption(with value: TemperatureUnitOptionValue) {
     var action: UIAlertAction
     
     switch dependencies.selectedOptionValue {

@@ -15,7 +15,7 @@ extension WeatherStationMeteorologyDetailsHeaderCellViewModel {
   struct Dependencies {
     let weatherInformationDTO: WeatherInformationDTO
     let temperatureUnitOption: TemperatureUnitOption
-    let dimensionalUnitsOption: DimensionalUnitsOption
+    let dimensionalUnitsOption: DimensionalUnitOption
     let isBookmark: Bool
   }
 }

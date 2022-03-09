@@ -59,19 +59,19 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Observables
   
-  private lazy var preferredListTypeObservable: Observable<ListTypeValue> = dependencies
+  private lazy var preferredListTypeObservable: Observable<ListTypeOptionValue> = dependencies
     .preferencesService
     .createGetListTypeOptionObservable()
     .map { $0.value }
     .share(replay: 1)
   
-  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsValue> = dependencies
+  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsOptionValue> = dependencies
     .preferencesService
     .createGetAmountOfNearbyResultsOptionObservable()
     .map { $0.value }
     .share(replay: 1)
   
-  private lazy var preferredSortingOrientationObservable: Observable<SortingOrientationValue> = dependencies
+  private lazy var preferredSortingOrientationObservable: Observable<SortingOrientationOptionValue> = dependencies
     .preferencesService
     .createGetSortingOrientationOptionObservable()
     .map { $0.value }
@@ -226,7 +226,7 @@ private extension WeatherListViewModel {
     }
   }
   
-  static func sortNearbyResults(_ results: [PersistencyModelThreadSafe<WeatherInformationDTO>], sortingOrientationValue: SortingOrientationValue, currentLocation: CLLocation?) -> [PersistencyModelThreadSafe<WeatherInformationDTO>] {
+  static func sortNearbyResults(_ results: [PersistencyModelThreadSafe<WeatherInformationDTO>], sortingOrientationValue: SortingOrientationOptionValue, currentLocation: CLLocation?) -> [PersistencyModelThreadSafe<WeatherInformationDTO>] {
     results.sorted { lhsValue, rhsValue -> Bool in
       let lhsEntity = lhsValue.entity
       let rhsEntity = rhsValue.entity

@@ -21,7 +21,7 @@ protocol SortingOrientationSelectionAlertDelegate: class {
 extension SortingOrientationSelectionAlert {
   struct Dependencies {
     weak var selectionDelegate: SortingOrientationSelectionAlertDelegate?
-    let selectedOptionValue: SortingOrientationValue
+    let selectedOptionValue: SortingOrientationOptionValue
   }
 }
 
@@ -31,13 +31,13 @@ final class SortingOrientationSelectionAlert {
   
   // MARK: - Actions
   
-  fileprivate lazy var nameSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: SortingOrientationValue.name.title, handler: { [dependencies] _ in
+  fileprivate lazy var nameSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: SortingOrientationOptionValue.name.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSortingOrientationOption(SortingOrientationOption(value: .name))
   }))
-  fileprivate lazy var temperatureSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: SortingOrientationValue.temperature.title, handler: { [dependencies] _ in
+  fileprivate lazy var temperatureSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: SortingOrientationOptionValue.temperature.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSortingOrientationOption(SortingOrientationOption(value: .temperature))
   }))
-  fileprivate lazy var distanceSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: SortingOrientationValue.distance.title, handler: { [dependencies] _ in
+  fileprivate lazy var distanceSortingSelectionAction = Factory.AlertAction.make(fromType: .standard(title: SortingOrientationOptionValue.distance.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSortingOrientationOption(SortingOrientationOption(value: .distance))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
@@ -79,7 +79,7 @@ final class SortingOrientationSelectionAlert {
 
 private extension SortingOrientationSelectionAlert {
   
-  func setCheckmarkForOption(with value: SortingOrientationValue) {
+  func setCheckmarkForOption(with value: SortingOrientationOptionValue) {
     var action: UIAlertAction
     
     switch dependencies.selectedOptionValue {

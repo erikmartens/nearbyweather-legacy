@@ -21,7 +21,7 @@ protocol ListTypeSelectionAlertDelegate: class {
 extension ListTypeSelectionAlert {
   struct Dependencies {
     weak var selectionDelegate: ListTypeSelectionAlertDelegate?
-    let selectedOptionValue: ListTypeValue
+    let selectedOptionValue: ListTypeOptionValue
   }
 }
 
@@ -31,10 +31,10 @@ final class ListTypeSelectionAlert {
   
   // MARK: - Actions
   
-  fileprivate lazy var nearbySelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.nearby.title, handler: { [dependencies] _ in
+  fileprivate lazy var nearbySelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeOptionValue.nearby.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectListTypeOption(ListTypeOption(value: .nearby))
   }))
-  fileprivate lazy var bookmarksSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeValue.bookmarked.title, handler: { [dependencies] _ in
+  fileprivate lazy var bookmarksSelectionAction = Factory.AlertAction.make(fromType: .standard(title: ListTypeOptionValue.bookmarked.title, handler: { [dependencies] _ in
     dependencies.selectionDelegate?.didSelectListTypeOption(ListTypeOption(value: .bookmarked))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
@@ -75,7 +75,7 @@ final class ListTypeSelectionAlert {
   
 private extension ListTypeSelectionAlert {
   
-  private func setCheckmarkForOption(with value: ListTypeValue) {
+  private func setCheckmarkForOption(with value: ListTypeOptionValue) {
     var action: UIAlertAction
     
     switch dependencies.selectedOptionValue {

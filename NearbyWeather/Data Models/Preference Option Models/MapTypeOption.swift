@@ -8,7 +8,7 @@
 
 import MapKit
 
-enum MapTypeValue: Int, CaseIterable, Codable, Equatable {
+enum MapTypeOptionValue: Int, CaseIterable, Codable, Equatable {
   case standard
   case satellite
   case hybrid
@@ -41,20 +41,20 @@ struct MapTypeOption: Codable, Equatable, PreferencesOption {
                                  MapTypeOption(value: .satellite),
                                  MapTypeOption(value: .hybrid)]
   
-  typealias PreferencesOptionType = MapTypeValue
+  typealias PreferencesOptionType = MapTypeOptionValue
   
   private lazy var count = {
-    MapTypeValue.allCases.count
+    MapTypeOptionValue.allCases.count
   }()
   
-  var value: MapTypeValue
+  var value: MapTypeOptionValue
   
-  init(value: MapTypeValue) {
+  init(value: MapTypeOptionValue) {
     self.value = value
   }
   
   init?(rawValue: Int) {
-    guard let value = MapTypeValue(rawValue: rawValue) else {
+    guard let value = MapTypeOptionValue(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)

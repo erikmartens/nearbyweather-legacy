@@ -12,6 +12,6 @@ struct PreferencesManagerStoredContentsWrapper: Codable {
   var preferredBookmark: PreferredBookmarkOption
   var amountOfResults: AmountOfResultsOption
   var temperatureUnit: TemperatureUnitOption
-  var windspeedUnit: DimensionalUnitsOption
+  var windspeedUnit: DimensionalUnitOption
   var sortingOrientation: SortingOrientationOption
 }

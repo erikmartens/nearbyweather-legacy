@@ -64,7 +64,7 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Observables
   
-  private lazy var preferredMapTypeObservable: Observable<MapTypeValue> = { [dependencies] in
+  private lazy var preferredMapTypeObservable: Observable<MapTypeOptionValue> = { [dependencies] in
     dependencies
       .preferencesService
       .createGetMapTypeOptionObservable()
@@ -72,7 +72,7 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
       .share(replay: 1)
   }()
   
-  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsValue>  = { [dependencies] in
+  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsOptionValue>  = { [dependencies] in
     dependencies
       .preferencesService
       .createGetAmountOfNearbyResultsOptionObservable()

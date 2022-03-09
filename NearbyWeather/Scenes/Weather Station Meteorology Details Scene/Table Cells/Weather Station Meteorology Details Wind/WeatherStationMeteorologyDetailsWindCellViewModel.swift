@@ -15,7 +15,7 @@ extension WeatherStationMeteorologyDetailsWindCellViewModel {
   struct Dependencies {
     let windSpeed: Double
     let windDirectionDegrees: Double
-    let dimensionaUnitsPreference: DimensionalUnitsOption
+    let dimensionaUnitsPreference: DimensionalUnitOption
   }
 }
 

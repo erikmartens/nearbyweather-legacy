@@ -18,9 +18,9 @@ enum SettingsStep: Step {
   case changePreferredBookmarkAlert(selectionDelegate: PreferredBookmarkSelectionAlertDelegate)
   case changePreferredBookmarkAlertAdapted(selectionDelegate: PreferredBookmarkSelectionAlertDelegate, selectedOptionValue: PreferredBookmarkOption, boomarkedLocations: [WeatherInformationDTO])
   case changeTemperatureUnitAlert(selectionDelegate: TemperatureUnitSelectionAlertDelegate)
-  case changeTemperatureUnitAlertAdapted(selectionDelegate: TemperatureUnitSelectionAlertDelegate, selectedOptionValue: TemperatureUnitValue)
+  case changeTemperatureUnitAlertAdapted(selectionDelegate: TemperatureUnitSelectionAlertDelegate, selectedOptionValue: TemperatureUnitOptionValue)
   case changeDimensionalUnitAlert(selectionDelegate: DimensionalUnitSelectionAlertDelegate)
-  case changeDimensionalUnitAlertAdapted(selectionDelegate: DimensionalUnitSelectionAlertDelegate, selectedOptionValue: DistanceVelocityUnitValue)
+  case changeDimensionalUnitAlertAdapted(selectionDelegate: DimensionalUnitSelectionAlertDelegate, selectedOptionValue: DimensionalUnitOptionValue)
   case webBrowser(url: URL)
 }
 

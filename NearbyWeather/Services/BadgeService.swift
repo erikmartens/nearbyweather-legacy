@@ -109,7 +109,7 @@ final class BadgeService {
       inputContent.cityName,
       inputContent.sign.stringValue
         .append(contentsOfConvertible: inputContent.temperature, delimiter: .space)
-        .append(contentsOf: inputContent.unit.abbreviation, delimiter: .none)
+        .append(contentsOf: inputContent.unit.value.abbreviation, delimiter: .none)
     )
     
     let content = UNMutableNotificationContent()

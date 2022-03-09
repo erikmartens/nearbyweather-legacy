@@ -142,7 +142,7 @@ extension WeatherStationMeteorologyDetailsMapCellViewModel: BaseMapViewSelection
 
 private extension WeatherStationMeteorologyDetailsMapCellViewModel {
   
-  static func distanceString(for weatherInformationDTO: WeatherInformationDTO, preferredDimensionalUnitsOption: DimensionalUnitsOption, currentLocation: CLLocation?) -> String? {
+  static func distanceString(for weatherInformationDTO: WeatherInformationDTO, preferredDimensionalUnitsOption: DimensionalUnitOption, currentLocation: CLLocation?) -> String? {
     guard let currentLocation = currentLocation,
           let weatherStationLatitude = weatherInformationDTO.coordinates.latitude,
           let weatherStationLongitude = weatherInformationDTO.coordinates.longitude else {

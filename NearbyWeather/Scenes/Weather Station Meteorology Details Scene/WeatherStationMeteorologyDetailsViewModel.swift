@@ -71,7 +71,7 @@ final class WeatherStationMeteorologyDetailsViewModel: NSObject, Stepper, BaseVi
   private lazy var weatherInformationDtoObservable: Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> = Self.createGetWeatherInformationDtoObservable(with: dependencies).share(replay: 1)
   private lazy var weatherStationIsBookmarkedObservable: Observable<Bool> = Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies).share(replay: 1)
   private lazy var temperatureUnitOptionObservable: Observable<TemperatureUnitOption> = dependencies.preferencesService.createGetTemperatureUnitOptionObservable().share(replay: 1)
-  private lazy var dimensionalUnitsOptionObservable: Observable<DimensionalUnitsOption> = dependencies.preferencesService.createGetDimensionalUnitsOptionObservable().share(replay: 1)
+  private lazy var dimensionalUnitsOptionObservable: Observable<DimensionalUnitOption> = dependencies.preferencesService.createGetDimensionalUnitsOptionObservable().share(replay: 1)
   
   // MARK: - Initialization
   

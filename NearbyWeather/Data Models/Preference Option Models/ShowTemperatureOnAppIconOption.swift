@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ShowTemperatureOnAppIconValue: Int, CaseIterable, Codable, Equatable {
+enum ShowTemperatureOnAppIconOptionValue: Int, CaseIterable, Codable, Equatable {
   case no
   case yes
 }
@@ -17,20 +17,20 @@ struct ShowTemperatureOnAppIconOption: Codable, Equatable, PreferencesOption {
   static let availableOptions = [ShowTemperatureOnAppIconOption(value: .no),
                                  ShowTemperatureOnAppIconOption(value: .yes)]
   
-  typealias PreferencesOptionType = ShowTemperatureOnAppIconValue
+  typealias PreferencesOptionType = ShowTemperatureOnAppIconOptionValue
   
   private lazy var count = {
-    ShowTemperatureOnAppIconValue.allCases.count
+    ShowTemperatureOnAppIconOptionValue.allCases.count
   }
   
-  var value: ShowTemperatureOnAppIconValue
+  var value: ShowTemperatureOnAppIconOptionValue
   
-  init(value: ShowTemperatureOnAppIconValue) {
+  init(value: ShowTemperatureOnAppIconOptionValue) {
     self.value = value
   }
   
   init?(rawValue: Int) {
-    guard let value = ShowTemperatureOnAppIconValue(rawValue: rawValue) else {
+    guard let value = ShowTemperatureOnAppIconOptionValue(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)

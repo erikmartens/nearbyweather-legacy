@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum RefreshOnAppStartValue: Int, CaseIterable, Codable, Equatable {
+enum RefreshOnAppStartOptionValue: Int, CaseIterable, Codable, Equatable {
   case no
   case yes
 }
@@ -17,20 +17,20 @@ struct RefreshOnAppStartOption: Codable, Equatable, PreferencesOption {
   static let availableOptions = [RefreshOnAppStartOption(value: .no),
                                  RefreshOnAppStartOption(value: .yes)]
   
-  typealias PreferencesOptionType = RefreshOnAppStartValue
+  typealias PreferencesOptionType = RefreshOnAppStartOptionValue
   
   private lazy var count = {
-    RefreshOnAppStartValue.allCases.count
+    RefreshOnAppStartOptionValue.allCases.count
   }
   
-  var value: RefreshOnAppStartValue
+  var value: RefreshOnAppStartOptionValue
   
-  init(value: RefreshOnAppStartValue) {
+  init(value: RefreshOnAppStartOptionValue) {
     self.value = value
   }
   
   init?(rawValue: Int) {
-    guard let value = RefreshOnAppStartValue(rawValue: rawValue) else {
+    guard let value = RefreshOnAppStartOptionValue(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)

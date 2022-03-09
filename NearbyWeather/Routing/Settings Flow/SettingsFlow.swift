@@ -186,7 +186,7 @@ private extension SettingsFlow {
     return .none
   }
   
-  func summonChangeTemperatureUnitAlert(selectionDelegate: TemperatureUnitSelectionAlertDelegate, currentSelectedOptionValue: TemperatureUnitValue) -> FlowContributors {
+  func summonChangeTemperatureUnitAlert(selectionDelegate: TemperatureUnitSelectionAlertDelegate, currentSelectedOptionValue: TemperatureUnitOptionValue) -> FlowContributors {
     let alert = TemperatureUnitSelectionAlert(dependencies: TemperatureUnitSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue
@@ -195,7 +195,7 @@ private extension SettingsFlow {
     return .none
   }
   
-  func summonChangeDimensionalUnitAlert(selectionDelegate: DimensionalUnitSelectionAlertDelegate, currentSelectedOptionValue: DistanceVelocityUnitValue) -> FlowContributors {
+  func summonChangeDimensionalUnitAlert(selectionDelegate: DimensionalUnitSelectionAlertDelegate, currentSelectedOptionValue: DimensionalUnitOptionValue) -> FlowContributors {
     let alert = DimensionalUnitSelectionAlert(dependencies: DimensionalUnitSelectionAlert.Dependencies(
       selectionDelegate: selectionDelegate,
       selectedOptionValue: currentSelectedOptionValue

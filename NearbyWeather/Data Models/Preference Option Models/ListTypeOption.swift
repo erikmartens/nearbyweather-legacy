@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ListTypeValue: Int, CaseIterable, Codable, Equatable {
+enum ListTypeOptionValue: Int, CaseIterable, Codable, Equatable {
   case bookmarked
   case nearby
   
@@ -27,20 +27,20 @@ struct ListTypeOption: Codable, Equatable, PreferencesOption {
   static let availableOptions = [ListTypeOption(value: .bookmarked),
                                  ListTypeOption(value: .nearby)]
   
-  typealias PreferencesOptionType = ListTypeValue
+  typealias PreferencesOptionType = ListTypeOptionValue
   
   private lazy var count = {
-    ListTypeValue.allCases.count
+    ListTypeOptionValue.allCases.count
   }()
   
-  var value: ListTypeValue
+  var value: ListTypeOptionValue
   
-  init(value: ListTypeValue) {
+  init(value: ListTypeOptionValue) {
     self.value = value
   }
   
   init?(rawValue: Int) {
-    guard let value = ListTypeValue(rawValue: rawValue) else {
+    guard let value = ListTypeOptionValue(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)

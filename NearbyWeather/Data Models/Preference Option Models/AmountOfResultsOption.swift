@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum AmountOfResultsValue: Int, CaseIterable, Codable, Equatable {
+enum AmountOfResultsOptionValue: Int, CaseIterable, Codable, Equatable {
   case ten = 10
   case twenty = 20
   case thirty = 30
@@ -24,20 +24,20 @@ struct AmountOfResultsOption: Codable, Equatable, PreferencesOption {
                                  AmountOfResultsOption(value: .forty),
                                  AmountOfResultsOption(value: .fifty)]
   
-  typealias PreferencesOptionType = AmountOfResultsValue
+  typealias PreferencesOptionType = AmountOfResultsOptionValue
   
   private lazy var count = {
-    AmountOfResultsValue.allCases.count
+    AmountOfResultsOptionValue.allCases.count
   }()
   
-  var value: AmountOfResultsValue
+  var value: AmountOfResultsOptionValue
   
-  init(value: AmountOfResultsValue) {
+  init(value: AmountOfResultsOptionValue) {
     self.value = value
   }
   
  init?(rawValue: Int) {
-    guard let value = AmountOfResultsValue(rawValue: rawValue) else {
+    guard let value = AmountOfResultsOptionValue(rawValue: rawValue) else {
       return nil
     }
     self.init(value: value)

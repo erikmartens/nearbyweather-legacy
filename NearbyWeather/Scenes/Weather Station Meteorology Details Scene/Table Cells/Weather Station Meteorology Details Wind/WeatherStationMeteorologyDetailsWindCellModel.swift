@@ -27,7 +27,7 @@ struct WeatherStationMeteorologyDetailsWindCellModel {
   init(
     windSpeed: Double,
     windDirectionDegrees: Double,
-    dimensionaUnitsPreference: DimensionalUnitsOption
+    dimensionaUnitsPreference: DimensionalUnitOption
   ) {
     self.init(
       windSpeedString: ConversionWorker.windspeedDescriptor(

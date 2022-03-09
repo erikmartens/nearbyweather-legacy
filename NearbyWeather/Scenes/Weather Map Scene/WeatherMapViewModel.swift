@@ -113,6 +113,8 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
   }
 }
 
+// MARK: - Observations
+
 extension WeatherMapViewModel {
   
   func observeDataSource() {
@@ -180,16 +182,14 @@ extension WeatherMapViewModel {
   
   func observeUserTapEvents() {    
     onDidTapMapTypeBarButtonSubject
-      .flatMapLatest { [unowned preferredMapTypeObservable] in preferredMapTypeObservable.take(1) } // take 1 so the observable does not retrigger from the user selection
-      .subscribe(onNext: { [weak steps] preferredMapType in
-        steps?.accept(MapStep.changeMapTypeAlert(selectionDelegate: self, currentSelectedOptionValue: preferredMapType))
+      .subscribe(onNext: { [weak steps] _ in
+        steps?.accept(MapStep.changeMapTypeAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapAmountOfResultsBarButtonSubject
-      .flatMapLatest { [unowned preferredAmountOfResultsObservable] in preferredAmountOfResultsObservable.take(1) } // take 1 so the observable does not retrigger from the user selection
-      .subscribe(onNext: { [weak steps] preferredAmountOfResults in
-        steps?.accept(MapStep.changeAmountOfResultsAlert(selectionDelegate: self, currentSelectedOptionValue: preferredAmountOfResults))
+      .subscribe(onNext: { [weak steps] _ in
+        steps?.accept(MapStep.changeAmountOfResultsAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     

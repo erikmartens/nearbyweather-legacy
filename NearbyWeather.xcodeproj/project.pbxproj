@@ -75,6 +75,9 @@
 		F217CB8C27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8B27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift */; };
 		F217CB8E27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8D27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift */; };
 		F217CB9027D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB8F27D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift */; };
+		F217CB9627D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB9527D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift */; };
+		F217CB9827D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB9727D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift */; };
+		F217CB9A27D8FF4500DAC947 /* DimensionalUnitSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB9927D8FF4500DAC947 /* DimensionalUnitSelectionAlert.swift */; };
 		F22A21F625A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */; };
 		F22A220425A36B5500C97844 /* SortingOrientationSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */; };
 		F22A221625A4A57B00C97844 /* WeatherListAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */; };
@@ -349,6 +352,9 @@
 		F217CB8B27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTemperatureOnAppIconOption.swift; sourceTree = "<group>"; };
 		F217CB8D27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBookmarksItemsSubSection1.swift; sourceTree = "<group>"; };
 		F217CB8F27D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPreferencesItemsSubSection1.swift; sourceTree = "<group>"; };
+		F217CB9527D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredBookmarkSelectionAlert.swift; sourceTree = "<group>"; };
+		F217CB9727D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureUnitSelectionAlert.swift; sourceTree = "<group>"; };
+		F217CB9927D8FF4500DAC947 /* DimensionalUnitSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionalUnitSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfNearbyResultsSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrientationSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListAlertTableViewCell.swift; sourceTree = "<group>"; };
@@ -710,6 +716,7 @@
 				F217CB6427D4F96200DAC947 /* SettingsTableViewDataSource.swift */,
 				F217CB6627D4F96E00DAC947 /* Table View Sections */,
 				F217CB6727D4F98000DAC947 /* Table View Cells */,
+				F217CB9127D8F7FC00DAC947 /* Alert Controllers */,
 			);
 			path = "Settings Scene 2";
 			sourceTree = "<group>";
@@ -765,6 +772,40 @@
 				F217CB8727D50E2D00DAC947 /* SettingsImagedSingleLabelToggleCell.swift */,
 			);
 			path = "Settings Imaged Single Label Toggle Cell";
+			sourceTree = "<group>";
+		};
+		F217CB9127D8F7FC00DAC947 /* Alert Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F217CB9227D8F81300DAC947 /* Preferred Bookmark Alert */,
+				F217CB9327D8F82A00DAC947 /* Temperature Unit Alert */,
+				F217CB9427D8F84800DAC947 /* Dimensional Unit Alert */,
+			);
+			path = "Alert Controllers";
+			sourceTree = "<group>";
+		};
+		F217CB9227D8F81300DAC947 /* Preferred Bookmark Alert */ = {
+			isa = PBXGroup;
+			children = (
+				F217CB9527D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift */,
+			);
+			path = "Preferred Bookmark Alert";
+			sourceTree = "<group>";
+		};
+		F217CB9327D8F82A00DAC947 /* Temperature Unit Alert */ = {
+			isa = PBXGroup;
+			children = (
+				F217CB9727D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift */,
+			);
+			path = "Temperature Unit Alert";
+			sourceTree = "<group>";
+		};
+		F217CB9427D8F84800DAC947 /* Dimensional Unit Alert */ = {
+			isa = PBXGroup;
+			children = (
+				F217CB9927D8FF4500DAC947 /* DimensionalUnitSelectionAlert.swift */,
+			);
+			path = "Dimensional Unit Alert";
 			sourceTree = "<group>";
 		};
 		F22A21FA25A36A6500C97844 /* Sorting Orientation */ = {
@@ -1729,9 +1770,11 @@
 				F237288E244C93BD00964C49 /* Factory+UINavigationController.swift in Sources */,
 				F2A5CAA62005762A0071BFFB /* ConversionWorker.swift in Sources */,
 				F217CB6127D4F92D00DAC947 /* SettingsViewModel.swift in Sources */,
+				F217CB9A27D8FF4500DAC947 /* DimensionalUnitSelectionAlert.swift in Sources */,
 				F2FE3F01200285B100EBC429 /* WeatherStationService.swift in Sources */,
 				F213FA3923F9EF9A00F094D8 /* AmountOfResultsOption.swift in Sources */,
 				F266995A1E9ADBC300498F99 /* UserLocationService.swift in Sources */,
+				F217CB9827D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift in Sources */,
 				F25A39732187B1B00054BC7A /* ThirdPartyLibraryDTO.swift in Sources */,
 				F284DDCB245A263900445BFF /* WeatherInformationService2.swift in Sources */,
 				F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */,
@@ -1875,6 +1918,7 @@
 				F284DDD6245CF38800445BFF /* PreferencesService2.swift in Sources */,
 				F20CA13625B35A3A00153E47 /* WeatherStationMeteorologyDetailsMapItemsSection.swift in Sources */,
 				F2060E5B27B9A9BB0066DC8C /* SetPermissionsViewModel.swift in Sources */,
+				F217CB9627D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift in Sources */,
 				F213FA2F23F9EE4200F094D8 /* PreferredBookmarkOption.swift in Sources */,
 				F217CB8627D50DF700DAC947 /* SettingsImagedSingleLabelToggleCellModel.swift in Sources */,
 				F217CB6E27D504DA00DAC947 /* BaseTableViewSectionData.swift in Sources */,

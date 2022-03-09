@@ -15,6 +15,12 @@ enum SettingsStep: Step {
   case apiKeyEdit
   case manageLocations
   case addLocation
+  case changePreferredBookmarkAlert(selectionDelegate: PreferredBookmarkSelectionAlertDelegate)
+  case changePreferredBookmarkAlertAdapted(selectionDelegate: PreferredBookmarkSelectionAlertDelegate, selectedOptionValue: PreferredBookmarkOption, boomarkedLocations: [WeatherInformationDTO])
+  case changeTemperatureUnitAlert(selectionDelegate: TemperatureUnitSelectionAlertDelegate)
+  case changeTemperatureUnitAlertAdapted(selectionDelegate: TemperatureUnitSelectionAlertDelegate, selectedOptionValue: TemperatureUnitValue)
+  case changeDimensionalUnitAlert(selectionDelegate: DimensionalUnitSelectionAlertDelegate)
+  case changeDimensionalUnitAlertAdapted(selectionDelegate: DimensionalUnitSelectionAlertDelegate, selectedOptionValue: DistanceVelocityUnitValue)
   case webBrowser(url: URL)
 }
 

@@ -47,8 +47,6 @@ final class MapTypeSelectionAlert {
   let dependencies: Dependencies
   let alertController: UIAlertController
   
-//  override var preferredStyle: UIAlertController.Style { .alert }
-  
   // MARK: - Initialization
   
   init(dependencies: Dependencies) {

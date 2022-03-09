@@ -20,7 +20,7 @@ extension MapFlow {
 
 // MARK: - Class Definition
 
-final class MapFlow: Flow {
+final class MapFlow: Flow { // TODO: rename to WeatherMapFlow
   
   // MARK: - Assets
   
@@ -66,11 +66,15 @@ final class MapFlow: Flow {
       return summonWeatherMapController()
     case let .weatherDetails2(identity):
       return summonWeatherDetailsController2(identity: identity)
-    case let .changeMapTypeAlert(selectionDelegate, currentSelectedOptionValue):
+    case .changeMapTypeAlert(_):
+      return .none // will be handled via `func adapt(step:)`
+    case let .changeMapTypeAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeMapTypeAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
-    case let .changeAmountOfResultsAlert(selectionDelegate, currentSelectedOptionValue):
+    case .changeAmountOfResultsAlert(_):
+      return .none // will be handled via `func adapt(step:)`
+    case let .changeAmountOfResultsAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeAmountOfResultsAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
-    case .focusOnLocationAlert:
+    case .focusOnLocationAlert(_):
       return .none // will be handled via `func adapt(step:)`
     case let .focusOnLocationAlertAdapted(selectionDelegate, weatherInformationDTOs):
       return summonFocusOnLocationAlert(selectionDelegate: selectionDelegate, bookmarkedLocations: weatherInformationDTOs)
@@ -80,36 +84,52 @@ final class MapFlow: Flow {
   }
   
   func adapt(step: Step) -> Single<Step> {
-    if let step = step as? MapStep {
-      switch step {
-      case let .focusOnLocationAlert(selectionDelegate):
-        return Observable
-          .combineLatest(
-            Observable.just(selectionDelegate),
-            dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!
-              .createGetBookmarkedWeatherInformationListObservable()
-              .map { $0.map { $0.entity } },
-            resultSelector: MapStep.focusOnLocationAlertAdapted
-          )
-          .take(1)
-          .asSingle()
-      default:
-        return .just(step)
-      }
+    guard let step = step as? MapStep else {
+      return .just(step)
     }
-    return .just(step)
+    switch step {
+    case let .changeMapTypeAlert(selectionDelegate):
+      return Observable
+        .combineLatest(
+          Observable.just(selectionDelegate),
+          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetMapTypeOptionObservable().map { $0.value }.take(1),
+          resultSelector: MapStep.changeMapTypeAlertAdapted
+        )
+        .take(1)
+        .asSingle()
+    case let .changeAmountOfResultsAlert(selectionDelegate):
+      return Observable
+        .combineLatest(
+          Observable.just(selectionDelegate),
+          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetAmountOfNearbyResultsOptionObservable().map { $0.value }.take(1),
+          resultSelector: MapStep.changeAmountOfResultsAlertAdapted
+        )
+        .take(1)
+        .asSingle()
+    case let .focusOnLocationAlert(selectionDelegate):
+      return Observable
+        .combineLatest(
+          Observable.just(selectionDelegate),
+          dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } }.take(1),
+          resultSelector: MapStep.focusOnLocationAlertAdapted
+        )
+        .take(1)
+        .asSingle()
+    default:
+      return .just(step)
+    }
   }
   
   private func transform(step: Step) -> Step? {
-    if let weatherDetailStep = step as? WeatherDetailStep {
-      switch weatherDetailStep {
-      case .weatherDetails:
-        return nil
-      case .dismiss:
-        return MapStep.dismissChildFlow
-      }
+    guard let weatherDetailStep = step as? WeatherDetailStep else {
+      return step
     }
-    return step
+    switch weatherDetailStep {
+    case .weatherDetails:
+      return nil
+    case .dismiss:
+      return MapStep.dismissChildFlow
+    }
   }
 }
 

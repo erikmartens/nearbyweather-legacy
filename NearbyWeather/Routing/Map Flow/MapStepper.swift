@@ -9,17 +9,19 @@
 import RxCocoa
 import RxFlow
 
-enum MapStep: Step {
+enum MapStep: Step { // TODO: rename to WeatherMapStep
   case map
   case weatherDetails2(identity: PersistencyModelIdentity)
-  case changeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeValue)
-  case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue)
+  case changeMapTypeAlert(selectionDelegate: MapTypeSelectionAlertDelegate)
+  case changeMapTypeAlertAdapted(selectionDelegate: MapTypeSelectionAlertDelegate, currentSelectedOptionValue: MapTypeValue)
+  case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate)
+  case changeAmountOfResultsAlertAdapted(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue)
   case focusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate)
   case focusOnLocationAlertAdapted(selectionDelegate: FocusOnLocationSelectionAlertDelegate, weatherInformationDTOs: [WeatherInformationDTO])
   case dismissChildFlow
 }
 
-final class MapStepper: Stepper {
+final class MapStepper: Stepper { // TODO: rename to WeatherMapStepper
   
   var steps = PublishRelay<Step>()
   

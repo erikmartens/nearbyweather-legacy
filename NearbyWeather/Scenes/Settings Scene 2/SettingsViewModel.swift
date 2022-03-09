@@ -15,7 +15,7 @@ import CoreLocation
 
 extension SettingsViewModel {
   struct Dependencies {
-    let weatherStationService: WeatherStationBookmarkReading
+    let weatherStationService: WeatherStationBookmarkReading & WeatherStationBookmarkSetting
     let preferencesService: SettingsPreferencesSetting & SettingsPreferencesReading
   }
 }
@@ -203,9 +203,7 @@ extension SettingsViewModel {
         bookmarksSubSection1Observable,
         preferencesMainSectionObservable,
         preferencesSubSection1Observable,
-        resultSelector: { sect0, sect1, sect2, sect3, sect4, sect5 -> [TableViewSectionDataProtocol] in
-          [sect0, sect1, sect2, sect3, sect4, sect5]
-        }
+        resultSelector: { [$0, $1, $2, $3, $4, $5] }
       )
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
@@ -221,16 +219,109 @@ extension SettingsViewModel {
 extension SettingsViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
-    
+    _ = Observable
+      .just(indexPath)
+      .map(mapIndexPathToRoutingIntent)
+      .filterNil()
+      .take(1)
+      .asSingle()
+      .subscribe(onSuccess: steps.accept)
   }
 }
 
-// MARK: - Delegates
+extension SettingsViewModel: PreferredBookmarkSelectionAlertDelegate {
+  
+  func didSelectPreferredBookmarkOption(_ option: PreferredBookmarkOption) {
+    _ = dependencies.weatherStationService
+      .createSetPreferredBookmarkCompletable(option)
+      .subscribe()
+  }
+}
+
+extension SettingsViewModel: TemperatureUnitSelectionAlertDelegate {
+  
+  func didSelectTemperatureUnitOption(_ selectedOption: TemperatureUnitOption) {
+    _ = dependencies.preferencesService
+      .createSetTemperatureUnitOptionCompletable(selectedOption)
+      .subscribe()
+  }
+}
+
+extension SettingsViewModel: DimensionalUnitSelectionAlertDelegate {
+  
+  func didSelectDimensionalUnitOption(_ selectedOption: DimensionalUnitsOption) {
+    _ = dependencies.preferencesService
+      .createSetDimensionalUnitsOptionCompletable(selectedOption)
+      .subscribe()
+  }
+}
 
 // MARK: - Helpers
 
 private extension SettingsViewModel {
   
+  func mapIndexPathToRoutingIntent(_ indexPath: IndexPath) -> SettingsStep? { // swiftlint:disable:this cyclomatic_complexity
+    switch indexPath.section {
+    /// General Section
+    case 0:
+      switch indexPath.row {
+      case 0:
+        return SettingsStep.about
+      default:
+        return nil
+      }
+    ///  OpenWeatherMap Api Section
+    case 1:
+      switch indexPath.row {
+      case 0:
+        return SettingsStep.apiKeyEdit
+      case 1:
+        return SettingsStep.webBrowser(url: Constants.Urls.kOpenWeatherMapInstructionsUrl)
+      default:
+        return nil
+      }
+    ///  Bookmarks Section Main
+    case 2:
+      switch indexPath.row {
+      case 0:
+        return SettingsStep.manageLocations
+      case 1:
+        return SettingsStep.addLocation
+      default:
+        return nil
+      }
+    ///  Bookmarks Section Sub 1
+    case 3:
+      switch indexPath.row {
+      case 0:
+        return nil
+      case 1:
+        return SettingsStep.changePreferredBookmarkAlert(selectionDelegate: self)
+      default:
+        return nil
+      }
+    ///  Preferences Section Main
+    case 4:
+      switch indexPath.row {
+      case 0:
+        return nil
+      default:
+        return nil
+      }
+    ///  Preferences Section Sub 1
+    case 5:
+      switch indexPath.row {
+      case 0:
+        return SettingsStep.changeDimensionalUnitAlert(selectionDelegate: self)
+      case 1:
+        return SettingsStep.changeDimensionalUnitAlert(selectionDelegate: self)
+      default:
+        return nil
+      }
+    default:
+      return nil
+    }
+  }
 }
 
 // MARK: - Helper Extensions

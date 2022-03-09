@@ -162,23 +162,20 @@ extension WeatherListViewModel {
   
   func observeUserTapEvents() {
     onDidTapListTypeBarButtonSubject
-      .flatMapLatest { [unowned preferredListTypeObservable] in preferredListTypeObservable.take(1) } // take 1 so the observable does not retrigger from the user selection
-      .subscribe(onNext: { [weak steps] preferredListType in
-        steps?.accept(ListStep.changeListTypeAlert(selectionDelegate: self, currentSelectedOptionValue: preferredListType))
+      .subscribe(onNext: { [weak steps] _ in
+        steps?.accept(ListStep.changeListTypeAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapAmountOfResultsBarButtonSubject
-      .flatMapLatest { [unowned preferredAmountOfResultsObservable] in preferredAmountOfResultsObservable.take(1) } // take 1 so the observable does not retrigger from the user selection
-      .subscribe(onNext: { [weak steps] preferredAmountOfResults in
-        steps?.accept(ListStep.changeAmountOfResultsAlert(selectionDelegate: self, currentSelectedOptionValue: preferredAmountOfResults))
+      .subscribe(onNext: { [weak steps] _ in
+        steps?.accept(ListStep.changeAmountOfResultsAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapSortingOrientationBarButtonSubject
-      .flatMapLatest { [unowned preferredSortingOrientationObservable] in preferredSortingOrientationObservable.take(1) } // take 1 so the observable does not retrigger from the user selection
-      .subscribe(onNext: { [weak steps] preferredSortingOrientation in
-        steps?.accept(ListStep.changeSortingOrientationAlert(selectionDelegate: self, currentSelectedOptionValue: preferredSortingOrientation))
+      .subscribe(onNext: { [weak steps] _ in
+        steps?.accept(ListStep.changeSortingOrientationAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     

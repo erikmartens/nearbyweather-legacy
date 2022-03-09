@@ -13,7 +13,7 @@ extension Factory {
   struct AlertAction: FactoryFunction {
     
     enum AlertActionType {
-      case standard(title: String, handler: ((UIAlertAction) -> Void)?)
+      case standard(title: String, destructive: Bool = false, handler: ((UIAlertAction) -> Void)?)
       case image(title: String, image: UIImage?, handler: ((UIAlertAction) -> Void)?)
       case cancel
     }
@@ -23,8 +23,8 @@ extension Factory {
     
     static func make(fromType type: InputType) -> ResultType {
       switch type {
-      case let .standard(title, handler):
-        return UIAlertAction(title: title, style: .default, handler: handler)
+      case let .standard(title, destructive, handler):
+        return UIAlertAction(title: title, style: (destructive ? .destructive : .default), handler: handler)
       case let .image(title, image, handler):
         let action = UIAlertAction(title: title, style: .default, handler: handler)
         action.setValue(image, forKey: Constants.Keys.KeyValueBindings.kImage)

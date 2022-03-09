@@ -6,6 +6,7 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
+import RxSwift
 import RxFlow
 import Swinject
 
@@ -19,7 +20,7 @@ extension ListFlow {
 
 // MARK: - Class Definition
 
-final class ListFlow: Flow {
+final class ListFlow: Flow {  // TODO: rename to WeatherListFlow
   
   // MARK: - Assets
   
@@ -65,14 +66,57 @@ final class ListFlow: Flow {
       return summonEmptyWeatherListController()
     case let .weatherDetails2(identity):
       return summonWeatherDetailsController2(identity: identity)
-    case let .changeListTypeAlert(selectionDelegate, currentSelectedOptionValue):
+    case .changeListTypeAlert(_):
+      return .none // will be handled via `func adapt(step:)`
+    case let .changeListTypeAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeListTypeAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
-    case let .changeAmountOfResultsAlert(selectionDelegate, currentSelectedOptionValue):
+    case .changeAmountOfResultsAlert(_):
+      return .none // will be handled via `func adapt(step:)`
+    case let .changeAmountOfResultsAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeAmountOfResultsAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
-    case let .changeSortingOrientationAlert(selectionDelegate, currentSelectedOptionValue):
+    case .changeSortingOrientationAlert(_):
+      return .none // will be handled via `func adapt(step:)`
+    case let .changeSortingOrientationAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeSortingOrientationAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
     case .dismissChildFlow:
       return dismissChildFlow()
+    }
+  }
+  
+  func adapt(step: Step) -> Single<Step> {
+    guard let step = step as? ListStep else {
+      return .just(step)
+    }
+    switch step {
+    case let .changeListTypeAlert(selectionDelegate):
+      return Observable
+        .combineLatest(
+          Observable.just(selectionDelegate),
+          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetListTypeOptionObservable().map { $0.value }.take(1),
+          resultSelector: ListStep.changeListTypeAlertAdapted
+        )
+        .take(1)
+        .asSingle()
+    case let .changeAmountOfResultsAlert(selectionDelegate):
+      return Observable
+        .combineLatest(
+          Observable.just(selectionDelegate),
+          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetAmountOfNearbyResultsOptionObservable().map { $0.value }.take(1),
+          resultSelector: ListStep.changeAmountOfResultsAlertAdapted
+        )
+        .take(1)
+        .asSingle()
+    case let .changeSortingOrientationAlert(selectionDelegate):
+      return Observable
+        .combineLatest(
+          Observable.just(selectionDelegate),
+          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetSortingOrientationOptionObservable().map { $0.value }.take(1),
+          resultSelector: ListStep.changeSortingOrientationAlertAdapted
+        )
+        .take(1)
+        .asSingle()
+    default:
+      return .just(step)
     }
   }
   

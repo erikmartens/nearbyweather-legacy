@@ -11,17 +11,20 @@ import RxCocoa
 import RxFlow
 import Swinject
 
-enum ListStep: Step {
+enum ListStep: Step { // TODO: rename to WeatherListStep
   case list
   case emptyList
   case weatherDetails2(identity: PersistencyModelIdentity)
-  case changeListTypeAlert(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeValue)
-  case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue)
-  case changeSortingOrientationAlert(selectionDelegate: SortingOrientationSelectionAlertDelegate, currentSelectedOptionValue: SortingOrientationValue)
+  case changeListTypeAlert(selectionDelegate: ListTypeSelectionAlertDelegate)
+  case changeListTypeAlertAdapted(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeValue)
+  case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate)
+  case changeAmountOfResultsAlertAdapted(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsValue)
+  case changeSortingOrientationAlert(selectionDelegate: SortingOrientationSelectionAlertDelegate)
+  case changeSortingOrientationAlertAdapted(selectionDelegate: SortingOrientationSelectionAlertDelegate, currentSelectedOptionValue: SortingOrientationValue)
   case dismissChildFlow
 }
 
-final class ListStepper: Stepper {
+final class ListStepper: Stepper { // TODO: rename to WeatherListStepper
   
   // MARK: - Assets
   

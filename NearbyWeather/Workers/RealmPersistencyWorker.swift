@@ -188,7 +188,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
           completable(.error(error))
         }
         return Disposables.create()
-    }
+      }
   }
   
   /// save a new resource or update an already existing resource for the specified identity

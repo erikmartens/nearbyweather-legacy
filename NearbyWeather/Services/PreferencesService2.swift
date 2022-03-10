@@ -278,7 +278,7 @@ extension PreferencesService2 {
         type: RefreshOnAppStartOption.self
       )
       .map { $0?.entity }
-      .replaceNilWith(RefreshOnAppStartOption(value: .yes)) // default value
+      .replaceNilWith(RefreshOnAppStartOption(value: .no)) // default value
   }
   
   func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable {
@@ -307,7 +307,7 @@ extension PreferencesService2 {
         type: ShowTemperatureOnAppIconOption.self
       )
       .map { $0?.entity }
-      .replaceNilWith(ShowTemperatureOnAppIconOption(value: .no)) // default value
+      .replaceNilWith(ShowTemperatureOnAppIconOption(value: .yes)) // default value
   }
 }
 

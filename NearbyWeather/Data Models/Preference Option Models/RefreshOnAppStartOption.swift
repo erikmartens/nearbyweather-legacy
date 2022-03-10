@@ -11,6 +11,13 @@ import Foundation
 enum RefreshOnAppStartOptionValue: Int, CaseIterable, Codable, Equatable {
   case no
   case yes
+  
+  var boolValue: Bool {
+    switch self {
+    case .no: return false
+    case .yes: return true
+    }
+  }
 }
 
 struct RefreshOnAppStartOption: Codable, Equatable, PreferencesOption {
@@ -37,9 +44,6 @@ struct RefreshOnAppStartOption: Codable, Equatable, PreferencesOption {
   }
   
   var rawRepresentableValue: Bool {
-    switch value {
-    case .no: return false
-    case .yes: return true
-    }
+    value.boolValue
   }
 }

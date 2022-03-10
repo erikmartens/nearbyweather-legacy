@@ -85,6 +85,14 @@ extension SettingsImagedSingleLabelToggleCell {
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
+  
+  func bindUserInputToViewModel(_ cellViewModel: CellViewModel) {
+    toggleSwitch.rx
+      .controlEvent(.valueChanged)
+      .withLatestFrom(toggleSwitch.rx.value)
+      .bind(to: cellViewModel.onDidFlipToggleSwitchSubject)
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Cell Composition

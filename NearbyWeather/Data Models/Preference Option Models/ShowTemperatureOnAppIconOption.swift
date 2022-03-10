@@ -11,6 +11,13 @@ import Foundation
 enum ShowTemperatureOnAppIconOptionValue: Int, CaseIterable, Codable, Equatable {
   case no
   case yes
+  
+  var boolValue: Bool {
+    switch self {
+    case .no: return false
+    case .yes: return true
+    }
+  }
 }
 
 struct ShowTemperatureOnAppIconOption: Codable, Equatable, PreferencesOption {
@@ -37,9 +44,6 @@ struct ShowTemperatureOnAppIconOption: Codable, Equatable, PreferencesOption {
   }
   
   var rawRepresentableValue: Bool {
-    switch value {
-    case .no: return false
-    case .yes: return true
-    }
+    value.boolValue
   }
 }

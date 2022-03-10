@@ -41,6 +41,9 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Events
   
+  let onDidChangeAllowTempOnAppIconOptionSubject = PublishSubject<Bool>()
+  let onDidChangeRefreshOnAppStartOptionSubject = PublishSubject<Bool>()
+  
   // MARK: - Drivers
   
   // MARK: - Observables
@@ -142,7 +145,8 @@ extension SettingsViewModel {
         symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
         symbolImage: R.image.badge(),
         labelText: R.string.localizable.show_temp_on_icon(),
-        isToggleOnObservable: allowTempOnAppIconObservable
+        isToggleOnObservable: allowTempOnAppIconObservable,
+        didFlipToggleSwitchSubject: onDidChangeAllowTempOnAppIconOptionSubject
       )),
       SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
         symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
@@ -164,7 +168,8 @@ extension SettingsViewModel {
         symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.gray,
         symbolImage: R.image.reload(),
         labelText: R.string.localizable.refresh_on_app_start(),
-        isToggleOnObservable: refreshOnAppStartObservable
+        isToggleOnObservable: refreshOnAppStartObservable,
+        didFlipToggleSwitchSubject: onDidChangeRefreshOnAppStartOptionSubject
       ))
     ]
     
@@ -210,7 +215,23 @@ extension SettingsViewModel {
   }
   
   func observeUserTapEvents() {
-    // nothing to do
+    onDidChangeAllowTempOnAppIconOptionSubject
+      .flatMapLatest { [dependencies] changedValue in
+        dependencies.preferencesService
+          .createSetShowTemperatureOnAppIconOptionCompletable(ShowTemperatureOnAppIconOption(value: changedValue ? .yes : .no))
+          .asObservable()
+      }
+      .subscribe()
+      .disposed(by: disposeBag)
+    
+    onDidChangeRefreshOnAppStartOptionSubject
+      .flatMapLatest { [dependencies] changedValue in
+        dependencies.preferencesService
+          .createSetRefreshOnAppStartOptionCompletable(RefreshOnAppStartOption(value: changedValue ? .yes : .no))
+          .asObservable()
+      }
+      .subscribe()
+      .disposed(by: disposeBag)
   }
 }
 

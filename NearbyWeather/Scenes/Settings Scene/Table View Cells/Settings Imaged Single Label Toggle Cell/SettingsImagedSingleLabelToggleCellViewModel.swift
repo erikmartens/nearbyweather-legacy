@@ -17,6 +17,7 @@ extension SettingsImagedSingleLabelToggleCellViewModel {
     let symbolImage: UIImage?
     let labelText: String
     let isToggleOnObservable: Observable<Bool>
+    let didFlipToggleSwitchSubject: PublishSubject<Bool>
   }
 }
 
@@ -24,11 +25,19 @@ extension SettingsImagedSingleLabelToggleCellViewModel {
 
 final class SettingsImagedSingleLabelToggleCellViewModel: NSObject, BaseCellViewModel {
   
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies
 
   // MARK: - Events
+  
+  let onDidFlipToggleSwitchSubject = PublishSubject<Bool>()
+  
+  // MARK: - Drivers
   
   lazy var cellModelDriver: Driver<SettingsImagedSingleLabelToggleCellModel> = Self.createCellModelDriver(with: dependencies)
 
@@ -43,6 +52,19 @@ final class SettingsImagedSingleLabelToggleCellViewModel: NSObject, BaseCellView
   func observeEvents() {
     observeDataSource()
     observeUserTapEvents()
+  }
+}
+
+extension SettingsImagedSingleLabelToggleCellViewModel {
+  
+  func observeDataSource() {
+    // nothing to do
+  }
+  
+  func observeUserTapEvents() {
+    onDidFlipToggleSwitchSubject
+      .bind(to: dependencies.didFlipToggleSwitchSubject)
+      .disposed(by: disposeBag)
   }
 }
 

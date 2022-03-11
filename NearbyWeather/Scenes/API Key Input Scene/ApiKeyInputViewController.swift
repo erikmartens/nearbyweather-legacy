@@ -81,6 +81,11 @@ extension ApiKeyInputViewController {
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {
     viewModel
+      .saveBarButtonIsEnabledDriver
+      .drive(onNext: { [weak saveBarButtonItem] isEnabled in saveBarButtonItem?.isEnabled = isEnabled })
+      .disposed(by: disposeBag)
+    
+    viewModel
       .tableDataSource
       .sectionDataSources
       .map { _ in () }

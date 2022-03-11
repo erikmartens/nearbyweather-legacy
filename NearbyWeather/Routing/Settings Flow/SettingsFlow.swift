@@ -153,7 +153,8 @@ private extension SettingsFlow {
   
   func summonAboutController() -> FlowContributors {
     let aboutAppFlow = AboutAppFlow(dependencies: AboutAppFlow.Dependencies(
-      rootViewController: rootViewController,
+      flowPresentationStyle: .pushed(navigationController: rootViewController),
+      endingStep: SettingsStep.pop,
       dependencyContainer: dependencies.dependencyContainer
     ))
     let aboutAppStepper = AboutAppStepper()
@@ -162,9 +163,14 @@ private extension SettingsFlow {
   }
   
   func summonApiKeyEditController() -> FlowContributors {
-    let apiKeyEditController = SettingsInputTableViewController(style: SettingsFlow.Definitions.preferredTableViewStyle)
-    rootViewController.pushViewController(apiKeyEditController, animated: true)
-    return .one(flowContributor: .contribute(withNext: apiKeyEditController))
+    let apiKeyInputFlow = ApiKeyInputFlow(dependencies: ApiKeyInputFlow.Dependencies(
+      flowPresentationStyle: .pushed(navigationController: rootViewController),
+      endingStep: SettingsStep.pop,
+      dependencyContainer: dependencies.dependencyContainer
+    ))
+    let apiKeyInputStepper = ApiKeyInputStepper()
+    
+    return .one(flowContributor: .contribute(withNextPresentable: apiKeyInputFlow, withNextStepper: apiKeyInputStepper))
   }
   
   func summonManageLocationsController() -> FlowContributors {

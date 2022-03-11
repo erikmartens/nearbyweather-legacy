@@ -11,21 +11,12 @@ import RxAlamofire
 
 // MARK: - Domain-Specific Errors
 
-extension ApiKeyService2 {
-  enum DomainError: String, Error {
-    var domain: String { "WeatherInformationService" }
-    
-    case apiKeyMissingError = "Trying to request data from OpenWeatherMap, but no API key exists."
-    case apiKeyInvalidError = "Trying to request data from OpenWeatherMap, but the API key is invalid."
-  }
-}
-
 // MARK: - Domain-Specific Types
 
 extension ApiKeyService2 {
   enum ApiKeyValidity {
     case valid(apiKey: String)
-    case invalid
+    case invalid(invalidApiKey: String)
     case missing
     case unknown(apiKey: String)
     
@@ -125,7 +116,7 @@ extension ApiKeyService2: ApiKeyValidity {
           .requestData(.get, Constants.Urls.kOpenWeatherMapApitTestRequestUrl(with: apiKey))
           .map { response -> ApiKeyService2.ApiKeyValidity in
             if response.0.statusCode == 401 {
-              return .invalid
+              return .invalid(invalidApiKey: apiKey)
             }
             guard response.0.statusCode == 200 else {
               return .unknown(apiKey: apiKey) // another http error was returned and it cannot be determined whether the key is valid
@@ -162,10 +153,10 @@ extension ApiKeyService2: ApiKeyPersistence {
         switch apiKeyValidity {
         case let .valid(apiKey):
           return apiKey
-        case .invalid:
-          throw ApiKeyService2.DomainError.apiKeyInvalidError
+        case let .invalid(invalidApiKey):
+          return invalidApiKey
         case .missing:
-          throw ApiKeyService2.DomainError.apiKeyMissingError
+          return ""
         case let .unknown(apiKey):
           return apiKey
         }

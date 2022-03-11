@@ -41,8 +41,11 @@ final class ApiKeyInputViewModel: NSObject, Stepper, BaseViewModel {
   
   let onDidTapSaveBarButtonSubject = PublishSubject<Void>()
   let inputTextFieldTextSubject = PublishSubject<String?>()
+  private let saveBarButtonIsEnabledSubject = PublishSubject<Bool>()
   
   // MARK: - Drivers
+  
+  lazy var saveBarButtonIsEnabledDriver = saveBarButtonIsEnabledSubject.asDriver(onErrorJustReturn: false)
   
   // MARK: - Observables
   
@@ -99,14 +102,19 @@ extension ApiKeyInputViewModel {
   }
   
   func observeUserTapEvents() {
+    inputTextFieldTextSubject
+      .map { ($0?.count ?? 0) == Constants.Values.ApiKey.kOpenWeatherMapApiKeyLength }
+      .bind(to: saveBarButtonIsEnabledSubject)
+      .disposed(by: disposeBag)
+    
     onDidTapSaveBarButtonSubject
       .withLatestFrom(inputTextFieldTextSubject)
       .filterNil()
-      .filter { $0.count == 32 }
-      .flatMapLatest { [dependencies] newApiKey in
-        dependencies.apiKeyService.createSetApiKeyCompletable(newApiKey).asObservable()
-      }
-      .map { _ -> ApiKeyInputStep in ApiKeyInputStep.pop }
+      .filter { $0.count == Constants.Values.ApiKey.kOpenWeatherMapApiKeyLength }
+      .do(onNext: { [dependencies] newApiKey in
+        _ = dependencies.apiKeyService.createSetApiKeyCompletable(newApiKey).subscribe()
+      })
+      .map { _ in ApiKeyInputStep.end }
       .bind(to: steps)
       .disposed(by: disposeBag)
   }

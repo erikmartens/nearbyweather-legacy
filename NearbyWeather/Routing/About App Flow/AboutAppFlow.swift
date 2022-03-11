@@ -14,7 +14,8 @@ import MessageUI
 
 extension AboutAppFlow {
   struct Dependencies {
-    let rootViewController: UINavigationController
+    let flowPresentationStyle: FlowPresentationStyle
+    let endingStep: Step
     let dependencyContainer: Container
   }
 }
@@ -29,9 +30,14 @@ final class AboutAppFlow: Flow {
     rootViewController
   }
   
-  var rootViewController: UINavigationController {
-    dependencies.rootViewController
-  }
+  lazy var rootViewController: UINavigationController = {
+    switch dependencies.flowPresentationStyle {
+    case let .pushed(rootViewController):
+      return rootViewController
+    case .presented:
+      return Factory.NavigationController.make(fromType: .standard)
+    }
+  }()
   
   // MARK: - Properties
   
@@ -70,9 +76,9 @@ final class AboutAppFlow: Flow {
       return summonSafariViewController(with: url)
     case let .externalApp(url):
       return summonExternalApp(with: url)
-    case .dismiss:
-      return dismissAboutAppController()
-    
+    case .end:
+      return endAboutAppFlow()
+      
     }
   }
 }
@@ -85,8 +91,13 @@ private extension AboutAppFlow {
       weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
       preferencesService: dependencies.dependencyContainer.resolve(PreferencesService2.self)!
     ))
+    switch dependencies.flowPresentationStyle {
+    case .pushed:
+      rootViewController.pushViewController(aboutAppViewController, animated: true)
+    case .presented:
+      rootViewController.setViewControllers([aboutAppViewController], animated: false)
+    }
     
-    rootViewController.pushViewController(aboutAppViewController, animated: true)
     return .one(flowContributor: .contribute(withNextPresentable: aboutAppViewController, withNextStepper: aboutAppViewController.viewModel))
   }
   
@@ -116,8 +127,8 @@ private extension AboutAppFlow {
     return .none
   }
   
-  func dismissAboutAppController() -> FlowContributors {
-    .end(forwardToParentFlowWithStep: SettingsStep.pop)
+  func endAboutAppFlow() -> FlowContributors {
+    .end(forwardToParentFlowWithStep: dependencies.endingStep)
   }
 }
 

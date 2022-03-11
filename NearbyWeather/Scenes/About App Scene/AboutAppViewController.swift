@@ -1,8 +1,8 @@
 //
-//  SettingsViewController.swift
+//  AboutAppViewController.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 06.03.22.
+//  Created by Erik Maximilian Martens on 11.03.22.
 //  Copyright © 2022 Erik Maximilian Martens. All rights reserved.
 //
 
@@ -11,15 +11,15 @@ import RxSwift
 
 // MARK: - Definitions
 
-private extension SettingsViewController {
+private extension AboutAppViewController {
   struct Definitions {}
 }
 
 // MARK: - Class Definition
 
-final class SettingsViewController: UIViewController, BaseViewController {
+final class AboutAppViewController: UIViewController, BaseViewController {
   
-  typealias ViewModel = SettingsViewModel
+  typealias ViewModel = AboutAppViewModel
   
   // MARK: - UIComponents
   
@@ -36,7 +36,7 @@ final class SettingsViewController: UIViewController, BaseViewController {
   // MARK: - Initialization
   
   required init(dependencies: ViewModel.Dependencies) {
-    viewModel = SettingsViewModel(dependencies: dependencies)
+    viewModel = AboutAppViewModel(dependencies: dependencies)
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -70,7 +70,7 @@ final class SettingsViewController: UIViewController, BaseViewController {
 
 // MARK: - ViewModel Bindings
 
-extension SettingsViewController {
+extension AboutAppViewController {
   
   func setupBindings() {
     viewModel.observeEvents()
@@ -87,20 +87,25 @@ extension SettingsViewController {
       .drive(onNext: { [weak tableView] in tableView?.reloadData() })
       .disposed(by: disposeBag)
   }
+  
+  func bindUserInputToViewModel(_ viewModel: ViewModel) {
+    // nothing to do
+  }
 }
 
 // MARK: - Setup
 
-private extension SettingsViewController {
+private extension AboutAppViewController {
   
   func setupUiComponents() {
     tableView.dataSource = viewModel.tableDataSource
     tableView.delegate = viewModel.tableDelegate
     
     tableView.registerCells([
-      SettingsImagedSingleLabelCell.self,
-      SettingsImagedDualLabelCell.self,
-      SettingsImagedSingleLabelToggleCell.self
+      SettingsAppVersionCell.self,
+      SettingsSingleLabelCell.self,
+      SettingsDualLabelSubtitleCell.self,
+      SettingsSingleLabelDualButtonCell.self
     ])
     
     tableView.contentInset = UIEdgeInsets(
@@ -119,8 +124,7 @@ private extension SettingsViewController {
   }
   
   func setupUiAppearance() {
-    title = R.string.localizable.tab_settings()
-    
+    title = R.string.localizable.about()
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

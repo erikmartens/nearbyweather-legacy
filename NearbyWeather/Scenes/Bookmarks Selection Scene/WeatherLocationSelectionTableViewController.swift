@@ -42,7 +42,6 @@ final class WeatherLocationSelectionTableViewController: UITableViewController, 
     searchController.searchResultsUpdater = self
     searchController.searchBar.placeholder = R.string.localizable.search_by_name()
     searchController.hidesNavigationBarDuringPresentation = false
-    searchController.dimsBackgroundDuringPresentation = false
     
     navigationItem.searchController = searchController
     navigationItem.hidesSearchBarWhenScrolling = false

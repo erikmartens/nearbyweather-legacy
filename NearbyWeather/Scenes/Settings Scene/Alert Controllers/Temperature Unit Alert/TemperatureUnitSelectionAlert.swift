@@ -12,7 +12,7 @@ import RxFlow
 
 // MARK: - Delegate
 
-protocol TemperatureUnitSelectionAlertDelegate: class {
+protocol TemperatureUnitSelectionAlertDelegate: AnyObject {
   func didSelectTemperatureUnitOption(_ selectedOption: TemperatureUnitOption)
 }
 

@@ -12,7 +12,7 @@ import RxFlow
 
 // MARK: - Delegate
 
-protocol MapTypeSelectionAlertDelegate: class {
+protocol MapTypeSelectionAlertDelegate: AnyObject {
   func didSelectMapTypeOption(_ selectedOption: MapTypeOption)
 }
 

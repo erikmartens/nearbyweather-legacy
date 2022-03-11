@@ -229,10 +229,6 @@ extension WeatherStationMeteorologyDetailsViewModel {
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
   }
-  
-  func observeUserTapEvents() {
-    // nothing to do - will be used in the future
-  }
 }
 
 // MARK: - Observation Helpers

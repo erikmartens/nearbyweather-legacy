@@ -12,7 +12,7 @@ import RxFlow
 
 // MARK: - Delegate
 
-protocol ListTypeSelectionAlertDelegate: class {
+protocol ListTypeSelectionAlertDelegate: AnyObject {
   func didSelectListTypeOption(_ selectedOption: ListTypeOption)
 }
 

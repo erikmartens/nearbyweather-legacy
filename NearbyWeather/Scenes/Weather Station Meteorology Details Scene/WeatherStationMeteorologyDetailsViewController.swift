@@ -101,10 +101,6 @@ extension WeatherStationMeteorologyDetailsViewController {
       .drive(onNext: { [weak tableView] in tableView?.reloadData() })
       .disposed(by: disposeBag)
   }
-  
-  func bindUserInputToViewModel(_ viewModel: ViewModel) {
-    // nothing to do - will be used in the future
-  }
 }
 
 // MARK: - Setup

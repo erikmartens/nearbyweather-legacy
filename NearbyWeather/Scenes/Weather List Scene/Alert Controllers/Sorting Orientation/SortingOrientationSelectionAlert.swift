@@ -12,7 +12,7 @@ import RxFlow
 
 // MARK: - Delegate
 
-protocol SortingOrientationSelectionAlertDelegate: class {
+protocol SortingOrientationSelectionAlertDelegate: AnyObject {
   func didSortingOrientationOption(_ selectedOption: SortingOrientationOption)
 }
 

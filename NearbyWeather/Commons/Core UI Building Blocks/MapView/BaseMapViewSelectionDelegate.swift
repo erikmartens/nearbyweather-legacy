@@ -8,6 +8,6 @@
 
 import MapKit
 
-protocol BaseMapViewSelectionDelegate: class {
+protocol BaseMapViewSelectionDelegate: AnyObject {
   func didSelectView(for annotationViewModel: BaseAnnotationViewModelProtocol)
 }

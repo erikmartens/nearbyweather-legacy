@@ -12,7 +12,7 @@ import RxFlow
 
 // MARK: - Delegate
 
-protocol AmountOfResultsSelectionAlertDelegate: class {
+protocol AmountOfResultsSelectionAlertDelegate: AnyObject {
   func didSelectAmountOfResultsOption(_ selectedOption: AmountOfResultsOption)
 }
 

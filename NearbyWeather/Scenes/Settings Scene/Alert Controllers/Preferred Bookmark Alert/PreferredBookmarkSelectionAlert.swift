@@ -13,7 +13,7 @@ import RxFlow
 
 // MARK: - Delegate
 
-protocol PreferredBookmarkSelectionAlertDelegate: class {
+protocol PreferredBookmarkSelectionAlertDelegate: AnyObject {
   func didSelectPreferredBookmarkOption(_ option: PreferredBookmarkOption)
 }
 

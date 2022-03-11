@@ -77,6 +77,35 @@
 		F217CB9627D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB9527D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift */; };
 		F217CB9827D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB9727D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift */; };
 		F217CB9A27D8FF4500DAC947 /* DimensionalUnitSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB9927D8FF4500DAC947 /* DimensionalUnitSelectionAlert.swift */; };
+		F217CB9C27DB5D3500DAC947 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB9B27DB5D3500DAC947 /* AboutAppViewController.swift */; };
+		F217CB9E27DB5D6700DAC947 /* AboutAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CB9D27DB5D6700DAC947 /* AboutAppViewModel.swift */; };
+		F217CBA227DB602600DAC947 /* AboutAppTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBA127DB602600DAC947 /* AboutAppTableViewDelegate.swift */; };
+		F217CBA427DB609300DAC947 /* AboutAppTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBA327DB609300DAC947 /* AboutAppTableViewDataSource.swift */; };
+		F217CBAA27DB623A00DAC947 /* AboutAppResourcesItemsMainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBA927DB623A00DAC947 /* AboutAppResourcesItemsMainSection.swift */; };
+		F217CBAC27DB633300DAC947 /* AboutAppResourcesItemsSubSection1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBAB27DB633300DAC947 /* AboutAppResourcesItemsSubSection1.swift */; };
+		F217CBAE27DB638D00DAC947 /* AboutAppContributingItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBAD27DB638D00DAC947 /* AboutAppContributingItemsSection.swift */; };
+		F217CBB027DB63E200DAC947 /* AboutAppContributorsItemsMainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBAF27DB63E200DAC947 /* AboutAppContributorsItemsMainSection.swift */; };
+		F217CBB227DB646100DAC947 /* AboutAppContributorsItemsSubSection1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBB127DB646100DAC947 /* AboutAppContributorsItemsSubSection1.swift */; };
+		F217CBB427DB649A00DAC947 /* AboutAppLibrariesItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBB327DB649A00DAC947 /* AboutAppLibrariesItemsSection.swift */; };
+		F217CBB627DB650600DAC947 /* SettingsAppVersionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBB527DB650600DAC947 /* SettingsAppVersionCellViewModel.swift */; };
+		F217CBB827DB651400DAC947 /* SettingsAppVersionCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBB727DB651400DAC947 /* SettingsAppVersionCellModel.swift */; };
+		F217CBBA27DB652700DAC947 /* SettingsAppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBB927DB652700DAC947 /* SettingsAppVersionCell.swift */; };
+		F217CBBC27DB6AEE00DAC947 /* SettingsSingleLabelCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBBB27DB6AEE00DAC947 /* SettingsSingleLabelCellViewModel.swift */; };
+		F217CBBE27DB6AF900DAC947 /* SettingsSingleLabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBBD27DB6AF900DAC947 /* SettingsSingleLabelCellModel.swift */; };
+		F217CBC027DB6B0800DAC947 /* SettingsSingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBBF27DB6B0800DAC947 /* SettingsSingleLabelCell.swift */; };
+		F217CBC227DB6CDE00DAC947 /* SettingsDualLabelSubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBC127DB6CDE00DAC947 /* SettingsDualLabelSubtitleCell.swift */; };
+		F217CBC427DB6CEA00DAC947 /* SettingsDualLabelSubtitleCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBC327DB6CEA00DAC947 /* SettingsDualLabelSubtitleCellViewModel.swift */; };
+		F217CBC627DB6CF400DAC947 /* SettingsDualLabelSubtitleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBC527DB6CF400DAC947 /* SettingsDualLabelSubtitleCellModel.swift */; };
+		F217CBC827DB6FB600DAC947 /* SettingsSingleLabelDualButtonCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBC727DB6FB600DAC947 /* SettingsSingleLabelDualButtonCellViewModel.swift */; };
+		F217CBCA27DB6FCA00DAC947 /* SettingsSingleLabelDualButtonCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBC927DB6FCA00DAC947 /* SettingsSingleLabelDualButtonCellModel.swift */; };
+		F217CBCC27DB6FD500DAC947 /* SettingsSingleLabelDualButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBCB27DB6FD500DAC947 /* SettingsSingleLabelDualButtonCell.swift */; };
+		F217CBCE27DB772B00DAC947 /* AboutAppVersionItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBCD27DB772B00DAC947 /* AboutAppVersionItemsSection.swift */; };
+		F217CBD127DB7E8B00DAC947 /* AboutAppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD027DB7E8B00DAC947 /* AboutAppFlow.swift */; };
+		F217CBD327DB7E9600DAC947 /* AboutAppStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD227DB7E9600DAC947 /* AboutAppStepper.swift */; };
+		F217CBD827DB889E00DAC947 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD427DB889D00DAC947 /* SingleLabelCell.swift */; };
+		F217CBD927DB889E00DAC947 /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */; };
+		F217CBDA27DB889E00DAC947 /* SubtitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F217CBD627DB889D00DAC947 /* SubtitleCell.xib */; };
+		F217CBDB27DB889E00DAC947 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD727DB889E00DAC947 /* SubtitleCell.swift */; };
 		F22A21F625A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */; };
 		F22A220425A36B5500C97844 /* SortingOrientationSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */; };
 		F22A221625A4A57B00C97844 /* WeatherListAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */; };
@@ -122,7 +151,6 @@
 		F25E125725AE140900342EFE /* WeatherStationMeteorologyDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25E125625AE140900342EFE /* WeatherStationMeteorologyDetailsViewModel.swift */; };
 		F25E125C25AE141D00342EFE /* WeatherStationMeteorologyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25E125B25AE141D00342EFE /* WeatherStationMeteorologyDetailsViewController.swift */; };
 		F25E126225AF27B800342EFE /* WeatherInformationUpdateDaemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25E126125AF27B800342EFE /* WeatherInformationUpdateDaemon.swift */; };
-		F260BDA8244CF0DD00B4357A /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260BDA7244CF0DD00B4357A /* AppVersionCell.swift */; };
 		F260BDAA244CF3CB00B4357A /* UITableViewCell+TableViewCellReuseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260BDA9244CF3CB00B4357A /* UITableViewCell+TableViewCellReuseIdentifiable.swift */; };
 		F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260BDAB244CFAE500B4357A /* Bundle+AppIcon.swift */; };
 		F260BDAE244F7BA700B4357A /* RealmPersistencyWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F260BDAD244F7BA700B4357A /* RealmPersistencyWorker.swift */; };
@@ -130,8 +158,6 @@
 		F26699581E9AD0F100498F99 /* WeatherInformationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699571E9AD0F100498F99 /* WeatherInformationService.swift */; };
 		F266995A1E9ADBC300498F99 /* UserLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26699591E9ADBC300498F99 /* UserLocationService.swift */; };
 		F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26A6D5D20FB6E610033BC49 /* R.generated.swift */; };
-		F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254B2032051F00A1DBD1 /* ButtonCell.swift */; };
-		F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */; };
 		F274FC39202F9A9300049144 /* WeatherNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */; };
 		F274FC3B2030ED5A00049144 /* PreferencesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F274FC3A2030ED5A00049144 /* PreferencesService.swift */; };
 		F277E7E025AC9F570009D59B /* MapTypeSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277E7DF25AC9F570009D59B /* MapTypeSelectionAlert.swift */; };
@@ -142,7 +168,6 @@
 		F282166224608194004E5B08 /* BaseCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166124608194004E5B08 /* BaseCellViewModel.swift */; };
 		F282166524608205004E5B08 /* WeatherListInformationTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166424608205004E5B08 /* WeatherListInformationTableViewCellViewModel.swift */; };
 		F282166724608690004E5B08 /* WeatherListInformationTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166624608690004E5B08 /* WeatherListInformationTableViewCellModel.swift */; };
-		F283D26E1DF39095001B879D /* DualLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283D26D1DF39095001B879D /* DualLabelCell.swift */; };
 		F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F283D2751DF393B2001B879D /* InfoPlist.strings */; };
 		F284DDC42458C07400445BFF /* FileManager+DirectoryUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDC32458C07400445BFF /* FileManager+DirectoryUrl.swift */; };
 		F284DDCB245A263900445BFF /* WeatherInformationService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDCA245A263900445BFF /* WeatherInformationService2.swift */; };
@@ -162,7 +187,6 @@
 		F284DDEC245F792D00445BFF /* WeatherListInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDEB245F792D00445BFF /* WeatherListInformationTableViewCell.swift */; };
 		F284DDF0245F794E00445BFF /* WeatherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDEF245F794E00445BFF /* WeatherListViewModel.swift */; };
 		F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDF1245F796000445BFF /* WeatherListViewController.swift */; };
-		F28CA53D202622C200209397 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CA53C202622C200209397 /* ToggleCell.swift */; };
 		F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */; };
 		F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */; };
 		F28DA8612042258500879E6C /* WeatherLocationManagementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */; };
@@ -175,7 +199,6 @@
 		F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */; };
 		F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */; };
 		F2B8EA001EA11BA800704E90 /* WeatherInformationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8E9FF1EA11BA800704E90 /* WeatherInformationDTO.swift */; };
-		F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */; };
 		F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14523F355370008B0F7 /* Date+String.swift */; };
 		F2D198FE25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D198FD25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift */; };
 		F2D1990625A10D2E004C7753 /* BaseTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1990525A10D2E004C7753 /* BaseTableViewDataSource.swift */; };
@@ -204,10 +227,6 @@
 		F2DB5E9325AB5C6C00E21A56 /* BaseAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DB5E9225AB5C6C00E21A56 /* BaseAnnotationView.swift */; };
 		F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */; };
 		F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEADB23E4CF7900CD513B /* Constants.swift */; };
-		F2DBEAE223E4D71700CD513B /* DualLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE123E4D71700CD513B /* DualLabelCell.xib */; };
-		F2DBEAE423E4D9D200CD513B /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */; };
-		F2DBEAE623E4DC6A00CD513B /* ToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */; };
-		F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */; };
 		F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF023E5F98200CD513B /* TextInputCell.swift */; };
 		F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */; };
 		F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */; };
@@ -228,7 +247,6 @@
 		F2E12F5B25B0996800176087 /* WeatherStationMeteorologyDetailsHeaderItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E12F5A25B0996800176087 /* WeatherStationMeteorologyDetailsHeaderItemsSection.swift */; };
 		F2E12F6025B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E12F5F25B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
-		F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7237923DE2857001189F5 /* SingleLabelCell.swift */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
 		F2F1553E244278D4007A3E90 /* WeatherInformationErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553D244278D4007A3E90 /* WeatherInformationErrorDTO.swift */; };
 		F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */; };
@@ -350,6 +368,35 @@
 		F217CB9527D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredBookmarkSelectionAlert.swift; sourceTree = "<group>"; };
 		F217CB9727D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureUnitSelectionAlert.swift; sourceTree = "<group>"; };
 		F217CB9927D8FF4500DAC947 /* DimensionalUnitSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionalUnitSelectionAlert.swift; sourceTree = "<group>"; };
+		F217CB9B27DB5D3500DAC947 /* AboutAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
+		F217CB9D27DB5D6700DAC947 /* AboutAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewModel.swift; sourceTree = "<group>"; };
+		F217CBA127DB602600DAC947 /* AboutAppTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppTableViewDelegate.swift; sourceTree = "<group>"; };
+		F217CBA327DB609300DAC947 /* AboutAppTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppTableViewDataSource.swift; sourceTree = "<group>"; };
+		F217CBA927DB623A00DAC947 /* AboutAppResourcesItemsMainSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppResourcesItemsMainSection.swift; sourceTree = "<group>"; };
+		F217CBAB27DB633300DAC947 /* AboutAppResourcesItemsSubSection1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppResourcesItemsSubSection1.swift; sourceTree = "<group>"; };
+		F217CBAD27DB638D00DAC947 /* AboutAppContributingItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppContributingItemsSection.swift; sourceTree = "<group>"; };
+		F217CBAF27DB63E200DAC947 /* AboutAppContributorsItemsMainSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppContributorsItemsMainSection.swift; sourceTree = "<group>"; };
+		F217CBB127DB646100DAC947 /* AboutAppContributorsItemsSubSection1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppContributorsItemsSubSection1.swift; sourceTree = "<group>"; };
+		F217CBB327DB649A00DAC947 /* AboutAppLibrariesItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppLibrariesItemsSection.swift; sourceTree = "<group>"; };
+		F217CBB527DB650600DAC947 /* SettingsAppVersionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAppVersionCellViewModel.swift; sourceTree = "<group>"; };
+		F217CBB727DB651400DAC947 /* SettingsAppVersionCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAppVersionCellModel.swift; sourceTree = "<group>"; };
+		F217CBB927DB652700DAC947 /* SettingsAppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAppVersionCell.swift; sourceTree = "<group>"; };
+		F217CBBB27DB6AEE00DAC947 /* SettingsSingleLabelCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSingleLabelCellViewModel.swift; sourceTree = "<group>"; };
+		F217CBBD27DB6AF900DAC947 /* SettingsSingleLabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSingleLabelCellModel.swift; sourceTree = "<group>"; };
+		F217CBBF27DB6B0800DAC947 /* SettingsSingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSingleLabelCell.swift; sourceTree = "<group>"; };
+		F217CBC127DB6CDE00DAC947 /* SettingsDualLabelSubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDualLabelSubtitleCell.swift; sourceTree = "<group>"; };
+		F217CBC327DB6CEA00DAC947 /* SettingsDualLabelSubtitleCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDualLabelSubtitleCellViewModel.swift; sourceTree = "<group>"; };
+		F217CBC527DB6CF400DAC947 /* SettingsDualLabelSubtitleCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDualLabelSubtitleCellModel.swift; sourceTree = "<group>"; };
+		F217CBC727DB6FB600DAC947 /* SettingsSingleLabelDualButtonCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSingleLabelDualButtonCellViewModel.swift; sourceTree = "<group>"; };
+		F217CBC927DB6FCA00DAC947 /* SettingsSingleLabelDualButtonCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSingleLabelDualButtonCellModel.swift; sourceTree = "<group>"; };
+		F217CBCB27DB6FD500DAC947 /* SettingsSingleLabelDualButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSingleLabelDualButtonCell.swift; sourceTree = "<group>"; };
+		F217CBCD27DB772B00DAC947 /* AboutAppVersionItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppVersionItemsSection.swift; sourceTree = "<group>"; };
+		F217CBD027DB7E8B00DAC947 /* AboutAppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppFlow.swift; sourceTree = "<group>"; };
+		F217CBD227DB7E9600DAC947 /* AboutAppStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppStepper.swift; sourceTree = "<group>"; };
+		F217CBD427DB889D00DAC947 /* SingleLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
+		F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
+		F217CBD627DB889D00DAC947 /* SubtitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubtitleCell.xib; sourceTree = "<group>"; };
+		F217CBD727DB889E00DAC947 /* SubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfNearbyResultsSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrientationSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListAlertTableViewCell.swift; sourceTree = "<group>"; };
@@ -395,7 +442,6 @@
 		F25E125625AE140900342EFE /* WeatherStationMeteorologyDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsViewModel.swift; sourceTree = "<group>"; };
 		F25E125B25AE141D00342EFE /* WeatherStationMeteorologyDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsViewController.swift; sourceTree = "<group>"; };
 		F25E126125AF27B800342EFE /* WeatherInformationUpdateDaemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationUpdateDaemon.swift; sourceTree = "<group>"; };
-		F260BDA7244CF0DD00B4357A /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		F260BDA9244CF3CB00B4357A /* UITableViewCell+TableViewCellReuseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+TableViewCellReuseIdentifiable.swift"; sourceTree = "<group>"; };
 		F260BDAB244CFAE500B4357A /* Bundle+AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+AppIcon.swift"; sourceTree = "<group>"; };
 		F260BDAD244F7BA700B4357A /* RealmPersistencyWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPersistencyWorker.swift; sourceTree = "<group>"; };
@@ -403,8 +449,6 @@
 		F26699571E9AD0F100498F99 /* WeatherInformationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInformationService.swift; sourceTree = "<group>"; };
 		F26699591E9ADBC300498F99 /* UserLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocationService.swift; sourceTree = "<group>"; };
 		F26A6D5D20FB6E610033BC49 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
-		F273254B2032051F00A1DBD1 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
-		F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		F274FC38202F9A9300049144 /* WeatherNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkingService.swift; sourceTree = "<group>"; };
 		F274FC3A2030ED5A00049144 /* PreferencesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesService.swift; sourceTree = "<group>"; };
 		F277E7DF25AC9F570009D59B /* MapTypeSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeSelectionAlert.swift; sourceTree = "<group>"; };
@@ -415,7 +459,6 @@
 		F282166124608194004E5B08 /* BaseCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCellViewModel.swift; sourceTree = "<group>"; };
 		F282166424608205004E5B08 /* WeatherListInformationTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListInformationTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		F282166624608690004E5B08 /* WeatherListInformationTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListInformationTableViewCellModel.swift; sourceTree = "<group>"; };
-		F283D26D1DF39095001B879D /* DualLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DualLabelCell.swift; sourceTree = "<group>"; };
 		F283D2741DF393B2001B879D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F283D2761DF393B3001B879D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F284DDC32458C07400445BFF /* FileManager+DirectoryUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+DirectoryUrl.swift"; sourceTree = "<group>"; };
@@ -436,7 +479,6 @@
 		F284DDEB245F792D00445BFF /* WeatherListInformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListInformationTableViewCell.swift; sourceTree = "<group>"; };
 		F284DDEF245F794E00445BFF /* WeatherListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewModel.swift; sourceTree = "<group>"; };
 		F284DDF1245F796000445BFF /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
-		F28CA53C202622C200209397 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extensions.swift"; sourceTree = "<group>"; };
 		F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationManagementTableViewController.swift; sourceTree = "<group>"; };
@@ -449,7 +491,6 @@
 		F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		F2B8E9FF1EA11BA800704E90 /* WeatherInformationDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInformationDTO.swift; sourceTree = "<group>"; };
-		F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppTableViewController.swift; sourceTree = "<group>"; };
 		F2C4E14523F355370008B0F7 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		F2D198FD25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLifeCycleRelay.swift; sourceTree = "<group>"; };
 		F2D1990525A10D2E004C7753 /* BaseTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -478,10 +519,6 @@
 		F2DB5E9225AB5C6C00E21A56 /* BaseAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAnnotationView.swift; sourceTree = "<group>"; };
 		F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+URLs.swift"; sourceTree = "<group>"; };
 		F2DBEADB23E4CF7900CD513B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		F2DBEAE123E4D71700CD513B /* DualLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DualLabelCell.xib; sourceTree = "<group>"; };
-		F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
-		F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToggleCell.xib; sourceTree = "<group>"; };
-		F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubtitleCell.xib; sourceTree = "<group>"; };
 		F2DBEAF023E5F98200CD513B /* TextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextInputCell.xib; sourceTree = "<group>"; };
 		F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AppendSafe.swift"; sourceTree = "<group>"; };
@@ -502,7 +539,6 @@
 		F2E12F5A25B0996800176087 /* WeatherStationMeteorologyDetailsHeaderItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsHeaderItemsSection.swift; sourceTree = "<group>"; };
 		F2E12F5F25B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsSunCycleItemsSection.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
-		F2E7237923DE2857001189F5 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
 		F2F1553D244278D4007A3E90 /* WeatherInformationErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationErrorDTO.swift; sourceTree = "<group>"; };
 		F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AppendWithDelimiter.swift"; sourceTree = "<group>"; };
@@ -800,6 +836,80 @@
 			path = "Dimensional Unit Alert";
 			sourceTree = "<group>";
 		};
+		F217CB9F27DB5D7A00DAC947 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBA527DB60B400DAC947 /* Settings App Version Cell */,
+				F217CBA627DB60EC00DAC947 /* Settings Single Label Cell */,
+				F217CBA727DB610900DAC947 /* Settings Dual Label Subtitle Cell */,
+				F217CBA827DB61B500DAC947 /* Settings Single Label Dual Button Cell */,
+			);
+			path = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		F217CBA027DB5D9E00DAC947 /* Table View Sections */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBCD27DB772B00DAC947 /* AboutAppVersionItemsSection.swift */,
+				F217CBA927DB623A00DAC947 /* AboutAppResourcesItemsMainSection.swift */,
+				F217CBAB27DB633300DAC947 /* AboutAppResourcesItemsSubSection1.swift */,
+				F217CBAD27DB638D00DAC947 /* AboutAppContributingItemsSection.swift */,
+				F217CBAF27DB63E200DAC947 /* AboutAppContributorsItemsMainSection.swift */,
+				F217CBB127DB646100DAC947 /* AboutAppContributorsItemsSubSection1.swift */,
+				F217CBB327DB649A00DAC947 /* AboutAppLibrariesItemsSection.swift */,
+			);
+			path = "Table View Sections";
+			sourceTree = "<group>";
+		};
+		F217CBA527DB60B400DAC947 /* Settings App Version Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBB527DB650600DAC947 /* SettingsAppVersionCellViewModel.swift */,
+				F217CBB727DB651400DAC947 /* SettingsAppVersionCellModel.swift */,
+				F217CBB927DB652700DAC947 /* SettingsAppVersionCell.swift */,
+			);
+			path = "Settings App Version Cell";
+			sourceTree = "<group>";
+		};
+		F217CBA627DB60EC00DAC947 /* Settings Single Label Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBBB27DB6AEE00DAC947 /* SettingsSingleLabelCellViewModel.swift */,
+				F217CBBD27DB6AF900DAC947 /* SettingsSingleLabelCellModel.swift */,
+				F217CBBF27DB6B0800DAC947 /* SettingsSingleLabelCell.swift */,
+			);
+			path = "Settings Single Label Cell";
+			sourceTree = "<group>";
+		};
+		F217CBA727DB610900DAC947 /* Settings Dual Label Subtitle Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBC327DB6CEA00DAC947 /* SettingsDualLabelSubtitleCellViewModel.swift */,
+				F217CBC527DB6CF400DAC947 /* SettingsDualLabelSubtitleCellModel.swift */,
+				F217CBC127DB6CDE00DAC947 /* SettingsDualLabelSubtitleCell.swift */,
+			);
+			path = "Settings Dual Label Subtitle Cell";
+			sourceTree = "<group>";
+		};
+		F217CBA827DB61B500DAC947 /* Settings Single Label Dual Button Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBC727DB6FB600DAC947 /* SettingsSingleLabelDualButtonCellViewModel.swift */,
+				F217CBC927DB6FCA00DAC947 /* SettingsSingleLabelDualButtonCellModel.swift */,
+				F217CBCB27DB6FD500DAC947 /* SettingsSingleLabelDualButtonCell.swift */,
+			);
+			path = "Settings Single Label Dual Button Cell";
+			sourceTree = "<group>";
+		};
+		F217CBCF27DB7E7300DAC947 /* AboutApp Flow */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBD027DB7E8B00DAC947 /* AboutAppFlow.swift */,
+				F217CBD227DB7E9600DAC947 /* AboutAppStepper.swift */,
+			);
+			path = "AboutApp Flow";
+			sourceTree = "<group>";
+		};
 		F22A21FA25A36A6500C97844 /* Sorting Orientation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1024,6 +1134,7 @@
 				F2372873244C7EF400964C49 /* Weather Map Flow */,
 				F2372874244C7F0100964C49 /* Settings Flow */,
 				F2372888244C931300964C49 /* WeatherDetail Flow */,
+				F217CBCF27DB7E7300DAC947 /* AboutApp Flow */,
 			);
 			path = Routing;
 			sourceTree = "<group>";
@@ -1090,7 +1201,12 @@
 		F27A122524425DF100A2CE8D /* About App Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F2B8EA0D1EA37BE800704E90 /* AboutAppTableViewController.swift */,
+				F217CB9B27DB5D3500DAC947 /* AboutAppViewController.swift */,
+				F217CBA127DB602600DAC947 /* AboutAppTableViewDelegate.swift */,
+				F217CBA327DB609300DAC947 /* AboutAppTableViewDataSource.swift */,
+				F217CB9D27DB5D6700DAC947 /* AboutAppViewModel.swift */,
+				F217CBA027DB5D9E00DAC947 /* Table View Sections */,
+				F217CB9F27DB5D7A00DAC947 /* Table View Cells */,
 			);
 			path = "About App Scene";
 			sourceTree = "<group>";
@@ -1201,18 +1317,12 @@
 		F27A122D24425F2400A2CE8D /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				F2DBEAE123E4D71700CD513B /* DualLabelCell.xib */,
-				F283D26D1DF39095001B879D /* DualLabelCell.swift */,
-				F2DBEAE323E4D9D200CD513B /* SingleLabelCell.xib */,
-				F2E7237923DE2857001189F5 /* SingleLabelCell.swift */,
-				F2DBEAE523E4DC6A00CD513B /* ToggleCell.xib */,
-				F28CA53C202622C200209397 /* ToggleCell.swift */,
-				F273254B2032051F00A1DBD1 /* ButtonCell.swift */,
-				F2DBEAE923E4DE1100CD513B /* SubtitleCell.xib */,
-				F273254D20320F4E00A1DBD1 /* SubtitleCell.swift */,
+				F217CBD427DB889D00DAC947 /* SingleLabelCell.swift */,
+				F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */,
+				F217CBD727DB889E00DAC947 /* SubtitleCell.swift */,
+				F217CBD627DB889D00DAC947 /* SubtitleCell.xib */,
 				F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */,
 				F2DBEAF023E5F98200CD513B /* TextInputCell.swift */,
-				F260BDA7244CF0DD00B4357A /* AppVersionCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -1609,18 +1719,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2DBEAE423E4D9D200CD513B /* SingleLabelCell.xib in Resources */,
-				F2DBEAE623E4DC6A00CD513B /* ToggleCell.xib in Resources */,
+				F217CBDA27DB889E00DAC947 /* SubtitleCell.xib in Resources */,
 				F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */,
 				F204B7851DF2EFA3000F4371 /* LaunchScreen.storyboard in Resources */,
 				F204B7B01DF2F1BC000F4371 /* Localizable.strings in Resources */,
 				F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */,
-				F2DBEAE223E4D71700CD513B /* DualLabelCell.xib in Resources */,
 				F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */,
 				F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */,
+				F217CBD927DB889E00DAC947 /* SingleLabelCell.xib in Resources */,
 				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
 				F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */,
-				F2DBEAEA23E4DE1100CD513B /* SubtitleCell.xib in Resources */,
 				F25A39712187AA5A0054BC7A /* ProjectContributors.json in Resources */,
 				F283D2731DF393B2001B879D /* InfoPlist.strings in Resources */,
 				F2F1554324435E55007A3E90 /* Settings.bundle in Resources */,
@@ -1690,7 +1798,6 @@
 				F20CA11525B3117200153E47 /* WeatherStationMeteorologyDetailsMapCell.swift in Sources */,
 				F2060E5E27BC17DB0066DC8C /* WeatherListErrorViewController.swift in Sources */,
 				F210B19E25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift in Sources */,
-				F283D26E1DF39095001B879D /* DualLabelCell.swift in Sources */,
 				F217CB7027D5091800DAC947 /* SettingsGeneralItemsSection.swift in Sources */,
 				F217CB8427D50DE700DAC947 /* SettingsImagedSingleLabelToggleCellViewModel.swift in Sources */,
 				F237288A244C934100964C49 /* WeatherDetailFlow.swift in Sources */,
@@ -1711,6 +1818,7 @@
 				F2E12F5025B098D300176087 /* WeatherStationMeteorologyDetailsSunCycleCell.swift in Sources */,
 				F217CB5F27D4F91E00DAC947 /* SettingsViewController.swift in Sources */,
 				F25E125C25AE141D00342EFE /* WeatherStationMeteorologyDetailsViewController.swift in Sources */,
+				F217CB9E27DB5D6700DAC947 /* AboutAppViewModel.swift in Sources */,
 				F2D1994525A1EED1004C7753 /* Factory+UIBarButtonItem.swift in Sources */,
 				F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */,
 				F2F7BA1F23E3792F00B4D2EB /* Constants+Mocks.swift in Sources */,
@@ -1736,14 +1844,17 @@
 				F28EE8C925AB91530045AE6A /* Factory+UIBezierPath.swift in Sources */,
 				F2372878244C7F2E00964C49 /* WeatherMapFlow.swift in Sources */,
 				F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */,
+				F217CBB027DB63E200DAC947 /* AboutAppContributorsItemsMainSection.swift in Sources */,
 				F20CA10825B3114B00153E47 /* WeatherStationMeteorologyDetailsMapCellViewModel.swift in Sources */,
 				F217CB9027D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift in Sources */,
 				F2D1998525A274ED004C7753 /* Factory+UIAlertAction.swift in Sources */,
 				86830394217BBAE400B7122E /* PermissionsService.swift in Sources */,
+				F217CBC627DB6CF400DAC947 /* SettingsDualLabelSubtitleCellModel.swift in Sources */,
 				F217CB7427D5097200DAC947 /* SettingsBookmarksItemsMainSection.swift in Sources */,
 				F2F1554D2443C842007A3E90 /* UIView+AddSubview.swift in Sources */,
 				F237101725AB43080072AF29 /* Factory+MKMapView.swift in Sources */,
 				F22A21F625A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift in Sources */,
+				F217CBC027DB6B0800DAC947 /* SettingsSingleLabelCell.swift in Sources */,
 				F213FA3223F9EEE300F094D8 /* SortingOrientationOption.swift in Sources */,
 				F22A221625A4A57B00C97844 /* WeatherListAlertTableViewCell.swift in Sources */,
 				F237288E244C93BD00964C49 /* Factory+UINavigationController.swift in Sources */,
@@ -1754,15 +1865,16 @@
 				F213FA3923F9EF9A00F094D8 /* AmountOfResultsOption.swift in Sources */,
 				F266995A1E9ADBC300498F99 /* UserLocationService.swift in Sources */,
 				F217CB9827D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift in Sources */,
+				F217CBA227DB602600DAC947 /* AboutAppTableViewDelegate.swift in Sources */,
 				F25A39732187B1B00054BC7A /* ThirdPartyLibraryDTO.swift in Sources */,
+				F217CBB627DB650600DAC947 /* SettingsAppVersionCellViewModel.swift in Sources */,
 				F284DDCB245A263900445BFF /* WeatherInformationService2.swift in Sources */,
-				F273254C2032051F00A1DBD1 /* ButtonCell.swift in Sources */,
 				F2DB5E9325AB5C6C00E21A56 /* BaseAnnotationView.swift in Sources */,
 				F284DDE7245F779500445BFF /* BaseViewController.swift in Sources */,
-				F260BDA8244CF0DD00B4357A /* AppVersionCell.swift in Sources */,
 				F2D1991025A10DBA004C7753 /* TableViewSectionDataProtocol.swift in Sources */,
 				F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */,
 				F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */,
+				F217CBAE27DB638D00DAC947 /* AboutAppContributingItemsSection.swift in Sources */,
 				F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */,
 				F2060E6227BC1D7F0066DC8C /* NetworkReachabilityService.swift in Sources */,
 				F284DDD4245CF37800445BFF /* PermissionsService2.swift in Sources */,
@@ -1778,8 +1890,13 @@
 				F2E12F2725AF5F1A00176087 /* WeatherStationMeteorologyDetailsTableViewDataSource.swift in Sources */,
 				F22B0F7C25AB615A0037F957 /* BaseAnnotation.swift in Sources */,
 				F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */,
+				F217CBD827DB889E00DAC947 /* SingleLabelCell.swift in Sources */,
+				F217CBC827DB6FB600DAC947 /* SettingsSingleLabelDualButtonCellViewModel.swift in Sources */,
+				F217CBCA27DB6FCA00DAC947 /* SettingsSingleLabelDualButtonCellModel.swift in Sources */,
 				F20CA11F25B322F800153E47 /* WeatherStationMeteorologyDetailsMapCellMapAnnotationData.swift in Sources */,
 				F2060E5427B69B170066DC8C /* SetApiKeyViewController.swift in Sources */,
+				F217CBBE27DB6AF900DAC947 /* SettingsSingleLabelCellModel.swift in Sources */,
+				F217CBC427DB6CEA00DAC947 /* SettingsDualLabelSubtitleCellViewModel.swift in Sources */,
 				F20CA0EA25B1FC7300153E47 /* WeatherStationMeteorologyDetailsAtmosphericDetailsCell.swift in Sources */,
 				F2D1996A25A23CD9004C7753 /* ListTypeSelectionAlert.swift in Sources */,
 				F2372893244CAB0A00964C49 /* RootStepper.swift in Sources */,
@@ -1788,12 +1905,14 @@
 				F217CB7627D50A2000DAC947 /* SettingsPreferencesItemsMainSection.swift in Sources */,
 				F22A220425A36B5500C97844 /* SortingOrientationSelectionAlert.swift in Sources */,
 				F284DDDC245F3FDB00445BFF /* MigrationService.swift in Sources */,
+				F217CBAA27DB623A00DAC947 /* AboutAppResourcesItemsMainSection.swift in Sources */,
 				F277E7EA25AC9F7F0009D59B /* FocusOnLocationSelectionAlert.swift in Sources */,
 				F284DDD8245E4AFC00445BFF /* ListTypeOption.swift in Sources */,
 				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,
 				F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */,
 				F22B0F8A25AB64D40037F957 /* WeatherMapAnnotationModel.swift in Sources */,
 				F2D1990625A10D2E004C7753 /* BaseTableViewDataSource.swift in Sources */,
+				F217CBC227DB6CDE00DAC947 /* SettingsDualLabelSubtitleCell.swift in Sources */,
 				F237100F25AB34950072AF29 /* WeatherMapViewController.swift in Sources */,
 				F217CB8E27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift in Sources */,
 				F2DB5E7225AB4F2000E21A56 /* BaseAnnotationViewProtocol.swift in Sources */,
@@ -1801,12 +1920,10 @@
 				F28F182725A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift in Sources */,
 				F2060E6027BC18060066DC8C /* WeatherListErrorViewModel.swift in Sources */,
 				F2F15545244389E8007A3E90 /* SettingsBundleTransferWorker.swift in Sources */,
-				F273254E20320F4E00A1DBD1 /* SubtitleCell.swift in Sources */,
 				F2E12F3D25AF64A300176087 /* WeatherStationMeteorologyDetailsHeaderCellViewModel.swift in Sources */,
-				F28CA53D202622C200209397 /* ToggleCell.swift in Sources */,
 				F284DDF0245F794E00445BFF /* WeatherListViewModel.swift in Sources */,
 				F284DDE5245F62E600445BFF /* PreferencesManagerStoredContentsWrapper.swift in Sources */,
-				F2B8EA0E1EA37BE800704E90 /* AboutAppTableViewController.swift in Sources */,
+				F217CBB227DB646100DAC947 /* AboutAppContributorsItemsSubSection1.swift in Sources */,
 				F2E12F5B25B0996800176087 /* WeatherStationMeteorologyDetailsHeaderItemsSection.swift in Sources */,
 				F2F155492443BB0D007A3E90 /* UnitedStatesOfAmericaStatesList.swift in Sources */,
 				F237285B2444A72100964C49 /* Constants+Dimensions.swift in Sources */,
@@ -1814,12 +1931,14 @@
 				F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */,
 				F213FA2D23F9EE1100F094D8 /* PreferencesOption.swift in Sources */,
 				F2F1554B2443C438007A3E90 /* Factory+UIButton.swift in Sources */,
+				F217CB9C27DB5D3500DAC947 /* AboutAppViewController.swift in Sources */,
 				F284DDC42458C07400445BFF /* FileManager+DirectoryUrl.swift in Sources */,
 				F20CA12425B3252B00153E47 /* WeatherStationMeteorologyDetailsMapCellMapViewDelegate.swift in Sources */,
 				F237288C244C934E00964C49 /* WeatherDetailStepper.swift in Sources */,
 				F217CB7227D5094100DAC947 /* SettingsOpenWeatherMapApiItemsSection.swift in Sources */,
 				F2E12F2225AF5EBF00176087 /* WeatherStationMeteorologyDetailsTableViewDelegate.swift in Sources */,
 				F2060E6D27C073DF0066DC8C /* UserLocation.swift in Sources */,
+				F217CBBA27DB652700DAC947 /* SettingsAppVersionCell.swift in Sources */,
 				F2E12F4B25B098C700176087 /* WeatherStationMeteorologyDetailsSunCycleCellModel.swift in Sources */,
 				F28F180425A7354500AEA99A /* ApiKeyService2.swift in Sources */,
 				F22B0F8F25AB64E40037F957 /* WeatherMapAnnotationView.swift in Sources */,
@@ -1836,22 +1955,28 @@
 				F2060E6827C0064E0066DC8C /* UserLocationUpdateDaemon.swift in Sources */,
 				F2DB5E6A25AB4D7D00E21A56 /* BaseMapViewSelectionDelegate.swift in Sources */,
 				F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */,
+				F217CBCC27DB6FD500DAC947 /* SettingsSingleLabelDualButtonCell.swift in Sources */,
 				F2DE35012464AF4E00FDC4C7 /* Constants+Dimensions.Spacing.swift in Sources */,
 				F22B0F9825AB78AE0037F957 /* WeatherMapAnnotationData.swift in Sources */,
 				F2F7BA1D23E373DD00B4D2EB /* Constants+Labels.swift in Sources */,
 				F2060E5627B6B7CE0066DC8C /* Factory+UITextField.swift in Sources */,
 				F28EE8CE25AB94390045AE6A /* Factory+CAShapeLayer.swift in Sources */,
-				F2E7237A23DE2857001189F5 /* SingleLabelCell.swift in Sources */,
+				F217CBCE27DB772B00DAC947 /* AboutAppVersionItemsSection.swift in Sources */,
 				F284DDD0245A414B00445BFF /* WeatherStationService2.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */,
 				F284DDE3245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift in Sources */,
 				F2D1995825A1F5C1004C7753 /* UITableView+RegisterCells.swift in Sources */,
+				F217CBA427DB609300DAC947 /* AboutAppTableViewDataSource.swift in Sources */,
 				F213FA3423F9EF2400F094D8 /* TemperatureUnitOption.swift in Sources */,
+				F217CBD327DB7E9600DAC947 /* AboutAppStepper.swift in Sources */,
 				F20CA0F825B21B8600153E47 /* WeatherStationMeteorologyDetailsWindCellViewModel.swift in Sources */,
 				F217CB6327D4F94C00DAC947 /* SettingsTableViewDelegate.swift in Sources */,
 				F2060E5927B9A9A80066DC8C /* SetPermissionsViewController.swift in Sources */,
 				F2DB5E6225AB4CFB00E21A56 /* BaseMapViewDelegate.swift in Sources */,
+				F217CBB427DB649A00DAC947 /* AboutAppLibrariesItemsSection.swift in Sources */,
 				F237287A244C7FDD00964C49 /* SettingsFlow.swift in Sources */,
+				F217CBD127DB7E8B00DAC947 /* AboutAppFlow.swift in Sources */,
+				F217CBB827DB651400DAC947 /* SettingsAppVersionCellModel.swift in Sources */,
 				F22A222825A4BE9500C97844 /* Factory+UIStackView.swift in Sources */,
 				F2060E6627BFF1150066DC8C /* Daemon.swift in Sources */,
 				F2372891244CAAF400964C49 /* RootFlow.swift in Sources */,
@@ -1865,6 +1990,7 @@
 				F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */,
 				F2D1995025A1F1A4004C7753 /* Factory+UITableView.swift in Sources */,
 				F2DBEB3023F038BE00CD513B /* Constants+Theme.swift in Sources */,
+				F217CBDB27DB889E00DAC947 /* SubtitleCell.swift in Sources */,
 				F2E12F6025B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift in Sources */,
 				F2370FFC25AB25B10072AF29 /* RefreshOnAppStartOption.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationController+Extensions.swift in Sources */,
@@ -1879,11 +2005,13 @@
 				F2E12F3025AF647D00176087 /* WeatherStationMeteorologyDetailsHeaderCell.swift in Sources */,
 				F22A222025A4A5A900C97844 /* WeatherListAlertTableViewCellModel.swift in Sources */,
 				F2F1553E244278D4007A3E90 /* WeatherInformationErrorDTO.swift in Sources */,
+				F217CBAC27DB633300DAC947 /* AboutAppResourcesItemsSubSection1.swift in Sources */,
 				F282166024608175004E5B08 /* BaseCell.swift in Sources */,
 				F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */,
 				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,
 				F20CA0FD25B21B9800153E47 /* WeatherStationMeteorologyDetailsWindCellModel.swift in Sources */,
 				F2D2B1E02004171500C810EF /* JsonPersistencyWorker.swift in Sources */,
+				F217CBBC27DB6AEE00DAC947 /* SettingsSingleLabelCellViewModel.swift in Sources */,
 				F260BDAA244CF3CB00B4357A /* UITableViewCell+TableViewCellReuseIdentifiable.swift in Sources */,
 				F25E126225AF27B800342EFE /* WeatherInformationUpdateDaemon.swift in Sources */,
 				F2D1993825A1E482004C7753 /* WeatherListTableViewDataSource.swift in Sources */,

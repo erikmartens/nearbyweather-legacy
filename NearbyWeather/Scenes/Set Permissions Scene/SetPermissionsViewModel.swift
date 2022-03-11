@@ -69,10 +69,6 @@ final class SetPermissionsViewModel: NSObject, Stepper, BaseViewModel {
 
 extension SetPermissionsViewModel {
 
-  func observeDataSource() {
-    // nothing to do
-  }
-  
   func observeUserInputEvents() {
     onDidTapConfigureButtonSubject
       .take(1)

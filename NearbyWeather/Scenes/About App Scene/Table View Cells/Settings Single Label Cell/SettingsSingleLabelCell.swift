@@ -1,8 +1,8 @@
 //
-//  SettingsImagedSingleLabelCell.swift
+//  SettingsSingleLabelCell.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 06.03.22.
+//  Created by Erik Maximilian Martens on 11.03.22.
 //  Copyright © 2022 Erik Maximilian Martens. All rights reserved.
 //
 
@@ -11,15 +11,15 @@ import RxSwift
 
 // MARK: - Definitions
 
-private extension SettingsImagedSingleLabelCell {
+private extension SettingsSingleLabelCell {
   struct Definitions {}
 }
 
 // MARK: - Class Definition
 
-final class SettingsImagedSingleLabelCell: UITableViewCell, BaseCell {
+final class SettingsSingleLabelCell: UITableViewCell, BaseCell {
   
-  typealias CellViewModel = SettingsImagedSingleLabelCellViewModel
+  typealias CellViewModel = SettingsSingleLabelCellViewModel
   private typealias CellContentInsets = Constants.Dimensions.Spacing.ContentInsets
   private typealias CellInterelementSpacing = Constants.Dimensions.Spacing.InterElementSpacing
   
@@ -59,7 +59,7 @@ final class SettingsImagedSingleLabelCell: UITableViewCell, BaseCell {
   // MARK: - Cell Life Cycle
   
   func configure(with cellViewModel: BaseCellViewModelProtocol?) {
-    guard let cellViewModel = cellViewModel as? SettingsImagedSingleLabelCellViewModel else {
+    guard let cellViewModel = cellViewModel as? SettingsSingleLabelCellViewModel else {
       return
     }
     
@@ -77,7 +77,7 @@ final class SettingsImagedSingleLabelCell: UITableViewCell, BaseCell {
 
 // MARK: - ViewModel Bindings
 
-extension SettingsImagedSingleLabelCell {
+extension SettingsSingleLabelCell {
   
   func bindContentFromViewModel(_ cellViewModel: CellViewModel) {
     cellViewModel.cellModelDriver
@@ -88,41 +88,21 @@ extension SettingsImagedSingleLabelCell {
 
 // MARK: - Cell Composition
 
-private extension SettingsImagedSingleLabelCell {
+private extension SettingsSingleLabelCell {
   
-  func setContent(for cellModel: SettingsImagedSingleLabelCellModel) {
-    leadingImageView.backgroundColor = cellModel.symbolImageBackgroundColor
-    leadingImageView.image = cellModel.symbolImage
+  func setContent(for cellModel: SettingsSingleLabelCellModel) {
     contentLabel.text = cellModel.labelText
     
     selectionStyle = (cellModel.isSelectable ?? false) ? .default : .none
     accessoryType = (cellModel.isDisclosable ?? false) ? .disclosureIndicator : .none
   }
   
-  func layoutUserInterface() {
-    separatorInset = UIEdgeInsets(
-      top: 0,
-      left: CellContentInsets.leading(from: .large)
-        + Constants.Dimensions.TableCellImage.width
-        + CellInterelementSpacing.xDistance(from: .small),
-      bottom: 0,
-      right: 0
-    )
-    
-    contentView.addSubview(leadingImageView, constraints: [
-      leadingImageView.heightAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.height),
-      leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.width),
-      leadingImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
-      leadingImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
-      leadingImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-    ])
-    
+  func layoutUserInterface() {    
     contentView.addSubview(contentLabel, constraints: [
       contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
+      contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
       contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
       contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])

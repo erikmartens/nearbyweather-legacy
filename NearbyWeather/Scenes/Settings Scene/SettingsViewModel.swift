@@ -80,7 +80,7 @@ extension SettingsViewModel {
 
   func observeDataSource() {
     
-    /// General Section
+    // General Section
     let generalSectionItems: [BaseCellViewModelProtocol] = [
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
         symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.blue,
@@ -93,7 +93,7 @@ extension SettingsViewModel {
     
     let generalSectionObservable = Observable.just(SettingsGeneralItemsSection(sectionItems: generalSectionItems))
     
-    /// OpenWeatherMapApi Section
+    // OpenWeatherMapApi Section
     let openWeatherMapApiSectionItems: [BaseCellViewModelProtocol] = [
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
         symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.green,
@@ -113,7 +113,7 @@ extension SettingsViewModel {
     
     let openWeatherMapApiSectionObservable = Observable.just(SettingsOpenWeatherMapApiItemsSection(sectionItems: openWeatherMapApiSectionItems))
     
-    /// Bookmarks Section Main
+    // Bookmarks Section Main
     let amountOfBookmarksObservable = dependencies.weatherStationService.createGetBookmarkedStationsObservable().map { "\($0.count)" }
     
     let bookmarksMainSectionItems: [BaseCellViewModelProtocol] = [
@@ -136,7 +136,7 @@ extension SettingsViewModel {
     
     let bookmarksMainSectionObservable = Observable.just(SettingsBookmarksItemsMainSection(sectionItems: bookmarksMainSectionItems))
     
-    /// Bookmarks Section Sub 1
+    // Bookmarks Section Sub 1
     let allowTempOnAppIconObservable = dependencies.preferencesService.createGetShowTemperatureOnAppIconOptionObservable().map { $0.rawRepresentableValue }
     let preferredBookmarkNameObservable = dependencies.weatherStationService.createGetPreferredBookmarkObservable().map { $0?.stringValue ?? R.string.localizable.none() }
     
@@ -160,7 +160,7 @@ extension SettingsViewModel {
     
     let bookmarksSubSection1Observable = Observable.just(SettingsBookmarksItemsSubSection1(sectionItems: bookmarksSubSection1Items))
     
-    /// Preferences Section Main
+    // Preferences Section Main
     let refreshOnAppStartObservable = dependencies.preferencesService.createGetRefreshOnAppStartOptionObservable().map { $0.rawRepresentableValue }
     
     let preferencesMainSectionItems: [BaseCellViewModelProtocol] = [
@@ -175,7 +175,7 @@ extension SettingsViewModel {
     
     let preferencesMainSectionObservable = Observable.just(SettingsPreferencesItemsMainSection(sectionItems: preferencesMainSectionItems))
     
-    /// Preferences Setion Sub 1
+    // Preferences Setion Sub 1
     let temperatureUnitPreferenceObservable = dependencies.preferencesService.createGetTemperatureUnitOptionObservable().map { $0.stringValue }
     let dimensionalUnitPreferenceObservable = dependencies.preferencesService.createGetDimensionalUnitsOptionObservable().map { $0.stringValue }
     
@@ -283,7 +283,7 @@ private extension SettingsViewModel {
   
   func mapIndexPathToRoutingIntent(_ indexPath: IndexPath) -> SettingsStep? { // swiftlint:disable:this cyclomatic_complexity
     switch indexPath.section {
-    /// General Section
+    // General Section
     case 0:
       switch indexPath.row {
       case 0:
@@ -291,7 +291,7 @@ private extension SettingsViewModel {
       default:
         return nil
       }
-    ///  OpenWeatherMap Api Section
+    //  OpenWeatherMap Api Section
     case 1:
       switch indexPath.row {
       case 0:
@@ -301,7 +301,7 @@ private extension SettingsViewModel {
       default:
         return nil
       }
-    ///  Bookmarks Section Main
+    //  Bookmarks Section Main
     case 2:
       switch indexPath.row {
       case 0:
@@ -311,7 +311,7 @@ private extension SettingsViewModel {
       default:
         return nil
       }
-    ///  Bookmarks Section Sub 1
+    //  Bookmarks Section Sub 1
     case 3:
       switch indexPath.row {
       case 0:
@@ -321,7 +321,7 @@ private extension SettingsViewModel {
       default:
         return nil
       }
-    ///  Preferences Section Main
+    //  Preferences Section Main
     case 4:
       switch indexPath.row {
       case 0:
@@ -329,7 +329,7 @@ private extension SettingsViewModel {
       default:
         return nil
       }
-    ///  Preferences Section Sub 1
+    //  Preferences Section Sub 1
     case 5:
       switch indexPath.row {
       case 0:

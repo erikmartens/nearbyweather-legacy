@@ -22,6 +22,7 @@ enum SettingsStep: Step {
   case changeDimensionalUnitAlert(selectionDelegate: DimensionalUnitSelectionAlertDelegate)
   case changeDimensionalUnitAlertAdapted(selectionDelegate: DimensionalUnitSelectionAlertDelegate, selectedOptionValue: DimensionalUnitOptionValue)
   case webBrowser(url: URL)
+  case pop
 }
 
 final class SettingsStepper: Stepper {

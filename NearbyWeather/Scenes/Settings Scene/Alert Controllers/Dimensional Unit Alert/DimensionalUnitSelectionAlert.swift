@@ -12,7 +12,7 @@ import RxFlow
 
 // MARK: - Delegate
 
-protocol DimensionalUnitSelectionAlertDelegate: class {
+protocol DimensionalUnitSelectionAlertDelegate: AnyObject {
   func didSelectDimensionalUnitOption(_ selectedOption: DimensionalUnitOption)
 }
 

@@ -66,15 +66,15 @@ final class WeatherMapFlow: Flow { // TODO: rename to WeatherMapFlow
       return summonWeatherMapController()
     case let .weatherDetails2(identity):
       return summonWeatherDetailsController2(identity: identity)
-    case .changeMapTypeAlert(_):
+    case .changeMapTypeAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .changeMapTypeAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeMapTypeAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
-    case .changeAmountOfResultsAlert(_):
+    case .changeAmountOfResultsAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .changeAmountOfResultsAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeAmountOfResultsAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
-    case .focusOnLocationAlert(_):
+    case .focusOnLocationAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .focusOnLocationAlertAdapted(selectionDelegate, weatherInformationDTOs):
       return summonFocusOnLocationAlert(selectionDelegate: selectionDelegate, bookmarkedLocations: weatherInformationDTOs)

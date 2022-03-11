@@ -12,9 +12,7 @@ import RxSwift
 // MARK: - Definitions
 
 private extension WeatherListViewController {
-  struct Definitions {
-    static let weatherInformationCellHeight: CGFloat = 156
-  }
+  struct Definitions {}
 }
 
 // MARK: - Class Definition
@@ -177,7 +175,6 @@ private extension WeatherListViewController {
     
     tableView.dataSource = viewModel.tableDataSource
     tableView.delegate = viewModel.tableDelegate
-    tableView.estimatedRowHeight = Definitions.weatherInformationCellHeight
     
     tableView.refreshControl = UIRefreshControl()
     

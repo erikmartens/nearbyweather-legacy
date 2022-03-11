@@ -27,7 +27,7 @@ extension FocusOnLocationSelectionAlert {
 
 // MARK: - Delegate
 
-protocol FocusOnLocationSelectionAlertDelegate: class {
+protocol FocusOnLocationSelectionAlertDelegate: AnyObject {
   func didSelectFocusOnLocationOption(_ option: FocusOnLocationOption)
 }
 

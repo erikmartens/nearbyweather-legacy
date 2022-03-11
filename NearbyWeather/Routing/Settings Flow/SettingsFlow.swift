@@ -90,6 +90,8 @@ final class SettingsFlow: Flow {
       return summonChangeDimensionalUnitAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: selectedOptionValue)
     case let .webBrowser(url):
       return summonWebBrowser(url: url)
+    case .pop:
+      return popPushedViewController()
     }
   }
   
@@ -150,9 +152,13 @@ private extension SettingsFlow {
   }
   
   func summonAboutController() -> FlowContributors {
-    let aboutController = AboutAppTableViewController(style: SettingsFlow.Definitions.preferredTableViewStyle)
-    rootViewController.pushViewController(aboutController, animated: true)
-    return .one(flowContributor: .contribute(withNext: aboutController))
+    let aboutAppFlow = AboutAppFlow(dependencies: AboutAppFlow.Dependencies(
+      rootViewController: rootViewController,
+      dependencyContainer: dependencies.dependencyContainer
+    ))
+    let aboutAppStepper = AboutAppStepper()
+
+    return .one(flowContributor: .contribute(withNextPresentable: aboutAppFlow, withNextStepper: aboutAppStepper))
   }
   
   func summonApiKeyEditController() -> FlowContributors {
@@ -206,6 +212,11 @@ private extension SettingsFlow {
   
   func summonWebBrowser(url: URL) -> FlowContributors {
     rootViewController.presentSafariViewController(for: url)
+    return .none
+  }
+  
+  func popPushedViewController() -> FlowContributors {
+    rootViewController.popToRootViewController(animated: true)
     return .none
   }
 }

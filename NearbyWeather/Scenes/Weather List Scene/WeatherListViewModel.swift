@@ -187,7 +187,7 @@ extension WeatherListViewModel {
                 dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()])
           .do(onCompleted: { isRefreshingSubject?.onNext(false) })
           .asObservable()
-          .map { _ in () } // swiftlint:disable:this
+          .map { _ in () }
       }
       .subscribe()
       .disposed(by: disposeBag)

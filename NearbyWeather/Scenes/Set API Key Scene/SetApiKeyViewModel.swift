@@ -84,10 +84,6 @@ final class SetApiKeyViewModel: NSObject, Stepper, BaseViewModel {
 
 extension SetApiKeyViewModel {
 
-  func observeDataSource() {
-    // nothing to do
-  }
-  
   func observeUserInputEvents() {
     
     let apiTextFieldTextObservable = apiInputTextFieldRelay

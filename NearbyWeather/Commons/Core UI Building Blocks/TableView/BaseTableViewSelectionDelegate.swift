@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol BaseTableViewSelectionDelegate: class {
+protocol BaseTableViewSelectionDelegate: AnyObject {
   func didSelectRow(at indexPath: IndexPath)
 }

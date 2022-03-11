@@ -1,20 +1,20 @@
 //
-//  SettingsGeneralItemsSection.swift
+//  ApiKeyInputTextEntrySection.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 06.03.22.
+//  Created by Erik Maximilian Martens on 11.03.22.
 //  Copyright © 2022 Erik Maximilian Martens. All rights reserved.
 //
 
 import Foundation
 
-final class SettingsGeneralItemsSection: BaseTableViewSectionData {
+final class ApiKeyInputTextEntrySection: BaseTableViewSectionData {
   
   init(sectionItems: [BaseCellViewModelProtocol]) {
     super.init(
-      sectionHeaderTitle: R.string.localizable.general(),
-      sectionFooterTitle: nil,
-      sectionCellsIdentifier: SettingsImagedSingleLabelCell.reuseIdentifier, // section only uses one type of cell
+      sectionHeaderTitle: R.string.localizable.enter_api_key(),
+      sectionFooterTitle: R.string.localizable.api_key_length_description(),
+      sectionCellsIdentifier: SettingsTextEntryCell.reuseIdentifier, // section only uses one type of cell
       sectionCellsIdentifiers: nil,
       sectionItems: sectionItems
     )

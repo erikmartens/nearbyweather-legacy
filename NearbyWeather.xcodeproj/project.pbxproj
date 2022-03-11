@@ -106,6 +106,14 @@
 		F217CBD927DB889E00DAC947 /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */; };
 		F217CBDA27DB889E00DAC947 /* SubtitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F217CBD627DB889D00DAC947 /* SubtitleCell.xib */; };
 		F217CBDB27DB889E00DAC947 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD727DB889E00DAC947 /* SubtitleCell.swift */; };
+		F217CBDE27DBB0C100DAC947 /* ApiKeyInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */; };
+		F217CBE027DBB0E700DAC947 /* ApiKeyInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBDF27DBB0E700DAC947 /* ApiKeyInputViewModel.swift */; };
+		F217CBE227DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBE127DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift */; };
+		F217CBE427DBB12400DAC947 /* ApiKeyInputTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBE327DBB12400DAC947 /* ApiKeyInputTableViewDataSource.swift */; };
+		F217CBE727DBB18C00DAC947 /* ApiKeyInputTextEntrySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBE627DBB18C00DAC947 /* ApiKeyInputTextEntrySection.swift */; };
+		F217CBEB27DBB21800DAC947 /* SettingsTextEntryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBEA27DBB21800DAC947 /* SettingsTextEntryCellViewModel.swift */; };
+		F217CBED27DBB22D00DAC947 /* SettingsTextEntryCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBEC27DBB22D00DAC947 /* SettingsTextEntryCellModel.swift */; };
+		F217CBEF27DBB23F00DAC947 /* SettingsTextEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBEE27DBB23F00DAC947 /* SettingsTextEntryCell.swift */; };
 		F22A21F625A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */; };
 		F22A220425A36B5500C97844 /* SortingOrientationSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */; };
 		F22A221625A4A57B00C97844 /* WeatherListAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */; };
@@ -397,6 +405,14 @@
 		F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
 		F217CBD627DB889D00DAC947 /* SubtitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubtitleCell.xib; sourceTree = "<group>"; };
 		F217CBD727DB889E00DAC947 /* SubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
+		F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputViewController.swift; sourceTree = "<group>"; };
+		F217CBDF27DBB0E700DAC947 /* ApiKeyInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputViewModel.swift; sourceTree = "<group>"; };
+		F217CBE127DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputTableViewDelegate.swift; sourceTree = "<group>"; };
+		F217CBE327DBB12400DAC947 /* ApiKeyInputTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputTableViewDataSource.swift; sourceTree = "<group>"; };
+		F217CBE627DBB18C00DAC947 /* ApiKeyInputTextEntrySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputTextEntrySection.swift; sourceTree = "<group>"; };
+		F217CBEA27DBB21800DAC947 /* SettingsTextEntryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextEntryCellViewModel.swift; sourceTree = "<group>"; };
+		F217CBEC27DBB22D00DAC947 /* SettingsTextEntryCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextEntryCellModel.swift; sourceTree = "<group>"; };
+		F217CBEE27DBB23F00DAC947 /* SettingsTextEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextEntryCell.swift; sourceTree = "<group>"; };
 		F22A21F525A33AB900C97844 /* AmountOfNearbyResultsSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfNearbyResultsSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A220325A36B5500C97844 /* SortingOrientationSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrientationSelectionAlert.swift; sourceTree = "<group>"; };
 		F22A221525A4A57B00C97844 /* WeatherListAlertTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListAlertTableViewCell.swift; sourceTree = "<group>"; };
@@ -910,6 +926,39 @@
 			path = "AboutApp Flow";
 			sourceTree = "<group>";
 		};
+		F217CBDC27DBB08200DAC947 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		F217CBE527DBB12F00DAC947 /* Table View Sections */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBE627DBB18C00DAC947 /* ApiKeyInputTextEntrySection.swift */,
+			);
+			path = "Table View Sections";
+			sourceTree = "<group>";
+		};
+		F217CBE827DBB1C300DAC947 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBE927DBB1DF00DAC947 /* Settings Text Entry Cell  */,
+			);
+			path = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		F217CBE927DBB1DF00DAC947 /* Settings Text Entry Cell  */ = {
+			isa = PBXGroup;
+			children = (
+				F217CBEA27DBB21800DAC947 /* SettingsTextEntryCellViewModel.swift */,
+				F217CBEC27DBB22D00DAC947 /* SettingsTextEntryCellModel.swift */,
+				F217CBEE27DBB23F00DAC947 /* SettingsTextEntryCell.swift */,
+			);
+			path = "Settings Text Entry Cell ";
+			sourceTree = "<group>";
+		};
 		F22A21FA25A36A6500C97844 /* Sorting Orientation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1152,7 +1201,7 @@
 				F27A122324425DB300A2CE8D /* Weather Map Scene */,
 				F217CB5D27D4F89D00DAC947 /* Settings Scene */,
 				F27A122524425DF100A2CE8D /* About App Scene */,
-				F27A122624425E0D00A2CE8D /* Settings Input Scene */,
+				F27A122624425E0D00A2CE8D /* API Key Input Scene */,
 				F27A122724425E2600A2CE8D /* Bookmarks Selection Scene */,
 				F27A122824425E3900A2CE8D /* Bookmarks Management Scene */,
 			);
@@ -1202,21 +1251,27 @@
 			isa = PBXGroup;
 			children = (
 				F217CB9B27DB5D3500DAC947 /* AboutAppViewController.swift */,
+				F217CB9D27DB5D6700DAC947 /* AboutAppViewModel.swift */,
 				F217CBA127DB602600DAC947 /* AboutAppTableViewDelegate.swift */,
 				F217CBA327DB609300DAC947 /* AboutAppTableViewDataSource.swift */,
-				F217CB9D27DB5D6700DAC947 /* AboutAppViewModel.swift */,
 				F217CBA027DB5D9E00DAC947 /* Table View Sections */,
 				F217CB9F27DB5D7A00DAC947 /* Table View Cells */,
 			);
 			path = "About App Scene";
 			sourceTree = "<group>";
 		};
-		F27A122624425E0D00A2CE8D /* Settings Input Scene */ = {
+		F27A122624425E0D00A2CE8D /* API Key Input Scene */ = {
 			isa = PBXGroup;
 			children = (
 				F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */,
+				F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */,
+				F217CBDF27DBB0E700DAC947 /* ApiKeyInputViewModel.swift */,
+				F217CBE127DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift */,
+				F217CBE327DBB12400DAC947 /* ApiKeyInputTableViewDataSource.swift */,
+				F217CBE527DBB12F00DAC947 /* Table View Sections */,
+				F217CBE827DBB1C300DAC947 /* Table View Cells */,
 			);
-			path = "Settings Input Scene";
+			path = "API Key Input Scene";
 			sourceTree = "<group>";
 		};
 		F27A122724425E2600A2CE8D /* Bookmarks Selection Scene */ = {
@@ -1408,8 +1463,9 @@
 		F2926CEE25AC8E2800413512 /* Shared Scene Objects */ = {
 			isa = PBXGroup;
 			children = (
-				F2926CF225AC9B9E00413512 /* Alert Controllers */,
+				F217CBDC27DBB08200DAC947 /* Table View Cells */,
 				F20CA11925B3225500153E47 /* Map Annotations */,
+				F2926CF225AC9B9E00413512 /* Alert Controllers */,
 			);
 			path = "Shared Scene Objects";
 			sourceTree = "<group>";
@@ -1810,6 +1866,7 @@
 				F2060E6B27C06CD30066DC8C /* UserLocationAuthorizationStatus.swift in Sources */,
 				F284DDEC245F792D00445BFF /* WeatherListInformationTableViewCell.swift in Sources */,
 				F2060E5227B69AFE0066DC8C /* SetApiKeyViewModel.swift in Sources */,
+				F217CBED27DBB22D00DAC947 /* SettingsTextEntryCellModel.swift in Sources */,
 				F284DDDA245E4B1600445BFF /* MapTypeOption.swift in Sources */,
 				F22A221B25A4A59B00C97844 /* WeatherListAlertTableViewCellViewModel.swift in Sources */,
 				F284DDDF245F5EC600445BFF /* WeatherDataContainer.swift in Sources */,
@@ -1836,11 +1893,14 @@
 				F20CA12C25B32B7700153E47 /* Array<PersistencyModel<WeatherInformationDTO>>+MapToWeatherMapAnnotationViewModel.swift in Sources */,
 				86830392217BBA5D00B7122E /* BadgeService.swift in Sources */,
 				F277E7E025AC9F570009D59B /* MapTypeSelectionAlert.swift in Sources */,
+				F217CBEB27DBB21800DAC947 /* SettingsTextEntryCellViewModel.swift in Sources */,
 				F2F7BA2123E37A9C00B4D2EB /* Constants+Values.swift in Sources */,
+				F217CBEF27DBB23F00DAC947 /* SettingsTextEntryCell.swift in Sources */,
 				F2DB5E7B25AB510600E21A56 /* MapAnnotationData.swift in Sources */,
 				F217CB8C27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift in Sources */,
 				F213FA3723F9EF6E00F094D8 /* DimensionalUnitOption.swift in Sources */,
 				F2372882244C82B200964C49 /* Constants+Theme.Color.swift in Sources */,
+				F217CBE027DBB0E700DAC947 /* ApiKeyInputViewModel.swift in Sources */,
 				F28EE8C925AB91530045AE6A /* Factory+UIBezierPath.swift in Sources */,
 				F2372878244C7F2E00964C49 /* WeatherMapFlow.swift in Sources */,
 				F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */,
@@ -1876,6 +1936,7 @@
 				F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */,
 				F217CBAE27DB638D00DAC947 /* AboutAppContributingItemsSection.swift in Sources */,
 				F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */,
+				F217CBE427DBB12400DAC947 /* ApiKeyInputTableViewDataSource.swift in Sources */,
 				F2060E6227BC1D7F0066DC8C /* NetworkReachabilityService.swift in Sources */,
 				F284DDD4245CF37800445BFF /* PermissionsService2.swift in Sources */,
 				F2DBEB3423F0427000CD513B /* Factory+UIAlertController.swift in Sources */,
@@ -1893,6 +1954,7 @@
 				F217CBD827DB889E00DAC947 /* SingleLabelCell.swift in Sources */,
 				F217CBC827DB6FB600DAC947 /* SettingsSingleLabelDualButtonCellViewModel.swift in Sources */,
 				F217CBCA27DB6FCA00DAC947 /* SettingsSingleLabelDualButtonCellModel.swift in Sources */,
+				F217CBE727DBB18C00DAC947 /* ApiKeyInputTextEntrySection.swift in Sources */,
 				F20CA11F25B322F800153E47 /* WeatherStationMeteorologyDetailsMapCellMapAnnotationData.swift in Sources */,
 				F2060E5427B69B170066DC8C /* SetApiKeyViewController.swift in Sources */,
 				F217CBBE27DB6AF900DAC947 /* SettingsSingleLabelCellModel.swift in Sources */,
@@ -1965,6 +2027,7 @@
 				F284DDD0245A414B00445BFF /* WeatherStationService2.swift in Sources */,
 				F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */,
 				F284DDE3245F605400445BFF /* WeatherDataManagerStoredContentsWrapper.swift in Sources */,
+				F217CBE227DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift in Sources */,
 				F2D1995825A1F5C1004C7753 /* UITableView+RegisterCells.swift in Sources */,
 				F217CBA427DB609300DAC947 /* AboutAppTableViewDataSource.swift in Sources */,
 				F213FA3423F9EF2400F094D8 /* TemperatureUnitOption.swift in Sources */,
@@ -2017,6 +2080,7 @@
 				F2D1993825A1E482004C7753 /* WeatherListTableViewDataSource.swift in Sources */,
 				F2D1991525A11D89004C7753 /* BaseCellViewModelProtocol.swift in Sources */,
 				F20CA10225B21BA300153E47 /* WeatherStationMeteorologyDetailsWindCell.swift in Sources */,
+				F217CBDE27DBB0C100DAC947 /* ApiKeyInputViewController.swift in Sources */,
 				F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */,
 				F284DDE9245F77A300445BFF /* BaseViewModel.swift in Sources */,
 				F284DDD6245CF38800445BFF /* PreferencesService2.swift in Sources */,

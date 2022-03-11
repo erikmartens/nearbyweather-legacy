@@ -16,6 +16,8 @@ extension SettingsSingleLabelDualButtonCellViewModel {
     let contentLabelText: String
     let lhsButtonTitleText: String
     let rhsButtonTitleText: String
+    let didTapLhsButtonSubject: PublishSubject<Void>
+    let didTapRhsButtonSubject: PublishSubject<Void>
   }
 }
 
@@ -23,11 +25,20 @@ extension SettingsSingleLabelDualButtonCellViewModel {
 
 final class SettingsSingleLabelDualButtonCellViewModel: NSObject, BaseCellViewModel {
   
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies
   
   // MARK: - Events
+  
+  let didTapLhsButtonSubject = PublishSubject<Void>()
+  let didTapRhsButtonSubject = PublishSubject<Void>()
+  
+  // MARK: - Drivers
   
   lazy var cellModelDriver: Driver<SettingsSingleLabelDualButtonCellModel> = Self.createCellModelDriver(with: dependencies)
   
@@ -42,6 +53,19 @@ final class SettingsSingleLabelDualButtonCellViewModel: NSObject, BaseCellViewMo
   func observeEvents() {
     observeDataSource()
     observeUserTapEvents()
+  }
+}
+
+extension SettingsSingleLabelDualButtonCellViewModel {
+  
+  func observeUserTapEvents() {
+    didTapLhsButtonSubject
+      .bind(to: dependencies.didTapLhsButtonSubject)
+      .disposed(by: disposeBag)
+    
+    didTapRhsButtonSubject
+      .bind(to: dependencies.didTapRhsButtonSubject)
+      .disposed(by: disposeBag)
   }
 }
 

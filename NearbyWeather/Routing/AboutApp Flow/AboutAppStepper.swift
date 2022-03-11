@@ -8,9 +8,11 @@
 
 import RxCocoa
 import RxFlow
+import MessageUI
 
 enum AboutAppStep: Step {
   case aboutApp
+  case sendEmail(recipients: [String],subject: String, message: String)
   case safariViewController(url: URL)
   case externalApp(url: URL)
   case dismiss

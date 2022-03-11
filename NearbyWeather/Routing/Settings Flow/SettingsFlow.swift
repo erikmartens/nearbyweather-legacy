@@ -61,7 +61,7 @@ final class SettingsFlow: Flow {
   
   // MARK: - Functions
   
-  func navigate(to step: Step) -> FlowContributors {
+  func navigate(to step: Step) -> FlowContributors { // swiftlint:disable:this cyclomatic_complexity
     guard let step = step as? SettingsStep else {
       return .none
     }

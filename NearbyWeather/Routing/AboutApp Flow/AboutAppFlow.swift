@@ -8,6 +8,7 @@
 
 import RxFlow
 import Swinject
+import MessageUI
 
 // MARK: - Dependencies
 
@@ -31,6 +32,10 @@ final class AboutAppFlow: Flow {
   var rootViewController: UINavigationController {
     dependencies.rootViewController
   }
+  
+  // MARK: - Properties
+  
+  private let mailComposeViewControllerDelegateHelper = MailComposeViewControllerDelegateHelper()
   
   // MARK: - Dependencies
   
@@ -59,12 +64,15 @@ final class AboutAppFlow: Flow {
     switch step {
     case .aboutApp:
       return summonAboutAppViewController()
+    case let .sendEmail(recipients, subject, message):
+      return summonEmailComposeSheet(recipients: recipients, subject: subject, message: message)
     case let .safariViewController(url):
       return summonSafariViewController(with: url)
     case let .externalApp(url):
       return summonExternalApp(with: url)
     case .dismiss:
       return dismissAboutAppController()
+    
     }
   }
 }
@@ -82,6 +90,22 @@ private extension AboutAppFlow {
     return .one(flowContributor: .contribute(withNextPresentable: aboutAppViewController, withNextStepper: aboutAppViewController.viewModel))
   }
   
+  func summonEmailComposeSheet(recipients: [String], subject: String, message: String) -> FlowContributors {
+    guard MFMailComposeViewController.canSendMail() else {
+      return .none // TODO: tell user needs to set up a mail account
+    }
+    
+    let mailController = MFMailComposeViewController()
+    mailController.mailComposeDelegate = mailComposeViewControllerDelegateHelper
+    
+    mailController.setToRecipients(recipients)
+    mailController.setSubject(subject)
+    mailController.setMessageBody(message, isHTML: false)
+    
+    rootViewController.present(mailController, animated: true, completion: nil)
+    return .none
+  }
+  
   func summonSafariViewController(with url: URL) -> FlowContributors {
     rootViewController.presentSafariViewController(for: url)
     return .none
@@ -94,5 +118,16 @@ private extension AboutAppFlow {
   
   func dismissAboutAppController() -> FlowContributors {
     .end(forwardToParentFlowWithStep: SettingsStep.pop)
+  }
+}
+
+// MARK: - Helper Extensions
+
+private class MailComposeViewControllerDelegateHelper: NSObject {}
+
+extension MailComposeViewControllerDelegateHelper: MFMailComposeViewControllerDelegate {
+  
+  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    controller.dismiss(animated: true, completion: nil)
   }
 }

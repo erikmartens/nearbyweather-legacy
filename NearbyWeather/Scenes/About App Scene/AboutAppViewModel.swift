@@ -71,8 +71,8 @@ final class AboutAppViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Events
   
-  let onDidChangeAllowTempOnAppIconOptionSubject = PublishSubject<Bool>()
-  let onDidChangeRefreshOnAppStartOptionSubject = PublishSubject<Bool>()
+  let onDidPressReportIssueViaGitHubCellButtonSubject = PublishSubject<Void>()
+  let onDidPressReportIssueViaEmailCellButtonSubject = PublishSubject<Void>()
   
   // MARK: - Drivers
   
@@ -130,7 +130,9 @@ extension AboutAppViewModel {
       SettingsSingleLabelDualButtonCellViewModel(dependencies: SettingsSingleLabelDualButtonCellViewModel.Dependencies(
         contentLabelText: R.string.localizable.report_issue(),
         lhsButtonTitleText: R.string.localizable.viaGitHub(),
-        rhsButtonTitleText: R.string.localizable.viaEmail()
+        rhsButtonTitleText: R.string.localizable.viaEmail(),
+        didTapLhsButtonSubject: onDidPressReportIssueViaGitHubCellButtonSubject,
+        didTapRhsButtonSubject: onDidPressReportIssueViaEmailCellButtonSubject
       ))
     ]
     
@@ -219,7 +221,21 @@ extension AboutAppViewModel {
   }
   
   func observeUserTapEvents() {
-    // nothing to do
+    onDidPressReportIssueViaGitHubCellButtonSubject
+      .map { _ -> AboutAppStep in AboutAppStep.safariViewController(url: Constants.Urls.kGitHubProjectIssuesUrl) }
+      .bind(to: steps)
+      .disposed(by: disposeBag)
+    
+    onDidPressReportIssueViaEmailCellButtonSubject
+      .map { _ -> AboutAppStep in
+        AboutAppStep.sendEmail(
+          recipients: [Constants.EmailAdresses.mainContact],
+          subject: R.string.localizable.app_name().append(contentsOf: R.string.localizable.report_issue(), delimiter: .custom(string: " - ")),
+          message: R.string.localizable.email_salutation()
+        )
+      }
+      .bind(to: steps)
+      .disposed(by: disposeBag)
   }
 }
 
@@ -305,28 +321,3 @@ private extension AboutAppViewModel {
 }
 
 // MARK: - Helper Extensions
-
-private extension AboutAppViewController {
-  
-  func sendMail(to recipients: [String], withSubject subject: String, withMessage message: String) {
-    guard MFMailComposeViewController.canSendMail() else {
-      return // TODO: tell user needs to set up a mail account
-    }
-    
-    let mailController = MFMailComposeViewController()
-    mailController.mailComposeDelegate = self
-    
-    mailController.setToRecipients(recipients)
-    mailController.setSubject(subject)
-    mailController.setMessageBody(message, isHTML: false)
-    
-    navigationController?.present(mailController, animated: true, completion: nil)
-  }
-}
-
-extension AboutAppViewController: MFMailComposeViewControllerDelegate {
-  
-  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-    controller.dismiss(animated: true, completion: nil)
-  }
-}

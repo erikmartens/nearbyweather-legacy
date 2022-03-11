@@ -88,6 +88,18 @@ extension SettingsSingleLabelDualButtonCell {
       .drive(onNext: { [setContent] in setContent($0) })
       .disposed(by: disposeBag)
   }
+  
+  func bindUserInputToViewModel(_ cellViewModel: CellViewModel) {
+    lhsButton.rx
+      .controlEvent(.touchUpInside)
+      .bind(to: cellViewModel.didTapLhsButtonSubject)
+      .disposed(by: disposeBag)
+    
+    rhsButton.rx
+      .controlEvent(.touchUpInside)
+      .bind(to: cellViewModel.didTapRhsButtonSubject)
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Cell Composition

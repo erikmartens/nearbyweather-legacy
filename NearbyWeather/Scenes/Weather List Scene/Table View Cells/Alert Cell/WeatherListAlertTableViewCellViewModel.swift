@@ -50,21 +50,21 @@ private extension WeatherListAlertTableViewCellViewModel {
   static func createCellModelDriver(error: Error) -> Driver<WeatherListAlertTableViewCellModel> {
     var errorMessage: String
     
-    if let error = error as? WeatherInformationService2.DomainError {
+    if let error = error as? WeatherInformationService.DomainError {
       switch error {
       case .nearbyWeatherInformationMissing:
         errorMessage = R.string.localizable.empty_nearby_locations_message()
       case .bookmarkedWeatherInformationMissing:
         errorMessage = R.string.localizable.empty_bookmarks_message()
       }
-    } else if let error = error as? UserLocationService2.DomainError {
+    } else if let error = error as? UserLocationService.DomainError {
       switch error {
       case .locationAuthorizationError:
         errorMessage = R.string.localizable.location_denied_error()
       case .locationUndeterminableError:
         errorMessage = R.string.localizable.location_unavailable_error()
       }
-    } else if let error = error as? ApiKeyService2.DomainError {
+    } else if let error = error as? ApiKeyService.DomainError {
       switch error {
       case .apiKeyMissingError:
         errorMessage = R.string.localizable.missing_api_key_error()

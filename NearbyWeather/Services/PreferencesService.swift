@@ -1,155 +1,454 @@
 //
-//  PreferencesManager.swift
+//  PreferencesService2.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 11.02.18.
-//  Copyright © 2018 Erik Maximilian Martens. All rights reserved.
+//  Created by Erik Maximilian Martens on 02.05.20.
+//  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
-import UIKit
-import MapKit
+import RxSwift
+import RxOptional
 
-protocol StoredPreferencesProvider {
-  var preferredBookmark: PreferredBookmarkOption { get set }
-  var amountOfResults: AmountOfResultsOption { get set }
-  var temperatureUnit: TemperatureUnitOption { get set }
-  var distanceSpeedUnit: DimensionalUnitOption { get set }
-  var sortingOrientation: SortingOrientationOption { get set }
+// MARK: - Persistency Keys
+
+private extension PreferencesService {
+  
+  enum PersistencyKeys {
+    case amountOfNearbyResultsOption
+    case temperatureUnitOption
+    case dimensionalUnitOption
+    case sortingOrientationOption
+    case preferredListTypeOption
+    case preferredMapTypeOption
+    case refreshOnAppStartOption
+    case showTemperatureAsAppIconBadge
+    
+    var collection: String {
+      switch self {
+      case .amountOfNearbyResultsOption: return "/general_preferences/cross_platform/amount_of_results/"
+      case .temperatureUnitOption: return "/general_preferences/cross_platform/temperature_unit/"
+      case .dimensionalUnitOption: return "/general_preferences/cross_platform/dimensional_unit/"
+      case .sortingOrientationOption: return "/general_preferences/cross_platform/sorting_orientation/"
+      case .preferredListTypeOption: return "/general_preferences/ios/preferred_list_type/"
+      case .preferredMapTypeOption: return "/general_preferences/cross_platform/preferred_map_type/"
+      case .refreshOnAppStartOption: return "/general_preferences/ios/refresh_on_app_start/"
+      
+      case .showTemperatureAsAppIconBadge: return "/notification_preferences/ios/show_temperature_as_app_icon_badge/"
+      }
+    }
+    
+    var identifier: String {
+      switch self {
+      case .amountOfNearbyResultsOption: return "default"
+      case .temperatureUnitOption: return "default"
+      case .dimensionalUnitOption: return "default"
+      case .sortingOrientationOption: return "default"
+      case .preferredListTypeOption: return "default"
+      case .preferredMapTypeOption: return "default"
+      case .refreshOnAppStartOption: return "default"
+      
+      case .showTemperatureAsAppIconBadge: return "default"
+      }
+    }
+  }
 }
 
-protocol InMemoryPreferencesProvider {
-  var preferredListType: ListTypeOptionValue { get set }
-  var preferredMapType: MKMapType { get set }
+// MARK: - Dependencies
+
+extension PreferencesService {
+  struct Dependencies {
+    let persistencyService: PersistencyProtocol
+  }
 }
 
-final class PreferencesService: StoredPreferencesProvider, InMemoryPreferencesProvider {
-  
-  private static let preferencesManagerBackgroundQueue = DispatchQueue(
-    label: Constants.Labels.DispatchQueues.kPreferencesManagerBackgroundQueue,
-    qos: .utility,
-    attributes: [.concurrent],
-    autoreleaseFrequency: .inherit,
-    target: nil
-  )
-  
-  // MARK: - Public Assets
-  
-  static var shared: PreferencesService!
+// MARK: - Class Definition
+
+final class PreferencesService {
   
   // MARK: - Properties
   
-  private var locationAuthorizationObserver: NSObjectProtocol!
+  private let dependencies: Dependencies
   
   // MARK: - Initialization
   
-  private init(preferredBookmark: PreferredBookmarkOption, amountOfResults: AmountOfResultsOption, temperatureUnit: TemperatureUnitOption, windspeedUnit: DimensionalUnitOption, sortingOrientation: SortingOrientationOption) {
-    self.preferredBookmark = preferredBookmark
-    self.amountOfResults = amountOfResults
-    self.temperatureUnit = temperatureUnit
-    self.distanceSpeedUnit = windspeedUnit
-    self.sortingOrientation = sortingOrientation
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
   }
-  
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
-  
-  // MARK: - Public Properties & Methods
-  
-  static func instantiateSharedInstance() {
-    shared = PreferencesService.loadData() ?? PreferencesService(preferredBookmark: PreferredBookmarkOption(value: .notSet),
-                                                                         amountOfResults: AmountOfResultsOption(value: .ten),
-                                                                         temperatureUnit: TemperatureUnitOption(value: .celsius),
-                                                                         windspeedUnit: DimensionalUnitOption(value: .metric),
-                                                                         sortingOrientation: SortingOrientationOption(value: .name))
-  }
-  
-  // MARK: - Stored Preferences
-  
-  var preferredBookmark: PreferredBookmarkOption {
-    didSet {
-      BadgeService.shared.updateBadge()
-      PreferencesService.storeData()
-    }
-  }
-  
-  var amountOfResults: AmountOfResultsOption {
-    didSet {
-      WeatherInformationService.shared.update(withCompletionHandler: nil)
-      PreferencesService.storeData()
-    }
-  }
-  
-  var temperatureUnit: TemperatureUnitOption {
-    didSet {
-      BadgeService.shared.updateBadge()
-      PreferencesService.storeData()
-    }
-  }
-  
-  var distanceSpeedUnit: DimensionalUnitOption {
-    didSet {
-      PreferencesService.storeData()
-    }
-  }
-  
-  var sortingOrientation: SortingOrientationOption {
-    didSet {
-      NotificationCenter.default.post(
-        name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kSortingOrientationPreferenceChanged),
-        object: nil
-      )
-      PreferencesService.storeData()
-    }
-  }
-  
-  // MARK: - In Memory Preferences
-  
-  var preferredListType: ListTypeOptionValue = .bookmarked
-  
-  var preferredMapType: MKMapType = .standard
 }
 
-extension PreferencesService: JsonPersistencyProtocol {
+extension PreferencesService {
   
-  typealias StorageEntity = PreferencesService
-  
-  static func loadData() -> PreferencesService? {
-    guard let preferencesManagerStoredContentsWrapper = try? JsonPersistencyWorker().retrieveJsonFromFile(
-      with: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
-      andDecodeAsType: PreferencesManagerStoredContentsWrapper.self,
-      fromStorageLocation: .applicationSupport
-      ) else {
-        return nil
-    }
-    
-    return PreferencesService(
-      preferredBookmark: preferencesManagerStoredContentsWrapper.preferredBookmark,
-      amountOfResults: preferencesManagerStoredContentsWrapper.amountOfResults,
-      temperatureUnit: preferencesManagerStoredContentsWrapper.temperatureUnit,
-      windspeedUnit: preferencesManagerStoredContentsWrapper.windspeedUnit,
-      sortingOrientation: preferencesManagerStoredContentsWrapper.sortingOrientation
-    )
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<AmountOfResultsOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService.PersistencyKeys.amountOfNearbyResultsOption.collection,
+            identifier: PreferencesService.PersistencyKeys.amountOfNearbyResultsOption.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: AmountOfResultsOption.self) }
   }
   
-  static func storeData() {
-    let dispatchSemaphore = DispatchSemaphore(value: 1)
-    
-    dispatchSemaphore.wait()
-    preferencesManagerBackgroundQueue.async {
-      let preferencesManagerStoredContentsWrapper = PreferencesManagerStoredContentsWrapper(
-        preferredBookmark: PreferencesService.shared.preferredBookmark,
-        amountOfResults: PreferencesService.shared.amountOfResults,
-        temperatureUnit: PreferencesService.shared.temperatureUnit,
-        windspeedUnit: PreferencesService.shared.distanceSpeedUnit,
-        sortingOrientation: PreferencesService.shared.sortingOrientation
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService.PersistencyKeys.amountOfNearbyResultsOption.collection,
+          identifier: PreferencesService.PersistencyKeys.amountOfNearbyResultsOption.identifier
+        ),
+        type: AmountOfResultsOption.self
       )
-      try? JsonPersistencyWorker().storeJson(
-        for: preferencesManagerStoredContentsWrapper,
-        inFileWithName: Constants.Keys.Storage.kPreferencesManagerStoredContentsFileName,
-        toStorageLocation: .applicationSupport
+      .map { $0?.entity }
+      .replaceNilWith(AmountOfResultsOption(value: .ten)) // default value
+  }
+  
+  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<TemperatureUnitOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService.PersistencyKeys.temperatureUnitOption.collection,
+            identifier: PreferencesService.PersistencyKeys.temperatureUnitOption.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: TemperatureUnitOption.self) }
+  }
+  
+  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService.PersistencyKeys.temperatureUnitOption.collection,
+          identifier: PreferencesService.PersistencyKeys.temperatureUnitOption.identifier
+        ),
+        type: TemperatureUnitOption.self
       )
-      dispatchSemaphore.signal()
-    }
+      .map { $0?.entity }
+      .replaceNilWith(TemperatureUnitOption(value: .celsius)) // default value
+  }
+  
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<DimensionalUnitOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService.PersistencyKeys.dimensionalUnitOption.collection,
+            identifier: PreferencesService.PersistencyKeys.dimensionalUnitOption.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: DimensionalUnitOption.self) }
+  }
+  
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService.PersistencyKeys.dimensionalUnitOption.collection,
+          identifier: PreferencesService.PersistencyKeys.dimensionalUnitOption.identifier
+        ),
+        type: DimensionalUnitOption.self
+      )
+      .map { $0?.entity }
+      .replaceNilWith(DimensionalUnitOption(value: .metric)) // default value
+  }
+  
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<SortingOrientationOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService.PersistencyKeys.sortingOrientationOption.collection,
+            identifier: PreferencesService.PersistencyKeys.sortingOrientationOption.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: SortingOrientationOption.self) }
+  }
+  
+  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService.PersistencyKeys.sortingOrientationOption.collection,
+          identifier: PreferencesService.PersistencyKeys.sortingOrientationOption.identifier
+        ),
+        type: SortingOrientationOption.self
+      )
+      .map { $0?.entity }
+      .replaceNilWith(SortingOrientationOption(value: .name)) // default value
+  }
+  
+  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<ListTypeOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService.PersistencyKeys.preferredListTypeOption.collection,
+            identifier: PreferencesService.PersistencyKeys.preferredListTypeOption.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: ListTypeOption.self) }
+  }
+  
+  func createGetListTypeOptionObservable() -> Observable<ListTypeOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService.PersistencyKeys.preferredListTypeOption.collection,
+          identifier: PreferencesService.PersistencyKeys.preferredListTypeOption.identifier
+        ),
+        type: ListTypeOption.self
+      )
+      .map { $0?.entity }
+      .replaceNilWith(ListTypeOption(value: .nearby)) // default value
+  }
+  
+  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<MapTypeOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService.PersistencyKeys.preferredMapTypeOption.collection,
+            identifier: PreferencesService.PersistencyKeys.preferredMapTypeOption.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: MapTypeOption.self) }
+  }
+  
+  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService.PersistencyKeys.preferredMapTypeOption.collection,
+          identifier: PreferencesService.PersistencyKeys.preferredMapTypeOption.identifier
+        ),
+        type: MapTypeOption.self
+      )
+      .map { $0?.entity }
+      .replaceNilWith(MapTypeOption(value: .standard)) // default value
+  }
+  
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<RefreshOnAppStartOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService.PersistencyKeys.refreshOnAppStartOption.collection,
+            identifier: PreferencesService.PersistencyKeys.refreshOnAppStartOption.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: RefreshOnAppStartOption.self) }
+  }
+  
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService.PersistencyKeys.refreshOnAppStartOption.collection,
+          identifier: PreferencesService.PersistencyKeys.refreshOnAppStartOption.identifier
+        ),
+        type: RefreshOnAppStartOption.self
+      )
+      .map { $0?.entity }
+      .replaceNilWith(RefreshOnAppStartOption(value: .no)) // default value
+  }
+  
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<ShowTemperatureOnAppIconOption>(
+          identity: PersistencyModelIdentity(
+            collection: PreferencesService.PersistencyKeys.showTemperatureAsAppIconBadge.collection,
+            identifier: PreferencesService.PersistencyKeys.showTemperatureAsAppIconBadge.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: ShowTemperatureOnAppIconOption.self) }
+  }
+  
+  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PreferencesService.PersistencyKeys.showTemperatureAsAppIconBadge.collection,
+          identifier: PreferencesService.PersistencyKeys.showTemperatureAsAppIconBadge.identifier
+        ),
+        type: ShowTemperatureOnAppIconOption.self
+      )
+      .map { $0?.entity }
+      .replaceNilWith(ShowTemperatureOnAppIconOption(value: .yes)) // default value
   }
 }
+
+// MARK: - General Preference Persistence
+
+protocol GeneralPreferencePersistence: WeatherListPreferencePersistence, WeatherMapPreferencePersistence, PreferenceMigration {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  
+  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
+  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
+  
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitOption>
+  
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
+  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
+  
+  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
+  func createGetListTypeOptionObservable() -> Observable<ListTypeOption>
+  
+  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
+  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
+  
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
+}
+
+extension PreferencesService: GeneralPreferencePersistence {}
+
+// MARK: - WeatherList Preferences
+/// Preferences that are available in the WeatherList Scene
+
+protocol WeatherListPreferencePersistence: WeatherListPreferenceSetting, WeatherListPreferenceReading {}
+extension PreferencesService: WeatherListPreferencePersistence {}
+
+protocol WeatherListPreferenceSetting {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
+  func createSetListTypeOptionCompletable(_ option: ListTypeOption) -> Completable
+}
+
+extension PreferencesService: WeatherListPreferenceSetting {}
+
+protocol WeatherListPreferenceReading {
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  func createGetSortingOrientationOptionObservable() -> Observable<SortingOrientationOption>
+  func createGetListTypeOptionObservable() -> Observable<ListTypeOption>
+}
+
+extension PreferencesService: WeatherListPreferenceReading {}
+
+// MARK: - WeatherMap Preferences
+/// Preferences that are available in the WeatherMap Scene
+
+protocol WeatherMapPreferencePersistence: WeatherMapPreferenceSetting, WeatherMapPreferenceReading {}
+extension PreferencesService: WeatherMapPreferencePersistence {}
+
+protocol WeatherMapPreferenceSetting {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createSetPreferredMapTypeOptionCompletable(_ option: MapTypeOption) -> Completable
+}
+
+extension PreferencesService: WeatherMapPreferenceSetting {}
+
+protocol WeatherMapPreferenceReading {
+  func createGetAmountOfNearbyResultsOptionObservable() -> Observable<AmountOfResultsOption>
+  func createGetMapTypeOptionObservable() -> Observable<MapTypeOption>
+  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitOption>
+}
+
+extension PreferencesService: WeatherMapPreferenceReading {}
+
+// MARK: Settings Preferences
+/// Preferences that are available in the Settings Scene
+
+protocol SettingsPreferencesPersistence: SettingsPreferencesSetting, SettingsPreferencesReading {}
+extension PreferencesService: SettingsPreferencesPersistence {}
+
+protocol SettingsPreferencesSetting {
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable
+}
+
+extension PreferencesService: SettingsPreferencesSetting {}
+
+protocol SettingsPreferencesReading {
+  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption>
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
+  func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
+  func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitOption>
+}
+
+extension PreferencesService: SettingsPreferencesReading {}
+
+// MARK: - Notification Preferences
+
+protocol NotificationPreferencesPersistence: NotificationPreferencesSetting, NotificationPreferencesReading {}
+extension PreferencesService: NotificationPreferencesPersistence {}
+
+protocol NotificationPreferencesSetting {
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
+}
+
+extension PreferencesService: NotificationPreferencesSetting {}
+
+protocol NotificationPreferencesReading {
+  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption>
+}
+
+extension PreferencesService: NotificationPreferencesReading {}
+
+// MARK: - AppDelegate Preferences
+
+protocol AppDelegatePreferencePersistence: AppDelegatePreferenceSetting, AppDelegatePreferenceReading {}
+extension PreferencesService: AppDelegatePreferencePersistence {}
+
+protocol AppDelegatePreferenceSetting {
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+}
+
+extension PreferencesService: AppDelegatePreferenceSetting {}
+
+protocol AppDelegatePreferenceReading {
+  func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
+}
+
+extension PreferencesService: AppDelegatePreferenceReading {}
+
+// MARK: - Preferences Migration
+
+protocol PreferenceMigration {
+  func createSetAmountOfNearbyResultsOptionCompletable(_ option: AmountOfResultsOption) -> Completable
+  func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
+  func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable
+  func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
+  func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
+}
+
+extension PreferencesService: PreferenceMigration {}

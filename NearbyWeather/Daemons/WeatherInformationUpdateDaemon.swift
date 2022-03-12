@@ -13,11 +13,11 @@ import RxOptional
 
 extension WeatherInformationUpdateDaemon {
   struct Dependencies { // TODO: create protocols for all
-    var apiKeyService: ApiKeyService2
-    var preferencesService: PreferencesService2
-    var userLocationService: UserLocationService2
-    var weatherStationService: WeatherStationService2
-    var weatherInformationService: WeatherInformationService2
+    var apiKeyService: ApiKeyService
+    var preferencesService: PreferencesService
+    var userLocationService: UserLocationService
+    var weatherStationService: WeatherStationService
+    var weatherInformationService: WeatherInformationService
   }
 }
 
@@ -90,7 +90,7 @@ private extension WeatherInformationUpdateDaemon {
       .map { apiKey -> String? in apiKey } // convert to optional
       .distinctUntilChanged()
       .asInfallible(onErrorRecover: { error in
-        if error as? ApiKeyService2.DomainError != nil {
+        if error as? ApiKeyService.DomainError != nil {
           return Infallible.just(nil) // key is missing or invalid -> return nil to delete previously downloaded weather information
         }
         return Infallible.just("") // some other error occured -> do not return nil to delete previously downloaded weather information

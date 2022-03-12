@@ -88,8 +88,8 @@ final class AboutAppFlow: Flow {
 private extension AboutAppFlow {
   func summonAboutAppViewController() -> FlowContributors {
     let aboutAppViewController = AboutAppViewController(dependencies: AboutAppViewModel.Dependencies(
-      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
-      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService2.self)!
+      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService.self)!,
+      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService.self)!
     ))
     switch dependencies.flowPresentationStyle {
     case .pushed:

@@ -1,69 +1,220 @@
 //
-//  LocationService.swift
+//  UserLocationService.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 09.04.17.
-//  Copyright © 2017 Erik Maximilian Martens. All rights reserved.
+//  Created by Erik Maximilian Martens on 30.04.20.
+//  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
 import CoreLocation
+import RxSwift
+import RxCoreLocation
 
-final class UserLocationService: CLLocationManager, CLLocationManagerDelegate {
-  
-  // MARK: - Public Assets
-  
-  static var shared: UserLocationService!
-  
-  var currentLatitude: Double?
-  var currentLongitude: Double?
-  var currentAuthorizationStatus: CLAuthorizationStatus
-  
-  // MARK: - Intialization
-  
-  private override init() {
-    currentAuthorizationStatus = CLLocationManager.authorizationStatus()
-    super.init()
-  }
-  
-  // MARK: - Public Methods
-  
-  static func instantiateSharedInstance() {
-    // initialize with example data
-    shared = UserLocationService()
+// MARK: - Domain-Specific Errors
+
+extension UserLocationService {
+  enum DomainError: String, Error {
+    var domain: String { "UserLocationService" }
     
-    UserLocationService.shared.delegate = UserLocationService.shared
-    UserLocationService.shared.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-    UserLocationService.shared.startUpdatingLocation()
+    case locationAuthorizationError = "Trying access the user location, but sufficient authorization was not granted or the user location is not accessible."
+    case locationUndeterminableError = "Trying access the user location, but it could not be determined."
   }
-  
-  var locationPermissionsGranted: Bool {
-    return currentAuthorizationStatus == .authorizedAlways || currentAuthorizationStatus == .authorizedWhenInUse
-  }
-  
-  var currentLocation: CLLocation? {
-    if let latitude = currentLatitude, let longitude = currentLongitude {
-      return CLLocation(latitude: latitude, longitude: longitude)
+}
+
+// MARK: - Persistency Keys
+
+private extension UserLocationService {
+  enum PersistencyKeys {
+    case userLocation
+    case authorizationStatus
+    
+    var collection: String {
+      switch self {
+      case .userLocation: return "/user_location/user_location/"
+      case .authorizationStatus: return "/user_location/authorization_status/"
+      }
     }
-    return nil
-  }
-  
-  // MARK: - Delegate Methods
-  
-  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-    currentAuthorizationStatus = status
-    if currentAuthorizationStatus != .authorizedWhenInUse && currentAuthorizationStatus != .authorizedAlways {
-      self.currentLatitude = nil
-      self.currentLongitude = nil
+    
+    var identifier: String {
+      switch self {
+      case .userLocation: return "default"
+      case .authorizationStatus: return "default"
+      }
     }
-    NotificationCenter.default.post(
-      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
-      object: nil
-    )
+    
+    var identity: PersistencyModelIdentity {
+      PersistencyModelIdentity(collection: collection, identifier: identifier)
+    }
+  }
+}
+
+// MARK: - Dependencies
+
+extension UserLocationService {
+  struct Dependencies {
+    let persistencyService: PersistencyProtocol
+  }
+}
+
+// MARK: - Class Definition
+
+final class UserLocationService {
+  
+  // MARK: - Properties
+  
+  private let dependencies: Dependencies
+  private let locationManager: CLLocationManager
+  
+  // MARK: - Initialization
+  
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
+    locationManager = CLLocationManager()
+    locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+  }
+}
+
+// MARK: - User Location Permissions Requesting
+
+protocol UserLocationPermissionRequesting {
+  func requestWhenImUseLocationAccess() -> Completable
+  func createSaveLocationAuthorizationStatusCompletable(_ authorizationStatus: UserLocationAuthorizationStatus) -> Completable
+  func createGetLocationAuthorizationStatusObservable() -> Observable<UserLocationAuthorizationStatus?>
+}
+
+extension UserLocationService: UserLocationPermissionRequesting {
+ 
+  func requestWhenImUseLocationAccess() -> Completable {
+    Completable
+      .create { handler in
+        let locationManager = CLLocationManager()
+        guard locationManager.authorizationStatus == .notDetermined else {
+          handler(.completed)
+          return Disposables.create()
+        }
+        locationManager.requestWhenInUseAuthorization()
+        handler(.completed)
+        return Disposables.create()
+      }
   }
   
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    let currentLocation = manager.location?.coordinate
-    currentLatitude = currentLocation?.latitude
-    currentLongitude = currentLocation?.longitude
+  func createSaveLocationAuthorizationStatusCompletable(_ authorizationStatus: UserLocationAuthorizationStatus) -> Completable {
+    dependencies.persistencyService
+      .saveResource(
+        PersistencyModel(identity: PersistencyKeys.authorizationStatus.identity, entity: authorizationStatus),
+        type: UserLocationAuthorizationStatus.self
+      )
+  }
+  
+  func createGetLocationAuthorizationStatusObservable() -> Observable<UserLocationAuthorizationStatus?> {
+    dependencies.persistencyService
+      .observeResource(
+        with: PersistencyKeys.authorizationStatus.identity,
+        type: UserLocationAuthorizationStatus.self
+      )
+      .map { $0?.entity }
+  }
+}
+
+// MARK: - User Location Permissions Writing
+
+protocol UserLocationPermissionWriting {
+  func createSaveLocationAuthorizationStatusCompletable(_ authorizationStatus: UserLocationAuthorizationStatus) -> Completable
+}
+
+extension UserLocationService: UserLocationPermissionWriting {}
+
+// MARK: - User Location Permissions Reading
+
+protocol UserLocationPermissionReading {
+  func createGetLocationAuthorizationStatusObservable() -> Observable<UserLocationAuthorizationStatus?>
+}
+
+extension UserLocationService: UserLocationPermissionReading {}
+
+// MARK: - User Location Accessing
+
+protocol UserLocationAccessing {
+  
+  func createDeleteUserLocationCompletable() -> Completable
+  func createSaveUserLocationCompletable(location: CLLocation?) -> Completable
+  func createGetUserLocationObservable() -> Observable<CLLocation>
+}
+
+extension UserLocationService: UserLocationAccessing {
+  
+  func createDeleteUserLocationCompletable() -> Completable {
+    dependencies.persistencyService.deleteResource(with: PersistencyKeys.userLocation.identity)
+  }
+  
+  func createSaveUserLocationCompletable(location: CLLocation?) -> Completable {
+    guard let location = location else {
+      return Completable.create { handler in
+        handler(.completed)
+        return Disposables.create()
+      }
+    }
+    return dependencies.persistencyService.saveResource(
+      PersistencyModel(
+        identity: PersistencyKeys.userLocation.identity,
+        entity: UserLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+      ),
+      type: UserLocation.self)
+  }
+  
+  func createGetUserLocationObservable() -> Observable<CLLocation> {
+    dependencies.persistencyService
+      .observeResource(with: PersistencyKeys.userLocation.identity, type: UserLocation.self)
+      .map { userLocation in
+        guard let userLocation = userLocation else {
+          throw DomainError.locationAuthorizationError
+        }
+        return CLLocation(latitude: userLocation.entity.latitude, longitude: userLocation.entity.longitude)
+      }
+  }
+}
+
+// MARK: - User Location Writing
+
+protocol UserLocationWriting {
+  func createDeleteUserLocationCompletable() -> Completable
+  func createSaveUserLocationCompletable(location: CLLocation?) -> Completable
+}
+
+extension UserLocationService: UserLocationWriting {}
+
+// MARK: - User Location Reading
+
+protocol UserLocationReading {
+  func createGetUserLocationObservable() -> Observable<CLLocation>
+}
+
+extension UserLocationService: UserLocationReading {}
+
+// MARK: - Helpers
+
+extension UserLocationAuthorizationStatus {
+  
+  var authorizationStatusIsSufficient: Bool {
+    switch self.authorizationStatus {
+    case .undetermined, .systemRevoked, .userRevoked:
+      return false
+    case .authorizedWhileUsing, .authorizedAnytime:
+      return true
+    }
+  }
+}
+
+extension CLAuthorizationStatus {
+  
+  var authorizationStatusIsSufficient: Bool {
+    switch self {
+    case .notDetermined, .restricted, .denied:
+      return false
+    case .authorizedWhenInUse, .authorizedAlways:
+      return true
+    @unknown default:
+      return false
+    }
   }
 }

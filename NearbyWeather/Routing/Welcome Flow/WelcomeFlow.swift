@@ -71,7 +71,7 @@ private extension WelcomeFlow {
   private func summonWelcomeWindow() -> FlowContributors {
    
     let setApiKeyViewController = SetApiKeyViewController(
-      dependencies: SetApiKeyViewController.ViewModel.Dependencies(apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!
+      dependencies: SetApiKeyViewController.ViewModel.Dependencies(apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService.self)!
     ))
     rootViewController.setViewControllers([setApiKeyViewController], animated: false)
     return .one(flowContributor: .contribute(
@@ -89,7 +89,7 @@ private extension WelcomeFlow {
   private func summonSetPermissions() -> FlowContributors {
     
     let setPermissionsViewController = SetPermissionsViewController(
-      dependencies: SetPermissionsViewController.ViewModel.Dependencies(userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!
+      dependencies: SetPermissionsViewController.ViewModel.Dependencies(userLocationService: dependencies.dependencyContainer.resolve(UserLocationService.self)!
     ))
     rootViewController.pushViewController(setPermissionsViewController, animated: true)
     return .one(flowContributor: .contribute(

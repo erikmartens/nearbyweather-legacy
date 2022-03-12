@@ -78,7 +78,7 @@ private extension AddBookmarkFlow {
   
   func summonAddBookmarkViewController() -> FlowContributors {
     let addBookmarkViewController = AddBookmarkViewController(dependencies: AddBookmarkViewController.ViewModel.Dependencies(
-      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!
+      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService.self)!
     ))
     
     switch dependencies.flowPresentationStyle {

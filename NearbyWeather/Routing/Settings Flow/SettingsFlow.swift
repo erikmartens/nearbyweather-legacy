@@ -104,8 +104,8 @@ final class SettingsFlow: Flow {
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(WeatherStationService2.self)!.createGetPreferredBookmarkObservable(),
-          dependencies.dependencyContainer.resolve(WeatherStationService2.self)!.createGetBookmarkedStationsObservable().take(1),
+          dependencies.dependencyContainer.resolve(WeatherStationService.self)!.createGetPreferredBookmarkObservable(),
+          dependencies.dependencyContainer.resolve(WeatherStationService.self)!.createGetBookmarkedStationsObservable().take(1),
           resultSelector: SettingsStep.changePreferredBookmarkAlertAdapted
         )
         .take(1)
@@ -114,7 +114,7 @@ final class SettingsFlow: Flow {
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetTemperatureUnitOptionObservable().map { $0.value }.take(1),
+          dependencies.dependencyContainer.resolve(PreferencesService.self)!.createGetTemperatureUnitOptionObservable().map { $0.value }.take(1),
           resultSelector: SettingsStep.changeTemperatureUnitAlertAdapted
         )
         .take(1)
@@ -123,7 +123,7 @@ final class SettingsFlow: Flow {
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetDimensionalUnitsOptionObservable().map { $0.value }.take(1),
+          dependencies.dependencyContainer.resolve(PreferencesService.self)!.createGetDimensionalUnitsOptionObservable().map { $0.value }.take(1),
           resultSelector: SettingsStep.changeDimensionalUnitAlertAdapted
         )
         .take(1)
@@ -140,8 +140,8 @@ private extension SettingsFlow {
   
   func summonSettingsController() -> FlowContributors {
     let settingsViewController = SettingsViewController(dependencies: SettingsViewModel.Dependencies(
-      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
-      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService2.self)!
+      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService.self)!,
+      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService.self)!
     ))
     rootViewController.setViewControllers([settingsViewController], animated: false)
     return .one(flowContributor: .contribute(
@@ -174,12 +174,14 @@ private extension SettingsFlow {
   }
   
   func summonManageLocationsController() -> FlowContributors {
-    guard !WeatherInformationService.shared.bookmarkedLocations.isEmpty else {
-      return .none
-    }
-    let locationManagementController = WeatherLocationManagementTableViewController(style: SettingsFlow.Definitions.preferredTableViewStyle)
-    rootViewController.pushViewController(locationManagementController, animated: true)
-    return .one(flowContributor: .contribute(withNext: locationManagementController))
+    // TODO
+//    guard !WeatherInformationService.shared.bookmarkedLocations.isEmpty else {
+//      return .none
+//    }
+    return .none
+//    let locationManagementController = WeatherLocationManagementTableViewController(style: SettingsFlow.Definitions.preferredTableViewStyle)
+//    rootViewController.pushViewController(locationManagementController, animated: true)
+//    return .one(flowContributor: .contribute(withNext: locationManagementController))
   }
   
   func summonAddLocationController() -> FlowContributors {
@@ -191,9 +193,6 @@ private extension SettingsFlow {
     let addBookmarkStepper = AddBookmarkStepper()
     
     return .one(flowContributor: .contribute(withNextPresentable: addBookmarkFlow, withNextStepper: addBookmarkStepper))
-//    let addLocationController = WeatherLocationSelectionTableViewController(style: SettingsFlow.Definitions.preferredTableViewStyle)
-//    rootViewController.pushViewController(addLocationController, animated: true)
-//    return .one(flowContributor: .contribute(withNext: addLocationController))
   }
   
   func summonChangePreferredBookmarkAlert(selectionDelegate: PreferredBookmarkSelectionAlertDelegate, preferredBookmarkOption: PreferredBookmarkOption?, bookmarkedLocations: [WeatherStationDTO]) -> FlowContributors {
@@ -230,7 +229,7 @@ private extension SettingsFlow {
   }
   
   func popPushedViewController() -> FlowContributors {
-    rootViewController.popToRootViewController(animated: true)
+    rootViewController.popViewController(animated: true)
     return .none
   }
 }

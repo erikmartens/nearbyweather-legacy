@@ -70,10 +70,10 @@ private extension WeatherDetailFlow {
   func summonWeatherDetailController() -> FlowContributors {
     let weatherDetailViewController = WeatherStationMeteorologyDetailsViewController(dependencies: WeatherStationMeteorologyDetailsViewModel.Dependencies(
       weatherInformationIdentity: dependencies.weatherInformationIdentity,
-      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
-      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,
-      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService2.self)!,
-      userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!
+      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService.self)!,
+      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService.self)!,
+      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService.self)!,
+      userLocationService: dependencies.dependencyContainer.resolve(UserLocationService.self)!
     ))
     
     rootViewController.setViewControllers([weatherDetailViewController], animated: false)

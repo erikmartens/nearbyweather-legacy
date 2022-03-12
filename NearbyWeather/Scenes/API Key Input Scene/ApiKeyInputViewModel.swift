@@ -84,7 +84,7 @@ extension ApiKeyInputViewModel {
       .createGetApiKeyObservable()
       .map { apiKey -> String? in apiKey } // convert to optional
       .catch { error in
-        guard let error = error as? ApiKeyService2.DomainError else {
+        guard let error = error as? ApiKeyService.DomainError else {
           throw error
         }
         switch error {

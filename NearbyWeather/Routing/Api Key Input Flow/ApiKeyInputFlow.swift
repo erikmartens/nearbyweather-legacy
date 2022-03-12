@@ -78,7 +78,7 @@ private extension ApiKeyInputFlow {
   
   func summonAboutAppViewController() -> FlowContributors {
     let apiKeyInputViewController = ApiKeyInputViewController(dependencies: ApiKeyInputViewController.ViewModel.Dependencies(
-      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!
+      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService.self)!
     ))
     
     switch dependencies.flowPresentationStyle {

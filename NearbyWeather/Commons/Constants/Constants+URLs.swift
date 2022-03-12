@@ -42,13 +42,6 @@ extension Constants {
       return URL(string: "\(baseUrlString)?q=\(stationName)&APPID=\(apiKey)")!
     }
     
-    // TODO: remove, use function below only after deleting old services
-    static func kOpenWeatherMapNearbyStationsDataRequestUrl(with apiKey: String, currentLatitude latitude: Double, currentLongitude longitude: Double) -> URL {
-      let baseUrl = Constants.Urls.kOpenWeatherNearbyStationsDataBaseUrl.absoluteString
-      let numberOfResults = PreferencesService.shared.amountOfResults.integerValue
-      return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)")!
-    }
-    
     static func kOpenWeatherMapMultiStationtDataRequestUrl(with apiKey: String, latitude: Double, longitude: Double, numberOfResults: Int) -> URL {
       let baseUrl = Constants.Urls.kOpenWeatherNearbyStationsDataBaseUrl.absoluteString
       return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)")!

@@ -92,7 +92,7 @@ final class WeatherListFlow: Flow {
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetListTypeOptionObservable().map { $0.value }.take(1),
+          dependencies.dependencyContainer.resolve(PreferencesService.self)!.createGetListTypeOptionObservable().map { $0.value }.take(1),
           resultSelector: WeatherListStep.changeListTypeAlertAdapted
         )
         .take(1)
@@ -101,7 +101,7 @@ final class WeatherListFlow: Flow {
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetAmountOfNearbyResultsOptionObservable().map { $0.value }.take(1),
+          dependencies.dependencyContainer.resolve(PreferencesService.self)!.createGetAmountOfNearbyResultsOptionObservable().map { $0.value }.take(1),
           resultSelector: WeatherListStep.changeAmountOfResultsAlertAdapted
         )
         .take(1)
@@ -110,7 +110,7 @@ final class WeatherListFlow: Flow {
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetSortingOrientationOptionObservable().map { $0.value }.take(1),
+          dependencies.dependencyContainer.resolve(PreferencesService.self)!.createGetSortingOrientationOptionObservable().map { $0.value }.take(1),
           resultSelector: WeatherListStep.changeSortingOrientationAlertAdapted
         )
         .take(1)
@@ -139,11 +139,11 @@ private extension WeatherListFlow {
   
   func summonWeatherListController() -> FlowContributors {
     let weatherListViewController = WeatherListViewController(dependencies: WeatherListViewController.ViewModel.Dependencies(
-      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,
-      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
-      userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!,
-      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService2.self)!,
-      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!
+      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService.self)!,
+      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService.self)!,
+      userLocationService: dependencies.dependencyContainer.resolve(UserLocationService.self)!,
+      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService.self)!,
+      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService.self)!
     ))
     rootViewController.setViewControllers([weatherListViewController], animated: false)
     return .one(flowContributor: .contribute(
@@ -155,8 +155,8 @@ private extension WeatherListFlow {
   
   func summonEmptyWeatherListController() -> FlowContributors {
     let listErrorViewController = WeatherListErrorViewController(dependencies: WeatherListErrorViewController.ViewModel.Dependencies(
-      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!,
-      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,
+      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService.self)!,
+      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService.self)!,
       networkReachabilityService: dependencies.dependencyContainer.resolve(NetworkReachabilityService.self)!
     ))
     rootViewController.setViewControllers([listErrorViewController], animated: false)

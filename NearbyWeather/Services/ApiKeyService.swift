@@ -11,7 +11,7 @@ import RxAlamofire
 
 // MARK: - Domain-Specific Errors
 
-extension ApiKeyService2 {
+extension ApiKeyService {
   enum DomainError: Error {
     var domain: String { "WeatherInformationService" }
     
@@ -29,7 +29,7 @@ extension ApiKeyService2 {
 
 // MARK: - Domain-Specific Types
 
-extension ApiKeyService2 {
+extension ApiKeyService {
   enum ApiKeyValidity {
     case valid(apiKey: String)
     case invalid(invalidApiKey: String)
@@ -47,7 +47,7 @@ extension ApiKeyService2 {
   }
 }
 
-extension ApiKeyService2.ApiKeyValidity: Equatable {
+extension ApiKeyService.ApiKeyValidity: Equatable {
   static func == (lhs: Self, rhs: Self) -> Bool {
     switch (lhs, rhs) {
     case (let .valid(lhsVal), let .valid(rhsVal)):
@@ -66,7 +66,7 @@ extension ApiKeyService2.ApiKeyValidity: Equatable {
 
 // MARK: - Persistency Keys
  
-private extension ApiKeyService2 {
+private extension ApiKeyService {
   enum PersistencyKeys {
     case userApiKey
     
@@ -86,7 +86,7 @@ private extension ApiKeyService2 {
 
 // MARK: - Dependencies
 
-extension ApiKeyService2 {
+extension ApiKeyService {
   struct Dependencies {
     let persistencyService: PersistencyProtocol
   }
@@ -94,7 +94,7 @@ extension ApiKeyService2 {
 
 // MARK: - Class Definition
 
-final class ApiKeyService2 {
+final class ApiKeyService {
   
   // MARK: - Properties
   
@@ -110,12 +110,12 @@ final class ApiKeyService2 {
 // MARK: - API Key Validity
 
 protocol ApiKeyValidity {
-  func createApiKeyIsValidObservable() -> Observable<ApiKeyService2.ApiKeyValidity>
+  func createApiKeyIsValidObservable() -> Observable<ApiKeyService.ApiKeyValidity>
 }
 
-extension ApiKeyService2: ApiKeyValidity {
+extension ApiKeyService: ApiKeyValidity {
   
-  func createApiKeyIsValidObservable() -> Observable<ApiKeyService2.ApiKeyValidity> {
+  func createApiKeyIsValidObservable() -> Observable<ApiKeyService.ApiKeyValidity> {
     let identity = PersistencyModelIdentity(
       collection: PersistencyKeys.userApiKey.collection,
       identifier: PersistencyKeys.userApiKey.identifier
@@ -124,13 +124,13 @@ extension ApiKeyService2: ApiKeyValidity {
       .persistencyService
       .observeResource(with: identity, type: ApiKeyDTO.self)
       .map { $0?.entity.apiKey }
-      .flatMapLatest { apiKey -> Observable<ApiKeyService2.ApiKeyValidity> in
+      .flatMapLatest { apiKey -> Observable<ApiKeyService.ApiKeyValidity> in
         guard let apiKey = apiKey else {
           return Observable.just(.missing)
         }
         return RxAlamofire
           .requestData(.get, Constants.Urls.kOpenWeatherMapApitTestRequestUrl(with: apiKey))
-          .map { response -> ApiKeyService2.ApiKeyValidity in
+          .map { response -> ApiKeyService.ApiKeyValidity in
             if response.0.statusCode == 401 {
               return .invalid(invalidApiKey: apiKey)
             }
@@ -150,7 +150,7 @@ protocol ApiKeyPersistence: ApiKeySetting, ApiKeyReading {
   func createGetApiKeyObservable() -> Observable<String>
 }
 
-extension ApiKeyService2: ApiKeyPersistence {
+extension ApiKeyService: ApiKeyPersistence {
   
   func createSetApiKeyCompletable(_ apiKey: String) -> Completable {
     Single
@@ -170,9 +170,9 @@ extension ApiKeyService2: ApiKeyPersistence {
         case let .valid(apiKey):
           return apiKey
         case let .invalid(invalidApiKey):
-          throw ApiKeyService2.DomainError.apiKeyInvalidError(invalidApiKey: invalidApiKey)
+          throw ApiKeyService.DomainError.apiKeyInvalidError(invalidApiKey: invalidApiKey)
         case .missing:
-          throw ApiKeyService2.DomainError.apiKeyMissingError
+          throw ApiKeyService.DomainError.apiKeyMissingError
         case let .unknown(apiKey):
           return apiKey
         }
@@ -186,13 +186,13 @@ protocol ApiKeySetting {
   func createSetApiKeyCompletable(_ apiKey: String) -> Completable
 }
 
-extension ApiKeyService2: ApiKeySetting {}
+extension ApiKeyService: ApiKeySetting {}
 
 // MARK: - API Key Reading
 
 protocol ApiKeyReading {
   func createGetApiKeyObservable() -> Observable<String>
-  func createApiKeyIsValidObservable() -> Observable<ApiKeyService2.ApiKeyValidity>
+  func createApiKeyIsValidObservable() -> Observable<ApiKeyService.ApiKeyValidity>
 }
 
-extension ApiKeyService2: ApiKeyReading {}
+extension ApiKeyService: ApiKeyReading {}

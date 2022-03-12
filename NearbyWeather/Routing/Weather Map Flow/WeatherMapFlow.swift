@@ -92,7 +92,7 @@ final class WeatherMapFlow: Flow { // TODO: rename to WeatherMapFlow
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetMapTypeOptionObservable().map { $0.value }.take(1),
+          dependencies.dependencyContainer.resolve(PreferencesService.self)!.createGetMapTypeOptionObservable().map { $0.value }.take(1),
           resultSelector: WeatherMapStep.changeMapTypeAlertAdapted
         )
         .take(1)
@@ -101,7 +101,7 @@ final class WeatherMapFlow: Flow { // TODO: rename to WeatherMapFlow
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(PreferencesService2.self)!.createGetAmountOfNearbyResultsOptionObservable().map { $0.value }.take(1),
+          dependencies.dependencyContainer.resolve(PreferencesService.self)!.createGetAmountOfNearbyResultsOptionObservable().map { $0.value }.take(1),
           resultSelector: WeatherMapStep.changeAmountOfResultsAlertAdapted
         )
         .take(1)
@@ -110,7 +110,7 @@ final class WeatherMapFlow: Flow { // TODO: rename to WeatherMapFlow
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } }.take(1),
+          dependencies.dependencyContainer.resolve(WeatherInformationService.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } }.take(1),
           resultSelector: WeatherMapStep.focusOnLocationAlertAdapted
         )
         .take(1)
@@ -139,11 +139,11 @@ private extension WeatherMapFlow {
   
   func summonWeatherMapController() -> FlowContributors {
     let weatherMapViewController = WeatherMapViewController(dependencies: WeatherMapViewController.ViewModel.Dependencies(
-      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!,
-      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService2.self)!,
-      userLocationService: dependencies.dependencyContainer.resolve(UserLocationService2.self)!,
-      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService2.self)!,
-      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService2.self)!
+      weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService.self)!,
+      weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService.self)!,
+      userLocationService: dependencies.dependencyContainer.resolve(UserLocationService.self)!,
+      preferencesService: dependencies.dependencyContainer.resolve(PreferencesService.self)!,
+      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService.self)!
     ))
     rootViewController.setViewControllers([weatherMapViewController], animated: false)
     return .one(flowContributor: .contribute(

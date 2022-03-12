@@ -11,7 +11,7 @@ import UserNotifications
 
 // TODO: SCHEDULED FOR DELETION (REPLACEMENT PENDING)
 
-final class BadgeService {
+final class LegacyBadgeService {
   
   // MARK: - Types
   
@@ -38,20 +38,20 @@ final class BadgeService {
   
   // MARK: - Properties
   
-  static var shared: BadgeService!
+  static var shared: LegacyBadgeService!
   
   // MARK: - Methods
   
   func isAppIconBadgeNotificationEnabled(with completionHandler: @escaping (Bool) -> Void) {
-    guard UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) else {
-      completionHandler(false)
-      return
-    }
-    PermissionsService.shared.requestNotificationPermissions(with: completionHandler)
+//    guard UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) else {
+//      completionHandler(false)
+//      return
+//    }
+//    PermissionsService.shared.requestNotificationPermissions(with: completionHandler)
   }
   
   static func instantiateSharedInstance() {
-    shared = BadgeService()
+    shared = LegacyBadgeService()
     
     if UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) {
       shared.setBackgroundFetchEnabled(true)
@@ -60,44 +60,44 @@ final class BadgeService {
   
   func setTemperatureOnAppIconEnabled(_ enabled: Bool) {
     UserDefaults.standard.set(enabled, forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey)
-    BadgeService.shared.updateBadge()
+    LegacyBadgeService.shared.updateBadge()
   }
   
   func updateBadge() {
-    guard UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) else {
-      clearAppIcon()
-      return
-    }
-    PermissionsService.shared.requestNotificationPermissions { [weak self] approved in
-      guard approved else {
-        self?.clearAppIcon()
-        return
-      }
-      self?.performBadgeUpdate()
-    }
+//    guard UserDefaults.standard.bool(forKey: Constants.Keys.UserDefaults.kIsTemperatureOnAppIconEnabledKey) else {
+//      clearAppIcon()
+//      return
+//    }
+//    PermissionsService.shared.requestNotificationPermissions { [weak self] approved in
+//      guard approved else {
+//        self?.clearAppIcon()
+//        return
+//      }
+//      self?.performBadgeUpdate()
+//    }
   }
   
   // MARK: - Helpers
   
   private func performBadgeUpdate() {
-    guard let weatherData = WeatherInformationService.shared.preferredBookmarkData else {
-      clearAppIcon()
-      return
-    }
-    
-    let temperatureUnit = PreferencesService.shared.temperatureUnit
-    
-    guard let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin,
-      let temperature = ConversionWorker.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin) else {
-      return
-    }
-    let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
-    UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
-    if previousTemperatureValue < 0 && temperature > 0 {
-      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.stationName))
-    } else if previousTemperatureValue > 0 && temperature < 0 {
-      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.stationName))
-    }
+//    guard let weatherData = WeatherInformationService.shared.preferredBookmarkData else {
+//      clearAppIcon()
+//      return
+//    }
+//
+//    let temperatureUnit = PreferencesService.shared.temperatureUnit
+//
+//    guard let temperatureKelvin = weatherData.atmosphericInformation.temperatureKelvin,
+//      let temperature = ConversionWorker.temperatureIntValue(forTemperatureUnit: temperatureUnit, fromRawTemperature: temperatureKelvin) else {
+//      return
+//    }
+//    let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
+//    UIApplication.shared.applicationIconBadgeNumber = abs(temperature)
+//    if previousTemperatureValue < 0 && temperature > 0 {
+//      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .plus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.stationName))
+//    } else if previousTemperatureValue > 0 && temperature < 0 {
+//      sendTemperatureSignChangeNotification(inputContent: AppIconBadgeTemperatureContent(sign: .minus, unit: temperatureUnit, temperature: temperature, cityName: weatherData.stationName))
+//    }
   }
   
   private func clearAppIcon() {

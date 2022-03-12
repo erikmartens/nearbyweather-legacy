@@ -12,7 +12,7 @@ import RxAlamofire
 
 // MARK: - Persistency Keys
 
-private extension PersistencyService2 {
+private extension PersistencyService {
   enum PersistencyKeys {
     
     var collection: String {
@@ -24,7 +24,7 @@ private extension PersistencyService2 {
 
 // MARK: - Class Definition
 
-final class PersistencyService2 {
+final class PersistencyService {
   
   // MARK: - Assets
   
@@ -54,7 +54,7 @@ protocol PersistencyProtocol {
   func deleteResource(with identity: PersistencyModelIdentity) -> Completable
 }
 
-extension PersistencyService2: PersistencyProtocol {
+extension PersistencyService: PersistencyProtocol {
   
   func saveResources<T: Codable & Equatable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable {
     persistencyWorker

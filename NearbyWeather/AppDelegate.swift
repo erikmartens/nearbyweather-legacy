@@ -76,43 +76,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 private extension AppDelegate {
   
   func registerServices() {
-    PermissionsService.instantiateSharedInstance()
-    BadgeService.instantiateSharedInstance()
-    
     dependencyContainer = Container()
     
-    dependencyContainer.register(PersistencyService2.self) { _ in PersistencyService2() }
-    dependencyContainer.register(UserLocationService2.self) { resolver in
-      UserLocationService2(
-        dependencies: UserLocationService2.Dependencies(persistencyService: resolver.resolve(PersistencyService2.self)!
+    dependencyContainer.register(PersistencyService.self) { _ in PersistencyService() }
+    dependencyContainer.register(UserLocationService.self) { resolver in
+      UserLocationService(
+        dependencies: UserLocationService.Dependencies(persistencyService: resolver.resolve(PersistencyService.self)!
                                                        ))
     }
     
-    dependencyContainer.register(PreferencesService2.self) { resolver in
-      PreferencesService2(dependencies: PreferencesService2.Dependencies(
-        persistencyService: resolver.resolve(PersistencyService2.self)!
+    dependencyContainer.register(PreferencesService.self) { resolver in
+      PreferencesService(dependencies: PreferencesService.Dependencies(
+        persistencyService: resolver.resolve(PersistencyService.self)!
       ))
     }
     
-    dependencyContainer.register(ApiKeyService2.self) { resolver in
-      ApiKeyService2(dependencies: ApiKeyService2.Dependencies(
-        persistencyService: resolver.resolve(PersistencyService2.self)!
+    dependencyContainer.register(ApiKeyService.self) { resolver in
+      ApiKeyService(dependencies: ApiKeyService.Dependencies(
+        persistencyService: resolver.resolve(PersistencyService.self)!
       ))
     }
     
-    dependencyContainer.register(WeatherStationService2.self) { resolver in
-      WeatherStationService2(dependencies: WeatherStationService2.Dependencies(
-        persistencyService: resolver.resolve(PersistencyService2.self)!
+    dependencyContainer.register(WeatherStationService.self) { resolver in
+      WeatherStationService(dependencies: WeatherStationService.Dependencies(
+        persistencyService: resolver.resolve(PersistencyService.self)!
       ))
     }
     
-    dependencyContainer.register(WeatherInformationService2.self) { resolver in
-      WeatherInformationService2(dependencies: WeatherInformationService2.Dependencies(
-        persistencyService: resolver.resolve(PersistencyService2.self)!,
-        preferencesService: resolver.resolve(PreferencesService2.self)!,
-        weatherStationService: resolver.resolve(WeatherStationService2.self)!,
-        userLocationService: resolver.resolve(UserLocationService2.self)!,
-        apiKeyService: resolver.resolve(ApiKeyService2.self)!
+    dependencyContainer.register(WeatherInformationService.self) { resolver in
+      WeatherInformationService(dependencies: WeatherInformationService.Dependencies(
+        persistencyService: resolver.resolve(PersistencyService.self)!,
+        preferencesService: resolver.resolve(PreferencesService.self)!,
+        weatherStationService: resolver.resolve(WeatherStationService.self)!,
+        userLocationService: resolver.resolve(UserLocationService.self)!,
+        apiKeyService: resolver.resolve(ApiKeyService.self)!
       ))
     }
     
@@ -122,11 +119,11 @@ private extension AppDelegate {
   }
   
   func instantiateDaemons() {
-    let apiKeyService = dependencyContainer.resolve(ApiKeyService2.self)!
-    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)!
-    let userLocationService = dependencyContainer.resolve(UserLocationService2.self)!
-    let weatherStationService = dependencyContainer.resolve(WeatherStationService2.self)!
-    let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self)!
+    let apiKeyService = dependencyContainer.resolve(ApiKeyService.self)!
+    let preferencesService = dependencyContainer.resolve(PreferencesService.self)!
+    let userLocationService = dependencyContainer.resolve(UserLocationService.self)!
+    let weatherStationService = dependencyContainer.resolve(WeatherStationService.self)!
+    let weatherInformationService = dependencyContainer.resolve(WeatherInformationService.self)!
     
     daemons.append(
       WeatherInformationUpdateDaemon(dependencies: WeatherInformationUpdateDaemon.Dependencies(
@@ -158,14 +155,14 @@ private extension AppDelegate {
     flowCoordinator?.coordinate(
       flow: rootFlow,
       with: RootStepper(
-        dependencies: RootStepper.Dependencies(apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!)
+        dependencies: RootStepper.Dependencies(apiKeyService: dependencyContainer.resolve(ApiKeyService.self)!)
       )
     )
   }
   
   func refreshWeatherDataIfNeeded() {
-    let preferencesService = dependencyContainer.resolve(PreferencesService2.self)! as AppDelegatePreferenceReading
-    let weatherInformationService = dependencyContainer.resolve(WeatherInformationService2.self)! as WeatherInformationUpdating
+    let preferencesService = dependencyContainer.resolve(PreferencesService.self)! as AppDelegatePreferenceReading
+    let weatherInformationService = dependencyContainer.resolve(WeatherInformationService.self)! as WeatherInformationUpdating
     
     _ = preferencesService
       .createGetRefreshOnAppStartOptionObservable()
@@ -193,7 +190,7 @@ private extension AppDelegate {
     })
     
     _ = dependencyContainer
-      .resolve(WeatherStationService2.self)!
+      .resolve(WeatherStationService.self)!
       .createGetPreferredBookmarkObservable()
       .map { $0?.value.stationIdentifier }
       .errorOnNil()
@@ -201,7 +198,7 @@ private extension AppDelegate {
       .asSingle()
       .flatMapCompletable { [unowned dependencyContainer] preferredBookmarkIdentifier -> Completable in
         dependencyContainer!
-          .resolve(WeatherInformationService2.self)!
+          .resolve(WeatherInformationService.self)!
           .createUpdateBookmarkedWeatherInformationCompletable(forStationWith: preferredBookmarkIdentifier)
       }
       .subscribe(
@@ -223,10 +220,10 @@ private extension AppDelegate {
   
   func runMigrationIfNeeded() {
     MigrationService(dependencies: MigrationService.Dependencies(
-      preferencesService: dependencyContainer.resolve(PreferencesService2.self)!,
-      weatherInformationService: dependencyContainer.resolve(WeatherInformationService2.self)!,
-      weatherStationService: dependencyContainer.resolve(WeatherStationService2.self)!,
-      apiKeyService: dependencyContainer.resolve(ApiKeyService2.self)!
+      preferencesService: dependencyContainer.resolve(PreferencesService.self)!,
+      weatherInformationService: dependencyContainer.resolve(WeatherInformationService.self)!,
+      weatherStationService: dependencyContainer.resolve(WeatherStationService.self)!,
+      apiKeyService: dependencyContainer.resolve(ApiKeyService.self)!
     ))
       .runMigrationIfNeeded_v2_2_2_to_3_0_0()
   }

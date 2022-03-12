@@ -43,7 +43,7 @@ final class WeatherListStepper: Stepper {
   
   func readyToEmitSteps() {
     dependencyContainer
-      .resolve(WeatherInformationService2.self)?
+      .resolve(WeatherInformationService.self)?
       .createDidUpdateWeatherInformationObservable()
       .subscribe { [weak steps] informationAvailable in
         steps?.accept(

@@ -195,14 +195,14 @@ private extension AppDelegate {
     _ = dependencyContainer
       .resolve(WeatherStationService2.self)!
       .createGetPreferredBookmarkObservable()
-      .map { $0?.value }
+      .map { $0?.value.stationIdentifier }
       .errorOnNil()
       .take(1)
       .asSingle()
-      .flatMapCompletable { [unowned dependencyContainer] preferredBookmark -> Completable in
+      .flatMapCompletable { [unowned dependencyContainer] preferredBookmarkIdentifier -> Completable in
         dependencyContainer!
           .resolve(WeatherInformationService2.self)!
-          .createUpdateBookmarkedWeatherInformationCompletable(forStationWith: preferredBookmark)
+          .createUpdateBookmarkedWeatherInformationCompletable(forStationWith: preferredBookmarkIdentifier)
       }
       .subscribe(
         onCompleted: { [weak self] in

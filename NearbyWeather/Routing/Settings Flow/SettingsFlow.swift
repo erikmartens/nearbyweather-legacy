@@ -104,8 +104,8 @@ final class SettingsFlow: Flow {
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(WeatherStationService2.self)!.createGetPreferredBookmarkObservable().replaceNilWith(PreferredBookmarkOption(value: nil)),
-          dependencies.dependencyContainer.resolve(WeatherInformationService2.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } }.take(1),
+          dependencies.dependencyContainer.resolve(WeatherStationService2.self)!.createGetPreferredBookmarkObservable(),
+          dependencies.dependencyContainer.resolve(WeatherStationService2.self)!.createGetBookmarkedStationsObservable().take(1),
           resultSelector: SettingsStep.changePreferredBookmarkAlertAdapted
         )
         .take(1)
@@ -183,12 +183,20 @@ private extension SettingsFlow {
   }
   
   func summonAddLocationController() -> FlowContributors {
-    let addLocationController = WeatherLocationSelectionTableViewController(style: SettingsFlow.Definitions.preferredTableViewStyle)
-    rootViewController.pushViewController(addLocationController, animated: true)
-    return .one(flowContributor: .contribute(withNext: addLocationController))
+    let addBookmarkFlow = AddBookmarkFlow(dependencies: AddBookmarkFlow.Dependencies(
+      flowPresentationStyle: .pushed(navigationController: rootViewController),
+      endingStep: SettingsStep.pop,
+      dependencyContainer: dependencies.dependencyContainer
+    ))
+    let addBookmarkStepper = AddBookmarkStepper()
+    
+    return .one(flowContributor: .contribute(withNextPresentable: addBookmarkFlow, withNextStepper: addBookmarkStepper))
+//    let addLocationController = WeatherLocationSelectionTableViewController(style: SettingsFlow.Definitions.preferredTableViewStyle)
+//    rootViewController.pushViewController(addLocationController, animated: true)
+//    return .one(flowContributor: .contribute(withNext: addLocationController))
   }
   
-  func summonChangePreferredBookmarkAlert(selectionDelegate: PreferredBookmarkSelectionAlertDelegate, preferredBookmarkOption: PreferredBookmarkOption, bookmarkedLocations: [WeatherInformationDTO]) -> FlowContributors {
+  func summonChangePreferredBookmarkAlert(selectionDelegate: PreferredBookmarkSelectionAlertDelegate, preferredBookmarkOption: PreferredBookmarkOption?, bookmarkedLocations: [WeatherStationDTO]) -> FlowContributors {
     let alert = PreferredBookmarkSelectionAlert(dependencies: PreferredBookmarkSelectionAlert.Dependencies(
       preferredBookmarkOption: preferredBookmarkOption,
       bookmarkedLocations: bookmarkedLocations,

@@ -16,7 +16,7 @@ enum SettingsStep: Step {
   case manageLocations
   case addLocation
   case changePreferredBookmarkAlert(selectionDelegate: PreferredBookmarkSelectionAlertDelegate)
-  case changePreferredBookmarkAlertAdapted(selectionDelegate: PreferredBookmarkSelectionAlertDelegate, selectedOptionValue: PreferredBookmarkOption, boomarkedLocations: [WeatherInformationDTO])
+  case changePreferredBookmarkAlertAdapted(selectionDelegate: PreferredBookmarkSelectionAlertDelegate, selectedOptionValue: PreferredBookmarkOption?, boomarkedLocations: [WeatherStationDTO])
   case changeTemperatureUnitAlert(selectionDelegate: TemperatureUnitSelectionAlertDelegate)
   case changeTemperatureUnitAlertAdapted(selectionDelegate: TemperatureUnitSelectionAlertDelegate, selectedOptionValue: TemperatureUnitOptionValue)
   case changeDimensionalUnitAlert(selectionDelegate: DimensionalUnitSelectionAlertDelegate)

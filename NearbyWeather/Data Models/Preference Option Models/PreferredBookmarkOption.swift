@@ -8,12 +8,32 @@
 
 import Foundation
 
+enum PreferredBookmarkOptionValue: Codable, Equatable {
+  case notSet
+  case set(weatherStationDto: WeatherStationDTO)
+  
+  var stationName: String {
+    switch self {
+    case .notSet: return R.string.localizable.none()
+    case let .set(weatherStationDto): return weatherStationDto.name
+    }
+  }
+  
+  var stationIdentifier: Int? {
+    switch self {
+    case .notSet: return nil
+    case let .set(weatherStationDto): return weatherStationDto.identifier
+    }
+  }
+}
+
 struct PreferredBookmarkOption: Codable, Equatable, PreferencesOption {
-  typealias WrappedEnumType = Int?
+    
+  typealias PreferencesOptionType = PreferredBookmarkOptionValue
   
-  var value: Int?
+  var value: PreferredBookmarkOptionValue
   
-  init(value: Int?) {
+  init(value: PreferredBookmarkOptionValue) {
     self.value = value
   }
   
@@ -22,7 +42,10 @@ struct PreferredBookmarkOption: Codable, Equatable, PreferencesOption {
   }
   
   var stringValue: String {
-    let bookmarkedLocation = WeatherInformationService.shared.bookmarkedLocations.first(where: { $0.identifier == value })
-    return bookmarkedLocation?.name ?? R.string.localizable.none()
+    value.stationName
+  }
+  
+  var intValue: Int? {
+    value.stationIdentifier
   }
 }

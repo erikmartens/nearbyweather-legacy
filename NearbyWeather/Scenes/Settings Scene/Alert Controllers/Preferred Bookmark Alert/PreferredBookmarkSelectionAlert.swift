@@ -21,8 +21,8 @@ protocol PreferredBookmarkSelectionAlertDelegate: AnyObject {
 
 extension PreferredBookmarkSelectionAlert {
   struct Dependencies {
-    let preferredBookmarkOption: PreferredBookmarkOption
-    let bookmarkedLocations: [WeatherInformationDTO]
+    let preferredBookmarkOption: PreferredBookmarkOption?
+    let bookmarkedLocations: [WeatherStationDTO]
     weak var selectionDelegate: PreferredBookmarkSelectionAlertDelegate?
   }
 }
@@ -33,7 +33,7 @@ final class PreferredBookmarkSelectionAlert {
   // MARK: - Actions
   
   fileprivate lazy var noneAction = Factory.AlertAction.make(fromType: .standard(title: R.string.localizable.none(), destructive: true, handler: { [dependencies] _ in
-    dependencies.selectionDelegate?.didSelectPreferredBookmarkOption(PreferredBookmarkOption(value: nil))
+    dependencies.selectionDelegate?.didSelectPreferredBookmarkOption(PreferredBookmarkOption(value: .notSet))
   }))
   fileprivate lazy var cancelAction = Factory.AlertAction.make(fromType: .cancel)
   
@@ -68,12 +68,12 @@ final class PreferredBookmarkSelectionAlert {
 
 // MARK: - Helper Extensions
 
-private extension Array where Element == WeatherInformationDTO {
+private extension Array where Element == WeatherStationDTO {
   
   func mapToAlertAction(dependencies: PreferredBookmarkSelectionAlert.Dependencies) -> [UIAlertAction] {
-    compactMap { weatherInformationDTO -> UIAlertAction? in
-      Factory.AlertAction.make(fromType: .standard(title: weatherInformationDTO.stationName, handler: { [dependencies] _ in
-          dependencies.selectionDelegate?.didSelectPreferredBookmarkOption(PreferredBookmarkOption(value: weatherInformationDTO.stationIdentifier))
+    compactMap { weatherStationDTO -> UIAlertAction? in
+      Factory.AlertAction.make(fromType: .standard(title: weatherStationDTO.name, handler: { [dependencies] _ in
+        dependencies.selectionDelegate?.didSelectPreferredBookmarkOption(PreferredBookmarkOption(value: .set(weatherStationDto: weatherStationDTO)))
       }))
     }
   }

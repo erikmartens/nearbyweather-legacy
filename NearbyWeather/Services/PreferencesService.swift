@@ -57,7 +57,7 @@ final class PreferencesService: StoredPreferencesProvider, InMemoryPreferencesPr
   // MARK: - Public Properties & Methods
   
   static func instantiateSharedInstance() {
-    shared = PreferencesService.loadData() ?? PreferencesService(preferredBookmark: PreferredBookmarkOption(value: .none),
+    shared = PreferencesService.loadData() ?? PreferencesService(preferredBookmark: PreferredBookmarkOption(value: .notSet),
                                                                          amountOfResults: AmountOfResultsOption(value: .ten),
                                                                          temperatureUnit: TemperatureUnitOption(value: .celsius),
                                                                          windspeedUnit: DimensionalUnitOption(value: .metric),

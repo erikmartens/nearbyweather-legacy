@@ -104,8 +104,6 @@
 		F217CBD327DB7E9600DAC947 /* AboutAppStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD227DB7E9600DAC947 /* AboutAppStepper.swift */; };
 		F217CBD827DB889E00DAC947 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD427DB889D00DAC947 /* SingleLabelCell.swift */; };
 		F217CBD927DB889E00DAC947 /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */; };
-		F217CBDA27DB889E00DAC947 /* SubtitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F217CBD627DB889D00DAC947 /* SubtitleCell.xib */; };
-		F217CBDB27DB889E00DAC947 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD727DB889E00DAC947 /* SubtitleCell.swift */; };
 		F217CBDE27DBB0C100DAC947 /* ApiKeyInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */; };
 		F217CBE027DBB0E700DAC947 /* ApiKeyInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBDF27DBB0E700DAC947 /* ApiKeyInputViewModel.swift */; };
 		F217CBE227DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBE127DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift */; };
@@ -278,7 +276,6 @@
 		F2F7BA2123E37A9C00B4D2EB /* Constants+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7BA2023E37A9C00B4D2EB /* Constants+Values.swift */; };
 		F2FE3EFF20027EB400EBC429 /* WeatherStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */; };
 		F2FE3F01200285B100EBC429 /* WeatherStationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3F00200285B100EBC429 /* WeatherStationService.swift */; };
-		F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FE3F022002972800EBC429 /* WeatherLocationSelectionTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -410,8 +407,6 @@
 		F217CBD227DB7E9600DAC947 /* AboutAppStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppStepper.swift; sourceTree = "<group>"; };
 		F217CBD427DB889D00DAC947 /* SingleLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
-		F217CBD627DB889D00DAC947 /* SubtitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubtitleCell.xib; sourceTree = "<group>"; };
-		F217CBD727DB889E00DAC947 /* SubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputViewController.swift; sourceTree = "<group>"; };
 		F217CBDF27DBB0E700DAC947 /* ApiKeyInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputViewModel.swift; sourceTree = "<group>"; };
 		F217CBE127DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputTableViewDelegate.swift; sourceTree = "<group>"; };
@@ -587,7 +582,6 @@
 		F2F7BA2023E37A9C00B4D2EB /* Constants+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Values.swift"; sourceTree = "<group>"; };
 		F2FE3EFE20027EB400EBC429 /* WeatherStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationDTO.swift; sourceTree = "<group>"; };
 		F2FE3F00200285B100EBC429 /* WeatherStationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationService.swift; sourceTree = "<group>"; };
-		F2FE3F022002972800EBC429 /* WeatherLocationSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationSelectionTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1319,7 +1313,6 @@
 		F27A122724425E2600A2CE8D /* Add Bookmark Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F2FE3F022002972800EBC429 /* WeatherLocationSelectionTableViewController.swift */,
 				F217CBF727DCA09100DAC947 /* AddBookmarkViewController.swift */,
 				F217CBF927DCA09D00DAC947 /* AddBookmarkViewModel.swift */,
 				F217CBFB27DCA0BA00DAC947 /* AddBookmarkTableViewDelegate.swift */,
@@ -1421,8 +1414,6 @@
 			children = (
 				F217CBD427DB889D00DAC947 /* SingleLabelCell.swift */,
 				F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */,
-				F217CBD727DB889E00DAC947 /* SubtitleCell.swift */,
-				F217CBD627DB889D00DAC947 /* SubtitleCell.xib */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -1820,7 +1811,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F217CBDA27DB889E00DAC947 /* SubtitleCell.xib in Resources */,
 				F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */,
 				F204B7851DF2EFA3000F4371 /* LaunchScreen.storyboard in Resources */,
 				F204B7B01DF2F1BC000F4371 /* Localizable.strings in Resources */,
@@ -2059,7 +2049,6 @@
 				F282166524608205004E5B08 /* WeatherListInformationTableViewCellViewModel.swift in Sources */,
 				F260BDAE244F7BA700B4357A /* RealmPersistencyWorker.swift in Sources */,
 				F217CBFA27DCA09D00DAC947 /* AddBookmarkViewModel.swift in Sources */,
-				F2FE3F032002972800EBC429 /* WeatherLocationSelectionTableViewController.swift in Sources */,
 				F217CB8227D50CFA00DAC947 /* SettingsImagedDualLabelCell.swift in Sources */,
 				F217CB7E27D50CD900DAC947 /* SettingsImagedDualLabelCellViewModel.swift in Sources */,
 				F2D1991D25A1246E004C7753 /* BaseCellProtocol.swift in Sources */,
@@ -2104,7 +2093,6 @@
 				F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */,
 				F2D1995025A1F1A4004C7753 /* Factory+UITableView.swift in Sources */,
 				F2DBEB3023F038BE00CD513B /* Constants+Theme.swift in Sources */,
-				F217CBDB27DB889E00DAC947 /* SubtitleCell.swift in Sources */,
 				F2E12F6025B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift in Sources */,
 				F2370FFC25AB25B10072AF29 /* RefreshOnAppStartOption.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationController+Extensions.swift in Sources */,

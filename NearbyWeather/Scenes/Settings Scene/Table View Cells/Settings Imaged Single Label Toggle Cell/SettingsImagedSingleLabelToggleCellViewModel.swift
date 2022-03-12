@@ -57,6 +57,10 @@ final class SettingsImagedSingleLabelToggleCellViewModel: NSObject, BaseCellView
 
 extension SettingsImagedSingleLabelToggleCellViewModel {
   
+  func observeDataSource() {
+    // nothing to do
+  }
+  
   func observeUserTapEvents() {
     onDidFlipToggleSwitchSubject
       .bind(to: dependencies.didFlipToggleSwitchSubject)

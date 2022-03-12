@@ -136,7 +136,7 @@ private extension SettingsImagedSingleLabelToggleCell {
     
     contentView.addSubview(toggleSwitch, constraints: [
       toggleSwitch.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
-      toggleSwitch.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
+      toggleSwitch.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       toggleSwitch.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       toggleSwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
       toggleSwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)

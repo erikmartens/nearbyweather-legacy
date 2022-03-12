@@ -14,7 +14,7 @@ import RxCocoa
 extension SettingsTextEntryCellViewModel {
   struct Dependencies {
     let textFieldPlaceholderText: String
-    let textFieldTextSubject: PublishSubject<String?>
+    let textFieldTextSubject: PublishRelay<String?>
   }
 }
 

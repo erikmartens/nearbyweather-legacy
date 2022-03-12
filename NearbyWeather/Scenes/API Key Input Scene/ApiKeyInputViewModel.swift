@@ -40,7 +40,7 @@ final class ApiKeyInputViewModel: NSObject, Stepper, BaseViewModel {
   // MARK: - Events
   
   let onDidTapSaveBarButtonSubject = PublishSubject<Void>()
-  let inputTextFieldTextSubject = PublishSubject<String?>()
+  let inputTextFieldTextSubject = PublishRelay<String?>()
   private let saveBarButtonIsEnabledSubject = PublishSubject<Bool>()
   
   // MARK: - Drivers
@@ -82,6 +82,18 @@ extension ApiKeyInputViewModel {
   func observeDataSource() {
     dependencies.apiKeyService
       .createGetApiKeyObservable()
+      .map { apiKey -> String? in apiKey } // convert to optional
+      .catch { error in
+        guard let error = error as? ApiKeyService2.DomainError else {
+          throw error
+        }
+        switch error {
+        case .apiKeyMissingError:
+          return Observable.just(nil)
+        case let .apiKeyInvalidError(invalidApiKey):
+          return Observable.just(invalidApiKey)
+        }
+      }
       .bind(to: inputTextFieldTextSubject)
       .disposed(by: disposeBag)
     

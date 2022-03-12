@@ -174,7 +174,6 @@
 		F277E7E025AC9F570009D59B /* MapTypeSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277E7DF25AC9F570009D59B /* MapTypeSelectionAlert.swift */; };
 		F277E7EA25AC9F7F0009D59B /* FocusOnLocationSelectionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277E7E925AC9F7F0009D59B /* FocusOnLocationSelectionAlert.swift */; };
 		F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */; };
-		F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */; };
 		F282166024608175004E5B08 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282165F24608175004E5B08 /* BaseCell.swift */; };
 		F282166224608194004E5B08 /* BaseCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166124608194004E5B08 /* BaseCellViewModel.swift */; };
 		F282166524608205004E5B08 /* WeatherListInformationTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F282166424608205004E5B08 /* WeatherListInformationTableViewCellViewModel.swift */; };
@@ -238,8 +237,6 @@
 		F2DB5E9325AB5C6C00E21A56 /* BaseAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DB5E9225AB5C6C00E21A56 /* BaseAnnotationView.swift */; };
 		F2DBEADA23E4C28C00CD513B /* Constants+URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */; };
 		F2DBEADC23E4CF7900CD513B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEADB23E4CF7900CD513B /* Constants.swift */; };
-		F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAF023E5F98200CD513B /* TextInputCell.swift */; };
-		F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */; };
 		F2DBEAFC23E8C88E00CD513B /* Array+AppendSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */; };
 		F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2D23F0386B00CD513B /* Factory.swift */; };
 		F2DBEB3023F038BE00CD513B /* Constants+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */; };
@@ -476,7 +473,6 @@
 		F277E7DF25AC9F570009D59B /* MapTypeSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeSelectionAlert.swift; sourceTree = "<group>"; };
 		F277E7E925AC9F7F0009D59B /* FocusOnLocationSelectionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnLocationSelectionAlert.swift; sourceTree = "<group>"; };
 		F27A1214243BBC8C00A2CE8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsInputTableViewController.swift; sourceTree = "<group>"; };
 		F282165F24608175004E5B08 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		F282166124608194004E5B08 /* BaseCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCellViewModel.swift; sourceTree = "<group>"; };
 		F282166424608205004E5B08 /* WeatherListInformationTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListInformationTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -541,8 +537,6 @@
 		F2DB5E9225AB5C6C00E21A56 /* BaseAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAnnotationView.swift; sourceTree = "<group>"; };
 		F2DBEAD923E4C28C00CD513B /* Constants+URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+URLs.swift"; sourceTree = "<group>"; };
 		F2DBEADB23E4CF7900CD513B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		F2DBEAF023E5F98200CD513B /* TextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
-		F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextInputCell.xib; sourceTree = "<group>"; };
 		F2DBEAFB23E8C88E00CD513B /* Array+AppendSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AppendSafe.swift"; sourceTree = "<group>"; };
 		F2DBEB2D23F0386B00CD513B /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		F2DBEB2F23F038BE00CD513B /* Constants+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Theme.swift"; sourceTree = "<group>"; };
@@ -1280,7 +1274,6 @@
 		F27A122624425E0D00A2CE8D /* API Key Input Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F27AFDEF1DF4D36C003957EB /* SettingsInputTableViewController.swift */,
 				F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */,
 				F217CBDF27DBB0E700DAC947 /* ApiKeyInputViewModel.swift */,
 				F217CBE127DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift */,
@@ -1393,8 +1386,6 @@
 				F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */,
 				F217CBD727DB889E00DAC947 /* SubtitleCell.swift */,
 				F217CBD627DB889D00DAC947 /* SubtitleCell.xib */,
-				F2DBEAF223E5F9B000CD513B /* TextInputCell.xib */,
-				F2DBEAF023E5F98200CD513B /* TextInputCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -1798,7 +1789,6 @@
 				F204B7B01DF2F1BC000F4371 /* Localizable.strings in Resources */,
 				F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */,
 				F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */,
-				F2DBEAF323E5F9B000CD513B /* TextInputCell.xib in Resources */,
 				F217CBD927DB889E00DAC947 /* SingleLabelCell.xib in Resources */,
 				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
 				F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */,
@@ -2100,7 +2090,6 @@
 				F2D1991525A11D89004C7753 /* BaseCellViewModelProtocol.swift in Sources */,
 				F20CA10225B21BA300153E47 /* WeatherStationMeteorologyDetailsWindCell.swift in Sources */,
 				F217CBDE27DBB0C100DAC947 /* ApiKeyInputViewController.swift in Sources */,
-				F2DBEAF123E5F98200CD513B /* TextInputCell.swift in Sources */,
 				F284DDE9245F77A300445BFF /* BaseViewModel.swift in Sources */,
 				F284DDD6245CF38800445BFF /* PreferencesService2.swift in Sources */,
 				F20CA13625B35A3A00153E47 /* WeatherStationMeteorologyDetailsMapItemsSection.swift in Sources */,
@@ -2115,7 +2104,6 @@
 				F237100425AB34830072AF29 /* WeatherMapViewModel.swift in Sources */,
 				F217CB6527D4F96200DAC947 /* SettingsTableViewDataSource.swift in Sources */,
 				F28DA8612042258500879E6C /* WeatherLocationManagementTableViewController.swift in Sources */,
-				F27AFDF01DF4D36C003957EB /* SettingsInputTableViewController.swift in Sources */,
 				F237286F244C7D8200964C49 /* MainFlow.swift in Sources */,
 				F22B0F8525AB64BE0037F957 /* WeatherMapAnnotationViewModel.swift in Sources */,
 				F217CBF627DBFB7600DAC947 /* ApiKeyInputStepper.swift in Sources */,

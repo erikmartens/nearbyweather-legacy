@@ -11,6 +11,22 @@ import RxAlamofire
 
 // MARK: - Domain-Specific Errors
 
+extension ApiKeyService2 {
+  enum DomainError: Error {
+    var domain: String { "WeatherInformationService" }
+    
+    case apiKeyMissingError
+    case apiKeyInvalidError(invalidApiKey: String)
+    
+    var rawValue: String {
+      switch self {
+      case .apiKeyMissingError: return "Trying to request data from OpenWeatherMap, but no API key exists."
+      case let .apiKeyInvalidError(invalidApiKey): return "Trying to request data from OpenWeatherMap, but the API key is invalid: \(invalidApiKey)."
+      }
+    }
+  }
+}
+
 // MARK: - Domain-Specific Types
 
 extension ApiKeyService2 {
@@ -154,9 +170,9 @@ extension ApiKeyService2: ApiKeyPersistence {
         case let .valid(apiKey):
           return apiKey
         case let .invalid(invalidApiKey):
-          return invalidApiKey
+          throw ApiKeyService2.DomainError.apiKeyInvalidError(invalidApiKey: invalidApiKey)
         case .missing:
-          return ""
+          throw ApiKeyService2.DomainError.apiKeyMissingError
         case let .unknown(apiKey):
           return apiKey
         }

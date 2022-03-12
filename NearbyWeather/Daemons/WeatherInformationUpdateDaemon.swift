@@ -35,11 +35,6 @@ final class WeatherInformationUpdateDaemon: Daemon {
   
   // MARK: - Observables
   
-//  private var bookmarkedStationChangesObservable: Observable<Void>?
-//  private var apiKeyChangesObservable: Observable<Void>?
-//  private var amountOfNearbyResultsPreferenceChangesObservable: Observable<Void>?
-//  private var locationAccessAuthorizationChangesObservable: Observable<Void>?
-  
   // MARK: - Initialization
   
   init(dependencies: Dependencies) {
@@ -88,39 +83,40 @@ private extension WeatherInformationUpdateDaemon {
       .disposed(by: disposeBag)
   }
   
+  // TODO: this completes prematurely when invalid api key was saved
   func observeApiKeyChanges() {
     dependencies.apiKeyService
       .createGetApiKeyObservable()
-      .map { apiKey -> String? in apiKey }
+      .map { apiKey -> String? in apiKey } // convert to optional
       .distinctUntilChanged()
-      .catch { error -> Observable<String?> in
+      .asInfallible(onErrorRecover: { error in
         if error as? ApiKeyService2.DomainError != nil {
-          return Observable.just(nil) // key is missing or invalid -> return nil to delete previously downloaded weather information
+          return Infallible.just(nil) // key is missing or invalid -> return nil to delete previously downloaded weather information
         }
-        return Observable.just("") // some other error occured -> do not return nil to delete previously downloaded weather information
-      }
-      .flatMapLatest { [dependencies] apiKey -> Observable<Void> in
+        return Infallible.just("") // some other error occured -> do not return nil to delete previously downloaded weather information
+      })
+      .asObservable()
+      .do(onNext: { [dependencies] apiKey in
         // key is nil (invalid or missing) -> signal to delete previously downloaded weather information
         guard let apiKey = apiKey else {
-          return Completable.zip([
+          _ = Completable.zip([
             dependencies.weatherInformationService.createDeleteBookmarkedWeatherInformationListCompletable(),
             dependencies.weatherInformationService.createDeleteNearbyWeatherInformationListCompletable()
           ])
-          .asObservable()
-          .map { _ in () }
+            .subscribe()
+          return
         }
         // key is empty (some unrelated error occured) -> signal to do nothing
         if apiKey.isEmpty {
-          return Observable.just(())
+          return
         }
         // key exists (was changed, is valid) -> signal to update weather information
-        return Completable.zip([
+        _ = Completable.zip([
           dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
           dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable()
         ])
-        .asObservable()
-        .map { _ in () }
-      }
+          .subscribe()
+      })
       .subscribe()
       .disposed(by: disposeBag)
   }

@@ -14,6 +14,7 @@ import Swinject
 enum WeatherListStep: Step {
   case list
   case emptyList
+  case loadingList
   case weatherDetails2(identity: PersistencyModelIdentity)
   case changeListTypeAlert(selectionDelegate: ListTypeSelectionAlertDelegate)
   case changeListTypeAlertAdapted(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeOptionValue)
@@ -45,11 +46,9 @@ final class WeatherListStepper: Stepper {
     dependencyContainer
       .resolve(WeatherInformationService.self)?
       .createDidUpdateWeatherInformationObservable()
-      .subscribe { [weak steps] informationAvailable in
-        steps?.accept(
-          (informationAvailable == .available) ? WeatherListStep.list : WeatherListStep.emptyList
-        )
-      }
+      .map { informationAvailable in (informationAvailable == .available) ? WeatherListStep.list : WeatherListStep.emptyList }
+      .startWith(WeatherListStep.loadingList)
+      .bind(to: steps)
       .disposed(by: disposeBag)
   }
 }

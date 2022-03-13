@@ -22,7 +22,6 @@ private extension WeatherListErrorViewController {
 final class WeatherListErrorViewController: UIViewController, BaseViewController {
   
   typealias ViewModel = WeatherListErrorViewModel
-  
   private typealias ContentInsets = Constants.Dimensions.Spacing.ContentInsets
   
   // MARK: - UIComponents

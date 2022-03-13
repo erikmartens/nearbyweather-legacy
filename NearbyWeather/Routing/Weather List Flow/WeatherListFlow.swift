@@ -55,7 +55,7 @@ final class WeatherListFlow: Flow {
   
   // MARK: - Functions
   
-  func navigate(to step: Step) -> FlowContributors {
+  func navigate(to step: Step) -> FlowContributors { // swiftlint:disable:this cyclomatic_complexity
     guard let step = transform(step: step) as? WeatherListStep else {
       return .none
     }
@@ -64,17 +64,19 @@ final class WeatherListFlow: Flow {
       return summonWeatherListController()
     case .emptyList:
       return summonEmptyWeatherListController()
+    case .loadingList:
+      return summonLoadingListController()
     case let .weatherDetails2(identity):
       return summonWeatherDetailsController2(identity: identity)
-    case .changeListTypeAlert(_):
+    case .changeListTypeAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .changeListTypeAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeListTypeAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
-    case .changeAmountOfResultsAlert(_):
+    case .changeAmountOfResultsAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .changeAmountOfResultsAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeAmountOfResultsAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
-    case .changeSortingOrientationAlert(_):
+    case .changeSortingOrientationAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .changeSortingOrientationAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeSortingOrientationAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
@@ -160,6 +162,12 @@ private extension WeatherListFlow {
       networkReachabilityService: dependencies.dependencyContainer.resolve(NetworkReachabilityService.self)!
     ))
     rootViewController.setViewControllers([listErrorViewController], animated: false)
+    return .none
+  }
+  
+  func summonLoadingListController() -> FlowContributors {
+    let loadingViewController = LoadingViewController(dependencies: LoadingViewController.ViewModel.Dependencies(title: R.string.localizable.tab_weatherList()))
+    rootViewController.setViewControllers([loadingViewController], animated: false)
     return .none
   }
   

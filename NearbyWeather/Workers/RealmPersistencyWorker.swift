@@ -10,12 +10,12 @@ import RealmSwift
 import RxRealm
 import RxSwift
 
-struct PersistencyModelIdentity: Equatable {
+public struct PersistencyModelIdentity: Equatable {
   let collection: String
   let identifier: String
 }
 
-class PersistencyModel<T: Codable & Equatable> {
+public class PersistencyModel<T: Codable & Equatable> {
   
   let identity: PersistencyModelIdentity
   let entity: T
@@ -37,7 +37,7 @@ class PersistencyModel<T: Codable & Equatable> {
     self.entity = entity
   }
   
-  func toRealmModel() -> RealmModel {
+  var realmModel: RealmModel {
     RealmModel(
       collection: identity.collection,
       identifier: identity.identifier,
@@ -45,12 +45,12 @@ class PersistencyModel<T: Codable & Equatable> {
     )
   }
   
-  func toThreadSafeModel() -> PersistencyModelThreadSafe<T> {
+  var threadSafeModel: PersistencyModelThreadSafe<T> {
     PersistencyModelThreadSafe(identity: identity, entity: entity)
   }
 }
 
-struct PersistencyModelThreadSafe<T: Codable & Equatable>: Equatable {
+public struct PersistencyModelThreadSafe<T: Codable & Equatable>: Equatable {
   let identity: PersistencyModelIdentity
   let entity: T
 }
@@ -75,7 +75,7 @@ internal class RealmModel: Object {
 
 // MARK: - Domain Errors
 
-enum RealmPersistencyWorkerError: String, Error {
+public enum RealmPersistencyWorkerError: String, Error {
   
   var domain: String {
     "RealmPersistencyWorker"
@@ -137,7 +137,7 @@ final class RealmPersistencyWorker {
 
 // MARK: - Public CRUD Functions
 
-protocol RealmPersistencyWorkerCRUD {
+public protocol RealmPersistencyWorkerCRUD {
   func saveResources<T: Codable & Equatable>(_ resources: [PersistencyModel<T>], type: T.Type) -> Completable
   func saveResource<T: Codable & Equatable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable
   func readResources<T: Codable & Equatable>(in collection: String, type: T.Type) -> Single<[PersistencyModelThreadSafe<T>]>
@@ -161,7 +161,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
           realm.beginWrite()
           
           try resources.forEach { resource in
-            let newModel = resource.toRealmModel()
+            let newModel = resource.realmModel
             
             guard newModel.data != nil else {
               throw RealmPersistencyWorkerError.dataEncodingError
@@ -195,7 +195,7 @@ extension RealmPersistencyWorker: RealmPersistencyWorkerCRUD {
   func saveResource<T: Codable & Equatable>(_ resource: PersistencyModel<T>, type: T.Type) -> Completable {
     Completable
       .create { [configuration] completable in
-        let newModel = resource.toRealmModel()
+        let newModel = resource.realmModel
         
         guard newModel.data != nil else {
           completable(.error(RealmPersistencyWorkerError.dataEncodingError))
@@ -338,7 +338,7 @@ private extension RealmPersistencyWorker {
       }
       .flatMapLatest { (results: Results<RealmModel>) in Observable.array(from: results) }
       .map { (results: [Results<RealmModel>.ElementType]) -> [PersistencyModelThreadSafe<T>] in
-        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.toThreadSafeModel() }
+        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.threadSafeModel }
       }
       .map { $0.compactMap { $0.identity.collection == collection ? $0 : nil } }
       .distinctUntilChanged()
@@ -361,7 +361,7 @@ private extension RealmPersistencyWorker {
       }
       .flatMapLatest { (results: Results<RealmModel>) in Observable.array(from: results) }
       .map {  (results: [Results<RealmModel>.ElementType]) -> [PersistencyModelThreadSafe<T>] in
-        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.toThreadSafeModel() }
+        results.compactMap { PersistencyModel(collection: $0.collection, identifier: $0.identifier, data: $0.data)?.threadSafeModel }
       }
       .map {
         $0.compactMap {

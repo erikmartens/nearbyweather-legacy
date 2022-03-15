@@ -24,7 +24,7 @@ extension Constants.Dimensions {
   
   enum ContentElement {
     /// constant: 34
-    static let height: CGFloat = 34
+    static let height: CGFloat = 24
   }
   
   enum InteractableElement {

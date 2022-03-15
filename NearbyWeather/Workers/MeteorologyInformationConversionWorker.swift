@@ -12,7 +12,7 @@ import APTimeZones
 
 // MARK: - Public Type
 
-extension ConversionWorker {
+extension MeteorologyInformationConversionWorker {
   struct DayCycleLocalizedTimeStrings {
     let currentTimeString: String
     let sunriseTimeString: String
@@ -22,7 +22,7 @@ extension ConversionWorker {
 
 // MARK: - Local Types
 
-private extension ConversionWorker {
+private extension MeteorologyInformationConversionWorker {
   struct DayCycleDateComponents {
     let currentTimeDateComponentsHour: Int
     let currentTimeDateComponentsMinute: Int
@@ -83,9 +83,9 @@ private extension ConversionWorker {
 
 // MARK: - Class Definition
 
-final class ConversionWorker {
+final class MeteorologyInformationConversionWorker {
   
-  static func weatherConditionSymbol(fromWeatherCode code: Int?, isDayTime: Bool?) -> String {
+  static func weatherConditionSymbol(fromWeatherCode code: Int?, isDayTime: Bool?) -> String { // swiftlint:disable:this cyclomatic_complexity
     guard let code = code else {
       return "❓"
     }
@@ -242,7 +242,7 @@ final class ConversionWorker {
 
 // MARK: - Helpers
 
-private extension ConversionWorker {
+private extension MeteorologyInformationConversionWorker {
   
   static func dayCycleDateComponents(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> DayCycleDateComponents? {
     

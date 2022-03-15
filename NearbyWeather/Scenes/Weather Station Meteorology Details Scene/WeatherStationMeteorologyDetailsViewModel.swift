@@ -51,7 +51,7 @@ final class WeatherStationMeteorologyDetailsViewModel: NSObject, Stepper, BaseVi
       weatherInformationDtoObservable.map { $0.entity },
       weatherStationIsBookmarkedObservable,
       resultSelector: { (weatherInformationDTO, isBookmark) -> (String?, UIColor?, UIColor?) in
-        let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
+        let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
         
         let navigationBarTintColor = isBookmark
           ? isDayTime ? Constants.Theme.Color.MarqueColors.bookmarkDay : Constants.Theme.Color.MarqueColors.bookmarkNight
@@ -130,7 +130,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
     let weatherStationCurrentInformationSunCycleSectionItemsObservable = weatherInformationDtoObservable // swiftlint:disable:this identifier_name
       .map { $0.entity }
       .map { weatherInformationDTO -> [BaseCellViewModelProtocol] in
-        guard let dayCycleStrings = ConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) else {
+        guard let dayCycleStrings = MeteorologyInformationConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) else {
           return []
         }
         return [WeatherStationMeteorologyDetailsSunCycleCellViewModel(dependencies: WeatherStationMeteorologyDetailsSunCycleCellViewModel.Dependencies(

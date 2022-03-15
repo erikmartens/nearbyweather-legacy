@@ -44,21 +44,21 @@ struct WeatherListInformationTableViewCellModel {
     dimensionalUnitsOption: DimensionalUnitOption,
     isBookmark: Bool
   ) {
-    let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
+    let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
     
     self.init(
-      weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
+      weatherConditionSymbol: MeteorologyInformationConversionWorker.weatherConditionSymbol(
         fromWeatherCode: weatherInformationDTO.weatherCondition.first?.identifier,
         isDayTime: isDayTime
       ),
       placeName: weatherInformationDTO.stationName,
-      temperature: ConversionWorker.temperatureDescriptor(
+      temperature: MeteorologyInformationConversionWorker.temperatureDescriptor(
         forTemperatureUnit: temperatureUnitOption,
         fromRawTemperature: weatherInformationDTO.atmosphericInformation.temperatureKelvin
       ),
       cloudCoverage: weatherInformationDTO.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
       humidity: weatherInformationDTO.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none),
-      windspeed: ConversionWorker.windspeedDescriptor(
+      windspeed: MeteorologyInformationConversionWorker.windspeedDescriptor(
         forDistanceSpeedUnit: dimensionalUnitsOption,
         forWindspeed: weatherInformationDTO.windInformation.windspeed
       ),

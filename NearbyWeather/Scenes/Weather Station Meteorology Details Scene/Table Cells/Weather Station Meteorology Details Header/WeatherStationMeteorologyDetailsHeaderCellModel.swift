@@ -36,18 +36,18 @@ struct WeatherStationMeteorologyDetailsHeaderCellModel {
     dimensionalUnitsOption: DimensionalUnitOption,
     isBookmark: Bool
   ) {
-    let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
-    let isDayTimeString = ConversionWorker.isDayTimeString(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
-    let dayCycleStrings = ConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
+    let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
+    let isDayTimeString = MeteorologyInformationConversionWorker.isDayTimeString(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
+    let dayCycleStrings = MeteorologyInformationConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
     
     self.init(
-      weatherConditionSymbol: ConversionWorker.weatherConditionSymbol(
+      weatherConditionSymbol: MeteorologyInformationConversionWorker.weatherConditionSymbol(
         fromWeatherCode: weatherInformationDTO.weatherCondition.first?.identifier,
         isDayTime: isDayTime
       ),
       weatherConditionTitle: weatherInformationDTO.weatherCondition.first?.conditionName?.capitalized,
       weatherConditionSubtitle: weatherInformationDTO.weatherCondition.first?.conditionDescription?.capitalized,
-      temperature: ConversionWorker.temperatureDescriptor(
+      temperature: MeteorologyInformationConversionWorker.temperatureDescriptor(
         forTemperatureUnit: temperatureUnitOption,
         fromRawTemperature: weatherInformationDTO.atmosphericInformation.temperatureKelvin
       ),

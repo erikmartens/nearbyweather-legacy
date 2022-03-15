@@ -8,4 +8,12 @@
 
 import Foundation
 
-protocol BaseCellViewModelProtocol {}
+protocol BaseCellViewModelProtocol {
+  var canEditRow: Bool { get }
+  var canMoveRow: Bool { get }
+}
+
+extension BaseCellViewModelProtocol {
+  var canEditRow: Bool { false }
+  var canMoveRow: Bool { false }
+}

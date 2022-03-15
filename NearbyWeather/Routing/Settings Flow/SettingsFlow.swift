@@ -69,13 +69,13 @@ final class SettingsFlow: Flow {
     case .settings:
       return summonSettingsController()
     case .about:
-      return summonAboutController()
+      return summonAboutAppFlow()
     case .apiKeyEdit:
-      return summonApiKeyEditController()
-    case .manageLocations:
-      return summonManageLocationsController()
+      return summonApiKeyEditFlow()
+    case .manageBookmarks:
+      return summonManageBookmarksFlow()
     case .addLocation:
-      return summonAddLocationController()
+      return summonAddLocationFlow()
     case .changePreferredBookmarkAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .changePreferredBookmarkAlertAdapted(selectionDelegate, selectedOptionValue, boomarkedLocations):
@@ -151,7 +151,7 @@ private extension SettingsFlow {
     ))
   }
   
-  func summonAboutController() -> FlowContributors {
+  func summonAboutAppFlow() -> FlowContributors {
     let aboutAppFlow = AboutAppFlow(dependencies: AboutAppFlow.Dependencies(
       flowPresentationStyle: .pushed(navigationController: rootViewController),
       endingStep: SettingsStep.pop,
@@ -162,7 +162,7 @@ private extension SettingsFlow {
     return .one(flowContributor: .contribute(withNextPresentable: aboutAppFlow, withNextStepper: aboutAppStepper))
   }
   
-  func summonApiKeyEditController() -> FlowContributors {
+  func summonApiKeyEditFlow() -> FlowContributors {
     let apiKeyInputFlow = ApiKeyInputFlow(dependencies: ApiKeyInputFlow.Dependencies(
       flowPresentationStyle: .pushed(navigationController: rootViewController),
       endingStep: SettingsStep.pop,
@@ -173,18 +173,18 @@ private extension SettingsFlow {
     return .one(flowContributor: .contribute(withNextPresentable: apiKeyInputFlow, withNextStepper: apiKeyInputStepper))
   }
   
-  func summonManageLocationsController() -> FlowContributors {
-    // TODO
-//    guard !WeatherInformationService.shared.bookmarkedLocations.isEmpty else {
-//      return .none
-//    }
-    return .none
-//    let locationManagementController = WeatherLocationManagementTableViewController(style: SettingsFlow.Definitions.preferredTableViewStyle)
-//    rootViewController.pushViewController(locationManagementController, animated: true)
-//    return .one(flowContributor: .contribute(withNext: locationManagementController))
+  func summonManageBookmarksFlow() -> FlowContributors {
+    let manageBookmarksFlow = ManageBookmarksFlow(dependencies: ManageBookmarksFlow.Dependencies(
+      flowPresentationStyle: .pushed(navigationController: rootViewController),
+      endingStep: SettingsStep.pop,
+      dependencyContainer: dependencies.dependencyContainer
+    ))
+    let manageBookmarksStepper = ManageBookmarksStepper()
+    
+    return .one(flowContributor: .contribute(withNextPresentable: manageBookmarksFlow, withNextStepper: manageBookmarksStepper))
   }
   
-  func summonAddLocationController() -> FlowContributors {
+  func summonAddLocationFlow() -> FlowContributors {
     let addBookmarkFlow = AddBookmarkFlow(dependencies: AddBookmarkFlow.Dependencies(
       flowPresentationStyle: .pushed(navigationController: rootViewController),
       endingStep: SettingsStep.pop,

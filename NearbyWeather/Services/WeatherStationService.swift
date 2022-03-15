@@ -230,6 +230,7 @@ extension WeatherStationService: WeatherStationBookmarkPersistence {}
 
 protocol WeatherStationBookmarkSetting {
   func createAddBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable
+  func createRemoveBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable
   func createSetBookmarkedStationsCompletable(_ weatherStationDTOs: [WeatherStationDTO]) -> Completable
   func createSetBookmarksSortingCompletable(_ sorting: [Int: Int]) -> Completable
   func createSetPreferredBookmarkCompletable(_ weatherStationDTO: PreferredBookmarkOption) -> Completable

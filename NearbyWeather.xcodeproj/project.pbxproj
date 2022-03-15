@@ -101,8 +101,6 @@
 		F217CBCE27DB772B00DAC947 /* AboutAppVersionItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBCD27DB772B00DAC947 /* AboutAppVersionItemsSection.swift */; };
 		F217CBD127DB7E8B00DAC947 /* AboutAppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD027DB7E8B00DAC947 /* AboutAppFlow.swift */; };
 		F217CBD327DB7E9600DAC947 /* AboutAppStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD227DB7E9600DAC947 /* AboutAppStepper.swift */; };
-		F217CBD827DB889E00DAC947 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBD427DB889D00DAC947 /* SingleLabelCell.swift */; };
-		F217CBD927DB889E00DAC947 /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */; };
 		F217CBDE27DBB0C100DAC947 /* ApiKeyInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */; };
 		F217CBE027DBB0E700DAC947 /* ApiKeyInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBDF27DBB0E700DAC947 /* ApiKeyInputViewModel.swift */; };
 		F217CBE227DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217CBE127DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift */; };
@@ -201,13 +199,12 @@
 		F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDF1245F796000445BFF /* WeatherListViewController.swift */; };
 		F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */; };
 		F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */; };
-		F28DA8612042258500879E6C /* WeatherLocationManagementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */; };
 		F28EE8C925AB91530045AE6A /* Factory+UIBezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */; };
 		F28EE8CE25AB94390045AE6A /* Factory+CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28EE8CD25AB94390045AE6A /* Factory+CAShapeLayer.swift */; };
 		F28F180425A7354500AEA99A /* ApiKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28F180325A7354500AEA99A /* ApiKeyService.swift */; };
 		F28F180D25A74C3600AEA99A /* ApiKeyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28F180C25A74C3600AEA99A /* ApiKeyDTO.swift */; };
 		F28F182725A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28F182625A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift */; };
-		F2A5CAA62005762A0071BFFB /* ConversionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAA52005762A0071BFFB /* ConversionWorker.swift */; };
+		F2A5CAA62005762A0071BFFB /* MeteorologyInformationConversionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */; };
 		F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */; };
 		F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */; };
 		F2B8EA001EA11BA800704E90 /* WeatherInformationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8E9FF1EA11BA800704E90 /* WeatherInformationDTO.swift */; };
@@ -257,6 +254,14 @@
 		F2E12F6025B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E12F5F25B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
+		F2E9C98427E114E600DCA19B /* ManageBookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9C98327E114E600DCA19B /* ManageBookmarksViewController.swift */; };
+		F2E9C98627E1150200DCA19B /* ManageBookmarksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9C98527E1150200DCA19B /* ManageBookmarksViewModel.swift */; };
+		F2E9C98927E1153E00DCA19B /* ManageBookmarksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9C98827E1153E00DCA19B /* ManageBookmarksSection.swift */; };
+		F2E9C98B27E11A5B00DCA19B /* ManageBookmarksTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9C98A27E11A5B00DCA19B /* ManageBookmarksTableViewDelegate.swift */; };
+		F2E9C98D27E11A8800DCA19B /* ManageBookmarksTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9C98C27E11A8800DCA19B /* ManageBookmarksTableViewDataSource.swift */; };
+		F2E9C99227E12F6E00DCA19B /* ManageBookmarksFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9C99127E12F6E00DCA19B /* ManageBookmarksFlow.swift */; };
+		F2E9C99427E12F8500DCA19B /* ManageBookmarksStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9C99327E12F8500DCA19B /* ManageBookmarksStepper.swift */; };
+		F2E9C99627E146EF00DCA19B /* BaseTableViewDataSourceEditingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9C99527E146EF00DCA19B /* BaseTableViewDataSourceEditingDelegate.swift */; };
 		F2F1553E244278D4007A3E90 /* WeatherInformationErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553D244278D4007A3E90 /* WeatherInformationErrorDTO.swift */; };
 		F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */; };
 		F2F1554324435E55007A3E90 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F2F1554224435E55007A3E90 /* Settings.bundle */; };
@@ -399,8 +404,6 @@
 		F217CBCD27DB772B00DAC947 /* AboutAppVersionItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppVersionItemsSection.swift; sourceTree = "<group>"; };
 		F217CBD027DB7E8B00DAC947 /* AboutAppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppFlow.swift; sourceTree = "<group>"; };
 		F217CBD227DB7E9600DAC947 /* AboutAppStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppStepper.swift; sourceTree = "<group>"; };
-		F217CBD427DB889D00DAC947 /* SingleLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
-		F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
 		F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputViewController.swift; sourceTree = "<group>"; };
 		F217CBDF27DBB0E700DAC947 /* ApiKeyInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputViewModel.swift; sourceTree = "<group>"; };
 		F217CBE127DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyInputTableViewDelegate.swift; sourceTree = "<group>"; };
@@ -500,13 +503,12 @@
 		F284DDF1245F796000445BFF /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
 		F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extensions.swift"; sourceTree = "<group>"; };
 		F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
-		F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationManagementTableViewController.swift; sourceTree = "<group>"; };
 		F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIBezierPath.swift"; sourceTree = "<group>"; };
 		F28EE8CD25AB94390045AE6A /* Factory+CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+CAShapeLayer.swift"; sourceTree = "<group>"; };
 		F28F180325A7354500AEA99A /* ApiKeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyService.swift; sourceTree = "<group>"; };
 		F28F180C25A74C3600AEA99A /* ApiKeyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyDTO.swift; sourceTree = "<group>"; };
 		F28F182625A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationSortingOrientationDTO.swift; sourceTree = "<group>"; };
-		F2A5CAA52005762A0071BFFB /* ConversionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionWorker.swift; sourceTree = "<group>"; };
+		F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorologyInformationConversionWorker.swift; sourceTree = "<group>"; };
 		F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		F2B8E9FF1EA11BA800704E90 /* WeatherInformationDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInformationDTO.swift; sourceTree = "<group>"; };
@@ -556,6 +558,14 @@
 		F2E12F5F25B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsSunCycleItemsSection.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
+		F2E9C98327E114E600DCA19B /* ManageBookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBookmarksViewController.swift; sourceTree = "<group>"; };
+		F2E9C98527E1150200DCA19B /* ManageBookmarksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBookmarksViewModel.swift; sourceTree = "<group>"; };
+		F2E9C98827E1153E00DCA19B /* ManageBookmarksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBookmarksSection.swift; sourceTree = "<group>"; };
+		F2E9C98A27E11A5B00DCA19B /* ManageBookmarksTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBookmarksTableViewDelegate.swift; sourceTree = "<group>"; };
+		F2E9C98C27E11A8800DCA19B /* ManageBookmarksTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBookmarksTableViewDataSource.swift; sourceTree = "<group>"; };
+		F2E9C99127E12F6E00DCA19B /* ManageBookmarksFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBookmarksFlow.swift; sourceTree = "<group>"; };
+		F2E9C99327E12F8500DCA19B /* ManageBookmarksStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBookmarksStepper.swift; sourceTree = "<group>"; };
+		F2E9C99527E146EF00DCA19B /* BaseTableViewDataSourceEditingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewDataSourceEditingDelegate.swift; sourceTree = "<group>"; };
 		F2F1553D244278D4007A3E90 /* WeatherInformationErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationErrorDTO.swift; sourceTree = "<group>"; };
 		F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AppendWithDelimiter.swift"; sourceTree = "<group>"; };
 		F2F1554224435E55007A3E90 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -854,7 +864,6 @@
 			isa = PBXGroup;
 			children = (
 				F217CBA527DB60B400DAC947 /* Settings App Version Cell */,
-				F217CBA627DB60EC00DAC947 /* Settings Single Label Cell */,
 				F217CBA827DB61B500DAC947 /* Settings Single Label Dual Button Cell */,
 			);
 			path = "Table View Cells";
@@ -926,6 +935,7 @@
 		F217CBDC27DBB08200DAC947 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F217CBA627DB60EC00DAC947 /* Settings Single Label Cell */,
 				F217CBA727DB610900DAC947 /* Settings Dual Label Subtitle Cell */,
 			);
 			path = "Table View Cells";
@@ -1206,6 +1216,7 @@
 				F217CBCF27DB7E7300DAC947 /* About App Flow */,
 				F217CBF227DBFB1C00DAC947 /* Api Key Input Flow */,
 				F217CC0227DCB0B300DAC947 /* Add Bookmark Flow */,
+				F2E9C99027E12F4900DCA19B /* Manage Bookmarks Flow */,
 			);
 			path = Routing;
 			sourceTree = "<group>";
@@ -1311,8 +1322,11 @@
 		F27A122824425E3900A2CE8D /* Manage Bookmarks Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F28DA8602042258500879E6C /* WeatherLocationManagementTableViewController.swift */,
-				F27A122D24425F2400A2CE8D /* TableViewCells */,
+				F2E9C98327E114E600DCA19B /* ManageBookmarksViewController.swift */,
+				F2E9C98527E1150200DCA19B /* ManageBookmarksViewModel.swift */,
+				F2E9C98A27E11A5B00DCA19B /* ManageBookmarksTableViewDelegate.swift */,
+				F2E9C98C27E11A8800DCA19B /* ManageBookmarksTableViewDataSource.swift */,
+				F2E9C98727E1150A00DCA19B /* Table View Sections */,
 			);
 			path = "Manage Bookmarks Scene";
 			sourceTree = "<group>";
@@ -1392,15 +1406,6 @@
 				F217CB5B27D3B04700DAC947 /* MKMapView+Focus.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		F27A122D24425F2400A2CE8D /* TableViewCells */ = {
-			isa = PBXGroup;
-			children = (
-				F217CBD427DB889D00DAC947 /* SingleLabelCell.swift */,
-				F217CBD527DB889D00DAC947 /* SingleLabelCell.xib */,
-			);
-			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 		F2821663246081B6004E5B08 /* Weather Information Cell */ = {
@@ -1537,8 +1542,9 @@
 		F2D1990325A10CF9004C7753 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
-				F2D1990A25A10D4C004C7753 /* BaseTableViewDelegate.swift */,
 				F2D1990525A10D2E004C7753 /* BaseTableViewDataSource.swift */,
+				F2E9C99527E146EF00DCA19B /* BaseTableViewDataSourceEditingDelegate.swift */,
+				F2D1990A25A10D4C004C7753 /* BaseTableViewDelegate.swift */,
 				F2D1992D25A1E249004C7753 /* BaseTableViewSelectionDelegate.swift */,
 				F2D1990F25A10DBA004C7753 /* TableViewSectionDataProtocol.swift */,
 				F2D1993225A1E330004C7753 /* TableSectionData+Subscript.swift */,
@@ -1637,10 +1643,27 @@
 			path = "Weather Station Meteorology Details Sun-Cycle";
 			sourceTree = "<group>";
 		};
+		F2E9C98727E1150A00DCA19B /* Table View Sections */ = {
+			isa = PBXGroup;
+			children = (
+				F2E9C98827E1153E00DCA19B /* ManageBookmarksSection.swift */,
+			);
+			path = "Table View Sections";
+			sourceTree = "<group>";
+		};
+		F2E9C99027E12F4900DCA19B /* Manage Bookmarks Flow */ = {
+			isa = PBXGroup;
+			children = (
+				F2E9C99127E12F6E00DCA19B /* ManageBookmarksFlow.swift */,
+				F2E9C99327E12F8500DCA19B /* ManageBookmarksStepper.swift */,
+			);
+			path = "Manage Bookmarks Flow";
+			sourceTree = "<group>";
+		};
 		F2F1554124432D77007A3E90 /* Workers */ = {
 			isa = PBXGroup;
 			children = (
-				F2A5CAA52005762A0071BFFB /* ConversionWorker.swift */,
+				F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */,
 				F2D2B1DF2004171500C810EF /* JsonPersistencyWorker.swift */,
 				F260BDAD244F7BA700B4357A /* RealmPersistencyWorker.swift */,
 				F2F15544244389E8007A3E90 /* SettingsBundleTransferWorker.swift */,
@@ -1801,7 +1824,6 @@
 				F204B7B01DF2F1BC000F4371 /* Localizable.strings in Resources */,
 				F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */,
 				F22F99572037A30800B7CB6B /* locationsSQLite.sqlite in Resources */,
-				F217CBD927DB889E00DAC947 /* SingleLabelCell.xib in Resources */,
 				F25A39752187B3F90054BC7A /* ThirdPartyLibraries.json in Resources */,
 				F27A1215243BBC8C00A2CE8D /* GoogleService-Info.plist in Resources */,
 				F25A39712187AA5A0054BC7A /* ProjectContributors.json in Resources */,
@@ -1893,6 +1915,7 @@
 				F2E12F5025B098D300176087 /* WeatherStationMeteorologyDetailsSunCycleCell.swift in Sources */,
 				F217CB5F27D4F91E00DAC947 /* SettingsViewController.swift in Sources */,
 				F25E125C25AE141D00342EFE /* WeatherStationMeteorologyDetailsViewController.swift in Sources */,
+				F2E9C98B27E11A5B00DCA19B /* ManageBookmarksTableViewDelegate.swift in Sources */,
 				F217CB9E27DB5D6700DAC947 /* AboutAppViewModel.swift in Sources */,
 				F217CBF427DBFB6000DAC947 /* ApiKeyInputFlow.swift in Sources */,
 				F2D1994525A1EED1004C7753 /* Factory+UIBarButtonItem.swift in Sources */,
@@ -1935,7 +1958,7 @@
 				F213FA3223F9EEE300F094D8 /* SortingOrientationOption.swift in Sources */,
 				F22A221625A4A57B00C97844 /* WeatherListAlertTableViewCell.swift in Sources */,
 				F237288E244C93BD00964C49 /* Factory+UINavigationController.swift in Sources */,
-				F2A5CAA62005762A0071BFFB /* ConversionWorker.swift in Sources */,
+				F2A5CAA62005762A0071BFFB /* MeteorologyInformationConversionWorker.swift in Sources */,
 				F217CB6127D4F92D00DAC947 /* SettingsViewModel.swift in Sources */,
 				F217CB9A27D8FF4500DAC947 /* DimensionalUnitSelectionAlert.swift in Sources */,
 				F213FA3923F9EF9A00F094D8 /* AmountOfResultsOption.swift in Sources */,
@@ -1966,7 +1989,6 @@
 				F2E12F2725AF5F1A00176087 /* WeatherStationMeteorologyDetailsTableViewDataSource.swift in Sources */,
 				F22B0F7C25AB615A0037F957 /* BaseAnnotation.swift in Sources */,
 				F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */,
-				F217CBD827DB889E00DAC947 /* SingleLabelCell.swift in Sources */,
 				F217CBC827DB6FB600DAC947 /* SettingsSingleLabelDualButtonCellViewModel.swift in Sources */,
 				F217CBCA27DB6FCA00DAC947 /* SettingsSingleLabelDualButtonCellModel.swift in Sources */,
 				F217CBE727DBB18C00DAC947 /* ApiKeyInputTextEntrySection.swift in Sources */,
@@ -1988,6 +2010,7 @@
 				F277E7EA25AC9F7F0009D59B /* FocusOnLocationSelectionAlert.swift in Sources */,
 				F284DDD8245E4AFC00445BFF /* ListTypeOption.swift in Sources */,
 				F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */,
+				F2E9C98927E1153E00DCA19B /* ManageBookmarksSection.swift in Sources */,
 				F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */,
 				F22B0F8A25AB64D40037F957 /* WeatherMapAnnotationModel.swift in Sources */,
 				F2D1990625A10D2E004C7753 /* BaseTableViewDataSource.swift in Sources */,
@@ -1995,6 +2018,7 @@
 				F237100F25AB34950072AF29 /* WeatherMapViewController.swift in Sources */,
 				F217CB8E27D8B33700DAC947 /* SettingsBookmarksItemsSubSection1.swift in Sources */,
 				F2DB5E7225AB4F2000E21A56 /* BaseAnnotationViewProtocol.swift in Sources */,
+				F2E9C98427E114E600DCA19B /* ManageBookmarksViewController.swift in Sources */,
 				F210B1A625A9D6BD00BF8DAA /* PersistencyService.swift in Sources */,
 				F28F182725A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift in Sources */,
 				F2060E6027BC18060066DC8C /* WeatherListErrorViewModel.swift in Sources */,
@@ -2022,6 +2046,7 @@
 				F28F180425A7354500AEA99A /* ApiKeyService.swift in Sources */,
 				F22B0F8F25AB64E40037F957 /* WeatherMapAnnotationView.swift in Sources */,
 				F217CBFC27DCA0BA00DAC947 /* AddBookmarkTableViewDelegate.swift in Sources */,
+				F2E9C98627E1150200DCA19B /* ManageBookmarksViewModel.swift in Sources */,
 				F2372885244C90EE00964C49 /* WelcomeFlow.swift in Sources */,
 				F2D1993D25A1E51E004C7753 /* WeatherListTableViewDelegate.swift in Sources */,
 				F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */,
@@ -2059,6 +2084,7 @@
 				F237287A244C7FDD00964C49 /* SettingsFlow.swift in Sources */,
 				F217CBD127DB7E8B00DAC947 /* AboutAppFlow.swift in Sources */,
 				F217CBB827DB651400DAC947 /* SettingsAppVersionCellModel.swift in Sources */,
+				F2E9C99427E12F8500DCA19B /* ManageBookmarksStepper.swift in Sources */,
 				F22A222825A4BE9500C97844 /* Factory+UIStackView.swift in Sources */,
 				F2060E6627BFF1150066DC8C /* Daemon.swift in Sources */,
 				F217CC0627DCB15300DAC947 /* AddBookmarkStepper.swift in Sources */,
@@ -2091,6 +2117,8 @@
 				F217CBF827DCA09100DAC947 /* AddBookmarkViewController.swift in Sources */,
 				F2F1553E244278D4007A3E90 /* WeatherInformationErrorDTO.swift in Sources */,
 				F217CBAC27DB633300DAC947 /* AboutAppResourcesItemsSubSection1.swift in Sources */,
+				F2E9C98D27E11A8800DCA19B /* ManageBookmarksTableViewDataSource.swift in Sources */,
+				F2E9C99627E146EF00DCA19B /* BaseTableViewDataSourceEditingDelegate.swift in Sources */,
 				F282166024608175004E5B08 /* BaseCell.swift in Sources */,
 				F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */,
 				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,
@@ -2115,9 +2143,9 @@
 				F237285D2444A9AD00964C49 /* Factory+UIImageView.swift in Sources */,
 				F237100425AB34830072AF29 /* WeatherMapViewModel.swift in Sources */,
 				F217CB6527D4F96200DAC947 /* SettingsTableViewDataSource.swift in Sources */,
-				F28DA8612042258500879E6C /* WeatherLocationManagementTableViewController.swift in Sources */,
 				F237286F244C7D8200964C49 /* MainFlow.swift in Sources */,
 				F22B0F8525AB64BE0037F957 /* WeatherMapAnnotationViewModel.swift in Sources */,
+				F2E9C99227E12F6E00DCA19B /* ManageBookmarksFlow.swift in Sources */,
 				F217CBF627DBFB7600DAC947 /* ApiKeyInputStepper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

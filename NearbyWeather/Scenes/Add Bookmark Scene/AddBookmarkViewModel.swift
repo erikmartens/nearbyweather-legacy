@@ -15,7 +15,7 @@ import PKHUD
 
 extension AddBookmarkViewModel {
   struct Dependencies {
-    let weatherStationService: WeatherStationBookmarkSetting & WeatherStationBookmarkSetting & WeatherStationLookup
+    let weatherStationService: WeatherStationBookmarkSetting & WeatherStationBookmarkReading & WeatherStationLookup
   }
 }
 
@@ -35,8 +35,8 @@ final class AddBookmarkViewModel: NSObject, Stepper, BaseViewModel {
   
   private let dependencies: Dependencies
   
-  var tableDelegate: AboutAppTableViewDelegate? // swiftlint:disable:this weak_delegate
-  let tableDataSource: AboutAppTableViewDataSource
+  var tableDelegate: AddBookmarkTableViewDelegate? // swiftlint:disable:this weak_delegate
+  let tableDataSource: AddBookmarkTableViewDataSource
   
   // MARK: - Events
   
@@ -51,10 +51,10 @@ final class AddBookmarkViewModel: NSObject, Stepper, BaseViewModel {
   
   required init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    tableDataSource = AboutAppTableViewDataSource()
+    tableDataSource = AddBookmarkTableViewDataSource()
     super.init()
     
-    tableDelegate = AboutAppTableViewDelegate(cellSelectionDelegate: self)
+    tableDelegate = AddBookmarkTableViewDelegate(cellSelectionDelegate: self)
   }
   
   deinit {
@@ -88,11 +88,11 @@ extension AddBookmarkViewModel {
     searchResultsSubject
       .map { weatherStationDtos -> [SettingsDualLabelSubtitleCellViewModel] in
         weatherStationDtos.map {
-          let countryName = ConversionWorker.countryName(for: $0.country) ?? ""
+          let countryName = MeteorologyInformationConversionWorker.countryName(for: $0.country) ?? ""
           let subtitleText: String
           if let usStateCode = $0.state {
             subtitleText = ""
-              .append(contentsOf: ConversionWorker.usStateName(for: usStateCode), delimiter: .none) // only US states have state codes attached
+              .append(contentsOf: MeteorologyInformationConversionWorker.usStateName(for: usStateCode), delimiter: .none) // only US states have state codes attached
               .append(contentsOf: countryName, delimiter: .comma)
           } else {
             subtitleText = countryName

@@ -9,10 +9,9 @@
 import UIKit
 
 class BaseTableViewDelegate: NSObject {
-  
   weak var cellSelectionDelegate: BaseTableViewSelectionDelegate?
   
-  init(cellSelectionDelegate: BaseTableViewSelectionDelegate) {
+  init(cellSelectionDelegate: BaseTableViewSelectionDelegate? = nil) {
     self.cellSelectionDelegate = cellSelectionDelegate
   }
 }
@@ -26,5 +25,9 @@ extension BaseTableViewDelegate: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     cellSelectionDelegate?.didSelectRow(at: indexPath)
+  }
+  
+  func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+    cellSelectionDelegate?.shouldIndentWhileEditingRow(at: indexPath) ?? false
   }
 }

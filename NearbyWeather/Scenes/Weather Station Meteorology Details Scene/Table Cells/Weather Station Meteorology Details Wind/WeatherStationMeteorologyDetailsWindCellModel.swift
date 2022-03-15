@@ -30,11 +30,11 @@ struct WeatherStationMeteorologyDetailsWindCellModel {
     dimensionaUnitsPreference: DimensionalUnitOption
   ) {
     self.init(
-      windSpeedString: ConversionWorker.windspeedDescriptor(
+      windSpeedString: MeteorologyInformationConversionWorker.windspeedDescriptor(
         forDistanceSpeedUnit: dimensionaUnitsPreference,
         forWindspeed: windSpeed
       ),
-      windDirectionString: ConversionWorker.windDirectionDescriptor(forWindDirection: windDirectionDegrees),
+      windDirectionString: MeteorologyInformationConversionWorker.windDirectionDescriptor(forWindDirection: windDirectionDegrees),
       windDirectionRotationAngle: CGFloat(windDirectionDegrees)*0.0174532925199 // convert to radians
     )
   }

@@ -305,7 +305,7 @@ private extension SettingsViewModel {
     case 2:
       switch indexPath.row {
       case 0:
-        return SettingsStep.manageLocations
+        return SettingsStep.manageBookmarks
       case 1:
         return SettingsStep.addLocation
       default:

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol BaseCell: BaseCellProtocol {
-  associatedtype CellViewModel: BaseCellViewModelProtocol
+  associatedtype CellViewModel: BaseCellViewModel
   var cellViewModel: CellViewModel? { get set }
   func bindContentFromViewModel(_ cellViewModel: CellViewModel)
   func bindUserInputToViewModel(_ cellViewModel: CellViewModel)

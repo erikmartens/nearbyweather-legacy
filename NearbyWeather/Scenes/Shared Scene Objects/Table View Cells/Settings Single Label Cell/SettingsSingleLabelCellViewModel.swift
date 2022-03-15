@@ -16,6 +16,22 @@ extension SettingsSingleLabelCellViewModel {
     let labelText: String
     let selectable: Bool
     let disclosable: Bool
+    let editable: Bool
+    let movable: Bool
+    
+    init(
+      labelText: String,
+      selectable: Bool = false,
+      disclosable: Bool = false,
+      editable: Bool = false,
+      movable: Bool = false
+    ) {
+      self.labelText = labelText
+      self.selectable = selectable
+      self.disclosable = disclosable
+      self.editable = editable
+      self.movable = movable
+    }
   }
 }
 
@@ -43,6 +59,10 @@ final class SettingsSingleLabelCellViewModel: NSObject, BaseCellViewModel {
     observeDataSource()
     observeUserTapEvents()
   }
+  
+  var canEditRow: Bool { dependencies.editable }
+
+  var canMoveRow: Bool { dependencies.movable }
 }
 
 // MARK: - Observation Helpers

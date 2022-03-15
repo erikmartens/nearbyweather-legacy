@@ -34,11 +34,11 @@ struct WeatherMapAnnotationModel {
     temperatureUnitOption: TemperatureUnitOption,
     isBookmark: Bool
   ) {
-    let isDayTime = ConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
+    let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
     
     var weatherConditionSymbol: String?
     if let weatherConditionIdentifier = weatherInformationDTO.weatherCondition.first?.identifier {
-      weatherConditionSymbol = ConversionWorker.weatherConditionSymbol(
+      weatherConditionSymbol = MeteorologyInformationConversionWorker.weatherConditionSymbol(
         fromWeatherCode: weatherConditionIdentifier,
         isDayTime: isDayTime
       )
@@ -46,7 +46,7 @@ struct WeatherMapAnnotationModel {
     
     var temperatureDescriptor: String?
     if let temperatureKelvin = weatherInformationDTO.atmosphericInformation.temperatureKelvin {
-      temperatureDescriptor = ConversionWorker.temperatureDescriptor(
+      temperatureDescriptor = MeteorologyInformationConversionWorker.temperatureDescriptor(
         forTemperatureUnit: temperatureUnitOption,
         fromRawTemperature: temperatureKelvin
       )

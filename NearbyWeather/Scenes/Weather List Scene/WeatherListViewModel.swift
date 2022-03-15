@@ -113,6 +113,7 @@ extension WeatherListViewModel {
       .createGetApiKeyObservable()
       .share(replay: 1)
     
+    // TODO: rebuild similar to observable below
     let nearbyListItemsObservable = Observable
       .combineLatest(
         dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
@@ -128,15 +129,13 @@ extension WeatherListViewModel {
       .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
-    let bookmarkedListItemsObservable = Observable
-      .combineLatest(
-        dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
-        dependencies.weatherStationService.createGetBookmarksSortingObservable(),
-        apiKeyValidObservable,
-        resultSelector: { weatherInformationItems, sortingWeights, _ in
-          Self.sortBookmarkedResults(weatherInformationItems, sortingWeights: sortingWeights)
-        }
-      )
+    let bookmarkedListItemsObservable = dependencies.weatherInformationService
+      .createGetBookmarkedWeatherInformationListObservable()
+      .flatMapLatest { [dependencies] weatherInformationItems in
+        dependencies.weatherStationService
+          .createGetBookmarksSortingObservable()
+          .map { Self.sortBookmarkedResults(weatherInformationItems, sortingWeights: $0) }
+      }
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
       .map { [WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionCellsIdentifiers: nil, sectionItems: $0)] }
       .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }

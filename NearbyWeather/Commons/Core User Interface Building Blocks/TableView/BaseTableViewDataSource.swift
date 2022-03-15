@@ -11,7 +11,12 @@ import RxSwift
 import RxCocoa
 
 class BaseTableViewDataSource: NSObject {
+  weak var cellEditingDelegate: BaseTableViewDataSourceEditingDelegate?
   var sectionDataSources: BehaviorRelay<[TableViewSectionDataProtocol]?> = BehaviorRelay(value: nil)
+  
+  init(cellEditingDelegate: BaseTableViewDataSourceEditingDelegate? = nil) {
+    self.cellEditingDelegate = cellEditingDelegate
+  }
 }
 
 extension BaseTableViewDataSource: UITableViewDataSource {
@@ -41,5 +46,21 @@ extension BaseTableViewDataSource: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
     sectionDataSources.value?[safe: section]?.sectionFooterTitle
+  }
+  
+  func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    sectionDataSources.value?[safe: indexPath.section]?.sectionItems[safe: indexPath.row]?.canEditRow ?? false
+  }
+  
+  func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    sectionDataSources.value?[safe: indexPath.section]?.sectionItems[safe: indexPath.row]?.canMoveRow ?? false
+  }
+  
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    cellEditingDelegate?.didCommitEdit(with: editingStyle, forRowAt: indexPath)
+  }
+  
+  func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    cellEditingDelegate?.didMoveRow(at: sourceIndexPath, to: destinationIndexPath)
   }
 }

@@ -10,4 +10,10 @@ import Foundation
 
 protocol BaseTableViewSelectionDelegate: AnyObject {
   func didSelectRow(at indexPath: IndexPath)
+  func shouldIndentWhileEditingRow(at indexPath: IndexPath) -> Bool
+}
+
+extension BaseTableViewSelectionDelegate {
+  func didSelectRow(at indexPath: IndexPath) {}
+  func shouldIndentWhileEditingRow(at indexPath: IndexPath) -> Bool { false }
 }

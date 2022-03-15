@@ -13,7 +13,7 @@ enum SettingsStep: Step {
   case settings
   case about
   case apiKeyEdit
-  case manageLocations
+  case manageBookmarks
   case addLocation
   case changePreferredBookmarkAlert(selectionDelegate: PreferredBookmarkSelectionAlertDelegate)
   case changePreferredBookmarkAlertAdapted(selectionDelegate: PreferredBookmarkSelectionAlertDelegate, selectedOptionValue: PreferredBookmarkOption?, boomarkedLocations: [WeatherStationDTO])

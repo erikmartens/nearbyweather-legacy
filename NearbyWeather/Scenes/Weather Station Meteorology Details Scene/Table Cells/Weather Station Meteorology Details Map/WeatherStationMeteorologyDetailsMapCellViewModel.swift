@@ -151,6 +151,6 @@ private extension WeatherStationMeteorologyDetailsMapCellViewModel {
     let weatherStationlocation = CLLocation(latitude: weatherStationLatitude, longitude: weatherStationLongitude)
     let distanceInMetres = currentLocation.distance(from: weatherStationlocation)
     
-    return ConversionWorker.distanceDescriptor(forDistanceSpeedUnit: preferredDimensionalUnitsOption, forDistanceInMetres: distanceInMetres)
+    return MeteorologyInformationConversionWorker.distanceDescriptor(forDistanceSpeedUnit: preferredDimensionalUnitsOption, forDistanceInMetres: distanceInMetres)
   }
 }

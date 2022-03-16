@@ -48,8 +48,15 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Observables
   
-  private lazy var amountOfBookmarksObservable = dependencies.weatherStationService.createGetBookmarkedStationsObservable().map { $0.count }
-  private lazy var allowTempOnAppIconObservable = dependencies.preferencesService.createGetShowTemperatureOnAppIconOptionObservable().map { $0.rawRepresentableValue }
+  private lazy var amountOfBookmarksObservable = dependencies.weatherStationService
+    .createGetBookmarkedStationsObservable()
+    .map { $0.count }
+    .share(replay: 1)
+  
+  private lazy var allowTempOnAppIconObservable = dependencies.preferencesService
+    .createGetShowTemperatureOnAppIconOptionObservable()
+    .map { $0.rawRepresentableValue }
+    .share(replay: 1)
   
   // MARK: - Initialization
   
@@ -136,7 +143,7 @@ extension SettingsViewModel {
       labelText: R.string.localizable.add_location(),
       selectable: true,
       disclosable: true,
-      routingIntent: SettingsStep.addLocation
+      routingIntent: SettingsStep.addBookmark
     ))
     
     let bookmarksMainSectionObservable = amountOfBookmarksObservable
@@ -144,7 +151,11 @@ extension SettingsViewModel {
       .map(SettingsBookmarksItemsMainSection.init)
     
     // Bookmarks Section Sub 1
-    let preferredBookmarkNameObservable = dependencies.weatherStationService.createGetPreferredBookmarkObservable().map { $0?.stringValue ?? R.string.localizable.none() }
+    let preferredBookmarkNameObservable = dependencies.weatherStationService
+      .createGetPreferredBookmarkObservable()
+      .materialize()
+      .map { ($0.element as? PreferredBookmarkOption)?.stringValue ?? R.string.localizable.none() }
+      .share(replay: 1)
     
     let temperatureViaAppIconCell = SettingsImagedSingleLabelToggleCellViewModel(dependencies: SettingsImagedSingleLabelToggleCellViewModel.Dependencies(
       symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
@@ -157,7 +168,7 @@ extension SettingsViewModel {
       symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
       symbolImage: R.image.preferred_bookmark(),
       contentLabelText: R.string.localizable.preferred_bookmark(),
-      descriptionLabelTextObservable: preferredBookmarkNameObservable,
+      descriptionLabelTextObservable: preferredBookmarkNameObservable.debug("🤢🤢🤢"),
       selectable: true,
       disclosable: false,
       routingIntent: SettingsStep.changePreferredBookmarkAlert(selectionDelegate: self)
@@ -180,7 +191,10 @@ extension SettingsViewModel {
       .map(SettingsBookmarksItemsSubSection1.init)
     
     // Preferences Section Main
-    let refreshOnAppStartObservable = dependencies.preferencesService.createGetRefreshOnAppStartOptionObservable().map { $0.rawRepresentableValue }
+    let refreshOnAppStartObservable = dependencies.preferencesService
+      .createGetRefreshOnAppStartOptionObservable()
+      .map { $0.rawRepresentableValue }
+      .share(replay: 1)
     
     let preferencesMainSectionItems: [BaseCellViewModelProtocol] = [
       SettingsImagedSingleLabelToggleCellViewModel(dependencies: SettingsImagedSingleLabelToggleCellViewModel.Dependencies(

@@ -89,14 +89,26 @@ extension WeatherStationService {
   }
   
   func createRemoveBookmarkCompletable(_ weatherStationDTO: WeatherStationDTO) -> Completable {
-    Single
+    Observable
       .just(weatherStationDTO.identifier)
+      .take(1)
+      .do(onNext: { [unowned self] identifier in
+        _ = createGetPreferredBookmarkObservable()
+          .take(1)
+          .filter { identifier == $0?.value.stationIdentifier }
+          .asSingle()
+          .flatMapCompletable { [unowned self] _ in
+            self.createRemovePreferredBookmarkCompletable()
+          }
+          .subscribe()
+      })
       .map {
         PersistencyModelIdentity(
           collection: WeatherStationService.PersistencyKeys.weatherStationBookmarks.collection,
           identifier: String($0)
         )
       }
+      .asSingle()
       .flatMapCompletable { [dependencies] in dependencies.persistencyService.deleteResource(with: $0) }
   }
   
@@ -190,10 +202,7 @@ extension WeatherStationService {
         in: WeatherStationService.PersistencyKeys.weatherStationPreferredBookmark.collection,
         type: PreferredBookmarkOption.self
       )
-      .map { $0.first }
-      .errorOnNil()
-      .map { $0.entity }
-      .catchAndReturn(nil)
+      .map { $0.first?.entity }
   }
   
   func createWeatherStationsLocalLookupObservable(for searchTerm: String) -> Observable<[WeatherStationDTO]> {

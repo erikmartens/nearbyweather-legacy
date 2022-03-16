@@ -74,7 +74,7 @@ final class SettingsFlow: Flow {
       return summonApiKeyEditFlow()
     case .manageBookmarks:
       return summonManageBookmarksFlow()
-    case .addLocation:
+    case .addBookmark:
       return summonAddLocationFlow()
     case .changePreferredBookmarkAlert:
       return .none // will be handled via `func adapt(step:)`

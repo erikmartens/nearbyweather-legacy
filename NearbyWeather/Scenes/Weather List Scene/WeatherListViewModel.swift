@@ -106,7 +106,7 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
 // MARK: - Observations
 
 extension WeatherListViewModel {
-
+  
   func observeDataSource() {
     // TODO: use this for error cell
     let apiKeyValidObservable = dependencies
@@ -131,7 +131,7 @@ extension WeatherListViewModel {
       .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
-let bookmarkedListItemsObservable = dependencies.weatherInformationService
+    let bookmarkedListItemsObservable = dependencies.weatherInformationService
       .createGetBookmarkedWeatherInformationListObservable()
       .flatMapLatest { [dependencies] weatherInformationItems in
         dependencies.weatherStationService
@@ -245,7 +245,7 @@ private extension WeatherListViewModel {
         return lhsTemperature > rhsTemperature
       case .distance:
         guard let currentLocation = currentLocation else {
-            return false
+          return false
         }
         guard let lhsLatitude = lhsEntity.coordinates.latitude, let lhsLongitude = lhsEntity.coordinates.longitude else {
           return false

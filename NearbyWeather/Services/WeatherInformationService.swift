@@ -75,17 +75,7 @@ final class WeatherInformationService {
 
 // MARK: - Weather Information Provisioning
 
-protocol WeatherInformationPersistence: WeatherInformationReading, WeatherInformationSetting {
-  func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
-  func createDeleteBookmarkedWeatherInformationListCompletable() -> Completable
-  func createGetBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModelThreadSafe<WeatherInformationDTO>]>
-  func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModelThreadSafe<WeatherInformationDTO>>
-  func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
-  func createDeleteNearbyWeatherInformationListCompletable() -> Completable
-  func createGetNearbyWeatherInformationListObservable() -> Observable<[PersistencyModelThreadSafe<WeatherInformationDTO>]>
-  func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModelThreadSafe<WeatherInformationDTO>>
-  func createGetWeatherInformationItemObservable(for identifier: String, isBookmark: Bool) -> Observable<PersistencyModelThreadSafe<WeatherInformationDTO>>
-}
+protocol WeatherInformationPersistence: WeatherInformationReading, WeatherInformationSetting {}
 
 extension WeatherInformationService: WeatherInformationPersistence {
   
@@ -121,6 +111,16 @@ extension WeatherInformationService: WeatherInformationPersistence {
       .persistencyService
       .observeResource(with: identity, type: WeatherInformationDTO.self)
       .errorOnNil(DomainError.bookmarkedWeatherInformationMissing)
+  }
+  
+  func createRemoveBookmarkedWeatherInformationItemCompletable(for identifier: String) -> Completable {
+    let identity = PersistencyModelIdentity(
+      collection: PersistencyKeys.bookmarkedWeatherInformation.collection,
+      identifier: identifier
+    )
+    return dependencies
+      .persistencyService
+      .deleteResource(with: identity)
   }
   
   func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable {
@@ -173,6 +173,7 @@ extension WeatherInformationService: WeatherInformationPersistence {
 protocol WeatherInformationSetting {
   func createSetBookmarkedWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
   func createDeleteBookmarkedWeatherInformationListCompletable() -> Completable
+  func createRemoveBookmarkedWeatherInformationItemCompletable(for identifier: String) -> Completable
   func createSetNearbyWeatherInformationListCompletable(_ list: [WeatherInformationDTO]) -> Completable
   func createDeleteNearbyWeatherInformationListCompletable() -> Completable
 }
@@ -235,7 +236,13 @@ extension WeatherInformationService: WeatherInformationUpdating {
       }
       .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [self, dependencies] in
+        createDeleteBookmarkedWeatherInformationListCompletable()
+          .andThen(
+            dependencies.persistencyService
+              .saveResources($0, type: WeatherInformationDTO.self)
+          )
+      }
   }
   
   func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int) -> Completable {

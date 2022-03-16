@@ -15,7 +15,7 @@ extension Factory {
     enum LabelType {
       case title(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
       case body(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
-      case description(text: String? = nil,  alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
+      case description(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
       case weatherSymbol
       case mapAnnotation(fontSize: CGFloat, width: CGFloat, height: CGFloat, yOffset: CGFloat)
     }
@@ -33,26 +33,31 @@ extension Factory {
         label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
+        label.lineBreakMode = numberOfLines == 1 ? .byTruncatingTail : .byWordWrapping
       case let .body(text, alignment, numberOfLines):
         label.textColor = Constants.Theme.Color.ViewElement.titleLight
         label.font = .preferredFont(forTextStyle: .body)
         label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
+        label.lineBreakMode = numberOfLines == 1 ? .byTruncatingTail : .byWordWrapping
       case let .description(text, alignment, numberOfLines):
         label.textColor = Constants.Theme.Color.ViewElement.subtitleLight
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
+        label.lineBreakMode = numberOfLines == 1 ? .byTruncatingTail : .byWordWrapping
       case .weatherSymbol:
         label.font = .systemFont(ofSize: 56)
         label.textAlignment = .center
         label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
       case let .mapAnnotation(fontSize, width, height, yOffset):
         label.frame.size = CGSize(width: width, height: height)
         label.frame = label.frame.offsetBy(dx: 0, dy: yOffset)
         label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
         label.font = UIFont.systemFont(ofSize: fontSize)
         label.textAlignment = .center
         label.minimumScaleFactor = 0.8

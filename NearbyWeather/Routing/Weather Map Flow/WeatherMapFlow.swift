@@ -76,8 +76,8 @@ final class WeatherMapFlow: Flow { // TODO: rename to WeatherMapFlow
       return summonChangeAmountOfResultsAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
     case .focusOnLocationAlert:
       return .none // will be handled via `func adapt(step:)`
-    case let .focusOnLocationAlertAdapted(selectionDelegate, weatherInformationDTOs):
-      return summonFocusOnLocationAlert(selectionDelegate: selectionDelegate, bookmarkedLocations: weatherInformationDTOs)
+    case let .focusOnLocationAlertAdapted(selectionDelegate, weatherStationDTOs):
+      return summonFocusOnLocationAlert(selectionDelegate: selectionDelegate, bookmarkedLocations: weatherStationDTOs)
     case .dismissChildFlow:
       return dismissChildFlow()
     }
@@ -110,7 +110,7 @@ final class WeatherMapFlow: Flow { // TODO: rename to WeatherMapFlow
       return Observable
         .combineLatest(
           Observable.just(selectionDelegate),
-          dependencies.dependencyContainer.resolve(WeatherInformationService.self)!.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.entity } }.take(1),
+          dependencies.dependencyContainer.resolve(WeatherStationService.self)!.createGetBookmarkedStationsObservable().take(1),
           resultSelector: WeatherMapStep.focusOnLocationAlertAdapted
         )
         .take(1)
@@ -189,7 +189,7 @@ private extension WeatherMapFlow {
     return .none
   }
   
-  func summonFocusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate, bookmarkedLocations: [WeatherInformationDTO]) -> FlowContributors {
+  func summonFocusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate, bookmarkedLocations: [WeatherStationDTO]) -> FlowContributors {
     let alert = FocusOnLocationSelectionAlert(dependencies: FocusOnLocationSelectionAlert.Dependencies(
       bookmarkedLocations: bookmarkedLocations,
       selectionDelegate: selectionDelegate

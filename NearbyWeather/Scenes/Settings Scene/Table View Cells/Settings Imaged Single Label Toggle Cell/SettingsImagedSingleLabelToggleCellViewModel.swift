@@ -37,9 +37,13 @@ final class SettingsImagedSingleLabelToggleCellViewModel: NSObject, BaseCellView
   
   let onDidFlipToggleSwitchSubject = PublishSubject<Bool>()
   
+  // MARK: - Observables
+  
+  private lazy var cellModelRelay: BehaviorRelay<SettingsImagedSingleLabelToggleCellModel> = Self.createCellModelRelay(with: dependencies)
+  
   // MARK: - Drivers
   
-  lazy var cellModelDriver: Driver<SettingsImagedSingleLabelToggleCellModel> = Self.createCellModelDriver(with: dependencies)
+  lazy var cellModelDriver: Driver<SettingsImagedSingleLabelToggleCellModel> = cellModelRelay.asDriver(onErrorJustReturn: SettingsImagedSingleLabelToggleCellModel())
 
   // MARK: - Initialization
   
@@ -58,7 +62,17 @@ final class SettingsImagedSingleLabelToggleCellViewModel: NSObject, BaseCellView
 extension SettingsImagedSingleLabelToggleCellViewModel {
   
   func observeDataSource() {
-    // nothing to do
+    dependencies.isToggleOnObservable
+      .map { [dependencies] isToggleOn -> SettingsImagedSingleLabelToggleCellModel in
+        SettingsImagedSingleLabelToggleCellModel(
+          symbolImageBackgroundColor: dependencies.symbolImageBackgroundColor,
+          symbolImage: dependencies.symbolImage,
+          labelText: dependencies.labelText,
+          isToggleOn: isToggleOn
+        )
+      }
+      .bind(to: cellModelRelay)
+      .disposed(by: disposeBag)
   }
   
   func observeUserTapEvents() {
@@ -72,15 +86,14 @@ extension SettingsImagedSingleLabelToggleCellViewModel {
 
 private extension SettingsImagedSingleLabelToggleCellViewModel {
   
-  static func createCellModelDriver(with dependencies: Dependencies) -> Driver<SettingsImagedSingleLabelToggleCellModel> {
-    Observable
-      .combineLatest(
-        Observable.just(dependencies.symbolImageBackgroundColor),
-        Observable.just(dependencies.symbolImage),
-        Observable.just(dependencies.labelText),
-        dependencies.isToggleOnObservable,
-        resultSelector: SettingsImagedSingleLabelToggleCellModel.init
+  static func createCellModelRelay(with dependencies: Dependencies) -> BehaviorRelay<SettingsImagedSingleLabelToggleCellModel> {
+    BehaviorRelay<SettingsImagedSingleLabelToggleCellModel>(
+      value: SettingsImagedSingleLabelToggleCellModel(
+        symbolImageBackgroundColor: dependencies.symbolImageBackgroundColor,
+        symbolImage: dependencies.symbolImage,
+        labelText: dependencies.labelText,
+        isToggleOn: false // start with default value
       )
-      .asDriver(onErrorJustReturn: SettingsImagedSingleLabelToggleCellModel())
+    )
   }
 }

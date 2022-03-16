@@ -103,7 +103,6 @@ private extension SettingsImagedSingleLabelToggleCell {
     leadingImageView.backgroundColor = cellModel.symbolImageBackgroundColor
     leadingImageView.image = cellModel.symbolImage
     contentLabel.text = cellModel.labelText
-    
     toggleSwitch.isOn = cellModel.isToggleOn ?? false
   }
   
@@ -135,8 +134,10 @@ private extension SettingsImagedSingleLabelToggleCell {
     ])
     
     contentView.addSubview(toggleSwitch, constraints: [
-      toggleSwitch.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
-      toggleSwitch.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
+      toggleSwitch.heightAnchor.constraint(equalToConstant: toggleSwitch.bounds.height),
+      toggleSwitch.widthAnchor.constraint(equalToConstant: toggleSwitch.bounds.width),
+      toggleSwitch.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
+      toggleSwitch.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       toggleSwitch.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       toggleSwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
       toggleSwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
@@ -146,6 +147,7 @@ private extension SettingsImagedSingleLabelToggleCell {
   func setupAppearance() {
     backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
     contentView.backgroundColor = .clear
+    selectionStyle = .none
     accessoryType = .none
   }
 }

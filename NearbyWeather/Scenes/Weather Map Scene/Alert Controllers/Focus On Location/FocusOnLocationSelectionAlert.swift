@@ -20,7 +20,7 @@ enum FocusOnLocationOption {
 
 extension FocusOnLocationSelectionAlert {
   struct Dependencies {
-    let bookmarkedLocations: [WeatherInformationDTO]
+    let bookmarkedLocations: [WeatherStationDTO]
     weak var selectionDelegate: FocusOnLocationSelectionAlertDelegate?
   }
 }
@@ -77,20 +77,16 @@ final class FocusOnLocationSelectionAlert {
 
 // MARK: - Helper Extensions
 
-private extension Array where Element == WeatherInformationDTO {
+private extension Array where Element == WeatherStationDTO {
   
   func mapToAlertAction(dependencies: FocusOnLocationSelectionAlert.Dependencies) -> [UIAlertAction] {
-    compactMap { weatherInformationDTO -> UIAlertAction? in
-      guard let latitude = weatherInformationDTO.coordinates.latitude,
-            let longitude = weatherInformationDTO.coordinates.longitude else {
-        return nil
-      }
-      return Factory.AlertAction.make(fromType: .image(
-        title: weatherInformationDTO.stationName,
+    compactMap { weatherStationDTO -> UIAlertAction? in
+      Factory.AlertAction.make(fromType: .image(
+        title: weatherStationDTO.name,
         image: R.image.locateFavoriteActiveIcon(),
         handler: { [dependencies] _ in
           dependencies.selectionDelegate?.didSelectFocusOnLocationOption(FocusOnLocationOption.weatherStation(
-            location: CLLocation(latitude: latitude, longitude: longitude)
+            location: CLLocation(latitude: weatherStationDTO.coordinates.latitude, longitude: weatherStationDTO.coordinates.longitude)
           ))
         }
       ))

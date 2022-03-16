@@ -17,7 +17,7 @@ enum WeatherMapStep: Step {
   case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate)
   case changeAmountOfResultsAlertAdapted(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsOptionValue)
   case focusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate)
-  case focusOnLocationAlertAdapted(selectionDelegate: FocusOnLocationSelectionAlertDelegate, weatherInformationDTOs: [WeatherInformationDTO])
+  case focusOnLocationAlertAdapted(selectionDelegate: FocusOnLocationSelectionAlertDelegate, weatherStationDTOs: [WeatherStationDTO])
   case dismissChildFlow
 }
 

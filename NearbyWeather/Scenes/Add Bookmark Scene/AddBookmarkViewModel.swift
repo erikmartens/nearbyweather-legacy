@@ -121,7 +121,7 @@ extension AddBookmarkViewModel: BaseTableViewSelectionDelegate {
     Observable
       .just(indexPath.row)
       .flatMapLatest { [unowned searchResultsSubject] row -> Observable<WeatherStationDTO?> in
-        searchResultsSubject.asObservable().map { $0[safe: row] }
+        searchResultsSubject.asObservable().take(1).map { $0[safe: row] }
       }
       .filterNil()
       .do(onNext: { [dependencies] weatherStationDto in

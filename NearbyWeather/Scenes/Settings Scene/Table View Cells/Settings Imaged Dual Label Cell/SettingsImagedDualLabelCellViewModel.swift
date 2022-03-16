@@ -26,13 +26,23 @@ extension SettingsImagedDualLabelCellViewModel {
 
 final class SettingsImagedDualLabelCellViewModel: NSObject, BaseCellViewModel {
   
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies
 
   // MARK: - Events
   
-  lazy var cellModelDriver: Driver<SettingsImagedDualLabelCellModel> = Self.createCellModelDriver(with: dependencies)
+  // MARK: - Observables
+  
+  private lazy var cellModelRelay: BehaviorRelay<SettingsImagedDualLabelCellModel> = Self.createCellModelRelay(with: dependencies)
+  
+  // MARK: - Drivers
+  
+  lazy var cellModelDriver: Driver<SettingsImagedDualLabelCellModel> = cellModelRelay.asDriver(onErrorJustReturn: SettingsImagedDualLabelCellModel())
 
   // MARK: - Initialization
   
@@ -48,21 +58,39 @@ final class SettingsImagedDualLabelCellViewModel: NSObject, BaseCellViewModel {
   }
 }
 
+extension SettingsImagedDualLabelCellViewModel {
+  
+  func observeDataSource() {
+    dependencies.descriptionLabelTextObservable
+      .map { [dependencies] descriptionText -> SettingsImagedDualLabelCellModel in
+        SettingsImagedDualLabelCellModel(
+          symbolImageBackgroundColor: dependencies.symbolImageBackgroundColor,
+          symbolImage: dependencies.symbolImage,
+          contentLabelText: dependencies.contentLabelText,
+          descriptionLabelText: descriptionText,
+          selectable: dependencies.selectable,
+          disclosable: dependencies.disclosable
+        )
+      }
+      .bind(to: cellModelRelay)
+      .disposed(by: disposeBag)
+  }
+}
+
 // MARK: - Observation Helpers
 
 private extension SettingsImagedDualLabelCellViewModel {
   
-  static func createCellModelDriver(with dependencies: Dependencies) -> Driver<SettingsImagedDualLabelCellModel> {
-    Observable
-      .combineLatest(
-        Observable.just(dependencies.symbolImageBackgroundColor),
-        Observable.just(dependencies.symbolImage),
-        Observable.just(dependencies.contentLabelText),
-        dependencies.descriptionLabelTextObservable,
-        Observable.just(dependencies.selectable),
-        Observable.just(dependencies.disclosable),
-        resultSelector: SettingsImagedDualLabelCellModel.init
+  static func createCellModelRelay(with dependencies: Dependencies) -> BehaviorRelay<SettingsImagedDualLabelCellModel> {
+    BehaviorRelay<SettingsImagedDualLabelCellModel>(
+      value: SettingsImagedDualLabelCellModel(
+        symbolImageBackgroundColor: dependencies.symbolImageBackgroundColor,
+        symbolImage: dependencies.symbolImage,
+        contentLabelText: dependencies.contentLabelText,
+        descriptionLabelText: nil, // start with default value
+        selectable: dependencies.selectable,
+        disclosable: dependencies.disclosable
       )
-      .asDriver(onErrorJustReturn: SettingsImagedDualLabelCellModel())
+    )
   }
 }

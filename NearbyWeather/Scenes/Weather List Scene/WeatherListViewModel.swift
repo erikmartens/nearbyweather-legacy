@@ -108,28 +108,30 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
 extension WeatherListViewModel {
 
   func observeDataSource() {
+    // TODO: use this for error cell
     let apiKeyValidObservable = dependencies
       .apiKeyService
       .createGetApiKeyObservable()
       .share(replay: 1)
     
-    // TODO: rebuild similar to observable below
-    let nearbyListItemsObservable = Observable
-      .combineLatest(
-        dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
-        preferredSortingOrientationObservable,
-        dependencies.userLocationService.createGetUserLocationObservable(),
-        apiKeyValidObservable,
-        resultSelector: { weatherInformationItems, sortingOrientation, currentLocation, _ in
-          Self.sortNearbyResults(weatherInformationItems, sortingOrientationValue: sortingOrientation, currentLocation: currentLocation)
-        }
-      )
+    let nearbyListItemsObservable = dependencies.weatherInformationService
+      .createGetNearbyWeatherInformationListObservable()
+      .flatMapLatest { [preferredSortingOrientationObservable, dependencies] weatherInformationItems in
+        Observable
+          .combineLatest(
+            preferredSortingOrientationObservable,
+            dependencies.userLocationService.createGetUserLocationObservable(),
+            resultSelector: { sortingOrientation, currentLocation in
+              Self.sortNearbyResults(weatherInformationItems, sortingOrientationValue: sortingOrientation, currentLocation: currentLocation)
+            }
+          )
+      }
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
       .map { [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionCellsIdentifiers: nil, sectionItems: $0)] }
       .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
-    let bookmarkedListItemsObservable = dependencies.weatherInformationService
+let bookmarkedListItemsObservable = dependencies.weatherInformationService
       .createGetBookmarkedWeatherInformationListObservable()
       .flatMapLatest { [dependencies] weatherInformationItems in
         dependencies.weatherStationService

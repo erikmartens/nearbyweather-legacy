@@ -130,13 +130,13 @@ private extension SettingsImagedDualLabelCell {
     
     contentView.addSubview(descriptionLabel, constraints: [
       descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
+      descriptionLabel.heightAnchor.constraint(equalTo: contentLabel.heightAnchor),
+      descriptionLabel.widthAnchor.constraint(equalTo: contentLabel.widthAnchor, multiplier: 2/3),
       descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       descriptionLabel.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .large)),
       descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
-      descriptionLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      descriptionLabel.heightAnchor.constraint(equalTo: contentLabel.heightAnchor, multiplier: 1),
-      descriptionLabel.widthAnchor.constraint(equalTo: contentLabel.widthAnchor, multiplier: 3/4)
+      descriptionLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
   }
   

@@ -109,7 +109,7 @@ final class AboutAppViewModel: NSObject, Stepper, BaseViewModel {
 extension AboutAppViewModel {
 
   func observeDataSource() {
-    // App Version Section
+    // 0: App Version Section
     let appVersionSectionItems: [BaseCellViewModelProtocol] = [
       SettingsAppVersionCellViewModel(dependencies: SettingsAppVersionCellViewModel.Dependencies(
         appIconImageObseravble: Observable.just(Bundle.main.appIcon),
@@ -120,12 +120,13 @@ extension AboutAppViewModel {
     
     let appVersionSectionObservable = Observable.just(AboutAppVersionItemsSection(sectionItems: appVersionSectionItems))
     
-    // Resources Items Section Main
+    // 1: Resources Items Section Main
     let resourcesMainSectionItems: [BaseCellViewModelProtocol] = [
       SettingsSingleLabelCellViewModel(dependencies: SettingsSingleLabelCellViewModel.Dependencies(
         labelText: R.string.localizable.rate_version(),
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: AboutAppStep.externalApp(url: Constants.Urls.kAppStoreRatingDeepLinkUrl)
       )),
       SettingsSingleLabelDualButtonCellViewModel(dependencies: SettingsSingleLabelDualButtonCellViewModel.Dependencies(
         contentLabelText: R.string.localizable.report_issue(),
@@ -138,68 +139,94 @@ extension AboutAppViewModel {
     
     let resourcesMainSectionObservable = Observable.just(AboutAppResourcesItemsMainSection(sectionItems: resourcesMainSectionItems))
     
-    // Resources Items Section Sub 1
+    // 2: Resources Items Section Sub 1
     let resourcesSubSection1Items: [BaseCellViewModelProtocol] = [
       SettingsSingleLabelCellViewModel(dependencies: SettingsSingleLabelCellViewModel.Dependencies(
         labelText: R.string.localizable.privacy_policy(),
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: AboutAppStep.safariViewController(url: Constants.Urls.kPrivacyPolicyUrl)
       )),
       SettingsSingleLabelCellViewModel(dependencies: SettingsSingleLabelCellViewModel.Dependencies(
         labelText: R.string.localizable.terms_of_use(),
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: AboutAppStep.safariViewController(url: Constants.Urls.kTermsOfUseUrl)
       ))
     ]
     
     let resourcesSubSection1Observable = Observable.just(AboutAppResourcesItemsSubSection1(sectionItems: resourcesSubSection1Items))
     
-    // Contributing Items Section
+    // 3: Contributing Items Section
     let contributingSectionItems: [BaseCellViewModelProtocol] = [
       SettingsSingleLabelCellViewModel(dependencies: SettingsSingleLabelCellViewModel.Dependencies(
         labelText: R.string.localizable.how_to_contribute(),
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: AboutAppStep.safariViewController(url: Constants.Urls.kGitHubProjectContributionGuidelinesUrl)
       )),
       SettingsSingleLabelCellViewModel(dependencies: SettingsSingleLabelCellViewModel.Dependencies(
         labelText: R.string.localizable.source_code_via_github(),
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: AboutAppStep.safariViewController(url: Constants.Urls.kGitHubProjectMainPageUrl)
       ))
     ]
     
     let contributingSectionObservable = Observable.just(AboutAppContributingItemsSection(sectionItems: contributingSectionItems))
     
-    // Contributors Items Section Main
+    // 4: Contributors Items Section Main
     let contributorsMainSectionItems: [BaseCellViewModelProtocol] = owner?.compactMap { contributor -> BaseCellViewModelProtocol in
       SettingsDualLabelSubtitleCellViewModel(dependencies: SettingsDualLabelSubtitleCellViewModel.Dependencies(
         contentLabelText: contributor.firstName.append(contentsOf: contributor.lastName, delimiter: .space),
         subtitleLabelText: contributor.localizedContributionDescription ?? "",
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: {
+          guard let urlString = owner?.first?.urlString, let url = URL(string: urlString) else {
+            return nil
+          }
+          return AboutAppStep.safariViewController(url: url)
+        }()
       ))
     } ?? []
     
     let contributorsMainSectionObservable = Observable.just(AboutAppContributorsItemsSubSection1(sectionItems: contributorsMainSectionItems))
     
-    // Contributors Items Section Sub 1
+    // 5: Contributors Items Section Sub 1
     let contributorsSubSection1Items: [BaseCellViewModelProtocol] = contributors?.compactMap { contributor -> BaseCellViewModelProtocol in
       SettingsDualLabelSubtitleCellViewModel(dependencies: SettingsDualLabelSubtitleCellViewModel.Dependencies(
         contentLabelText: contributor.firstName.append(contentsOf: contributor.lastName, delimiter: .space),
         subtitleLabelText: contributor.localizedContributionDescription ?? "",
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: {
+          guard let row = contributors?.firstIndex(of: contributor),
+                  let urlString = contributors?[safe: row]?.urlString,
+                  let url = URL(string: urlString) else {
+            return nil
+          }
+          return AboutAppStep.safariViewController(url: url)
+        }()
       ))
     } ?? []
     
     let contributorsSubSection1Observable = Observable.just(AboutAppContributorsItemsSubSection1(sectionItems: contributorsSubSection1Items))
     
-    // Libraries Items Section
+    // 6: Libraries Items Section
     let librariesSectionItems: [BaseCellViewModelProtocol] = thirdPartyLibraries?.compactMap { lib -> BaseCellViewModelProtocol in
       SettingsSingleLabelCellViewModel(dependencies: SettingsSingleLabelCellViewModel.Dependencies(
         labelText: lib.name,
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: {
+          guard let row = thirdPartyLibraries?.firstIndex(of: lib),
+                let urlString = thirdPartyLibraries?[safe: row]?.urlString,
+                let url = URL(string: urlString) else {
+            return nil
+          }
+          return AboutAppStep.safariViewController(url: url)
+        }()
       ))
     } ?? []
     
@@ -244,9 +271,13 @@ extension AboutAppViewModel {
 extension AboutAppViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
-    _ = Observable
-      .just(indexPath)
-      .map(mapIndexPathToRoutingIntent)
+    _ = Observable.just(indexPath)
+      .map { [unowned tableDataSource] indexPath in
+        tableDataSource.sectionDataSources
+          .value?[safe: indexPath.section]?
+          .sectionItems[safe: indexPath.row]?
+          .onSelectedRoutingIntent
+      }
       .filterNil()
       .take(1)
       .asSingle()
@@ -255,69 +286,5 @@ extension AboutAppViewModel: BaseTableViewSelectionDelegate {
 }
 
 // MARK: - Helpers
-
-private extension AboutAppViewModel {
-  
-  func mapIndexPathToRoutingIntent(_ indexPath: IndexPath) -> AboutAppStep? { // swiftlint:disable:this cyclomatic_complexity
-    switch indexPath.section {
-      // App Version Section
-    case 0:
-      return nil
-      // Resources Items Section Main
-    case 1:
-      switch indexPath.row {
-      case 0:
-        return AboutAppStep.externalApp(url: Constants.Urls.kAppStoreRatingDeepLinkUrl)
-      default:
-        return nil
-      }
-    // Resources Section Sub 1
-    case 2:
-      switch indexPath.row {
-      case 0:
-        return AboutAppStep.safariViewController(url: Constants.Urls.kPrivacyPolicyUrl)
-      case 1:
-        return AboutAppStep.safariViewController(url: Constants.Urls.kTermsOfUseUrl)
-      default:
-        return nil
-      }
-    // Contributing Section
-    case 3:
-      switch indexPath.row {
-      case 0:
-        return AboutAppStep.safariViewController(url: Constants.Urls.kGitHubProjectContributionGuidelinesUrl)
-      case 1:
-        return AboutAppStep.safariViewController(url: Constants.Urls.kGitHubProjectMainPageUrl)
-      default:
-        return nil
-      }
-    // Contributors Section Main
-    case 4:
-      switch indexPath.row {
-      case 0:
-        guard let urlString = owner?.first?.urlString, let url = URL(string: urlString) else {
-          return nil
-        }
-        return AboutAppStep.safariViewController(url: url)
-      default:
-        return nil
-      }
-    // Contributors Section Sub 1
-    case 5:
-      guard let urlString = contributors?[safe: indexPath.row]?.urlString, let url = URL(string: urlString) else {
-        return nil
-      }
-      return AboutAppStep.safariViewController(url: url)
-    //  Libraries Section
-    case 6:
-      guard let urlString = thirdPartyLibraries?[safe: indexPath.row]?.urlString, let url = URL(string: urlString) else {
-        return nil
-      }
-      return AboutAppStep.safariViewController(url: url)
-    default:
-      return nil
-    }
-  }
-}
 
 // MARK: - Helper Extensions

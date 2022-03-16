@@ -49,6 +49,7 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
   // MARK: - Observables
   
   private lazy var amountOfBookmarksObservable = dependencies.weatherStationService.createGetBookmarkedStationsObservable().map { $0.count }
+  private lazy var allowTempOnAppIconObservable = dependencies.preferencesService.createGetShowTemperatureOnAppIconOptionObservable().map { $0.rawRepresentableValue }
   
   // MARK: - Initialization
   
@@ -89,7 +90,8 @@ extension SettingsViewModel {
         symbolImage: R.image.info(),
         labelText: R.string.localizable.about(),
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: SettingsStep.about
       ))
     ]
     
@@ -102,14 +104,16 @@ extension SettingsViewModel {
         symbolImage: R.image.seal(),
         labelText: R.string.localizable.apiKey(),
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: SettingsStep.apiKeyEdit
       )),
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
         symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.green,
         symbolImage: R.image.start(),
         labelText: R.string.localizable.get_started_with_openweathermap(),
         selectable: true,
-        disclosable: true
+        disclosable: true,
+        routingIntent: SettingsStep.webBrowser(url: Constants.Urls.kOpenWeatherMapInstructionsUrl)
       ))
     ]
     
@@ -122,7 +126,8 @@ extension SettingsViewModel {
       contentLabelText: R.string.localizable.manage_locations(),
       descriptionLabelTextObservable: amountOfBookmarksObservable.map { "\($0)" },
       selectable: true,
-      disclosable: true
+      disclosable: true,
+      routingIntent: SettingsStep.manageBookmarks
     ))
     
     let addBookmarkCell = SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
@@ -130,7 +135,8 @@ extension SettingsViewModel {
       symbolImage: R.image.add_bookmark(),
       labelText: R.string.localizable.add_location(),
       selectable: true,
-      disclosable: true
+      disclosable: true,
+      routingIntent: SettingsStep.addLocation
     ))
     
     let bookmarksMainSectionObservable = amountOfBookmarksObservable
@@ -138,28 +144,40 @@ extension SettingsViewModel {
       .map(SettingsBookmarksItemsMainSection.init)
     
     // Bookmarks Section Sub 1
-    let allowTempOnAppIconObservable = dependencies.preferencesService.createGetShowTemperatureOnAppIconOptionObservable().map { $0.rawRepresentableValue }
     let preferredBookmarkNameObservable = dependencies.weatherStationService.createGetPreferredBookmarkObservable().map { $0?.stringValue ?? R.string.localizable.none() }
     
-    let bookmarksSubSection1Items: [BaseCellViewModelProtocol] = [
-      SettingsImagedSingleLabelToggleCellViewModel(dependencies: SettingsImagedSingleLabelToggleCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
-        symbolImage: R.image.badge(),
-        labelText: R.string.localizable.show_temp_on_icon(),
-        isToggleOnObservable: allowTempOnAppIconObservable,
-        didFlipToggleSwitchSubject: onDidChangeAllowTempOnAppIconOptionSubject
-      )),
-      SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
-        symbolImage: R.image.preferred_bookmark(),
-        contentLabelText: R.string.localizable.preferred_bookmark(),
-        descriptionLabelTextObservable: preferredBookmarkNameObservable,
-        selectable: true,
-        disclosable: false
-      ))
-    ]
+    let temperatureViaAppIconCell = SettingsImagedSingleLabelToggleCellViewModel(dependencies: SettingsImagedSingleLabelToggleCellViewModel.Dependencies(
+      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
+      symbolImage: R.image.badge(),
+      labelText: R.string.localizable.show_temp_on_icon(),
+      isToggleOnObservable: allowTempOnAppIconObservable,
+      didFlipToggleSwitchSubject: onDidChangeAllowTempOnAppIconOptionSubject
+    ))
+    let preferredBookmarkCell = SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
+      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
+      symbolImage: R.image.preferred_bookmark(),
+      contentLabelText: R.string.localizable.preferred_bookmark(),
+      descriptionLabelTextObservable: preferredBookmarkNameObservable,
+      selectable: true,
+      disclosable: false,
+      routingIntent: SettingsStep.changePreferredBookmarkAlert(selectionDelegate: self)
+    ))
     
-    let bookmarksSubSection1Observable = Observable.just(SettingsBookmarksItemsSubSection1(sectionItems: bookmarksSubSection1Items))
+    let bookmarksSubSection1Observable = Observable
+      .combineLatest(
+        amountOfBookmarksObservable,
+        allowTempOnAppIconObservable,
+        resultSelector: { amountOfBookmarks, allowTempOnAppIcon -> [BaseCellViewModelProtocol] in
+          guard amountOfBookmarks > 0 else {
+            return []
+          }
+          guard allowTempOnAppIcon else {
+            return [temperatureViaAppIconCell]
+          }
+          return [temperatureViaAppIconCell, preferredBookmarkCell]
+        }
+      )
+      .map(SettingsBookmarksItemsSubSection1.init)
     
     // Preferences Section Main
     let refreshOnAppStartObservable = dependencies.preferencesService.createGetRefreshOnAppStartOptionObservable().map { $0.rawRepresentableValue }
@@ -187,7 +205,8 @@ extension SettingsViewModel {
         contentLabelText: R.string.localizable.temperature_unit(),
         descriptionLabelTextObservable: temperatureUnitPreferenceObservable,
         selectable: true,
-        disclosable: false
+        disclosable: false,
+        routingIntent: SettingsStep.changeTemperatureUnitAlert(selectionDelegate: self)
       )),
       SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
         symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.gray,
@@ -195,7 +214,8 @@ extension SettingsViewModel {
         contentLabelText: R.string.localizable.distanceSpeed_unit(),
         descriptionLabelTextObservable: dimensionalUnitPreferenceObservable,
         selectable: true,
-        disclosable: false
+        disclosable: false,
+        routingIntent: SettingsStep.changeDimensionalUnitAlert(selectionDelegate: self)
       ))
     ]
     
@@ -211,6 +231,7 @@ extension SettingsViewModel {
         preferencesSubSection1Observable,
         resultSelector: { [$0, $1, $2, $3, $4, $5] }
       )
+      .map { $0.compactMap { $0.sectionItems.isEmpty ? nil : $0 } } // remove empty sections
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
   }
@@ -241,12 +262,13 @@ extension SettingsViewModel {
 extension SettingsViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
-    _ = Observable
-      .combineLatest(
-        Observable.just(indexPath),
-        amountOfBookmarksObservable.take(1),
-        resultSelector: mapIndexPathToRoutingIntent
-      )
+    _ = Observable.just(indexPath)
+      .map { [unowned tableDataSource] indexPath in
+        tableDataSource.sectionDataSources
+          .value?[safe: indexPath.section]?
+          .sectionItems[safe: indexPath.row]?
+          .onSelectedRoutingIntent
+      }
       .filterNil()
       .take(1)
       .asSingle()
@@ -282,71 +304,5 @@ extension SettingsViewModel: DimensionalUnitSelectionAlertDelegate {
 }
 
 // MARK: - Helpers
-
-private extension SettingsViewModel {
-  
-  func mapIndexPathToRoutingIntent(_ indexPath: IndexPath, amountOfBookmarks: Int) -> SettingsStep? { // swiftlint:disable:this cyclomatic_complexity
-    switch indexPath.section {
-    // General Section
-    case 0:
-      switch indexPath.row {
-      case 0:
-        return SettingsStep.about
-      default:
-        return nil
-      }
-    //  OpenWeatherMap Api Section
-    case 1:
-      switch indexPath.row {
-      case 0:
-        return SettingsStep.apiKeyEdit
-      case 1:
-        return SettingsStep.webBrowser(url: Constants.Urls.kOpenWeatherMapInstructionsUrl)
-      default:
-        return nil
-      }
-    //  Bookmarks Section Main
-    case 2:
-      switch indexPath.row {
-      case 0:
-        return amountOfBookmarks > 0 ? SettingsStep.manageBookmarks : SettingsStep.addLocation
-      case 1:
-        return amountOfBookmarks > 0 ? SettingsStep.addLocation : nil
-      default:
-        return nil
-      }
-    //  Bookmarks Section Sub 1
-    case 3:
-      switch indexPath.row {
-      case 0:
-        return nil
-      case 1:
-        return SettingsStep.changePreferredBookmarkAlert(selectionDelegate: self)
-      default:
-        return nil
-      }
-    //  Preferences Section Main
-    case 4:
-      switch indexPath.row {
-      case 0:
-        return nil
-      default:
-        return nil
-      }
-    //  Preferences Section Sub 1
-    case 5:
-      switch indexPath.row {
-      case 0:
-        return SettingsStep.changeTemperatureUnitAlert(selectionDelegate: self)
-      case 1:
-        return SettingsStep.changeDimensionalUnitAlert(selectionDelegate: self)
-      default:
-        return nil
-      }
-    default:
-      return nil
-    }
-  }
-}
 
 // MARK: - Helper Extensions

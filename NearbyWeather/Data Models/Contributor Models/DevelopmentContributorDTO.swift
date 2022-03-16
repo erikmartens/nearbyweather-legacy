@@ -12,7 +12,7 @@ struct DevelopmentContributorArrayWrapper: Codable {
   var elements: [DevelopmentContributorDTO]
 }
 
-struct DevelopmentContributorDTO: Codable {
+struct DevelopmentContributorDTO: Codable, Equatable {
   var firstName: String
   var lastName: String
   var contributionDescription: [String: String]

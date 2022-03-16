@@ -12,7 +12,7 @@ struct ThirdPartyLibrariesWrapperDTO: Codable {
   var elements: [ThirdPartyLibraryDTO]
 }
 
-struct ThirdPartyLibraryDTO: Codable {
+struct ThirdPartyLibraryDTO: Codable, Equatable {
   var name: String
   var urlString: String
 }

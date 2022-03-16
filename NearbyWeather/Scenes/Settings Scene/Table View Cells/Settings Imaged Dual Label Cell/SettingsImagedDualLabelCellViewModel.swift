@@ -8,6 +8,7 @@
 
 import RxSwift
 import RxCocoa
+import RxFlow
 
 // MARK: - Dependencies
 
@@ -19,6 +20,7 @@ extension SettingsImagedDualLabelCellViewModel {
     let descriptionLabelTextObservable: Observable<String>
     let selectable: Bool
     let disclosable: Bool
+    let routingIntent: Step?
   }
 }
 
@@ -27,6 +29,9 @@ extension SettingsImagedDualLabelCellViewModel {
 final class SettingsImagedDualLabelCellViewModel: NSObject, BaseCellViewModel {
   
   let associatedCellReuseIdentifier = SettingsImagedDualLabelCell.reuseIdentifier
+  lazy var onSelectedRoutingIntent: Step? = {
+    dependencies.routingIntent
+  }()
   
   // MARK: - Assets
   

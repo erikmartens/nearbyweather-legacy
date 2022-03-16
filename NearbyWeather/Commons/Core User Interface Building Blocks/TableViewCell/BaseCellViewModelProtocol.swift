@@ -6,10 +6,11 @@
 //  Copyright © 2021 Erik Maximilian Martens. All rights reserved.
 //
 
-import Foundation
+import RxFlow
 
 protocol BaseCellViewModelProtocol {
   var associatedCellReuseIdentifier: String { get }
+  var onSelectedRoutingIntent: Step? { get }
   var canEditRow: Bool { get }
   var canMoveRow: Bool { get }
 }
@@ -17,4 +18,5 @@ protocol BaseCellViewModelProtocol {
 extension BaseCellViewModelProtocol {
   var canEditRow: Bool { false }
   var canMoveRow: Bool { false }
+  var onSelectedRoutingIntent: Step? { nil }
 }

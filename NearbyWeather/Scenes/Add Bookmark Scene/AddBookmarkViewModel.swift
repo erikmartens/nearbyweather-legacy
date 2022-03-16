@@ -102,7 +102,8 @@ extension AddBookmarkViewModel {
             contentLabelText: $0.name,
             subtitleLabelText: subtitleText,
             selectable: true,
-            disclosable: false
+            disclosable: false,
+            routingIntent: nil
           ))
         }
       }

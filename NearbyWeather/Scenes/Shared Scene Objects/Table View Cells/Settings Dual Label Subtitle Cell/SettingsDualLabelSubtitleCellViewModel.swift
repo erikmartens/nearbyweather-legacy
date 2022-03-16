@@ -8,6 +8,7 @@
 
 import RxSwift
 import RxCocoa
+import RxFlow
 
 // MARK: - Dependencies
 
@@ -17,6 +18,7 @@ extension SettingsDualLabelSubtitleCellViewModel {
     let subtitleLabelText: String
     let selectable: Bool
     let disclosable: Bool
+    let routingIntent: Step?
   }
 }
 
@@ -25,6 +27,9 @@ extension SettingsDualLabelSubtitleCellViewModel {
 final class SettingsDualLabelSubtitleCellViewModel: NSObject, BaseCellViewModel {
   
   let associatedCellReuseIdentifier = SettingsDualLabelSubtitleCell.reuseIdentifier
+  lazy var onSelectedRoutingIntent: Step? = {
+    dependencies.routingIntent
+  }()
   
   // MARK: - Properties
   

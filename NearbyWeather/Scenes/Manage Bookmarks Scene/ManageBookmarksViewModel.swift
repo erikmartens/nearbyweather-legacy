@@ -99,6 +99,7 @@ extension ManageBookmarksViewModel {
       .map { $0.map {
         SettingsSingleLabelCellViewModel(dependencies: SettingsSingleLabelCellViewModel.Dependencies(
           labelText: $0.name,
+          routingIntent: nil,
           editable: true,
           movable: true
         ))

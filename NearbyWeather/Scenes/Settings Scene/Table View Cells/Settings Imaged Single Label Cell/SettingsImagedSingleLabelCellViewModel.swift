@@ -8,6 +8,7 @@
 
 import RxSwift
 import RxCocoa
+import RxFlow
 
 // MARK: - Dependencies
 
@@ -18,6 +19,7 @@ extension SettingsImagedSingleLabelCellViewModel {
     let labelText: String
     let selectable: Bool
     let disclosable: Bool
+    let routingIntent: Step?
   }
 }
 
@@ -26,6 +28,9 @@ extension SettingsImagedSingleLabelCellViewModel {
 final class SettingsImagedSingleLabelCellViewModel: NSObject, BaseCellViewModel {
   
   let associatedCellReuseIdentifier = SettingsImagedSingleLabelCell.reuseIdentifier
+  lazy var onSelectedRoutingIntent: Step? = {
+    dependencies.routingIntent
+  }()
   
   // MARK: - Properties
   

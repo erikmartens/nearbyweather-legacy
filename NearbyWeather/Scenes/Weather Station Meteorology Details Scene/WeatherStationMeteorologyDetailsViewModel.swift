@@ -120,11 +120,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
         }
       )
       .map { headerCell -> [TableViewSectionDataProtocol] in
-        [WeatherStationMeteorologyDetailsHeaderItemsSection(
-          sectionCellsIdentifier: WeatherStationMeteorologyDetailsHeaderCell.reuseIdentifier,
-          sectionCellsIdentifiers: nil,
-          sectionItems: [headerCell]
-        )]
+        [WeatherStationMeteorologyDetailsHeaderItemsSection(sectionItems: [headerCell])]
       }
     
     let weatherStationCurrentInformationSunCycleSectionItemsObservable = weatherInformationDtoObservable // swiftlint:disable:this identifier_name
@@ -139,11 +135,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
         ))]
       }
       .map { sunCycleCellItems -> [TableViewSectionDataProtocol] in
-        [WeatherStationMeteorologyDetailsHeaderItemsSection(
-          sectionCellsIdentifier: WeatherStationMeteorologyDetailsSunCycleCell.reuseIdentifier,
-          sectionCellsIdentifiers: nil,
-          sectionItems: sunCycleCellItems
-        )]
+        [WeatherStationMeteorologyDetailsHeaderItemsSection(sectionItems: sunCycleCellItems)]
       }
     
     let weatherStationCurrentInformationAtmosphericDetailsSectionItemsObservable = weatherInformationDtoObservable // swiftlint:disable:this identifier_name
@@ -155,18 +147,14 @@ extension WeatherStationMeteorologyDetailsViewModel {
           return []
         }
         
-        return [WeatherStationMeteorologyDetailsDetailsCellViewModel(dependencies: WeatherStationMeteorologyDetailsDetailsCellViewModel.Dependencies(
+        return [WeatherStationMeteorologyDetailsAtmosphericDetailsCellViewModel(dependencies: WeatherStationMeteorologyDetailsAtmosphericDetailsCellViewModel.Dependencies(
           cloudCoverage: cloudCoverage,
           humidity: humidity,
           pressurePsi: pressurePsi
         ))]
       }
       .map { atmosphericDetailsCellItems -> [TableViewSectionDataProtocol] in
-        [WeatherStationMeteorologyDetailsAtmosphericDetailsItemsSection(
-          sectionCellsIdentifier: WeatherStationMeteorologyDetailsAtmosphericDetailsCell.reuseIdentifier,
-          sectionCellsIdentifiers: nil,
-          sectionItems: atmosphericDetailsCellItems
-        )]
+        [WeatherStationMeteorologyDetailsAtmosphericDetailsItemsSection(sectionItems: atmosphericDetailsCellItems)]
       }
     
     let weatherStationCurrentInformationWindSectionItemsObservable = Observable
@@ -186,11 +174,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
         }
       )
       .map { windCellItems -> [TableViewSectionDataProtocol] in
-        [WeatherStationMeteorologyDetailsWindItemsSection(
-          sectionCellsIdentifier: WeatherStationMeteorologyDetailsWindCell.reuseIdentifier,
-          sectionCellsIdentifiers: nil,
-          sectionItems: windCellItems
-        )]
+        [WeatherStationMeteorologyDetailsWindItemsSection(sectionItems: windCellItems)]
       }
     
     let weatherStationCurrentInformationMapSectionItemsObservable = weatherInformationDtoObservable
@@ -208,11 +192,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
         ))]
       }
       .map { mapCellItems -> [TableViewSectionDataProtocol] in
-        [WeatherStationMeteorologyDetailsMapItemsSection(
-          sectionCellsIdentifier: WeatherStationMeteorologyDetailsMapCell.reuseIdentifier,
-          sectionCellsIdentifiers: nil,
-          sectionItems: mapCellItems
-        )]
+        [WeatherStationMeteorologyDetailsMapItemsSection(sectionItems: mapCellItems)]
       }
       
     Observable

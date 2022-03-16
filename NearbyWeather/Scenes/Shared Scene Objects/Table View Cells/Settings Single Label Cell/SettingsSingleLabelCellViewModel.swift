@@ -38,6 +38,8 @@ extension SettingsSingleLabelCellViewModel {
 // MARK: - Class Definition
 
 final class SettingsSingleLabelCellViewModel: NSObject, BaseCellViewModel {
+
+  let associatedCellReuseIdentifier = SettingsSingleLabelCell.reuseIdentifier
   
   // MARK: - Properties
   

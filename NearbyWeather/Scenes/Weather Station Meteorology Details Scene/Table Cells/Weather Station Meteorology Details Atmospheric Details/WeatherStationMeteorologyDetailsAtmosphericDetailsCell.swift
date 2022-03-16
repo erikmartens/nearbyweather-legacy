@@ -21,7 +21,7 @@ private extension WeatherStationMeteorologyDetailsAtmosphericDetailsCell {
 
 final class WeatherStationMeteorologyDetailsAtmosphericDetailsCell: UITableViewCell, BaseCell { // swiftlint:disable:this type_name
   
-  typealias CellViewModel = WeatherStationMeteorologyDetailsDetailsCellViewModel
+  typealias CellViewModel = WeatherStationMeteorologyDetailsAtmosphericDetailsCellViewModel
   private typealias CellContentInsets = Constants.Dimensions.Spacing.ContentInsets
   private typealias CellInterelementSpacing = Constants.Dimensions.Spacing.InterElementSpacing
   
@@ -62,7 +62,7 @@ final class WeatherStationMeteorologyDetailsAtmosphericDetailsCell: UITableViewC
   // MARK: - Cell Life Cycle
   
   func configure(with cellViewModel: BaseCellViewModelProtocol?) {
-    guard let cellViewModel = cellViewModel as? WeatherStationMeteorologyDetailsDetailsCellViewModel else {
+    guard let cellViewModel = cellViewModel as? WeatherStationMeteorologyDetailsAtmosphericDetailsCellViewModel else {
       return
     }
     self.cellViewModel = cellViewModel

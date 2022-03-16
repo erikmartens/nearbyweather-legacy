@@ -11,7 +11,7 @@ import RxCocoa
 
 // MARK: - Dependencies
 
-extension WeatherStationMeteorologyDetailsDetailsCellViewModel {
+extension WeatherStationMeteorologyDetailsAtmosphericDetailsCellViewModel {
   struct Dependencies {
     let cloudCoverage: Double
     let humidity: Double
@@ -21,7 +21,9 @@ extension WeatherStationMeteorologyDetailsDetailsCellViewModel {
 
 // MARK: - Class Definition
 
-final class WeatherStationMeteorologyDetailsDetailsCellViewModel: NSObject, BaseCellViewModel { // swiftlint:disable:this type_name
+final class WeatherStationMeteorologyDetailsAtmosphericDetailsCellViewModel: NSObject, BaseCellViewModel { // swiftlint:disable:this type_name
+  
+  let associatedCellReuseIdentifier = WeatherStationMeteorologyDetailsAtmosphericDetailsCell.reuseIdentifier
   
   // MARK: - Properties
   
@@ -49,7 +51,7 @@ final class WeatherStationMeteorologyDetailsDetailsCellViewModel: NSObject, Base
 
 // MARK: - Observation Helpers
 
-private extension WeatherStationMeteorologyDetailsDetailsCellViewModel {
+private extension WeatherStationMeteorologyDetailsAtmosphericDetailsCellViewModel {
   
   static func createCellModelDriver(with dependencies: Dependencies) -> Driver<WeatherStationMeteorologyDetailsAtmosphericDetailsCellModel> {
     Observable

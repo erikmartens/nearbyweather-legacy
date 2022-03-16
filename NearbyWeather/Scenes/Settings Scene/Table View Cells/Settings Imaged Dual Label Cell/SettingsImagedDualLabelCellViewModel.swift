@@ -26,6 +26,8 @@ extension SettingsImagedDualLabelCellViewModel {
 
 final class SettingsImagedDualLabelCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = SettingsImagedDualLabelCell.reuseIdentifier
+  
   // MARK: - Assets
   
   private let disposeBag = DisposeBag()

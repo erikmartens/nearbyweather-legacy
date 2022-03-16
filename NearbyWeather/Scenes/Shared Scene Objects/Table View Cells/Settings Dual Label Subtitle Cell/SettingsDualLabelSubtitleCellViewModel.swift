@@ -24,6 +24,8 @@ extension SettingsDualLabelSubtitleCellViewModel {
 
 final class SettingsDualLabelSubtitleCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = SettingsDualLabelSubtitleCell.reuseIdentifier
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies

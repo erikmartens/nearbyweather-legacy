@@ -25,6 +25,8 @@ extension SettingsImagedSingleLabelToggleCellViewModel {
 
 final class SettingsImagedSingleLabelToggleCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = SettingsImagedSingleLabelToggleCell.reuseIdentifier
+  
   // MARK: - Assets
   
   private let disposeBag = DisposeBag()

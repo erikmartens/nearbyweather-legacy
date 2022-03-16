@@ -14,11 +14,6 @@ final class SettingsOpenWeatherMapApiItemsSection: BaseTableViewSectionData {
     super.init(
       sectionHeaderTitle: R.string.localizable.openWeatherMap_api(),
       sectionFooterTitle: nil,
-      sectionCellsIdentifier: nil,
-      sectionCellsIdentifiers: [
-        SettingsImagedSingleLabelCell.reuseIdentifier,
-        SettingsImagedSingleLabelCell.reuseIdentifier
-      ],
       sectionItems: sectionItems
     )
   }
@@ -26,15 +21,11 @@ final class SettingsOpenWeatherMapApiItemsSection: BaseTableViewSectionData {
   required init(
     sectionHeaderTitle: String? = nil,
     sectionFooterTitle: String? = nil,
-    sectionCellsIdentifier: String?,
-    sectionCellsIdentifiers: [String]?,
     sectionItems: [BaseCellViewModelProtocol]
   ) {
     super.init(
       sectionHeaderTitle: sectionHeaderTitle,
       sectionFooterTitle: sectionFooterTitle,
-      sectionCellsIdentifier: sectionCellsIdentifier,
-      sectionCellsIdentifiers: sectionCellsIdentifiers,
       sectionItems: sectionItems
     )
   }

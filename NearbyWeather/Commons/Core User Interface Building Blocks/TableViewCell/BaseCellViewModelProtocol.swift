@@ -9,6 +9,7 @@
 import Foundation
 
 protocol BaseCellViewModelProtocol {
+  var associatedCellReuseIdentifier: String { get }
   var canEditRow: Bool { get }
   var canMoveRow: Bool { get }
 }

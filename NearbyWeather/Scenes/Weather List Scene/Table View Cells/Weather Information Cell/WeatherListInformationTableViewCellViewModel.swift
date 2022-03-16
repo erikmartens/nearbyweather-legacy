@@ -24,6 +24,8 @@ extension WeatherListInformationTableViewCellViewModel {
 
 final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = WeatherListInformationTableViewCell.reuseIdentifier
+  
   // MARK: - Public Access
   
   var weatherInformationIdentity: PersistencyModelIdentity {

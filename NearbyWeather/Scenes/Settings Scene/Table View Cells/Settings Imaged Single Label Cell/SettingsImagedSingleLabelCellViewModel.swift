@@ -25,6 +25,8 @@ extension SettingsImagedSingleLabelCellViewModel {
 
 final class SettingsImagedSingleLabelCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = SettingsImagedSingleLabelCell.reuseIdentifier
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies

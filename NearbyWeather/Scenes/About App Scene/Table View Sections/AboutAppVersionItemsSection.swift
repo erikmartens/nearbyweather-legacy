@@ -14,8 +14,6 @@ final class AboutAppVersionItemsSection: BaseTableViewSectionData {
     super.init(
       sectionHeaderTitle: nil,
       sectionFooterTitle: nil,
-      sectionCellsIdentifier: SettingsAppVersionCell.reuseIdentifier, // section only uses one type of cell
-      sectionCellsIdentifiers: nil,
       sectionItems: sectionItems
     )
   }
@@ -23,15 +21,11 @@ final class AboutAppVersionItemsSection: BaseTableViewSectionData {
   required init(
     sectionHeaderTitle: String? = nil,
     sectionFooterTitle: String? = nil,
-    sectionCellsIdentifier: String?,
-    sectionCellsIdentifiers: [String]?,
     sectionItems: [BaseCellViewModelProtocol]
   ) {
     super.init(
       sectionHeaderTitle: sectionHeaderTitle,
       sectionFooterTitle: sectionFooterTitle,
-      sectionCellsIdentifier: sectionCellsIdentifier,
-      sectionCellsIdentifiers: sectionCellsIdentifiers,
       sectionItems: sectionItems
     )
   }

@@ -26,6 +26,8 @@ extension WeatherStationMeteorologyDetailsMapCellViewModel {
 
 final class WeatherStationMeteorologyDetailsMapCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = WeatherStationMeteorologyDetailsMapCell.reuseIdentifier
+  
   // MARK: - Assets
   
   private let disposeBag = DisposeBag()

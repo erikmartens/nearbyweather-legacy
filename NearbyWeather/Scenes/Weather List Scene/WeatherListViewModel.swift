@@ -127,7 +127,7 @@ extension WeatherListViewModel {
           )
       }
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
-      .map { [WeatherListNearbyItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionCellsIdentifiers: nil, sectionItems: $0)] }
+      .map { [WeatherListNearbyItemsSection(sectionItems: $0)] }
       .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
@@ -139,7 +139,7 @@ let bookmarkedListItemsObservable = dependencies.weatherInformationService
           .map { Self.sortBookmarkedResults(weatherInformationItems, sortingWeights: $0) }
       }
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
-      .map { [WeatherListBookmarkedItemsSection(sectionCellsIdentifier: WeatherListInformationTableViewCell.reuseIdentifier, sectionCellsIdentifiers: nil, sectionItems: $0)] }
+      .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }
       .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
       .share(replay: 1)
     
@@ -297,7 +297,7 @@ private extension Error {
   func mapToObservableTableSectionData() -> Observable<[TableViewSectionDataProtocol]> {
     Observable
       .just([WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(error: self))])
-      .map { [WeatherListAlertItemsSection(sectionCellsIdentifier: WeatherListAlertTableViewCell.reuseIdentifier, sectionCellsIdentifiers: nil, sectionItems: $0)] }
+      .map { [WeatherListAlertItemsSection(sectionItems: $0)] }
   }
 }
 

@@ -20,6 +20,8 @@ extension WeatherListAlertTableViewCellViewModel {
 // MARK: - Class Definition
 
 final class WeatherListAlertTableViewCellViewModel: NSObject, BaseCellViewModel {
+  
+  let associatedCellReuseIdentifier = WeatherListAlertTableViewCell.reuseIdentifier
 
   // MARK: - Events
   

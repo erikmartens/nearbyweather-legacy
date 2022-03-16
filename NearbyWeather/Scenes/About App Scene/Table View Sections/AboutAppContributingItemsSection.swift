@@ -14,8 +14,6 @@ final class AboutAppContributingItemsSection: BaseTableViewSectionData {
     super.init(
       sectionHeaderTitle: R.string.localizable.contributing(),
       sectionFooterTitle: nil,
-      sectionCellsIdentifier: SettingsSingleLabelCell.reuseIdentifier,  // section only uses one type of cell
-      sectionCellsIdentifiers: nil,
       sectionItems: sectionItems
     )
   }
@@ -23,17 +21,12 @@ final class AboutAppContributingItemsSection: BaseTableViewSectionData {
   required init(
     sectionHeaderTitle: String? = nil,
     sectionFooterTitle: String? = nil,
-    sectionCellsIdentifier: String?,
-    sectionCellsIdentifiers: [String]?,
     sectionItems: [BaseCellViewModelProtocol]
   ) {
     super.init(
       sectionHeaderTitle: sectionHeaderTitle,
       sectionFooterTitle: sectionFooterTitle,
-      sectionCellsIdentifier: sectionCellsIdentifier,
-      sectionCellsIdentifiers: sectionCellsIdentifiers,
       sectionItems: sectionItems
     )
   }
 }
-

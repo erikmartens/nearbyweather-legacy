@@ -22,6 +22,8 @@ extension WeatherStationMeteorologyDetailsSunCycleCellViewModel {
 
 final class WeatherStationMeteorologyDetailsSunCycleCellViewModel: NSObject, BaseCellViewModel { // swiftlint:disable:this type_name
   
+  let associatedCellReuseIdentifier = WeatherStationMeteorologyDetailsSunCycleCell.reuseIdentifier
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies

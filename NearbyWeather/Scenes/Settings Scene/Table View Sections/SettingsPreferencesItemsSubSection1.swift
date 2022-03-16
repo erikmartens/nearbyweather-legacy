@@ -14,11 +14,6 @@ final class SettingsPreferencesItemsSubSection1: BaseTableViewSectionData {
     super.init(
       sectionHeaderTitle: nil,
       sectionFooterTitle: nil,
-      sectionCellsIdentifier: nil,
-      sectionCellsIdentifiers: [
-        SettingsImagedDualLabelCell.reuseIdentifier,
-        SettingsImagedDualLabelCell.reuseIdentifier
-      ],
       sectionItems: sectionItems
     )
   }
@@ -26,15 +21,11 @@ final class SettingsPreferencesItemsSubSection1: BaseTableViewSectionData {
   required init(
     sectionHeaderTitle: String? = nil,
     sectionFooterTitle: String? = nil,
-    sectionCellsIdentifier: String?,
-    sectionCellsIdentifiers: [String]?,
     sectionItems: [BaseCellViewModelProtocol]
   ) {
     super.init(
       sectionHeaderTitle: sectionHeaderTitle,
       sectionFooterTitle: sectionFooterTitle,
-      sectionCellsIdentifier: sectionCellsIdentifier,
-      sectionCellsIdentifiers: sectionCellsIdentifiers,
       sectionItems: sectionItems
     )
   }

@@ -22,6 +22,8 @@ extension SettingsTextEntryCellViewModel {
 
 final class SettingsTextEntryCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = SettingsTextEntryCell.reuseIdentifier
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies

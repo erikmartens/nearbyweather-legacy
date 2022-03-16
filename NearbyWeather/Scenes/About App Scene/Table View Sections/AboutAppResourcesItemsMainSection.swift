@@ -14,11 +14,6 @@ final class AboutAppResourcesItemsMainSection: BaseTableViewSectionData {
     super.init(
       sectionHeaderTitle: R.string.localizable.resources(),
       sectionFooterTitle: nil,
-      sectionCellsIdentifier: nil,
-      sectionCellsIdentifiers: [
-        SettingsSingleLabelCell.reuseIdentifier,
-        SettingsSingleLabelDualButtonCell.reuseIdentifier
-      ],
       sectionItems: sectionItems
     )
   }
@@ -26,15 +21,11 @@ final class AboutAppResourcesItemsMainSection: BaseTableViewSectionData {
   required init(
     sectionHeaderTitle: String? = nil,
     sectionFooterTitle: String? = nil,
-    sectionCellsIdentifier: String?,
-    sectionCellsIdentifiers: [String]?,
     sectionItems: [BaseCellViewModelProtocol]
   ) {
     super.init(
       sectionHeaderTitle: sectionHeaderTitle,
       sectionFooterTitle: sectionFooterTitle,
-      sectionCellsIdentifier: sectionCellsIdentifier,
-      sectionCellsIdentifiers: sectionCellsIdentifiers,
       sectionItems: sectionItems
     )
   }

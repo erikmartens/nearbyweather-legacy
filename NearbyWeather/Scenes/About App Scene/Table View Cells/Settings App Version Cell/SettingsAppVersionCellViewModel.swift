@@ -23,6 +23,8 @@ extension SettingsAppVersionCellViewModel {
 
 final class SettingsAppVersionCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = SettingsAppVersionCell.reuseIdentifier
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies

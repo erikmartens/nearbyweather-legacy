@@ -25,6 +25,8 @@ extension SettingsSingleLabelDualButtonCellViewModel {
 
 final class SettingsSingleLabelDualButtonCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = SettingsSingleLabelDualButtonCell.reuseIdentifier
+  
   // MARK: - Assets
   
   private let disposeBag = DisposeBag()

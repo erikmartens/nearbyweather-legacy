@@ -14,8 +14,6 @@ final class ApiKeyInputTextEntrySection: BaseTableViewSectionData {
     super.init(
       sectionHeaderTitle: R.string.localizable.enter_api_key(),
       sectionFooterTitle: R.string.localizable.api_key_length_description(),
-      sectionCellsIdentifier: SettingsTextEntryCell.reuseIdentifier, // section only uses one type of cell
-      sectionCellsIdentifiers: nil,
       sectionItems: sectionItems
     )
   }
@@ -23,15 +21,11 @@ final class ApiKeyInputTextEntrySection: BaseTableViewSectionData {
   required init(
     sectionHeaderTitle: String? = nil,
     sectionFooterTitle: String? = nil,
-    sectionCellsIdentifier: String?,
-    sectionCellsIdentifiers: [String]?,
     sectionItems: [BaseCellViewModelProtocol]
   ) {
     super.init(
       sectionHeaderTitle: sectionHeaderTitle,
       sectionFooterTitle: sectionFooterTitle,
-      sectionCellsIdentifier: sectionCellsIdentifier,
-      sectionCellsIdentifiers: sectionCellsIdentifiers,
       sectionItems: sectionItems
     )
   }

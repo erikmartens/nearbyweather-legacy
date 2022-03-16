@@ -12,21 +12,15 @@ class BaseTableViewSectionData: TableViewSectionDataProtocol {
   
   var sectionHeaderTitle: String?
   var sectionFooterTitle: String?
-  let sectionCellsIdentifier: String?
-  let sectionCellsIdentifiers: [String]?
   let sectionItems: [BaseCellViewModelProtocol]
   
   required init(
     sectionHeaderTitle: String? = nil,
     sectionFooterTitle: String? = nil,
-    sectionCellsIdentifier: String?,
-    sectionCellsIdentifiers: [String]?,
     sectionItems: [BaseCellViewModelProtocol]
   ) {
     self.sectionHeaderTitle = sectionHeaderTitle
     self.sectionFooterTitle = sectionFooterTitle
-    self.sectionCellsIdentifier = sectionCellsIdentifier
-    self.sectionCellsIdentifiers = sectionCellsIdentifiers
     self.sectionItems = sectionItems
   }
 }

@@ -23,6 +23,8 @@ extension WeatherStationMeteorologyDetailsWindCellViewModel {
 
 final class WeatherStationMeteorologyDetailsWindCellViewModel: NSObject, BaseCellViewModel {
   
+  let associatedCellReuseIdentifier = WeatherStationMeteorologyDetailsWindCell.reuseIdentifier
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies

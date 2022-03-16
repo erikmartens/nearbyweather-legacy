@@ -25,7 +25,7 @@ final class SettingsTextEntryCell: UITableViewCell, BaseCell {
   
   // MARK: - UIComponents
   
-  private(set) lazy var textEntryTextField = Factory.TextField.make(fromType: .counter(count: Constants.Values.ApiKey.kOpenWeatherMapApiKeyLength, cornerRadiusWeight: .medium))
+  private(set) lazy var textEntryTextField = Factory.TextField.make(fromType: .standard(cornerRadiusWeight: .medium))
   
   // MARK: - Assets
   

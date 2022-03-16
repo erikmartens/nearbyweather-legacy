@@ -7,7 +7,6 @@
 //
 
 import UIKit.UITextField
-import TextFieldCounter
 
 extension Factory {
 
@@ -15,7 +14,6 @@ extension Factory {
 
     enum ViewType {
       case standard(cornerRadiusWeight: Weight? = nil)
-      case counter(count: Int, cornerRadiusWeight: Weight? = nil)
     }
 
     typealias InputType = ViewType
@@ -29,13 +27,6 @@ extension Factory {
         if let cornerRadiusWeight = cornerRadiusWeight {
           textField.layer.cornerRadius = Constants.Dimensions.CornerRadius.from(weight: cornerRadiusWeight)
         }
-        return textField
-      case let .counter(count, cornerRadiusWeight):
-        let textField = TextFieldCounter(frame: .zero, limit: count) // TODO: .zero probably won't work
-        if let cornerRadiusWeight = cornerRadiusWeight {
-          textField.layer.cornerRadius = Constants.Dimensions.CornerRadius.from(weight: cornerRadiusWeight)
-        }
-        textField.counterColor = Constants.Theme.Color.InteractableElement.standardButtonTint
         return textField
       }
     }

@@ -140,7 +140,6 @@ PODS:
   - RxSwift (6.5.0)
   - SwiftLint (0.46.2)
   - Swinject (2.8.1)
-  - TextFieldCounter (1.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.5.0)
@@ -160,7 +159,6 @@ DEPENDENCIES:
   - RxSwift (~> 6.5.0)
   - SwiftLint (~> 0.46.2)
   - Swinject (~> 2.8.1)
-  - TextFieldCounter (~> 1.1.0)
 
 SPEC REPOS:
   trunk:
@@ -192,7 +190,6 @@ SPEC REPOS:
     - RxSwift
     - SwiftLint
     - Swinject
-    - TextFieldCounter
 
 EXTERNAL SOURCES:
   APTimeZones:
@@ -235,8 +232,7 @@ SPEC CHECKSUMS:
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SwiftLint: 6bc52a21f0fd44cab9aa2dc8e534fb9f5e3ec507
   Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
-  TextFieldCounter: 0f20630c8fe6f02b657bd883674829edfc40d845
 
-PODFILE CHECKSUM: ef54385bed9226bc5a94703f207c2863a48c86d2
+PODFILE CHECKSUM: 785f0896087155b510e00d0137eb7b3b2b259c04
 
 COCOAPODS: 1.11.2

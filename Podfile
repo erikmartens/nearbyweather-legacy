@@ -7,7 +7,6 @@ use_frameworks!
 
 def nearbyweather_pods
     pod 'PKHUD', '~> 5.3.0'
-    pod 'TextFieldCounter', '~> 1.1.0'
     pod 'Alamofire', '~> 5.5.0'
     pod 'APTimeZones', :git => 'https://github.com/Alterplay/APTimeZones.git', :branch => 'master', :commit => '9ffd147'
     pod 'FMDB', '~> 2.7.5'

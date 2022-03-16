@@ -40,9 +40,16 @@ final class ManageBookmarksViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Events
   
+  // MARK: - Drivers
+  
+  // MARK: - Observables
+  
+  private lazy var bookmarkedStationsObservable =  dependencies.weatherStationService.createGetBookmarkedStationsObservable()
+  private lazy var bookmarkedStationsCountObservable = bookmarkedStationsObservable.map { $0.count }
+  
   private lazy var bookmarksInOrderObservable: Observable<[WeatherStationDTO]> = Observable
     .combineLatest(
-      dependencies.weatherStationService.createGetBookmarkedStationsObservable(),
+      bookmarkedStationsObservable,
       dependencies.weatherStationService.createGetBookmarksSortingObservable()
     )
     .map { bookmarks, sorting -> [WeatherStationDTO] in
@@ -56,10 +63,6 @@ final class ManageBookmarksViewModel: NSObject, Stepper, BaseViewModel {
           return lhsSortingWeight < rhsSortingWeight
         }
     }
-  
-  // MARK: - Drivers
-  
-  // MARK: - Observables
   
   // MARK: - Initialization
   
@@ -93,7 +96,6 @@ extension ManageBookmarksViewModel {
 
   func observeDataSource() {
     bookmarksInOrderObservable
-      .asObservable()
       .map { $0.map {
         SettingsSingleLabelCellViewModel(dependencies: SettingsSingleLabelCellViewModel.Dependencies(
           labelText: $0.name,
@@ -103,6 +105,13 @@ extension ManageBookmarksViewModel {
       }}
       .map { [ManageBookmarksSection(sectionItems: $0)] }
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
+      .disposed(by: disposeBag)
+    
+    bookmarkedStationsCountObservable
+      .filter { $0 == 0 }
+      .take(1)
+      .map { _ in ManageBookmarksStep.end }
+      .bind(to: steps)
       .disposed(by: disposeBag)
   }
 }

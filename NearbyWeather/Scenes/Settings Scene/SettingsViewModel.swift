@@ -48,6 +48,8 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Observables
   
+  private lazy var amountOfBookmarksObservable = dependencies.weatherStationService.createGetBookmarkedStationsObservable().map { $0.count }
+  
   // MARK: - Initialization
   
   required init(dependencies: Dependencies) {
@@ -114,27 +116,26 @@ extension SettingsViewModel {
     let openWeatherMapApiSectionObservable = Observable.just(SettingsOpenWeatherMapApiItemsSection(sectionItems: openWeatherMapApiSectionItems))
     
     // Bookmarks Section Main
-    let amountOfBookmarksObservable = dependencies.weatherStationService.createGetBookmarkedStationsObservable().map { "\($0.count)" }
+    let manageBoomarksCell = SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
+      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
+      symbolImage: R.image.wrench(),
+      contentLabelText: R.string.localizable.manage_locations(),
+      descriptionLabelTextObservable: amountOfBookmarksObservable.map { "\($0)" },
+      selectable: true,
+      disclosable: true
+    ))
     
-    let bookmarksMainSectionItems: [BaseCellViewModelProtocol] = [
-      SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
-        symbolImage: R.image.wrench(),
-        contentLabelText: R.string.localizable.manage_locations(),
-        descriptionLabelTextObservable: amountOfBookmarksObservable,
-        selectable: true,
-        disclosable: true
-      )),
-      SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
-        symbolImage: R.image.add_bookmark(),
-        labelText: R.string.localizable.add_location(),
-        selectable: true,
-        disclosable: true
-      ))
-    ]
+    let addBookmarkCell = SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
+      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
+      symbolImage: R.image.add_bookmark(),
+      labelText: R.string.localizable.add_location(),
+      selectable: true,
+      disclosable: true
+    ))
     
-    let bookmarksMainSectionObservable = Observable.just(SettingsBookmarksItemsMainSection(sectionItems: bookmarksMainSectionItems))
+    let bookmarksMainSectionObservable = amountOfBookmarksObservable
+      .map { $0 > 0 ? [manageBoomarksCell, addBookmarkCell] : [addBookmarkCell] }
+      .map(SettingsBookmarksItemsMainSection.init)
     
     // Bookmarks Section Sub 1
     let allowTempOnAppIconObservable = dependencies.preferencesService.createGetShowTemperatureOnAppIconOptionObservable().map { $0.rawRepresentableValue }
@@ -241,8 +242,11 @@ extension SettingsViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
     _ = Observable
-      .just(indexPath)
-      .map(mapIndexPathToRoutingIntent)
+      .combineLatest(
+        Observable.just(indexPath),
+        amountOfBookmarksObservable.take(1),
+        resultSelector: mapIndexPathToRoutingIntent
+      )
       .filterNil()
       .take(1)
       .asSingle()
@@ -281,7 +285,7 @@ extension SettingsViewModel: DimensionalUnitSelectionAlertDelegate {
 
 private extension SettingsViewModel {
   
-  func mapIndexPathToRoutingIntent(_ indexPath: IndexPath) -> SettingsStep? { // swiftlint:disable:this cyclomatic_complexity
+  func mapIndexPathToRoutingIntent(_ indexPath: IndexPath, amountOfBookmarks: Int) -> SettingsStep? { // swiftlint:disable:this cyclomatic_complexity
     switch indexPath.section {
     // General Section
     case 0:
@@ -305,9 +309,9 @@ private extension SettingsViewModel {
     case 2:
       switch indexPath.row {
       case 0:
-        return SettingsStep.manageBookmarks
+        return amountOfBookmarks > 0 ? SettingsStep.manageBookmarks : SettingsStep.addLocation
       case 1:
-        return SettingsStep.addLocation
+        return amountOfBookmarks > 0 ? SettingsStep.addLocation : nil
       default:
         return nil
       }

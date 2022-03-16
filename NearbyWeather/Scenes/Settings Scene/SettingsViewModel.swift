@@ -175,7 +175,7 @@ extension SettingsViewModel {
     
     let preferencesMainSectionObservable = Observable.just(SettingsPreferencesItemsMainSection(sectionItems: preferencesMainSectionItems))
     
-    // Preferences Setion Sub 1
+    // Preferences Section Sub 1
     let temperatureUnitPreferenceObservable = dependencies.preferencesService.createGetTemperatureUnitOptionObservable().map { $0.stringValue }
     let dimensionalUnitPreferenceObservable = dependencies.preferencesService.createGetDimensionalUnitsOptionObservable().map { $0.stringValue }
     

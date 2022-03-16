@@ -73,6 +73,24 @@ final class AddBookmarkViewController: UIViewController, BaseViewController {
     viewModel.viewWillAppear()
     setupUiAppearance()
   }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    viewModel.viewDidAppear()
+    
+    searchController.isActive = true
+    DispatchQueue.main.async {
+      self.searchController.searchBar.becomeFirstResponder()
+    }
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    viewModel.viewWillDisappear()
+    
+    searchController.isActive = false
+    searchController.resignFirstResponder()
+  }
 }
 
 // MARK: - ViewModel Bindings

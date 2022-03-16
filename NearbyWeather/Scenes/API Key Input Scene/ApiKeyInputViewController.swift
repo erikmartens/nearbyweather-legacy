@@ -33,6 +33,7 @@ final class ApiKeyInputViewController: UIViewController, BaseViewController {
   // MARK: - Properties
   
   let viewModel: ViewModel
+  private lazy var textEntryCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? SettingsTextEntryCell
   
   // MARK: - Initialization
   
@@ -66,6 +67,24 @@ final class ApiKeyInputViewController: UIViewController, BaseViewController {
     super.viewWillAppear(animated)
     viewModel.viewWillAppear()
     setupUiAppearance()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    viewModel.viewDidAppear()
+    
+    DispatchQueue.main.async {
+      self.textEntryCell?.textEntryTextField.becomeFirstResponder()
+    }
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    viewModel.viewWillDisappear()
+    
+    DispatchQueue.main.async {
+      self.textEntryCell?.textEntryTextField.resignFirstResponder()
+    }
   }
 }
 

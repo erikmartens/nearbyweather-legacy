@@ -12,9 +12,9 @@ enum PreferredBookmarkOptionValue: Codable, Equatable {
   case notSet
   case set(weatherStationDto: WeatherStationDTO)
   
-  var stationName: String {
+  var stationName: String? {
     switch self {
-    case .notSet: return R.string.localizable.none()
+    case .notSet: return nil
     case let .set(weatherStationDto): return weatherStationDto.name
     }
   }
@@ -41,7 +41,7 @@ struct PreferredBookmarkOption: Codable, Equatable, PreferencesOption {
     return nil
   }
   
-  var stringValue: String {
+  var stringValue: String? {
     value.stationName
   }
   

@@ -77,14 +77,14 @@ final class UserLocationService {
 // MARK: - User Location Permissions Requesting
 
 protocol UserLocationPermissionRequesting {
-  func requestWhenImUseLocationAccess() -> Completable
+  func requestWhenInUseLocationAccess() -> Completable
   func createSaveLocationAuthorizationStatusCompletable(_ authorizationStatus: UserLocationAuthorizationStatus) -> Completable
   func createGetLocationAuthorizationStatusObservable() -> Observable<UserLocationAuthorizationStatus?>
 }
 
 extension UserLocationService: UserLocationPermissionRequesting {
  
-  func requestWhenImUseLocationAccess() -> Completable {
+  func requestWhenInUseLocationAccess() -> Completable {
     Completable
       .create { handler in
         let locationManager = CLLocationManager()

@@ -168,7 +168,7 @@ extension SettingsViewModel {
       symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
       symbolImage: R.image.preferred_bookmark(),
       contentLabelText: R.string.localizable.preferred_bookmark(),
-      descriptionLabelTextObservable: preferredBookmarkNameObservable.debug("🤢🤢🤢"),
+      descriptionLabelTextObservable: preferredBookmarkNameObservable,
       selectable: true,
       disclosable: false,
       routingIntent: SettingsStep.changePreferredBookmarkAlert(selectionDelegate: self)

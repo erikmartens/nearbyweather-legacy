@@ -184,7 +184,7 @@ private extension WeatherListViewController {
     ])
     
     tableView.contentInset = UIEdgeInsets(
-      top: Constants.Dimensions.TableCellContentInsets.top,
+      top: .zero,
       left: .zero,
       bottom: Constants.Dimensions.TableCellContentInsets.bottom,
       right: .zero

@@ -6,7 +6,6 @@
 //  Copyright © 2022 Erik Maximilian Martens. All rights reserved.
 //
 
-import Foundation
 import CoreLocation
 
 enum UserLocationAuthorizationStatusOption: Int, Codable {

@@ -74,7 +74,7 @@ extension SetPermissionsViewModel {
       .take(1)
       .asSingle()
       .flatMapCompletable { [dependencies] () in
-        dependencies.userLocationService.requestWhenImUseLocationAccess()
+        dependencies.userLocationService.requestWhenInUseLocationAccess()
       }
       .subscribe(onCompleted: { [unowned steps] in
         steps.accept(WelcomeStep.dismiss)

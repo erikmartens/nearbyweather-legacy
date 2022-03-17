@@ -86,13 +86,6 @@ private enum TemperaturePolarity {
   }
 }
 
-private struct TemperaturePolarityChangedNotificationContent {
-  let sign: TemperaturePolarity
-  let unit: TemperatureUnitOption
-  let temperature: Int
-  let cityName: String
-}
-
 // MARK: - Dependencies
 
 extension NotificationService {
@@ -125,15 +118,14 @@ extension NotificationService {
   
   // MARK: - Authorization Handling
   
-  func requestNotificationDeliveryAuthorization() -> Completable {
-    Completable
+  func createRequestNotificationDeliveryAuthorizationSingle() -> Single<Bool> {
+    Single
       .create { [unowned userNotificationCenter] handler in
         userNotificationCenter.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
-          guard error != nil else {
-            handler(.error(DomainError.notificationAuthorizationRequestError))
-            return
+          if let error = error {
+            handler(.failure(error))
           }
-          handler(.completed)
+          handler(.success(granted))
         }
         return Disposables.create()
       }
@@ -186,37 +178,22 @@ extension NotificationService {
   
   // MARK: - Notification Provisioning
   
-  func createPerformTemperatureOnBadgeUpdateCompletable(with information: TemperatureOnAppIconBadgeInformation) -> Completable {
-    Observable
+  func createPerformTemperatureOnBadgeUpdateCompletable(with information: TemperatureOnAppIconBadgeInformation?) -> Completable {
+    Single
       .just(information)
-      .take(1)
-      .asSingle()
+      .subscribe(on: MainScheduler.instance)
       .flatMapCompletable { [unowned self] information in
-        let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber // TODO: how does this even work? This would never be negative
-        DispatchQueue.main.async {
-          UIApplication.shared.applicationIconBadgeNumber = abs(information.temperature)
+        guard let information = information else {
+          UIApplication.shared.applicationIconBadgeNumber = 0
+          return Completable.emptyCompletable
         }
+        let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber
+        UIApplication.shared.applicationIconBadgeNumber = information.temperature
         
-        if previousTemperatureValue < 0 && information.temperature > 0 {
-          return createSendTemperaturePolarityChangedNotificationCompletable(inputContent: TemperaturePolarityChangedNotificationContent(
-            sign: .positive,
-            unit: information.temperatureUnitOption,
-            temperature: information.temperature,
-            cityName: information.stationName
-          ))
-        } else if previousTemperatureValue > 0 && information.temperature < 0 {
-          return createSendTemperaturePolarityChangedNotificationCompletable(inputContent: TemperaturePolarityChangedNotificationContent(
-            sign: .negative,
-            unit: information.temperatureUnitOption,
-            temperature: information.temperature,
-            cityName: information.stationName
-          ))
-        } else {
-          return Completable.create { handler in
-            handler(.completed)
-            return Disposables.create()
-          }
+        guard previousTemperatureValue.signum() == information.temperature.signum() else {
+          return createSendTemperaturePolarityChangedNotificationCompletable(information: information)
         }
+        return Completable.emptyCompletable
       }
   }
 }
@@ -224,7 +201,7 @@ extension NotificationService {
 // MARK: - User Location Permissions Requesting
 
 protocol UserNotificationPermissionRequesting {
-  func requestNotificationDeliveryAuthorization() -> Completable
+  func createRequestNotificationDeliveryAuthorizationSingle() -> Single<Bool>
   func createGetNotificationSettingsSingle() -> Single<UNNotificationSettings>
   func createGetNotificationAuthorizationStatusSingle() -> Single<UNAuthorizationStatus>
 }
@@ -251,7 +228,7 @@ extension NotificationService: NotificationPreferencesReading {}
 // MARK: - Temperature On App Icon Notification Provisioning
 
 protocol AppIconNotificationProvisioning {
-  func createPerformTemperatureOnBadgeUpdateCompletable(with information: TemperatureOnAppIconBadgeInformation) -> Completable
+  func createPerformTemperatureOnBadgeUpdateCompletable(with information: TemperatureOnAppIconBadgeInformation?) -> Completable
 }
 
 extension NotificationService: AppIconNotificationProvisioning {}
@@ -260,19 +237,21 @@ extension NotificationService: AppIconNotificationProvisioning {}
 
 private extension NotificationService {
   
-  func createSendTemperaturePolarityChangedNotificationCompletable(inputContent: TemperaturePolarityChangedNotificationContent) -> Completable {
+  func createSendTemperaturePolarityChangedNotificationCompletable(information: TemperatureOnAppIconBadgeInformation) -> Completable {
     Completable
       .create { [unowned self] handler in
+        let temperatureSign: TemperaturePolarity = information.temperature < 0 ? .negative : .positive
+       
         let notificationBody = R.string.localizable.temperature_notification(
-          inputContent.cityName,
-          inputContent.sign.stringValue
-            .append(contentsOfConvertible: inputContent.temperature, delimiter: .space)
-            .append(contentsOf: inputContent.unit.value.abbreviation, delimiter: .none)
+          information.stationName,
+          temperatureSign.stringValue
+            .append(contentsOfConvertible: information.temperature, delimiter: .space)
+            .append(contentsOf: information.temperatureUnitOption.value.abbreviation, delimiter: .none)
         )
         
         let content = UNMutableNotificationContent()
         
-        switch inputContent.sign {
+        switch temperatureSign {
         case .positive:
           content.title = R.string.localizable.app_icon_temperature_sign_updated_above_zero()
         case .negative:
@@ -281,9 +260,11 @@ private extension NotificationService {
         content.body = notificationBody
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
-        let request = UNNotificationRequest(identifier: Constants.Keys.NotificationIdentifiers.kAppIconTemeperatureNotification,
-                                            content: content,
-                                            trigger: trigger)
+        let request = UNNotificationRequest(
+          identifier: Constants.Keys.NotificationIdentifiers.kAppIconTemeperatureNotification,
+          content: content,
+          trigger: trigger
+        )
         
         userNotificationCenter.add(request) { error in
           guard error == nil else {

@@ -53,10 +53,7 @@ extension MigrationService {
       .flatMapCompletable { [dependencies] apiKey -> Completable in
         guard let apiKey = apiKey else {
           // previous data does not exist or could not be read -> do not try to migrate any further
-          return Completable.create { handler in
-            handler(.completed)
-            return Disposables.create()
-          }
+          return Completable.emptyCompletable
         }
         return dependencies.apiKeyService.createSetApiKeyCompletable(apiKey)
       }
@@ -115,10 +112,7 @@ extension MigrationService {
       .flatMapCompletable { [dependencies] weatherInformationStoredContents -> Completable in
         guard let weatherInformationStoredContents = weatherInformationStoredContents else {
           // previous data does not exist or could not be read -> do not try to migrate anymore
-          return Completable.create { handler in
-            handler(.completed)
-            return Disposables.create()
-          }
+          return Completable.emptyCompletable
         }
         return Completable.zip([
           dependencies.weatherInformationService.createSetBookmarkedWeatherInformationListCompletable(

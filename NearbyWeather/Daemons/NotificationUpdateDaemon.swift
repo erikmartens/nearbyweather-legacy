@@ -76,19 +76,16 @@ extension NotificationUpdateDaemon {
         }
         return dependencies.notificationService
           .createGetNotificationAuthorizationStatusSingle()
-          .flatMapCompletable { [unowned self] authorizationStatus in
-            guard authorizationStatus.authorizationStatusIsSufficient else {
-              return dependencies.notificationService.requestNotificationDeliveryAuthorization()
+          .flatMap { [unowned self] authorizationStatus -> Single<Bool> in
+            guard authorizationStatus != .notDetermined else {
+              return dependencies.notificationService.createRequestNotificationDeliveryAuthorizationSingle()
             }
-            return Completable.create { handler in
-              handler(.completed)
+            return Single.create { handler in
+              handler(.success(authorizationStatus.authorizationStatusIsSufficient))
               return Disposables.create()
             }
           }
           .asObservable()
-          .materialize()
-          .withLatestFrom(dependencies.notificationService.createGetNotificationAuthorizationStatusSingle().asObservable())
-          .map { $0.authorizationStatusIsSufficient }
       }
     // based on previous evaluation -> enable background fetch or disable background fetch and remove the app icon badge
       .do(onNext: { [unowned self] shouldDisplayBadge in

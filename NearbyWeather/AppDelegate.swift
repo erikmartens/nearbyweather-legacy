@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   private var daemons: [Daemon] = []
   
-  private var backgroundFetchTaskId: UIBackgroundTaskIdentifier = .invalid
+  private var tempOnAsAppIconBadgeBackgroundFetchTaskId: UIBackgroundTaskIdentifier = .invalid
   
   // MARK: - Functions
   
@@ -182,10 +182,7 @@ private extension AppDelegate {
       .asSingle()
       .flatMapCompletable { [weatherInformationService] refreshOnAppStartOption -> Completable in
         guard refreshOnAppStartOption.value == .yes else {
-          return Completable.create { handler in
-            handler(.completed)
-            return Disposables.create()
-          }
+          return Completable.emptyCompletable
         }
         return Completable.zip([
           weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
@@ -196,10 +193,11 @@ private extension AppDelegate {
   }
   
   func beginAppIconUpdateBackgroundFetchTask(for application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    let taskName = "de.erikmaximilianmartens.nearbyweather.bookmarked_weather_information_background_fetch" // Move to constants
-    backgroundFetchTaskId = application.beginBackgroundTask(withName: taskName, expirationHandler: { [weak self] in
-      self?.endAppIconUpdateBackgroundFetchTask()
-    })
+    tempOnAsAppIconBadgeBackgroundFetchTaskId = application.beginBackgroundTask(
+      withName: Constants.Keys.BackgroundTaskIdentifiers.kRefreshTempOnAppIconBadge,
+      expirationHandler: { [unowned self] in
+        endAppIconUpdateBackgroundFetchTask()
+      })
     
     let preferencesService = dependencyContainer.resolve(PreferencesService.self)!
     let weatherStationService = dependencyContainer.resolve(WeatherStationService.self)!
@@ -216,37 +214,27 @@ private extension AppDelegate {
           .combineLatest(
             weatherInformationService.createGetBookmarkedWeatherInformationItemObservable(for: String(stationIdentifierInt)).map { $0.entity },
             preferencesService.createGetTemperatureUnitOptionObservable(),
-            resultSelector: TemperatureOnAppIconBadgeInformation.init)
+            resultSelector: TemperatureOnAppIconBadgeInformation.init
+          )
       }
       .take(1)
       .asSingle()
-      .flatMapCompletable { temperatureOnAppIconBadgeInformation in
-        guard let temperatureOnAppIconBadgeInformation = temperatureOnAppIconBadgeInformation else {
-          DispatchQueue.main.async {
-            UIApplication.shared.applicationIconBadgeNumber = 0
-          }
-          return Completable.create { handler in
-            handler(.completed)
-            return Disposables.create()
-          }
-        }
-        return notificationService.createPerformTemperatureOnBadgeUpdateCompletable(with: temperatureOnAppIconBadgeInformation)
-      }
+      .flatMapCompletable(notificationService.createPerformTemperatureOnBadgeUpdateCompletable)
       .subscribe(
-        onCompleted: { [weak self] in
+        onCompleted: { [unowned self] in
           completionHandler(.newData)
-          self?.endAppIconUpdateBackgroundFetchTask()
+          endAppIconUpdateBackgroundFetchTask()
         },
-        onError: { [weak self] _ in
+        onError: { [unowned self] _ in
           completionHandler(.failed)
-          self?.endAppIconUpdateBackgroundFetchTask()
+          endAppIconUpdateBackgroundFetchTask()
         }
       )
   }
   
   func endAppIconUpdateBackgroundFetchTask() {
-    UIApplication.shared.endBackgroundTask(backgroundFetchTaskId)
-    backgroundFetchTaskId = .invalid
+    UIApplication.shared.endBackgroundTask(tempOnAsAppIconBadgeBackgroundFetchTaskId)
+    tempOnAsAppIconBadgeBackgroundFetchTaskId = .invalid
   }
   
   func runMigrationIfNeeded() {

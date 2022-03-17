@@ -131,21 +131,26 @@ private extension AppDelegate {
     let userLocationService = dependencyContainer.resolve(UserLocationService.self)!
     let weatherStationService = dependencyContainer.resolve(WeatherStationService.self)!
     let weatherInformationService = dependencyContainer.resolve(WeatherInformationService.self)!
+    let notificationService = dependencyContainer.resolve(NotificationService.self)!
     
-    daemons.append(
+    daemons.append(contentsOf: [
       WeatherInformationUpdateDaemon(dependencies: WeatherInformationUpdateDaemon.Dependencies(
         apiKeyService: apiKeyService,
         preferencesService: preferencesService,
         userLocationService: userLocationService,
         weatherStationService: weatherStationService,
         weatherInformationService: weatherInformationService
-      ))
-    )
-    daemons.append(
+      )),
       UserLocationUpdateDaemon(dependencies: UserLocationUpdateDaemon.Dependencies(
         userLocationService: userLocationService
+      )),
+      NotificationUpdateDaemon(dependencies: NotificationUpdateDaemon.Dependencies(
+        weatherStationService: weatherStationService,
+        weatherInformationService: weatherInformationService,
+        preferencesService: preferencesService,
+        notificationService: notificationService
       ))
-    )
+    ])
     
     daemons.forEach { $0.startObservations() }
   }
@@ -196,23 +201,37 @@ private extension AppDelegate {
       self?.endAppIconUpdateBackgroundFetchTask()
     })
     
-    _ = dependencyContainer
-      .resolve(WeatherStationService.self)!
+    let preferencesService = dependencyContainer.resolve(PreferencesService.self)!
+    let weatherStationService = dependencyContainer.resolve(WeatherStationService.self)!
+    let weatherInformationService = dependencyContainer.resolve(WeatherInformationService.self)!
+    let notificationService = dependencyContainer.resolve(NotificationService.self)!
+    
+    _ = weatherStationService
       .createGetPreferredBookmarkObservable()
-      .map { $0?.value.stationIdentifier }
-      .errorOnNil()
+      .flatMapLatest { preferredBookmarkOption -> Observable<TemperatureOnAppIconBadgeInformation?> in
+        guard let stationIdentifierInt = preferredBookmarkOption?.intValue else {
+          return Observable.just(nil)
+        }
+        return Observable
+          .combineLatest(
+            weatherInformationService.createGetBookmarkedWeatherInformationItemObservable(for: String(stationIdentifierInt)).map { $0.entity },
+            preferencesService.createGetTemperatureUnitOptionObservable(),
+            resultSelector: TemperatureOnAppIconBadgeInformation.init)
+      }
       .take(1)
       .asSingle()
-      .flatMapCompletable { [unowned dependencyContainer] preferredBookmarkIdentifier -> Completable in
-        dependencyContainer!
-          .resolve(WeatherInformationService.self)!
-          .createUpdateBookmarkedWeatherInformationCompletable(forStationWith: preferredBookmarkIdentifier)
+      .flatMapCompletable { temperatureOnAppIconBadgeInformation in
+        guard let temperatureOnAppIconBadgeInformation = temperatureOnAppIconBadgeInformation else {
+          DispatchQueue.main.async {
+            UIApplication.shared.applicationIconBadgeNumber = 0
+          }
+          return Completable.create { handler in
+            handler(.completed)
+            return Disposables.create()
+          }
+        }
+        return notificationService.createPerformTemperatureOnBadgeUpdateCompletable(with: temperatureOnAppIconBadgeInformation)
       }
-      .andThen(
-        dependencyContainer!
-          .resolve(NotificationService.self)!
-          .createPerformTemperatureOnBadgeUpdateCompletable()
-      )
       .subscribe(
         onCompleted: { [weak self] in
           completionHandler(.newData)

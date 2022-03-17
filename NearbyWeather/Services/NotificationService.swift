@@ -47,6 +47,33 @@ private extension NotificationService {
 
 // MARK: - Types
 
+struct TemperatureOnAppIconBadgeInformation {
+  let stationName: String
+  let temperature: Int
+  let temperatureUnitOption: TemperatureUnitOption
+  
+  init(
+    stationName: String,
+    temperature: Int,
+    temperatureUnitOption: TemperatureUnitOption
+  ) {
+    self.stationName = stationName
+    self.temperature = temperature
+    self.temperatureUnitOption = temperatureUnitOption
+  }
+  
+  init?(
+    weatherInformationModel: WeatherInformationDTO,
+    temperatureUnitOption: TemperatureUnitOption
+  ) {
+    guard let temperatureKelvin = weatherInformationModel.atmosphericInformation.temperatureKelvin,
+          let temperature = MeteorologyInformationConversionWorker.temperatureIntValue(forTemperatureUnit: temperatureUnitOption,fromRawTemperature: temperatureKelvin) else {
+      return nil
+    }
+    self.init(stationName: weatherInformationModel.stationName, temperature: temperature, temperatureUnitOption: temperatureUnitOption)
+  }
+}
+
 private enum TemperaturePolarity {
   case positive
   case negative
@@ -141,19 +168,6 @@ extension NotificationService {
         )
       }
       .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: ShowTemperatureOnAppIconOption.self) }
-      .andThen(
-        createGetNotificationAuthorizationStatusSingle()
-          .flatMapCompletable { [unowned self] authorizationStatus in
-            if authorizationStatus.authorizationStatusIsSufficient {
-              return Completable.create {
-                $0(.completed)
-                return Disposables.create()
-              }
-            }
-            return requestNotificationDeliveryAuthorization()
-          }
-      )
-      .andThen(createChangeTemperatureOnAppIconNotificationProvisioningCompletable())
   }
   
   func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption> {
@@ -167,89 +181,43 @@ extension NotificationService {
         type: ShowTemperatureOnAppIconOption.self
       )
       .map { $0?.entity }
-      .replaceNilWith(ShowTemperatureOnAppIconOption(value: .yes)) // default value
+      .replaceNilWith(ShowTemperatureOnAppIconOption(value: .no)) // default value
   }
   
   // MARK: - Notification Provisioning
   
-  func createChangeTemperatureOnAppIconNotificationProvisioningCompletable() -> Completable {
-    createGetNotificationAuthorizationStatusSingle()
-      .do(onSuccess: { [unowned self] authorizationStatus in
-        if !authorizationStatus.authorizationStatusIsSufficient {
-          clearAppIconBadge()
+  func createPerformTemperatureOnBadgeUpdateCompletable(with information: TemperatureOnAppIconBadgeInformation) -> Completable {
+    Observable
+      .just(information)
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { [unowned self] information in
+        let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber // TODO: how does this even work? This would never be negative
+        DispatchQueue.main.async {
+          UIApplication.shared.applicationIconBadgeNumber = abs(information.temperature)
         }
-      })
-      .flatMapCompletable { [unowned self] authorizationStatus in
-        return setBackgroundFetchEnabled(authorizationStatus.authorizationStatusIsSufficient)
-      }
-  }
-  
-  func createPerformTemperatureOnBadgeUpdateCompletable() -> Completable {
-    struct ResultType {
-      let stationName: String
-      let newTemperature: Int
-      let temperatureUnitOption: TemperatureUnitOption
-    }
-    
-    return dependencies.weatherStationService
-      .createGetPreferredBookmarkObservable()
-      .do(onNext: { [unowned self] preferredBookmarkOption in
-        if preferredBookmarkOption?.value.stationIdentifier == nil {
-          clearAppIconBadge()
-        }
-      })
-        .filterNil()
-        .filter { $0.value.stationIdentifier != nil }
-        .flatMapLatest { [unowned self] preferredBookmarkOption in
-          Observable
-            .combineLatest(
-              dependencies.weatherInformationService.createGetNearbyWeatherInformationObservable(for: "\(preferredBookmarkOption.value.stationIdentifier!)"),
-              dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
-              resultSelector: { weatherInformationDto, temperatureUnitOption -> ResultType? in
-                guard let temperatureKelvin = weatherInformationDto.entity.atmosphericInformation.temperatureKelvin,
-                      let temperatureIntValue = MeteorologyInformationConversionWorker.temperatureIntValue(
-                        forTemperatureUnit: temperatureUnitOption,
-                        fromRawTemperature: temperatureKelvin
-                      )
-                else {
-                  return nil
-                }
-                
-                return ResultType(
-                  stationName: weatherInformationDto.entity.stationName,
-                  newTemperature: temperatureIntValue,
-                  temperatureUnitOption: temperatureUnitOption
-                )
-              })
-        }
-        .filterNil()
-        .take(1)
-        .asSingle()
-        .flatMapCompletable { [unowned self] result in
-          let previousTemperatureValue = UIApplication.shared.applicationIconBadgeNumber // TODO: how does this even work? This would never be negative
-          UIApplication.shared.applicationIconBadgeNumber = abs(result.newTemperature)
-          
-          if previousTemperatureValue < 0 && result.newTemperature > 0 {
-            return createSendTemperaturePolarityChangedNotificationCompletable(inputContent: TemperaturePolarityChangedNotificationContent(
-              sign: .positive,
-              unit: result.temperatureUnitOption,
-              temperature: result.newTemperature,
-              cityName: result.stationName
-            ))
-          } else if previousTemperatureValue > 0 && result.newTemperature < 0 {
-            return createSendTemperaturePolarityChangedNotificationCompletable(inputContent: TemperaturePolarityChangedNotificationContent(
-              sign: .negative,
-              unit: result.temperatureUnitOption,
-              temperature: result.newTemperature,
-              cityName: result.stationName
-            ))
-          } else {
-            return Completable.create { handler in
-              handler(.completed)
-              return Disposables.create()
-            }
+        
+        if previousTemperatureValue < 0 && information.temperature > 0 {
+          return createSendTemperaturePolarityChangedNotificationCompletable(inputContent: TemperaturePolarityChangedNotificationContent(
+            sign: .positive,
+            unit: information.temperatureUnitOption,
+            temperature: information.temperature,
+            cityName: information.stationName
+          ))
+        } else if previousTemperatureValue > 0 && information.temperature < 0 {
+          return createSendTemperaturePolarityChangedNotificationCompletable(inputContent: TemperaturePolarityChangedNotificationContent(
+            sign: .negative,
+            unit: information.temperatureUnitOption,
+            temperature: information.temperature,
+            cityName: information.stationName
+          ))
+        } else {
+          return Completable.create { handler in
+            handler(.completed)
+            return Disposables.create()
           }
         }
+      }
   }
 }
 
@@ -283,8 +251,7 @@ extension NotificationService: NotificationPreferencesReading {}
 // MARK: - Temperature On App Icon Notification Provisioning
 
 protocol AppIconNotificationProvisioning {
-  func createChangeTemperatureOnAppIconNotificationProvisioningCompletable() -> Completable
-  func createPerformTemperatureOnBadgeUpdateCompletable() -> Completable
+  func createPerformTemperatureOnBadgeUpdateCompletable(with information: TemperatureOnAppIconBadgeInformation) -> Completable
 }
 
 extension NotificationService: AppIconNotificationProvisioning {}
@@ -292,10 +259,6 @@ extension NotificationService: AppIconNotificationProvisioning {}
 // MARK: - Helpers
 
 private extension NotificationService {
-  
-  func clearAppIconBadge() {
-    UIApplication.shared.applicationIconBadgeNumber = 0
-  }
   
   func createSendTemperaturePolarityChangedNotificationCompletable(inputContent: TemperaturePolarityChangedNotificationContent) -> Completable {
     Completable
@@ -329,15 +292,6 @@ private extension NotificationService {
           }
           handler(.completed)
         }
-        return Disposables.create()
-      }
-  }
-  
-  func setBackgroundFetchEnabled(_ enabled: Bool) -> Completable {
-    Completable
-      .create { handler in
-        UIApplication.shared.setMinimumBackgroundFetchInterval(enabled ? UIApplication.backgroundFetchIntervalMinimum : UIApplication.backgroundFetchIntervalNever)
-        handler(.completed)
         return Disposables.create()
       }
   }

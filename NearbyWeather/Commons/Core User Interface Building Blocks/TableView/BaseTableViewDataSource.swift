@@ -30,7 +30,7 @@ extension BaseTableViewDataSource: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cellIdentifier = sectionDataSources.value?[safe: indexPath.section]?.sectionCellsIdentifiers?[indexPath.row] else {
+    guard let cellIdentifier = sectionDataSources.value?[safe: indexPath.section]?.sectionCellsIdentifiers?[safe: indexPath.row] else {
       fatalError("Could not determine reuse-identifier for sections-cells.")
     }
     guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? BaseCellProtocol else {

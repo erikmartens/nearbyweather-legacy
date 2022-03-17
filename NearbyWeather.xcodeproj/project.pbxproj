@@ -251,6 +251,7 @@
 		F2E12F5025B098D300176087 /* WeatherStationMeteorologyDetailsSunCycleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E12F4F25B098D300176087 /* WeatherStationMeteorologyDetailsSunCycleCell.swift */; };
 		F2E12F5B25B0996800176087 /* WeatherStationMeteorologyDetailsHeaderItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E12F5A25B0996800176087 /* WeatherStationMeteorologyDetailsHeaderItemsSection.swift */; };
 		F2E12F6025B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E12F5F25B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift */; };
+		F2E4DB5D27E39DA9008EB9C6 /* NotificationUpdateDaemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E4DB5C27E39DA9008EB9C6 /* NotificationUpdateDaemon.swift */; };
 		F2E7237823DE064D001189F5 /* ProjectOwner.json in Resources */ = {isa = PBXBuildFile; fileRef = F2E7237723DE064D001189F5 /* ProjectOwner.json */; };
 		F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7238023E0F044001189F5 /* Constants+Keys.swift */; };
 		F2E9C98427E114E600DCA19B /* ManageBookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9C98327E114E600DCA19B /* ManageBookmarksViewController.swift */; };
@@ -554,6 +555,7 @@
 		F2E12F4F25B098D300176087 /* WeatherStationMeteorologyDetailsSunCycleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsSunCycleCell.swift; sourceTree = "<group>"; };
 		F2E12F5A25B0996800176087 /* WeatherStationMeteorologyDetailsHeaderItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsHeaderItemsSection.swift; sourceTree = "<group>"; };
 		F2E12F5F25B0997F00176087 /* WeatherStationMeteorologyDetailsSunCycleItemsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsSunCycleItemsSection.swift; sourceTree = "<group>"; };
+		F2E4DB5C27E39DA9008EB9C6 /* NotificationUpdateDaemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationUpdateDaemon.swift; sourceTree = "<group>"; };
 		F2E7237723DE064D001189F5 /* ProjectOwner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProjectOwner.json; sourceTree = "<group>"; };
 		F2E7238023E0F044001189F5 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
 		F2E9C98327E114E600DCA19B /* ManageBookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBookmarksViewController.swift; sourceTree = "<group>"; };
@@ -1103,8 +1105,9 @@
 			isa = PBXGroup;
 			children = (
 				F2060E6527BFF1150066DC8C /* Daemon.swift */,
-				F25E126125AF27B800342EFE /* WeatherInformationUpdateDaemon.swift */,
+				F2E4DB5C27E39DA9008EB9C6 /* NotificationUpdateDaemon.swift */,
 				F2060E6727C0064E0066DC8C /* UserLocationUpdateDaemon.swift */,
+				F25E126125AF27B800342EFE /* WeatherInformationUpdateDaemon.swift */,
 			);
 			path = Daemons;
 			sourceTree = "<group>";
@@ -2099,6 +2102,7 @@
 				F2370FFC25AB25B10072AF29 /* RefreshOnAppStartOption.swift in Sources */,
 				F260C4431F9D4883000D2BC0 /* UINavigationController+Extensions.swift in Sources */,
 				F217CC0D27DDEE0000DAC947 /* LoadingViewController.swift in Sources */,
+				F2E4DB5D27E39DA9008EB9C6 /* NotificationUpdateDaemon.swift in Sources */,
 				F2DB5E8825AB55A100E21A56 /* MKAnnotationView+AnnotationViewReuseIdentifiable.swift in Sources */,
 				F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */,
 				F22B0F7425AB5E670037F957 /* WeatherMapMapViewDelegate.swift in Sources */,

@@ -23,7 +23,7 @@ extension WeatherInformationUpdateDaemon {
 
 // MARK: - Class Definition
 
-final class WeatherInformationUpdateDaemon: Daemon {
+final class WeatherInformationUpdateDaemon: NSObject, Daemon {
   
   // MARK: - Assets
   

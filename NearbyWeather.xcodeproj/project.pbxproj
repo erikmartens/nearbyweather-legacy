@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		86830392217BBA5D00B7122E /* LegacyNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86830391217BBA5D00B7122E /* LegacyNotificationService.swift */; };
 		F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204B77A1DF2EFA3000F4371 /* AppDelegate.swift */; };
 		F204B7821DF2EFA3000F4371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F204B7811DF2EFA3000F4371 /* Assets.xcassets */; };
 		F204B7851DF2EFA3000F4371 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F204B7831DF2EFA3000F4371 /* LaunchScreen.storyboard */; };
@@ -299,7 +298,6 @@
 		5142D45C22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5142D45E22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5142D45F22F45DC2000E6B06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		86830391217BBA5D00B7122E /* LegacyNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyNotificationService.swift; sourceTree = "<group>"; };
 		86830395217BC28E00B7122E /* NearbyWeather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NearbyWeather.entitlements; sourceTree = "<group>"; };
 		E8303A8024CB199800FD9531 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E8303A8124CB199900FD9531 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -1162,7 +1160,6 @@
 				F28F180325A7354500AEA99A /* ApiKeyService.swift */,
 				F2060E6127BC1D7F0066DC8C /* NetworkReachabilityService.swift */,
 				F217CC0927DD5A9500DAC947 /* NotificationService.swift */,
-				86830391217BBA5D00B7122E /* LegacyNotificationService.swift */,
 				F210B1A525A9D6BD00BF8DAA /* PersistencyService.swift */,
 				F284DDD5245CF38800445BFF /* PreferencesService.swift */,
 				F284DDCD245A40F500445BFF /* UserLocationService.swift */,
@@ -1932,7 +1929,6 @@
 				F2D1992E25A1E249004C7753 /* BaseTableViewSelectionDelegate.swift in Sources */,
 				F2D1996325A2050C004C7753 /* WeatherListBookmarkedItemsSection.swift in Sources */,
 				F20CA12C25B32B7700153E47 /* Array<PersistencyModel<WeatherInformationDTO>>+MapToWeatherMapAnnotationViewModel.swift in Sources */,
-				86830392217BBA5D00B7122E /* LegacyNotificationService.swift in Sources */,
 				F277E7E025AC9F570009D59B /* MapTypeSelectionAlert.swift in Sources */,
 				F217CBEB27DBB21800DAC947 /* SettingsTextEntryCellViewModel.swift in Sources */,
 				F2F7BA2123E37A9C00B4D2EB /* Constants+Values.swift in Sources */,

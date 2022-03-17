@@ -17,6 +17,7 @@ extension SettingsViewModel {
   struct Dependencies {
     let weatherStationService: WeatherStationBookmarkReading & WeatherStationBookmarkSetting
     let preferencesService: SettingsPreferencesSetting & SettingsPreferencesReading
+    let notificationService: NotificationPreferencesSetting & NotificationPreferencesReading
   }
 }
 
@@ -53,7 +54,7 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
     .map { $0.count }
     .share(replay: 1)
   
-  private lazy var allowTempOnAppIconObservable = dependencies.preferencesService
+  private lazy var allowTempOnAppIconObservable = dependencies.notificationService
     .createGetShowTemperatureOnAppIconOptionObservable()
     .map { $0.rawRepresentableValue }
     .share(replay: 1)
@@ -253,7 +254,7 @@ extension SettingsViewModel {
   func observeUserTapEvents() {
     onDidChangeAllowTempOnAppIconOptionSubject
       .flatMapLatest { [dependencies] changedValue in
-        dependencies.preferencesService
+        dependencies.notificationService
           .createSetShowTemperatureOnAppIconOptionCompletable(ShowTemperatureOnAppIconOption(value: changedValue ? .yes : .no))
           .asObservable()
       }

@@ -31,8 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   // MARK: - Functions
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    //    FirebaseApp.configure()
-    
     // TODO: Handle via NSOperations
     registerServices()
     runMigrationIfNeeded()
@@ -115,6 +113,15 @@ private extension AppDelegate {
     
     dependencyContainer.register(NetworkReachabilityService.self) { _ in
       NetworkReachabilityService()
+    }
+    
+    dependencyContainer.register(NotificationService.self) { resolver in
+      NotificationService(dependencies: NotificationService.Dependencies(
+        persistencyService: resolver.resolve(PersistencyService.self)!,
+        weatherStationService: resolver.resolve(WeatherStationService.self)!,
+        weatherInformationService: resolver.resolve(WeatherInformationService.self)!,
+        preferencesService: resolver.resolve(PreferencesService.self)!
+      ))
     }
   }
   
@@ -201,6 +208,11 @@ private extension AppDelegate {
           .resolve(WeatherInformationService.self)!
           .createUpdateBookmarkedWeatherInformationCompletable(forStationWith: preferredBookmarkIdentifier)
       }
+      .andThen(
+        dependencyContainer!
+          .resolve(NotificationService.self)!
+          .createPerformTemperatureOnBadgeUpdateCompletable()
+      )
       .subscribe(
         onCompleted: { [weak self] in
           completionHandler(.newData)
@@ -223,7 +235,8 @@ private extension AppDelegate {
       preferencesService: dependencyContainer.resolve(PreferencesService.self)!,
       weatherInformationService: dependencyContainer.resolve(WeatherInformationService.self)!,
       weatherStationService: dependencyContainer.resolve(WeatherStationService.self)!,
-      apiKeyService: dependencyContainer.resolve(ApiKeyService.self)!
+      apiKeyService: dependencyContainer.resolve(ApiKeyService.self)!,
+      notificationService: dependencyContainer.resolve(NotificationService.self)!
     ))
       .runMigrationIfNeeded_v2_2_2_to_3_0_0()
   }

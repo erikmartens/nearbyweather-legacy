@@ -15,6 +15,7 @@ extension MigrationService {
     let weatherInformationService: WeatherInformationMigration
     let weatherStationService: WeatherStationBookmarkMigration
     let apiKeyService: ApiKeySetting
+    let notificationService: NotificationPreferencesSetting
   }
 }
 
@@ -94,7 +95,7 @@ extension MigrationService {
           dependencies.preferencesService.createSetDimensionalUnitsOptionCompletable(preferencesStoredContentsWrapper.windspeedUnit),
           dependencies.preferencesService.createSetSortingOrientationOptionCompletable(preferencesStoredContentsWrapper.sortingOrientation),
           dependencies.preferencesService.createSetRefreshOnAppStartOptionCompletable(RefreshOnAppStartOption(value: preferences.1)),
-          dependencies.preferencesService.createSetShowTemperatureOnAppIconOptionCompletable(ShowTemperatureOnAppIconOption(value: preferences.2))
+          dependencies.notificationService.createSetShowTemperatureOnAppIconOptionCompletable(ShowTemperatureOnAppIconOption(value: preferences.2))
         ])
       }
     

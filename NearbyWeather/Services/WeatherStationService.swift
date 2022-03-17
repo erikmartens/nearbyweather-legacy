@@ -79,7 +79,7 @@ extension WeatherStationService {
       .map {
         PersistencyModel<WeatherStationDTO>(
           identity: PersistencyModelIdentity(
-            collection: WeatherStationService.PersistencyKeys.weatherStationBookmarks.collection,
+            collection: PersistencyKeys.weatherStationBookmarks.collection,
             identifier: String($0.identifier)
           ),
           entity: $0
@@ -104,7 +104,7 @@ extension WeatherStationService {
       })
       .map {
         PersistencyModelIdentity(
-          collection: WeatherStationService.PersistencyKeys.weatherStationBookmarks.collection,
+          collection: PersistencyKeys.weatherStationBookmarks.collection,
           identifier: String($0)
         )
       }
@@ -119,7 +119,7 @@ extension WeatherStationService {
         $0.map {
           PersistencyModel(
             identity: PersistencyModelIdentity(
-              collection: WeatherStationService.PersistencyKeys.weatherStationBookmarks.collection,
+              collection: PersistencyKeys.weatherStationBookmarks.collection,
               identifier: String($0.identifier)
             ),
             entity: $0
@@ -132,7 +132,7 @@ extension WeatherStationService {
   func createGetBookmarkedStationsObservable() -> Observable<[WeatherStationDTO]> {
     dependencies
       .persistencyService
-      .observeResources(in: WeatherStationService.PersistencyKeys.weatherStationBookmarks.collection, type: WeatherStationDTO.self)
+      .observeResources(in: PersistencyKeys.weatherStationBookmarks.collection, type: WeatherStationDTO.self)
       .map { $0.map { $0.entity } }
   }
   
@@ -147,8 +147,8 @@ extension WeatherStationService {
       .map {
         PersistencyModel(
           identity: PersistencyModelIdentity(
-            collection: WeatherStationService.PersistencyKeys.weatherStationBookmarksSorting.collection,
-            identifier: WeatherStationService.PersistencyKeys.weatherStationBookmarksSorting.identifier
+            collection: PersistencyKeys.weatherStationBookmarksSorting.collection,
+            identifier: PersistencyKeys.weatherStationBookmarksSorting.identifier
           ),
           entity: $0.toArray()
         )
@@ -161,8 +161,8 @@ extension WeatherStationService {
       .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
-          collection: WeatherStationService.PersistencyKeys.weatherStationBookmarksSorting.collection,
-          identifier: WeatherStationService.PersistencyKeys.weatherStationBookmarksSorting.identifier
+          collection: PersistencyKeys.weatherStationBookmarksSorting.collection,
+          identifier: PersistencyKeys.weatherStationBookmarksSorting.identifier
         ),
         type: [WeatherStationSortingOrientationDTO].self
       )
@@ -175,8 +175,8 @@ extension WeatherStationService {
       .map {
         PersistencyModel(
           identity: PersistencyModelIdentity(
-            collection: WeatherStationService.PersistencyKeys.weatherStationPreferredBookmark.collection,
-            identifier: WeatherStationService.PersistencyKeys.weatherStationPreferredBookmark.identifier
+            collection: PersistencyKeys.weatherStationPreferredBookmark.collection,
+            identifier: PersistencyKeys.weatherStationPreferredBookmark.identifier
           ),
           entity: $0
         )
@@ -189,8 +189,8 @@ extension WeatherStationService {
       .persistencyService
       .deleteResource(
         with: PersistencyModelIdentity(
-          collection: WeatherStationService.PersistencyKeys.weatherStationPreferredBookmark.collection,
-          identifier: WeatherStationService.PersistencyKeys.weatherStationPreferredBookmark.identifier
+          collection: PersistencyKeys.weatherStationPreferredBookmark.collection,
+          identifier: PersistencyKeys.weatherStationPreferredBookmark.identifier
         )
       )
   }
@@ -199,7 +199,7 @@ extension WeatherStationService {
     dependencies
       .persistencyService
       .observeResources(
-        in: WeatherStationService.PersistencyKeys.weatherStationPreferredBookmark.collection,
+        in: PersistencyKeys.weatherStationPreferredBookmark.collection,
         type: PreferredBookmarkOption.self
       )
       .map { $0.first?.entity }

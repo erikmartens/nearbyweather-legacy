@@ -10,18 +10,6 @@ import RxSwift
 import RxOptional
 import RxAlamofire
 
-// MARK: - Persistency Keys
-
-private extension PersistencyService {
-  enum PersistencyKeys {
-    
-    var collection: String {
-      switch self {
-      }
-    }
-  }
-}
-
 // MARK: - Class Definition
 
 final class PersistencyService {

@@ -21,7 +21,6 @@ private extension PreferencesService {
     case preferredListTypeOption
     case preferredMapTypeOption
     case refreshOnAppStartOption
-    case showTemperatureAsAppIconBadge
     
     var collection: String {
       switch self {
@@ -32,8 +31,6 @@ private extension PreferencesService {
       case .preferredListTypeOption: return "/general_preferences/ios/preferred_list_type/"
       case .preferredMapTypeOption: return "/general_preferences/cross_platform/preferred_map_type/"
       case .refreshOnAppStartOption: return "/general_preferences/ios/refresh_on_app_start/"
-      
-      case .showTemperatureAsAppIconBadge: return "/notification_preferences/ios/show_temperature_as_app_icon_badge/"
       }
     }
     
@@ -46,8 +43,6 @@ private extension PreferencesService {
       case .preferredListTypeOption: return "default"
       case .preferredMapTypeOption: return "default"
       case .refreshOnAppStartOption: return "default"
-      
-      case .showTemperatureAsAppIconBadge: return "default"
       }
     }
   }
@@ -84,8 +79,8 @@ extension PreferencesService {
       .map {
         PersistencyModel<AmountOfResultsOption>(
           identity: PersistencyModelIdentity(
-            collection: PreferencesService.PersistencyKeys.amountOfNearbyResultsOption.collection,
-            identifier: PreferencesService.PersistencyKeys.amountOfNearbyResultsOption.identifier
+            collection: PersistencyKeys.amountOfNearbyResultsOption.collection,
+            identifier: PersistencyKeys.amountOfNearbyResultsOption.identifier
           ),
           entity: $0
         )
@@ -98,8 +93,8 @@ extension PreferencesService {
       .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
-          collection: PreferencesService.PersistencyKeys.amountOfNearbyResultsOption.collection,
-          identifier: PreferencesService.PersistencyKeys.amountOfNearbyResultsOption.identifier
+          collection: PersistencyKeys.amountOfNearbyResultsOption.collection,
+          identifier: PersistencyKeys.amountOfNearbyResultsOption.identifier
         ),
         type: AmountOfResultsOption.self
       )
@@ -113,8 +108,8 @@ extension PreferencesService {
       .map {
         PersistencyModel<TemperatureUnitOption>(
           identity: PersistencyModelIdentity(
-            collection: PreferencesService.PersistencyKeys.temperatureUnitOption.collection,
-            identifier: PreferencesService.PersistencyKeys.temperatureUnitOption.identifier
+            collection: PersistencyKeys.temperatureUnitOption.collection,
+            identifier: PersistencyKeys.temperatureUnitOption.identifier
           ),
           entity: $0
         )
@@ -127,8 +122,8 @@ extension PreferencesService {
       .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
-          collection: PreferencesService.PersistencyKeys.temperatureUnitOption.collection,
-          identifier: PreferencesService.PersistencyKeys.temperatureUnitOption.identifier
+          collection: PersistencyKeys.temperatureUnitOption.collection,
+          identifier: PersistencyKeys.temperatureUnitOption.identifier
         ),
         type: TemperatureUnitOption.self
       )
@@ -142,8 +137,8 @@ extension PreferencesService {
       .map {
         PersistencyModel<DimensionalUnitOption>(
           identity: PersistencyModelIdentity(
-            collection: PreferencesService.PersistencyKeys.dimensionalUnitOption.collection,
-            identifier: PreferencesService.PersistencyKeys.dimensionalUnitOption.identifier
+            collection: PersistencyKeys.dimensionalUnitOption.collection,
+            identifier: PersistencyKeys.dimensionalUnitOption.identifier
           ),
           entity: $0
         )
@@ -156,8 +151,8 @@ extension PreferencesService {
       .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
-          collection: PreferencesService.PersistencyKeys.dimensionalUnitOption.collection,
-          identifier: PreferencesService.PersistencyKeys.dimensionalUnitOption.identifier
+          collection: PersistencyKeys.dimensionalUnitOption.collection,
+          identifier: PersistencyKeys.dimensionalUnitOption.identifier
         ),
         type: DimensionalUnitOption.self
       )
@@ -171,8 +166,8 @@ extension PreferencesService {
       .map {
         PersistencyModel<SortingOrientationOption>(
           identity: PersistencyModelIdentity(
-            collection: PreferencesService.PersistencyKeys.sortingOrientationOption.collection,
-            identifier: PreferencesService.PersistencyKeys.sortingOrientationOption.identifier
+            collection: PersistencyKeys.sortingOrientationOption.collection,
+            identifier: PersistencyKeys.sortingOrientationOption.identifier
           ),
           entity: $0
         )
@@ -185,8 +180,8 @@ extension PreferencesService {
       .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
-          collection: PreferencesService.PersistencyKeys.sortingOrientationOption.collection,
-          identifier: PreferencesService.PersistencyKeys.sortingOrientationOption.identifier
+          collection: PersistencyKeys.sortingOrientationOption.collection,
+          identifier: PersistencyKeys.sortingOrientationOption.identifier
         ),
         type: SortingOrientationOption.self
       )
@@ -200,8 +195,8 @@ extension PreferencesService {
       .map {
         PersistencyModel<ListTypeOption>(
           identity: PersistencyModelIdentity(
-            collection: PreferencesService.PersistencyKeys.preferredListTypeOption.collection,
-            identifier: PreferencesService.PersistencyKeys.preferredListTypeOption.identifier
+            collection: PersistencyKeys.preferredListTypeOption.collection,
+            identifier: PersistencyKeys.preferredListTypeOption.identifier
           ),
           entity: $0
         )
@@ -214,8 +209,8 @@ extension PreferencesService {
       .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
-          collection: PreferencesService.PersistencyKeys.preferredListTypeOption.collection,
-          identifier: PreferencesService.PersistencyKeys.preferredListTypeOption.identifier
+          collection: PersistencyKeys.preferredListTypeOption.collection,
+          identifier: PersistencyKeys.preferredListTypeOption.identifier
         ),
         type: ListTypeOption.self
       )
@@ -229,8 +224,8 @@ extension PreferencesService {
       .map {
         PersistencyModel<MapTypeOption>(
           identity: PersistencyModelIdentity(
-            collection: PreferencesService.PersistencyKeys.preferredMapTypeOption.collection,
-            identifier: PreferencesService.PersistencyKeys.preferredMapTypeOption.identifier
+            collection: PersistencyKeys.preferredMapTypeOption.collection,
+            identifier: PersistencyKeys.preferredMapTypeOption.identifier
           ),
           entity: $0
         )
@@ -243,8 +238,8 @@ extension PreferencesService {
       .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
-          collection: PreferencesService.PersistencyKeys.preferredMapTypeOption.collection,
-          identifier: PreferencesService.PersistencyKeys.preferredMapTypeOption.identifier
+          collection: PersistencyKeys.preferredMapTypeOption.collection,
+          identifier: PersistencyKeys.preferredMapTypeOption.identifier
         ),
         type: MapTypeOption.self
       )
@@ -258,8 +253,8 @@ extension PreferencesService {
       .map {
         PersistencyModel<RefreshOnAppStartOption>(
           identity: PersistencyModelIdentity(
-            collection: PreferencesService.PersistencyKeys.refreshOnAppStartOption.collection,
-            identifier: PreferencesService.PersistencyKeys.refreshOnAppStartOption.identifier
+            collection: PersistencyKeys.refreshOnAppStartOption.collection,
+            identifier: PersistencyKeys.refreshOnAppStartOption.identifier
           ),
           entity: $0
         )
@@ -272,42 +267,13 @@ extension PreferencesService {
       .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
-          collection: PreferencesService.PersistencyKeys.refreshOnAppStartOption.collection,
-          identifier: PreferencesService.PersistencyKeys.refreshOnAppStartOption.identifier
+          collection: PersistencyKeys.refreshOnAppStartOption.collection,
+          identifier: PersistencyKeys.refreshOnAppStartOption.identifier
         ),
         type: RefreshOnAppStartOption.self
       )
       .map { $0?.entity }
       .replaceNilWith(RefreshOnAppStartOption(value: .no)) // default value
-  }
-  
-  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable {
-    Single
-      .just(option)
-      .map {
-        PersistencyModel<ShowTemperatureOnAppIconOption>(
-          identity: PersistencyModelIdentity(
-            collection: PreferencesService.PersistencyKeys.showTemperatureAsAppIconBadge.collection,
-            identifier: PreferencesService.PersistencyKeys.showTemperatureAsAppIconBadge.identifier
-          ),
-          entity: $0
-        )
-      }
-      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: ShowTemperatureOnAppIconOption.self) }
-  }
-  
-  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption> {
-    dependencies
-      .persistencyService
-      .observeResource(
-        with: PersistencyModelIdentity(
-          collection: PreferencesService.PersistencyKeys.showTemperatureAsAppIconBadge.collection,
-          identifier: PreferencesService.PersistencyKeys.showTemperatureAsAppIconBadge.identifier
-        ),
-        type: ShowTemperatureOnAppIconOption.self
-      )
-      .map { $0?.entity }
-      .replaceNilWith(ShowTemperatureOnAppIconOption(value: .yes)) // default value
   }
 }
 
@@ -389,7 +355,6 @@ protocol SettingsPreferencesPersistence: SettingsPreferencesSetting, SettingsPre
 extension PreferencesService: SettingsPreferencesPersistence {}
 
 protocol SettingsPreferencesSetting {
-  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
   func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
   func createSetTemperatureUnitOptionCompletable(_ option: TemperatureUnitOption) -> Completable
   func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable
@@ -398,30 +363,12 @@ protocol SettingsPreferencesSetting {
 extension PreferencesService: SettingsPreferencesSetting {}
 
 protocol SettingsPreferencesReading {
-  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption>
   func createGetRefreshOnAppStartOptionObservable() -> Observable<RefreshOnAppStartOption>
   func createGetTemperatureUnitOptionObservable() -> Observable<TemperatureUnitOption>
   func createGetDimensionalUnitsOptionObservable() -> Observable<DimensionalUnitOption>
 }
 
 extension PreferencesService: SettingsPreferencesReading {}
-
-// MARK: - Notification Preferences
-
-protocol NotificationPreferencesPersistence: NotificationPreferencesSetting, NotificationPreferencesReading {}
-extension PreferencesService: NotificationPreferencesPersistence {}
-
-protocol NotificationPreferencesSetting {
-  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
-}
-
-extension PreferencesService: NotificationPreferencesSetting {}
-
-protocol NotificationPreferencesReading {
-  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption>
-}
-
-extension PreferencesService: NotificationPreferencesReading {}
 
 // MARK: - AppDelegate Preferences
 
@@ -448,7 +395,6 @@ protocol PreferenceMigration {
   func createSetDimensionalUnitsOptionCompletable(_ option: DimensionalUnitOption) -> Completable
   func createSetSortingOrientationOptionCompletable(_ option: SortingOrientationOption) -> Completable
   func createSetRefreshOnAppStartOptionCompletable(_ option: RefreshOnAppStartOption) -> Completable
-  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
 }
 
 extension PreferencesService: PreferenceMigration {}

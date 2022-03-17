@@ -25,17 +25,17 @@ extension NotificationService {
 
 private extension NotificationService {
   enum PersistencyKeys {
-    case showTemperatureAsIconBadge
+    case showTemperatureAsAppIconBadge
     
     var collection: String {
       switch self {
-      case .showTemperatureAsIconBadge: return "/user_notification/show_temperature_as_icon_badge/"
+      case .showTemperatureAsAppIconBadge: return "/user_notification/ios/show_temperature_as_app_icon_badge/"
       }
     }
     
     var identifier: String {
       switch self {
-      case .showTemperatureAsIconBadge: return "default"
+      case .showTemperatureAsAppIconBadge: return "default"
       }
     }
     
@@ -96,6 +96,8 @@ final class NotificationService {
 
 extension NotificationService {
   
+  // MARK: - Authorization Handling
+  
   func requestNotificationDeliveryAuthorization() -> Completable {
     Completable
       .create { [unowned userNotificationCenter] handler in
@@ -124,6 +126,52 @@ extension NotificationService {
     createGetNotificationSettingsSingle().map { $0.authorizationStatus }
   }
   
+  // MARK: - Notification Preferences
+  
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable {
+    Single
+      .just(option)
+      .map {
+        PersistencyModel<ShowTemperatureOnAppIconOption>(
+          identity: PersistencyModelIdentity(
+            collection: PersistencyKeys.showTemperatureAsAppIconBadge.collection,
+            identifier: PersistencyKeys.showTemperatureAsAppIconBadge.identifier
+          ),
+          entity: $0
+        )
+      }
+      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: ShowTemperatureOnAppIconOption.self) }
+      .andThen(
+        createGetNotificationAuthorizationStatusSingle()
+          .flatMapCompletable { [unowned self] authorizationStatus in
+            if authorizationStatus.authorizationStatusIsSufficient {
+              return Completable.create {
+                $0(.completed)
+                return Disposables.create()
+              }
+            }
+            return requestNotificationDeliveryAuthorization()
+          }
+      )
+      .andThen(createChangeTemperatureOnAppIconNotificationProvisioningCompletable())
+  }
+  
+  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption> {
+    dependencies
+      .persistencyService
+      .observeResource(
+        with: PersistencyModelIdentity(
+          collection: PersistencyKeys.showTemperatureAsAppIconBadge.collection,
+          identifier: PersistencyKeys.showTemperatureAsAppIconBadge.identifier
+        ),
+        type: ShowTemperatureOnAppIconOption.self
+      )
+      .map { $0?.entity }
+      .replaceNilWith(ShowTemperatureOnAppIconOption(value: .yes)) // default value
+  }
+  
+  // MARK: - Notification Provisioning
+  
   func createChangeTemperatureOnAppIconNotificationProvisioningCompletable() -> Completable {
     createGetNotificationAuthorizationStatusSingle()
       .do(onSuccess: { [unowned self] authorizationStatus in
@@ -131,7 +179,7 @@ extension NotificationService {
           clearAppIconBadge()
         }
       })
-      .flatMapCompletable{ [unowned self] authorizationStatus in
+      .flatMapCompletable { [unowned self] authorizationStatus in
         return setBackgroundFetchEnabled(authorizationStatus.authorizationStatusIsSufficient)
       }
   }
@@ -214,6 +262,23 @@ protocol UserNotificationPermissionRequesting {
 }
 
 extension NotificationService: UserNotificationPermissionRequesting {}
+
+// MARK: - Notification Preferences
+
+protocol NotificationPreferencesPersistence: NotificationPreferencesSetting, NotificationPreferencesReading {}
+extension NotificationService: NotificationPreferencesPersistence {}
+
+protocol NotificationPreferencesSetting {
+  func createSetShowTemperatureOnAppIconOptionCompletable(_ option: ShowTemperatureOnAppIconOption) -> Completable
+}
+
+extension NotificationService: NotificationPreferencesSetting {}
+
+protocol NotificationPreferencesReading {
+  func createGetShowTemperatureOnAppIconOptionObservable() -> Observable<ShowTemperatureOnAppIconOption>
+}
+
+extension NotificationService: NotificationPreferencesReading {}
 
 // MARK: - Temperature On App Icon Notification Provisioning
 

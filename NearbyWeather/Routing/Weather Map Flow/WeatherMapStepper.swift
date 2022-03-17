@@ -18,7 +18,8 @@ enum WeatherMapStep: Step {
   case changeAmountOfResultsAlertAdapted(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsOptionValue)
   case focusOnLocationAlert(selectionDelegate: FocusOnLocationSelectionAlertDelegate)
   case focusOnLocationAlertAdapted(selectionDelegate: FocusOnLocationSelectionAlertDelegate, weatherStationDTOs: [WeatherStationDTO])
-  case dismissChildFlow
+  case dismiss
+  case pop
 }
 
 final class WeatherMapStepper: Stepper {

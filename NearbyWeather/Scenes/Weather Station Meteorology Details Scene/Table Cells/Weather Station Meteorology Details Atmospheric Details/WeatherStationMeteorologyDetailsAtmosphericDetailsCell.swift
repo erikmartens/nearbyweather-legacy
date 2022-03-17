@@ -28,16 +28,16 @@ final class WeatherStationMeteorologyDetailsAtmosphericDetailsCell: UITableViewC
   // MARK: - UIComponents
   
   private lazy var cloudCoverageSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.cloudCover()))
-  private lazy var cloudCoverageDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.cloud_coverage(), numberOfLines: 1))
-  private lazy var cloudCoverageLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
+  private lazy var cloudCoverageDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.cloud_coverage()))
+  private lazy var cloudCoverageLabel = Factory.Label.make(fromType: .body(alignment: .right))
   
   private lazy var humiditySymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.humidity()))
-  private lazy var humidityDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.humidity(), numberOfLines: 1))
-  private lazy var humidityLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
+  private lazy var humidityDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.humidity()))
+  private lazy var humidityLabel = Factory.Label.make(fromType: .body(alignment: .right))
   
   private lazy var airPressureSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.airPressure()))
-  private lazy var airPressureDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.air_pressure(), numberOfLines: 1))
-  private lazy var airPressureLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
+  private lazy var airPressureDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.air_pressure()))
+  private lazy var airPressureLabel = Factory.Label.make(fromType: .body(alignment: .right))
   
   // MARK: - Assets
   

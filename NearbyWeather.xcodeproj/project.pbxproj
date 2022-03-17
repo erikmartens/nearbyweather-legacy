@@ -155,8 +155,8 @@
 		F2372882244C82B200964C49 /* Constants+Theme.Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372881244C82B200964C49 /* Constants+Theme.Color.swift */; };
 		F2372885244C90EE00964C49 /* WelcomeFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372884244C90EE00964C49 /* WelcomeFlow.swift */; };
 		F2372887244C90FF00964C49 /* WelcomeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372886244C90FF00964C49 /* WelcomeStepper.swift */; };
-		F237288A244C934100964C49 /* WeatherDetailFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372889244C934100964C49 /* WeatherDetailFlow.swift */; };
-		F237288C244C934E00964C49 /* WeatherDetailStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237288B244C934E00964C49 /* WeatherDetailStepper.swift */; };
+		F237288A244C934100964C49 /* WeatherStationMeteorologyDetailsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372889244C934100964C49 /* WeatherStationMeteorologyDetailsFlow.swift */; };
+		F237288C244C934E00964C49 /* WeatherStationMeteorologyDetailsStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237288B244C934E00964C49 /* WeatherStationMeteorologyDetailsStepper.swift */; };
 		F237288E244C93BD00964C49 /* Factory+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F237288D244C93BD00964C49 /* Factory+UINavigationController.swift */; };
 		F2372891244CAAF400964C49 /* RootFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372890244CAAF400964C49 /* RootFlow.swift */; };
 		F2372893244CAB0A00964C49 /* RootStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2372892244CAB0A00964C49 /* RootStepper.swift */; };
@@ -458,8 +458,8 @@
 		F2372881244C82B200964C49 /* Constants+Theme.Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Theme.Color.swift"; sourceTree = "<group>"; };
 		F2372884244C90EE00964C49 /* WelcomeFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeFlow.swift; sourceTree = "<group>"; };
 		F2372886244C90FF00964C49 /* WelcomeStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeStepper.swift; sourceTree = "<group>"; };
-		F2372889244C934100964C49 /* WeatherDetailFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailFlow.swift; sourceTree = "<group>"; };
-		F237288B244C934E00964C49 /* WeatherDetailStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailStepper.swift; sourceTree = "<group>"; };
+		F2372889244C934100964C49 /* WeatherStationMeteorologyDetailsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsFlow.swift; sourceTree = "<group>"; };
+		F237288B244C934E00964C49 /* WeatherStationMeteorologyDetailsStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsStepper.swift; sourceTree = "<group>"; };
 		F237288D244C93BD00964C49 /* Factory+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UINavigationController.swift"; sourceTree = "<group>"; };
 		F2372890244CAAF400964C49 /* RootFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFlow.swift; sourceTree = "<group>"; };
 		F2372892244CAB0A00964C49 /* RootStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStepper.swift; sourceTree = "<group>"; };
@@ -1083,13 +1083,13 @@
 			path = "Welcome Flow";
 			sourceTree = "<group>";
 		};
-		F2372888244C931300964C49 /* Weather Detail Flow */ = {
+		F2372888244C931300964C49 /* Weather Station Meteorology Details Flow */ = {
 			isa = PBXGroup;
 			children = (
-				F2372889244C934100964C49 /* WeatherDetailFlow.swift */,
-				F237288B244C934E00964C49 /* WeatherDetailStepper.swift */,
+				F2372889244C934100964C49 /* WeatherStationMeteorologyDetailsFlow.swift */,
+				F237288B244C934E00964C49 /* WeatherStationMeteorologyDetailsStepper.swift */,
 			);
-			path = "Weather Detail Flow";
+			path = "Weather Station Meteorology Details Flow";
 			sourceTree = "<group>";
 		};
 		F237288F244CAAE600964C49 /* Root Flow */ = {
@@ -1212,7 +1212,7 @@
 				F2372872244C7EE600964C49 /* Weather List Flow */,
 				F2372873244C7EF400964C49 /* Weather Map Flow */,
 				F2372874244C7F0100964C49 /* Settings Flow */,
-				F2372888244C931300964C49 /* Weather Detail Flow */,
+				F2372888244C931300964C49 /* Weather Station Meteorology Details Flow */,
 				F217CBCF27DB7E7300DAC947 /* About App Flow */,
 				F217CBF227DBFB1C00DAC947 /* Api Key Input Flow */,
 				F217CC0227DCB0B300DAC947 /* Add Bookmark Flow */,
@@ -1896,7 +1896,7 @@
 				F210B19E25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift in Sources */,
 				F217CB7027D5091800DAC947 /* SettingsGeneralItemsSection.swift in Sources */,
 				F217CB8427D50DE700DAC947 /* SettingsImagedSingleLabelToggleCellViewModel.swift in Sources */,
-				F237288A244C934100964C49 /* WeatherDetailFlow.swift in Sources */,
+				F237288A244C934100964C49 /* WeatherStationMeteorologyDetailsFlow.swift in Sources */,
 				F20CA0E025B1FC2500153E47 /* WeatherStationMeteorologyDetailsDetailsCellViewModel.swift in Sources */,
 				F237286C2445024D00964C49 /* Collection+SafeIndex.swift in Sources */,
 				F284DDE1245F5EE600445BFF /* BulkWeatherDataContainer.swift in Sources */,
@@ -2037,7 +2037,7 @@
 				F217CB9C27DB5D3500DAC947 /* AboutAppViewController.swift in Sources */,
 				F284DDC42458C07400445BFF /* FileManager+DirectoryUrl.swift in Sources */,
 				F20CA12425B3252B00153E47 /* WeatherStationMeteorologyDetailsMapCellMapViewDelegate.swift in Sources */,
-				F237288C244C934E00964C49 /* WeatherDetailStepper.swift in Sources */,
+				F237288C244C934E00964C49 /* WeatherStationMeteorologyDetailsStepper.swift in Sources */,
 				F217CB7227D5094100DAC947 /* SettingsOpenWeatherMapApiItemsSection.swift in Sources */,
 				F2E12F2225AF5EBF00176087 /* WeatherStationMeteorologyDetailsTableViewDelegate.swift in Sources */,
 				F2060E6D27C073DF0066DC8C /* UserLocation.swift in Sources */,

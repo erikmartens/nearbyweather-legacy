@@ -11,8 +11,10 @@ import Swinject
 
 // MARK: - Dependencies
 
-extension WeatherDetailFlow {
+extension WeatherStationMeteorologyDetailsFlow {
   struct Dependencies {
+    let flowPresentationStyle: FlowPresentationStyle
+    let endingStep: Step
     let weatherInformationIdentity: PersistencyModelIdentity
     let dependencyContainer: Container
   }
@@ -20,7 +22,7 @@ extension WeatherDetailFlow {
 
 // MARK: - Class Definition
 
-final class WeatherDetailFlow: Flow {
+final class WeatherStationMeteorologyDetailsFlow: Flow {
   
   // MARK: - Assets
   
@@ -28,7 +30,14 @@ final class WeatherDetailFlow: Flow {
     rootViewController
   }
   
-  private lazy var rootViewController = Factory.NavigationController.make(fromType: .standard)
+  private lazy var rootViewController: UINavigationController = {
+    switch dependencies.flowPresentationStyle {
+    case let .pushed(rootViewController):
+      return rootViewController
+    case .presented:
+      return Factory.NavigationController.make(fromType: .standard)
+    }
+  }()
   
   // MARK: - Dependencies
   
@@ -51,13 +60,13 @@ final class WeatherDetailFlow: Flow {
   // MARK: - Functions
   
   func navigate(to step: Step) -> FlowContributors {
-    guard let step = step as? WeatherDetailStep else {
+    guard let step = step as? WeatherStationMeteorologyDetailsStep else {
       return .none
     }
     switch step {
-    case .weatherDetails:
-      return summonWeatherDetailController()
-    case .dismiss:
+    case .weatherStationMeteorologyDetails:
+      return summonWeatherStationMeteorologyDetailsController()
+    case .end:
       return dismissWeatherDetailController()
     }
   }
@@ -65,9 +74,9 @@ final class WeatherDetailFlow: Flow {
 
 // MARK: - Summoning Functions
 
-private extension WeatherDetailFlow {
+private extension WeatherStationMeteorologyDetailsFlow {
   
-  func summonWeatherDetailController() -> FlowContributors {
+  func summonWeatherStationMeteorologyDetailsController() -> FlowContributors {
     let weatherDetailViewController = WeatherStationMeteorologyDetailsViewController(dependencies: WeatherStationMeteorologyDetailsViewModel.Dependencies(
       weatherInformationIdentity: dependencies.weatherInformationIdentity,
       weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService.self)!,
@@ -76,11 +85,16 @@ private extension WeatherDetailFlow {
       userLocationService: dependencies.dependencyContainer.resolve(UserLocationService.self)!
     ))
     
-    rootViewController.setViewControllers([weatherDetailViewController], animated: false)
+    switch dependencies.flowPresentationStyle {
+    case .pushed:
+      rootViewController.pushViewController(weatherDetailViewController, animated: true)
+    case .presented:
+      rootViewController.setViewControllers([weatherDetailViewController], animated: false)
+    }
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailViewController, withNextStepper: weatherDetailViewController.viewModel))
   }
   
   func dismissWeatherDetailController() -> FlowContributors {
-    .end(forwardToParentFlowWithStep: WeatherDetailStep.dismiss)
+    .end(forwardToParentFlowWithStep: dependencies.endingStep)
   }
 }

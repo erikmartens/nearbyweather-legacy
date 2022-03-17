@@ -8,6 +8,7 @@
 
 import RxSwift
 import RxCocoa
+import RxFlow
 
 // MARK: - Dependencies
 
@@ -25,6 +26,9 @@ extension WeatherListInformationTableViewCellViewModel {
 final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellViewModel {
   
   let associatedCellReuseIdentifier = WeatherListInformationTableViewCell.reuseIdentifier
+  lazy var onSelectedRoutingIntent: Step? = {
+    WeatherListStep.weatherDetails(identity: dependencies.weatherInformationIdentity)
+  }()
   
   // MARK: - Public Access
   

@@ -75,7 +75,7 @@ final class SettingsFlow: Flow {
     case .manageBookmarks:
       return summonManageBookmarksFlow()
     case .addBookmark:
-      return summonAddLocationFlow()
+      return summonAddBookmarkFlow()
     case .changePreferredBookmarkAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .changePreferredBookmarkAlertAdapted(selectionDelegate, selectedOptionValue, boomarkedLocations):
@@ -184,7 +184,7 @@ private extension SettingsFlow {
     return .one(flowContributor: .contribute(withNextPresentable: manageBookmarksFlow, withNextStepper: manageBookmarksStepper))
   }
   
-  func summonAddLocationFlow() -> FlowContributors {
+  func summonAddBookmarkFlow() -> FlowContributors {
     let addBookmarkFlow = AddBookmarkFlow(dependencies: AddBookmarkFlow.Dependencies(
       flowPresentationStyle: .pushed(navigationController: rootViewController),
       endingStep: SettingsStep.pop,

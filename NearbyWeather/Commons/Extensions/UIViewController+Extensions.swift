@@ -14,11 +14,7 @@ extension UIViewController {
   func presentSafariViewController(for url: URL) {
     let safariController = SFSafariViewController(url: url)
     safariController.preferredControlTintColor = Constants.Theme.Color.ViewElement.titleLight
-    if #available(iOS 13, *) {
-      safariController.modalPresentationStyle = .automatic
-    } else {
-      safariController.modalPresentationStyle = .overFullScreen
-    }
+    safariController.modalPresentationStyle = .automatic
     present(safariController, animated: true, completion: nil)
   }
 }

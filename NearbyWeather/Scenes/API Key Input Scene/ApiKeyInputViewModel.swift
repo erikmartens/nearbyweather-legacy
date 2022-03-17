@@ -9,6 +9,7 @@
 import RxSwift
 import RxCocoa
 import RxFlow
+import PKHUD
 
 // MARK: - Dependencies
 
@@ -124,7 +125,12 @@ extension ApiKeyInputViewModel {
       .filterNil()
       .filter { $0.count == Constants.Values.ApiKey.kOpenWeatherMapApiKeyLength }
       .do(onNext: { [dependencies] newApiKey in
-        _ = dependencies.apiKeyService.createSetApiKeyCompletable(newApiKey).subscribe()
+        _ = dependencies.apiKeyService.createSetApiKeyCompletable(newApiKey)
+          .do(
+            onError: { _ in DispatchQueue.main.async { HUD.flash(.error, delay: 1.0) } },
+            onCompleted: { DispatchQueue.main.async { HUD.flash(.success, delay: 1.0) } }
+          )
+          .subscribe()
       })
       .map { _ in ApiKeyInputStep.end }
       .bind(to: steps)

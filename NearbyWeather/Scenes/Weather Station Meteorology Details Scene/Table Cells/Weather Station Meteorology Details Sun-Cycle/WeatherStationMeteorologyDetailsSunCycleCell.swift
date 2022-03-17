@@ -34,12 +34,12 @@ final class WeatherStationMeteorologyDetailsSunCycleCell: UITableViewCell, BaseC
   // MARK: - UIComponents
   
   private lazy var sunriseSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.sunrise()))
-  private lazy var sunriseDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunrise(), numberOfLines: 1))
-  private lazy var sunriseTimeLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
+  private lazy var sunriseDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunrise()))
+  private lazy var sunriseTimeLabel = Factory.Label.make(fromType: .body(alignment: .right))
   
   private lazy var sunsetSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.sunset()))
-  private lazy var sunsetDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunset(), numberOfLines: 1))
-  private lazy var sunsetTimeLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
+  private lazy var sunsetDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunset()))
+  private lazy var sunsetTimeLabel = Factory.Label.make(fromType: .body(alignment: .right))
   
   // MARK: - Assets
   

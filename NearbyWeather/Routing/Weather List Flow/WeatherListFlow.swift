@@ -66,8 +66,8 @@ final class WeatherListFlow: Flow {
       return summonEmptyWeatherListController()
     case .loadingList:
       return summonLoadingListController()
-    case let .weatherDetails2(identity):
-      return summonWeatherDetailsController2(identity: identity)
+    case let .weatherDetails(identity):
+      return summonWeatherDetailsController(identity: identity)
     case .changeListTypeAlert:
       return .none // will be handled via `func adapt(step:)`
     case let .changeListTypeAlertAdapted(selectionDelegate, currentSelectedOptionValue):
@@ -80,8 +80,10 @@ final class WeatherListFlow: Flow {
       return .none // will be handled via `func adapt(step:)`
     case let .changeSortingOrientationAlertAdapted(selectionDelegate, currentSelectedOptionValue):
       return summonChangeSortingOrientationAlert(selectionDelegate: selectionDelegate, currentSelectedOptionValue: currentSelectedOptionValue)
-    case .dismissChildFlow:
-      return dismissChildFlow()
+    case .dismiss:
+      return dismissPresentedViewController()
+    case .pop:
+      return popPushedViewController()
     }
   }
   
@@ -123,12 +125,12 @@ final class WeatherListFlow: Flow {
   }
   
   private func transform(step: Step) -> Step? {
-    if let weatherDetailStep = step as? WeatherDetailStep {
+    if let weatherDetailStep = step as? WeatherStationMeteorologyDetailsStep {
       switch weatherDetailStep {
-      case .weatherDetails:
+      case .weatherStationMeteorologyDetails:
         return nil
-      case .dismiss:
-        return WeatherListStep.dismissChildFlow
+      case .end:
+        return WeatherListStep.dismiss
       }
     }
     return step
@@ -171,19 +173,14 @@ private extension WeatherListFlow {
     return .none
   }
   
-  func summonWeatherDetailsController2(identity: PersistencyModelIdentity) -> FlowContributors {
-    let weatherDetailFlow = WeatherDetailFlow(dependencies: WeatherDetailFlow.Dependencies(
+  func summonWeatherDetailsController(identity: PersistencyModelIdentity) -> FlowContributors {
+    let weatherDetailFlow = WeatherStationMeteorologyDetailsFlow(dependencies: WeatherStationMeteorologyDetailsFlow.Dependencies(
+      flowPresentationStyle: .pushed(navigationController: rootViewController),
+      endingStep: WeatherListStep.pop,
       weatherInformationIdentity: identity,
       dependencyContainer: dependencies.dependencyContainer
     ))
-    let weatherDetailStepper = WeatherDetailStepper()
-    
-    Flows.use(weatherDetailFlow, when: .ready) { [unowned rootViewController] (weatherDetailRoot: UINavigationController) in
-      weatherDetailRoot.viewControllers.first?.addCloseButton {
-        weatherDetailStepper.steps.accept(WeatherDetailStep.dismiss)
-      }
-      rootViewController.present(weatherDetailRoot, animated: true)
-    }
+    let weatherDetailStepper = WeatherStationMeteorologyDetailsStepper()
     
     return .one(flowContributor: .contribute(withNextPresentable: weatherDetailFlow, withNextStepper: weatherDetailStepper))
   }
@@ -215,8 +212,13 @@ private extension WeatherListFlow {
     return .none
   }
   
-  func dismissChildFlow() -> FlowContributors {
+  func dismissPresentedViewController() -> FlowContributors {
     rootViewController.presentedViewController?.dismiss(animated: true, completion: nil)
+    return .none
+  }
+  
+  func popPushedViewController() -> FlowContributors {
+    rootViewController.popViewController(animated: true)
     return .none
   }
 }

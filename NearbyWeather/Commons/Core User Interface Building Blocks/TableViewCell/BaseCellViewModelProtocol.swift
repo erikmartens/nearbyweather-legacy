@@ -16,7 +16,7 @@ protocol BaseCellViewModelProtocol {
 }
 
 extension BaseCellViewModelProtocol {
+  var onSelectedRoutingIntent: Step? { nil }
   var canEditRow: Bool { false }
   var canMoveRow: Bool { false }
-  var onSelectedRoutingIntent: Step? { nil }
 }

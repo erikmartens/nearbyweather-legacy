@@ -15,14 +15,15 @@ enum WeatherListStep: Step {
   case list
   case emptyList
   case loadingList
-  case weatherDetails2(identity: PersistencyModelIdentity)
+  case weatherDetails(identity: PersistencyModelIdentity)
   case changeListTypeAlert(selectionDelegate: ListTypeSelectionAlertDelegate)
   case changeListTypeAlertAdapted(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeOptionValue)
   case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate)
   case changeAmountOfResultsAlertAdapted(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsOptionValue)
   case changeSortingOrientationAlert(selectionDelegate: SortingOrientationSelectionAlertDelegate)
   case changeSortingOrientationAlertAdapted(selectionDelegate: SortingOrientationSelectionAlertDelegate, currentSelectedOptionValue: SortingOrientationOptionValue)
-  case dismissChildFlow
+  case dismiss
+  case pop
 }
 
 final class WeatherListStepper: Stepper {

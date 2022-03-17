@@ -28,11 +28,11 @@ final class MainFlow: Flow {
   }
 
   private lazy var rootViewController: UITabBarController = {
-    let tabbar = UITabBarController()
-    tabbar.tabBar.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
-    tabbar.tabBar.barTintColor = Constants.Theme.Color.ViewElement.primaryBackground
-    tabbar.tabBar.tintColor = Constants.Theme.Color.MarqueColors.bookmarkDay
-    return tabbar
+    let tabBarController = UITabBarController()
+    tabBarController.tabBar.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    tabBarController.tabBar.barTintColor = Constants.Theme.Color.ViewElement.primaryBackground
+    tabBarController.tabBar.tintColor = Constants.Theme.Color.MarqueColors.bookmarkDay
+    return tabBarController
   }()
   
   // MARK: - Properties

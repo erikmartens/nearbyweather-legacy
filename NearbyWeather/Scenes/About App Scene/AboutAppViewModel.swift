@@ -273,10 +273,7 @@ extension AboutAppViewModel: BaseTableViewSelectionDelegate {
   func didSelectRow(at indexPath: IndexPath) {
     _ = Observable.just(indexPath)
       .map { [unowned tableDataSource] indexPath in
-        tableDataSource.sectionDataSources
-          .value?[safe: indexPath.section]?
-          .sectionItems[safe: indexPath.row]?
-          .onSelectedRoutingIntent
+        tableDataSource.sectionDataSources[indexPath]?.onSelectedRoutingIntent
       }
       .filterNil()
       .take(1)

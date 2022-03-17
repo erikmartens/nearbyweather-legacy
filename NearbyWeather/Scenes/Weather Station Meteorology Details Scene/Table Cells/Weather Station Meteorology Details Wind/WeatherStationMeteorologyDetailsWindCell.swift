@@ -28,12 +28,12 @@ final class WeatherStationMeteorologyDetailsWindCell: UITableViewCell, BaseCell 
   // MARK: - UIComponents
   
   private lazy var windSpeedSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.windSpeed()))
-  private lazy var windSpeedDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.windspeed(), numberOfLines: 1))
-  private lazy var windSpeedLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
+  private lazy var windSpeedDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.windspeed()))
+  private lazy var windSpeedLabel = Factory.Label.make(fromType: .body(alignment: .right))
   
   private lazy var windDirectionSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.windDirection()))
-  private lazy var windDirectionDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.wind_direction(), numberOfLines: 1))
-  private lazy var windDirectionLabel = Factory.Label.make(fromType: .body(alignment: .right, numberOfLines: 1))
+  private lazy var windDirectionDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.wind_direction()))
+  private lazy var windDirectionLabel = Factory.Label.make(fromType: .body(alignment: .right))
   
   // MARK: - Assets
   

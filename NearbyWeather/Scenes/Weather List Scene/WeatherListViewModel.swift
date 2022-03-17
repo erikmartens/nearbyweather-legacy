@@ -200,12 +200,11 @@ extension WeatherListViewModel {
 extension WeatherListViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
-    guard let cellViewModel = tableDataSource.sectionDataSources[indexPath] as? WeatherListInformationTableViewCellViewModel else {
-      return
-    }
-    _ = Observable
-      .just(cellViewModel.weatherInformationIdentity)
-      .map(WeatherListStep.weatherDetails2)
+    _ = Observable.just(indexPath)
+      .map { [unowned tableDataSource] indexPath in
+        tableDataSource.sectionDataSources[indexPath]?.onSelectedRoutingIntent
+      }
+      .filterNil()
       .take(1)
       .asSingle()
       .subscribe(onSuccess: steps.accept)

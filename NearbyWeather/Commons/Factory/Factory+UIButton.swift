@@ -27,9 +27,10 @@ extension Factory {
       case let .standard(title, height):
         button.layer.cornerRadius = height/4
         button.layer.backgroundColor = Constants.Theme.Color.InteractableElement.standardButtonBackground.cgColor
-
+        
         button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
-        button.setTitleColor(.white, for: UIControl.State())
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
 
         if let title = title {
           button.setTitle(title, for: UIControl.State())
@@ -37,7 +38,8 @@ extension Factory {
         
       case let .plain(title):
         button.titleLabel?.font = .preferredFont(forTextStyle: .body)
-        button.setTitleColor(Constants.Theme.Color.ViewElement.Label.titleLight, for: UIControl.State())
+        button.setTitleColor(Constants.Theme.Color.InteractableElement.standardButtonBackground, for: .normal)
+        button.setTitleColor(Constants.Theme.Color.InteractableElement.standardButtonBackground.withAlphaComponent(0.5), for: .highlighted)
         
         if let title = title {
           button.setTitle(title, for: UIControl.State())

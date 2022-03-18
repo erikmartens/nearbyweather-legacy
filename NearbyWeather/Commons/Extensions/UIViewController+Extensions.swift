@@ -13,7 +13,7 @@ extension UIViewController {
   
   func presentSafariViewController(for url: URL) {
     let safariController = SFSafariViewController(url: url)
-    safariController.preferredControlTintColor = Constants.Theme.Color.ViewElement.Label.titleLight
+    safariController.preferredControlTintColor = Constants.Theme.Color.ViewElement.Label.titleDark
     safariController.modalPresentationStyle = .automatic
     present(safariController, animated: true, completion: nil)
   }

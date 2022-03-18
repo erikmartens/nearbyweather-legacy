@@ -13,7 +13,7 @@ extension Factory {
   struct BarButtonItem: FactoryFunction {
 
     enum BarButtonItemType {
-      case standard(title: String? = nil, image: UIImage? = nil)
+      case standard(title: String? = nil, image: UIImage? = nil, style: UIBarButtonItem.Style = .plain)
     }
 
     typealias InputType = BarButtonItemType
@@ -21,13 +21,13 @@ extension Factory {
 
     static func make(fromType type: InputType) -> ResultType {
       let button = UIBarButtonItem()
-      button.style = .plain
       button.tintColor = Constants.Theme.Color.InteractableElement.standardBarButtonTint
 
       switch type {
-      case let .standard(title, image):
+      case let .standard(title, image, style):
         button.title = title
         button.image = image?.withRenderingMode(.alwaysTemplate)
+        button.style = style
       }
 
       return button

@@ -65,7 +65,7 @@ final class ApiKeyInputFlow: Flow {
     }
     switch step {
     case .apiKeyInput:
-      return summonAboutAppViewController()
+      return summonApiKeyInputViewController()
     case .end:
       return endApiKeyInputFlow()
     }
@@ -76,7 +76,7 @@ final class ApiKeyInputFlow: Flow {
 
 private extension ApiKeyInputFlow {
   
-  func summonAboutAppViewController() -> FlowContributors {
+  func summonApiKeyInputViewController() -> FlowContributors {
     let apiKeyInputViewController = ApiKeyInputViewController(dependencies: ApiKeyInputViewController.ViewModel.Dependencies(
       apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService.self)!
     ))

@@ -23,7 +23,7 @@ final class ApiKeyInputViewController: UIViewController, BaseViewController {
   
   // MARK: - UIComponents
   
-  fileprivate lazy var saveBarButtonItem = Factory.BarButtonItem.make(fromType: .standard(title: R.string.localizable.save().uppercased()))
+  fileprivate lazy var saveBarButtonItem = Factory.BarButtonItem.make(fromType: .standard(title: R.string.localizable.save(), style: .done))
   fileprivate lazy var tableView = Factory.TableView.make(fromType: .standard(frame: view.frame))
   
   // MARK: - Assets

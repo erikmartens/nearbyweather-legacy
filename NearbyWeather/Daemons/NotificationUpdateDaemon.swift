@@ -108,19 +108,13 @@ extension NotificationUpdateDaemon {
                 .combineLatest(
                   dependencies.weatherInformationService.createGetBookmarkedWeatherInformationItemObservable(for: String(stationIdentifierInt)).map { $0.entity },
                   dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
-                  resultSelector: TemperatureOnAppIconBadgeInformation.init)
+                  resultSelector: TemperatureOnAppIconBadgeInformation.init
+                )
+                .catchAndReturn(nil)
             }
         }
     // update the app icon badge with the latest weather information for the preferred bookmark
-        .do(onNext: { [unowned self] temperatureOnAppIconBadgeInformation in
-          guard let temperatureOnAppIconBadgeInformation = temperatureOnAppIconBadgeInformation else {
-            clearAppIconBadge()
-            return
-          }
-          _ = dependencies.notificationService
-            .createPerformTemperatureOnBadgeUpdateCompletable(with: temperatureOnAppIconBadgeInformation)
-            .subscribe()
-        })
+        .flatMapLatest { [unowned self] information in dependencies.notificationService.createPerformTemperatureOnBadgeUpdateCompletable(with: information).asObservable().materialize() }
         .subscribe()
         .disposed(by: disposeBag)
   }

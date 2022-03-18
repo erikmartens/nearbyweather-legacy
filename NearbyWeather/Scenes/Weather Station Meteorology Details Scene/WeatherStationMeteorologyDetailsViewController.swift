@@ -81,16 +81,8 @@ extension WeatherStationMeteorologyDetailsViewController {
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {
     viewModel
-      .navigationBarDriver
-      .drive { [weak self] navigationBarInformation in
-        guard let navigationTitle = navigationBarInformation.0,
-              let barTintColor = navigationBarInformation.1,
-              let tintColor = navigationBarInformation.2 else {
-          return
-        }
-        self?.title = navigationTitle
-        self?.navigationController?.navigationBar.style(withBarTintColor: barTintColor, tintColor: tintColor)
-      }
+      .navigationBarTitleDriver
+      .drive { [unowned self] navigationTitle in title = navigationTitle }
       .disposed(by: disposeBag)
     
     viewModel

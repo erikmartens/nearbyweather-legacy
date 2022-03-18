@@ -28,12 +28,10 @@ final class WeatherListFlow: Flow {
     rootViewController
   }
   
-  private lazy var rootViewController: UINavigationController = {
-    let navigationController = Factory.NavigationController.make(fromType: .standard)
-    navigationController.tabBarItem.image = R.image.tabbar_list_ios11()
-    navigationController.tabBarItem.title = R.string.localizable.tab_weatherList()
-    return navigationController
-  }()
+  private lazy var rootViewController = Factory.NavigationController.make(fromType: .standardTabbed(
+    tabTitle: R.string.localizable.tab_weatherList(),
+    tabImage: R.image.tabbar_list_ios11()
+  ))
   
   // MARK: - Properties
   

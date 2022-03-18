@@ -11,9 +11,9 @@ import UIKit
 struct WeatherListAlertTableViewCellModel {
   let backgroundColor = Constants.Theme.Color.ViewElement.alert
   let alertImage = R.image.exclamationMark()
-  let alertImageTintColor = Constants.Theme.Color.ViewElement.titleLight
+  let alertImageTintColor = Constants.Theme.Color.ViewElement.Label.titleLight
   let alertInformationText: String?
-  let alertInformationTextColor = Constants.Theme.Color.ViewElement.titleLight
+  let alertInformationTextColor = Constants.Theme.Color.ViewElement.Label.titleLight
   
   init(
     alertInformationText: String? = nil

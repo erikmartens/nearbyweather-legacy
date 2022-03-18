@@ -26,7 +26,7 @@ final class SettingsImagedSingleLabelToggleCell: UITableViewCell, BaseCell {
   // MARK: - UIComponents
   
   private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
-  private lazy var contentLabel = Factory.Label.make(fromType: .body())
+  private lazy var contentLabel = Factory.Label.make(fromType: .body(textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   private lazy var toggleSwitch = UISwitch()
   
   // MARK: - Assets
@@ -109,9 +109,9 @@ private extension SettingsImagedSingleLabelToggleCell {
   func layoutUserInterface() {
     separatorInset = UIEdgeInsets(
       top: 0,
-      left: CellContentInsets.leading(from: .large)
+      left: CellContentInsets.leading(from: .extraLarge)
         + Constants.Dimensions.TableCellImage.width
-        + Constants.Dimensions.Spacing.InterElementSpacing.yDistance(from: .small),
+        + Constants.Dimensions.Spacing.InterElementSpacing.xDistance(from: .medium),
       bottom: 0,
       right: 0
     )
@@ -121,7 +121,7 @@ private extension SettingsImagedSingleLabelToggleCell {
       leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.width),
       leadingImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       leadingImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
+      leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .extraLarge)),
       leadingImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     
@@ -129,7 +129,7 @@ private extension SettingsImagedSingleLabelToggleCell {
       contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
+      contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
       contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     

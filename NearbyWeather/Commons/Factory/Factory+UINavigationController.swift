@@ -30,8 +30,9 @@ extension Factory {
       appearance.buttonAppearance = UIBarButtonItemAppearance(style: .plain)
       navigationController.navigationBar.standardAppearance = appearance
       
-      navigationController.navigationBar.barTintColor = Constants.Theme.Color.ViewElement.titleLight
-      navigationController.navigationBar.tintColor = Constants.Theme.Color.ViewElement.titleLight
+      navigationController.navigationBar.barTintColor = Constants.Theme.Color.ViewElement.Label.titleDark
+      navigationController.navigationBar.tintColor = Constants.Theme.Color.ViewElement.Label.titleDark
+      
       navigationController.navigationBar.isTranslucent = false
       navigationController.navigationBar.barStyle = .default
       

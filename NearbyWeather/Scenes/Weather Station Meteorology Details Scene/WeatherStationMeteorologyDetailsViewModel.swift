@@ -46,25 +46,9 @@ final class WeatherStationMeteorologyDetailsViewModel: NSObject, Stepper, BaseVi
   
   // MARK: - Drivers
   
-  lazy var navigationBarDriver: Driver<(String?, UIColor?, UIColor?)> = Observable
-    .combineLatest(
-      weatherInformationDtoObservable.map { $0.entity },
-      weatherStationIsBookmarkedObservable,
-      resultSelector: { (weatherInformationDTO, isBookmark) -> (String?, UIColor?, UIColor?) in
-        let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
-        
-        let navigationBarTintColor = isBookmark
-          ? isDayTime ? Constants.Theme.Color.MarqueColors.bookmarkDay : Constants.Theme.Color.MarqueColors.bookmarkNight
-          : isDayTime ? Constants.Theme.Color.MarqueColors.nearbyDay : Constants.Theme.Color.MarqueColors.nearbyNight
-        
-        let navigationTintColor = isBookmark
-          ? Constants.Theme.Color.ViewElement.titleLight
-          : Constants.Theme.Color.ViewElement.titleDark
-        
-        return (weatherInformationDTO.stationName, navigationBarTintColor, navigationTintColor)
-      }
-    )
-    .asDriver(onErrorJustReturn: (nil, nil, nil))
+  lazy var navigationBarTitleDriver: Driver<String?> = weatherInformationDtoObservable
+    .map { $0.entity.stationName }
+    .asDriver(onErrorJustReturn: nil)
   
   // MARK: - Observables
   
@@ -206,6 +190,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
           headerSectionItems + sunCycleSectionItems + atmosphericDetailsSectionItems + windSectionItems + mapSectionItems
         }
       )
+      .map { $0.compactMap { $0.sectionItems.isEmpty ? nil : $0 } } // remove empty sections
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
   }

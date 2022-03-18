@@ -13,12 +13,6 @@ import RxSwift
 
 private extension WeatherStationMeteorologyDetailsSunCycleCell {
   struct Definitions {
-    static var trailingLeadingContentInsets: CGFloat {
-      if #available(iOS 13, *) {
-        return CellContentInsets.leading(from: .small)
-      }
-      return CellContentInsets.leading(from: .medium)
-    }
     static let symbolWidth: CGFloat = 20
   }
 }
@@ -34,12 +28,12 @@ final class WeatherStationMeteorologyDetailsSunCycleCell: UITableViewCell, BaseC
   // MARK: - UIComponents
   
   private lazy var sunriseSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.sunrise()))
-  private lazy var sunriseDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunrise()))
-  private lazy var sunriseTimeLabel = Factory.Label.make(fromType: .body(alignment: .right))
+  private lazy var sunriseDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunrise(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
+  private lazy var sunriseTimeLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   
   private lazy var sunsetSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.sunset()))
-  private lazy var sunsetDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunset()))
-  private lazy var sunsetTimeLabel = Factory.Label.make(fromType: .body(alignment: .right))
+  private lazy var sunsetDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.sunset(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
+  private lazy var sunsetTimeLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   
   // MARK: - Assets
   
@@ -98,7 +92,7 @@ private extension WeatherStationMeteorologyDetailsSunCycleCell {
     // line 1
     contentView.addSubview(sunriseSymbolImageView, constraints: [
       sunriseSymbolImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
-      sunriseSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
+      sunriseSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
       sunriseSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
       sunriseSymbolImageView.heightAnchor.constraint(equalTo: sunriseSymbolImageView.widthAnchor)
     ])
@@ -113,7 +107,7 @@ private extension WeatherStationMeteorologyDetailsSunCycleCell {
     contentView.addSubview(sunriseTimeLabel, constraints: [
       sunriseTimeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       sunriseTimeLabel.leadingAnchor.constraint(equalTo: sunriseDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      sunriseTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Definitions.trailingLeadingContentInsets),
+      sunriseTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
       sunriseTimeLabel.widthAnchor.constraint(equalTo: sunriseDescriptionLabel.widthAnchor),
       sunriseTimeLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       sunriseTimeLabel.heightAnchor.constraint(equalTo: sunriseDescriptionLabel.heightAnchor),
@@ -124,7 +118,7 @@ private extension WeatherStationMeteorologyDetailsSunCycleCell {
     // line 2
     contentView.addSubview(sunsetSymbolImageView, constraints: [
       sunsetSymbolImageView.topAnchor.constraint(equalTo: sunriseSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
-      sunsetSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Definitions.trailingLeadingContentInsets),
+      sunsetSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
       sunsetSymbolImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       sunsetSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
       sunsetSymbolImageView.heightAnchor.constraint(equalTo: sunsetSymbolImageView.widthAnchor)
@@ -141,7 +135,7 @@ private extension WeatherStationMeteorologyDetailsSunCycleCell {
     contentView.addSubview(sunsetTimeLabel, constraints: [
       sunsetTimeLabel.topAnchor.constraint(equalTo: sunriseTimeLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       sunsetTimeLabel.leadingAnchor.constraint(equalTo: sunsetDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      sunsetTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Definitions.trailingLeadingContentInsets),
+      sunsetTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
       sunsetTimeLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       sunsetTimeLabel.widthAnchor.constraint(equalTo: sunsetDescriptionLabel.widthAnchor),
       sunsetTimeLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),

@@ -19,7 +19,7 @@ class SettingsAppVersionCell: UITableViewCell, BaseCell {
   
   private lazy var mainImageView = Factory.ImageView.make(fromType: .appIcon)
   private lazy var titleLabel = Factory.Label.make(fromType: .title(alignment: .center))
-  private lazy var subtitleLabel = Factory.Label.make(fromType: .description(alignment: .center))
+  private lazy var subtitleLabel = Factory.Label.make(fromType: .subtitle(alignment: .center))
   
   // MARK: - Assets
   

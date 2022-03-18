@@ -12,7 +12,7 @@ struct WeatherMapAnnotationModel {
   let title: String?
   let subtitle: String?
   let isDayTime: Bool?
-  let borderColor: UIColor?
+  let tintColor: UIColor?
   let backgroundColor: UIColor?
   
   init(
@@ -25,7 +25,7 @@ struct WeatherMapAnnotationModel {
     self.title = title
     self.subtitle = subtitle
     self.isDayTime = isDayTime
-    self.borderColor = borderColor
+    self.tintColor = borderColor
     self.backgroundColor = backgroundColor
   }
   
@@ -61,25 +61,8 @@ struct WeatherMapAnnotationModel {
       title: weatherInformationDTO.stationName,
       subtitle: subtitle,
       isDayTime: isDayTime,
-      borderColor: Self.borderColor(for: isBookmark),
-      backgroundColor: Self.backgroundColor(for: isBookmark, isDayTime: isDayTime)
+      borderColor: Constants.Theme.Color.ViewElement.WeatherInformation.border,
+      backgroundColor: isDayTime ? Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay : Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundNight
     )
-  }
-}
-
-// MARK: - Helpers
-
-private extension WeatherMapAnnotationModel {
-  
-  static func borderColor(for isBookmark: Bool) -> UIColor {
-    isBookmark
-      ? Constants.Theme.Color.ViewElement.borderBookmark
-      : Constants.Theme.Color.ViewElement.borderNearby
-  }
-  
-  static func backgroundColor(for isBookmark: Bool, isDayTime: Bool) -> UIColor {
-    isBookmark
-      ? (isDayTime ? Constants.Theme.Color.MarqueColors.bookmarkDay : Constants.Theme.Color.MarqueColors.bookmarkNight)
-      : (isDayTime ? Constants.Theme.Color.MarqueColors.nearbyDay : Constants.Theme.Color.MarqueColors.nearbyNight)
   }
 }

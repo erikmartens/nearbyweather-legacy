@@ -26,8 +26,8 @@ final class SettingsImagedDualLabelCell: UITableViewCell, BaseCell {
   // MARK: - UIComponents
   
   private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
-  private lazy var contentLabel = Factory.Label.make(fromType: .body())
-  private lazy var descriptionLabel = Factory.Label.make(fromType: .description(alignment: .right, numberOfLines: 1))
+  private lazy var contentLabel = Factory.Label.make(fromType: .body(textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
+  private lazy var descriptionLabel = Factory.Label.make(fromType: .subtitle(alignment: .right, numberOfLines: 1, textColor: Constants.Theme.Color.ViewElement.Label.subtitleDark))
   
   // MARK: - Assets
   
@@ -104,9 +104,9 @@ private extension SettingsImagedDualLabelCell {
   func layoutUserInterface() {
     separatorInset = UIEdgeInsets(
       top: 0,
-      left: CellContentInsets.leading(from: .large)
+      left: CellContentInsets.leading(from: .extraLarge)
         + Constants.Dimensions.TableCellImage.width
-        + CellInterelementSpacing.xDistance(from: .small),
+        + CellInterelementSpacing.xDistance(from: .medium),
       bottom: 0,
       right: 0
     )
@@ -116,7 +116,7 @@ private extension SettingsImagedDualLabelCell {
       leadingImageView.widthAnchor.constraint(equalToConstant: Constants.Dimensions.TableCellImage.width),
       leadingImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       leadingImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
+      leadingImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .extraLarge)),
       leadingImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     
@@ -124,7 +124,7 @@ private extension SettingsImagedDualLabelCell {
       contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
+      contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
       contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     

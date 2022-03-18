@@ -29,7 +29,7 @@ extension Factory {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
         imageView.image = image?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = tintColor ?? Constants.Theme.Color.ViewElement.symbolImage
+        imageView.tintColor = tintColor ?? Constants.Theme.Color.ViewElement.symbolImageDark
       case .appIcon:
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = Constants.Dimensions.AppIconImage.cornerRadius

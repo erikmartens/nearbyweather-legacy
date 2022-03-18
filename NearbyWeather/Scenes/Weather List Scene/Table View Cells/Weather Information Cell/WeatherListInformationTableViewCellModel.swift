@@ -62,8 +62,8 @@ struct WeatherListInformationTableViewCellModel {
         forDistanceSpeedUnit: dimensionalUnitsOption,
         forWindspeed: weatherInformationDTO.windInformation.windspeed
       ),
-      backgroundColor: Self.backgroundColor(for: isBookmark, isDayTime: isDayTime),
-      borderColor: Self.borderColor(for: isBookmark)
+      backgroundColor: Self.backgroundColor(isDayTime: isDayTime),
+      borderColor: Constants.Theme.Color.ViewElement.WeatherInformation.border
     )
   }
 }
@@ -72,15 +72,7 @@ struct WeatherListInformationTableViewCellModel {
 
 private extension WeatherListInformationTableViewCellModel {
   
-  static func borderColor(for isBookmark: Bool) -> UIColor {
-    isBookmark
-      ? Constants.Theme.Color.ViewElement.borderBookmark
-      : Constants.Theme.Color.ViewElement.borderNearby
-  }
-  
-  static func backgroundColor(for isBookmark: Bool, isDayTime: Bool) -> UIColor {
-    isBookmark
-      ? (isDayTime ? Constants.Theme.Color.MarqueColors.bookmarkDay : Constants.Theme.Color.MarqueColors.bookmarkNight)
-      : (isDayTime ? Constants.Theme.Color.MarqueColors.nearbyDay : Constants.Theme.Color.MarqueColors.nearbyNight)
+  static func backgroundColor(isDayTime: Bool) -> UIColor {
+    isDayTime ? Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay : Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundNight
   }
 }

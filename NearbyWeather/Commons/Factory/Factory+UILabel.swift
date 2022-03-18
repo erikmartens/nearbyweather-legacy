@@ -13,9 +13,10 @@ extension Factory {
   struct Label: FactoryFunction {
     
     enum LabelType {
-      case title(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
-      case body(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
-      case description(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0)
+      case headline(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0, textColor: UIColor = Constants.Theme.Color.ViewElement.Label.titleDark)
+      case title(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0, textColor: UIColor = Constants.Theme.Color.ViewElement.Label.titleDark)
+      case body(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0, textColor: UIColor = Constants.Theme.Color.ViewElement.Label.bodyDark)
+      case subtitle(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0, textColor: UIColor = Constants.Theme.Color.ViewElement.Label.subtitleDark)
       case weatherSymbol
       case mapAnnotation(fontSize: CGFloat, width: CGFloat, height: CGFloat, yOffset: CGFloat)
     }
@@ -27,22 +28,29 @@ extension Factory {
       let label = UILabel()
       
       switch type {
-      case let .title(text, alignment, numberOfLines):
-        label.textColor = Constants.Theme.Color.ViewElement.titleLight
+      case let .headline(text, alignment, numberOfLines, textColor):
+        label.textColor = textColor
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.text = text
+        label.textAlignment = alignment
+        label.numberOfLines = numberOfLines
+        label.lineBreakMode = numberOfLines == 1 ? .byTruncatingTail : .byWordWrapping
+      case let .title(text, alignment, numberOfLines, textColor):
+        label.textColor = textColor
         label.font = .preferredFont(forTextStyle: .title3)
         label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
         label.lineBreakMode = numberOfLines == 1 ? .byTruncatingTail : .byWordWrapping
-      case let .body(text, alignment, numberOfLines):
-        label.textColor = Constants.Theme.Color.ViewElement.titleLight
+      case let .body(text, alignment, numberOfLines, textColor):
+        label.textColor = textColor
         label.font = .preferredFont(forTextStyle: .body)
         label.text = text
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
         label.lineBreakMode = numberOfLines == 1 ? .byTruncatingTail : .byWordWrapping
-      case let .description(text, alignment, numberOfLines):
-        label.textColor = Constants.Theme.Color.ViewElement.subtitleLight
+      case let .subtitle(text, alignment, numberOfLines, textColor):
+        label.textColor = textColor
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.text = text
         label.textAlignment = alignment

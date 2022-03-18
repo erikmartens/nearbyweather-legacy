@@ -26,8 +26,8 @@ final class SettingsDualLabelSubtitleCell: UITableViewCell, BaseCell {
   // MARK: - UIComponents
   
   private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
-  private lazy var contentLabel = Factory.Label.make(fromType: .body())
-  private lazy var subtitleLabel = Factory.Label.make(fromType: .description())
+  private lazy var contentLabel = Factory.Label.make(fromType: .body(textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
+  private lazy var subtitleLabel = Factory.Label.make(fromType: .subtitle())
   
   // MARK: - Assets
   

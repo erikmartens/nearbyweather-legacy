@@ -124,16 +124,16 @@ private extension WeatherMapAnnotationView {
   
   func setContent(for annotationModel: WeatherMapAnnotationModel) {
     circleLayer.fillColor = annotationModel.backgroundColor?.cgColor
-    circleLayer.strokeColor = annotationModel.borderColor?.cgColor
+    circleLayer.strokeColor = annotationModel.tintColor?.cgColor
     
     speechBubbleLayer.fillColor = annotationModel.backgroundColor?.cgColor
-    speechBubbleLayer.strokeColor = annotationModel.borderColor?.cgColor
+    speechBubbleLayer.strokeColor = annotationModel.tintColor?.cgColor
     
     titleLabel.text = annotationModel.title
-    titleLabel.textColor = annotationModel.borderColor
+    titleLabel.textColor = annotationModel.tintColor
     
     subtitleLabel.text = annotationModel.subtitle
-    subtitleLabel.textColor = annotationModel.borderColor
+    subtitleLabel.textColor = annotationModel.tintColor
   }
   
   func layoutUserInterface() {

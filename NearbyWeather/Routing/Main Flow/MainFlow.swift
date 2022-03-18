@@ -31,7 +31,7 @@ final class MainFlow: Flow {
     let tabBarController = UITabBarController()
     tabBarController.tabBar.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
     tabBarController.tabBar.barTintColor = Constants.Theme.Color.ViewElement.primaryBackground
-    tabBarController.tabBar.tintColor = Constants.Theme.Color.MarqueColors.bookmarkDay
+    tabBarController.tabBar.tintColor = Constants.Theme.Color.MarqueColors.standardMarque
     return tabBarController
   }()
   

@@ -38,12 +38,12 @@ final class WeatherStationMeteorologyDetailsMapCell: UITableViewCell, BaseCell {
   ))
   
   private lazy var coordinatesSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.location()))
-  private lazy var coordinatesDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.coordinates()))
-  private lazy var coordinatesLabel = Factory.Label.make(fromType: .body(alignment: .right))
+  private lazy var coordinatesDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.coordinates(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
+  private lazy var coordinatesLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   
   private lazy var distanceSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.distance()))
-  private lazy var distanceDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.distance()))
-  private lazy var distanceLabel = Factory.Label.make(fromType: .body(alignment: .right))
+  private lazy var distanceDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.distance(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
+  private lazy var distanceLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   
   // MARK: - Assets
   

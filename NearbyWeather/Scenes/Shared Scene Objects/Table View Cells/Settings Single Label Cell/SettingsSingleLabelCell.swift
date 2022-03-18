@@ -26,7 +26,7 @@ final class SettingsSingleLabelCell: UITableViewCell, BaseCell {
   // MARK: - UIComponents
   
   private lazy var leadingImageView = Factory.ImageView.make(fromType: .cellPrefix)
-  private lazy var contentLabel = Factory.Label.make(fromType: .body())
+  private lazy var contentLabel = Factory.Label.make(fromType: .body(textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   
   // MARK: - Assets
   

@@ -94,7 +94,7 @@ extension SettingsViewModel {
     // General Section
     let generalSectionItems: [BaseCellViewModelProtocol] = [
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.blue,
+        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundBlue,
         symbolImage: R.image.info(),
         labelText: R.string.localizable.about(),
         selectable: true,
@@ -108,7 +108,7 @@ extension SettingsViewModel {
     // OpenWeatherMapApi Section
     let openWeatherMapApiSectionItems: [BaseCellViewModelProtocol] = [
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.green,
+        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundGreen,
         symbolImage: R.image.seal(),
         labelText: R.string.localizable.apiKey(),
         selectable: true,
@@ -116,7 +116,7 @@ extension SettingsViewModel {
         routingIntent: SettingsStep.apiKeyEdit
       )),
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.green,
+        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundGreen,
         symbolImage: R.image.start(),
         labelText: R.string.localizable.get_started_with_openweathermap(),
         selectable: true,
@@ -129,7 +129,7 @@ extension SettingsViewModel {
     
     // Bookmarks Section Main
     let manageBoomarksCell = SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
-      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
+      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundRed,
       symbolImage: R.image.wrench(),
       contentLabelText: R.string.localizable.manage_locations(),
       descriptionLabelTextObservable: amountOfBookmarksObservable.map { "\($0)" },
@@ -139,7 +139,7 @@ extension SettingsViewModel {
     ))
     
     let addBookmarkCell = SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
-      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
+      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundRed,
       symbolImage: R.image.add_bookmark(),
       labelText: R.string.localizable.add_location(),
       selectable: true,
@@ -159,14 +159,14 @@ extension SettingsViewModel {
       .share(replay: 1)
     
     let temperatureViaAppIconCell = SettingsImagedSingleLabelToggleCellViewModel(dependencies: SettingsImagedSingleLabelToggleCellViewModel.Dependencies(
-      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
+      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundRed,
       symbolImage: R.image.badge(),
       labelText: R.string.localizable.show_temp_on_icon(),
       isToggleOnObservable: allowTempOnAppIconObservable,
       didFlipToggleSwitchSubject: onDidChangeAllowTempOnAppIconOptionSubject
     ))
     let preferredBookmarkCell = SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
-      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.red,
+      symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundRed,
       symbolImage: R.image.preferred_bookmark(),
       contentLabelText: R.string.localizable.preferred_bookmark(),
       descriptionLabelTextObservable: preferredBookmarkNameObservable,
@@ -199,7 +199,7 @@ extension SettingsViewModel {
     
     let preferencesMainSectionItems: [BaseCellViewModelProtocol] = [
       SettingsImagedSingleLabelToggleCellViewModel(dependencies: SettingsImagedSingleLabelToggleCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.gray,
+        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundGray,
         symbolImage: R.image.reload(),
         labelText: R.string.localizable.refresh_on_app_start(),
         isToggleOnObservable: refreshOnAppStartObservable,
@@ -215,7 +215,7 @@ extension SettingsViewModel {
     
     let preferencesSubSection1Items: [BaseCellViewModelProtocol] = [
       SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.gray,
+        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundGray,
         symbolImage: R.image.thermometer(),
         contentLabelText: R.string.localizable.temperature_unit(),
         descriptionLabelTextObservable: temperatureUnitPreferenceObservable,
@@ -224,7 +224,7 @@ extension SettingsViewModel {
         routingIntent: SettingsStep.changeTemperatureUnitAlert(selectionDelegate: self)
       )),
       SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.gray,
+        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundGray,
         symbolImage: R.image.dimension(),
         contentLabelText: R.string.localizable.distanceSpeed_unit(),
         descriptionLabelTextObservable: dimensionalUnitPreferenceObservable,

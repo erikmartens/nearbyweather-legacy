@@ -21,23 +21,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var welcomeWindow: UIWindow?
   
-  private var dependencyContainer: Container!
   private var flowCoordinator: FlowCoordinator!
   
-  private var daemons: [Daemon] = []
+  private var dependencyContainer: Container!
+  private var daemonContainer: [Daemon] = []
   
   private var tempOnAsAppIconBadgeBackgroundFetchTaskId: UIBackgroundTaskIdentifier = .invalid
   
   // MARK: - Functions
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    // TODO: Handle via NSOperations
     registerServices()
     runMigrationIfNeeded()
     
     instantiateApplicationUserInterface()
+    instantiateDaemons()
     
-    // TODO: create secrets sub-repo and git-ignore
     if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
        let firebaseOptions = FirebaseOptions(contentsOfFile: filePath) {
       FirebaseApp.configure(options: firebaseOptions)
@@ -48,24 +47,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
   
+  func applicationWillEnterForeground(_ application: UIApplication) {
+    startDaemons()
+  }
+  
   func applicationDidBecomeActive(_ application: UIApplication) {
-    instantiateDaemons()
-    refreshWeatherDataIfNeeded()
+    // nothing to do
   }
   
   func applicationWillResignActive(_ application: UIApplication) {
-    daemons.forEach { $0.stopObservations() }
-    daemons = []
+    stopDaemons()
   }
   
   func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    beginAppIconUpdateBackgroundFetchTask(for: application, performFetchWithCompletionHandler: completionHandler)
+    beginTempAsAppIconBadgeBackgroundFetchTask(for: application, performFetchWithCompletionHandler: completionHandler)
   }
   
   func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
-    daemons.forEach { $0.stopObservations() }
-    daemons = []
-    instantiateDaemons()
+    restartDaemons()
   }
 }
 
@@ -133,7 +132,7 @@ private extension AppDelegate {
     let weatherInformationService = dependencyContainer.resolve(WeatherInformationService.self)!
     let notificationService = dependencyContainer.resolve(NotificationService.self)!
     
-    daemons.append(contentsOf: [
+    daemonContainer.append(contentsOf: [
       WeatherInformationUpdateDaemon(dependencies: WeatherInformationUpdateDaemon.Dependencies(
         apiKeyService: apiKeyService,
         preferencesService: preferencesService,
@@ -151,8 +150,21 @@ private extension AppDelegate {
         notificationService: notificationService
       ))
     ])
-    
-    daemons.forEach { $0.startObservations() }
+  }
+  
+  func startDaemons() {
+    daemonContainer.forEach { $0.startObservations() }
+  }
+  
+  func stopDaemons() {
+    daemonContainer.forEach { $0.stopObservations() }
+  }
+  
+  func restartDaemons() {
+    stopDaemons()
+    daemonContainer = []
+    instantiateDaemons()
+    startDaemons()
   }
   
   func instantiateApplicationUserInterface() {
@@ -166,37 +178,16 @@ private extension AppDelegate {
     flowCoordinator = FlowCoordinator()
     flowCoordinator?.coordinate(
       flow: rootFlow,
-      with: RootStepper(
-        dependencies: RootStepper.Dependencies(apiKeyService: dependencyContainer.resolve(ApiKeyService.self)!)
-      )
+      with: RootStepper(dependencies: RootStepper.Dependencies(apiKeyService: dependencyContainer.resolve(ApiKeyService.self)!))
     )
   }
   
-  func refreshWeatherDataIfNeeded() {
-    let preferencesService = dependencyContainer.resolve(PreferencesService.self)! as AppDelegatePreferenceReading
-    let weatherInformationService = dependencyContainer.resolve(WeatherInformationService.self)! as WeatherInformationUpdating
-    
-    _ = preferencesService
-      .createGetRefreshOnAppStartOptionObservable()
-      .take(1)
-      .asSingle()
-      .flatMapCompletable { [weatherInformationService] refreshOnAppStartOption -> Completable in
-        guard refreshOnAppStartOption.value == .yes else {
-          return Completable.emptyCompletable
-        }
-        return Completable.zip([
-          weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
-          weatherInformationService.createUpdateNearbyWeatherInformationCompletable()
-        ])
-      }
-      .subscribe()
-  }
-  
-  func beginAppIconUpdateBackgroundFetchTask(for application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+  // TODO: move this to a background task worker
+  func beginTempAsAppIconBadgeBackgroundFetchTask(for application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
     tempOnAsAppIconBadgeBackgroundFetchTaskId = application.beginBackgroundTask(
       withName: Constants.Keys.BackgroundTaskIdentifiers.kRefreshTempOnAppIconBadge,
       expirationHandler: { [unowned self] in
-        endAppIconUpdateBackgroundFetchTask()
+        endTempAsAppIconBadgeBackgroundFetchTask()
       })
     
     let preferencesService = dependencyContainer.resolve(PreferencesService.self)!
@@ -223,16 +214,16 @@ private extension AppDelegate {
       .subscribe(
         onCompleted: { [unowned self] in
           completionHandler(.newData)
-          endAppIconUpdateBackgroundFetchTask()
+          endTempAsAppIconBadgeBackgroundFetchTask()
         },
         onError: { [unowned self] _ in
           completionHandler(.failed)
-          endAppIconUpdateBackgroundFetchTask()
+          endTempAsAppIconBadgeBackgroundFetchTask()
         }
       )
   }
   
-  func endAppIconUpdateBackgroundFetchTask() {
+  func endTempAsAppIconBadgeBackgroundFetchTask() {
     UIApplication.shared.endBackgroundTask(tempOnAsAppIconBadgeBackgroundFetchTaskId)
     tempOnAsAppIconBadgeBackgroundFetchTaskId = .invalid
   }

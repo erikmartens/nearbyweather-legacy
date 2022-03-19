@@ -45,10 +45,12 @@ final class RootFlow: Flow {
       return .none
     }
     switch step {
-    case .main:
-      return summonMainWindow()
+    case .loading:
+      return summonLoadingWindow()
     case .welcome:
       return summonWelcomeWindow()
+    case .main:
+      return summonMainWindow()
     case .dimissWelcome:
       return dismissWelcomeWindow()
     }
@@ -71,15 +73,15 @@ final class RootFlow: Flow {
 
 private extension RootFlow {
   
-  func summonMainWindow() -> FlowContributors {
-    let mainFlow = MainFlow(dependencies: MainFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+  func summonLoadingWindow() -> FlowContributors {
+    let loadingFlow = LoadingFlow(dependencies: LoadingFlow.Dependencies())
     
-    Flows.use(mainFlow, when: .ready) { [dependencies] (mainRoot: UITabBarController) in
-      dependencies.rootWindow.rootViewController = mainRoot
+    Flows.use(loadingFlow, when: .ready) { [dependencies] (loadingRoot: UINavigationController) in
+      dependencies.rootWindow.rootViewController = loadingRoot
       dependencies.rootWindow.makeKeyAndVisible()
     }
     
-    return .one(flowContributor: .contribute(withNextPresentable: mainFlow, withNextStepper: MainStepper()))
+    return .one(flowContributor: .contribute(withNextPresentable: loadingFlow, withNextStepper: LoadingStepper()))
   }
   
   func summonWelcomeWindow() -> FlowContributors {
@@ -91,6 +93,17 @@ private extension RootFlow {
     }
     
     return .one(flowContributor: .contribute(withNextPresentable: welcomeFlow, withNextStepper: WelcomeStepper()))
+  }
+  
+  func summonMainWindow() -> FlowContributors {
+    let mainFlow = MainFlow(dependencies: MainFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+    
+    Flows.use(mainFlow, when: .ready) { [dependencies] (mainRoot: UITabBarController) in
+      dependencies.rootWindow.rootViewController = mainRoot
+      dependencies.rootWindow.makeKeyAndVisible()
+    }
+    
+    return .one(flowContributor: .contribute(withNextPresentable: mainFlow, withNextStepper: MainStepper()))
   }
   
   func dismissWelcomeWindow() -> FlowContributors {

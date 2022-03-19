@@ -11,10 +11,7 @@ import UIKit.UIColor
 extension UIColor {
   
   static func from(dark: UIColor, light: UIColor) -> UIColor {
-    guard #available(iOS 13.0, *) else {
-      return light
-    }
-    return UIColor { traitCollection in
+    UIColor { traitCollection in
       switch traitCollection.userInterfaceStyle {
       case .light:
         return light

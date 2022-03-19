@@ -208,6 +208,8 @@
 		F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */; };
 		F2B8EA001EA11BA800704E90 /* WeatherInformationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8E9FF1EA11BA800704E90 /* WeatherInformationDTO.swift */; };
 		F2BDACF927E3F99B00FF6401 /* Completable+EmptyCompletable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDACF827E3F99B00FF6401 /* Completable+EmptyCompletable.swift */; };
+		F2BDACFC27E64E2800FF6401 /* LoadingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDACFB27E64E2800FF6401 /* LoadingFlow.swift */; };
+		F2BDACFE27E64E4500FF6401 /* LoadingStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDACFD27E64E4500FF6401 /* LoadingStepper.swift */; };
 		F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14523F355370008B0F7 /* Date+String.swift */; };
 		F2D198FE25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D198FD25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift */; };
 		F2D1990625A10D2E004C7753 /* BaseTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1990525A10D2E004C7753 /* BaseTableViewDataSource.swift */; };
@@ -513,6 +515,8 @@
 		F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		F2B8E9FF1EA11BA800704E90 /* WeatherInformationDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInformationDTO.swift; sourceTree = "<group>"; };
 		F2BDACF827E3F99B00FF6401 /* Completable+EmptyCompletable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Completable+EmptyCompletable.swift"; sourceTree = "<group>"; };
+		F2BDACFB27E64E2800FF6401 /* LoadingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFlow.swift; sourceTree = "<group>"; };
+		F2BDACFD27E64E4500FF6401 /* LoadingStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStepper.swift; sourceTree = "<group>"; };
 		F2C4E14523F355370008B0F7 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		F2D198FD25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLifeCycleRelay.swift; sourceTree = "<group>"; };
 		F2D1990525A10D2E004C7753 /* BaseTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -1209,6 +1213,7 @@
 			children = (
 				F217CBF027DBF5D800DAC947 /* FlowPresentationStyle.swift */,
 				F237288F244CAAE600964C49 /* Root Flow */,
+				F2BDACFA27E64E0500FF6401 /* Loading Flow */,
 				F2372883244C8F5800964C49 /* Welcome Flow */,
 				F237286D244C7D6800964C49 /* Main Flow */,
 				F2372872244C7EE600964C49 /* Weather List Flow */,
@@ -1530,6 +1535,15 @@
 				F277E7E925AC9F7F0009D59B /* FocusOnLocationSelectionAlert.swift */,
 			);
 			path = "Focus On Location";
+			sourceTree = "<group>";
+		};
+		F2BDACFA27E64E0500FF6401 /* Loading Flow */ = {
+			isa = PBXGroup;
+			children = (
+				F2BDACFB27E64E2800FF6401 /* LoadingFlow.swift */,
+				F2BDACFD27E64E4500FF6401 /* LoadingStepper.swift */,
+			);
+			path = "Loading Flow";
 			sourceTree = "<group>";
 		};
 		F2D1990225A10CD8004C7753 /* ViewController */ = {
@@ -2046,12 +2060,14 @@
 				F217CBBA27DB652700DAC947 /* SettingsAppVersionCell.swift in Sources */,
 				F2E12F4B25B098C700176087 /* WeatherStationMeteorologyDetailsSunCycleCellModel.swift in Sources */,
 				F28F180425A7354500AEA99A /* ApiKeyService.swift in Sources */,
+				F2BDACFC27E64E2800FF6401 /* LoadingFlow.swift in Sources */,
 				F22B0F8F25AB64E40037F957 /* WeatherMapAnnotationView.swift in Sources */,
 				F217CBFC27DCA0BA00DAC947 /* AddBookmarkTableViewDelegate.swift in Sources */,
 				F2E9C98627E1150200DCA19B /* ManageBookmarksViewModel.swift in Sources */,
 				F2372885244C90EE00964C49 /* WelcomeFlow.swift in Sources */,
 				F2D1993D25A1E51E004C7753 /* WeatherListTableViewDelegate.swift in Sources */,
 				F2F7BA1623E0FB2D00B4D2EB /* BuildEnvironment.m in Sources */,
+				F2BDACFE27E64E4500FF6401 /* LoadingStepper.swift in Sources */,
 				F217CB7C27D50C4100DAC947 /* SettingsImagedSingleLabelCellViewModel.swift in Sources */,
 				F282166524608205004E5B08 /* WeatherListInformationTableViewCellViewModel.swift in Sources */,
 				F260BDAE244F7BA700B4357A /* RealmPersistencyWorker.swift in Sources */,

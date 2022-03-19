@@ -7,6 +7,7 @@
 //
 
 import RxSwift
+import RxCocoa
 import RxOptional
 
 // MARK: - Dependencies
@@ -35,13 +36,19 @@ final class WeatherInformationUpdateDaemon: NSObject, Daemon {
   
   // MARK: - Observables
   
+  private let appDidBecomeActiveRelay = PublishRelay<Void>()
+  
   // MARK: - Initialization
   
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
+    super.init()
+    NotificationCenter.default.addObserver(self, selector: #selector(notifyAppDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
   }
   
   deinit {
+    NotificationCenter.default.removeObserver(self)
+    
     printDebugMessage(
       domain: String(describing: self),
       message: "was deinitialized",
@@ -110,6 +117,33 @@ private extension WeatherInformationUpdateDaemon {
   }
   
   func observeAppDidBecomeActive() {
-    // TODO
+    appDidBecomeActiveRelay
+      .asObservable()
+      .flatMapLatest { [unowned self] _ in
+        dependencies.preferencesService
+          .createGetRefreshOnAppStartOptionObservable()
+          .take(1)
+          .asSingle()
+          .flatMapCompletable { [unowned self] refreshOnAppStartOption -> Completable in
+            guard refreshOnAppStartOption.value == .yes else {
+              return Completable.emptyCompletable
+            }
+            return Completable.zip([
+              dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(),
+              dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable()
+            ])
+          }
+          .asObservable()
+          .materialize()
+      }
+      .subscribe()
+      .disposed(by: disposeBag)
+  }
+}
+
+fileprivate extension WeatherInformationUpdateDaemon {
+  
+  @objc func notifyAppDidBecomeActive() {
+    appDidBecomeActiveRelay.accept(())
   }
 }

@@ -11,8 +11,9 @@ import RxCocoa
 import RxSwift
 
 enum RootStep: Step {
-  case main
+  case loading
   case welcome
+  case main
   case dimissWelcome
 }
 
@@ -29,8 +30,7 @@ extension RootStepper {
 class RootStepper: Stepper {
   
   var steps = PublishRelay<Step>()
-  
-  // TODO: make initial step that shows a loading screen while the app is loading its content
+  var initialStep: Step = RootStep.loading
   
   // MARK: - Assets
   
@@ -47,24 +47,12 @@ class RootStepper: Stepper {
   // MARK: - Functions
   
   func readyToEmitSteps() {
-    createRootSceneStateStepObservable
-      .take(1)
-      .asSingle()
-      .subscribe(onSuccess: { [unowned steps] in steps.accept($0) })
-      .disposed(by: disposeBag)
-  }
-}
-
-// MARK: - Helper Extensions
-
-private extension RootStepper {
-  
-  var createRootSceneStateStepObservable: Observable<Step> {
     dependencies.apiKeyService
       .createApiKeyIsValidObservable()
-      .distinctUntilChanged()
-      .map {
-        $0 == .missing ? RootStep.welcome : RootStep.main
-      }
+      .take(1)
+      .asSingle()
+      .map { $0 == .missing ? RootStep.welcome : RootStep.main }
+      .subscribe(onSuccess: { [unowned steps] in steps.accept($0) })
+      .disposed(by: disposeBag)
   }
 }

@@ -141,6 +141,7 @@ private extension WeatherStationMeteorologyDetailsHeaderCell {
     
     contentView.addSubview(dayTimeStatusLabel, constraints: [
       dayTimeStatusLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
+      dayTimeStatusLabel.widthAnchor.constraint(equalTo: weatherConditionSubtitleLabel.widthAnchor),
       dayTimeStatusLabel.topAnchor.constraint(equalTo: temperatureLabelLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
       dayTimeStatusLabel.leadingAnchor.constraint(equalTo: weatherConditionSubtitleLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       dayTimeStatusLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),

@@ -91,7 +91,7 @@ private extension WeatherStationMeteorologyDetailsSunCycleCell {
   func layoutUserInterface() {
     // line 1
     contentView.addSubview(sunriseSymbolImageView, constraints: [
-      sunriseSymbolImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
+      sunriseSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       sunriseSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
       sunriseSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
       sunriseSymbolImageView.heightAnchor.constraint(equalTo: sunriseSymbolImageView.widthAnchor)
@@ -108,18 +108,17 @@ private extension WeatherStationMeteorologyDetailsSunCycleCell {
       sunriseTimeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       sunriseTimeLabel.leadingAnchor.constraint(equalTo: sunriseDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       sunriseTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
-      sunriseTimeLabel.widthAnchor.constraint(equalTo: sunriseDescriptionLabel.widthAnchor),
+      sunriseTimeLabel.widthAnchor.constraint(equalTo: sunriseDescriptionLabel.widthAnchor, multiplier: 2/3),
       sunriseTimeLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      sunriseTimeLabel.heightAnchor.constraint(equalTo: sunriseDescriptionLabel.heightAnchor),
       sunriseTimeLabel.centerYAnchor.constraint(equalTo: sunriseDescriptionLabel.centerYAnchor),
       sunriseTimeLabel.centerYAnchor.constraint(equalTo: sunriseSymbolImageView.centerYAnchor)
     ])
     
     // line 2
     contentView.addSubview(sunsetSymbolImageView, constraints: [
-      sunsetSymbolImageView.topAnchor.constraint(equalTo: sunriseSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
+      sunsetSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: sunriseSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
+      sunsetSymbolImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       sunsetSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
-      sunsetSymbolImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       sunsetSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
       sunsetSymbolImageView.heightAnchor.constraint(equalTo: sunsetSymbolImageView.widthAnchor)
     ])
@@ -136,10 +135,9 @@ private extension WeatherStationMeteorologyDetailsSunCycleCell {
       sunsetTimeLabel.topAnchor.constraint(equalTo: sunriseTimeLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       sunsetTimeLabel.leadingAnchor.constraint(equalTo: sunsetDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       sunsetTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
-      sunsetTimeLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      sunsetTimeLabel.widthAnchor.constraint(equalTo: sunsetDescriptionLabel.widthAnchor),
+      sunsetTimeLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
+      sunsetTimeLabel.widthAnchor.constraint(equalTo: sunsetDescriptionLabel.widthAnchor, multiplier: 2/3),
       sunsetTimeLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      sunsetTimeLabel.heightAnchor.constraint(equalTo: sunsetDescriptionLabel.heightAnchor),
       sunsetTimeLabel.centerYAnchor.constraint(equalTo: sunsetDescriptionLabel.centerYAnchor),
       sunsetTimeLabel.centerYAnchor.constraint(equalTo: sunsetSymbolImageView.centerYAnchor)
     ])

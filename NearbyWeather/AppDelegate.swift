@@ -32,16 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   /// only called on cold start
   func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-    print("1️⃣")
     registerServices()
     instantiateDaemons()
+    instantiateFirebase()
     
     runMigrationIfNeeded()
-    
-    if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
-       let firebaseOptions = FirebaseOptions(contentsOfFile: filePath) {
-      FirebaseApp.configure(options: firebaseOptions)
-    }
     
     SettingsBundleTransferWorker.updateSystemSettings()
     
@@ -187,6 +182,13 @@ private extension AppDelegate {
     daemonContainer = []
     instantiateDaemons()
     startDaemons()
+  }
+  
+  func instantiateFirebase() {
+    if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
+       let firebaseOptions = FirebaseOptions(contentsOfFile: filePath) {
+      FirebaseApp.configure(options: firebaseOptions)
+    }
   }
   
   func instantiateApplicationUserInterface() {

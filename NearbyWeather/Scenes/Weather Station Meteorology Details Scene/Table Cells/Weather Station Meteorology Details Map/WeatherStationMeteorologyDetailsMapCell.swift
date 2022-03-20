@@ -132,7 +132,7 @@ private extension WeatherStationMeteorologyDetailsMapCell {
     
     // line 1
     contentView.addSubview(coordinatesSymbolImageView, constraints: [
-      coordinatesSymbolImageView.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
+      coordinatesSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
       coordinatesSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
       coordinatesSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
       coordinatesSymbolImageView.heightAnchor.constraint(equalTo: coordinatesSymbolImageView.widthAnchor)
@@ -149,18 +149,17 @@ private extension WeatherStationMeteorologyDetailsMapCell {
       coordinatesLabel.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
       coordinatesLabel.leadingAnchor.constraint(equalTo: coordinatesDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       coordinatesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
-      coordinatesLabel.widthAnchor.constraint(equalTo: coordinatesDescriptionLabel.widthAnchor),
+      coordinatesLabel.widthAnchor.constraint(equalTo: coordinatesDescriptionLabel.widthAnchor, multiplier: 2/3),
       coordinatesLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      coordinatesLabel.heightAnchor.constraint(equalTo: coordinatesDescriptionLabel.heightAnchor),
       coordinatesLabel.centerYAnchor.constraint(equalTo: coordinatesDescriptionLabel.centerYAnchor),
       coordinatesLabel.centerYAnchor.constraint(equalTo: coordinatesSymbolImageView.centerYAnchor)
     ])
     
     // line 2
     contentView.addSubview(distanceSymbolImageView, constraints: [
-      distanceSymbolImageView.topAnchor.constraint(equalTo: coordinatesSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
+      distanceSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: coordinatesSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
       distanceSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
-      distanceSymbolImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
+      distanceSymbolImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       distanceSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
       distanceSymbolImageView.heightAnchor.constraint(equalTo: distanceSymbolImageView.widthAnchor)
     ])
@@ -178,9 +177,8 @@ private extension WeatherStationMeteorologyDetailsMapCell {
       distanceLabel.leadingAnchor.constraint(equalTo: distanceDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       distanceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
       distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      distanceLabel.widthAnchor.constraint(equalTo: distanceDescriptionLabel.widthAnchor),
+      distanceLabel.widthAnchor.constraint(equalTo: distanceDescriptionLabel.widthAnchor, multiplier: 2/3),
       distanceLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      distanceLabel.heightAnchor.constraint(equalTo: distanceDescriptionLabel.heightAnchor),
       distanceLabel.centerYAnchor.constraint(equalTo: distanceDescriptionLabel.centerYAnchor),
       distanceLabel.centerYAnchor.constraint(equalTo: distanceSymbolImageView.centerYAnchor)
     ])

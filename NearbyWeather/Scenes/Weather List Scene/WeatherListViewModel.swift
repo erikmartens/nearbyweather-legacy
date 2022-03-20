@@ -132,7 +132,7 @@ extension WeatherListViewModel {
       .distinctUntilChanged()
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
       .map { [WeatherListNearbyItemsSection(sectionItems: $0)] }
-      .share(replay: 1).debug("🤢🤢🤢 NEARBY")
+      .share(replay: 1)
     
     let bookmarkedListItemsObservable = dependencies.weatherInformationService
       .createGetBookmarkedWeatherInformationListObservable()
@@ -144,7 +144,7 @@ extension WeatherListViewModel {
       .distinctUntilChanged()
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
       .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }
-      .share(replay: 1).debug("🤢🤢🤢 BOOKMARKED")
+      .share(replay: 1)
     
     Observable
       .combineLatest(

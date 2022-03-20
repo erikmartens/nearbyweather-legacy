@@ -14,7 +14,7 @@ import RxFlow
 
 // MARK: - Dependencies
 
-extension WeatherMapViewModel { // TODO : check which are needed
+extension WeatherMapViewModel {
   struct Dependencies {
     let weatherInformationService: WeatherInformationPersistence & WeatherInformationUpdating
     let weatherStationService: WeatherStationBookmarkReading
@@ -102,7 +102,7 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
       .createGetUserLocationObservable()
       .take(1)
       .asSingle()
-      .subscribe(onSuccess: { [unowned onDidSelectFocusOnUserLocationSubject] _ in onDidSelectFocusOnUserLocationSubject.onNext(()) })
+      .subscribe(onSuccess: { [unowned self] _ in onDidSelectFocusOnUserLocationSubject.onNext(()) })
   }
   
   // MARK: - Functions

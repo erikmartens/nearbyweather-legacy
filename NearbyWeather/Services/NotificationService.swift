@@ -67,7 +67,7 @@ struct TemperatureOnAppIconBadgeInformation {
     temperatureUnitOption: TemperatureUnitOption
   ) {
     guard let temperatureKelvin = weatherInformationModel.atmosphericInformation.temperatureKelvin,
-          let temperature = MeteorologyInformationConversionWorker.temperatureIntValue(forTemperatureUnit: temperatureUnitOption,fromRawTemperature: temperatureKelvin) else {
+          let temperature = MeteorologyInformationConversionWorker.temperatureIntValue(forTemperatureUnit: temperatureUnitOption, fromRawTemperature: temperatureKelvin) else {
       return nil
     }
     self.init(stationName: weatherInformationModel.stationName, temperature: temperature, temperatureUnitOption: temperatureUnitOption)

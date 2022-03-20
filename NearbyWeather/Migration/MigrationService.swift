@@ -19,7 +19,7 @@ extension MigrationService {
   }
 }
 
-final class MigrationService { // TODO: move all Constants-Keys and DTOs (that are only needed here) to here and make private, after old services were deleted
+final class MigrationService {
   
   // MARK: - Properties
   

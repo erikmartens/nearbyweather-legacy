@@ -11,7 +11,7 @@ import RxFlow
 
 enum AboutAppStep: Step {
   case aboutApp
-  case sendEmail(recipients: [String],subject: String, message: String)
+  case sendEmail(recipients: [String], subject: String, message: String)
   case safariViewController(url: URL)
   case externalApp(url: URL)
   case end

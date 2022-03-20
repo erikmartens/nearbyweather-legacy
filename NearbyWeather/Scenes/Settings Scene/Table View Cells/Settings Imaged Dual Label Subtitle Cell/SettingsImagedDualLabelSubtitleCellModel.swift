@@ -32,4 +32,3 @@ struct SettingsImagedDualLabelSubtitleCellModel {
     self.isDisclosable = disclosable
   }
 }
-

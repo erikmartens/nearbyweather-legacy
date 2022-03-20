@@ -68,13 +68,27 @@ final class PreferredBookmarkSelectionAlert {
 
 // MARK: - Helper Extensions
 
+private extension UIAlertAction {
+  
+  func setCheckmarkForOption(withAssociatedStation identifier: Int, currentlySelectedStationIdentifier: Int?) {
+    guard let currentlySelectedStationIdentifier = currentlySelectedStationIdentifier, identifier == currentlySelectedStationIdentifier else {
+      return
+    }
+    setValue(true, forKey: Constants.Keys.KeyValueBindings.kChecked)
+  }
+}
+
 private extension Array where Element == WeatherStationDTO {
   
   func mapToAlertAction(dependencies: PreferredBookmarkSelectionAlert.Dependencies) -> [UIAlertAction] {
     compactMap { weatherStationDTO -> UIAlertAction? in
-      Factory.AlertAction.make(fromType: .standard(title: weatherStationDTO.name, handler: { [dependencies] _ in
+      let action = Factory.AlertAction.make(fromType: .standard(title: weatherStationDTO.name, handler: { [dependencies] _ in
         dependencies.selectionDelegate?.didSelectPreferredBookmarkOption(PreferredBookmarkOption(value: .set(weatherStationDto: weatherStationDTO)))
       }))
+      
+      action.setCheckmarkForOption(withAssociatedStation: weatherStationDTO.identifier, currentlySelectedStationIdentifier: dependencies.preferredBookmarkOption?.intValue)
+      
+      return action
     }
   }
 }

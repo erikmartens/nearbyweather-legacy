@@ -128,7 +128,7 @@ extension WeatherStationMeteorologyDetailsMapCellViewModel {
           .begin(with: R.string.localizable.coordinates().capitalized)
           .append(contentsOf: R.string.localizable.copied().capitalized, delimiter: .space)
         
-        HUD.flash(.label(message), delay: 1.0)
+        HUD.flash(.label(message), delay: 0.5)
       })
       .disposed(by: disposeBag)
   }

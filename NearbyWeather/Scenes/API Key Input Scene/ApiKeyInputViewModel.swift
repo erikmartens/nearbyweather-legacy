@@ -127,8 +127,8 @@ extension ApiKeyInputViewModel {
       .do(onNext: { [dependencies] newApiKey in
         _ = dependencies.apiKeyService.createSetApiKeyCompletable(newApiKey)
           .do(
-            onError: { _ in DispatchQueue.main.async { HUD.flash(.error, delay: 1.0) } },
-            onCompleted: { DispatchQueue.main.async { HUD.flash(.success, delay: 1.0) } }
+            onError: { _ in DispatchQueue.main.async { HUD.flash(.error, delay: 0.5) } },
+            onCompleted: { DispatchQueue.main.async { HUD.flash(.success, delay: 0.5) } }
           )
           .subscribe()
       })

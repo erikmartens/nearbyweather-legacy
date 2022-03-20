@@ -18,7 +18,7 @@ private extension WeatherListInformationTableViewCell {
     static let mainContentStackViewTrailingInset: CGFloat = 40
     static let weatherConditionSymbolHeight: CGFloat = 60
     static let conditionDetailSymbolHeightWidth: CGFloat = 15
-    static let conditionDetailLabelHeight: CGFloat = 20
+    static let conditionDetailLabelHeight: CGFloat = 24
     static let placeNameLabelHeight: CGFloat = 28
   }
 }
@@ -164,29 +164,29 @@ private extension WeatherListInformationTableViewCell {
       temperatureLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Definitions.conditionDetailLabelHeight),
       temperatureLabel.centerYAnchor.constraint(equalTo: temperatureSymbolImageView.centerYAnchor),
       temperatureLabel.leadingAnchor.constraint(equalTo: temperatureSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
-      temperatureLabel.topAnchor.constraint(equalTo: placeNameLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large))
+      temperatureLabel.topAnchor.constraint(equalTo: placeNameLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
+      temperatureLabel.centerYAnchor.constraint(equalTo: temperatureSymbolImageView.centerYAnchor)
     ])
     
     // cloud coverage
     contentView.addSubview(cloudCoverageSymbolImageView, constraints: [
       cloudCoverageSymbolImageView.heightAnchor.constraint(equalToConstant: Definitions.conditionDetailSymbolHeightWidth),
       cloudCoverageSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.conditionDetailSymbolHeightWidth),
-      cloudCoverageSymbolImageView.centerYAnchor.constraint(equalTo: temperatureSymbolImageView.centerYAnchor),
-      cloudCoverageSymbolImageView.centerYAnchor.constraint(equalTo: temperatureLabel.centerYAnchor),
       cloudCoverageSymbolImageView.leadingAnchor.constraint(equalTo: temperatureLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .large)),
-      cloudCoverageSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: placeNameLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large))
+      cloudCoverageSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: placeNameLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
+      cloudCoverageSymbolImageView.centerYAnchor.constraint(equalTo: temperatureSymbolImageView.centerYAnchor),
+      cloudCoverageSymbolImageView.centerYAnchor.constraint(equalTo: temperatureLabel.centerYAnchor)
     ])
     
     contentView.addSubview(cloudCoverageLabel, constraints: [
       cloudCoverageLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Definitions.conditionDetailLabelHeight),
       cloudCoverageLabel.widthAnchor.constraint(equalTo: temperatureLabel.widthAnchor),
-      cloudCoverageLabel.centerYAnchor.constraint(equalTo: cloudCoverageSymbolImageView.centerYAnchor),
-      cloudCoverageLabel.centerYAnchor.constraint(equalTo: temperatureSymbolImageView.centerYAnchor),
-      cloudCoverageLabel.centerYAnchor.constraint(equalTo: temperatureLabel.centerYAnchor),
-      cloudCoverageLabel.centerYAnchor.constraint(equalTo: cloudCoverageSymbolImageView.centerYAnchor),
       cloudCoverageLabel.leadingAnchor.constraint(equalTo: cloudCoverageSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
       cloudCoverageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
-      cloudCoverageLabel.topAnchor.constraint(equalTo: placeNameLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large))
+      cloudCoverageLabel.topAnchor.constraint(equalTo: placeNameLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
+      cloudCoverageLabel.centerYAnchor.constraint(equalTo: temperatureSymbolImageView.centerYAnchor),
+      cloudCoverageLabel.centerYAnchor.constraint(equalTo: temperatureLabel.centerYAnchor),
+      cloudCoverageLabel.centerYAnchor.constraint(equalTo: cloudCoverageSymbolImageView.centerYAnchor)
     ])
     
     // humidity
@@ -202,21 +202,21 @@ private extension WeatherListInformationTableViewCell {
       humidityLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Definitions.conditionDetailLabelHeight),
       humidityLabel.widthAnchor.constraint(equalTo: temperatureLabel.widthAnchor),
       humidityLabel.widthAnchor.constraint(equalTo: cloudCoverageLabel.widthAnchor),
-      humidityLabel.centerYAnchor.constraint(equalTo: humiditySymbolImageView.centerYAnchor),
       humidityLabel.leadingAnchor.constraint(equalTo: humiditySymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
       humidityLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
-      humidityLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2)
+      humidityLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2),
+      humidityLabel.centerYAnchor.constraint(equalTo: humiditySymbolImageView.centerYAnchor)
     ])
     
     // windspeed
     contentView.addSubview(windspeedSymbolImageView, constraints: [
       windspeedSymbolImageView.heightAnchor.constraint(equalToConstant: Definitions.conditionDetailSymbolHeightWidth),
       windspeedSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.conditionDetailSymbolHeightWidth),
-      windspeedSymbolImageView.centerYAnchor.constraint(equalTo: humiditySymbolImageView.centerYAnchor),
-      windspeedSymbolImageView.centerYAnchor.constraint(equalTo: humidityLabel.centerYAnchor),
       windspeedSymbolImageView.leadingAnchor.constraint(equalTo: humidityLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .large)),
       windspeedSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: cloudCoverageSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
-      windspeedSymbolImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2)
+      windspeedSymbolImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2),
+      windspeedSymbolImageView.centerYAnchor.constraint(equalTo: humiditySymbolImageView.centerYAnchor),
+      windspeedSymbolImageView.centerYAnchor.constraint(equalTo: humidityLabel.centerYAnchor)
     ])
     
     contentView.addSubview(windspeedLabel, constraints: [
@@ -224,13 +224,13 @@ private extension WeatherListInformationTableViewCell {
       windspeedLabel.widthAnchor.constraint(equalTo: temperatureLabel.widthAnchor),
       windspeedLabel.widthAnchor.constraint(equalTo: cloudCoverageLabel.widthAnchor),
       windspeedLabel.widthAnchor.constraint(equalTo: humidityLabel.widthAnchor),
-      windspeedLabel.centerYAnchor.constraint(equalTo: humiditySymbolImageView.centerYAnchor),
-      windspeedLabel.centerYAnchor.constraint(equalTo: humidityLabel.centerYAnchor),
-      windspeedLabel.centerYAnchor.constraint(equalTo: windspeedSymbolImageView.centerYAnchor),
       windspeedLabel.leadingAnchor.constraint(equalTo: windspeedSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
       windspeedLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
       windspeedLabel.topAnchor.constraint(equalTo: cloudCoverageLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
-      windspeedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2)
+      windspeedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2),
+      windspeedLabel.centerYAnchor.constraint(equalTo: humiditySymbolImageView.centerYAnchor),
+      windspeedLabel.centerYAnchor.constraint(equalTo: humidityLabel.centerYAnchor),
+      windspeedLabel.centerYAnchor.constraint(equalTo: windspeedSymbolImageView.centerYAnchor)
     ])
   }
   

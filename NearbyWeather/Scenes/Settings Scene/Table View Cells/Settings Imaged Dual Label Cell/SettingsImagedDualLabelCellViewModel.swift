@@ -79,6 +79,7 @@ extension SettingsImagedDualLabelCellViewModel {
           disclosable: dependencies.disclosable
         )
       }
+      .catchAndReturn(SettingsImagedDualLabelCellModel())
       .bind(to: cellModelRelay)
       .disposed(by: disposeBag)
   }

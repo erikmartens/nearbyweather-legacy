@@ -146,7 +146,7 @@ private extension WeatherListInformationTableViewCell {
     
     // place name
     contentView.addSubview(placeNameLabel, constraints: [
-      placeNameLabel.heightAnchor.constraint(equalToConstant: Definitions.placeNameLabelHeight),
+      placeNameLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Definitions.placeNameLabelHeight),
       placeNameLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)*2),
       placeNameLabel.leadingAnchor.constraint(equalTo: weatherConditionSymbolLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .extraLarge)),
       placeNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))

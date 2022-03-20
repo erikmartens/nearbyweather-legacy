@@ -63,18 +63,21 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
     .preferencesService
     .createGetListTypeOptionObservable()
     .map { $0.value }
+    .distinctUntilChanged()
     .share(replay: 1)
   
   private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsOptionValue> = dependencies
     .preferencesService
     .createGetAmountOfNearbyResultsOptionObservable()
     .map { $0.value }
+    .distinctUntilChanged()
     .share(replay: 1)
   
   private lazy var preferredSortingOrientationObservable: Observable<SortingOrientationOptionValue> = dependencies
     .preferencesService
     .createGetSortingOrientationOptionObservable()
     .map { $0.value }
+    .distinctUntilChanged()
     .share(replay: 1)
   
   // MARK: - Initialization
@@ -126,6 +129,7 @@ extension WeatherListViewModel {
             }
           )
       }
+      .distinctUntilChanged()
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
       .map { [WeatherListNearbyItemsSection(sectionItems: $0)] }
       .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
@@ -138,6 +142,7 @@ extension WeatherListViewModel {
           .createGetBookmarksSortingObservable()
           .map { Self.sortBookmarkedResults(weatherInformationItems, sortingWeights: $0) }
       }
+      .distinctUntilChanged()
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
       .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }
       .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
@@ -306,6 +311,7 @@ private extension Array where Element == PersistencyModelThreadSafe<WeatherInfor
     map { weatherInformationPersistencyModel -> WeatherListInformationTableViewCellViewModel in
       WeatherListInformationTableViewCellViewModel(
         dependencies: WeatherListInformationTableViewCellViewModel.Dependencies(
+          weatherStationName: weatherInformationPersistencyModel.entity.stationName,
           weatherInformationIdentity: weatherInformationPersistencyModel.identity,
           weatherStationService: dependencies.weatherStationService,
           weatherInformationService: dependencies.weatherInformationService,

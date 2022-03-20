@@ -207,6 +207,7 @@ private extension AppDelegate {
             preferencesService.createGetTemperatureUnitOptionObservable(),
             resultSelector: TemperatureOnAppIconBadgeInformation.init
           )
+          .catchAndReturn(nil)
       }
       .take(1)
       .asSingle()

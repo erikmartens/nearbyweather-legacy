@@ -14,6 +14,7 @@ import RxFlow
 
 extension WeatherListInformationTableViewCellViewModel {
   struct Dependencies {
+    let weatherStationName: String
     let weatherInformationIdentity: PersistencyModelIdentity
     let weatherStationService: WeatherStationBookmarkReading
     let weatherInformationService: WeatherInformationReading
@@ -36,13 +37,23 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
     dependencies.weatherInformationIdentity
   }
   
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
+  
   // MARK: - Properties
   
   private let dependencies: Dependencies
 
   // MARK: - Events
   
-  lazy var cellModelDriver: Driver<WeatherListInformationTableViewCellModel> = Self.createCellModelDriver(with: dependencies)
+  // MARK: - Observables
+  
+  private lazy var cellModelRelay: BehaviorRelay<WeatherListInformationTableViewCellModel> = Self.createCellModelRelay(with: dependencies)
+  
+  // MARK: - Drivers
+  
+  lazy var cellModelDriver: Driver<WeatherListInformationTableViewCellModel> = cellModelRelay.asDriver(onErrorJustReturn: WeatherListInformationTableViewCellModel())
 
   // MARK: - Initialization
   
@@ -58,12 +69,12 @@ final class WeatherListInformationTableViewCellViewModel: NSObject, BaseCellView
   }
 }
 
-// MARK: - Observation Helpers
-
-private extension WeatherListInformationTableViewCellViewModel {
+extension WeatherListInformationTableViewCellViewModel {
   
-  static func createCellModelDriver(with dependencies: Dependencies) -> Driver<WeatherListInformationTableViewCellModel> {
-    let weatherStationIsBookmarkedObservable = Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies).share(replay: 1)
+  func observeDataSource() {
+    let weatherStationIsBookmarkedObservable = dependencies.weatherStationService
+      .createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
+      .share(replay: 1)
     
     let weatherInformationDtoObservable = Observable
       .combineLatest(
@@ -73,7 +84,7 @@ private extension WeatherListInformationTableViewCellViewModel {
       .flatMapLatest(dependencies.weatherInformationService.createGetWeatherInformationItemObservable)
       .map { $0.entity }
       
-    return Observable
+    Observable
       .combineLatest(
         weatherInformationDtoObservable,
         dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
@@ -88,10 +99,27 @@ private extension WeatherListInformationTableViewCellViewModel {
           )
         }
       )
-      .asDriver(onErrorJustReturn: WeatherListInformationTableViewCellModel())
+      .catchAndReturn(WeatherListInformationTableViewCellModel())
+      .bind(to: cellModelRelay)
+      .disposed(by: disposeBag)
   }
+}
+
+// MARK: - Observation Helpers
+
+private extension WeatherListInformationTableViewCellViewModel {
   
-  static func createGetWeatherStationIsBookmarkedObservable(with dependencies: Dependencies) -> Observable<Bool> {
-    dependencies.weatherStationService.createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
+  static func createCellModelRelay(with dependencies: Dependencies) -> BehaviorRelay<WeatherListInformationTableViewCellModel> {
+    BehaviorRelay<WeatherListInformationTableViewCellModel>(
+      value: WeatherListInformationTableViewCellModel(
+        weatherConditionSymbol: nil, // start with default value
+        placeName: dependencies.weatherStationName,
+        temperature: nil, // start with default value
+        cloudCoverage: nil, // start with default value
+        humidity: nil, // start with default value
+        windspeed: nil, // start with default value
+        backgroundColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay // start with default value
+      )
+    )
   }
 }

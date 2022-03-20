@@ -100,6 +100,7 @@ private extension SettingsViewController {
     tableView.registerCells([
       SettingsImagedSingleLabelCell.self,
       SettingsImagedDualLabelCell.self,
+      SettingsImagedDualLabelSubtitleCell.self,
       SettingsImagedSingleLabelToggleCell.self
     ])
     

@@ -165,7 +165,7 @@ extension SettingsViewModel {
       isToggleOnObservable: allowTempOnAppIconObservable,
       didFlipToggleSwitchSubject: onDidChangeAllowTempOnAppIconOptionSubject
     ))
-    let preferredBookmarkCell = SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(
+    let preferredBookmarkCell = SettingsImagedDualLabelSubtitleCellViewModel(dependencies: SettingsImagedDualLabelSubtitleCellViewModel.Dependencies(
       symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundRed,
       symbolImage: R.image.preferred_bookmark(),
       contentLabelText: R.string.localizable.preferred_bookmark(),

@@ -212,6 +212,9 @@
 		F2BDACFE27E64E4500FF6401 /* LoadingStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDACFD27E64E4500FF6401 /* LoadingStepper.swift */; };
 		F2BDAD0027E68A8E00FF6401 /* UIColor+Adjust.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDACFF27E68A8E00FF6401 /* UIColor+Adjust.swift */; };
 		F2BDAD0227E68C6100FF6401 /* Factory+CAGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDAD0127E68C6100FF6401 /* Factory+CAGradientLayer.swift */; };
+		F2BDAD0527E72A6200FF6401 /* SettingsImagedDualLabelSubtitleCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDAD0427E72A6200FF6401 /* SettingsImagedDualLabelSubtitleCellViewModel.swift */; };
+		F2BDAD0727E72A7900FF6401 /* SettingsImagedDualLabelSubtitleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDAD0627E72A7900FF6401 /* SettingsImagedDualLabelSubtitleCellModel.swift */; };
+		F2BDAD0927E72A8D00FF6401 /* SettingsImagedDualLabelSubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDAD0827E72A8D00FF6401 /* SettingsImagedDualLabelSubtitleCell.swift */; };
 		F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14523F355370008B0F7 /* Date+String.swift */; };
 		F2D198FE25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D198FD25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift */; };
 		F2D1990625A10D2E004C7753 /* BaseTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1990525A10D2E004C7753 /* BaseTableViewDataSource.swift */; };
@@ -521,6 +524,9 @@
 		F2BDACFD27E64E4500FF6401 /* LoadingStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStepper.swift; sourceTree = "<group>"; };
 		F2BDACFF27E68A8E00FF6401 /* UIColor+Adjust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Adjust.swift"; sourceTree = "<group>"; };
 		F2BDAD0127E68C6100FF6401 /* Factory+CAGradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+CAGradientLayer.swift"; sourceTree = "<group>"; };
+		F2BDAD0427E72A6200FF6401 /* SettingsImagedDualLabelSubtitleCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedDualLabelSubtitleCellViewModel.swift; sourceTree = "<group>"; };
+		F2BDAD0627E72A7900FF6401 /* SettingsImagedDualLabelSubtitleCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedDualLabelSubtitleCellModel.swift; sourceTree = "<group>"; };
+		F2BDAD0827E72A8D00FF6401 /* SettingsImagedDualLabelSubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsImagedDualLabelSubtitleCell.swift; sourceTree = "<group>"; };
 		F2C4E14523F355370008B0F7 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		F2D198FD25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLifeCycleRelay.swift; sourceTree = "<group>"; };
 		F2D1990525A10D2E004C7753 /* BaseTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -801,6 +807,7 @@
 			children = (
 				F217CB6827D5022900DAC947 /* Settings Imaged Single Label Cell */,
 				F217CB6927D5027900DAC947 /* Settings Imaged Dual Label Cell */,
+				F2BDAD0327E729FD00FF6401 /* Settings Imaged Dual Label Subtitle Cell */,
 				F217CB6A27D5029800DAC947 /* Settings Imaged Single Label Toggle Cell */,
 			);
 			path = "Table View Cells";
@@ -1552,6 +1559,16 @@
 			path = "Loading Flow";
 			sourceTree = "<group>";
 		};
+		F2BDAD0327E729FD00FF6401 /* Settings Imaged Dual Label Subtitle Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F2BDAD0427E72A6200FF6401 /* SettingsImagedDualLabelSubtitleCellViewModel.swift */,
+				F2BDAD0627E72A7900FF6401 /* SettingsImagedDualLabelSubtitleCellModel.swift */,
+				F2BDAD0827E72A8D00FF6401 /* SettingsImagedDualLabelSubtitleCell.swift */,
+			);
+			path = "Settings Imaged Dual Label Subtitle Cell";
+			sourceTree = "<group>";
+		};
 		F2D1990225A10CD8004C7753 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1917,6 +1934,7 @@
 				F20CA11525B3117200153E47 /* WeatherStationMeteorologyDetailsMapCell.swift in Sources */,
 				F2060E5E27BC17DB0066DC8C /* WeatherListErrorViewController.swift in Sources */,
 				F210B19E25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift in Sources */,
+				F2BDAD0727E72A7900FF6401 /* SettingsImagedDualLabelSubtitleCellModel.swift in Sources */,
 				F217CB7027D5091800DAC947 /* SettingsGeneralItemsSection.swift in Sources */,
 				F217CB8427D50DE700DAC947 /* SettingsImagedSingleLabelToggleCellViewModel.swift in Sources */,
 				F237288A244C934100964C49 /* WeatherStationMeteorologyDetailsFlow.swift in Sources */,
@@ -2011,6 +2029,7 @@
 				F28F180D25A74C3600AEA99A /* ApiKeyDTO.swift in Sources */,
 				F2E12F2725AF5F1A00176087 /* WeatherStationMeteorologyDetailsTableViewDataSource.swift in Sources */,
 				F22B0F7C25AB615A0037F957 /* BaseAnnotation.swift in Sources */,
+				F2BDAD0927E72A8D00FF6401 /* SettingsImagedDualLabelSubtitleCell.swift in Sources */,
 				F260BDAC244CFAE500B4357A /* Bundle+AppIcon.swift in Sources */,
 				F217CBC827DB6FB600DAC947 /* SettingsSingleLabelDualButtonCellViewModel.swift in Sources */,
 				F217CBCA27DB6FCA00DAC947 /* SettingsSingleLabelDualButtonCellModel.swift in Sources */,
@@ -2055,6 +2074,7 @@
 				F237285B2444A72100964C49 /* Constants+Dimensions.swift in Sources */,
 				F2372871244C7D8C00964C49 /* MainStepper.swift in Sources */,
 				F2F7BA1923E0FBEB00B4D2EB /* GlobalFunctions.swift in Sources */,
+				F2BDAD0527E72A6200FF6401 /* SettingsImagedDualLabelSubtitleCellViewModel.swift in Sources */,
 				F213FA2D23F9EE1100F094D8 /* PreferencesOption.swift in Sources */,
 				F2F1554B2443C438007A3E90 /* Factory+UIButton.swift in Sources */,
 				F217CB9C27DB5D3500DAC947 /* AboutAppViewController.swift in Sources */,

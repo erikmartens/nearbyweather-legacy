@@ -132,8 +132,7 @@ extension WeatherListViewModel {
       .distinctUntilChanged()
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
       .map { [WeatherListNearbyItemsSection(sectionItems: $0)] }
-      .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
-      .share(replay: 1)
+      .share(replay: 1).debug("🤢🤢🤢 NEARBY")
     
     let bookmarkedListItemsObservable = dependencies.weatherInformationService
       .createGetBookmarkedWeatherInformationListObservable()
@@ -145,8 +144,7 @@ extension WeatherListViewModel {
       .distinctUntilChanged()
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
       .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }
-      .catch { error -> Observable<[TableViewSectionDataProtocol]> in error.mapToObservableTableSectionData() }
-      .share(replay: 1)
+      .share(replay: 1).debug("🤢🤢🤢 BOOKMARKED")
     
     Observable
       .combineLatest(
@@ -189,8 +187,10 @@ extension WeatherListViewModel {
       .do(onNext: { [weak isRefreshingSubject] in isRefreshingSubject?.onNext(true) })
       .flatMapLatest { [dependencies, weak isRefreshingSubject] _ -> Observable<Void> in
         Completable
-          .zip([dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable(),
-                dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()])
+          .zip([
+            dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable(),
+            dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()
+          ])
           .do(onCompleted: { isRefreshingSubject?.onNext(false) })
           .asObservable()
           .map { _ in () }
@@ -298,6 +298,7 @@ extension WeatherListViewModel: SortingOrientationSelectionAlertDelegate {
 
 private extension Error {
   
+  // TODO: remove
   func mapToObservableTableSectionData() -> Observable<[TableViewSectionDataProtocol]> {
     Observable
       .just([WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(error: self))])

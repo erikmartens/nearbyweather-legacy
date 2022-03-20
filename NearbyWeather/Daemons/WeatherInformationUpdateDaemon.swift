@@ -108,28 +108,21 @@ private extension WeatherInformationUpdateDaemon {
           .materialize()
       }
     
-    // only start observing this after the app became active
-    appDidBecomeActiveRelay
-      .asObservable()
-      .flatMapLatest { _ in updateBookmarkedWeatherInformationObservable }
+    updateBookmarkedWeatherInformationObservable
+      .skip(until: appDidBecomeActiveRelay.asObservable())
       .subscribe()
       .disposed(by: disposeBag)
   }
   
   func observeAmountOfNearbyResultsPreferenceChanges() {
-    // only start observing this after the app became active
-    appDidBecomeActiveRelay
-      .asObservable()
+    dependencies.preferencesService
+      .createGetAmountOfNearbyResultsOptionObservable()
+      .skip(until: appDidBecomeActiveRelay.asObservable())
       .flatMapLatest { [unowned self] _ in
-        dependencies.preferencesService
-          .createGetAmountOfNearbyResultsOptionObservable()
-          .distinctUntilChanged()
-          .flatMapLatest { [unowned self] _ in
-            dependencies.weatherInformationService
-              .createUpdateNearbyWeatherInformationCompletable()
-              .asObservable()
-              .materialize()
-          }
+        dependencies.weatherInformationService
+          .createUpdateNearbyWeatherInformationCompletable()
+          .asObservable()
+          .materialize()
       }
       .subscribe()
       .disposed(by: disposeBag)
@@ -138,7 +131,6 @@ private extension WeatherInformationUpdateDaemon {
   func observeLocationAccessAuthorization() {
     dependencies.userLocationService
       .createGetLocationAuthorizationStatusObservable()
-      .distinctUntilChanged()
       .filter { !($0?.authorizationStatusIsSufficient ?? false) } // keep going when not authorized
       .do(onNext: { [dependencies] _ in
         _ = dependencies.weatherInformationService

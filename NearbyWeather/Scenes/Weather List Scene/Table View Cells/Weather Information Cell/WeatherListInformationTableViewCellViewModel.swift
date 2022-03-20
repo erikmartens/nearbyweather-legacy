@@ -76,7 +76,7 @@ extension WeatherListInformationTableViewCellViewModel {
       .createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
       .share(replay: 1)
     
-    let weatherInformationDtoObservable = Observable
+    let weatherInformationModelObservable = Observable
       .combineLatest(
         Observable.just(dependencies.weatherInformationIdentity.identifier),
         weatherStationIsBookmarkedObservable
@@ -86,7 +86,7 @@ extension WeatherListInformationTableViewCellViewModel {
       
     Observable
       .combineLatest(
-        weatherInformationDtoObservable,
+        weatherInformationModelObservable,
         dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
         dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
         weatherStationIsBookmarkedObservable,

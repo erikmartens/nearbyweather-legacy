@@ -30,12 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   // MARK: - Functions
   
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+  /// only called on cold start
+  func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+    print("1️⃣")
     registerServices()
-    runMigrationIfNeeded()
-    
-    instantiateApplicationUserInterface()
     instantiateDaemons()
+    
+    runMigrationIfNeeded()
     
     if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
        let firebaseOptions = FirebaseOptions(contentsOfFile: filePath) {
@@ -47,10 +48,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
   
+  /// only called on cold start
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    instantiateApplicationUserInterface()
+    startDaemons()
+    return true
+  }
+  
+  /// only called on warm start
   func applicationWillEnterForeground(_ application: UIApplication) {
     startDaemons()
   }
   
+  /// called on any start
   func applicationDidBecomeActive(_ application: UIApplication) {
     // nothing to do
   }
@@ -153,10 +163,22 @@ private extension AppDelegate {
   }
   
   func startDaemons() {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "👹 STARTED",
+      type: .info
+    )
+    
     daemonContainer.forEach { $0.startObservations() }
   }
   
   func stopDaemons() {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "👹 STOPPED",
+      type: .info
+    )
+    
     daemonContainer.forEach { $0.stopObservations() }
   }
   

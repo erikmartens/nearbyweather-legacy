@@ -197,7 +197,7 @@ extension WeatherInformationService: WeatherInformationReading {}
 protocol WeatherInformationUpdating {
   func createDidUpdateWeatherInformationObservable() -> Observable<WeatherInformationService.WeatherInformationAvailability>
   func createUpdateBookmarkedWeatherInformationCompletable() -> Completable
-  func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int) -> Completable
+  func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int?) -> Completable
   func createUpdateNearbyWeatherInformationCompletable() -> Completable
 }
 
@@ -245,13 +245,17 @@ extension WeatherInformationService: WeatherInformationUpdating {
       }
   }
   
-  func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int) -> Completable {
-    Observable
+  func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int?) -> Completable {
+    guard let identifier = identifier else {
+      return Completable.emptyCompletable
+    }
+    return Observable
       .combineLatest(
         dependencies.apiKeyService.createGetApiKeyObservable(),
         Observable.just(identifier),
         resultSelector: { apiKey, identifier -> URL in Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier) }
       )
+      .take(1)
       .asSingle()
       .flatMapCompletable { [dependencies] url -> Completable in
         RxAlamofire

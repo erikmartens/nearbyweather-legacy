@@ -74,30 +74,63 @@ final class WeatherInformationUpdateDaemon: NSObject, Daemon {
 
 private extension WeatherInformationUpdateDaemon {
   
-  // TODO: inefficient -> only load information for added stations and delete information for removed stations
   func observeBookmarkedStationsChanges() {
-    dependencies.weatherStationService
-      .createGetBookmarkedStationsObservable()
-      .distinctUntilChanged()
-      .catch { _ -> Observable<[WeatherStationDTO]> in Observable.just([]) }
-      .do(onNext: { [dependencies] _ in
-        _ = dependencies.weatherInformationService
-          .createUpdateBookmarkedWeatherInformationCompletable()
-          .subscribe()
-      })
+    let updateBookmarkedWeatherInformationObservable = Observable
+      .combineLatest(
+        dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.identity.identifier } },
+        dependencies.weatherStationService.createGetBookmarkedStationsObservable().map { $0.compactMap { $0.identifier} }.map { $0.map { String($0) } },
+        resultSelector: { existingWeatherInformationIdentifiers, bookmarkedWeatherInformationIdentifiers -> ([String], [String]) in
+          var toBeDeletedWeatherInformationIdentifiers: [String] = []
+          var toBeAddedWeatherInformationIdentifiers: [String] = []
+          
+          existingWeatherInformationIdentifiers.forEach { exisitingIdentifier in
+            if !bookmarkedWeatherInformationIdentifiers.contains(exisitingIdentifier) {
+              toBeDeletedWeatherInformationIdentifiers.append(exisitingIdentifier)
+            }
+          }
+          
+          bookmarkedWeatherInformationIdentifiers.forEach { bookmarkedIdentifier in
+            if !existingWeatherInformationIdentifiers.contains(bookmarkedIdentifier) {
+              toBeAddedWeatherInformationIdentifiers.append(bookmarkedIdentifier)
+            }
+          }
+          
+          return (toBeDeletedWeatherInformationIdentifiers, toBeAddedWeatherInformationIdentifiers)
+        }
+      )
+      .flatMapLatest { [unowned self] result in
+        Completable
+          .zip(
+            result.0.map { dependencies.weatherInformationService.createRemoveBookmarkedWeatherInformationItemCompletable(for: $0) }
+            + result.1.map { dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable(forStationWith: Int($0)) }
+          )
+          .asObservable()
+          .materialize()
+      }
+    
+    // only start observing this after the app became active
+    appDidBecomeActiveRelay
+      .asObservable()
+      .flatMapLatest { _ in updateBookmarkedWeatherInformationObservable }
       .subscribe()
       .disposed(by: disposeBag)
   }
   
   func observeAmountOfNearbyResultsPreferenceChanges() {
-    dependencies.preferencesService
-      .createGetAmountOfNearbyResultsOptionObservable()
-      .distinctUntilChanged()
-      .do(onNext: { [dependencies] _ in
-        _ = dependencies.weatherInformationService
-          .createUpdateNearbyWeatherInformationCompletable()
-          .subscribe()
-      })
+    // only start observing this after the app became active
+    appDidBecomeActiveRelay
+      .asObservable()
+      .flatMapLatest { [unowned self] _ in
+        dependencies.preferencesService
+          .createGetAmountOfNearbyResultsOptionObservable()
+          .distinctUntilChanged()
+          .flatMapLatest { [unowned self] _ in
+            dependencies.weatherInformationService
+              .createUpdateNearbyWeatherInformationCompletable()
+              .asObservable()
+              .materialize()
+          }
+      }
       .subscribe()
       .disposed(by: disposeBag)
   }
@@ -140,6 +173,8 @@ private extension WeatherInformationUpdateDaemon {
       .disposed(by: disposeBag)
   }
 }
+
+// MARK: - Helpers
 
 fileprivate extension WeatherInformationUpdateDaemon {
   

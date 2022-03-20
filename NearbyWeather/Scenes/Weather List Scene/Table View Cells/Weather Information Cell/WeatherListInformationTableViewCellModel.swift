@@ -59,16 +59,7 @@ struct WeatherListInformationTableViewCellModel {
         forDistanceSpeedUnit: dimensionalUnitsOption,
         forWindspeed: weatherInformationDTO.windInformation.windspeed
       ),
-      backgroundColor: Self.backgroundColor(isDayTime: isDayTime)
+      backgroundColor: isDayTime ? Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay : Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundNight
     )
-  }
-}
-
-// MARK: - Helpers
-
-private extension WeatherListInformationTableViewCellModel {
-  
-  static func backgroundColor(isDayTime: Bool) -> UIColor {
-    isDayTime ? Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay : Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundNight
   }
 }

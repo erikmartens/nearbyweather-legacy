@@ -16,7 +16,6 @@ struct WeatherListInformationTableViewCellModel {
   let humidity: String?
   let windspeed: String?
   let backgroundColor: UIColor?
-  let borderColor: UIColor?
   
   init(
     weatherConditionSymbol: String? = nil,
@@ -25,8 +24,7 @@ struct WeatherListInformationTableViewCellModel {
     cloudCoverage: String? = nil,
     humidity: String? = nil,
     windspeed: String? = nil,
-    backgroundColor: UIColor? = nil,
-    borderColor: UIColor? = nil
+    backgroundColor: UIColor? = nil
   ) {
     self.weatherConditionSymbol = weatherConditionSymbol
     self.placeName = placeName
@@ -35,7 +33,6 @@ struct WeatherListInformationTableViewCellModel {
     self.humidity = humidity
     self.windspeed = windspeed
     self.backgroundColor = backgroundColor
-    self.borderColor = borderColor
   }
   
   init(
@@ -62,8 +59,7 @@ struct WeatherListInformationTableViewCellModel {
         forDistanceSpeedUnit: dimensionalUnitsOption,
         forWindspeed: weatherInformationDTO.windInformation.windspeed
       ),
-      backgroundColor: Self.backgroundColor(isDayTime: isDayTime),
-      borderColor: Constants.Theme.Color.ViewElement.WeatherInformation.border
+      backgroundColor: Self.backgroundColor(isDayTime: isDayTime)
     )
   }
 }

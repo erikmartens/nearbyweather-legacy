@@ -210,6 +210,8 @@
 		F2BDACF927E3F99B00FF6401 /* Completable+EmptyCompletable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDACF827E3F99B00FF6401 /* Completable+EmptyCompletable.swift */; };
 		F2BDACFC27E64E2800FF6401 /* LoadingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDACFB27E64E2800FF6401 /* LoadingFlow.swift */; };
 		F2BDACFE27E64E4500FF6401 /* LoadingStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDACFD27E64E4500FF6401 /* LoadingStepper.swift */; };
+		F2BDAD0027E68A8E00FF6401 /* UIColor+Adjust.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDACFF27E68A8E00FF6401 /* UIColor+Adjust.swift */; };
+		F2BDAD0227E68C6100FF6401 /* Factory+CAGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDAD0127E68C6100FF6401 /* Factory+CAGradientLayer.swift */; };
 		F2C4E14623F355370008B0F7 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4E14523F355370008B0F7 /* Date+String.swift */; };
 		F2D198FE25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D198FD25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift */; };
 		F2D1990625A10D2E004C7753 /* BaseTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D1990525A10D2E004C7753 /* BaseTableViewDataSource.swift */; };
@@ -517,6 +519,8 @@
 		F2BDACF827E3F99B00FF6401 /* Completable+EmptyCompletable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Completable+EmptyCompletable.swift"; sourceTree = "<group>"; };
 		F2BDACFB27E64E2800FF6401 /* LoadingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFlow.swift; sourceTree = "<group>"; };
 		F2BDACFD27E64E4500FF6401 /* LoadingStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStepper.swift; sourceTree = "<group>"; };
+		F2BDACFF27E68A8E00FF6401 /* UIColor+Adjust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Adjust.swift"; sourceTree = "<group>"; };
+		F2BDAD0127E68C6100FF6401 /* Factory+CAGradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+CAGradientLayer.swift"; sourceTree = "<group>"; };
 		F2C4E14523F355370008B0F7 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		F2D198FD25A0AE39004C7753 /* ViewControllerLifeCycleRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLifeCycleRelay.swift; sourceTree = "<group>"; };
 		F2D1990525A10D2E004C7753 /* BaseTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -1373,19 +1377,20 @@
 			isa = PBXGroup;
 			children = (
 				F2DBEB2D23F0386B00CD513B /* Factory.swift */,
-				F20CA0D625B1C75700153E47 /* Factory+UIView.swift */,
+				F2BDAD0127E68C6100FF6401 /* Factory+CAGradientLayer.swift */,
+				F28EE8CD25AB94390045AE6A /* Factory+CAShapeLayer.swift */,
+				F237101625AB43080072AF29 /* Factory+MKMapView.swift */,
+				F2D1998425A274ED004C7753 /* Factory+UIAlertAction.swift */,
+				F2D1994425A1EED1004C7753 /* Factory+UIBarButtonItem.swift */,
+				F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */,
+				F2F1554A2443C438007A3E90 /* Factory+UIButton.swift */,
+				F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */,
+				F237285E2444AA5600964C49 /* Factory+UILabel.swift */,
+				F237288D244C93BD00964C49 /* Factory+UINavigationController.swift */,
 				F22A222725A4BE9500C97844 /* Factory+UIStackView.swift */,
 				F2D1994F25A1F1A4004C7753 /* Factory+UITableView.swift */,
-				F2F1554A2443C438007A3E90 /* Factory+UIButton.swift */,
-				F2D1994425A1EED1004C7753 /* Factory+UIBarButtonItem.swift */,
-				F237285E2444AA5600964C49 /* Factory+UILabel.swift */,
-				F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */,
-				F2D1998425A274ED004C7753 /* Factory+UIAlertAction.swift */,
-				F237288D244C93BD00964C49 /* Factory+UINavigationController.swift */,
-				F237101625AB43080072AF29 /* Factory+MKMapView.swift */,
-				F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */,
-				F28EE8CD25AB94390045AE6A /* Factory+CAShapeLayer.swift */,
 				F2060E5527B6B7CE0066DC8C /* Factory+UITextField.swift */,
+				F20CA0D625B1C75700153E47 /* Factory+UIView.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -1412,6 +1417,7 @@
 				F2F1554C2443C842007A3E90 /* UIView+AddSubview.swift */,
 				F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */,
 				F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */,
+				F2BDACFF27E68A8E00FF6401 /* UIColor+Adjust.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1981,6 +1987,7 @@
 				F217CB9827D8FD7200DAC947 /* TemperatureUnitSelectionAlert.swift in Sources */,
 				F217CBA227DB602600DAC947 /* AboutAppTableViewDelegate.swift in Sources */,
 				F25A39732187B1B00054BC7A /* ThirdPartyLibraryDTO.swift in Sources */,
+				F2BDAD0227E68C6100FF6401 /* Factory+CAGradientLayer.swift in Sources */,
 				F217CBB627DB650600DAC947 /* SettingsAppVersionCellViewModel.swift in Sources */,
 				F284DDCB245A263900445BFF /* WeatherInformationService.swift in Sources */,
 				F2DB5E9325AB5C6C00E21A56 /* BaseAnnotationView.swift in Sources */,
@@ -2143,6 +2150,7 @@
 				F2E7238123E0F044001189F5 /* Constants+Keys.swift in Sources */,
 				F25A396F2187A6DA0054BC7A /* DevelopmentContributorDTO.swift in Sources */,
 				F20CA0FD25B21B9800153E47 /* WeatherStationMeteorologyDetailsWindCellModel.swift in Sources */,
+				F2BDAD0027E68A8E00FF6401 /* UIColor+Adjust.swift in Sources */,
 				F2D2B1E02004171500C810EF /* JsonPersistencyWorker.swift in Sources */,
 				F217CBBC27DB6AEE00DAC947 /* SettingsSingleLabelCellViewModel.swift in Sources */,
 				F260BDAA244CF3CB00B4357A /* UITableViewCell+TableViewCellReuseIdentifiable.swift in Sources */,

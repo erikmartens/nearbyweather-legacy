@@ -86,7 +86,14 @@ extension WeatherStationMeteorologyDetailsHeaderCell {
 private extension WeatherStationMeteorologyDetailsHeaderCell {
   
   func setContent(for cellModel: WeatherStationMeteorologyDetailsHeaderCellModel) {
+//    let gradientLayer = Factory.GradientLayer.make(fromType: .weatherCell(
+//      frame: backgroundColorView.bounds,
+//      cornerRadiusWeight: .medium,
+//      baseColor: cellModel.backgroundColor
+//    ))
+//    backgroundColorView.layer.insertSublayer(gradientLayer, at: 0)
     backgroundColorView.backgroundColor = cellModel.backgroundColor
+  
     weatherConditionSymbolLabel.text = cellModel.weatherConditionSymbol
     weatherConditionTitleLabel.text = cellModel.weatherConditionTitle
     temperatureLabelLabel.text = cellModel.temperature

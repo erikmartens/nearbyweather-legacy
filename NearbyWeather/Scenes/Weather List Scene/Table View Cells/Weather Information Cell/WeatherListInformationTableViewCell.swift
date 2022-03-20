@@ -110,12 +110,16 @@ extension WeatherListInformationTableViewCell {
 private extension WeatherListInformationTableViewCell {
   
   func setContent(for cellModel: WeatherListInformationTableViewCellModel) {
+//    let gradientLayer = Factory.GradientLayer.make(fromType: .weatherCell(
+//      frame: backgroundColorView.bounds,
+//      cornerRadiusWeight: .medium,
+//      baseColor: cellModel.backgroundColor ?? .clear
+//    ))
+//    backgroundColorView.layer.insertSublayer(gradientLayer, at: 0)
     backgroundColorView.backgroundColor = cellModel.backgroundColor
-    backgroundColorView.layer.borderColor = cellModel.borderColor?.cgColor
     
     weatherConditionSymbolLabel.text = cellModel.weatherConditionSymbol
     placeNameLabel.text = cellModel.placeName
-    
     temperatureLabel.text = cellModel.temperature
     cloudCoverageLabel.text = cellModel.cloudCoverage
     humidityLabel.text = cellModel.humidity
@@ -191,7 +195,7 @@ private extension WeatherListInformationTableViewCell {
       humiditySymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.conditionDetailSymbolHeightWidth),
       humiditySymbolImageView.leadingAnchor.constraint(equalTo: weatherConditionSymbolLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .extraLarge)),
       humiditySymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: temperatureSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
-      humiditySymbolImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)*2)
+      humiditySymbolImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2)
     ])
     
     contentView.addSubview(humidityLabel, constraints: [
@@ -201,7 +205,7 @@ private extension WeatherListInformationTableViewCell {
       humidityLabel.centerYAnchor.constraint(equalTo: humiditySymbolImageView.centerYAnchor),
       humidityLabel.leadingAnchor.constraint(equalTo: humiditySymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
       humidityLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
-      humidityLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)*2)
+      humidityLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2)
     ])
     
     // windspeed
@@ -212,7 +216,7 @@ private extension WeatherListInformationTableViewCell {
       windspeedSymbolImageView.centerYAnchor.constraint(equalTo: humidityLabel.centerYAnchor),
       windspeedSymbolImageView.leadingAnchor.constraint(equalTo: humidityLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .large)),
       windspeedSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: cloudCoverageSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
-      windspeedSymbolImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)*2)
+      windspeedSymbolImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2)
     ])
     
     contentView.addSubview(windspeedLabel, constraints: [
@@ -226,7 +230,7 @@ private extension WeatherListInformationTableViewCell {
       windspeedLabel.leadingAnchor.constraint(equalTo: windspeedSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
       windspeedLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
       windspeedLabel.topAnchor.constraint(equalTo: cloudCoverageLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
-      windspeedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)*2)
+      windspeedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2)
     ])
   }
   
@@ -234,7 +238,5 @@ private extension WeatherListInformationTableViewCell {
     selectionStyle = .none
     backgroundColor = .clear
     contentView.backgroundColor = .clear
-    
-    backgroundColorView.layer.borderWidth = Definitions.backgroundColorViewBorderWidth
   }
 }

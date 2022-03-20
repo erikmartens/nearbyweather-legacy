@@ -32,6 +32,7 @@ extension Constants {
     
     static func kOpenWeatherMapSingleStationtDataRequestUrl(with apiKey: String, stationIdentifier identifier: Int) -> URL {
       let localeTag = Locale.current.languageCode?.lowercased() ?? "en"
+
       let baseUrl = Constants.Urls.kOpenWeatherSingleLocationBaseUrl.absoluteString
       return URL(string: "\(baseUrl)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)")!
     }
@@ -43,8 +44,10 @@ extension Constants {
     }
     
     static func kOpenWeatherMapMultiStationtDataRequestUrl(with apiKey: String, latitude: Double, longitude: Double, numberOfResults: Int) -> URL {
+      let localeTag = Locale.current.languageCode?.lowercased() ?? "en"
+      
       let baseUrl = Constants.Urls.kOpenWeatherNearbyStationsDataBaseUrl.absoluteString
-      return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)")!
+      return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)&lang=\(localeTag)")!
     }
   }
 }

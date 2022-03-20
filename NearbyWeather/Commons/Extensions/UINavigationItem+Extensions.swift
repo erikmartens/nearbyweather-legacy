@@ -10,12 +10,6 @@ import UIKit.UINavigationItem
 
 extension UINavigationItem {
   
-  func removeTextFromBackBarButton() {
-    let barButton = UIBarButtonItem()
-    barButton.title = ""
-    self.backBarButtonItem = barButton
-  }
-  
   func setTitle(_ title: String, andSubtitle subtitle: String) {
     let titleLabelFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
     let titleLabel = UILabel(frame: titleLabelFrame)

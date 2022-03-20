@@ -12,6 +12,8 @@ enum Delimiter {
   case none
   case space
   case comma
+  case colon
+  case semicolon
   case custom(string: String)
   
   var stringValue: String {
@@ -22,6 +24,10 @@ enum Delimiter {
       return " "
     case .comma:
       return ", "
+    case .colon:
+      return ": "
+    case .semicolon:
+      return "; "
     case let .custom(string):
       return string
     }
@@ -30,7 +36,7 @@ enum Delimiter {
 
 extension String {
   
-  static func begin(with string: String?, defaultTo replacement: String = "") -> String {
+  static func begin(with string: String? = nil, defaultTo replacement: String = "") -> String {
     string ?? replacement
   }
   

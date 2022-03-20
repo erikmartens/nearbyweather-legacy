@@ -119,3 +119,4 @@ get_started_with_openweathermap = "Configurer l'accès à OpenWeatherMap";
 privacy_policy = "Politique de confidentialité";
 terms_of_use = "Conditions d'utilisation";
 email_salutation = "Bonjour Erik, \n";
+copied = "copié";

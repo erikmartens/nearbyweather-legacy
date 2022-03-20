@@ -111,7 +111,7 @@ private extension WeatherStationMeteorologyDetailsWindCell {
       windSpeedLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       windSpeedLabel.leadingAnchor.constraint(equalTo: windSpeedDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       windSpeedLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
-      windSpeedLabel.widthAnchor.constraint(equalTo: windSpeedDescriptionLabel.widthAnchor, multiplier: 2/3),
+      windSpeedLabel.widthAnchor.constraint(equalTo: windSpeedDescriptionLabel.widthAnchor, multiplier: 4/5),
       windSpeedLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       windSpeedLabel.centerYAnchor.constraint(equalTo: windSpeedDescriptionLabel.centerYAnchor),
       windSpeedLabel.centerYAnchor.constraint(equalTo: windSpeedSymbolImageView.centerYAnchor)
@@ -139,7 +139,7 @@ private extension WeatherStationMeteorologyDetailsWindCell {
       windDirectionLabel.leadingAnchor.constraint(equalTo: windDirectionDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       windDirectionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
       windDirectionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      windDirectionLabel.widthAnchor.constraint(equalTo: windDirectionDescriptionLabel.widthAnchor, multiplier: 2/3),
+      windDirectionLabel.widthAnchor.constraint(equalTo: windDirectionDescriptionLabel.widthAnchor, multiplier: 4/5),
       windDirectionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       windDirectionLabel.centerYAnchor.constraint(equalTo: windDirectionDescriptionLabel.centerYAnchor),
       windDirectionLabel.centerYAnchor.constraint(equalTo: windDirectionSymbolImageView.centerYAnchor)

@@ -108,7 +108,7 @@ private extension WeatherStationMeteorologyDetailsSunCycleCell {
       sunriseTimeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       sunriseTimeLabel.leadingAnchor.constraint(equalTo: sunriseDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       sunriseTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
-      sunriseTimeLabel.widthAnchor.constraint(equalTo: sunriseDescriptionLabel.widthAnchor, multiplier: 2/3),
+      sunriseTimeLabel.widthAnchor.constraint(equalTo: sunriseDescriptionLabel.widthAnchor, multiplier: 4/5),
       sunriseTimeLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       sunriseTimeLabel.centerYAnchor.constraint(equalTo: sunriseDescriptionLabel.centerYAnchor),
       sunriseTimeLabel.centerYAnchor.constraint(equalTo: sunriseSymbolImageView.centerYAnchor)
@@ -136,7 +136,7 @@ private extension WeatherStationMeteorologyDetailsSunCycleCell {
       sunsetTimeLabel.leadingAnchor.constraint(equalTo: sunsetDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       sunsetTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
       sunsetTimeLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      sunsetTimeLabel.widthAnchor.constraint(equalTo: sunsetDescriptionLabel.widthAnchor, multiplier: 2/3),
+      sunsetTimeLabel.widthAnchor.constraint(equalTo: sunsetDescriptionLabel.widthAnchor, multiplier: 4/5),
       sunsetTimeLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       sunsetTimeLabel.centerYAnchor.constraint(equalTo: sunsetDescriptionLabel.centerYAnchor),
       sunsetTimeLabel.centerYAnchor.constraint(equalTo: sunsetSymbolImageView.centerYAnchor)

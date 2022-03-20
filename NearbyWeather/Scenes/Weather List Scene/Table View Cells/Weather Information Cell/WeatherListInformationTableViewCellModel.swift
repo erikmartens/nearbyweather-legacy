@@ -53,8 +53,8 @@ struct WeatherListInformationTableViewCellModel {
         forTemperatureUnit: temperatureUnitOption,
         fromRawTemperature: weatherInformationDTO.atmosphericInformation.temperatureKelvin
       ),
-      cloudCoverage: weatherInformationDTO.cloudCoverage.coverage?.append(contentsOf: "%", delimiter: .none),
-      humidity: weatherInformationDTO.atmosphericInformation.humidity?.append(contentsOf: "%", delimiter: .none),
+      cloudCoverage: MeteorologyInformationConversionWorker.cloudCoverageDescriptor(for: weatherInformationDTO.cloudCoverage.coverage),
+      humidity: MeteorologyInformationConversionWorker.humidityDescriptor(for: weatherInformationDTO.atmosphericInformation.humidity),
       windspeed: MeteorologyInformationConversionWorker.windspeedDescriptor(
         forDistanceSpeedUnit: dimensionalUnitsOption,
         forWindspeed: weatherInformationDTO.windInformation.windspeed

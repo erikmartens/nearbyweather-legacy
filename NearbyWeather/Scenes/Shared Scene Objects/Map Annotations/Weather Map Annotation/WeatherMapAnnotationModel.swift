@@ -52,7 +52,8 @@ struct WeatherMapAnnotationModel {
       )
     }
     
-    let subtitle: String? = ""
+    let subtitle: String? = String
+      .begin()
       .append(contentsOf: weatherConditionSymbol, delimiter: .space)
       .append(contentsOf: temperatureDescriptor, delimiter: .space)
       .ifEmpty(justReturn: nil)

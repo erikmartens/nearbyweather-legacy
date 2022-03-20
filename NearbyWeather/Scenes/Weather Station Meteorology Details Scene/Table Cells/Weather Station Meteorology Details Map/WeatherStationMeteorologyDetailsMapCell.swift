@@ -39,11 +39,13 @@ final class WeatherStationMeteorologyDetailsMapCell: UITableViewCell, BaseCell {
   
   private lazy var coordinatesSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.location()))
   private lazy var coordinatesDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.coordinates(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
-  private lazy var coordinatesLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
+  private lazy var coordinatesLabel = Factory.Label.make(fromType: .subtitle(alignment: .right, isCopyable: true))
   
   private lazy var distanceSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.distance()))
   private lazy var distanceDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.distance(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   private lazy var distanceLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
+  
+  private lazy var coordinatesLabelTapGestureRecognizer = UITapGestureRecognizer()
   
   // MARK: - Assets
   
@@ -100,6 +102,14 @@ extension WeatherStationMeteorologyDetailsMapCell {
       })
       .disposed(by: disposeBag)
   }
+  
+  func bindUserInputToViewModel(_ cellViewModel: WeatherStationMeteorologyDetailsMapCellViewModel) {
+    coordinatesLabelTapGestureRecognizer.rx
+      .event
+      .map { _ in () }
+      .bind(to: cellViewModel.onDidTapCoordinatesLabelSubject)
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Cell Composition
@@ -149,7 +159,7 @@ private extension WeatherStationMeteorologyDetailsMapCell {
       coordinatesLabel.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
       coordinatesLabel.leadingAnchor.constraint(equalTo: coordinatesDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       coordinatesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
-      coordinatesLabel.widthAnchor.constraint(equalTo: coordinatesDescriptionLabel.widthAnchor, multiplier: 2/3),
+      coordinatesLabel.widthAnchor.constraint(equalTo: coordinatesDescriptionLabel.widthAnchor, multiplier: 4/5),
       coordinatesLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       coordinatesLabel.centerYAnchor.constraint(equalTo: coordinatesDescriptionLabel.centerYAnchor),
       coordinatesLabel.centerYAnchor.constraint(equalTo: coordinatesSymbolImageView.centerYAnchor)
@@ -177,11 +187,13 @@ private extension WeatherStationMeteorologyDetailsMapCell {
       distanceLabel.leadingAnchor.constraint(equalTo: distanceDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
       distanceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
       distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      distanceLabel.widthAnchor.constraint(equalTo: distanceDescriptionLabel.widthAnchor, multiplier: 2/3),
+      distanceLabel.widthAnchor.constraint(equalTo: distanceDescriptionLabel.widthAnchor, multiplier: 4/5),
       distanceLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       distanceLabel.centerYAnchor.constraint(equalTo: distanceDescriptionLabel.centerYAnchor),
       distanceLabel.centerYAnchor.constraint(equalTo: distanceSymbolImageView.centerYAnchor)
     ])
+    
+    coordinatesLabel.addGestureRecognizer(coordinatesLabelTapGestureRecognizer)
   }
   
   func setupAppearance() {

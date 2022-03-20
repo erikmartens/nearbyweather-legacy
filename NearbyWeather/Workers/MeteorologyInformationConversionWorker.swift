@@ -85,6 +85,19 @@ private extension MeteorologyInformationConversionWorker {
 
 final class MeteorologyInformationConversionWorker {
   
+  private static var numberFormatter: NumberFormatter {
+    let formatter = NumberFormatter()
+    formatter.locale = Locale.current
+    formatter.numberStyle = .decimal
+    formatter.maximumFractionDigits = 1
+    return formatter
+  }
+}
+
+// MARK: - Public Functions
+
+extension MeteorologyInformationConversionWorker {
+  
   static func weatherConditionSymbol(fromWeatherCode code: Int?, isDayTime: Bool?) -> String { // swiftlint:disable:this cyclomatic_complexity
     guard let code = code else {
       return "❓"
@@ -140,7 +153,7 @@ final class MeteorologyInformationConversionWorker {
     switch temperatureUnit.value {
     case .celsius:
       adjustedTemp = rawTemperature - 273.15
-    case . fahrenheit:
+    case .fahrenheit:
       adjustedTemp = rawTemperature * (9/5) - 459.67
     case .kelvin:
       adjustedTemp = rawTemperature
@@ -156,11 +169,44 @@ final class MeteorologyInformationConversionWorker {
     }
     switch temperatureUnit.value {
     case .celsius:
-      return String(format: "%.02f", rawTemperature - 273.15).append(contentsOf: "°C", delimiter: .none)
-    case . fahrenheit:
-      return String(format: "%.02f", rawTemperature * (9/5) - 459.67).append(contentsOf: "°F", delimiter: .none)
+      return numberFormatter.string(from: rawTemperature - 273.15)?.append(contentsOf: "°C", delimiter: .none)
+    case .fahrenheit:
+      return numberFormatter.string(from: rawTemperature * (9/5) - 459.67)?.append(contentsOf: "°F", delimiter: .none)
     case .kelvin:
-      return String(format: "%.02f", rawTemperature).append(contentsOf: "°K", delimiter: .none)
+      return numberFormatter.string(from: rawTemperature)?.append(contentsOf: "°K", delimiter: .none)
+    }
+  }
+  
+  static func cloudCoverageDescriptor(for cloudCoverage: Double?) -> String? {
+    guard let cloudCoverage = cloudCoverage else {
+      return nil
+    }
+    return numberFormatter.string(from: cloudCoverage)?.append(contentsOf: "%", delimiter: .none)
+  }
+  
+  static func humidityDescriptor(for humidity: Double?) -> String? {
+    guard let humidity = humidity else {
+      return nil
+    }
+    return numberFormatter.string(from: humidity)?.append(contentsOf: "%", delimiter: .none)
+  }
+  
+  static func airPressureDescriptor(for airPressure: Double?) -> String? {
+    guard let airPressure = airPressure else {
+      return nil
+    }
+    return numberFormatter.string(from: airPressure)?.append(contentsOf: "hpa", delimiter: .space)
+  }
+  
+  static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitOption, forDistanceInMetres distance: Double) -> String? {
+    let numberFormaatter = numberFormatter
+    numberFormaatter.maximumFractionDigits = distance > 100000 ? 0 : 1
+    
+    switch distanceSpeedUnit.value {
+    case .metric:
+      return numberFormaatter.string(from: distance/1000)?.append(contentsOf: R.string.localizable.km(), delimiter: .space)
+    case .imperial:
+      return numberFormaatter.string(from: distance/1609.344)?.append(contentsOf: R.string.localizable.mi(), delimiter: .space)
     }
   }
   
@@ -170,23 +216,39 @@ final class MeteorologyInformationConversionWorker {
     }
     switch distanceSpeedUnit.value {
     case .metric:
-      return String(format: "%.02f", windspeed).append(contentsOf: R.string.localizable.kph(), delimiter: .space)
+      return numberFormatter.string(from: windspeed)?.append(contentsOf: R.string.localizable.kph(), delimiter: .space)
     case .imperial:
-      return String(format: "%.02f", windspeed / 1.609344).append(contentsOf: R.string.localizable.mph(), delimiter: .space)
+      return numberFormatter.string(from: windspeed / 1.609344)?.append(contentsOf: R.string.localizable.mph(), delimiter: .space)
     }
   }
   
-  static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitOption, forDistanceInMetres distance: Double) -> String {
-    switch distanceSpeedUnit.value {
-    case .metric:
-      return String(format: "%.02f", distance/1000).append(contentsOf: R.string.localizable.km(), delimiter: .space)
-    case .imperial:
-      return String(format: "%.02f", distance/1609.344).append(contentsOf: R.string.localizable.mi(), delimiter: .space)
-    }
+  static func windDirectionDescriptor(forWindDirection degrees: Double) -> String? {
+    numberFormatter.string(from: degrees)?.append(contentsOf: "°", delimiter: .none)
   }
   
-  static func windDirectionDescriptor(forWindDirection degrees: Double) -> String {
-    return String(format: "%.02f", degrees).append(contentsOf: "°", delimiter: .none)
+  static func coordinatesDescriptorFor(latitude lat: Double?, longitude lon: Double?) -> String? {
+    guard let latitude = lat, let longitude = lon else {
+      return nil
+    }
+    let numberFormatter = numberFormatter
+    numberFormatter.decimalSeparator = "."
+    return String
+      .begin(with: numberFormatter.string(from: latitude))
+      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .comma)
+  }
+  
+  static func coordinatesCopyTextFor(latitude lat: Double?, longitude lon: Double?) -> String? {
+    guard let latitude = lat, let longitude = lon else {
+      return nil
+    }
+    let numberFormatter = numberFormatter
+    numberFormatter.decimalSeparator = "."
+    numberFormatter.minimumFractionDigits = 6
+    numberFormatter.maximumFractionDigits = 12
+    
+    return String
+      .begin(with: numberFormatter.string(from: latitude))
+      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .comma)
   }
   
   static func isDayTime(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> Bool? {
@@ -274,5 +336,13 @@ private extension MeteorologyInformationConversionWorker {
       sunsetTimeDateComponentsMinute: sunsetDateComponents.minute,
       timeZone: timeZone
     )
+  }
+}
+
+// MARK: - Helper Extensions
+
+private extension NumberFormatter {
+  func string(from double: Double) -> String? {
+    string(from: double as NSNumber)
   }
 }

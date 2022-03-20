@@ -9,6 +9,7 @@
 import RxSwift
 import RxCocoa
 import CoreLocation
+import PKHUD
 
 // MARK: - Dependencies
 
@@ -40,15 +41,36 @@ final class WeatherStationMeteorologyDetailsMapCellViewModel: NSObject, BaseCell
 
   // MARK: - Events
   
-  lazy var cellModelDriver: Driver<WeatherStationMeteorologyDetailsMapCellModel> = { [dependencies] in
-    Self.createCellModelDriver(with: dependencies)
-  }()
+  lazy var cellModelDriver: Driver<WeatherStationMeteorologyDetailsMapCellModel> = Observable
+    .combineLatest(
+      weatherInformationDtoObservable.map { $0.entity },
+      dependencies.preferencesService.createGetMapTypeOptionObservable(),
+      dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
+      dependencies.userLocationService.createGetUserLocationObservable(),
+      resultSelector: { weatherInformationModel, preferredMapTypeOption, preferredDimensionalUnitsOption, currentLocation -> WeatherStationMeteorologyDetailsMapCellModel in
+        WeatherStationMeteorologyDetailsMapCellModel(
+          preferredMapTypeOption: preferredMapTypeOption,
+          coordinatesString: MeteorologyInformationConversionWorker.coordinatesDescriptorFor(
+            latitude: weatherInformationModel.coordinates.latitude,
+            longitude: weatherInformationModel.coordinates.longitude
+          ),
+          distanceString: Self.distanceString(for: weatherInformationModel, preferredDimensionalUnitsOption: preferredDimensionalUnitsOption, currentLocation: currentLocation)
+        )
+      }
+    )
+    .asDriver(onErrorJustReturn: WeatherStationMeteorologyDetailsMapCellModel())
+  
+  var onDidTapCoordinatesLabelSubject = PublishSubject<Void>()
   
   // MARK: - Observables
   
-  private lazy var weatherInformationDtoObservable: Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> = { [dependencies] in
-    Self.createGetWeatherInformationDtoObservable(with: dependencies).share(replay: 1)
-  }()
+  private lazy var weatherInformationDtoObservable = Observable
+    .combineLatest(
+      Observable.just(dependencies.weatherInformationIdentity.identifier),
+      dependencies.weatherStationService.createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
+    )
+    .flatMapLatest(dependencies.weatherInformationService.createGetWeatherInformationItemObservable)
+    .share(replay: 1)
 
   // MARK: - Initialization
   
@@ -90,44 +112,25 @@ extension WeatherStationMeteorologyDetailsMapCellViewModel {
       .bind { [weak mapDelegate] in mapDelegate?.dataSource.accept($0) }
       .disposed(by: disposeBag)
   }
-}
-
-// MARK: - Observation Helpers
-
-private extension WeatherStationMeteorologyDetailsMapCellViewModel {
   
-  static func createCellModelDriver(with dependencies: Dependencies) -> Driver<WeatherStationMeteorologyDetailsMapCellModel> {
-    Observable
-      .combineLatest(
-        createGetWeatherInformationDtoObservable(with: dependencies).map { $0.entity },
-        dependencies.preferencesService.createGetMapTypeOptionObservable(),
-        dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
-        dependencies.userLocationService.createGetUserLocationObservable(),
-        resultSelector: { weatherInformationDTO, preferredMapTypeOption, preferredDimensionalUnitsOption, currentLocation -> WeatherStationMeteorologyDetailsMapCellModel in
-          WeatherStationMeteorologyDetailsMapCellModel(
-            preferredMapTypeOption: preferredMapTypeOption,
-            coordinatesString: String
-              .begin(with: weatherInformationDTO.coordinates.latitude)
-              .append(contentsOfConvertible: weatherInformationDTO.coordinates.longitude, delimiter: .comma, emptyIfPredecessorWasEmpty: true)
-              .ifEmpty(justReturn: nil),
-            distanceString: Self.distanceString(for: weatherInformationDTO, preferredDimensionalUnitsOption: preferredDimensionalUnitsOption, currentLocation: currentLocation)
-          )
-        }
-      )
-      .asDriver(onErrorJustReturn: WeatherStationMeteorologyDetailsMapCellModel())
-  }
-  
-  static func createGetWeatherStationIsBookmarkedObservable(with dependencies: Dependencies) -> Observable<Bool> {
-    dependencies.weatherStationService.createGetIsStationBookmarkedObservable(for: dependencies.weatherInformationIdentity)
-  }
-  
-  static func createGetWeatherInformationDtoObservable(with dependencies: Dependencies) -> Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> {
-    Observable
-      .combineLatest(
-        Observable.just(dependencies.weatherInformationIdentity.identifier),
-        Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies)
-      )
-      .flatMapLatest(dependencies.weatherInformationService.createGetWeatherInformationItemObservable)
+  func observeUserTapEvents() {
+    onDidTapCoordinatesLabelSubject
+      .asObservable()
+      .withLatestFrom(weatherInformationDtoObservable.map { $0.entity })
+      .subscribe(on: MainScheduler.instance)
+      .subscribe(onNext: { weatherInformationModel in
+        UIPasteboard.general.string = MeteorologyInformationConversionWorker.coordinatesCopyTextFor(
+          latitude: weatherInformationModel.coordinates.latitude,
+          longitude: weatherInformationModel.coordinates.longitude
+        )
+        
+        let message = String
+          .begin(with: R.string.localizable.coordinates().capitalized)
+          .append(contentsOf: R.string.localizable.copied().capitalized, delimiter: .space)
+        
+        HUD.flash(.label(message), delay: 1.0)
+      })
+      .disposed(by: disposeBag)
   }
 }
 

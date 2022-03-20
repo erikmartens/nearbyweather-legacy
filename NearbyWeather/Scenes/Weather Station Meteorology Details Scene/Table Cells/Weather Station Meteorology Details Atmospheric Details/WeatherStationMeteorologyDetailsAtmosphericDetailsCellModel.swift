@@ -30,18 +30,9 @@ struct WeatherStationMeteorologyDetailsAtmosphericDetailsCellModel { // swiftlin
     pressurePsi: Double
   ) {
     self.init(
-      cloudCoverageString: String
-        .begin(with: cloudCoverage)
-        .append(contentsOf: "%", delimiter: .none, emptyIfPredecessorWasEmpty: true)
-        .ifEmpty(justReturn: nil),
-      humidityString: String
-        .begin(with: humidity)
-        .append(contentsOf: "%", delimiter: .none, emptyIfPredecessorWasEmpty: true)
-        .ifEmpty(justReturn: nil),
-      airPressureString: String
-        .begin(with: pressurePsi)
-        .append(contentsOf: "hpa", delimiter: .none, emptyIfPredecessorWasEmpty: true)
-        .ifEmpty(justReturn: nil)
+      cloudCoverageString: MeteorologyInformationConversionWorker.cloudCoverageDescriptor(for: cloudCoverage),
+      humidityString: MeteorologyInformationConversionWorker.humidityDescriptor(for: humidity),
+      airPressureString: MeteorologyInformationConversionWorker.airPressureDescriptor(for: pressurePsi)
     )
   }
 }

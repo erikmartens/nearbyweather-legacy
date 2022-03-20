@@ -31,6 +31,8 @@ end
 
 desc "fastlane testflight_beta changelog: 'Notes to testers'"
 lane :testflight_beta do |options|
+  system "pod install"
+
   clear_derived_data
   build_app
   upload_to_testflight(
@@ -40,6 +42,8 @@ lane :testflight_beta do |options|
     changelog: options[:changelog],
     skip_waiting_for_build_processing: true
   )
+
+  system "pod deintegrate ../NearbyWeather.xcodeproj"
 end
 
 lane :prepare_release do

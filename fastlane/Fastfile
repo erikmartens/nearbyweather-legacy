@@ -33,6 +33,7 @@ desc "fastlane testflight_beta changelog: 'Notes to testers'"
 lane :testflight_beta do |options|
   system "pod install"
 
+  xcode_select("/Applications/Xcode-13.2.1/Xcode.app")
   clear_derived_data
   build_app
   upload_to_testflight(
@@ -54,6 +55,7 @@ end
 lane :release do
   system "pod install"
 
+  xcode_select("/Applications/Xcode-13.2.1/Xcode.app")
   clear_derived_data
   build_app
   deliver(

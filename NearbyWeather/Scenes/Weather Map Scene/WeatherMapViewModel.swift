@@ -58,7 +58,7 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
   lazy var focusOnWeatherStationDriver = onDidSelectFocusOnWeatherStationSubject.asDriver(onErrorJustReturn: nil)
   lazy var focusOnUserLocationDriver: Driver<CLLocation?> = onDidSelectFocusOnUserLocationSubject
     .asObservable()
-    .flatMapLatest { [dependencies] _ in dependencies.userLocationService.createGetUserLocationObservable() }
+    .flatMapLatest { [unowned self] _ in dependencies.userLocationService.createGetUserLocationObservable().take(1) }
     .map { location -> CLLocation? in location }
     .asDriver(onErrorJustReturn: nil)
   

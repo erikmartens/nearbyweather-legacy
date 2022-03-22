@@ -61,7 +61,6 @@ final class WeatherInformationUpdateDaemon: NSObject, Daemon {
   func startObservations() {
     observeBookmarkedStationsChanges()
     observeAmountOfNearbyResultsPreferenceChanges()
-    observeLocationAccessAuthorization()
     observeAppDidBecomeActive()
   }
   
@@ -124,19 +123,6 @@ private extension WeatherInformationUpdateDaemon {
           .asObservable()
           .materialize()
       }
-      .subscribe()
-      .disposed(by: disposeBag)
-  }
-  
-  func observeLocationAccessAuthorization() {
-    dependencies.userLocationService
-      .createGetLocationAuthorizationStatusObservable()
-      .filter { !($0?.authorizationStatusIsSufficient ?? false) } // keep going when not authorized
-      .do(onNext: { [dependencies] _ in
-        _ = dependencies.weatherInformationService
-          .createDeleteNearbyWeatherInformationListCompletable()
-          .subscribe()
-      })
       .subscribe()
       .disposed(by: disposeBag)
   }

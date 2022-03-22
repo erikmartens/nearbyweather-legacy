@@ -24,6 +24,8 @@ extension Factory {
       switch type {
       case let .standard(cornerRadiusWeight):
         let textField = UITextField()
+        textField.layer.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground.cgColor
+        textField.tintColor = Constants.Theme.Color.ViewElement.Label.titleDark
         if let cornerRadiusWeight = cornerRadiusWeight {
           textField.layer.cornerRadius = Constants.Dimensions.CornerRadius.from(weight: cornerRadiusWeight)
         }

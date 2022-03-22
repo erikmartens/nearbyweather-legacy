@@ -30,8 +30,8 @@ final class SetApiKeyViewController: UIViewController, BaseViewController {
   fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .custom(value: Definitions.mainStackViewInterElementYSpacing)))
   fileprivate lazy var bubbleView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
   fileprivate lazy var bubbleContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .large))
-  fileprivate lazy var bubbleDescriptionLabel = Factory.Label.make(fromType: .subtitle(text: R.string.localizable.welcome_api_key_description()))
-  fileprivate lazy var apiKeyInputTextField = Factory.TextField.make(fromType: .standard(cornerRadiusWeight: .medium))
+  fileprivate lazy var bubbleDescriptionLabel = Factory.Label.make(fromType: .subtitle(text: R.string.localizable.welcome_api_key_description(), textColor: Constants.Theme.Color.ViewElement.Label.titleLight))
+  fileprivate lazy var apiKeyInputTextField = Factory.TextField.make(fromType: .standard(cornerRadiusWeight: .small))
   fileprivate lazy var buttonStackView = Factory.StackView.make(fromType: .vertical(distribution: .fillProportionally, spacingWeight: .large))
   fileprivate lazy var saveButton = Factory.Button.make(fromType: .standard(title: R.string.localizable.save(), height: Constants.Dimensions.InteractableElement.height))
   fileprivate lazy var instructionsButton = Factory.Button.make(fromType: .plain(title: R.string.localizable.get_api_key_description()))
@@ -160,7 +160,7 @@ private extension SetApiKeyViewController {
   func setupUiAppearance() {
     title = R.string.localizable.welcome()
     
-    view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
     bubbleView.backgroundColor = Constants.Theme.Color.ViewElement.alert
   }
 }

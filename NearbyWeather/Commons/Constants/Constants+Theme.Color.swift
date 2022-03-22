@@ -33,7 +33,7 @@ extension Constants.Theme.Color {
     }
     
     static var standardBarButtonTint: UIColor {
-      Constants.Theme.Color.ViewElement.alert
+      Constants.Theme.Color.ViewElement.Label.titleDark
     }
   }
   
@@ -52,8 +52,7 @@ extension Constants.Theme.Color {
     }
     
     static var alert: UIColor {
-      UIColor.from(dark: .init(hex: 0xFFFFFF),
-                   light: .init(hex: 0x000000))
+      Constants.Theme.Color.SystemColor.orange
     }
     
     static var symbolImageLight: UIColor {
@@ -79,7 +78,7 @@ extension Constants.Theme.Color {
       }
       
       static var bodyLight: UIColor {
-        Constants.Theme.Color.SystemColor.gray
+        Constants.Theme.Color.SystemColor.gray2
       }
       
       static var bodyDark: UIColor {
@@ -87,7 +86,7 @@ extension Constants.Theme.Color {
       }
       
       static var subtitleLight: UIColor {
-        Constants.Theme.Color.SystemColor.gray
+        Constants.Theme.Color.SystemColor.gray2
       }
       
       static var subtitleDark: UIColor {

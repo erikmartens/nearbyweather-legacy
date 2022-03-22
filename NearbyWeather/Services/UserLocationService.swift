@@ -16,7 +16,7 @@ extension UserLocationService {
   enum DomainError: String, Error {
     var domain: String { "UserLocationService" }
     
-    case locationAuthorizationError = "Trying access the user location, but sufficient authorization was not granted or the user location is not accessible."
+    case locationAuthorizationError = "Trying access the user location, but sufficient authorization was not granted."
     case locationUndeterminableError = "Trying access the user location, but it could not be determined."
   }
 }
@@ -138,7 +138,7 @@ protocol UserLocationAccessing {
   
   func createDeleteUserLocationCompletable() -> Completable
   func createSaveUserLocationCompletable(location: CLLocation?) -> Completable
-  func createGetUserLocationObservable() -> Observable<CLLocation>
+  func createGetUserLocationObservable() -> Observable<CLLocation?>
 }
 
 extension UserLocationService: UserLocationAccessing {
@@ -162,12 +162,12 @@ extension UserLocationService: UserLocationAccessing {
       type: UserLocation.self)
   }
   
-  func createGetUserLocationObservable() -> Observable<CLLocation> {
+  func createGetUserLocationObservable() -> Observable<CLLocation?> {
     dependencies.persistencyService
       .observeResource(with: PersistencyKeys.userLocation.identity, type: UserLocation.self)
       .map { userLocation in
         guard let userLocation = userLocation else {
-          throw DomainError.locationAuthorizationError
+          return nil
         }
         return CLLocation(latitude: userLocation.entity.latitude, longitude: userLocation.entity.longitude)
       }
@@ -186,7 +186,7 @@ extension UserLocationService: UserLocationWriting {}
 // MARK: - User Location Reading
 
 protocol UserLocationReading {
-  func createGetUserLocationObservable() -> Observable<CLLocation>
+  func createGetUserLocationObservable() -> Observable<CLLocation?>
 }
 
 extension UserLocationService: UserLocationReading {}

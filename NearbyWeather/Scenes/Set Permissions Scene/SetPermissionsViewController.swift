@@ -30,7 +30,7 @@ final class SetPermissionsViewController: UIViewController, BaseViewController {
   fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .custom(value: Definitions.mainStackViewInterElementYSpacing)))
   fileprivate lazy var bubbleView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
   fileprivate lazy var bubbleContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .large))
-  fileprivate lazy var bubbleDescriptionLabel = Factory.Label.make(fromType: .subtitle(text: R.string.localizable.configure_location_permissions_description()))
+  fileprivate lazy var bubbleDescriptionLabel = Factory.Label.make(fromType: .subtitle(text: R.string.localizable.configure_location_permissions_description(), textColor: Constants.Theme.Color.ViewElement.Label.titleLight))
   fileprivate lazy var configureButton = Factory.Button.make(fromType: .standard(title: R.string.localizable.configure(), height: Constants.Dimensions.InteractableElement.height))
   
   // MARK: - Assets

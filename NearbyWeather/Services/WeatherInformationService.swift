@@ -272,7 +272,7 @@ extension WeatherInformationService: WeatherInformationUpdating {
     Observable
       .combineLatest(
         dependencies.apiKeyService.createGetApiKeyObservable(),
-        dependencies.userLocationService.createGetUserLocationObservable(),
+        dependencies.userLocationService.createGetUserLocationObservable().filterNil(),
         dependencies.preferencesService.createGetAmountOfNearbyResultsOptionObservable(),
         resultSelector: { apiKey, location, amountOfResultsOption -> URL in
           Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(

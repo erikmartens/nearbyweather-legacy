@@ -119,6 +119,14 @@ extension WeatherListViewModel {
     
     let nearbyListItemsObservable = dependencies.weatherInformationService
       .createGetNearbyWeatherInformationListObservable()
+      .distinctUntilChanged { lhsPersistencyModels, rhsPersistencyModels in
+        lhsPersistencyModels
+          .map { $0.identity.identifier }
+          .difference(from:
+                        rhsPersistencyModels.map { $0.identity.identifier }
+          )
+          .isEmpty
+      }
       .flatMapLatest { [preferredSortingOrientationObservable, dependencies] weatherInformationItems in
         Observable
           .combineLatest(
@@ -129,19 +137,26 @@ extension WeatherListViewModel {
             }
           )
       }
-      .distinctUntilChanged()
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
       .map { [WeatherListNearbyItemsSection(sectionItems: $0)] }
       .share(replay: 1)
     
     let bookmarkedListItemsObservable = dependencies.weatherInformationService
       .createGetBookmarkedWeatherInformationListObservable()
+      .distinctUntilChanged { lhsPersistencyModels, rhsPersistencyModels in
+        lhsPersistencyModels
+          .map { $0.identity.identifier }
+          .difference(from:
+                        rhsPersistencyModels.map { $0.identity.identifier }
+          )
+          .isEmpty
+      }
       .flatMapLatest { [dependencies] weatherInformationItems in
         dependencies.weatherStationService
           .createGetBookmarksSortingObservable()
           .map { Self.sortBookmarkedResults(weatherInformationItems, sortingWeights: $0) }
+          .distinctUntilChanged()
       }
-      .distinctUntilChanged()
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
       .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }
       .share(replay: 1)

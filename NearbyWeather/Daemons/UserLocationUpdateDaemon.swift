@@ -73,6 +73,7 @@ extension UserLocationUpdateDaemon: CLLocationManagerDelegate {
       .createSaveLocationAuthorizationStatusCompletable(
         UserLocationAuthorizationStatus(authorizationStatus: UserLocationAuthorizationStatusOption(clAuthorizationStatus: status))
       )
+      .subscribe()
     
     if status == .authorizedWhenInUse || status == .authorizedAlways {
       locationManager.startUpdatingLocation()

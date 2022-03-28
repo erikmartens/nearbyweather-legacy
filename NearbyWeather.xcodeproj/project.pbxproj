@@ -203,6 +203,10 @@
 		F28F180425A7354500AEA99A /* ApiKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28F180325A7354500AEA99A /* ApiKeyService.swift */; };
 		F28F180D25A74C3600AEA99A /* ApiKeyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28F180C25A74C3600AEA99A /* ApiKeyDTO.swift */; };
 		F28F182725A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28F182625A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift */; };
+		F29912CD27F1DCFC00BE0D59 /* ApplicationCycleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912CC27F1DCFC00BE0D59 /* ApplicationCycleService.swift */; };
+		F29912D027F1E68F00BE0D59 /* InstallVersionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912CF27F1E68F00BE0D59 /* InstallVersionModel.swift */; };
+		F29912D327F1F04700BE0D59 /* MigrationCompletedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912D227F1F04700BE0D59 /* MigrationCompletedModel.swift */; };
+		F29912D627F1F4F100BE0D59 /* SetupCompletedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912D527F1F4F100BE0D59 /* SetupCompletedModel.swift */; };
 		F2A5CAA62005762A0071BFFB /* MeteorologyInformationConversionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */; };
 		F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */; };
 		F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */; };
@@ -515,6 +519,10 @@
 		F28F180325A7354500AEA99A /* ApiKeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyService.swift; sourceTree = "<group>"; };
 		F28F180C25A74C3600AEA99A /* ApiKeyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyDTO.swift; sourceTree = "<group>"; };
 		F28F182625A87FA900AEA99A /* WeatherStationSortingOrientationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationSortingOrientationDTO.swift; sourceTree = "<group>"; };
+		F29912CC27F1DCFC00BE0D59 /* ApplicationCycleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCycleService.swift; sourceTree = "<group>"; };
+		F29912CF27F1E68F00BE0D59 /* InstallVersionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallVersionModel.swift; sourceTree = "<group>"; };
+		F29912D227F1F04700BE0D59 /* MigrationCompletedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationCompletedModel.swift; sourceTree = "<group>"; };
+		F29912D527F1F4F100BE0D59 /* SetupCompletedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompletedModel.swift; sourceTree = "<group>"; };
 		F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorologyInformationConversionWorker.swift; sourceTree = "<group>"; };
 		F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -1178,6 +1186,7 @@
 			isa = PBXGroup;
 			children = (
 				F28F180325A7354500AEA99A /* ApiKeyService.swift */,
+				F29912CC27F1DCFC00BE0D59 /* ApplicationCycleService.swift */,
 				F2060E6127BC1D7F0066DC8C /* NetworkReachabilityService.swift */,
 				F217CC0927DD5A9500DAC947 /* NotificationService.swift */,
 				F210B1A525A9D6BD00BF8DAA /* PersistencyService.swift */,
@@ -1194,7 +1203,10 @@
 			children = (
 				F28F180B25A74C0700AEA99A /* Api Key Models */,
 				F284DDC7245A12FE00445BFF /* Contributor Models */,
+				F29912CE27F1E67100BE0D59 /* Install Version Model */,
+				F29912D127F1F02B00BE0D59 /* Migration Completed Model */,
 				F27A121A24425BF200A2CE8D /* Preference Option Models */,
+				F29912D427F1F4DA00BE0D59 /* Setup Completed Model */,
 				F2060E6927C06C710066DC8C /* User Location Models */,
 				F284DDC5245A12A100445BFF /* Weather Information Models */,
 				F28F182B25A8895C00AEA99A /* Weather Station Models */,
@@ -1548,6 +1560,30 @@
 				F277E7E925AC9F7F0009D59B /* FocusOnLocationSelectionAlert.swift */,
 			);
 			path = "Focus On Location";
+			sourceTree = "<group>";
+		};
+		F29912CE27F1E67100BE0D59 /* Install Version Model */ = {
+			isa = PBXGroup;
+			children = (
+				F29912CF27F1E68F00BE0D59 /* InstallVersionModel.swift */,
+			);
+			path = "Install Version Model";
+			sourceTree = "<group>";
+		};
+		F29912D127F1F02B00BE0D59 /* Migration Completed Model */ = {
+			isa = PBXGroup;
+			children = (
+				F29912D227F1F04700BE0D59 /* MigrationCompletedModel.swift */,
+			);
+			path = "Migration Completed Model";
+			sourceTree = "<group>";
+		};
+		F29912D427F1F4DA00BE0D59 /* Setup Completed Model */ = {
+			isa = PBXGroup;
+			children = (
+				F29912D527F1F4F100BE0D59 /* SetupCompletedModel.swift */,
+			);
+			path = "Setup Completed Model";
 			sourceTree = "<group>";
 		};
 		F2BDACFA27E64E0500FF6401 /* Loading Flow */ = {
@@ -1934,6 +1970,7 @@
 				F20CA11525B3117200153E47 /* WeatherStationMeteorologyDetailsMapCell.swift in Sources */,
 				F2060E5E27BC17DB0066DC8C /* WeatherListErrorViewController.swift in Sources */,
 				F210B19E25A89E4100BF8DAA /* WeatherListAlertItemsSection.swift in Sources */,
+				F29912D327F1F04700BE0D59 /* MigrationCompletedModel.swift in Sources */,
 				F2BDAD0727E72A7900FF6401 /* SettingsImagedDualLabelSubtitleCellModel.swift in Sources */,
 				F217CB7027D5091800DAC947 /* SettingsGeneralItemsSection.swift in Sources */,
 				F217CB8427D50DE700DAC947 /* SettingsImagedSingleLabelToggleCellViewModel.swift in Sources */,
@@ -2055,6 +2092,7 @@
 				F2E9C98927E1153E00DCA19B /* ManageBookmarksSection.swift in Sources */,
 				F2F1554024432A5D007A3E90 /* String+AppendWithDelimiter.swift in Sources */,
 				F22B0F8A25AB64D40037F957 /* WeatherMapAnnotationModel.swift in Sources */,
+				F29912CD27F1DCFC00BE0D59 /* ApplicationCycleService.swift in Sources */,
 				F2D1990625A10D2E004C7753 /* BaseTableViewDataSource.swift in Sources */,
 				F217CBC227DB6CDE00DAC947 /* SettingsDualLabelSubtitleCell.swift in Sources */,
 				F237100F25AB34950072AF29 /* WeatherMapViewController.swift in Sources */,
@@ -2133,6 +2171,7 @@
 				F22A222825A4BE9500C97844 /* Factory+UIStackView.swift in Sources */,
 				F2060E6627BFF1150066DC8C /* Daemon.swift in Sources */,
 				F217CC0627DCB15300DAC947 /* AddBookmarkStepper.swift in Sources */,
+				F29912D027F1E68F00BE0D59 /* InstallVersionModel.swift in Sources */,
 				F2372891244CAAF400964C49 /* RootFlow.swift in Sources */,
 				F284DDCE245A40F500445BFF /* UserLocationService.swift in Sources */,
 				F2DB5E8325AB535600E21A56 /* BaseAnnotationProtocol.swift in Sources */,
@@ -2181,6 +2220,7 @@
 				F217CBDE27DBB0C100DAC947 /* ApiKeyInputViewController.swift in Sources */,
 				F284DDE9245F77A300445BFF /* BaseViewModel.swift in Sources */,
 				F284DDD6245CF38800445BFF /* PreferencesService.swift in Sources */,
+				F29912D627F1F4F100BE0D59 /* SetupCompletedModel.swift in Sources */,
 				F20CA13625B35A3A00153E47 /* WeatherStationMeteorologyDetailsMapItemsSection.swift in Sources */,
 				F2060E5B27B9A9BB0066DC8C /* SetPermissionsViewModel.swift in Sources */,
 				F217CB9627D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift in Sources */,
@@ -2394,7 +2434,7 @@
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Erik Maximilian Martens (C929JV4AQN)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 36;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = VDPU24L36V;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -2418,7 +2458,7 @@
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Erik Maximilian Martens (VDPU24L36V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 36;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = VDPU24L36V;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

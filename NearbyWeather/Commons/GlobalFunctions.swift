@@ -39,3 +39,12 @@ func reportCustomNonFatalError(for domain: String, message: String) {
   )
   Crashlytics.crashlytics().record(error: error)
 }
+
+var appVersion: String? {
+  Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+}
+
+
+var appBuild: String? {
+  Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+}

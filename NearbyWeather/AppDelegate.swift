@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   private var dependencyContainer: Container!
   private var daemonContainer: [Daemon] = []
   
+  private let migrationIsRunningSubject = BehaviorSubject<Bool>(value: false)
+  
   private var tempOnAsAppIconBadgeBackgroundFetchTaskId: UIBackgroundTaskIdentifier = .invalid
   
   // MARK: - Functions
@@ -36,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     instantiateDaemons()
     instantiateFirebase()
     
+    setInstallVersionIfNeeded()
     runMigrationIfNeeded()
     
     SettingsBundleTransferWorker.updateSystemSettings()
@@ -81,10 +84,17 @@ private extension AppDelegate {
     dependencyContainer = Container()
     
     dependencyContainer.register(PersistencyService.self) { _ in PersistencyService() }
+    
+    dependencyContainer.register(ApplicationCycleService.self) { resolver in
+      ApplicationCycleService(
+        dependencies: ApplicationCycleService.Dependencies(persistencyService: resolver.resolve(PersistencyService.self)!
+                                                      ))
+    }
+    
     dependencyContainer.register(UserLocationService.self) { resolver in
       UserLocationService(
         dependencies: UserLocationService.Dependencies(persistencyService: resolver.resolve(PersistencyService.self)!
-                                                       ))
+                                                      ))
     }
     
     dependencyContainer.register(PreferencesService.self) { resolver in
@@ -202,7 +212,10 @@ private extension AppDelegate {
     flowCoordinator = FlowCoordinator()
     flowCoordinator?.coordinate(
       flow: rootFlow,
-      with: RootStepper(dependencies: RootStepper.Dependencies(apiKeyService: dependencyContainer.resolve(ApiKeyService.self)!))
+      with: RootStepper(dependencies: RootStepper.Dependencies(
+        applicationCycleService: dependencyContainer.resolve(ApplicationCycleService.self)!,
+        migrationRunningObservable: migrationIsRunningSubject.asObservable()
+      ))
     )
   }
   
@@ -253,14 +266,37 @@ private extension AppDelegate {
     tempOnAsAppIconBadgeBackgroundFetchTaskId = .invalid
   }
   
+  func setInstallVersionIfNeeded() {
+    let applicationCycleService = dependencyContainer.resolve(ApplicationCycleService.self)!
+    
+    _ = applicationCycleService
+      .createGetInstallVersionObservable()
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { installVersion in
+        guard installVersion == nil else {
+          return Completable.emptyCompletable
+        }
+        // TODO: log failure of writing installversion
+        guard let installVersion = appVersion?.toInstallVersion else {
+          return Completable.emptyCompletable
+        }
+        return applicationCycleService.createSetInstallVersionCompletable(installVersion)
+      }
+      .subscribe()
+  }
+  
   func runMigrationIfNeeded() {
-    MigrationService(dependencies: MigrationService.Dependencies(
+    _ = MigrationService(dependencies: MigrationService.Dependencies(
+      migrationIsRunningSubject: migrationIsRunningSubject,
       preferencesService: dependencyContainer.resolve(PreferencesService.self)!,
       weatherInformationService: dependencyContainer.resolve(WeatherInformationService.self)!,
       weatherStationService: dependencyContainer.resolve(WeatherStationService.self)!,
       apiKeyService: dependencyContainer.resolve(ApiKeyService.self)!,
-      notificationService: dependencyContainer.resolve(NotificationService.self)!
+      notificationService: dependencyContainer.resolve(NotificationService.self)!,
+      applicationCycleService: dependencyContainer.resolve(ApplicationCycleService.self)!
     ))
-      .runMigrationIfNeeded_v2_2_2_to_3_0_0()
+    .createRun_2_2_2_to_3_0_0_migrationCompletable()
+    .subscribe()
   }
 }

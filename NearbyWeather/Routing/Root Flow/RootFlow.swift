@@ -6,6 +6,7 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
+import RxSwift
 import RxFlow
 import Swinject
 

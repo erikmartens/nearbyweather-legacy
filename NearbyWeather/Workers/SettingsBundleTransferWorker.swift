@@ -16,10 +16,10 @@ final class SettingsBundleTransferWorker {
   }
   
   static func updateSystemSettings() {
-    if let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+    if let appVersion = appVersion {
       UserDefaults.standard.set(appVersion, forKey: SettingsBundleIdentifier.appVersion)
     }
-    if let appBuild = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String {
+    if let appBuild = appBuild {
       UserDefaults.standard.set(appBuild, forKey: SettingsBundleIdentifier.appBuild)
     }
   }

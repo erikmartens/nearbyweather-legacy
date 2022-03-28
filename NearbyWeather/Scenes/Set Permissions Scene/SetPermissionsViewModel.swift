@@ -15,7 +15,8 @@ import CoreLocation
 
 extension SetPermissionsViewModel {
   struct Dependencies {
-    let userLocationService: UserLocationPermissionRequesting
+    let userLocationService: UserLocationPermissionRequesting & UserLocationPermissionReading
+    let applicationCycleService: ApplicationStateSetting
   }
 }
 
@@ -74,12 +75,17 @@ final class SetPermissionsViewModel: NSObject, Stepper, BaseViewModel {
 extension SetPermissionsViewModel {
 
   func observeUserInputEvents() {
-    onDidTapConfigureButtonSubject
+    _ = onDidTapConfigureButtonSubject
       .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] () in
+      .flatMapCompletable { [unowned self] _ in
         dependencies.userLocationService.requestWhenInUseLocationAccess()
       }
+      .subscribe()
+    
+    dependencies.userLocationService
+      .createUserDidDecideLocationAccessAuthorizationCompletable()
+      .andThen(dependencies.applicationCycleService.createSetSetupCompletedCompletable(SetupCompletedModel(completed: true)))
       .subscribe(onCompleted: { [unowned steps] in
         steps.accept(WelcomeStep.dismiss)
       })

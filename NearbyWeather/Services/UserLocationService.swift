@@ -114,6 +114,15 @@ extension UserLocationService: UserLocationPermissionRequesting {
       )
       .map { $0?.entity }
   }
+  
+  func createUserDidDecideLocationAccessAuthorizationCompletable() -> Completable {
+    createGetLocationAuthorizationStatusObservable()
+      .filterNil()
+      .skip { $0.authorizationStatus == .undetermined }
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { _ in Completable.emptyCompletable }
+  }
 }
 
 // MARK: - User Location Permissions Writing
@@ -128,6 +137,7 @@ extension UserLocationService: UserLocationPermissionWriting {}
 
 protocol UserLocationPermissionReading {
   func createGetLocationAuthorizationStatusObservable() -> Observable<UserLocationAuthorizationStatus?>
+  func createUserDidDecideLocationAccessAuthorizationCompletable() -> Completable
 }
 
 extension UserLocationService: UserLocationPermissionReading {}

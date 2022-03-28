@@ -21,7 +21,8 @@ enum RootStep: Step {
 
 extension RootStepper {
   struct Dependencies {
-    let apiKeyService: ApiKeyReading
+    let applicationCycleService: ApplicationStateReading
+    let migrationRunningObservable: Observable<Bool>
   }
 }
 
@@ -47,13 +48,15 @@ class RootStepper: Stepper {
   // MARK: - Functions
   
   func readyToEmitSteps() {
-    // TODO: improve this logic
-    dependencies.apiKeyService
-      .createApiKeyIsValidObservable()
+    dependencies.migrationRunningObservable
+      .skip { $0 == true }
+      .flatMapLatest { [unowned self] _ in
+        dependencies.applicationCycleService.createGetSetupCompletedObservable()
+      }
       .take(1)
       .asSingle()
-      .map { $0 == .missing ? RootStep.welcome : RootStep.main }
-      .subscribe(onSuccess: { [unowned steps] in steps.accept($0) })
+      .map { ($0?.completed ?? false) == true ? RootStep.main : RootStep.welcome }
+      .subscribe(onSuccess: steps.accept)
       .disposed(by: disposeBag)
   }
 }

@@ -17,11 +17,11 @@ enum WeatherListStep: Step {
   case loadingList
   case weatherDetails(identity: PersistencyModelIdentity)
   case changeListTypeAlert(selectionDelegate: ListTypeSelectionAlertDelegate)
-  case changeListTypeAlertAdapted(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeOptionValue) // TODO: do not pass option value here
+  case changeListTypeAlertAdapted(selectionDelegate: ListTypeSelectionAlertDelegate, currentSelectedOptionValue: ListTypeOptionValue)
   case changeAmountOfResultsAlert(selectionDelegate: AmountOfResultsSelectionAlertDelegate)
-  case changeAmountOfResultsAlertAdapted(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsOptionValue) // TODO: do not pass option value here
+  case changeAmountOfResultsAlertAdapted(selectionDelegate: AmountOfResultsSelectionAlertDelegate, currentSelectedOptionValue: AmountOfResultsOptionValue)
   case changeSortingOrientationAlert(selectionDelegate: SortingOrientationSelectionAlertDelegate)
-  case changeSortingOrientationAlertAdapted(selectionDelegate: SortingOrientationSelectionAlertDelegate, currentSelectedOptionValue: SortingOrientationOptionValue) // TODO: do not pass option value here
+  case changeSortingOrientationAlertAdapted(selectionDelegate: SortingOrientationSelectionAlertDelegate, currentSelectedOptionValue: SortingOrientationOptionValue)
   case dismiss
   case pop
 }
@@ -33,8 +33,14 @@ extension WeatherListStep: Equatable {
       return lhsIdentity.identifier == rhsIdentity.identifier
     case (.list, .list), (.emptyList, .emptyList), (.loadingList, .loadingList), (.dismiss, .dismiss), (.pop, .pop):
       return true
-    case (.changeListTypeAlert, .changeListTypeAlert), (.changeListTypeAlertAdapted, .changeListTypeAlertAdapted), (.changeAmountOfResultsAlert, .changeAmountOfResultsAlert), (.changeAmountOfResultsAlertAdapted, .changeAmountOfResultsAlertAdapted), (.changeSortingOrientationAlert, .changeSortingOrientationAlert), (.changeSortingOrientationAlertAdapted, .changeSortingOrientationAlertAdapted): // swiftlint:disable:this line_length
+    case (.changeListTypeAlert, .changeListTypeAlert), (.changeAmountOfResultsAlert, .changeAmountOfResultsAlert), (.changeSortingOrientationAlert, .changeSortingOrientationAlert):
       return false
+    case (let .changeListTypeAlertAdapted(_, lhsOption), let .changeListTypeAlertAdapted(_, rhsOption)):
+      return lhsOption.rawValue == rhsOption.rawValue
+    case (let .changeAmountOfResultsAlertAdapted(_, lhsOption), let .changeAmountOfResultsAlertAdapted(_, rhsOption)):
+      return lhsOption.rawValue == rhsOption.rawValue
+    case (let .changeSortingOrientationAlertAdapted(_, lhsOption), let .changeSortingOrientationAlertAdapted(_, rhsOption)):
+      return lhsOption.rawValue == rhsOption.rawValue
     default:
       return false
     }

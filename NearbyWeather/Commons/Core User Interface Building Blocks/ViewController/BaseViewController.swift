@@ -20,12 +20,6 @@ protocol BaseViewController {
 
 /// functions are optional
 extension BaseViewController {
-  func setupBindings() {
-    viewModel.observeEvents()
-    bindContentFromViewModel(viewModel)
-    bindUserInputToViewModel(viewModel)
-  }
-  
   func bindContentFromViewModel(_ viewModel: ViewModel) {}
   func bindUserInputToViewModel(_ viewModel: ViewModel) {}
 }

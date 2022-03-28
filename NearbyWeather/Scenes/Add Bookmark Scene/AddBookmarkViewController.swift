@@ -65,13 +65,14 @@ final class AddBookmarkViewController: UIViewController, BaseViewController {
     super.viewDidLoad()
     viewModel.viewDidLoad()
     setupUiComponents()
+    setupBindings()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     viewModel.viewWillAppear()
     setupUiAppearance()
-    setupBindings()
+//    setupBindings()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -91,7 +92,7 @@ final class AddBookmarkViewController: UIViewController, BaseViewController {
     searchController.isActive = false
     searchController.resignFirstResponder()
     
-    destroyBindings()
+//    destroyBindings()
   }
 }
 

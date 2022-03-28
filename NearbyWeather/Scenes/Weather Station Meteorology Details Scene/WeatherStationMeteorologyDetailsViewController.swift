@@ -59,19 +59,20 @@ final class WeatherStationMeteorologyDetailsViewController: UIViewController, Ba
     super.viewDidLoad()
     viewModel.viewDidLoad()
     setupUiComponents()
+    setupBindings()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     viewModel.viewWillAppear()
     setupUiAppearance()
-    setupBindings()
+//    setupBindings()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     viewModel.viewWillDisappear()
-    destroyBindings()
+//    destroyBindings()
   }
 }
 

@@ -59,21 +59,21 @@ final class LoadingViewController: UIViewController, BaseViewController {
     super.viewDidLoad()
     viewModel.viewDidLoad()
     setupUiComponents()
-    
+    setupBindings()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     setupUiAppearance()
     loadingSpinner.startAnimating()
-    setupBindings()
+//    setupBindings()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     setupUiAppearance()
     loadingSpinner.stopAnimating()
-    destroyBindings()
+//    destroyBindings()
   }
 }
 

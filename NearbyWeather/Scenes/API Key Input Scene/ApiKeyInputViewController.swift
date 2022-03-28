@@ -60,13 +60,14 @@ final class ApiKeyInputViewController: UIViewController, BaseViewController {
     super.viewDidLoad()
     viewModel.viewDidLoad()
     setupUiComponents()
+    setupBindings()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     viewModel.viewWillAppear()
     setupUiAppearance()
-    setupBindings()
+//    setupBindings()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -86,7 +87,7 @@ final class ApiKeyInputViewController: UIViewController, BaseViewController {
       self.textEntryCell?.textEntryTextField.resignFirstResponder()
     }
     
-    destroyBindings()
+//    destroyBindings()
   }
 }
 

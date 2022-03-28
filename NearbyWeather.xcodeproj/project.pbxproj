@@ -720,8 +720,8 @@
 		F2060E5C27BC17BD0066DC8C /* Weather List Error Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F2060E5D27BC17DB0066DC8C /* WeatherListErrorViewController.swift */,
 				F2060E5F27BC18060066DC8C /* WeatherListErrorViewModel.swift */,
+				F2060E5D27BC17DB0066DC8C /* WeatherListErrorViewController.swift */,
 			);
 			path = "Weather List Error Scene";
 			sourceTree = "<group>";
@@ -786,8 +786,8 @@
 		F217CB5D27D4F89D00DAC947 /* Settings Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F217CB5E27D4F91E00DAC947 /* SettingsViewController.swift */,
 				F217CB6027D4F92D00DAC947 /* SettingsViewModel.swift */,
+				F217CB5E27D4F91E00DAC947 /* SettingsViewController.swift */,
 				F217CB6227D4F94C00DAC947 /* SettingsTableViewDelegate.swift */,
 				F217CB6427D4F96200DAC947 /* SettingsTableViewDataSource.swift */,
 				F217CB6627D4F96E00DAC947 /* Table View Sections */,
@@ -1021,8 +1021,8 @@
 		F217CC0B27DDEDD700DAC947 /* Loading Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F217CC0C27DDEE0000DAC947 /* LoadingViewController.swift */,
 				F217CC0E27DDEE1200DAC947 /* LoadingViewModel.swift */,
+				F217CC0C27DDEE0000DAC947 /* LoadingViewController.swift */,
 			);
 			path = "Loading Scene";
 			sourceTree = "<group>";
@@ -1275,8 +1275,8 @@
 		F27A122024425D4E00A2CE8D /* Weather List Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F284DDF1245F796000445BFF /* WeatherListViewController.swift */,
 				F284DDEF245F794E00445BFF /* WeatherListViewModel.swift */,
+				F284DDF1245F796000445BFF /* WeatherListViewController.swift */,
 				F2D1993C25A1E51E004C7753 /* WeatherListTableViewDelegate.swift */,
 				F2D1993725A1E482004C7753 /* WeatherListTableViewDataSource.swift */,
 				F2D1995C25A204C4004C7753 /* Table View Sections */,
@@ -1314,8 +1314,8 @@
 		F27A122524425DF100A2CE8D /* About App Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F217CB9B27DB5D3500DAC947 /* AboutAppViewController.swift */,
 				F217CB9D27DB5D6700DAC947 /* AboutAppViewModel.swift */,
+				F217CB9B27DB5D3500DAC947 /* AboutAppViewController.swift */,
 				F217CBA127DB602600DAC947 /* AboutAppTableViewDelegate.swift */,
 				F217CBA327DB609300DAC947 /* AboutAppTableViewDataSource.swift */,
 				F217CBA027DB5D9E00DAC947 /* Table View Sections */,
@@ -1327,8 +1327,8 @@
 		F27A122624425E0D00A2CE8D /* API Key Input Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */,
 				F217CBDF27DBB0E700DAC947 /* ApiKeyInputViewModel.swift */,
+				F217CBDD27DBB0C100DAC947 /* ApiKeyInputViewController.swift */,
 				F217CBE127DBB10700DAC947 /* ApiKeyInputTableViewDelegate.swift */,
 				F217CBE327DBB12400DAC947 /* ApiKeyInputTableViewDataSource.swift */,
 				F217CBE527DBB12F00DAC947 /* Table View Sections */,
@@ -1340,8 +1340,8 @@
 		F27A122724425E2600A2CE8D /* Add Bookmark Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F217CBF727DCA09100DAC947 /* AddBookmarkViewController.swift */,
 				F217CBF927DCA09D00DAC947 /* AddBookmarkViewModel.swift */,
+				F217CBF727DCA09100DAC947 /* AddBookmarkViewController.swift */,
 				F217CBFB27DCA0BA00DAC947 /* AddBookmarkTableViewDelegate.swift */,
 				F217CBFD27DCA0D600DAC947 /* AddBookmarkTableViewDataSource.swift */,
 				F217CBFF27DCA0E000DAC947 /* Table View Sections */,
@@ -1352,8 +1352,8 @@
 		F27A122824425E3900A2CE8D /* Manage Bookmarks Scene */ = {
 			isa = PBXGroup;
 			children = (
-				F2E9C98327E114E600DCA19B /* ManageBookmarksViewController.swift */,
 				F2E9C98527E1150200DCA19B /* ManageBookmarksViewModel.swift */,
+				F2E9C98327E114E600DCA19B /* ManageBookmarksViewController.swift */,
 				F2E9C98A27E11A5B00DCA19B /* ManageBookmarksTableViewDelegate.swift */,
 				F2E9C98C27E11A8800DCA19B /* ManageBookmarksTableViewDataSource.swift */,
 				F2E9C98727E1150A00DCA19B /* Table View Sections */,
@@ -2434,7 +2434,7 @@
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Erik Maximilian Martens (C929JV4AQN)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = VDPU24L36V;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -2458,7 +2458,7 @@
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Erik Maximilian Martens (VDPU24L36V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = VDPU24L36V;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

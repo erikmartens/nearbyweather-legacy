@@ -116,14 +116,14 @@ extension WeatherListViewModel {
   
   func observeDataSource() {
     // TODO: use this for error cell
-    let apiKeyValidObservable = dependencies
-      .apiKeyService
-      .createGetApiKeyObservable()
+//    let apiKeyValidObservable = dependencies
+//      .apiKeyService
+//      .createGetApiKeyObservable()
     
     let nearbyListItemsObservable = dependencies.weatherInformationService
       .createGetNearbyWeatherInformationListObservable()
       .distinctUntilChanged(Self.weatherListItemsDidChange)
-      .flatMapLatest { [preferredSortingOrientationObservable, dependencies] weatherInformationItems in
+      .flatMapLatest { [unowned self] weatherInformationItems in
         Observable
           .combineLatest(
             preferredSortingOrientationObservable,
@@ -133,19 +133,19 @@ extension WeatherListViewModel {
             }
           )
       }
-      .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
+      .map { [unowned self] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
       .map { [WeatherListNearbyItemsSection(sectionItems: $0)] }
     
     let bookmarkedListItemsObservable = dependencies.weatherInformationService
       .createGetBookmarkedWeatherInformationListObservable()
       .distinctUntilChanged(Self.weatherListItemsDidChange)
-      .flatMapLatest { [dependencies] weatherInformationItems in
+      .flatMapLatest { [unowned self] weatherInformationItems in
         dependencies.weatherStationService
           .createGetBookmarksSortingObservable()
           .map { Self.sortBookmarkedResults(weatherInformationItems, sortingWeights: $0) }
           .distinctUntilChanged()
       }
-      .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
+      .map { [unowned self] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
       .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }
     
     Observable
@@ -168,32 +168,32 @@ extension WeatherListViewModel {
   
   func observeUserTapEvents() {
     onDidTapListTypeBarButtonSubject
-      .subscribe(onNext: { [weak steps] _ in
+      .subscribe(onNext: { [weak steps, unowned self] _ in
         steps?.accept(WeatherListStep.changeListTypeAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapAmountOfResultsBarButtonSubject
-      .subscribe(onNext: { [weak steps] _ in
+      .subscribe(onNext: { [weak steps, unowned self] _ in
         steps?.accept(WeatherListStep.changeAmountOfResultsAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapSortingOrientationBarButtonSubject
-      .subscribe(onNext: { [weak steps] _ in
+      .subscribe(onNext: { [weak steps, unowned self] _ in
         steps?.accept(WeatherListStep.changeSortingOrientationAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidPullToRefreshSubject
       .do(onNext: { [weak isRefreshingSubject] in isRefreshingSubject?.onNext(true) })
-      .flatMapLatest { [dependencies, weak isRefreshingSubject] _ -> Observable<Void> in
+      .flatMapLatest { [unowned self] _ -> Observable<Void> in
         Completable
           .zip([
             dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable(),
             dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()
           ])
-          .do(onCompleted: { isRefreshingSubject?.onNext(false) })
+          .do(onCompleted: { [weak isRefreshingSubject] in isRefreshingSubject?.onNext(false) })
           .asObservable()
           .map { _ in () }
       }
@@ -207,9 +207,10 @@ extension WeatherListViewModel {
 extension WeatherListViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
-    _ = Observable.just(indexPath)
-      .map { [unowned tableDataSource] indexPath in
-        tableDataSource.sectionDataSources[indexPath]?.onSelectedRoutingIntent
+    _ = Observable
+      .just(indexPath)
+      .map { [weak tableDataSource] indexPath in
+        tableDataSource?.sectionDataSources[indexPath]?.onSelectedRoutingIntent
       }
       .filterNil()
       .take(1)
@@ -272,7 +273,7 @@ private extension WeatherListViewModel {
       .difference(from:
                     rhsItems.map { $0.identity.identifier }
       )
-      .isEmpty == false
+      .isEmpty == true
   }
 }
 

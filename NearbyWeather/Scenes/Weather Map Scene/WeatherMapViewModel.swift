@@ -131,7 +131,7 @@ extension WeatherMapViewModel {
       .combineLatest(
         dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
         apiKeyValidObservable,
-        resultSelector: { [dependencies] weatherInformationList, _ in
+        resultSelector: { [dependencies, unowned self] weatherInformationList, _ in
           weatherInformationList.mapToWeatherMapAnnotationViewModel(
             weatherStationService: dependencies.weatherStationService,
             weatherInformationService: dependencies.weatherInformationService,
@@ -147,7 +147,7 @@ extension WeatherMapViewModel {
       .combineLatest(
         dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
         apiKeyValidObservable,
-        resultSelector: { [dependencies] weatherInformationList, _ in
+        resultSelector: { [dependencies, unowned self] weatherInformationList, _ in
           weatherInformationList.mapToWeatherMapAnnotationViewModel(
             weatherStationService: dependencies.weatherStationService,
             weatherInformationService: dependencies.weatherInformationService,
@@ -186,19 +186,19 @@ extension WeatherMapViewModel {
   
   func observeUserTapEvents() {    
     onDidTapMapTypeBarButtonSubject
-      .subscribe(onNext: { [weak steps] _ in
+      .subscribe(onNext: { [weak steps, unowned self] _ in
         steps?.accept(WeatherMapStep.changeMapTypeAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapAmountOfResultsBarButtonSubject
-      .subscribe(onNext: { [weak steps] _ in
+      .subscribe(onNext: { [weak steps, unowned self] _ in
         steps?.accept(WeatherMapStep.changeAmountOfResultsAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapFocusOnLocationBarButtonSubject
-      .subscribe(onNext: { [weak steps] _ in
+      .subscribe(onNext: { [weak steps, unowned self] _ in
         steps?.accept(WeatherMapStep.focusOnLocationAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)

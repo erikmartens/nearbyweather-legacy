@@ -76,10 +76,12 @@ extension SetPermissionsViewModel {
 
   func observeUserInputEvents() {
     _ = onDidTapConfigureButtonSubject
-      .take(1)
-      .asSingle()
-      .flatMapCompletable { [unowned self] _ in
-        dependencies.userLocationService.requestWhenInUseLocationAccess()
+      .asObservable()
+      .flatMapLatest { [unowned self] _ in
+        dependencies.userLocationService
+          .requestWhenInUseLocationAccess()
+          .asObservable()
+          .materialize()
       }
       .subscribe()
     

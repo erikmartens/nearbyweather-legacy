@@ -74,7 +74,7 @@ final class WeatherInformationUpdateDaemon: NSObject, Daemon {
 private extension WeatherInformationUpdateDaemon {
   
   func observeBookmarkedStationsChanges() {
-    let updateBookmarkedWeatherInformationObservable = Observable
+    Observable
       .combineLatest(
         dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable().map { $0.map { $0.identity.identifier } },
         dependencies.weatherStationService.createGetBookmarkedStationsObservable().map { $0.compactMap { $0.identifier} }.map { $0.map { String($0) } },
@@ -106,8 +106,6 @@ private extension WeatherInformationUpdateDaemon {
           .asObservable()
           .materialize()
       }
-    
-    updateBookmarkedWeatherInformationObservable
       .skip(until: appDidBecomeActiveRelay.asObservable())
       .subscribe()
       .disposed(by: disposeBag)

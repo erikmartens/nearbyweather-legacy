@@ -28,7 +28,7 @@ final class SetApiKeyViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Assets
   
-  private let disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -77,6 +77,10 @@ final class SetApiKeyViewModel: NSObject, Stepper, BaseViewModel {
   func observeEvents() {
     observeDataSource()
     observeUserInputEvents()
+  }
+  
+  func disregardEvents() {
+    disposeBag = DisposeBag()
   }
 }
 

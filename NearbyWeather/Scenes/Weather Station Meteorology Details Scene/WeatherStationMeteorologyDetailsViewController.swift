@@ -28,7 +28,7 @@ final class WeatherStationMeteorologyDetailsViewController: UIViewController, Ba
   
   // MARK: - Assets
   
-  private let disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -59,13 +59,19 @@ final class WeatherStationMeteorologyDetailsViewController: UIViewController, Ba
     super.viewDidLoad()
     viewModel.viewDidLoad()
     setupUiComponents()
-    setupBindings()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     viewModel.viewWillAppear()
     setupUiAppearance()
+    setupBindings()
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    viewModel.viewWillDisappear()
+    destroyBindings()
   }
 }
 
@@ -77,6 +83,11 @@ extension WeatherStationMeteorologyDetailsViewController {
     viewModel.observeEvents()
     bindContentFromViewModel(viewModel)
     bindUserInputToViewModel(viewModel)
+  }
+  
+  func destroyBindings() {
+    disposeBag = DisposeBag()
+    viewModel.disregardEvents()
   }
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {

@@ -31,7 +31,7 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Assets
   
-  private let disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -82,6 +82,10 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
   func observeEvents() {
     observeDataSource()
     observeUserTapEvents()
+  }
+  
+  func disregardEvents() {
+    disposeBag = DisposeBag()
   }
 }
 

@@ -146,7 +146,7 @@ extension WeatherListViewModel {
           .distinctUntilChanged()
       }
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
-      .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }.debug("🤢🤢🤢")
+      .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }
     
     Observable
       .combineLatest(

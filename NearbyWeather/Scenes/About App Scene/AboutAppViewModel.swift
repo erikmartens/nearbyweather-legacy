@@ -30,7 +30,7 @@ final class AboutAppViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Assets
   
-  private let disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   private lazy var thirdPartyLibraries: [ThirdPartyLibraryDTO]? = {
     try? JsonPersistencyWorker().retrieveJsonFromFile(
@@ -101,6 +101,10 @@ final class AboutAppViewModel: NSObject, Stepper, BaseViewModel {
   func observeEvents() {
     observeDataSource()
     observeUserTapEvents()
+  }
+  
+  func disregardEvents() {
+    disposeBag = DisposeBag()
   }
 }
 

@@ -33,7 +33,7 @@ final class WeatherStationMeteorologyDetailsViewModel: NSObject, Stepper, BaseVi
   
   // MARK: - Assets
   
-  private let disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -80,6 +80,10 @@ final class WeatherStationMeteorologyDetailsViewModel: NSObject, Stepper, BaseVi
   func observeEvents() {
     observeDataSource()
     observeUserTapEvents()
+  }
+  
+  func disregardEvents() {
+    disposeBag = DisposeBag()
   }
 }
 

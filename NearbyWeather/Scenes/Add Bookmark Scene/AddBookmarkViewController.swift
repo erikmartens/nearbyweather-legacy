@@ -34,7 +34,7 @@ final class AddBookmarkViewController: UIViewController, BaseViewController {
   
   // MARK: - Assets
   
-  private let disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -65,13 +65,13 @@ final class AddBookmarkViewController: UIViewController, BaseViewController {
     super.viewDidLoad()
     viewModel.viewDidLoad()
     setupUiComponents()
-    setupBindings()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     viewModel.viewWillAppear()
     setupUiAppearance()
+    setupBindings()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -90,6 +90,8 @@ final class AddBookmarkViewController: UIViewController, BaseViewController {
     
     searchController.isActive = false
     searchController.resignFirstResponder()
+    
+    destroyBindings()
   }
 }
 
@@ -101,6 +103,11 @@ extension AddBookmarkViewController {
     viewModel.observeEvents()
     bindContentFromViewModel(viewModel)
     bindUserInputToViewModel(viewModel)
+  }
+  
+  func destroyBindings() {
+    disposeBag = DisposeBag()
+    viewModel.disregardEvents()
   }
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {

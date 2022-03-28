@@ -29,7 +29,7 @@ final class SetPermissionsViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Assets
   
-  private let disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -62,6 +62,10 @@ final class SetPermissionsViewModel: NSObject, Stepper, BaseViewModel {
   func observeEvents() {
     observeDataSource()
     observeUserInputEvents()
+  }
+  
+  func disregardEvents() {
+    disposeBag = DisposeBag()
   }
 }
 

@@ -33,7 +33,7 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Assets
   
-  private let disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -104,6 +104,10 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
     observeDataSource()
     observeUserTapEvents()
   }
+  
+  func disregardEvents() {
+    disposeBag = DisposeBag()
+  }
 }
 
 // MARK: - Observations
@@ -115,18 +119,10 @@ extension WeatherListViewModel {
     let apiKeyValidObservable = dependencies
       .apiKeyService
       .createGetApiKeyObservable()
-      .share(replay: 1)
     
     let nearbyListItemsObservable = dependencies.weatherInformationService
       .createGetNearbyWeatherInformationListObservable()
-      .distinctUntilChanged { lhsPersistencyModels, rhsPersistencyModels in
-        lhsPersistencyModels
-          .map { $0.identity.identifier }
-          .difference(from:
-                        rhsPersistencyModels.map { $0.identity.identifier }
-          )
-          .isEmpty
-      }
+      .distinctUntilChanged(Self.weatherListItemsDidChange)
       .flatMapLatest { [preferredSortingOrientationObservable, dependencies] weatherInformationItems in
         Observable
           .combineLatest(
@@ -139,18 +135,10 @@ extension WeatherListViewModel {
       }
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
       .map { [WeatherListNearbyItemsSection(sectionItems: $0)] }
-      .share(replay: 1)
     
     let bookmarkedListItemsObservable = dependencies.weatherInformationService
       .createGetBookmarkedWeatherInformationListObservable()
-      .distinctUntilChanged { lhsPersistencyModels, rhsPersistencyModels in
-        lhsPersistencyModels
-          .map { $0.identity.identifier }
-          .difference(from:
-                        rhsPersistencyModels.map { $0.identity.identifier }
-          )
-          .isEmpty
-      }
+      .distinctUntilChanged(Self.weatherListItemsDidChange)
       .flatMapLatest { [dependencies] weatherInformationItems in
         dependencies.weatherStationService
           .createGetBookmarksSortingObservable()
@@ -158,8 +146,7 @@ extension WeatherListViewModel {
           .distinctUntilChanged()
       }
       .map { [dependencies] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
-      .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }
-      .share(replay: 1)
+      .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }.debug("🤢🤢🤢")
     
     Observable
       .combineLatest(
@@ -278,6 +265,15 @@ private extension WeatherListViewModel {
       }
     }
   }
+  
+  static func weatherListItemsDidChange(lhsItems: [PersistencyModelThreadSafe<WeatherInformationDTO>], rhsItems: [PersistencyModelThreadSafe<WeatherInformationDTO>]) -> Bool {
+    lhsItems
+      .map { $0.identity.identifier }
+      .difference(from:
+                    rhsItems.map { $0.identity.identifier }
+      )
+      .isEmpty == false
+  }
 }
 
 // MARK: - Delegate Extensions
@@ -310,16 +306,6 @@ extension WeatherListViewModel: SortingOrientationSelectionAlertDelegate {
 }
 
 // MARK: - Helper Extensions
-
-private extension Error {
-  
-  // TODO: remove
-  func mapToObservableTableSectionData() -> Observable<[TableViewSectionDataProtocol]> {
-    Observable
-      .just([WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(error: self))])
-      .map { [WeatherListAlertItemsSection(sectionItems: $0)] }
-  }
-}
 
 private extension Array where Element == PersistencyModelThreadSafe<WeatherInformationDTO> {
   

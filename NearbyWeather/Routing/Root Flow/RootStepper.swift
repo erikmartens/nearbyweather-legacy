@@ -47,6 +47,7 @@ class RootStepper: Stepper {
   // MARK: - Functions
   
   func readyToEmitSteps() {
+    // TODO: improve this logic
     dependencies.apiKeyService
       .createApiKeyIsValidObservable()
       .take(1)

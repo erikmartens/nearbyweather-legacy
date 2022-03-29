@@ -274,25 +274,35 @@ extension WeatherInformationService: WeatherInformationUpdating {
     Observable
       .combineLatest(
         dependencies.apiKeyService.createGetApiKeyObservable(),
-        dependencies.userLocationService.createGetUserLocationObservable().filterNil(),
+        dependencies.userLocationService.createGetUserLocationObservable(),
         dependencies.preferencesService.createGetAmountOfNearbyResultsOptionObservable(),
-        resultSelector: { apiKey, location, amountOfResultsOption -> URL in
-          Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
+        resultSelector: { apiKey, location, amountOfResultsOption -> URL? in
+          guard let location = location else {
+            return nil
+          }
+          return Constants.Urls.kOpenWeatherMapMultiStationtDataRequestUrl(
             with: apiKey,
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude,
             numberOfResults: amountOfResultsOption.value.rawValue
           )
       })
-      .flatMapLatest { url -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
-        RxAlamofire
+      .flatMapLatest { url -> Observable<[PersistencyModel<WeatherInformationDTO>]?> in
+        guard let url = url else {
+          return .just(nil)
+        }
+        return RxAlamofire
           .requestData(.get, url)
           .map { Self.mapMultiInformationResponseToPersistencyModel($0) }
-          .filterNil()
       }
       .take(1)
       .asSingle()
-      .flatMapCompletable { [unowned self] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [unowned self] result in
+        guard let result = result else {
+          return Completable.emptyCompletable
+        }
+        return dependencies.persistencyService.saveResources(result, type: WeatherInformationDTO.self)
+      }
   }
 }
 

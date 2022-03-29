@@ -40,15 +40,6 @@
 
 NearbyWeather is a simple weather app, that provides current weather information for nearby weather stations, as well for bookmarked weather stations. NearbyWeather uses the OpenWeatherMap API to download weather data. Additionally the OpenWeatherMap's station-database is directly bootstrapped into the app for quick access.
 
-### Feature Set
-
-- See current weather information for bookmarked and nearby places via a list and a map view
-- See the current temperature on your app icon
-- Detailed weather information is offered in addition to the overviews
-- Add places as bookmarks via OpenWeatherMaps weather-station data base
-- Choose your preferred units (celsius/fahrenheit/kelvin & kilometres/miles)
-- Access previously loaded data offline
-
 ### Supported Languages
 
 | Development Language | App Localizations |
@@ -57,27 +48,28 @@ NearbyWeather is a simple weather app, that provides current weather information
 
 ## Mission of this Project
 
-NearbyWeather was created to help you as a reference for developing your skills. The app is kept up to date with the latest best practices in mobile app development. Find out how how modern iOS apps are engineered:
+NearbyWeather was created to help you as a reference for advanced app-building-concepts. The app is kept up to date with the latest best practices in native development for Apple Platforms. Below is a list of the concepts used for different areas of the construction of NearbyWeather:
 
 | Area | Concepts | Status |
 |:--|:--|:-:|
-| Languages | Swift, Objective-C, JavaScript | ✅ |
-| Frameworks | RxSwift, RxFlow | ✅ |
+| Language | Swift | ✅ |
+| Framework | ReactiveX (RxCocoa, RxSwift) | ✅ |
 | Architecture | MVVM+C | ✅ |
-| UI-Construction | Autolayout in Code + Factory Pattern | ✅ |
+| Routing | Coordinator Pattern via RxFlow | ✅ |
+| UI-Construction | Layout via Code + Factory Pattern | ✅ |
 | Dependency Management| Swinject | ✅ |
-| Data Persistence | Realm, Files on Disk & UserDefaults | ✅ |
+| Data Persistence | Realm | ✅ |
 | Networking | Alamofire | ✅ |
 | Asset Management | R.Swift | ✅ |
 | Code Quality | SwiftLint | ✅ |
 | Package Management | CocoaPods | ✅ |
 | Bootsrapping | Node.js Scripts | ✅ |
 | Deployment | Fastlane | ✅ |
-| Crash Data Analytics | Logs and Stack Traces to Google Firebase | ✅ |
+| Crash Data Analytics | Reports to Google Firebase | ✅ |
 | Usage Behavior Analytics | Events to Google Firebase | 🅾️ |
 | UI Deign Verification | SwiftUI Scene Previews | 🅾️ |
 | Continuous Integration | Bitrise | 🅾️ |
-| Testing & Quality Assurance | Unit Tests & UI Tests, SwiftUI Scene Previews | 🅾️ |
+| Quality Assurance | Unit Tests & UI Tests for Regression Tests via CI | 🅾️ |
 
 > __LEGEND:__ ✅ = Done, 🔄 = In Progress, 🅾️ = Coming Soon
 
@@ -131,7 +123,7 @@ If you are having technical issues or want to raise a bug/issue with the app, th
 
 ## Licensing
 
-Copyright © 2016 - 2021 Erik Maximilian Martens.
+Copyright © 2016 - 2022 Erik Maximilian Martens.
 
 Licensed under the **MIT License** (the "License"); you may not use this project except in compliance with the License.
 

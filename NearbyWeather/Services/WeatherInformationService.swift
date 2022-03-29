@@ -89,17 +89,19 @@ extension WeatherInformationService: WeatherInformationPersistence {
                            entity: weatherInformationDto)
         }
       }
-      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [unowned self] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createDeleteBookmarkedWeatherInformationListCompletable() -> Completable {
     Single
       .just(PersistencyKeys.bookmarkedWeatherInformation.collection)
-      .flatMapCompletable { [dependencies] in dependencies.persistencyService.deleteResources(in: $0) }
+      .flatMapCompletable { [unowned self] in dependencies.persistencyService.deleteResources(in: $0) }
   }
   
   func createGetBookmarkedWeatherInformationListObservable() -> Observable<[PersistencyModelThreadSafe<WeatherInformationDTO>]> {
-    dependencies.persistencyService.observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
+    dependencies.persistencyService
+      .observeResources(in: PersistencyKeys.bookmarkedWeatherInformation.collection, type: WeatherInformationDTO.self)
+      .share()
   }
   
   func createGetBookmarkedWeatherInformationItemObservable(for identifier: String) -> Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> {
@@ -111,6 +113,7 @@ extension WeatherInformationService: WeatherInformationPersistence {
       .persistencyService
       .observeResource(with: identity, type: WeatherInformationDTO.self)
       .errorOnNil(DomainError.bookmarkedWeatherInformationMissing)
+      .share()
   }
   
   func createRemoveBookmarkedWeatherInformationItemCompletable(for identifier: String) -> Completable {
@@ -133,17 +136,19 @@ extension WeatherInformationService: WeatherInformationPersistence {
                            entity: weatherInformationDto)
         }
       }
-      .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [unowned self] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createDeleteNearbyWeatherInformationListCompletable() -> Completable {
     Single
       .just(PersistencyKeys.nearbyWeatherInformation.collection)
-      .flatMapCompletable { [dependencies] in dependencies.persistencyService.deleteResources(in: $0) }
+      .flatMapCompletable { [unowned self] in dependencies.persistencyService.deleteResources(in: $0) }
   }
   
   func createGetNearbyWeatherInformationListObservable() -> Observable<[PersistencyModelThreadSafe<WeatherInformationDTO>]> {
-    dependencies.persistencyService.observeResources(in: PersistencyKeys.nearbyWeatherInformation.collection, type: WeatherInformationDTO.self)
+    dependencies.persistencyService
+      .observeResources(in: PersistencyKeys.nearbyWeatherInformation.collection, type: WeatherInformationDTO.self)
+      .share()
   }
   
   func createGetNearbyWeatherInformationObservable(for identifier: String) -> Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> {
@@ -155,6 +160,7 @@ extension WeatherInformationService: WeatherInformationPersistence {
       .persistencyService
       .observeResource(with: identity, type: WeatherInformationDTO.self)
       .errorOnNil(DomainError.nearbyWeatherInformationMissing)
+      .share()
   }
   
   func createGetWeatherInformationItemObservable(for identifier: String, isBookmark: Bool) -> Observable<PersistencyModelThreadSafe<WeatherInformationDTO>> {
@@ -165,6 +171,7 @@ extension WeatherInformationService: WeatherInformationPersistence {
           ? self.createGetBookmarkedWeatherInformationItemObservable(for: identifier)
           : self.createGetNearbyWeatherInformationObservable(for: identifier)
       }
+      .share()
   }
 }
 
@@ -210,6 +217,7 @@ extension WeatherInformationService: WeatherInformationUpdating {
         createGetNearbyWeatherInformationListObservable().map { $0.isEmpty },
         resultSelector: { ($0 && $1) ? .unavailable : .available }
       )
+      .share()
   }
   
   func createUpdateBookmarkedWeatherInformationCompletable() -> Completable {
@@ -236,13 +244,7 @@ extension WeatherInformationService: WeatherInformationUpdating {
       }
       .take(1)
       .asSingle()
-      .flatMapCompletable { [self, dependencies] in
-        createDeleteBookmarkedWeatherInformationListCompletable()
-          .andThen(
-            dependencies.persistencyService
-              .saveResources($0, type: WeatherInformationDTO.self)
-          )
-      }
+      .flatMapCompletable { [unowned self] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
   }
   
   func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int?) -> Completable {
@@ -257,14 +259,14 @@ extension WeatherInformationService: WeatherInformationUpdating {
       )
       .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] url -> Completable in
+      .flatMapCompletable { [unowned self] url -> Completable in
         RxAlamofire
           .requestData(.get, url)
           .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
           .filterNil()
           .take(1)
           .asSingle()
-          .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: WeatherInformationDTO.self) }
+          .flatMapCompletable { [unowned self] in dependencies.persistencyService.saveResource($0, type: WeatherInformationDTO.self) }
       }
   }
   
@@ -290,11 +292,7 @@ extension WeatherInformationService: WeatherInformationUpdating {
       }
       .take(1)
       .asSingle()
-      .flatMapCompletable { [dependencies] in
-        dependencies.persistencyService
-          .deleteResources(in: PersistencyKeys.nearbyWeatherInformation.collection)
-          .andThen(dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self))
-      }
+      .flatMapCompletable { [unowned self] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
   }
 }
 

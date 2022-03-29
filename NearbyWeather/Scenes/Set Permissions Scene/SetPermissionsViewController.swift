@@ -35,7 +35,7 @@ final class SetPermissionsViewController: UIViewController, BaseViewController {
   
   // MARK: - Assets
   
-  private var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -73,13 +73,11 @@ final class SetPermissionsViewController: UIViewController, BaseViewController {
     super.viewWillAppear(animated)
     viewModel.viewWillAppear()
     setupUiAppearance()
-//    setupBindings()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     viewModel.viewWillDisappear()
-//    destroyBindings()
   }
 }
 
@@ -91,11 +89,6 @@ extension SetPermissionsViewController {
     viewModel.observeEvents()
     bindContentFromViewModel(viewModel)
     bindUserInputToViewModel(viewModel)
-  }
-  
-  func destroyBindings() {
-    disposeBag = DisposeBag()
-    viewModel.disregardEvents()
   }
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {

@@ -29,13 +29,13 @@ private extension ApplicationCycleService {
   enum PersistencyKeys {
     case installVersion
     case setupCompleted
-    case migrated_2_2_2_to_3_0_0 // swiftlint:disable:this identifier_name
+    case migrated_2_2_1_to_3_0_0 // swiftlint:disable:this identifier_name
     
     var collection: String {
       switch self {
       case .installVersion: return "/application_cycle/install_version/"
       case .setupCompleted: return "/application_cycle/setup_complete/"
-      case .migrated_2_2_2_to_3_0_0: return "/application_cycle/migrated_2_2_2_to_3_0_0/"
+      case .migrated_2_2_1_to_3_0_0: return "/application_cycle/migrated_2_2_1_to_3_0_0/"
       }
     }
     
@@ -43,7 +43,7 @@ private extension ApplicationCycleService {
       switch self {
       case .installVersion: return "default"
       case .setupCompleted: return "default"
-      case .migrated_2_2_2_to_3_0_0: return "default"
+      case .migrated_2_2_1_to_3_0_0: return "default"
       }
     }
   }
@@ -101,14 +101,14 @@ extension ApplicationCycleService {
       .map { $0?.entity }
   }
   
-  func createSetMigration_2_2_2_to_3_0_0_CompletedCompletable(_ model: MigrationCompletedModel) -> Completable {
+  func createSetMigration_2_2_1_to_3_0_0_CompletedCompletable(_ model: MigrationCompletedModel) -> Completable {
     Single
       .just(model)
       .map {
         PersistencyModel<MigrationCompletedModel>(
           identity: PersistencyModelIdentity(
-            collection: PersistencyKeys.migrated_2_2_2_to_3_0_0.collection,
-            identifier: PersistencyKeys.migrated_2_2_2_to_3_0_0.identifier
+            collection: PersistencyKeys.migrated_2_2_1_to_3_0_0.collection,
+            identifier: PersistencyKeys.migrated_2_2_1_to_3_0_0.identifier
           ),
           entity: $0
         )
@@ -116,13 +116,13 @@ extension ApplicationCycleService {
       .flatMapCompletable { [dependencies] in dependencies.persistencyService.saveResource($0, type: MigrationCompletedModel.self) }
   }
   
-  func createGetMigration_2_2_2_to_3_0_0_CompletedObservable() -> Observable<MigrationCompletedModel?> {
+  func createGetMigration_2_2_1_to_3_0_0_CompletedObservable() -> Observable<MigrationCompletedModel?> {
     dependencies
       .persistencyService
       .observeResource(
         with: PersistencyModelIdentity(
-          collection: PersistencyKeys.migrated_2_2_2_to_3_0_0.collection,
-          identifier: PersistencyKeys.migrated_2_2_2_to_3_0_0.identifier
+          collection: PersistencyKeys.migrated_2_2_1_to_3_0_0.collection,
+          identifier: PersistencyKeys.migrated_2_2_1_to_3_0_0.identifier
         ),
         type: MigrationCompletedModel.self
       )
@@ -164,13 +164,13 @@ protocol ApplicationMigrationPersistence: ApplicationMigrationSetting, Applicati
 extension ApplicationCycleService: ApplicationMigrationPersistence {}
 
 protocol ApplicationMigrationSetting {
-  func createSetMigration_2_2_2_to_3_0_0_CompletedCompletable(_ model: MigrationCompletedModel) -> Completable
+  func createSetMigration_2_2_1_to_3_0_0_CompletedCompletable(_ model: MigrationCompletedModel) -> Completable
 }
 
 extension ApplicationCycleService: ApplicationMigrationSetting {}
 
 protocol ApplicationMigrationReading {
-  func createGetMigration_2_2_2_to_3_0_0_CompletedObservable() -> Observable<MigrationCompletedModel?>
+  func createGetMigration_2_2_1_to_3_0_0_CompletedObservable() -> Observable<MigrationCompletedModel?>
 }
 
 extension ApplicationCycleService: ApplicationMigrationReading {}

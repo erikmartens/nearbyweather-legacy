@@ -28,7 +28,7 @@ final class ApiKeyInputViewController: UIViewController, BaseViewController {
   
   // MARK: - Assets
   
-  private var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -67,7 +67,6 @@ final class ApiKeyInputViewController: UIViewController, BaseViewController {
     super.viewWillAppear(animated)
     viewModel.viewWillAppear()
     setupUiAppearance()
-//    setupBindings()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -86,8 +85,6 @@ final class ApiKeyInputViewController: UIViewController, BaseViewController {
     DispatchQueue.main.async {
       self.textEntryCell?.textEntryTextField.resignFirstResponder()
     }
-    
-//    destroyBindings()
   }
 }
 
@@ -99,11 +96,6 @@ extension ApiKeyInputViewController {
     viewModel.observeEvents()
     bindContentFromViewModel(viewModel)
     bindUserInputToViewModel(viewModel)
-  }
-  
-  func destroyBindings() {
-    disposeBag = DisposeBag()
-    viewModel.disregardEvents()
   }
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {

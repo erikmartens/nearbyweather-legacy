@@ -12,7 +12,9 @@ import RxSwift
 // MARK: - Definitions
 
 private extension SettingsImagedDualLabelSubtitleCell {
-  struct Definitions {}
+  struct Definitions {
+    static let labelHeight: CGFloat = 20
+  }
 }
 
 // MARK: - Class Definition
@@ -121,15 +123,15 @@ private extension SettingsImagedDualLabelSubtitleCell {
     ])
     
     contentView.addSubview(contentLabel, constraints: [
-      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
+      contentLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Definitions.labelHeight),
       contentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .medium)),
       contentLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
       contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
     ])
     
     contentView.addSubview(descriptionLabel, constraints: [
-      descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      descriptionLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
+      descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Definitions.labelHeight),
+      descriptionLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
       descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
       descriptionLabel.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
       descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))

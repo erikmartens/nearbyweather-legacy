@@ -12,8 +12,6 @@ protocol BaseViewController {
   associatedtype ViewModel: BaseViewModel
   var viewModel: ViewModel { get }
   init(dependencies: ViewModel.Dependencies)
-  func setupBindings()
-  func destroyBindings()
   func bindContentFromViewModel(_ viewModel: ViewModel)
   func bindUserInputToViewModel(_ viewModel: ViewModel)
 }

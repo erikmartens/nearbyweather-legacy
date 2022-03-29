@@ -31,7 +31,7 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
   
   // MARK: - Assets
   
-  private var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -69,13 +69,11 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
     super.viewWillAppear(animated)
     viewModel.viewWillAppear()
     setupUiAppearance()
-//    setupBindings()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     viewModel.viewWillDisappear()
-//    destroyBindings()
   }
 }
 
@@ -88,11 +86,6 @@ extension WeatherMapViewController {
     viewModel.observeEvents()
     bindContentFromViewModel(viewModel)
     bindUserInputToViewModel(viewModel)
-  }
-  
-  func destroyBindings() {
-    disposeBag = DisposeBag()
-    viewModel.disregardEvents()
   }
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {
@@ -126,15 +119,15 @@ extension WeatherMapViewController {
       .drive(onNext: { [unowned self] amountOfResultsValue in
         switch amountOfResultsValue {
         case .ten:
-          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton10, self.focusOnLocationBarButton]
+          self.navigationItem.rightBarButtonItems = [amountOfResultsBarButton10, focusOnLocationBarButton]
         case .twenty:
-          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton20, self.focusOnLocationBarButton]
+          self.navigationItem.rightBarButtonItems = [amountOfResultsBarButton20, focusOnLocationBarButton]
         case .thirty:
-          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton30, self.focusOnLocationBarButton]
+          self.navigationItem.rightBarButtonItems = [amountOfResultsBarButton30, focusOnLocationBarButton]
         case .forty:
-          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton40, self.focusOnLocationBarButton]
+          self.navigationItem.rightBarButtonItems = [amountOfResultsBarButton40, focusOnLocationBarButton]
         case .fifty:
-          self.navigationItem.rightBarButtonItems = [self.amountOfResultsBarButton50, self.focusOnLocationBarButton]
+          self.navigationItem.rightBarButtonItems = [amountOfResultsBarButton50, focusOnLocationBarButton]
         }
       })
       .disposed(by: disposeBag)

@@ -28,7 +28,7 @@ final class LoadingViewController: UIViewController, BaseViewController {
   
   // MARK: - Assets
   
-  private var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -66,14 +66,12 @@ final class LoadingViewController: UIViewController, BaseViewController {
     super.viewWillAppear(animated)
     setupUiAppearance()
     loadingSpinner.startAnimating()
-//    setupBindings()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     setupUiAppearance()
     loadingSpinner.stopAnimating()
-//    destroyBindings()
   }
 }
 
@@ -85,11 +83,6 @@ extension LoadingViewController {
     viewModel.observeEvents()
     bindContentFromViewModel(viewModel)
     bindUserInputToViewModel(viewModel)
-  }
-  
-  func destroyBindings() {
-    disposeBag = DisposeBag()
-    viewModel.disregardEvents()
   }
   
   func bindContentFromViewModel(_ viewModel: ViewModel) {

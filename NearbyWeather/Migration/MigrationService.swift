@@ -38,20 +38,20 @@ final class MigrationService {
 
 extension MigrationService {
   
-  func createRun_2_2_2_to_3_0_0_migrationCompletable() -> Completable {
+  func createRun_2_2_1_to_3_0_0_migrationCompletable() -> Completable {
     dependencies.applicationCycleService
-      .createGetMigration_2_2_2_to_3_0_0_CompletedObservable()
+      .createGetMigration_2_2_1_to_3_0_0_CompletedObservable()
       .take(1)
       .asSingle()
       .flatMapCompletable { [dependencies] migrationCompletedModel in
-        // users who have ACTIVELY used version 2.2.2 will have stored an API Key
+        // users who have ACTIVELY used version 2.2.1 will have stored an API Key
         // users who have not done so, will not suffer from skipping the migration
         // migrationCompletedModel == nil && UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) == nil -> old user who never used the app or new user
         // migrationCompletedModel == nil && UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil -> old user
         guard migrationCompletedModel == nil && UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil else {
           return Completable
             .emptyCompletable
-            .andThen(dependencies.applicationCycleService.createSetMigration_2_2_2_to_3_0_0_CompletedCompletable(MigrationCompletedModel(completed: true)))
+            .andThen(dependencies.applicationCycleService.createSetMigration_2_2_1_to_3_0_0_CompletedCompletable(MigrationCompletedModel(completed: true)))
         }
         // mirgrate api key
         let migrateApiKeyCompletable = Observable<String?>
@@ -154,7 +154,7 @@ extension MigrationService {
             migrateWeatherInformationCompletable
           ])
           // store that the migration was completed
-          .andThen(dependencies.applicationCycleService.createSetMigration_2_2_2_to_3_0_0_CompletedCompletable(MigrationCompletedModel(completed: true)))
+          .andThen(dependencies.applicationCycleService.createSetMigration_2_2_1_to_3_0_0_CompletedCompletable(MigrationCompletedModel(completed: true)))
           .andThen(dependencies.applicationCycleService.createSetSetupCompletedCompletable(SetupCompletedModel(completed: true)))
           .do(onCompleted: {
             // delete previous data

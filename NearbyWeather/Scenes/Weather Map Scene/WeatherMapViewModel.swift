@@ -34,7 +34,7 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Assets
   
-  private var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -64,21 +64,17 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Observables
   
-  private lazy var preferredMapTypeObservable: Observable<MapTypeOptionValue> = { [dependencies] in
-    dependencies
-      .preferencesService
-      .createGetMapTypeOptionObservable()
-      .map { $0.value }
-      .share(replay: 1)
-  }()
+  private lazy var preferredMapTypeObservable: Observable<MapTypeOptionValue> = dependencies
+    .preferencesService
+    .createGetMapTypeOptionObservable()
+    .map { $0.value }
+    .share(replay: 1)
   
-  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsOptionValue>  = { [dependencies] in
-    dependencies
-      .preferencesService
-      .createGetAmountOfNearbyResultsOptionObservable()
-      .map { $0.value }
-      .share(replay: 1)
-  }()
+  private lazy var preferredAmountOfResultsObservable: Observable<AmountOfResultsOptionValue>  = dependencies
+    .preferencesService
+    .createGetAmountOfNearbyResultsOptionObservable()
+    .map { $0.value }
+    .share(replay: 1)
   
   // MARK: - Initialization
   
@@ -111,10 +107,6 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
     observeDataSource()
     observeUserTapEvents()
   }
-  
-  func disregardEvents() {
-    disposeBag = DisposeBag()
-  }
 }
 
 // MARK: - Observations
@@ -131,7 +123,7 @@ extension WeatherMapViewModel {
       .combineLatest(
         dependencies.weatherInformationService.createGetNearbyWeatherInformationListObservable(),
         apiKeyValidObservable,
-        resultSelector: { [dependencies, unowned self] weatherInformationList, _ in
+        resultSelector: { [unowned self] weatherInformationList, _ in
           weatherInformationList.mapToWeatherMapAnnotationViewModel(
             weatherStationService: dependencies.weatherStationService,
             weatherInformationService: dependencies.weatherInformationService,
@@ -147,7 +139,7 @@ extension WeatherMapViewModel {
       .combineLatest(
         dependencies.weatherInformationService.createGetBookmarkedWeatherInformationListObservable(),
         apiKeyValidObservable,
-        resultSelector: { [dependencies, unowned self] weatherInformationList, _ in
+        resultSelector: { [unowned self] weatherInformationList, _ in
           weatherInformationList.mapToWeatherMapAnnotationViewModel(
             weatherStationService: dependencies.weatherStationService,
             weatherInformationService: dependencies.weatherInformationService,
@@ -186,20 +178,20 @@ extension WeatherMapViewModel {
   
   func observeUserTapEvents() {    
     onDidTapMapTypeBarButtonSubject
-      .subscribe(onNext: { [weak steps, unowned self] _ in
-        steps?.accept(WeatherMapStep.changeMapTypeAlert(selectionDelegate: self))
+      .subscribe(onNext: { [unowned self] _ in
+        steps.accept(WeatherMapStep.changeMapTypeAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapAmountOfResultsBarButtonSubject
-      .subscribe(onNext: { [weak steps, unowned self] _ in
-        steps?.accept(WeatherMapStep.changeAmountOfResultsAlert(selectionDelegate: self))
+      .subscribe(onNext: { [unowned self] _ in
+        steps.accept(WeatherMapStep.changeAmountOfResultsAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
     
     onDidTapFocusOnLocationBarButtonSubject
-      .subscribe(onNext: { [weak steps, unowned self] _ in
-        steps?.accept(WeatherMapStep.focusOnLocationAlert(selectionDelegate: self))
+      .subscribe(onNext: { [unowned self] _ in
+        steps.accept(WeatherMapStep.focusOnLocationAlert(selectionDelegate: self))
       })
       .disposed(by: disposeBag)
   }

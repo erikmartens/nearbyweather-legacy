@@ -102,10 +102,6 @@ final class AboutAppViewModel: NSObject, Stepper, BaseViewModel {
     observeDataSource()
     observeUserTapEvents()
   }
-  
-  func disregardEvents() {
-    disposeBag = DisposeBag()
-  }
 }
 
 // MARK: - Observations
@@ -276,8 +272,8 @@ extension AboutAppViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
     _ = Observable.just(indexPath)
-      .map { [unowned tableDataSource] indexPath in
-        tableDataSource.sectionDataSources[indexPath]?.onSelectedRoutingIntent
+      .map { [weak tableDataSource] indexPath in
+        tableDataSource?.sectionDataSources[indexPath]?.onSelectedRoutingIntent
       }
       .filterNil()
       .take(1)

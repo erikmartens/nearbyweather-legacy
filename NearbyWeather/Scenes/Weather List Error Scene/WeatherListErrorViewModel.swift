@@ -74,7 +74,7 @@ final class WeatherListErrorViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Assets
   
-  private var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -132,10 +132,6 @@ final class WeatherListErrorViewModel: NSObject, Stepper, BaseViewModel {
     observeDataSource()
     observeUserTapEvents()
   }
-  
-  func disregardEvents() {
-    disposeBag = DisposeBag()
-  }
 }
 
 // MARK: - Observations
@@ -149,11 +145,13 @@ extension WeatherListErrorViewModel {
   func observeUserTapEvents() {
     onDidTapRefreshButtonSubject
       .do(onNext: { [weak isRefreshingSubject] in isRefreshingSubject?.onNext(true) })
-      .flatMapLatest { [weak isRefreshingSubject, dependencies] _ -> Observable<Void> in
+      .flatMapLatest { [unowned self] _ -> Observable<Void> in
         Completable
-          .zip([dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable(),
-                dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()])
-          .do(onCompleted: { isRefreshingSubject?.onNext(false) })
+          .zip([
+            dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable(),
+            dependencies.weatherInformationService.createUpdateBookmarkedWeatherInformationCompletable()
+          ])
+          .do(onCompleted: { [weak isRefreshingSubject] in isRefreshingSubject?.onNext(false) })
           .asObservable()
           .map { _ in () }
       }

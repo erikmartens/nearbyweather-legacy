@@ -31,7 +31,7 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
   
   // MARK: - Assets
   
-  private var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -82,10 +82,6 @@ final class SettingsViewModel: NSObject, Stepper, BaseViewModel {
   func observeEvents() {
     observeDataSource()
     observeUserTapEvents()
-  }
-  
-  func disregardEvents() {
-    disposeBag = DisposeBag()
   }
 }
 
@@ -257,7 +253,7 @@ extension SettingsViewModel {
   
   func observeUserTapEvents() {
     onDidChangeAllowTempOnAppIconOptionSubject
-      .flatMapLatest { [dependencies] changedValue in
+      .flatMapLatest { [unowned self] changedValue in
         dependencies.notificationService
           .createSetShowTemperatureOnAppIconOptionCompletable(ShowTemperatureOnAppIconOption(value: changedValue ? .yes : .no))
           .asObservable()
@@ -266,7 +262,7 @@ extension SettingsViewModel {
       .disposed(by: disposeBag)
     
     onDidChangeRefreshOnAppStartOptionSubject
-      .flatMapLatest { [dependencies] changedValue in
+      .flatMapLatest { [unowned self] changedValue in
         dependencies.preferencesService
           .createSetRefreshOnAppStartOptionCompletable(RefreshOnAppStartOption(value: changedValue ? .yes : .no))
           .asObservable()
@@ -282,8 +278,8 @@ extension SettingsViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
     _ = Observable.just(indexPath)
-      .map { [unowned tableDataSource] indexPath in
-        tableDataSource.sectionDataSources[indexPath]?.onSelectedRoutingIntent
+      .map { [weak tableDataSource] indexPath in
+        tableDataSource?.sectionDataSources[indexPath]?.onSelectedRoutingIntent
       }
       .filterNil()
       .take(1)

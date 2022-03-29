@@ -37,7 +37,7 @@ final class WeatherListErrorViewController: UIViewController, BaseViewController
   
   // MARK: - Assets
   
-  private var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
@@ -74,13 +74,11 @@ final class WeatherListErrorViewController: UIViewController, BaseViewController
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     setupUiAppearance()
-//    setupBindings()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     viewModel.viewWillDisappear()
-//    destroyBindings()
   }
 }
 
@@ -94,11 +92,6 @@ extension WeatherListErrorViewController {
     bindUserInputToViewModel(viewModel)
   }
   
-  func destroyBindings() {
-    disposeBag = DisposeBag()
-    viewModel.disregardEvents()
-  }
-  
   func bindContentFromViewModel(_ viewModel: ViewModel) {
      viewModel
       .isRefreshingDriver
@@ -109,7 +102,7 @@ extension WeatherListErrorViewController {
     
     viewModel
       .errorTypeDriver
-      .drive { [unowned titleLabel, unowned descriptionLabel, unowned refreshButton] listErrorType in
+      .drive { [unowned self] listErrorType in
         titleLabel.text = listErrorType.title
         descriptionLabel.text = listErrorType.message
         refreshButton.isHidden = listErrorType != .noData

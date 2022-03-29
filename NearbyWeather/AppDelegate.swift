@@ -296,7 +296,7 @@ private extension AppDelegate {
       notificationService: dependencyContainer.resolve(NotificationService.self)!,
       applicationCycleService: dependencyContainer.resolve(ApplicationCycleService.self)!
     ))
-    .createRun_2_2_2_to_3_0_0_migrationCompletable()
+    .createRun_2_2_1_to_3_0_0_migrationCompletable()
     .subscribe()
   }
 }

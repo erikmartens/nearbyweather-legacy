@@ -40,11 +40,13 @@ extension Constants.Theme.Color {
   enum ViewElement {
     
     static var primaryBackground: UIColor {
-      UIColor.systemBackground
+      UIColor.from(dark: UIColor.secondarySystemBackground,
+                   light: UIColor.systemBackground)
     }
     
     static var secondaryBackground: UIColor {
-      UIColor.secondarySystemBackground
+      UIColor.from(dark: UIColor.systemBackground,
+                   light: UIColor.secondarySystemBackground)
     }
     
     static var tertiaryBackground: UIColor {
@@ -97,13 +99,13 @@ extension Constants.Theme.Color {
     enum WeatherInformation {
       
       static var colorBackgroundDay: UIColor {
-        UIColor.from(dark: .init(hex: 0x64AFF5),
+        UIColor.from(dark: .init(hex: 0x72c3fb),
                      light: .init(hex: 0x50B4FA))
       }
       
       static var colorBackgroundNight: UIColor {
-        UIColor.from(dark: .init(hex: 0x3F709B),
-                     light: .init(hex: 0x32719C))
+        UIColor.from(dark: .init(hex: 0x546e9f),
+                     light: .init(hex: 0x2a4a87))
       }
       
       static var border: UIColor {

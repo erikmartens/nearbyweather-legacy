@@ -26,7 +26,7 @@ extension Factory {
       let appearance = UINavigationBarAppearance()
       appearance.configureWithOpaqueBackground()
       appearance.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
-      appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+      appearance.titleTextAttributes = [.foregroundColor: Constants.Theme.Color.ViewElement.Label.titleDark]
       appearance.buttonAppearance = UIBarButtonItemAppearance(style: .plain)
       navigationController.navigationBar.standardAppearance = appearance
       

@@ -117,7 +117,7 @@ extension WeatherListViewModel {
 //      .createGetApiKeyObservable()
     
     let nearbyListItemsObservable = dependencies.weatherInformationService
-      .createGetNearbyWeatherInformationListObservable().debug("🤢🤢🤢 NEARBY")
+      .createGetNearbyWeatherInformationListObservable()
       .distinctUntilChanged(Self.weatherListItemsDidChange)
       .flatMapLatest { [unowned self] weatherInformationItems in
         Observable
@@ -133,7 +133,7 @@ extension WeatherListViewModel {
       .map { [WeatherListNearbyItemsSection(sectionItems: $0)] }
     
     let bookmarkedListItemsObservable = dependencies.weatherInformationService
-      .createGetBookmarkedWeatherInformationListObservable().debug("🤢🤢🤢 BOOKMARKED")
+      .createGetBookmarkedWeatherInformationListObservable()
       .distinctUntilChanged(Self.weatherListItemsDidChange)
       .flatMapLatest { [unowned self] weatherInformationItems in
         dependencies.weatherStationService

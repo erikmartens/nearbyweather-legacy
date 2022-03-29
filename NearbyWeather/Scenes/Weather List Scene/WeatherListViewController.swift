@@ -201,6 +201,12 @@ private extension WeatherListViewController {
   }
   
   func setupUiAppearance() {
+    navigationController?.navigationBar.prefersLargeTitles = true
+    navigationItem.largeTitleDisplayMode = .automatic
+    DispatchQueue.main.async {
+      self.navigationController?.navigationBar.sizeToFit()
+    }
+    
     title = R.string.localizable.tab_weatherList()
     
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground

@@ -16,6 +16,7 @@ import CoreLocation
 extension SetPermissionsViewModel {
   struct Dependencies {
     let userLocationService: UserLocationPermissionRequesting & UserLocationPermissionReading
+    let weatherInformationService: WeatherInformationUpdating
     let applicationCycleService: ApplicationStateSetting
   }
 }
@@ -81,13 +82,13 @@ extension SetPermissionsViewModel {
       }
       .subscribe()
     
-    dependencies.userLocationService
+    _ = dependencies.userLocationService
       .createUserDidDecideLocationAccessAuthorizationCompletable()
       .andThen(dependencies.applicationCycleService.createSetSetupCompletedCompletable(SetupCompletedModel(completed: true)))
-      .subscribe(onCompleted: { [unowned steps] in
+      .andThen(dependencies.weatherInformationService.createUpdateNearbyWeatherInformationCompletable())
+      .subscribe(onCompleted: { [unowned self] in
         steps.accept(WelcomeStep.dismiss)
       })
-      .disposed(by: disposeBag)
   }
 }
 

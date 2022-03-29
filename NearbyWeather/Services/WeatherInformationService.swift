@@ -229,22 +229,29 @@ extension WeatherInformationService: WeatherInformationUpdating {
           identifiers.map { Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: $0) }
         }
       )
-      .flatMapLatest { urls -> Observable<[PersistencyModel<WeatherInformationDTO>]> in
+      .flatMapLatest { urls -> Observable<[PersistencyModel<WeatherInformationDTO>?]> in
         guard !urls.isEmpty else {
-          return Observable.just([])
+          return .just([])
         }
         return Observable.zip(
-          urls.map { url -> Observable<PersistencyModel<WeatherInformationDTO>> in
+          urls.map { url -> Observable<PersistencyModel<WeatherInformationDTO>?> in
             RxAlamofire
               .requestData(.get, url)
               .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
-              .filterNil()
           }
         )
       }
+      .map { $0.compactMap { $0 } }
+      .map { $0.isEmpty ? nil : $0 }
+      .catchAndReturn(nil)
       .take(1)
       .asSingle()
-      .flatMapCompletable { [unowned self] in dependencies.persistencyService.saveResources($0, type: WeatherInformationDTO.self) }
+      .flatMapCompletable { [unowned self] result in
+        guard let result = result else {
+          return Completable.emptyCompletable
+        }
+        return dependencies.persistencyService.saveResources(result, type: WeatherInformationDTO.self)
+      }
   }
   
   func createUpdateBookmarkedWeatherInformationCompletable(forStationWith identifier: Int?) -> Completable {
@@ -257,16 +264,19 @@ extension WeatherInformationService: WeatherInformationUpdating {
         Observable.just(identifier),
         resultSelector: { apiKey, identifier -> URL in Constants.Urls.kOpenWeatherMapSingleStationtDataRequestUrl(with: apiKey, stationIdentifier: identifier) }
       )
-      .take(1)
-      .asSingle()
-      .flatMapCompletable { [unowned self] url -> Completable in
+      .flatMapLatest { url -> Observable<PersistencyModel<WeatherInformationDTO>?> in
         RxAlamofire
           .requestData(.get, url)
           .map { Self.mapSingleInformationResponseToPersistencyModel($0) }
-          .filterNil()
-          .take(1)
-          .asSingle()
-          .flatMapCompletable { [unowned self] in dependencies.persistencyService.saveResource($0, type: WeatherInformationDTO.self) }
+      }
+      .catchAndReturn(nil)
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { [unowned self] result -> Completable in
+        guard let result = result else {
+          return Completable.emptyCompletable
+        }
+        return dependencies.persistencyService.saveResource(result, type: WeatherInformationDTO.self)
       }
   }
   
@@ -295,6 +305,7 @@ extension WeatherInformationService: WeatherInformationUpdating {
           .requestData(.get, url)
           .map { Self.mapMultiInformationResponseToPersistencyModel($0) }
       }
+      .catchAndReturn(nil)
       .take(1)
       .asSingle()
       .flatMapCompletable { [unowned self] result in

@@ -33,7 +33,6 @@ final class WeatherStationMeteorologyDetailsMapCell: UITableViewCell, BaseCell {
       origin: .zero,
       size: CGSize(width: contentView.frame.size.width - 2*CellContentInsets.leading(from: .medium), height: Definitions.mapViewHeight)
     ),
-    cornerRadiusWeight: .small,
     isUserInteractionEnabled: false
   ))
   
@@ -134,11 +133,18 @@ private extension WeatherStationMeteorologyDetailsMapCell {
   func layoutUserInterface() {
     // map view
     contentView.addSubview(mapView, constraints: [
-      mapView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
-      mapView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
-      mapView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
+      mapView.topAnchor.constraint(equalTo: contentView.topAnchor),
+      mapView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+      mapView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
       mapView.heightAnchor.constraint(equalToConstant: Definitions.mapViewHeight)
     ])
+    
+//    contentView.addSubview(mapView, constraints: [
+//      mapView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
+//      mapView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
+//      mapView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
+//      mapView.heightAnchor.constraint(equalToConstant: Definitions.mapViewHeight)
+//    ])
     
     // line 1
     contentView.addSubview(coordinatesSymbolImageView, constraints: [

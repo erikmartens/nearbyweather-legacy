@@ -129,7 +129,10 @@ private extension AboutAppViewController {
   }
   
   func setupUiAppearance() {
+    navigationItem.largeTitleDisplayMode = .never
+    
     title = R.string.localizable.about()
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

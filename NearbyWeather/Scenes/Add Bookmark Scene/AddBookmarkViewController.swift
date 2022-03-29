@@ -151,9 +151,11 @@ private extension AddBookmarkViewController {
   }
   
   func setupUiAppearance() {
+    navigationItem.largeTitleDisplayMode = .never
+    navigationItem.hidesSearchBarWhenScrolling = false
+    
     title = R.string.localizable.add_location()
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
-    
-    navigationItem.hidesSearchBarWhenScrolling = false
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

@@ -91,7 +91,8 @@ private extension WelcomeFlow {
     let setPermissionsViewController = SetPermissionsViewController(
       dependencies: SetPermissionsViewController.ViewModel.Dependencies(
         userLocationService: dependencies.dependencyContainer.resolve(UserLocationService.self)!,
-        applicationCycleService:  dependencies.dependencyContainer.resolve(ApplicationCycleService.self)!
+        weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService.self)!,
+        applicationCycleService: dependencies.dependencyContainer.resolve(ApplicationCycleService.self)!
     ))
     rootViewController.pushViewController(setPermissionsViewController, animated: true)
     return .one(flowContributor: .contribute(

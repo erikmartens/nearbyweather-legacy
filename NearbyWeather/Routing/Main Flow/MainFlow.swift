@@ -29,7 +29,12 @@ final class MainFlow: Flow {
 
   private lazy var rootViewController: UITabBarController = {
     let tabBarController = UITabBarController()
-    tabBarController.tabBar.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    let appearance = UITabBarAppearance()
+    appearance.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground.withAlphaComponent(0.5)
+    appearance.configureWithDefaultBackground()
+    
+    tabBarController.tabBar.standardAppearance = appearance
+    tabBarController.tabBar.isTranslucent = true
     tabBarController.tabBar.barTintColor = Constants.Theme.Color.ViewElement.primaryBackground
     tabBarController.tabBar.tintColor = Constants.Theme.Color.MarqueColors.standardMarque
     return tabBarController

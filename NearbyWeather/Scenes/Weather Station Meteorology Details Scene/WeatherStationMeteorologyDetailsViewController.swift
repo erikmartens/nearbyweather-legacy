@@ -132,6 +132,12 @@ private extension WeatherStationMeteorologyDetailsViewController {
   }
   
   func setupUiAppearance() {
+    navigationController?.navigationBar.prefersLargeTitles = true
+    navigationItem.largeTitleDisplayMode = .automatic
+    DispatchQueue.main.async {
+      self.navigationController?.navigationBar.sizeToFit()
+    }
+    
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
     tableView.backgroundColor = .clear
   }

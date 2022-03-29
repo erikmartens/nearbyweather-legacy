@@ -151,7 +151,10 @@ private extension ApiKeyInputViewController {
   }
   
   func setupUiAppearance() {
+    navigationItem.largeTitleDisplayMode = .never
+    
     title = R.string.localizable.api_settings()
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

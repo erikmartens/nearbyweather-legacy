@@ -123,7 +123,10 @@ private extension ManageBookmarksViewController {
   }
   
   func setupUiAppearance() {
+    navigationItem.largeTitleDisplayMode = .never
+    
     title = R.string.localizable.manage_locations()
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

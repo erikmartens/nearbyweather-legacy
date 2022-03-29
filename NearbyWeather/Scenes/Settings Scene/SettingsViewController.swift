@@ -125,6 +125,12 @@ private extension SettingsViewController {
   }
   
   func setupUiAppearance() {
+    navigationController?.navigationBar.prefersLargeTitles = true
+    navigationItem.largeTitleDisplayMode = .automatic
+    DispatchQueue.main.async {
+      self.navigationController?.navigationBar.sizeToFit()
+    }
+    
     title = R.string.localizable.tab_settings()
     
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground

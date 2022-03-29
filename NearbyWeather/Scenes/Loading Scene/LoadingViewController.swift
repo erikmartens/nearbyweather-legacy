@@ -114,6 +114,9 @@ private extension LoadingViewController {
   }
   
   func setupUiAppearance() {
+    navigationItem.largeTitleDisplayMode = .never
+    
     view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
   }
 }

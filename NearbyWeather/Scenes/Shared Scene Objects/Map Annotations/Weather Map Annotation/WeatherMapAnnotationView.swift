@@ -19,8 +19,8 @@ private extension WeatherMapAnnotationView {
     static let triangleHeight: CGFloat = 10
     static let radius: CGFloat = 10
     static let borderWidth: CGFloat = 4
-    static let titleLabelFontSize: CGFloat = 12
-    static let subtitleLabelFontSize: CGFloat = 10
+    static let titleLabelFontSize: CGFloat = 14
+    static let subtitleLabelFontSize: CGFloat = 12
   }
 }
 
@@ -41,14 +41,14 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
     triangleHeight: Definitions.triangleHeight
   ))
   
-  private lazy var titleLabel = Factory.Label.make(fromType: .mapAnnotation(
+  private lazy var titleLabel = Factory.Label.make(fromType: .mapAnnotationTitle(
     fontSize: Definitions.titleLabelFontSize,
     width: Definitions.width - 2*Definitions.margin,
     height: (Definitions.height - 2*Definitions.margin - Definitions.triangleHeight)/2,
     yOffset: -Definitions.height/2
   ))
   
-  private lazy var subtitleLabel = Factory.Label.make(fromType: .mapAnnotation(
+  private lazy var subtitleLabel = Factory.Label.make(fromType: .mapAnnotationSubtitle(
     fontSize: Definitions.subtitleLabelFontSize,
     width: Definitions.width - 2*Definitions.margin,
     height: (Definitions.height - 2*Definitions.margin - Definitions.triangleHeight)/2,

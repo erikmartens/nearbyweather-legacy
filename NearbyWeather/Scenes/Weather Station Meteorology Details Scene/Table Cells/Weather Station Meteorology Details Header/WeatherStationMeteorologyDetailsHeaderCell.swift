@@ -31,11 +31,11 @@ final class WeatherStationMeteorologyDetailsHeaderCell: UITableViewCell, BaseCel
   
   private lazy var weatherConditionSymbolLabel = Factory.Label.make(fromType: .weatherSymbol)
   
-  private lazy var weatherConditionTitleLabel = Factory.Label.make(fromType: .headline(textColor: Constants.Theme.Color.ViewElement.Label.titleLight))
-  private lazy var temperatureLabelLabel = Factory.Label.make(fromType: .headline(alignment: .right, textColor: Constants.Theme.Color.ViewElement.Label.titleLight))
+  private lazy var weatherConditionTitleLabel = Factory.Label.make(fromType: .headline(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
+  private lazy var temperatureLabelLabel = Factory.Label.make(fromType: .headline(alignment: .right, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   
-  private lazy var weatherConditionSubtitleLabel = Factory.Label.make(fromType: .subtitle(textColor: Constants.Theme.Color.ViewElement.Label.titleLight))
-  private lazy var dayTimeStatusLabel = Factory.Label.make(fromType: .subtitle(alignment: .right, textColor: Constants.Theme.Color.ViewElement.Label.titleLight))
+  private lazy var weatherConditionSubtitleLabel = Factory.Label.make(fromType: .subtitle(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
+  private lazy var dayTimeStatusLabel = Factory.Label.make(fromType: .subtitle(alignment: .right, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   
   // MARK: - Assets
   

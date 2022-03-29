@@ -19,13 +19,13 @@ struct WeatherMapAnnotationModel {
     title: String? = nil,
     subtitle: String? = nil,
     isDayTime: Bool? = false,
-    borderColor: UIColor? = nil,
+    tintColor: UIColor? = nil,
     backgroundColor: UIColor? = nil
   ) {
     self.title = title
     self.subtitle = subtitle
     self.isDayTime = isDayTime
-    self.tintColor = borderColor
+    self.tintColor = tintColor
     self.backgroundColor = backgroundColor
   }
   
@@ -62,7 +62,7 @@ struct WeatherMapAnnotationModel {
       title: weatherInformationDTO.stationName,
       subtitle: subtitle,
       isDayTime: isDayTime,
-      borderColor: Constants.Theme.Color.ViewElement.WeatherInformation.border,
+      tintColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle,
       backgroundColor: isDayTime ? Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay : Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundNight
     )
   }

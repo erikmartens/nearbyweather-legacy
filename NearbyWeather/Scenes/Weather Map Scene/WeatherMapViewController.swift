@@ -134,12 +134,12 @@ extension WeatherMapViewController {
     
     viewModel
       .focusOnWeatherStationDriver
-      .drive(onNext: { [weak mapView] location in mapView?.focus(onCoordinate: location?.coordinate) })
+      .drive(onNext: { [weak mapView] location in mapView?.focus(onCoordinate: location?.coordinate, animated: true) })
       .disposed(by: disposeBag)
     
     viewModel
       .focusOnUserLocationDriver
-      .drive(onNext: { [weak mapView] userLocation in mapView?.focus(onCoordinate: userLocation?.coordinate, latitudinalMeters: 20000, longitudinalMeters: 20000) })
+      .drive(onNext: { [weak mapView] userLocation in mapView?.focus(onCoordinate: userLocation?.coordinate, latitudinalMeters: 20000, longitudinalMeters: 20000, animated: true) })
       .disposed(by: disposeBag)
   }
   

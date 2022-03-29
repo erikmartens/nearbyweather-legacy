@@ -98,6 +98,11 @@ extension Constants.Theme.Color {
     
     enum WeatherInformation {
       
+      static var colorBackgroundPrimaryTitle: UIColor {
+        UIColor.from(dark: .init(hex: 0xFFFFFF),
+                     light: .init(hex: 0xFFFFFF))
+      }
+      
       static var colorBackgroundDay: UIColor {
         UIColor.from(dark: .init(hex: 0x72c3fb),
                      light: .init(hex: 0x50B4FA))

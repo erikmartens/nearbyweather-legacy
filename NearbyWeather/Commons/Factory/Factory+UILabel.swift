@@ -18,7 +18,8 @@ extension Factory {
       case body(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0, textColor: UIColor = Constants.Theme.Color.ViewElement.Label.bodyDark, isCopyable: Bool = false)
       case subtitle(text: String? = nil, alignment: NSTextAlignment = .left, numberOfLines: Int = 0, textColor: UIColor = Constants.Theme.Color.ViewElement.Label.subtitleDark, isCopyable: Bool = false)
       case weatherSymbol
-      case mapAnnotation(fontSize: CGFloat, width: CGFloat, height: CGFloat, yOffset: CGFloat)
+      case mapAnnotationTitle(fontSize: CGFloat, width: CGFloat, height: CGFloat, yOffset: CGFloat)
+      case mapAnnotationSubtitle(fontSize: CGFloat, width: CGFloat, height: CGFloat, yOffset: CGFloat)
     }
     
     typealias InputType = LabelType
@@ -67,7 +68,16 @@ extension Factory {
         label.textAlignment = .center
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
-      case let .mapAnnotation(fontSize, width, height, yOffset):
+      case let .mapAnnotationTitle(fontSize, width, height, yOffset):
+        label.frame.size = CGSize(width: width, height: height)
+        label.frame = label.frame.offsetBy(dx: 0, dy: yOffset)
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
+        label.font = UIFont.boldSystemFont(ofSize: fontSize)
+        label.textAlignment = .center
+        label.minimumScaleFactor = 0.8
+        label.backgroundColor = .clear
+      case let .mapAnnotationSubtitle(fontSize, width, height, yOffset):
         label.frame.size = CGSize(width: width, height: height)
         label.frame = label.frame.offsetBy(dx: 0, dy: yOffset)
         label.numberOfLines = 1

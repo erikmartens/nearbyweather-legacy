@@ -147,6 +147,10 @@ private extension WeatherListErrorViewController {
   
   func setupUiAppearance() {
     title = R.string.localizable.tab_weatherList()
-    view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

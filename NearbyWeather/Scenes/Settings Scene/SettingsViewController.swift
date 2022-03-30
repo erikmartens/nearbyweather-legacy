@@ -133,6 +133,9 @@ private extension SettingsViewController {
     
     title = R.string.localizable.tab_settings()
     
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

@@ -132,7 +132,10 @@ private extension AboutAppViewController {
     navigationItem.largeTitleDisplayMode = .never
     
     title = R.string.localizable.about()
-    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
     navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

@@ -20,14 +20,35 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
   
   fileprivate lazy var mapView = Factory.MapView.make(fromType: .standard(frame: view.frame))
   
-  fileprivate lazy var mapTypeBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.layerType()))
-  fileprivate lazy var focusOnLocationBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.marker()))
+  fileprivate lazy var mapTypeBarButton = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "rectangle.on.rectangle.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var focusOnLocationBarButton = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "location.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
   
-  fileprivate lazy var amountOfResultsBarButton10 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.ten()))
-  fileprivate lazy var amountOfResultsBarButton20 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.twenty()))
-  fileprivate lazy var amountOfResultsBarButton30 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.thirty()))
-  fileprivate lazy var amountOfResultsBarButton40 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.forty()))
-  fileprivate lazy var amountOfResultsBarButton50 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.fifty()))
+  fileprivate lazy var amountOfResultsBarButton10 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "10.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var amountOfResultsBarButton20 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "20.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var amountOfResultsBarButton30 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "30.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var amountOfResultsBarButton40 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "40.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var amountOfResultsBarButton50 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "50.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
   
   // MARK: - Assets
   
@@ -184,6 +205,10 @@ private extension WeatherMapViewController {
   
   func setupUiAppearance() {
     title = R.string.localizable.tab_weatherMap()
+    
+    tabBarController?.tabBar.isTranslucent = false
+    navigationController?.navigationBar.isTranslucent = false
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

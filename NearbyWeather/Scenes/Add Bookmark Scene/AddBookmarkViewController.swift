@@ -155,7 +155,10 @@ private extension AddBookmarkViewController {
     navigationItem.hidesSearchBarWhenScrolling = false
     
     title = R.string.localizable.add_location()
-    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
     navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

@@ -133,7 +133,11 @@ private extension SetPermissionsViewController {
   func setupUiAppearance() {
     title = R.string.localizable.location_access()
     
-    view.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    
     bubbleView.backgroundColor = Constants.Theme.Color.ViewElement.alert
   }
 }

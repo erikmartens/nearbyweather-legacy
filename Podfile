@@ -1,4 +1,4 @@
-platform :ios, '14.0'
+platform :ios, '15.0'
 
 # ignore all warnings from all pods
 inhibit_all_warnings!
@@ -41,7 +41,7 @@ post_install do |installer|
     target.build_configurations.each do |config|
       
       config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
       
       next if config.name.downcase.include? 'debug'
       config.build_settings['ENABLE_BITCODE'] = 'YES'

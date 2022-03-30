@@ -23,7 +23,7 @@ final class ApiKeyInputViewController: UIViewController, BaseViewController {
   
   // MARK: - UIComponents
   
-  fileprivate lazy var saveBarButtonItem = Factory.BarButtonItem.make(fromType: .standard(title: R.string.localizable.save(), style: .done))
+  fileprivate lazy var saveBarButtonItem = Factory.BarButtonItem.make(fromType: .standard(title: R.string.localizable.save(), color: Constants.Theme.Color.MarqueColors.standardMarque, style: .done))
   fileprivate lazy var tableView = Factory.TableView.make(fromType: .standard(frame: view.frame))
   
   // MARK: - Assets
@@ -154,7 +154,10 @@ private extension ApiKeyInputViewController {
     navigationItem.largeTitleDisplayMode = .never
     
     title = R.string.localizable.api_settings()
-    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
     navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
   }
 }

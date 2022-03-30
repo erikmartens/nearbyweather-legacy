@@ -161,7 +161,11 @@ private extension SetApiKeyViewController {
   func setupUiAppearance() {
     title = R.string.localizable.welcome()
     
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    
     bubbleView.backgroundColor = Constants.Theme.Color.ViewElement.alert
   }
 }

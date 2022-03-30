@@ -25,18 +25,15 @@ extension Factory {
       
       let appearance = UINavigationBarAppearance()
       appearance.configureWithDefaultBackground()
-      appearance.backgroundColor = Constants.Theme.Color.ViewElement.primaryBackground.withAlphaComponent(0.5)
       appearance.titleTextAttributes = [.foregroundColor: Constants.Theme.Color.ViewElement.Label.titleDark]
       appearance.buttonAppearance = UIBarButtonItemAppearance(style: .plain)
+      
       navigationController.navigationBar.standardAppearance = appearance
-      
-      navigationController.navigationBar.barTintColor = Constants.Theme.Color.ViewElement.Label.titleDark
-      navigationController.navigationBar.tintColor = Constants.Theme.Color.ViewElement.Label.titleDark
-      
+      navigationController.navigationBar.barTintColor = Constants.Theme.Color.MarqueColors.standardMarque
+      navigationController.navigationBar.tintColor = Constants.Theme.Color.MarqueColors.standardMarque
       navigationController.navigationBar.isTranslucent = true
       navigationController.navigationBar.barStyle = .default
-      
-      navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
+      navigationController.navigationBar.scrollEdgeAppearance = .none
       
       switch type {
       case .standard:

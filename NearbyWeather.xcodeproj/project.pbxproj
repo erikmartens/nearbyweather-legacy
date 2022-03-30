@@ -196,7 +196,6 @@
 		F284DDEC245F792D00445BFF /* WeatherListInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDEB245F792D00445BFF /* WeatherListInformationTableViewCell.swift */; };
 		F284DDF0245F794E00445BFF /* WeatherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDEF245F794E00445BFF /* WeatherListViewModel.swift */; };
 		F284DDF2245F796000445BFF /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284DDF1245F796000445BFF /* WeatherListViewController.swift */; };
-		F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */; };
 		F28CE96A1F9AA829008319C4 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */; };
 		F28EE8C925AB91530045AE6A /* Factory+UIBezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */; };
 		F28EE8CE25AB94390045AE6A /* Factory+CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28EE8CD25AB94390045AE6A /* Factory+CAShapeLayer.swift */; };
@@ -207,6 +206,7 @@
 		F29912D027F1E68F00BE0D59 /* InstallVersionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912CF27F1E68F00BE0D59 /* InstallVersionModel.swift */; };
 		F29912D327F1F04700BE0D59 /* MigrationCompletedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912D227F1F04700BE0D59 /* MigrationCompletedModel.swift */; };
 		F29912D627F1F4F100BE0D59 /* SetupCompletedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912D527F1F4F100BE0D59 /* SetupCompletedModel.swift */; };
+		F29912D827F4E86500BE0D59 /* Factory+UITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912D727F4E86500BE0D59 /* Factory+UITabBarController.swift */; };
 		F2A5CAA62005762A0071BFFB /* MeteorologyInformationConversionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */; };
 		F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */; };
 		F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */; };
@@ -512,7 +512,6 @@
 		F284DDEB245F792D00445BFF /* WeatherListInformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListInformationTableViewCell.swift; sourceTree = "<group>"; };
 		F284DDEF245F794E00445BFF /* WeatherListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewModel.swift; sourceTree = "<group>"; };
 		F284DDF1245F796000445BFF /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
-		F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extensions.swift"; sourceTree = "<group>"; };
 		F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIBezierPath.swift"; sourceTree = "<group>"; };
 		F28EE8CD25AB94390045AE6A /* Factory+CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+CAShapeLayer.swift"; sourceTree = "<group>"; };
@@ -523,6 +522,7 @@
 		F29912CF27F1E68F00BE0D59 /* InstallVersionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallVersionModel.swift; sourceTree = "<group>"; };
 		F29912D227F1F04700BE0D59 /* MigrationCompletedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationCompletedModel.swift; sourceTree = "<group>"; };
 		F29912D527F1F4F100BE0D59 /* SetupCompletedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompletedModel.swift; sourceTree = "<group>"; };
+		F29912D727F4E86500BE0D59 /* Factory+UITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UITabBarController.swift"; sourceTree = "<group>"; };
 		F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorologyInformationConversionWorker.swift; sourceTree = "<group>"; };
 		F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -1407,6 +1407,7 @@
 				F237285E2444AA5600964C49 /* Factory+UILabel.swift */,
 				F237288D244C93BD00964C49 /* Factory+UINavigationController.swift */,
 				F22A222725A4BE9500C97844 /* Factory+UIStackView.swift */,
+				F29912D727F4E86500BE0D59 /* Factory+UITabBarController.swift */,
 				F2D1994F25A1F1A4004C7753 /* Factory+UITableView.swift */,
 				F2060E5527B6B7CE0066DC8C /* Factory+UITextField.swift */,
 				F20CA0D625B1C75700153E47 /* Factory+UIView.swift */,
@@ -1429,7 +1430,6 @@
 				F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */,
 				F2060E6327BC3A5E0066DC8C /* UIButton+Extensions.swift */,
 				F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */,
-				F28CE9651F96B537008319C4 /* UINavigationBar+Extensions.swift */,
 				F260C4421F9D4883000D2BC0 /* UINavigationController+Extensions.swift */,
 				F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */,
 				F22A222C25A4C17200C97844 /* UIStackView+AddArrangedSubview.swift */,
@@ -2146,6 +2146,7 @@
 				F217CBCC27DB6FD500DAC947 /* SettingsSingleLabelDualButtonCell.swift in Sources */,
 				F2DE35012464AF4E00FDC4C7 /* Constants+Dimensions.Spacing.swift in Sources */,
 				F22B0F9825AB78AE0037F957 /* WeatherMapAnnotationData.swift in Sources */,
+				F29912D827F4E86500BE0D59 /* Factory+UITabBarController.swift in Sources */,
 				F2F7BA1D23E373DD00B4D2EB /* Constants+Labels.swift in Sources */,
 				F2060E5627B6B7CE0066DC8C /* Factory+UITextField.swift in Sources */,
 				F28EE8CE25AB94390045AE6A /* Factory+CAShapeLayer.swift in Sources */,
@@ -2227,7 +2228,6 @@
 				F213FA2F23F9EE4200F094D8 /* PreferredBookmarkOption.swift in Sources */,
 				F217CB8627D50DF700DAC947 /* SettingsImagedSingleLabelToggleCellModel.swift in Sources */,
 				F217CB6E27D504DA00DAC947 /* BaseTableViewSectionData.swift in Sources */,
-				F28CE9661F96B537008319C4 /* UINavigationBar+Extensions.swift in Sources */,
 				F237285D2444A9AD00964C49 /* Factory+UIImageView.swift in Sources */,
 				F237100425AB34830072AF29 /* WeatherMapViewModel.swift in Sources */,
 				F217CB6527D4F96200DAC947 /* SettingsTableViewDataSource.swift in Sources */,
@@ -2357,7 +2357,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-fembed-bitcode";
@@ -2415,7 +2415,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-fembed-bitcode";
 				SDKROOT = iphoneos;
@@ -2434,10 +2434,10 @@
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Erik Maximilian Martens (C929JV4AQN)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_TEAM = VDPU24L36V;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeather;
@@ -2458,10 +2458,10 @@
 				CODE_SIGN_ENTITLEMENTS = NearbyWeather/NearbyWeather.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Erik Maximilian Martens (VDPU24L36V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_TEAM = VDPU24L36V;
 				INFOPLIST_FILE = NearbyWeather/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.erikmaximilianmartens.NearbyWeather;

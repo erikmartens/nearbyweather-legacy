@@ -23,14 +23,34 @@ final class WeatherListViewController: UIViewController, BaseViewController {
   
   // MARK: - UIComponents
   
-  fileprivate lazy var listTypeBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.layerType()))
-  fileprivate lazy var sortingOrientationBarButton = Factory.BarButtonItem.make(fromType: .standard(image: R.image.sort()))
-  
-  fileprivate lazy var amountOfResultsBarButton10 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.ten()))
-  fileprivate lazy var amountOfResultsBarButton20 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.twenty()))
-  fileprivate lazy var amountOfResultsBarButton30 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.thirty()))
-  fileprivate lazy var amountOfResultsBarButton40 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.forty()))
-  fileprivate lazy var amountOfResultsBarButton50 = Factory.BarButtonItem.make(fromType: .standard(image: R.image.fifty()))
+  fileprivate lazy var listTypeBarButton = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "line.3.horizontal.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var sortingOrientationBarButton = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "arrow.up.arrow.down.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var amountOfResultsBarButton10 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "10.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var amountOfResultsBarButton20 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "20.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var amountOfResultsBarButton30 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "30.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var amountOfResultsBarButton40 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "40.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
+  fileprivate lazy var amountOfResultsBarButton50 = Factory.BarButtonItem.make(fromType: .systemImage(
+    imageName: "50.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+  ))
   
   fileprivate lazy var tableView = Factory.TableView.make(fromType: .standard(frame: view.frame))
   
@@ -209,7 +229,11 @@ private extension WeatherListViewController {
     
     title = R.string.localizable.tab_weatherList()
     
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
     view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    
     tableView.separatorStyle = .none
     tableView.backgroundColor = .clear
   }

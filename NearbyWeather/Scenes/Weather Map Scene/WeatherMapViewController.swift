@@ -20,34 +20,28 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
   
   fileprivate lazy var mapView = Factory.MapView.make(fromType: .standard(frame: view.frame))
   
-  fileprivate lazy var mapTypeBarButton = Factory.BarButtonItem.make(fromType: .systemImage(
-    imageName: "rectangle.on.rectangle.circle.fill",
-    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
-  ))
-  fileprivate lazy var focusOnLocationBarButton = Factory.BarButtonItem.make(fromType: .systemImage(
-    imageName: "location.circle.fill",
-    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
-  ))
+  fileprivate lazy var mapTypeBarButton = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(imageName: "globe"))
+  fileprivate lazy var focusOnLocationBarButton = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(imageName: "location.fill"))
   
-  fileprivate lazy var amountOfResultsBarButton10 = Factory.BarButtonItem.make(fromType: .systemImage(
+  fileprivate lazy var amountOfResultsBarButton10 = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(
     imageName: "10.circle.fill",
-    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, .clear]
   ))
-  fileprivate lazy var amountOfResultsBarButton20 = Factory.BarButtonItem.make(fromType: .systemImage(
+  fileprivate lazy var amountOfResultsBarButton20 = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(
     imageName: "20.circle.fill",
-    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, .clear]
   ))
-  fileprivate lazy var amountOfResultsBarButton30 = Factory.BarButtonItem.make(fromType: .systemImage(
+  fileprivate lazy var amountOfResultsBarButton30 = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(
     imageName: "30.circle.fill",
-    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, .clear]
   ))
-  fileprivate lazy var amountOfResultsBarButton40 = Factory.BarButtonItem.make(fromType: .systemImage(
+  fileprivate lazy var amountOfResultsBarButton40 = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(
     imageName: "40.circle.fill",
-    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, .clear]
   ))
-  fileprivate lazy var amountOfResultsBarButton50 = Factory.BarButtonItem.make(fromType: .systemImage(
+  fileprivate lazy var amountOfResultsBarButton50 = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(
     imageName: "50.circle.fill",
-    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, Constants.Theme.Color.SystemColor.gray.withAlphaComponent(0.2)]
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, .clear]
   ))
   
   // MARK: - Assets

@@ -7,6 +7,7 @@
 //
 
 import UIKit.UIBarButtonItem
+import UIKit
 
 extension Factory {
 
@@ -14,7 +15,8 @@ extension Factory {
 
     enum BarButtonItemType {
       case standard(title: String? = nil, image: UIImage? = nil, color: UIColor? = nil, style: UIBarButtonItem.Style = .plain)
-      case systemImage(imageName: String, color: UIColor? = nil, paletteColors: [UIColor]?)
+      case systemImage(imageName: String, color: UIColor? = nil)
+      case systemImageWithCircle(imageName: String, paletteColors: [UIColor] = [], circleColor: UIColor? = nil)
     }
 
     typealias InputType = BarButtonItemType
@@ -26,26 +28,46 @@ extension Factory {
       switch type {
       case let .standard(title, image, color, style):
         button.title = title
-        button.tintColor = color ?? Constants.Theme.Color.InteractableElement.standardBarButtonTint
+        button.tintColor = color ?? Constants.Theme.Color.MarqueColors.standardMarque
         button.image = image?.withRenderingMode(.alwaysTemplate)
         button.style = style
-      case let .systemImage(imageName, color, paletteColors):
-        var imageConfig = UIImage.SymbolConfiguration(weight: .semibold)
+      case let .systemImage(imageName, color):
+        let imageConfig = UIImage.SymbolConfiguration(weight: .semibold)
           .applying(UIImage.SymbolConfiguration(scale: .large))
         
-        if let paletteColors = paletteColors, !paletteColors.isEmpty {
+        button.image = UIImage(systemName: imageName, withConfiguration: imageConfig)?
+          .withTintColor(color ?? Constants.Theme.Color.MarqueColors.standardMarque, renderingMode: .alwaysOriginal)
+      case let .systemImageWithCircle(imageName, paletteColors, circleColor):
+        let frame = CGRect(x: 0, y: 0, width: 28, height: 28)
+        
+        let circleView = UIView(frame: frame)
+        let circleLayer = Factory.ShapeLayer.make(fromType: .circle(radius: frame.height/2, borderWidth: 0))
+        circleLayer.fillColor = (circleColor ?? Constants.Theme.Color.SystemColor.gray).withAlphaComponent(0.2).cgColor
+        circleView.layer.addSublayer(circleLayer)
+        
+        let imageView: UIImageView
+        
+        var imageConfig = UIImage.SymbolConfiguration(weight: .semibold)
+        
+        if !paletteColors.isEmpty, paletteColors.count > 1 {
           let colorConfig = UIImage.SymbolConfiguration(paletteColors: paletteColors)
           imageConfig = imageConfig.applying(colorConfig)
-          button.image = UIImage(systemName: imageName, withConfiguration: imageConfig)?
+          
+          imageView = UIImageView(frame: frame)
+          imageView.image = UIImage(systemName: imageName, withConfiguration: colorConfig)?
             .withRenderingMode(.alwaysTemplate)
-            .scalePreservingAspectRatio(targetScale: 90)
         } else {
-          button.image = UIImage(systemName: imageName, withConfiguration: imageConfig)?
-            .withTintColor(color ?? Constants.Theme.Color.InteractableElement.standardBarButtonTint, renderingMode: .alwaysOriginal)
-            .scalePreservingAspectRatio(targetScale: 90)
+          imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+          imageView.image = UIImage(systemName: imageName, withConfiguration: imageConfig)?
+            .withTintColor(paletteColors[safe: 0] ?? Constants.Theme.Color.MarqueColors.standardMarque, renderingMode: .alwaysOriginal)
         }
+        
+        circleView.addSubview(imageView)
+        imageView.center = circleView.center
+        
+        button.image = circleView.toImage()
       }
-
+      
       return button
     }
   }
@@ -53,29 +75,10 @@ extension Factory {
 
 // MARK: - Private Helper Extensions
 
-private extension UIImage {
-  
-  func scalePreservingAspectRatio(targetScale: CGFloat) -> UIImage {
-    let targetSize = CGSize(width: targetScale/UIScreen.main.scale, height: targetScale/UIScreen.main.scale)
-    // Determine the scale factor that preserves aspect ratio
-    let widthRatio = targetSize.width / size.width
-    let heightRatio = targetSize.height / size.height
-    
-    let scaleFactor = min(widthRatio, heightRatio)
-    
-    // Compute the new image size that preserves aspect ratio
-    let scaledImageSize = CGSize(
-      width: size.width * scaleFactor,
-      height: size.height * scaleFactor
-    )
-    
-    // Draw and return the resized UIImage
-    let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
-    
-    let scaledImage = renderer.image { _ in
-      self.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+extension UIView {
+  func toImage() -> UIImage {
+    UIGraphicsImageRenderer(bounds: bounds).image { rendererContext in
+      layer.render(in: rendererContext.cgContext)
     }
-    
-    return scaledImage
   }
 }

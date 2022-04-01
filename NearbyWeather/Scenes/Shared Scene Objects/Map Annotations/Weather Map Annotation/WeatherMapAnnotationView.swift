@@ -15,12 +15,52 @@ private extension WeatherMapAnnotationView {
   struct Definitions {
     static let margin: CGFloat = 4
     static let width: CGFloat = 110
-    static let height: CGFloat = 50
+    static let height: CGFloat = 72
     static let triangleHeight: CGFloat = 10
     static let radius: CGFloat = 10
     static let borderWidth: CGFloat = 4
-    static let titleLabelFontSize: CGFloat = 14
-    static let subtitleLabelFontSize: CGFloat = 12
+    
+    static let labelWidth: CGFloat = Definitions.width - 2*Definitions.margin
+    static let labelHeight: CGFloat = (Definitions.height - 2*Definitions.margin - Definitions.triangleHeight)/3
+    static let weatherConditionSymbolImageViewWidthHeight: CGFloat = labelHeight
+    
+    static var titleLabelFontSize: CGFloat {
+      switch UIApplication.shared.preferredContentSizeCategory {
+      case .accessibilityExtraLarge, .accessibilityExtraExtraLarge, .accessibilityExtraExtraExtraLarge:
+        return 18
+      case .accessibilityMedium, .accessibilityLarge, .extraExtraExtraLarge:
+        return 16
+      case .large, .extraLarge, .extraExtraLarge:
+        return 14
+      case .small, .medium:
+        return 12
+      case .extraSmall:
+        return 10
+      case .unspecified:
+        return 12
+      default:
+        return 12
+      }
+    }
+    
+    static var subtitleLabelFontSize: CGFloat {
+      switch UIApplication.shared.preferredContentSizeCategory {
+      case .accessibilityExtraLarge, .accessibilityExtraExtraLarge, .accessibilityExtraExtraExtraLarge:
+        return 16
+      case .accessibilityMedium, .accessibilityLarge, .extraExtraExtraLarge:
+        return 14
+      case .large, .extraLarge, .extraExtraLarge:
+        return 12
+      case .small, .medium:
+        return 10
+      case .extraSmall:
+        return 8
+      case .unspecified:
+        return 12
+      default:
+        return 12
+      }
+    }
   }
 }
 
@@ -43,16 +83,15 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   
   private lazy var titleLabel = Factory.Label.make(fromType: .mapAnnotationTitle(
     fontSize: Definitions.titleLabelFontSize,
-    width: Definitions.width - 2*Definitions.margin,
-    height: (Definitions.height - 2*Definitions.margin - Definitions.triangleHeight)/2,
-    yOffset: -Definitions.height/2
+    width: Definitions.labelWidth,
+    height: Definitions.labelHeight
   ))
   
+  private lazy var weatherConditionSymbolImageView = Factory.ImageView.make(fromType: .weatherConditionSymbol)
   private lazy var subtitleLabel = Factory.Label.make(fromType: .mapAnnotationSubtitle(
     fontSize: Definitions.subtitleLabelFontSize,
-    width: Definitions.width - 2*Definitions.margin,
-    height: (Definitions.height - 2*Definitions.margin - Definitions.triangleHeight)/2,
-    yOffset: -Definitions.height/2
+    width: Definitions.labelWidth - Definitions.weatherConditionSymbolImageViewWidthHeight - Definitions.margin,
+    height: Definitions.labelHeight
   ))
   
   private lazy var tapGestureRecognizer = UITapGestureRecognizer()
@@ -134,6 +173,8 @@ private extension WeatherMapAnnotationView {
     
     subtitleLabel.text = annotationModel.subtitle
     subtitleLabel.textColor = annotationModel.tintColor
+    
+    weatherConditionSymbolImageView.image = annotationModel.weatherConditionSymbol
   }
   
   func layoutUserInterface() {
@@ -144,13 +185,33 @@ private extension WeatherMapAnnotationView {
     circleLayer.bounds.origin = CGPoint(x: -frame.width/2 + Definitions.radius, y: -frame.height/2 + Definitions.radius)
     layer.addSublayer(circleLayer)
 
-    speechBubbleLayer.position = .zero
     layer.addSublayer(speechBubbleLayer)
-
-    titleLabel.center = CGPoint(x: frame.size.width/2, y: Definitions.margin - titleLabel.frame.size.height )
+    
+    // weather condition
+    weatherConditionSymbolImageView.frame = CGRect(
+      x: 0,
+      y: 0,
+      width: Definitions.weatherConditionSymbolImageViewWidthHeight,
+      height: Definitions.weatherConditionSymbolImageViewWidthHeight
+    )
+    weatherConditionSymbolImageView.center = CGPoint(
+      x: frame.size.width/2,
+      y: 3*Definitions.margin - 2*Definitions.labelHeight
+    )
+    addSubview(weatherConditionSymbolImageView)
+    
+    // title
+    titleLabel.center = CGPoint(
+      x: frame.size.width/2,
+      y: 3*Definitions.margin - Definitions.labelHeight
+    )
     addSubview(titleLabel)
-
-    subtitleLabel.center = CGPoint(x: frame.size.width/2, y: Definitions.margin - titleLabel.frame.size.height + titleLabel.frame.size.height)
+    
+    // subtitle
+    subtitleLabel.center = CGPoint(
+      x: frame.size.width/2,
+      y: 3*Definitions.margin
+    )
     addSubview(subtitleLabel)
     
     // add interaction components

@@ -112,7 +112,7 @@ private extension WeatherListInformationTableViewCellViewModel {
   static func createCellModelRelay(with dependencies: Dependencies) -> BehaviorRelay<WeatherListInformationTableViewCellModel> {
     BehaviorRelay<WeatherListInformationTableViewCellModel>(
       value: WeatherListInformationTableViewCellModel(
-        weatherConditionSymbol: nil, // start with default value
+        weatherConditionSymbolImage: nil, // start with default value
         placeName: dependencies.weatherStationName,
         temperature: nil, // start with default value
         cloudCoverage: nil, // start with default value

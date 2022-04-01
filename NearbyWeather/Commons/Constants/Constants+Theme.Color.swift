@@ -121,6 +121,35 @@ extension Constants.Theme.Color {
         UIColor.from(dark: .init(hex: 0x000000),
                      light: .init(hex: 0xFFFFFF))
       }
+      
+      static var white: UIColor {
+        UIColor.from(dark: .init(hex: 0xFFFFFF),
+                     light: .init(hex: 0xFFFFFF))
+      }
+      
+      static var gray: UIColor {
+        Constants.Theme.Color.SystemColor.gray
+      }
+      
+      static var blue: UIColor {
+        Constants.Theme.Color.SystemColor.blue
+      }
+      
+      static var cyan: UIColor {
+        Constants.Theme.Color.SystemColor.cyan
+      }
+      
+      static var red: UIColor {
+        Constants.Theme.Color.SystemColor.red
+      }
+      
+      static var yellow: UIColor {
+        Constants.Theme.Color.SystemColor.yellow
+      }
+      
+      static var purple: UIColor {
+        Constants.Theme.Color.SystemColor.purple
+      }
     }
     
     enum CellImage {
@@ -159,7 +188,7 @@ extension Constants.Theme.Color {
   enum SystemColor {
     
     static var blue: UIColor {
-      return UIColor.systemBlue
+      UIColor.systemBlue
     }
     
     static var green: UIColor {
@@ -190,6 +219,11 @@ extension Constants.Theme.Color {
     static var red: UIColor {
       UIColor.from(dark: .init(red: 255, green: 69, blue: 58),
                    light: .init(red: 255, green: 59, blue: 48))
+    }
+    
+    static var cyan: UIColor {
+      UIColor.from(dark: .init(red: 100, green: 210, blue: 255),
+                   light: .init(red: 50, green: 173, blue: 230))
     }
     
     static var teal: UIColor {

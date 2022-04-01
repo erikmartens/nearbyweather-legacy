@@ -10,7 +10,7 @@ import UIKit
 
 struct WeatherStationMeteorologyDetailsHeaderCellModel {
   
-  let weatherConditionSymbol: String?
+  let weatherConditionSymbolImage: UIImage?
   let weatherConditionTitle: String?
   let weatherConditionSubtitle: String?
   let temperature: String?
@@ -18,14 +18,14 @@ struct WeatherStationMeteorologyDetailsHeaderCellModel {
   let backgroundColor: UIColor
   
   init(
-    weatherConditionSymbol: String? = nil,
+    weatherConditionSymbolImage: UIImage? = nil,
     weatherConditionTitle: String? = nil,
     weatherConditionSubtitle: String? = nil,
     temperature: String? = nil,
     daytimeStatus: String? = nil,
     backgroundColor: UIColor = Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay
   ) {
-    self.weatherConditionSymbol = weatherConditionSymbol
+    self.weatherConditionSymbolImage = weatherConditionSymbolImage
     self.weatherConditionTitle = weatherConditionTitle
     self.weatherConditionSubtitle = weatherConditionSubtitle
     self.temperature = temperature
@@ -44,7 +44,7 @@ struct WeatherStationMeteorologyDetailsHeaderCellModel {
     let dayCycleStrings = MeteorologyInformationConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
     
     self.init(
-      weatherConditionSymbol: MeteorologyInformationConversionWorker.weatherConditionSymbol(
+      weatherConditionSymbolImage: MeteorologyInformationConversionWorker.weatherConditionSymbol(
         fromWeatherCode: weatherInformationDTO.weatherCondition.first?.identifier,
         isDayTime: isDayTime
       ),

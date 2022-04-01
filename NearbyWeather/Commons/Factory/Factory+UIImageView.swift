@@ -13,6 +13,7 @@ extension Factory {
   struct ImageView: FactoryFunction {
     
     enum ImageViewType {
+      case weatherConditionSymbol
       case symbol(systemImageName: String? = nil, tintColor: UIColor? = nil)
       case appIcon
       case cellPrefix
@@ -25,6 +26,10 @@ extension Factory {
       let imageView = UIImageView()
       
       switch type {
+      case .weatherConditionSymbol:
+        imageView.tintAdjustmentMode = .automatic
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.masksToBounds = true
       case let .symbol(systemImageName, tintColor):
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true

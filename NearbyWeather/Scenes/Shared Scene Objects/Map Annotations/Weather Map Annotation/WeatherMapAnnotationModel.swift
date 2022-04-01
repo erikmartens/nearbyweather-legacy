@@ -11,6 +11,7 @@ import MapKit
 struct WeatherMapAnnotationModel {
   let title: String?
   let subtitle: String?
+  let weatherConditionSymbol: UIImage?
   let isDayTime: Bool?
   let tintColor: UIColor?
   let backgroundColor: UIColor?
@@ -18,12 +19,14 @@ struct WeatherMapAnnotationModel {
   init(
     title: String? = nil,
     subtitle: String? = nil,
+    weatherConditionSymbol: UIImage? = nil,
     isDayTime: Bool? = false,
     tintColor: UIColor? = nil,
     backgroundColor: UIColor? = nil
   ) {
     self.title = title
     self.subtitle = subtitle
+    self.weatherConditionSymbol = weatherConditionSymbol
     self.isDayTime = isDayTime
     self.tintColor = tintColor
     self.backgroundColor = backgroundColor
@@ -36,7 +39,7 @@ struct WeatherMapAnnotationModel {
   ) {
     let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
     
-    var weatherConditionSymbol: String?
+    var weatherConditionSymbol: UIImage?
     if let weatherConditionIdentifier = weatherInformationDTO.weatherCondition.first?.identifier {
       weatherConditionSymbol = MeteorologyInformationConversionWorker.weatherConditionSymbol(
         fromWeatherCode: weatherConditionIdentifier,
@@ -52,15 +55,12 @@ struct WeatherMapAnnotationModel {
       )
     }
     
-    let subtitle: String? = String
-      .begin()
-      .append(contentsOf: weatherConditionSymbol, delimiter: .space)
-      .append(contentsOf: temperatureDescriptor, delimiter: .space)
-      .ifEmpty(justReturn: nil)
+    let subtitle = temperatureDescriptor
     
     self.init(
       title: weatherInformationDTO.stationName,
       subtitle: subtitle,
+      weatherConditionSymbol: weatherConditionSymbol,
       isDayTime: isDayTime,
       tintColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle,
       backgroundColor: isDayTime ? Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay : Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundNight

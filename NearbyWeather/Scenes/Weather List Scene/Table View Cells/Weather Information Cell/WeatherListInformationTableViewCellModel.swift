@@ -9,7 +9,7 @@
 import UIKit
 
 struct WeatherListInformationTableViewCellModel {
-  let weatherConditionSymbol: String?
+  let weatherConditionSymbolImage: UIImage?
   let placeName: String?
   let temperature: String?
   let cloudCoverage: String?
@@ -18,7 +18,7 @@ struct WeatherListInformationTableViewCellModel {
   let backgroundColor: UIColor?
   
   init(
-    weatherConditionSymbol: String? = nil,
+    weatherConditionSymbolImage: UIImage? = nil,
     placeName: String? =  nil,
     temperature: String? = nil,
     cloudCoverage: String? = nil,
@@ -26,7 +26,7 @@ struct WeatherListInformationTableViewCellModel {
     windspeed: String? = nil,
     backgroundColor: UIColor? = nil
   ) {
-    self.weatherConditionSymbol = weatherConditionSymbol
+    self.weatherConditionSymbolImage = weatherConditionSymbolImage
     self.placeName = placeName
     self.temperature = temperature
     self.cloudCoverage = cloudCoverage
@@ -44,7 +44,7 @@ struct WeatherListInformationTableViewCellModel {
     let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
     
     self.init(
-      weatherConditionSymbol: MeteorologyInformationConversionWorker.weatherConditionSymbol(
+      weatherConditionSymbolImage: MeteorologyInformationConversionWorker.weatherConditionSymbol(
         fromWeatherCode: weatherInformationDTO.weatherCondition.first?.identifier,
         isDayTime: isDayTime
       ),

@@ -35,7 +35,7 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
   
   private lazy var backgroundColorView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
   
-  private lazy var weatherConditionSymbolLabel = Factory.Label.make(fromType: .weatherSymbol)
+  private lazy var weatherConditionSymbolImageView = Factory.ImageView.make(fromType: .weatherConditionSymbol)
   private lazy var placeNameLabel = Factory.Label.make(fromType: .headline(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   
   private lazy var temperatureSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "thermometer"))
@@ -120,7 +120,7 @@ private extension WeatherListInformationTableViewCell {
 //    backgroundColorView.layer.insertSublayer(gradientLayer, at: 0)
     backgroundColorView.backgroundColor = cellModel.backgroundColor
     
-    weatherConditionSymbolLabel.text = cellModel.weatherConditionSymbol
+    weatherConditionSymbolImageView.image = cellModel.weatherConditionSymbolImage
     placeNameLabel.text = cellModel.placeName
     temperatureLabel.text = cellModel.temperature
     cloudCoverageLabel.text = cellModel.cloudCoverage
@@ -137,20 +137,20 @@ private extension WeatherListInformationTableViewCell {
       backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
     ])
     
-    contentView.addSubview(weatherConditionSymbolLabel, constraints: [
-      weatherConditionSymbolLabel.heightAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolHeight),
-      weatherConditionSymbolLabel.widthAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolHeight),
-      weatherConditionSymbolLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)*2),
-      weatherConditionSymbolLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)*2),
-      weatherConditionSymbolLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
-      weatherConditionSymbolLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+    contentView.addSubview(weatherConditionSymbolImageView, constraints: [
+      weatherConditionSymbolImageView.heightAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolHeight),
+      weatherConditionSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolHeight),
+      weatherConditionSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)*2),
+      weatherConditionSymbolImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)*2),
+      weatherConditionSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
+      weatherConditionSymbolImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
     
     // place name
     contentView.addSubview(placeNameLabel, constraints: [
       placeNameLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Definitions.placeNameLabelHeight),
       placeNameLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)*2),
-      placeNameLabel.leadingAnchor.constraint(equalTo: weatherConditionSymbolLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .extraLarge)),
+      placeNameLabel.leadingAnchor.constraint(equalTo: weatherConditionSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .extraLarge)),
       placeNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
     ])
     
@@ -158,7 +158,7 @@ private extension WeatherListInformationTableViewCell {
     contentView.addSubview(temperatureSymbolImageView, constraints: [
       temperatureSymbolImageView.heightAnchor.constraint(equalToConstant: Definitions.conditionDetailSymbolHeightWidth),
       temperatureSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.conditionDetailSymbolHeightWidth),
-      temperatureSymbolImageView.leadingAnchor.constraint(equalTo: weatherConditionSymbolLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .extraLarge)),
+      temperatureSymbolImageView.leadingAnchor.constraint(equalTo: weatherConditionSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .extraLarge)),
       temperatureSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: placeNameLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large))
     ])
     
@@ -195,7 +195,7 @@ private extension WeatherListInformationTableViewCell {
     contentView.addSubview(humiditySymbolImageView, constraints: [
       humiditySymbolImageView.heightAnchor.constraint(equalToConstant: Definitions.conditionDetailSymbolHeightWidth),
       humiditySymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.conditionDetailSymbolHeightWidth),
-      humiditySymbolImageView.leadingAnchor.constraint(equalTo: weatherConditionSymbolLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .extraLarge)),
+      humiditySymbolImageView.leadingAnchor.constraint(equalTo: weatherConditionSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .extraLarge)),
       humiditySymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: temperatureSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
       humiditySymbolImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .extraLarge)*2)
     ])

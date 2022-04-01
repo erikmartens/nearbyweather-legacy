@@ -14,6 +14,7 @@ extension Factory {
     
     enum ImageType {
       case cellSymbol(systemImageName: String?)
+      case weatherConditionSymbol(systemImageName: String?, colorPalette: [UIColor] = [])
     }
     
     typealias InputType = ImageType
@@ -31,6 +32,28 @@ extension Factory {
         )?
           .trimmingTransparentPixels()?
           .withRenderingMode(.alwaysTemplate) ?? UIImage()
+      case let .weatherConditionSymbol(systemImageName, colorPalette):
+        guard let systemImageName = systemImageName, !colorPalette.isEmpty else {
+          return UIImage()
+        }
+        let image: UIImage?
+        let imageConfiguration = UIImage.SymbolConfiguration(weight: .semibold).applying(UIImage.SymbolConfiguration(scale: .large))
+        
+        if colorPalette.count > 1 {
+          image = UIImage(
+            systemName: systemImageName,
+            withConfiguration: UIImage.SymbolConfiguration(paletteColors: colorPalette).applying(imageConfiguration)
+          )?
+            .withRenderingMode(.alwaysTemplate)
+        } else {
+          image = UIImage(
+            systemName: systemImageName,
+            withConfiguration: imageConfiguration
+          )?
+            .withTintColor(colorPalette[safe: 0] ?? Constants.Theme.Color.ViewElement.WeatherInformation.white, renderingMode: .alwaysOriginal)
+        }
+        
+        return image ?? UIImage()
       }
     }
   }

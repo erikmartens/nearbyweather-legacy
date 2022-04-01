@@ -98,53 +98,160 @@ final class MeteorologyInformationConversionWorker {
 
 extension MeteorologyInformationConversionWorker {
   
-  static func weatherConditionSymbol(fromWeatherCode code: Int?, isDayTime: Bool?) -> String { // swiftlint:disable:this cyclomatic_complexity
+  static func weatherConditionSymbol(fromWeatherCode code: Int?, isDayTime: Bool?) -> UIImage { // swiftlint:disable:this cyclomatic_complexity
+    typealias WeatherInformationColor = Constants.Theme.Color.ViewElement.WeatherInformation
+    let isDayTime = isDayTime ?? true
+    
+    let defaultImage = Factory.Image.make(fromType: .weatherConditionSymbol(
+      systemImageName: "questionmark",
+      colorPalette: [Constants.Theme.Color.SystemColor.red]
+    ))
+    
     guard let code = code else {
-      return "❓"
+      return defaultImage
     }
     switch code {
     case let x where (x >= 200 && x <= 202) || (x >= 230 && x <= 232):
-      return "⛈"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.bolt.rain.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.blue,
+          WeatherInformationColor.yellow
+        ]
+      ))
     case let x where x >= 210 && x <= 211:
-      return "🌩"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.bolt.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.yellow
+        ]
+      ))
     case let x where x >= 212 && x <= 221:
-      return "⚡️"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "bolt.fill",
+        colorPalette: [
+          WeatherInformationColor.yellow
+        ]
+      ))
     case let x where x >= 300 && x <= 321:
-      return "🌦"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: isDayTime ? "cloud.sun.rain.fill" : "cloud.moon.rain.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          isDayTime ? WeatherInformationColor.yellow : .purple,
+          WeatherInformationColor.blue
+        ]
+      ))
     case let x where x >= 500 && x <= 531:
-      return "🌧"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.drizzle.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.blue
+        ]
+      ))
     case let x where x >= 600 && x <= 602:
-      return "☃️"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "wind.snow",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
     case let x where x >= 603 && x <= 622:
-      return "🌨"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.snow.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
     case let x where x >= 701 && x <= 771:
-      return "🌫"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.fog.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.white.withAlphaComponent(0.5)
+        ]
+      ))
     case let x where x == 781 || x == 900:
-      return "🌪"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "tornado",
+        colorPalette: [
+          WeatherInformationColor.gray
+        ]
+      ))
     case let x where x == 800:
-      return (isDayTime ?? false) ? "☀️" : "🌕"
-    case let x where x == 801:
-      return "🌤"
-    case let x where x == 802:
-      return "⛅️"
-    case let x where x == 803:
-      return "🌥"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: isDayTime ? "sun.max.fill" : "moon.stars.fill",
+        colorPalette: [
+          isDayTime ? WeatherInformationColor.yellow : .purple
+        ]
+      ))
+    case let x where x >= 801 && x <= 803:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: isDayTime ? "cloud.sun.fill" : "cloud.moon.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          isDayTime ? WeatherInformationColor.yellow : .purple
+        ]
+      ))
     case let x where x == 804:
-      return "☁️"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.fill",
+        colorPalette: [
+          WeatherInformationColor.white
+        ]
+      ))
     case let x where x >= 952 && x <= 956 || x == 905:
-      return "🌬"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "wind",
+        colorPalette: [
+          WeatherInformationColor.white
+        ]
+      ))
     case let x where x >= 957 && x <= 961 || x == 771:
-      return "💨"
-    case let x where x == 901 || x == 902 || x == 962:
-      return "🌀"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "wind",
+        colorPalette: [
+          WeatherInformationColor.white
+        ]
+      ))
+    case let x where x == 901 || x == 902:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "hurricane",
+        colorPalette: [
+          WeatherInformationColor.white
+        ]
+      ))
     case let x where x == 903:
-      return "❄️"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "wind.snow",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
     case let x where x == 904:
-      return "🌡"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "thermometer.sun",
+        colorPalette: [
+          WeatherInformationColor.red,
+          WeatherInformationColor.yellow
+        ]
+      ))
     case let x where x == 962:
-      return "🌋"
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "flame.fill",
+        colorPalette: [
+          WeatherInformationColor.red,
+          WeatherInformationColor.yellow
+        ]
+      ))
     default:
-      return "❓"
+      return defaultImage
     }
   }
   
@@ -223,7 +330,31 @@ extension MeteorologyInformationConversionWorker {
   }
   
   static func windDirectionDescriptor(forWindDirection degrees: Double) -> String? {
-    numberFormatter.string(from: degrees)?.append(contentsOf: "°", delimiter: .none)
+    let baseString = numberFormatter.string(from: degrees)?.append(contentsOf: "°", delimiter: .none)
+    
+    let directionString: String?
+    switch degrees {
+    case let x where x >= 315 && x < 45:
+      directionString = "(N)"
+    case let x where x >= 45 && x < 90:
+      directionString = "(NE)"
+    case let x where x == 90:
+      directionString = "(E)"
+    case let x where x > 90 && x < 135:
+      directionString = "(SE)"
+    case let x where x >= 135 && x < 225:
+      directionString = "(S)"
+    case let x where x >= 225 && x < 270:
+      directionString = "(SW)"
+    case let x where x == 270:
+      directionString = "(W)"
+    case let x where x > 270 && x < 315:
+      directionString = "(N)"
+    default:
+      directionString = nil
+    }
+    
+    return baseString?.append(contentsOf: directionString, delimiter: .space)
   }
   
   static func coordinatesDescriptorFor(latitude lat: Double?, longitude lon: Double?) -> String? {

@@ -8,4 +8,4 @@
 
 import Foundation
 
-final class WeatherMapMapViewDelegate: BaseMapViewDelegate<WeatherMapAnnotationView> {}
+final class WeatherMapMapViewDelegate: BaseMapViewDelegate<WeatherStationMeteorologyInformationPreviewAnnotationView> {}

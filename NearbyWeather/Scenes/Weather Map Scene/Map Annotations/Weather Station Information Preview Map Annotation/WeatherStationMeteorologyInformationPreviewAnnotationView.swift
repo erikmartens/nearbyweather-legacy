@@ -11,7 +11,7 @@ import RxSwift
 
 // MARK: - Definitions
 
-private extension WeatherMapAnnotationView {
+private extension WeatherStationMeteorologyInformationPreviewAnnotationView {
   struct Definitions {
     static let margin: CGFloat = 4
     static let width: CGFloat = 110
@@ -66,9 +66,9 @@ private extension WeatherMapAnnotationView {
 
 // MARK: - Class Definition
 
-final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
+final class WeatherStationMeteorologyInformationPreviewAnnotationView: MKAnnotationView, BaseAnnotationView {
   
-  typealias AnnotationViewModel = WeatherMapAnnotationViewModel
+  typealias AnnotationViewModel = WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel
   
   // MARK: - UIComponents
   
@@ -129,7 +129,7 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
   }
   
   func configure(with annotationViewModel: BaseAnnotationViewModelProtocol?) {
-    guard let annotationViewModel = annotationViewModel as? WeatherMapAnnotationViewModel else {
+    guard let annotationViewModel = annotationViewModel as? WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel else {
       return
     }
     self.annotationViewModel = annotationViewModel
@@ -141,7 +141,7 @@ final class WeatherMapAnnotationView: MKAnnotationView, BaseAnnotationView {
 
 // MARK: - ViewModel Bindings
 
-extension WeatherMapAnnotationView {
+extension WeatherStationMeteorologyInformationPreviewAnnotationView {
   
   func bindContentFromViewModel(_ annotationViewModel: AnnotationViewModel) {
     annotationViewModel.annotationModelDriver
@@ -149,7 +149,7 @@ extension WeatherMapAnnotationView {
       .disposed(by: disposeBag)
   }
   
-  func bindUserInputToViewModel(_ annotationViewModel: WeatherMapAnnotationViewModel) {
+  func bindUserInputToViewModel(_ annotationViewModel: WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel) {
     tapGestureRecognizer.rx
       .event
       .bind { _ in annotationViewModel.onDidTapAnnotationView.onNext(()) }
@@ -159,9 +159,9 @@ extension WeatherMapAnnotationView {
 
 // MARK: - Annotation Composition
 
-private extension WeatherMapAnnotationView {
+private extension WeatherStationMeteorologyInformationPreviewAnnotationView {
   
-  func setContent(for annotationModel: WeatherMapAnnotationModel) {
+  func setContent(for annotationModel: WeatherStationMeteorologyInformationPreviewAnnotationModel) {
     circleLayer.fillColor = annotationModel.backgroundColor?.cgColor
     circleLayer.strokeColor = annotationModel.tintColor?.cgColor
     

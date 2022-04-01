@@ -12,7 +12,7 @@ import RxCocoa
 
 // MARK: - Dependencies
 
-extension WeatherMapAnnotationViewModel {
+extension WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel {
   struct Dependencies {
     let weatherInformationIdentity: PersistencyModelIdentity
     let coordinate: CLLocationCoordinate2D
@@ -25,7 +25,7 @@ extension WeatherMapAnnotationViewModel {
 
 // MARK: - Class Definition
 
-final class WeatherMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
+final class WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel: NSObject, BaseAnnotationViewModel { // swiftlint:disable:this type_name
   
   // MARK: - Public Access
   
@@ -51,7 +51,7 @@ final class WeatherMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
   
   // MARK: - Drivers
   
-  lazy var annotationModelDriver: Driver<WeatherMapAnnotationModel> = { [dependencies] in
+  lazy var annotationModelDriver: Driver<WeatherStationMeteorologyInformationPreviewAnnotationModel> = { [dependencies] in
     Self.createDataSourceObserver(with: dependencies)
   }()
 
@@ -71,7 +71,7 @@ final class WeatherMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
 
 // MARK: - Observations
 
-extension WeatherMapAnnotationViewModel {
+extension WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel {
   
   func observeUserTapEvents() {
     onDidTapAnnotationView
@@ -84,9 +84,9 @@ extension WeatherMapAnnotationViewModel {
 
 // MARK: - Observation Helpers
 
-private extension WeatherMapAnnotationViewModel {
+private extension WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel {
   
-  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherMapAnnotationModel> {
+  static func createDataSourceObserver(with dependencies: Dependencies) -> Driver<WeatherStationMeteorologyInformationPreviewAnnotationModel> {
     let weatherStationIsBookmarkedObservable = Self.createGetWeatherStationIsBookmarkedObservable(with: dependencies).share(replay: 1)
     
     let weatherInformationDtoObservable = Observable
@@ -102,15 +102,15 @@ private extension WeatherMapAnnotationViewModel {
         weatherInformationDtoObservable,
         dependencies.preferencesService.createGetTemperatureUnitOptionObservable(),
         weatherStationIsBookmarkedObservable,
-        resultSelector: { weatherInformationModel, temperatureUnitOption, isBookmark -> WeatherMapAnnotationModel in
-          WeatherMapAnnotationModel(
+        resultSelector: { weatherInformationModel, temperatureUnitOption, isBookmark -> WeatherStationMeteorologyInformationPreviewAnnotationModel in
+          WeatherStationMeteorologyInformationPreviewAnnotationModel(
             weatherInformationDTO: weatherInformationModel,
             temperatureUnitOption: temperatureUnitOption,
             isBookmark: isBookmark
           )
         }
       )
-      .asDriver(onErrorJustReturn: WeatherMapAnnotationModel())
+      .asDriver(onErrorJustReturn: WeatherStationMeteorologyInformationPreviewAnnotationModel())
   }
   
   static func createGetWeatherStationIsBookmarkedObservable(with dependencies: Dependencies) -> Observable<Bool> {

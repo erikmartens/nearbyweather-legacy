@@ -109,7 +109,7 @@ extension SettingsViewModel {
     let openWeatherMapApiSectionItems: [BaseCellViewModelProtocol] = [
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
         symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundGreen,
-        symbolImageName: "antenna.radiowaves.left.and.right",
+        symbolImageName: "checkmark.seal.fill",
         labelText: R.string.localizable.apiKey(),
         selectable: true,
         disclosable: true,

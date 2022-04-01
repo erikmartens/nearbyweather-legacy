@@ -82,7 +82,7 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
     self.dependencies = dependencies
     super.init()
     
-    mapDelegate = WeatherMapMapViewDelegate(annotationSelectionDelegate: self, annotationViewType: WeatherMapAnnotationView.self)
+    mapDelegate = WeatherMapMapViewDelegate(annotationSelectionDelegate: self, annotationViewType: WeatherStationMeteorologyInformationPreviewAnnotationView.self)
   }
   
   deinit {
@@ -160,14 +160,14 @@ extension WeatherMapViewModel {
           
           mutableNearbyAnnotations.removeAll { nearbyAnnotation -> Bool in
             bookmarkedAnnotations.contains { bookmarkedAnnotation -> Bool in
-              let nearbyIdentifier = (nearbyAnnotation as? WeatherMapAnnotationViewModel)?.weatherInformationIdentity.identifier
-              let bookmarkedIdentifier = (bookmarkedAnnotation as? WeatherMapAnnotationViewModel)?.weatherInformationIdentity.identifier
+              let nearbyIdentifier = (nearbyAnnotation as? WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel)?.weatherInformationIdentity.identifier
+              let bookmarkedIdentifier = (bookmarkedAnnotation as? WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel)?.weatherInformationIdentity.identifier
               return nearbyIdentifier == bookmarkedIdentifier
             }
           }
           
           return WeatherMapAnnotationData(
-            annotationViewReuseIdentifier: WeatherMapAnnotationView.reuseIdentifier,
+            annotationViewReuseIdentifier: WeatherStationMeteorologyInformationPreviewAnnotationView.reuseIdentifier,
             annotationItems: mutableNearbyAnnotations + bookmarkedAnnotations
           )
         }
@@ -202,7 +202,7 @@ extension WeatherMapViewModel {
 extension WeatherMapViewModel: BaseMapViewSelectionDelegate {
   
   func didSelectView(for annotationViewModel: BaseAnnotationViewModelProtocol) {
-    guard let annotationViewModel = annotationViewModel as? WeatherMapAnnotationViewModel else {
+    guard let annotationViewModel = annotationViewModel as? WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel else {
       return
     }
     _ = Observable
@@ -241,5 +241,35 @@ extension WeatherMapViewModel: AmountOfResultsSelectionAlertDelegate {
     _ = dependencies.preferencesService
       .createSetAmountOfNearbyResultsOptionCompletable(selectedOption)
       .subscribe()
+  }
+}
+
+// MARK: - Private Helper Extensions
+
+private extension Array where Element == PersistencyModelThreadSafe<WeatherInformationDTO> {
+  
+  func mapToWeatherMapAnnotationViewModel(
+    weatherStationService: WeatherStationBookmarkReading,
+    weatherInformationService: WeatherInformationReading,
+    preferencesService: WeatherMapPreferenceReading,
+    selectionDelegate: BaseMapViewSelectionDelegate?
+  ) -> [BaseAnnotationViewModelProtocol] {
+    compactMap { weatherInformationPersistencyModel -> WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel? in
+      guard let latitude = weatherInformationPersistencyModel.entity.coordinates.latitude,
+            let longitude = weatherInformationPersistencyModel.entity.coordinates.longitude else {
+        return nil
+      }
+      return WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel(dependencies: WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel.Dependencies(
+        weatherInformationIdentity: weatherInformationPersistencyModel.identity,
+        coordinate: CLLocationCoordinate2D(
+          latitude: latitude,
+          longitude: longitude
+        ),
+        weatherStationService: weatherStationService,
+        weatherInformationService: weatherInformationService,
+        preferencesService: preferencesService,
+        annotationSelectionDelegate: selectionDelegate
+      ))
+    }
   }
 }

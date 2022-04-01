@@ -57,7 +57,7 @@ class BaseMapViewDelegate<AnnotationViewType: BaseAnnotationViewProtocol>: NSObj
   
   func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
     views.forEach { view in
-      if let weatherAnnotationView = view as? WeatherMapAnnotationView {
+      if let weatherAnnotationView = view as? WeatherStationMeteorologyInformationPreviewAnnotationView {
         weatherAnnotationView.zPriority = MKAnnotationViewZPriority(0)
       } else {
         view.zPriority = MKAnnotationViewZPriority(1)

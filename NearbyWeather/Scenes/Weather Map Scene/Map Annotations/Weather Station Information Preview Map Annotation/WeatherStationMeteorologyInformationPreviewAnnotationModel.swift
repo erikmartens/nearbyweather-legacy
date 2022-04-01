@@ -8,7 +8,7 @@
 
 import MapKit
 
-struct WeatherMapAnnotationModel {
+struct WeatherStationMeteorologyInformationPreviewAnnotationModel {
   let title: String?
   let subtitle: String?
   let weatherConditionSymbol: UIImage?

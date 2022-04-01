@@ -78,7 +78,7 @@ final class WeatherStationMeteorologyDetailsMapCellViewModel: NSObject, BaseCell
     self.dependencies = dependencies
     super.init()
     
-    mapDelegate = WeatherStationMeteorologyDetailsMapCellMapViewDelegate(annotationSelectionDelegate: self, annotationViewType: WeatherMapAnnotationView.self)
+    mapDelegate = WeatherStationMeteorologyDetailsMapCellMapViewDelegate(annotationSelectionDelegate: self, annotationViewType: WeatherStationLocationAnnotationView.self)
   }
   
   // MARK: - Functions
@@ -95,17 +95,10 @@ extension WeatherStationMeteorologyDetailsMapCellViewModel {
   
   func observeDataSource() {
     weatherInformationDtoObservable
-      .map { [dependencies] weatherInformationDTO in
-        [weatherInformationDTO].mapToWeatherMapAnnotationViewModel(
-          weatherStationService: dependencies.weatherStationService,
-          weatherInformationService: dependencies.weatherInformationService,
-          preferencesService: dependencies.preferencesService,
-          selectionDelegate: nil
-        )
-      }
+      .map { weatherInformationDTO in [weatherInformationDTO].mapToWeatherStationLocationMapAnnotationViewModel() }
       .map {
         WeatherMapAnnotationData(
-          annotationViewReuseIdentifier: WeatherMapAnnotationView.reuseIdentifier,
+          annotationViewReuseIdentifier: WeatherStationLocationAnnotationView.reuseIdentifier,
           annotationItems: $0
         )
       }
@@ -157,5 +150,22 @@ private extension WeatherStationMeteorologyDetailsMapCellViewModel {
     let distanceInMetres = currentLocation.distance(from: weatherStationlocation)
     
     return MeteorologyInformationConversionWorker.distanceDescriptor(forDistanceSpeedUnit: preferredDimensionalUnitsOption, forDistanceInMetres: distanceInMetres)
+  }
+}
+
+private extension Array where Element == PersistencyModelThreadSafe<WeatherInformationDTO> {
+  
+  func mapToWeatherStationLocationMapAnnotationViewModel() -> [BaseAnnotationViewModelProtocol] {
+    compactMap { weatherInformationPersistencyModel -> WeatherStationLocationMapAnnotationViewModel? in
+      guard let latitude = weatherInformationPersistencyModel.entity.coordinates.latitude,
+            let longitude = weatherInformationPersistencyModel.entity.coordinates.longitude else {
+        return nil
+      }
+      return WeatherStationLocationMapAnnotationViewModel(dependencies: WeatherStationLocationMapAnnotationViewModel.Dependencies(
+        coordinate: CLLocationCoordinate2D(
+          latitude: latitude,
+          longitude: longitude
+        )))
+    }
   }
 }

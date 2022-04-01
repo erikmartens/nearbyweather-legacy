@@ -135,18 +135,23 @@ extension Constants.Theme.Color {
       }
       
       static var backgroundGreen: UIColor {
-        UIColor.from(dark: .init(red: 48, green: 209, blue: 88),
-                     light: .init(red: 52, green: 199, blue: 89))
+        Constants.Theme.Color.SystemColor.green
       }
       
       static var backgroundRed: UIColor {
-        UIColor.from(dark: .init(red: 255, green: 69, blue: 58),
-                     light: .init(red: 255, green: 59, blue: 48))
+        Constants.Theme.Color.SystemColor.red
+      }
+      
+      static var backgroundAmber: UIColor {
+        Constants.Theme.Color.SystemColor.orange
+      }
+      
+      static var backgroundYellow: UIColor {
+        Constants.Theme.Color.SystemColor.yellow
       }
       
       static var backgroundGray: UIColor {
-        UIColor.from(dark: .init(red: 142, green: 142, blue: 147),
-                     light: .init(red: 142, green: 142, blue: 147))
+        Constants.Theme.Color.SystemColor.gray
       }
     }
   }

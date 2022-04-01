@@ -116,7 +116,7 @@ extension SettingsViewModel {
         routingIntent: SettingsStep.apiKeyEdit
       )),
       SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
-        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundGreen,
+        symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundYellow,
         symbolImageName: "lightbulb.fill",
         labelText: R.string.localizable.get_started_with_openweathermap(),
         selectable: true,

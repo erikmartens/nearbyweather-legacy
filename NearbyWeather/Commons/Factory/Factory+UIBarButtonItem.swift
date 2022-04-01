@@ -54,11 +54,14 @@ extension Factory {
           imageConfig = imageConfig.applying(colorConfig)
           
           imageView = UIImageView(frame: frame)
+          imageView.contentMode = .scaleAspectFit
           imageView.image = UIImage(systemName: imageName, withConfiguration: colorConfig)?
             .withRenderingMode(.alwaysTemplate)
         } else {
-          imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+          imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
+          imageView.contentMode = .scaleAspectFit
           imageView.image = UIImage(systemName: imageName, withConfiguration: imageConfig)?
+            .trimmingTransparentPixels()?
             .withTintColor(paletteColors[safe: 0] ?? Constants.Theme.Color.MarqueColors.standardMarque, renderingMode: .alwaysOriginal)
         }
         

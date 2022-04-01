@@ -21,7 +21,10 @@ final class WeatherMapViewController: UIViewController, BaseViewController {
   fileprivate lazy var mapView = Factory.MapView.make(fromType: .standard(frame: view.frame))
   
   fileprivate lazy var mapTypeBarButton = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(imageName: "globe"))
-  fileprivate lazy var focusOnLocationBarButton = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(imageName: "location.fill"))
+  fileprivate lazy var focusOnLocationBarButton = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(
+    imageName: "location.circle.fill",
+    paletteColors: [Constants.Theme.Color.MarqueColors.standardMarque, .clear]
+  ))
   
   fileprivate lazy var amountOfResultsBarButton10 = Factory.BarButtonItem.make(fromType: .systemImageWithCircle(
     imageName: "10.circle.fill",

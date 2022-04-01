@@ -38,7 +38,7 @@ final class SettingsFlow: Flow {
   
   private lazy var rootViewController = Factory.NavigationController.make(fromType: .standardTabbed(
     tabTitle: R.string.localizable.tab_settings(),
-    tabImage: R.image.tabbar_settings_ios11()
+    systemImageName: "gear"
   ))
   
   // MARK: - Properties

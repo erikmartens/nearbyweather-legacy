@@ -14,7 +14,7 @@ extension Factory {
     
     enum NavigationControllerType {
       case standard
-      case standardTabbed(tabTitle: String? = nil, tabImage: UIImage? = nil)
+      case standardTabbed(tabTitle: String? = nil, systemImageName: String? = nil)
     }
     
     typealias InputType = NavigationControllerType
@@ -38,8 +38,20 @@ extension Factory {
       switch type {
       case .standard:
         break
-      case let .standardTabbed(tabTitle, tabImage):
+      case let .standardTabbed(tabTitle, systemImageName):
         navigationController.tabBarItem.title = tabTitle
+        
+        let tabImage: UIImage
+        if let systemImageName = systemImageName {
+          tabImage = UIImage(
+            systemName: systemImageName,
+            withConfiguration: UIImage.SymbolConfiguration(weight: .semibold).applying(UIImage.SymbolConfiguration(scale: .large))
+          )?
+            .trimmingTransparentPixels()?
+            .withRenderingMode(.alwaysTemplate) ?? UIImage()
+        } else {
+          tabImage = UIImage()
+        }
         navigationController.tabBarItem.image = tabImage
       }
       

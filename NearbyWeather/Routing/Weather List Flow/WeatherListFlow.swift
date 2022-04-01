@@ -30,7 +30,7 @@ final class WeatherListFlow: Flow {
   
   private lazy var rootViewController = Factory.NavigationController.make(fromType: .standardTabbed(
     tabTitle: R.string.localizable.tab_weatherList(),
-    tabImage: R.image.tabbar_list_ios11()
+    systemImageName: "text.justify"
   ))
   
   // MARK: - Properties

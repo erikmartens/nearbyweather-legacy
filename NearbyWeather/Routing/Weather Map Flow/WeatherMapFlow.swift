@@ -30,7 +30,7 @@ final class WeatherMapFlow: Flow {
   
   private lazy var rootViewController = Factory.NavigationController.make(fromType: .standardTabbed(
     tabTitle: R.string.localizable.tab_weatherMap(),
-    tabImage: R.image.tabbar_map_ios11()
+    systemImageName: "map.fill"
   ))
   
   // MARK: - Properties

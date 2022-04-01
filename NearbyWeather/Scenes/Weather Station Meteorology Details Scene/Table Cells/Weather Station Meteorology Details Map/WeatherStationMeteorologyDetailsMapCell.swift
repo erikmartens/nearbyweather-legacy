@@ -36,11 +36,11 @@ final class WeatherStationMeteorologyDetailsMapCell: UITableViewCell, BaseCell {
     isUserInteractionEnabled: false
   ))
   
-  private lazy var coordinatesSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.location()))
+  private lazy var coordinatesSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "mappin.and.ellipse"))
   private lazy var coordinatesDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.coordinates(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   private lazy var coordinatesLabel = Factory.Label.make(fromType: .subtitle(alignment: .right, isCopyable: true))
   
-  private lazy var distanceSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.distance()))
+  private lazy var distanceSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "ruler"))
   private lazy var distanceDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.distance(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   private lazy var distanceLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   

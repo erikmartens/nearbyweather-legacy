@@ -10,7 +10,7 @@ import UIKit
 
 struct WeatherListAlertTableViewCellModel {
   let backgroundColor = Constants.Theme.Color.ViewElement.alert
-  let alertImage = R.image.exclamationMark()
+  let alertImage = UIImage() // TODO: fix (prolly gets deleted anyway, when rebuilding the cell)
   let alertImageTintColor = Constants.Theme.Color.ViewElement.Label.titleLight
   let alertInformationText: String?
   let alertInformationTextColor = Constants.Theme.Color.ViewElement.Label.titleLight

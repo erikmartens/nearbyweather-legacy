@@ -39,7 +39,7 @@ final class FocusOnLocationSelectionAlert {
   
   fileprivate lazy var focusOnUserLocationAction = Factory.AlertAction.make(fromType: .image(
     title: R.string.localizable.current_location(),
-    image: R.image.location(),
+    systemImageName: "location.fill",
     handler: { [dependencies] _ in
       dependencies.selectionDelegate?.didSelectFocusOnLocationOption(FocusOnLocationOption.userLocation)
     }
@@ -83,7 +83,7 @@ private extension Array where Element == WeatherStationDTO {
     compactMap { weatherStationDTO -> UIAlertAction? in
       Factory.AlertAction.make(fromType: .image(
         title: weatherStationDTO.name,
-        image: R.image.locateFavoriteActiveIcon(),
+        systemImageName: "bookmark.fill",
         handler: { [dependencies] _ in
           dependencies.selectionDelegate?.didSelectFocusOnLocationOption(FocusOnLocationOption.weatherStation(
             location: CLLocation(latitude: weatherStationDTO.coordinates.latitude, longitude: weatherStationDTO.coordinates.longitude)

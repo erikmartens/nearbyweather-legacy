@@ -38,14 +38,16 @@ final class WeatherListInformationTableViewCell: UITableViewCell, BaseCell {
   private lazy var weatherConditionSymbolLabel = Factory.Label.make(fromType: .weatherSymbol)
   private lazy var placeNameLabel = Factory.Label.make(fromType: .headline(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   
-  private lazy var temperatureSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.temperature(), tintColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
+  private lazy var temperatureSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "thermometer"))
   private lazy var temperatureLabel = Factory.Label.make(fromType: .subtitle(numberOfLines: 1, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
-  private lazy var cloudCoverageSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.cloudCoverFilled(), tintColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
+  
+  private lazy var cloudCoverageSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "cloud"))
   private lazy var cloudCoverageLabel = Factory.Label.make(fromType: .subtitle(numberOfLines: 1, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   
-  private lazy var humiditySymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.humidity(), tintColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
+  private lazy var humiditySymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "humidity"))
   private lazy var humidityLabel = Factory.Label.make(fromType: .subtitle(numberOfLines: 1, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
-  private lazy var windspeedSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.windSpeed(), tintColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
+  
+  private lazy var windspeedSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "wind"))
   private lazy var windspeedLabel = Factory.Label.make(fromType: .subtitle(numberOfLines: 1, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   
   // MARK: - Assets

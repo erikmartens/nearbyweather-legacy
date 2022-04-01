@@ -29,7 +29,7 @@ final class WeatherListErrorViewController: UIViewController, BaseViewController
   fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(alignment: .center, distribution: .equalSpacing, spacingWeight: .custom(value: Definitions.mainStackViewInterElementYSpacing)))
   fileprivate lazy var textStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .medium))
   
-  fileprivate lazy var imageView = Factory.ImageView.make(fromType: .symbol(image: R.image.sadCloud()))
+  fileprivate lazy var imageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "exclamationmark.bubble")) // TODO: check size
   fileprivate lazy var titleLabel = Factory.Label.make(fromType: .title(text: nil, alignment: .center, numberOfLines: 0))
   fileprivate lazy var descriptionLabel = Factory.Label.make(fromType: .subtitle(text: nil, alignment: .center, numberOfLines: 0))
   

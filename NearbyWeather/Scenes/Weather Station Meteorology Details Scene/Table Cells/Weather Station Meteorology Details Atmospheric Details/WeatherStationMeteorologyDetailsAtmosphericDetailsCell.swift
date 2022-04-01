@@ -27,15 +27,15 @@ final class WeatherStationMeteorologyDetailsAtmosphericDetailsCell: UITableViewC
   
   // MARK: - UIComponents
   
-  private lazy var cloudCoverageSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.cloudCover()))
+  private lazy var cloudCoverageSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "cloud"))
   private lazy var cloudCoverageDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.cloud_coverage(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   private lazy var cloudCoverageLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   
-  private lazy var humiditySymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.humidity()))
+  private lazy var humiditySymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "humidity"))
   private lazy var humidityDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.humidity(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   private lazy var humidityLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   
-  private lazy var airPressureSymbolImageView = Factory.ImageView.make(fromType: .symbol(image: R.image.airPressure()))
+  private lazy var airPressureSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "gauge"))
   private lazy var airPressureDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.air_pressure(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   private lazy var airPressureLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   

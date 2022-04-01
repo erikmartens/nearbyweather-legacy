@@ -10,20 +10,20 @@ import UIKit
 
 struct SettingsImagedSingleLabelCellModel {
   let symbolImageBackgroundColor: UIColor?
-  let symbolImage: UIImage?
+  let symbolImageName: String?
   let labelText: String?
   let isSelectable: Bool?
   let isDisclosable: Bool?
   
   init(
     symbolImageBackgroundColor: UIColor? = nil,
-    symbolImage: UIImage? = nil,
+    symbolImageName: String? = nil,
     labelText: String? = nil,
     selectable: Bool? = nil,
     disclosable: Bool? = nil
   ) {
     self.symbolImageBackgroundColor = symbolImageBackgroundColor
-    self.symbolImage = symbolImage
+    self.symbolImageName = symbolImageName
     self.labelText = labelText
     self.isSelectable = selectable
     self.isDisclosable = disclosable

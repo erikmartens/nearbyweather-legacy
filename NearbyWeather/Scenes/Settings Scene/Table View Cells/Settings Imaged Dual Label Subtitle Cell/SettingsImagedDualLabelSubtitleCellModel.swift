@@ -10,7 +10,7 @@ import UIKit
 
 struct SettingsImagedDualLabelSubtitleCellModel {
   let symbolImageBackgroundColor: UIColor?
-  let symbolImage: UIImage?
+  let symbolImageName: String?
   let contentLabelText: String?
   let descriptionLabelText: String?
   let isSelectable: Bool?
@@ -18,14 +18,14 @@ struct SettingsImagedDualLabelSubtitleCellModel {
   
   init(
     symbolImageBackgroundColor: UIColor? = nil,
-    symbolImage: UIImage? = nil,
+    symbolImageName: String? = nil,
     contentLabelText: String? = nil,
     descriptionLabelText: String? = nil,
     selectable: Bool? = nil,
     disclosable: Bool? = nil
   ) {
     self.symbolImageBackgroundColor = symbolImageBackgroundColor
-    self.symbolImage = symbolImage
+    self.symbolImageName = symbolImageName
     self.contentLabelText = contentLabelText
     self.descriptionLabelText = descriptionLabelText
     self.isSelectable = selectable

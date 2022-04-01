@@ -67,6 +67,11 @@ extension Constants.Theme.Color {
                    light: .init(hex: 0x000000))
     }
     
+    static var cellPrefixSymbolImage: UIColor {
+      UIColor.from(dark: .init(hex: 0xFFFFFF),
+                   light: .init(hex: 0xFFFFFF))
+    }
+    
     enum Label {
       
       static var titleLight: UIColor {

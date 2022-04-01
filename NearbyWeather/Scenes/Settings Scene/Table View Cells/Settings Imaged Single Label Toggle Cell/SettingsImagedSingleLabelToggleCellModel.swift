@@ -10,18 +10,18 @@ import UIKit
 
 struct SettingsImagedSingleLabelToggleCellModel {
   let symbolImageBackgroundColor: UIColor?
-  let symbolImage: UIImage?
+  let symbolImageName: String?
   let labelText: String?
   let isToggleOn: Bool?
   
   init(
     symbolImageBackgroundColor: UIColor? = nil,
-    symbolImage: UIImage? = nil,
+    symbolImageName: String? = nil,
     labelText: String? = nil,
     isToggleOn: Bool? = nil
   ) {
     self.symbolImageBackgroundColor = symbolImageBackgroundColor
-    self.symbolImage = symbolImage
+    self.symbolImageName = symbolImageName
     self.labelText = labelText
     self.isToggleOn = isToggleOn
   }

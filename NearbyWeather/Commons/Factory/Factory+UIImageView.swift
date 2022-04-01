@@ -35,9 +35,8 @@ extension Factory {
         imageView.layer.cornerRadius = Constants.Dimensions.AppIconImage.cornerRadius
         imageView.layer.masksToBounds = true
       case .cellPrefix:
-        imageView.tintColor = .white
+        imageView.tintColor = Constants.Theme.Color.ViewElement.cellPrefixSymbolImage
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = Constants.Dimensions.TableCellImage.cornerRadius
         imageView.layer.masksToBounds = true
       }
       

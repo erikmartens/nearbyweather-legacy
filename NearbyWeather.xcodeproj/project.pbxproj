@@ -207,6 +207,8 @@
 		F29912D327F1F04700BE0D59 /* MigrationCompletedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912D227F1F04700BE0D59 /* MigrationCompletedModel.swift */; };
 		F29912D627F1F4F100BE0D59 /* SetupCompletedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912D527F1F4F100BE0D59 /* SetupCompletedModel.swift */; };
 		F29912D827F4E86500BE0D59 /* Factory+UITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912D727F4E86500BE0D59 /* Factory+UITabBarController.swift */; };
+		F29912DA27F6EC8800BE0D59 /* Factory+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912D927F6EC8800BE0D59 /* Factory+UIImage.swift */; };
+		F29912DC27F6F6B300BE0D59 /* UIImage+CropWhiteSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912DB27F6F6B300BE0D59 /* UIImage+CropWhiteSpace.swift */; };
 		F2A5CAA62005762A0071BFFB /* MeteorologyInformationConversionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */; };
 		F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */; };
 		F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */; };
@@ -523,6 +525,8 @@
 		F29912D227F1F04700BE0D59 /* MigrationCompletedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationCompletedModel.swift; sourceTree = "<group>"; };
 		F29912D527F1F4F100BE0D59 /* SetupCompletedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompletedModel.swift; sourceTree = "<group>"; };
 		F29912D727F4E86500BE0D59 /* Factory+UITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UITabBarController.swift"; sourceTree = "<group>"; };
+		F29912D927F6EC8800BE0D59 /* Factory+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+UIImage.swift"; sourceTree = "<group>"; };
+		F29912DB27F6F6B300BE0D59 /* UIImage+CropWhiteSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CropWhiteSpace.swift"; sourceTree = "<group>"; };
 		F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorologyInformationConversionWorker.swift; sourceTree = "<group>"; };
 		F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -1403,6 +1407,7 @@
 				F2D1994425A1EED1004C7753 /* Factory+UIBarButtonItem.swift */,
 				F28EE8C825AB91530045AE6A /* Factory+UIBezierPath.swift */,
 				F2F1554A2443C438007A3E90 /* Factory+UIButton.swift */,
+				F29912D927F6EC8800BE0D59 /* Factory+UIImage.swift */,
 				F237285C2444A9AD00964C49 /* Factory+UIImageView.swift */,
 				F237285E2444AA5600964C49 /* Factory+UILabel.swift */,
 				F237288D244C93BD00964C49 /* Factory+UINavigationController.swift */,
@@ -1429,14 +1434,15 @@
 				F217CB5B27D3B04700DAC947 /* MKMapView+Focus.swift */,
 				F2F1553F24432A5D007A3E90 /* String+AppendWithDelimiter.swift */,
 				F2060E6327BC3A5E0066DC8C /* UIButton+Extensions.swift */,
+				F2BDACFF27E68A8E00FF6401 /* UIColor+Adjust.swift */,
 				F2DBEB3123F03A9800CD513B /* UIColor+SemanticInitializer.swift */,
+				F29912DB27F6F6B300BE0D59 /* UIImage+CropWhiteSpace.swift */,
 				F260C4421F9D4883000D2BC0 /* UINavigationController+Extensions.swift */,
 				F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */,
 				F22A222C25A4C17200C97844 /* UIStackView+AddArrangedSubview.swift */,
 				F2F1554C2443C842007A3E90 /* UIView+AddSubview.swift */,
 				F28CE9691F9AA829008319C4 /* UIView+Extensions.swift */,
 				F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */,
-				F2BDACFF27E68A8E00FF6401 /* UIColor+Adjust.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2014,6 +2020,7 @@
 				F217CBEB27DBB21800DAC947 /* SettingsTextEntryCellViewModel.swift in Sources */,
 				F2F7BA2123E37A9C00B4D2EB /* Constants+Values.swift in Sources */,
 				F217CBEF27DBB23F00DAC947 /* SettingsTextEntryCell.swift in Sources */,
+				F29912DA27F6EC8800BE0D59 /* Factory+UIImage.swift in Sources */,
 				F2DB5E7B25AB510600E21A56 /* MapAnnotationData.swift in Sources */,
 				F217CB8C27D75BBE00DAC947 /* ShowTemperatureOnAppIconOption.swift in Sources */,
 				F213FA3723F9EF6E00F094D8 /* DimensionalUnitOption.swift in Sources */,
@@ -2050,6 +2057,7 @@
 				F2D1991025A10DBA004C7753 /* TableViewSectionDataProtocol.swift in Sources */,
 				F26A6D5E20FB6E610033BC49 /* R.generated.swift in Sources */,
 				F2DBEB2E23F0386B00CD513B /* Factory.swift in Sources */,
+				F29912DC27F6F6B300BE0D59 /* UIImage+CropWhiteSpace.swift in Sources */,
 				F217CBAE27DB638D00DAC947 /* AboutAppContributingItemsSection.swift in Sources */,
 				F204B77B1DF2EFA3000F4371 /* AppDelegate.swift in Sources */,
 				F217CBE427DBB12400DAC947 /* ApiKeyInputTableViewDataSource.swift in Sources */,

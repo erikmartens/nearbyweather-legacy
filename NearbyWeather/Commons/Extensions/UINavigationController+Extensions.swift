@@ -12,7 +12,7 @@ extension UIViewController {
   
   func addCloseButton(atPosition position: UIBarButtonItem.Position = .left, touchupInsideHandler handler: @escaping (() -> Void)) {
     let closeButton = UIBarButtonItem(
-      image: R.image.verticalCloseButton()?.withRenderingMode(.alwaysTemplate),
+      image: UIImage(systemName: "chevron.down", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))?.withTintColor(Constants.Theme.Color.MarqueColors.standardMarque, renderingMode: .alwaysOriginal),
       style: .plain
     ) { [unowned self] _ in
       self.view.endEditing(true)

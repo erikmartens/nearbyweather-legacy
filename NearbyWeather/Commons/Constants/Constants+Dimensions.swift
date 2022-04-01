@@ -34,9 +34,13 @@ extension Constants.Dimensions {
   
   enum TableCellImage {
     /// constant: 28
-    static let width: CGFloat = 28
+    static let backgroundWidth: CGFloat = 29
     /// constant: 28
-    static let height: CGFloat = 28
+    static let backgroundHeight: CGFloat = 29
+    /// constant: 20
+    static let foregroundWidth: CGFloat = 19
+    /// constant: 28
+    static let foregroundHeight: CGFloat = 19
     /// constant: 4
     static let cornerRadius: CGFloat = 4
   }

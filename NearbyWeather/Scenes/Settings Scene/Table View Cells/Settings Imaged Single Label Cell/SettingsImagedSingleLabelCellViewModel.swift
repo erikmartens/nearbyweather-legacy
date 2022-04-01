@@ -15,7 +15,7 @@ import RxFlow
 extension SettingsImagedSingleLabelCellViewModel {
   struct Dependencies {
     let symbolImageBackgroundColor: UIColor
-    let symbolImage: UIImage?
+    let symbolImageName: String?
     let labelText: String
     let selectable: Bool
     let disclosable: Bool
@@ -62,7 +62,7 @@ private extension SettingsImagedSingleLabelCellViewModel {
     Observable
       .just(SettingsImagedSingleLabelCellModel(
         symbolImageBackgroundColor: dependencies.symbolImageBackgroundColor,
-        symbolImage: dependencies.symbolImage,
+        symbolImageName: dependencies.symbolImageName,
         labelText: dependencies.labelText,
         selectable: dependencies.selectable,
         disclosable: dependencies.disclosable

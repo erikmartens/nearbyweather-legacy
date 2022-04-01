@@ -14,6 +14,7 @@ extension Factory {
 
     enum ViewType {
       case standard(cornerRadiusWeight: Weight? = nil)
+      case cellPrefix
     }
 
     typealias InputType = ViewType
@@ -27,6 +28,8 @@ extension Factory {
         if let cornerRadiusWeight = cornerRadiusWeight {
           view.layer.cornerRadius = Constants.Dimensions.CornerRadius.from(weight: cornerRadiusWeight)
         }
+      case .cellPrefix:
+        view.layer.cornerRadius = Constants.Dimensions.TableCellImage.cornerRadius
       }
 
       return view

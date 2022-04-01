@@ -15,7 +15,7 @@ import RxFlow
 extension SettingsImagedDualLabelSubtitleCellViewModel {
   struct Dependencies {
     let symbolImageBackgroundColor: UIColor
-    let symbolImage: UIImage?
+    let symbolImageName: String?
     let contentLabelText: String
     let descriptionLabelTextObservable: Observable<String>
     let selectable: Bool
@@ -72,7 +72,7 @@ extension SettingsImagedDualLabelSubtitleCellViewModel {
       .map { [dependencies] descriptionText -> SettingsImagedDualLabelSubtitleCellModel in
         SettingsImagedDualLabelSubtitleCellModel(
           symbolImageBackgroundColor: dependencies.symbolImageBackgroundColor,
-          symbolImage: dependencies.symbolImage,
+          symbolImageName: dependencies.symbolImageName,
           contentLabelText: dependencies.contentLabelText,
           descriptionLabelText: descriptionText,
           selectable: dependencies.selectable,
@@ -92,7 +92,7 @@ private extension SettingsImagedDualLabelSubtitleCellViewModel {
     BehaviorRelay<SettingsImagedDualLabelSubtitleCellModel>(
       value: SettingsImagedDualLabelSubtitleCellModel(
         symbolImageBackgroundColor: dependencies.symbolImageBackgroundColor,
-        symbolImage: dependencies.symbolImage,
+        symbolImageName: dependencies.symbolImageName,
         contentLabelText: dependencies.contentLabelText,
         descriptionLabelText: nil, // start with default value
         selectable: dependencies.selectable,

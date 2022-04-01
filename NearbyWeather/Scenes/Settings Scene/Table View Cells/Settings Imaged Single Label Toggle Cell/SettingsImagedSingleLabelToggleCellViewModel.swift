@@ -14,7 +14,7 @@ import RxCocoa
 extension SettingsImagedSingleLabelToggleCellViewModel {
   struct Dependencies {
     let symbolImageBackgroundColor: UIColor
-    let symbolImage: UIImage?
+    let symbolImageName: String?
     let labelText: String
     let isToggleOnObservable: Observable<Bool>
     let didFlipToggleSwitchSubject: PublishSubject<Bool>
@@ -68,7 +68,7 @@ extension SettingsImagedSingleLabelToggleCellViewModel {
       .map { [dependencies] isToggleOn -> SettingsImagedSingleLabelToggleCellModel in
         SettingsImagedSingleLabelToggleCellModel(
           symbolImageBackgroundColor: dependencies.symbolImageBackgroundColor,
-          symbolImage: dependencies.symbolImage,
+          symbolImageName: dependencies.symbolImageName,
           labelText: dependencies.labelText,
           isToggleOn: isToggleOn
         )
@@ -92,7 +92,7 @@ private extension SettingsImagedSingleLabelToggleCellViewModel {
     BehaviorRelay<SettingsImagedSingleLabelToggleCellModel>(
       value: SettingsImagedSingleLabelToggleCellModel(
         symbolImageBackgroundColor: dependencies.symbolImageBackgroundColor,
-        symbolImage: dependencies.symbolImage,
+        symbolImageName: dependencies.symbolImageName,
         labelText: dependencies.labelText,
         isToggleOn: false // start with default value
       )

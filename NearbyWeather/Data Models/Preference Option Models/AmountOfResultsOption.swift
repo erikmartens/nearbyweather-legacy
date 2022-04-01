@@ -50,19 +50,4 @@ struct AmountOfResultsOption: Codable, Equatable, PreferencesOption {
   var integerValue: Int {
     value.rawValue
   }
-  
-  var imageValue: UIImage? {
-    switch value {
-    case .ten:
-      return R.image.ten()
-    case .twenty:
-      return R.image.twenty()
-    case .thirty:
-      return R.image.thirty()
-    case .forty:
-      return R.image.forty()
-    case .fifty:
-      return R.image.fifty()
-    }
-  }
 }

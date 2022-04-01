@@ -31,7 +31,7 @@ final class WeatherStationMeteorologyDetailsWindCell: UITableViewCell, BaseCell 
   private lazy var windSpeedDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.windspeed(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   private lazy var windSpeedLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   
-  private lazy var windDirectionSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "arrow.up.circle"))
+  private lazy var windDirectionSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "arrow.down.circle"))
   private lazy var windDirectionDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.wind_direction(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
   private lazy var windDirectionLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
   

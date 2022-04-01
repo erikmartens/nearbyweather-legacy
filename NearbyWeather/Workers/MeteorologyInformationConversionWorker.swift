@@ -23,6 +23,7 @@ extension MeteorologyInformationConversionWorker {
 // MARK: - Local Types
 
 private extension MeteorologyInformationConversionWorker {
+  
   struct DayCycleDateComponents {
     let currentTimeDateComponentsHour: Int
     let currentTimeDateComponentsMinute: Int
@@ -77,6 +78,88 @@ private extension MeteorologyInformationConversionWorker {
         sunsetTimeDateComponentsMinute: sunsetTimeDateComponentsMinute,
         timeZone: timeZone
       )
+    }
+  }
+  
+  enum WindDirection {
+    case cardinalDirectionN
+    case cardinalDirectionNNE
+    case cardinalDirectionNE
+    case cardinalDirectionENE
+    case cardinalDirectionE
+    case cardinalDirectionESE
+    case cardinalDirectionSE
+    case cardinalDirectionSSE
+    case cardinalDirectionS
+    case cardinalDirectionSSW
+    case cardinalDirectionSW
+    case cardinalDirectionWSW
+    case cardinalDirectionW
+    case cardinalDirectionWNW
+    case cardinalDirectionNW
+    case cardinalDirectionNNW
+    
+    init?(degrees: Double) {
+      guard degrees >= 0 && degrees <= 360 else {
+        return nil
+      }
+      switch degrees {
+      case let x where (x >= 348.75 && x <= 360) || (x >= 0 && x < 11.25):
+        self = .cardinalDirectionN
+      case let x where x >= 11.25 && x < 33.75:
+        self = .cardinalDirectionNNE
+      case let x where x >= 33.75 && x < 56.25:
+        self = .cardinalDirectionNE
+      case let x where x >= 56.25 && x < 78.75:
+        self = .cardinalDirectionENE
+      case let x where x >= 78.75 && x < 101.25:
+        self = .cardinalDirectionE
+      case let x where x >= 101.25 && x < 123.75:
+        self = .cardinalDirectionESE
+      case let x where x >= 123.75 && x < 146.25:
+        self = .cardinalDirectionSE
+      case let x where x >= 146.25 && x < 168.75:
+        self = .cardinalDirectionSSE
+      case let x where x >= 168.75 && x < 191.25:
+        self = .cardinalDirectionS
+      case let x where x >= 191.25 && x < 213.75:
+        self = .cardinalDirectionSSW
+      case let x where x >= 213.75 && x < 236.25:
+        self = .cardinalDirectionSW
+      case let x where x >= 236.25 && x < 258.75:
+        self = .cardinalDirectionWSW
+      case let x where x >= 258.75 && x < 281.25:
+        self = .cardinalDirectionW
+      case let x where x >= 281.25 && x < 303.75:
+        self = .cardinalDirectionWNW
+      case let x where x >= 303.75 && x < 326.25:
+        self = .cardinalDirectionNW
+      case let x where x >= 326.25 && x < 348.75:
+        self = .cardinalDirectionNNW
+      default:
+        return nil
+      }
+    }
+    
+    var stringValue: String {
+      switch self {
+      case .cardinalDirectionN: return "N"
+      case .cardinalDirectionNNE: return "NNE"
+      case .cardinalDirectionNE: return "NE"
+      case .cardinalDirectionENE: return "ENE"
+      case .cardinalDirectionE: return "E"
+      case .cardinalDirectionESE: return "ESE"
+      case .cardinalDirectionSE: return "SE"
+      case .cardinalDirectionSSE: return "SSE"
+      case .cardinalDirectionS: return "S"
+      case .cardinalDirectionSSW: return "SSW"
+      case .cardinalDirectionSW: return "SW"
+      case .cardinalDirectionWSW: return "WSW"
+      case .cardinalDirectionW: return "W"
+      case .cardinalDirectionWNW: return "WNW"
+      case .cardinalDirectionNW: return "NW"
+      case .cardinalDirectionNNW: return "NNW"
+      }
     }
   }
 }
@@ -330,31 +413,8 @@ extension MeteorologyInformationConversionWorker {
   }
   
   static func windDirectionDescriptor(forWindDirection degrees: Double) -> String? {
-    let baseString = numberFormatter.string(from: degrees)?.append(contentsOf: "°", delimiter: .none)
-    
-    let directionString: String?
-    switch degrees {
-    case let x where x >= 315 && x < 45:
-      directionString = "(N)"
-    case let x where x >= 45 && x < 90:
-      directionString = "(NE)"
-    case let x where x == 90:
-      directionString = "(E)"
-    case let x where x > 90 && x < 135:
-      directionString = "(SE)"
-    case let x where x >= 135 && x < 225:
-      directionString = "(S)"
-    case let x where x >= 225 && x < 270:
-      directionString = "(SW)"
-    case let x where x == 270:
-      directionString = "(W)"
-    case let x where x > 270 && x < 315:
-      directionString = "(N)"
-    default:
-      directionString = nil
-    }
-    
-    return baseString?.append(contentsOf: directionString, delimiter: .space)
+    let degreesString = numberFormatter.string(from: degrees)?.append(contentsOf: "°", delimiter: .none)
+    return degrees.toCardinalDirectionString?.append(contentsOf: degreesString, encasing: .roundBrackets, delimiter: .space)
   }
   
   static func coordinatesDescriptorFor(latitude lat: Double?, longitude lon: Double?) -> String? {
@@ -475,5 +535,11 @@ private extension MeteorologyInformationConversionWorker {
 private extension NumberFormatter {
   func string(from double: Double) -> String? {
     string(from: double as NSNumber)
+  }
+}
+
+private extension Double {
+  var toCardinalDirectionString: String? {
+    MeteorologyInformationConversionWorker.WindDirection(degrees: self)?.stringValue
   }
 }

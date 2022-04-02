@@ -53,6 +53,7 @@ struct WeatherStationMeteorologyDetailsHeaderCellModel {
       ),
       feelsLikeTemperature: String
         .begin()
+        .append(contentsOf: R.string.localizable.feels_like().capitalized)
         .append(
           contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
             forTemperatureUnit: temperatureUnitOption,

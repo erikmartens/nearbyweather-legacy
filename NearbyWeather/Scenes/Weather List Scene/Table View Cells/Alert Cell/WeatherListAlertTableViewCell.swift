@@ -25,7 +25,7 @@ final class WeatherListAlertTableViewCell: UITableViewCell, BaseCell {
   
   private lazy var backgroundColorView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
   private lazy var contentStackView = Factory.StackView.make(fromType: .horizontal(spacingWeight: .large))
-  private lazy var alertImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "thermometer"))
+  private lazy var alertImageView = Factory.ImageView.make(fromType: .symbol(image: Factory.Image.make(fromType: .symbol(systemImageName: "thermometer"))))
   private lazy var alertInformationLabel = Factory.Label.make(fromType: .title(numberOfLines: 1))
   
   // MARK: - Assets

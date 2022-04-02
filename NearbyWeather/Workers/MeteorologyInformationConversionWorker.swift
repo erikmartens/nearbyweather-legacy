@@ -9,11 +9,13 @@
 import Foundation
 import MapKit
 import APTimeZones
+import Solar
 
 // MARK: - Public Type
 
 extension MeteorologyInformationConversionWorker {
   struct DayCycleLocalizedTimeStrings {
+    let timeOfDayString: String
     let currentTimeString: String
     let sunriseTimeString: String
     let sunsetTimeString: String
@@ -496,30 +498,32 @@ extension MeteorologyInformationConversionWorker {
       .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .comma)
   }
   
-  static func isDayTime(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> Bool? {
+  static func isDayTime(for weatherInformationModel: WeatherInformationDTO) -> Bool? {
     
-    guard let cycle = dayCycleDateComponents(for: dayTimeInformation, coordinates: coordinates) else {
-      return nil
-    }
-    
-    return ((cycle.currentTimeDateComponentsHour == cycle.sunriseTimeDateComponentsHour
-              && cycle.currentTimeDateComponentsMinute >= cycle.sunriseTimeDateComponentsMinute)
+    if let cycle = dayCycleDateComponents(for: weatherInformationModel) {
+      return ((cycle.currentTimeDateComponentsHour == cycle.sunriseTimeDateComponentsHour
+               && cycle.currentTimeDateComponentsMinute >= cycle.sunriseTimeDateComponentsMinute)
               || cycle.currentTimeDateComponentsHour > cycle.sunriseTimeDateComponentsHour)
       && ((cycle.currentTimeDateComponentsHour == cycle.sunsetTimeDateComponentsHour
-            && cycle.currentTimeDateComponentsMinute <= cycle.sunsetTimeDateComponentsMinute)
-            || cycle.currentTimeDateComponentsHour < cycle.sunsetTimeDateComponentsHour)
+           && cycle.currentTimeDateComponentsMinute <= cycle.sunsetTimeDateComponentsMinute)
+          || cycle.currentTimeDateComponentsHour < cycle.sunsetTimeDateComponentsHour)
+    }
+    guard let latitude = weatherInformationModel.coordinates.latitude, let longitude = weatherInformationModel.coordinates.longitude else {
+      return nil
+    }
+    return Solar(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))?.isDaytime
   }
   
-  static func isDayTimeString(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> String? {
-    guard let isDayTime = isDayTime(for: dayTimeInformation, coordinates: coordinates) else {
+  static func isDayTimeString(for weatherInformationModel: WeatherInformationDTO) -> String? {
+    guard let isDayTime = isDayTime(for: weatherInformationModel) else {
       return nil
     }
     return isDayTime ? R.string.localizable.dayTime() : R.string.localizable.nightTime()
   }
   
-  static func dayCycleTimeStrings(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> DayCycleLocalizedTimeStrings? {
-    
-    guard let cycle = dayCycleDateComponents(for: dayTimeInformation, coordinates: coordinates),
+  static func dayCycleTimeStrings(for weatherInformationModel: WeatherInformationDTO) -> DayCycleLocalizedTimeStrings? {
+    guard let timeOfDayString = isDayTimeString(for: weatherInformationModel),
+          let cycle = dayCycleDateComponents(for: weatherInformationModel),
           let sunriseDate = Calendar.current.date(from: DateComponents(hour: cycle.sunriseTimeDateComponentsHour, minute: cycle.sunriseTimeDateComponentsMinute)),
           let sunsetDate = Calendar.current.date(from: DateComponents(hour: cycle.sunsetTimeDateComponentsHour, minute: cycle.sunsetTimeDateComponentsMinute)) else {
       return nil
@@ -531,10 +535,17 @@ extension MeteorologyInformationConversionWorker {
     dateFormatter.dateStyle = .none
     dateFormatter.timeStyle = .short
     
+    let dateFormatter2 = DateFormatter()
+    dateFormatter2.calendar = .current
+    dateFormatter2.timeZone = Calendar.current.timeZone
+    dateFormatter2.dateStyle = .none
+    dateFormatter2.timeStyle = .short
+    
     return DayCycleLocalizedTimeStrings(
+      timeOfDayString: timeOfDayString,
       currentTimeString: dateFormatter.string(from: Date()),
-      sunriseTimeString: dateFormatter.string(from: sunriseDate),
-      sunsetTimeString: dateFormatter.string(from: sunsetDate)
+      sunriseTimeString: dateFormatter2.string(from: sunriseDate),
+      sunsetTimeString: dateFormatter2.string(from: sunsetDate)
     )
   }
   
@@ -551,12 +562,10 @@ extension MeteorologyInformationConversionWorker {
 
 private extension MeteorologyInformationConversionWorker {
   
-  static func dayCycleDateComponents(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> DayCycleDateComponents? {
+  static func dayCycleDateComponents(for weatherInformationModel: WeatherInformationDTO) -> DayCycleDateComponents? {
     
-    guard let sunrise =  dayTimeInformation?.sunrise,
-          let sunset =  dayTimeInformation?.sunset,
-          let latitude = coordinates.latitude,
-          let longitude = coordinates.longitude else {
+    guard let latitude = weatherInformationModel.coordinates.latitude,
+          let longitude = weatherInformationModel.coordinates.longitude else {
       return nil
     }
     
@@ -567,9 +576,25 @@ private extension MeteorologyInformationConversionWorker {
     calendar.timeZone = location.timeZone()
     
     let currentTimeDateComponents = calendar.dateComponents([.hour, .minute], from: Date())
-    let sunriseDate = Date(timeIntervalSince1970: sunrise)
+    let sunriseDate: Date?
+    let sunsetDate: Date?
+    
+    if let sunrise = weatherInformationModel.dayTimeInformation.sunrise,
+       let sunset = weatherInformationModel.dayTimeInformation.sunset {
+      sunriseDate = Date(timeIntervalSince1970: sunrise)
+      sunsetDate = Date(timeIntervalSince1970: sunset)
+    } else {
+      let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+      sunriseDate = solar?.sunrise
+      sunsetDate = solar?.sunset
+    }
+    
+    guard let sunriseDate = sunriseDate,
+          let sunsetDate = sunsetDate else {
+      return nil
+    }
+    
     let sunriseDateComponents = calendar.dateComponents([.hour, .minute], from: sunriseDate)
-    let sunsetDate = Date(timeIntervalSince1970: sunset)
     let sunsetDateComponents = calendar.dateComponents([.hour, .minute], from: sunsetDate)
     
     return DayCycleDateComponents(

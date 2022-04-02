@@ -120,6 +120,6 @@ privacy_policy = "隱私政策";
 terms_of_use = "使用條款";
 email_salutation = "Hey Erik, \n";
 copied = "複製了";
-current_time = "當前時間";
+current_time = "當地時間";
 feels_like = "感覺像";
 hi_lo = "最大/最低限度";

@@ -110,18 +110,21 @@ extension WeatherStationMeteorologyDetailsViewModel {
     
     let dayCycleStringsObservable = weatherInformationDtoObservable
       .map { $0.entity }
-      .map { MeteorologyInformationConversionWorker.dayCycleTimeStrings(for: $0.dayTimeInformation, coordinates: $0.coordinates) }
+      .map { MeteorologyInformationConversionWorker.dayCycleTimeStrings(for: $0) }
       .share(replay: 1)
     
     let weatherStationCurrentInformationSunCycleSectionItemsObservable = dayCycleStringsObservable // swiftlint:disable:this identifier_name
       .map { dayCycleStrings -> [WeatherStationMeteorologyDetailsSymbolCellViewModel] in
         var results = [WeatherStationMeteorologyDetailsSymbolCellViewModel]()
         
-        if let currentTimeString = dayCycleStrings?.currentTimeString {
+        if let dayCycleStrings = dayCycleStrings {
           results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
             symbolImageName: "clock",
             contentLabelText: R.string.localizable.current_time().capitalized,
-            descriptionLabelText: currentTimeString
+            descriptionLabelText: String
+              .begin()
+              .append(contentsOf: dayCycleStrings.timeOfDayString)
+              .append(contentsOf: dayCycleStrings.currentTimeString, delimiter: .commaSpace)
           )))
         }
         

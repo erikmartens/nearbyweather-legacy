@@ -37,7 +37,7 @@ struct WeatherStationMeteorologyInformationPreviewAnnotationModel { // swiftlint
     temperatureUnitOption: TemperatureUnitOption,
     isBookmark: Bool
   ) {
-    let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
+    let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO) ?? true
     
     var weatherConditionSymbol: UIImage?
     if let weatherConditionIdentifier = weatherInformationDTO.weatherCondition.first?.identifier {

@@ -120,6 +120,6 @@ privacy_policy = "Politique de confidentialité";
 terms_of_use = "Conditions d'utilisation";
 email_salutation = "Bonjour Erik, \n";
 copied = "copié";
-current_time = "heure actuelle";
+current_time = "heure locale";
 feels_like = "se sent comme";
 hi_lo = "Max/Min";

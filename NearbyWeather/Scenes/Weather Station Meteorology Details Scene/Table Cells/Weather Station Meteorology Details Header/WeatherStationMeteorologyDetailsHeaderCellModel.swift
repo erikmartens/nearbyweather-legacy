@@ -39,7 +39,7 @@ struct WeatherStationMeteorologyDetailsHeaderCellModel {
     dimensionalUnitsOption: DimensionalUnitOption,
     isBookmark: Bool
   ) {
-    let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
+    let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO)
     
     self.init(
       weatherConditionSymbolImage: MeteorologyInformationConversionWorker.weatherConditionSymbol(

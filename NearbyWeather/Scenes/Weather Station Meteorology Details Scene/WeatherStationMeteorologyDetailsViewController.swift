@@ -110,9 +110,7 @@ private extension WeatherStationMeteorologyDetailsViewController {
     
     tableView.registerCells([
       WeatherStationMeteorologyDetailsHeaderCell.self,
-      WeatherStationMeteorologyDetailsSunCycleCell.self,
-      WeatherStationMeteorologyDetailsAtmosphericDetailsCell.self,
-      WeatherStationMeteorologyDetailsWindCell.self,
+      WeatherStationMeteorologyDetailsSymbolCell.self,
       WeatherStationMeteorologyDetailsMapCell.self
     ])
     

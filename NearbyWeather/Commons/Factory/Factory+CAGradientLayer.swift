@@ -28,9 +28,9 @@ extension Factory {
         gardientLayer.frame = frame
         gardientLayer.cornerRadius = Constants.Dimensions.CornerRadius.from(weight: cornerRadiusWeight)
         gardientLayer.colors = [
-          (baseColor.lighten(by: 10) ?? baseColor).cgColor,
+          baseColor.lighten(by: 10).cgColor,
           baseColor.cgColor,
-          (baseColor.darken(by: 25) ?? baseColor).cgColor
+          baseColor.darken(by: 25).cgColor
         ]
       }
       

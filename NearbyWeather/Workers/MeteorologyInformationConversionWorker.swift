@@ -373,7 +373,7 @@ extension MeteorologyInformationConversionWorker {
       ))
     case let x where x == 904:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
-        systemImageName: "thermometer.sun",
+        systemImageName: "thermometer.sun.fill",
         colorPalette: [
           WeatherInformationColor.red,
           WeatherInformationColor.yellow

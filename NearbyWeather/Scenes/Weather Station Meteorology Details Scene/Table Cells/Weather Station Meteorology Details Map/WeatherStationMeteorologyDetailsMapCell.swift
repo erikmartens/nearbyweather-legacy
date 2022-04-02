@@ -33,18 +33,8 @@ final class WeatherStationMeteorologyDetailsMapCell: UITableViewCell, BaseCell {
       origin: .zero,
       size: CGSize(width: contentView.frame.size.width - 2*CellContentInsets.leading(from: .medium), height: Definitions.mapViewHeight)
     ),
-    isUserInteractionEnabled: false
+    isUserInteractionEnabled: true
   ))
-  
-  private lazy var coordinatesSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "mappin.and.ellipse"))
-  private lazy var coordinatesDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.coordinates(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
-  private lazy var coordinatesLabel = Factory.Label.make(fromType: .subtitle(alignment: .right, isCopyable: true))
-  
-  private lazy var distanceSymbolImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "ruler"))
-  private lazy var distanceDescriptionLabel = Factory.Label.make(fromType: .body(text: R.string.localizable.distance(), textColor: Constants.Theme.Color.ViewElement.Label.titleDark))
-  private lazy var distanceLabel = Factory.Label.make(fromType: .subtitle(alignment: .right))
-  
-  private lazy var coordinatesLabelTapGestureRecognizer = UITapGestureRecognizer()
   
   // MARK: - Assets
   
@@ -103,11 +93,7 @@ extension WeatherStationMeteorologyDetailsMapCell {
   }
   
   func bindUserInputToViewModel(_ cellViewModel: WeatherStationMeteorologyDetailsMapCellViewModel) {
-    coordinatesLabelTapGestureRecognizer.rx
-      .event
-      .map { _ in () }
-      .bind(to: cellViewModel.onDidTapCoordinatesLabelSubject)
-      .disposed(by: disposeBag)
+    // nothing to do
   }
 }
 
@@ -126,80 +112,17 @@ private extension WeatherStationMeteorologyDetailsMapCell {
         mapView.mapType = .hybrid
       }
     }
-    coordinatesLabel.text = cellModel.coordinatesString
-    distanceLabel.text = cellModel.distanceString
   }
   
   func layoutUserInterface() {
     // map view
     contentView.addSubview(mapView, constraints: [
+      mapView.heightAnchor.constraint(equalToConstant: Definitions.mapViewHeight),
       mapView.topAnchor.constraint(equalTo: contentView.topAnchor),
       mapView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
       mapView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-      mapView.heightAnchor.constraint(equalToConstant: Definitions.mapViewHeight)
+      mapView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
     ])
-    
-//    contentView.addSubview(mapView, constraints: [
-//      mapView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
-//      mapView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
-//      mapView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
-//      mapView.heightAnchor.constraint(equalToConstant: Definitions.mapViewHeight)
-//    ])
-    
-    // line 1
-    contentView.addSubview(coordinatesSymbolImageView, constraints: [
-      coordinatesSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
-      coordinatesSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
-      coordinatesSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
-      coordinatesSymbolImageView.heightAnchor.constraint(equalTo: coordinatesSymbolImageView.widthAnchor)
-    ])
-    
-    contentView.addSubview(coordinatesDescriptionLabel, constraints: [
-      coordinatesDescriptionLabel.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
-      coordinatesDescriptionLabel.leadingAnchor.constraint(equalTo: coordinatesSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      coordinatesDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      coordinatesDescriptionLabel.centerYAnchor.constraint(equalTo: coordinatesSymbolImageView.centerYAnchor)
-    ])
-    
-    contentView.addSubview(coordinatesLabel, constraints: [
-      coordinatesLabel.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
-      coordinatesLabel.leadingAnchor.constraint(equalTo: coordinatesDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      coordinatesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
-      coordinatesLabel.widthAnchor.constraint(equalTo: coordinatesDescriptionLabel.widthAnchor, multiplier: 4/5),
-      coordinatesLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      coordinatesLabel.centerYAnchor.constraint(equalTo: coordinatesDescriptionLabel.centerYAnchor),
-      coordinatesLabel.centerYAnchor.constraint(equalTo: coordinatesSymbolImageView.centerYAnchor)
-    ])
-    
-    // line 2
-    contentView.addSubview(distanceSymbolImageView, constraints: [
-      distanceSymbolImageView.topAnchor.constraint(greaterThanOrEqualTo: coordinatesSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
-      distanceSymbolImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
-      distanceSymbolImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      distanceSymbolImageView.widthAnchor.constraint(equalToConstant: Definitions.symbolWidth),
-      distanceSymbolImageView.heightAnchor.constraint(equalTo: distanceSymbolImageView.widthAnchor)
-    ])
-    
-    contentView.addSubview(distanceDescriptionLabel, constraints: [
-      distanceDescriptionLabel.topAnchor.constraint(equalTo: coordinatesDescriptionLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
-      distanceDescriptionLabel.leadingAnchor.constraint(equalTo: distanceSymbolImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      distanceDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      distanceDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      distanceDescriptionLabel.centerYAnchor.constraint(equalTo: distanceSymbolImageView.centerYAnchor)
-    ])
-    
-    contentView.addSubview(distanceLabel, constraints: [
-      distanceLabel.topAnchor.constraint(equalTo: coordinatesLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
-      distanceLabel.leadingAnchor.constraint(equalTo: distanceDescriptionLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      distanceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.leading(from: .medium)),
-      distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .medium)),
-      distanceLabel.widthAnchor.constraint(equalTo: distanceDescriptionLabel.widthAnchor, multiplier: 4/5),
-      distanceLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      distanceLabel.centerYAnchor.constraint(equalTo: distanceDescriptionLabel.centerYAnchor),
-      distanceLabel.centerYAnchor.constraint(equalTo: distanceSymbolImageView.centerYAnchor)
-    ])
-    
-    coordinatesLabel.addGestureRecognizer(coordinatesLabelTapGestureRecognizer)
   }
   
   func setupAppearance() {

@@ -67,7 +67,7 @@ NearbyWeather was created to help you as a reference for advanced app-building-c
 | Deployment | Fastlane | ✅ |
 | Crash Data Analytics | Reports to Google Firebase | ✅ |
 | Usage Behavior Analytics | Events to Google Firebase | 🅾️ |
-| UI Deign Verification | SwiftUI Scene Previews | 🅾️ |
+| UI Design Verification | SwiftUI Scene Previews | 🅾️ |
 | Continuous Integration | Bitrise | 🅾️ |
 | Quality Assurance | Unit Tests & UI Tests for Regression Tests via CI | 🅾️ |
 

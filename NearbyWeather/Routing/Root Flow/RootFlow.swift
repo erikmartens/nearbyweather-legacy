@@ -6,24 +6,37 @@
 //  Copyright © 2020 Erik Maximilian Martens. All rights reserved.
 //
 
+import RxSwift
 import RxFlow
+import Swinject
 
-class RootFlow: Flow {
+// MARK: - Dependencies
+
+extension RootFlow {
+  struct Dependencies {
+    let rootWindow: UIWindow
+    let dependencyContainer: Container
+  }
+}
+
+// MARK: - Class Definition
+
+final class RootFlow: Flow {
   
   // MARK: - Assets
   
   var root: Presentable {
-    rootWindow
+    dependencies.rootWindow
   }
   
   // MARK: - Properties
   
-  let rootWindow: UIWindow
+  let dependencies: Dependencies
   
   // MARK: - Initialization
   
-  init(rootWindow: UIWindow) {
-    self.rootWindow = rootWindow
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
   }
   
   // MARK: - Functions
@@ -33,10 +46,12 @@ class RootFlow: Flow {
       return .none
     }
     switch step {
-    case .main:
-      return summonMainWindow()
+    case .loading:
+      return summonLoadingWindow()
     case .welcome:
       return summonWelcomeWindow()
+    case .main:
+      return summonMainWindow()
     case .dimissWelcome:
       return dismissWelcomeWindow()
     }
@@ -55,40 +70,53 @@ class RootFlow: Flow {
   }
 }
 
+// MARK: - Summoning Functions
+
 private extension RootFlow {
   
-  func summonMainWindow() -> FlowContributors {
-    let mainFlow = MainFlow()
+  func summonLoadingWindow() -> FlowContributors {
+    let loadingFlow = LoadingFlow(dependencies: LoadingFlow.Dependencies())
     
-    Flows.whenReady(flow1: mainFlow) { [rootWindow] (mainRoot: UITabBarController) in
-      rootWindow.rootViewController = mainRoot
-      rootWindow.makeKeyAndVisible()
+    Flows.use(loadingFlow, when: .ready) { [dependencies] (loadingRoot: UINavigationController) in
+      dependencies.rootWindow.rootViewController = loadingRoot
+      dependencies.rootWindow.makeKeyAndVisible()
     }
     
-    return .one(flowContributor: .contribute(withNextPresentable: mainFlow, withNextStepper: MainStepper()))
+    return .one(flowContributor: .contribute(withNextPresentable: loadingFlow, withNextStepper: LoadingStepper()))
   }
   
   func summonWelcomeWindow() -> FlowContributors {
-    let welcomeFlow = WelcomeFlow()
+    let welcomeFlow = WelcomeFlow(dependencies: WelcomeFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
     
-    Flows.whenReady(flow1: welcomeFlow) { [rootWindow] (welcomeRoot: UINavigationController) in
-      rootWindow.rootViewController = welcomeRoot
-      rootWindow.makeKeyAndVisible()
+    Flows.use(welcomeFlow, when: .ready) { [dependencies] (welcomeRoot: UINavigationController) in
+      dependencies.rootWindow.rootViewController = welcomeRoot
+      dependencies.rootWindow.makeKeyAndVisible()
     }
     
     return .one(flowContributor: .contribute(withNextPresentable: welcomeFlow, withNextStepper: WelcomeStepper()))
   }
   
-  func dismissWelcomeWindow() -> FlowContributors {
-    let mainFlow = MainFlow()
+  func summonMainWindow() -> FlowContributors {
+    let mainFlow = MainFlow(dependencies: MainFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
     
-    Flows.whenReady(flow1: mainFlow) { [rootWindow] (mainRoot: UITabBarController) in
+    Flows.use(mainFlow, when: .ready) { [dependencies] (mainRoot: UITabBarController) in
+      dependencies.rootWindow.rootViewController = mainRoot
+      dependencies.rootWindow.makeKeyAndVisible()
+    }
+    
+    return .one(flowContributor: .contribute(withNextPresentable: mainFlow, withNextStepper: MainStepper()))
+  }
+  
+  func dismissWelcomeWindow() -> FlowContributors {
+    let mainFlow = MainFlow(dependencies: MainFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+    
+    Flows.use(mainFlow, when: .ready) { [dependencies] (mainRoot: UITabBarController) in
       UIView.animate(withDuration: 0.2, animations: {
-        rootWindow.alpha = 0
-        rootWindow.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        dependencies.rootWindow.alpha = 0
+        dependencies.rootWindow.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
       }, completion: { _ in
-        rootWindow.rootViewController = mainRoot
-        rootWindow.alpha = 1
+        dependencies.rootWindow.rootViewController = mainRoot
+        dependencies.rootWindow.alpha = 1
       })
     }
     

@@ -6,7 +6,7 @@
 storage_mode("git")
 git_url("git@github.com:erikmartens/appstore_code_signing.git")
 git_branch("master")
-# app_identifier(["de.erikmaximilianmartens.NearbyWeather"])
+app_identifier(["de.erikmaximilianmartens.NearbyWeather"])
 
-type("development") # The default type, can be: appstore, adhoc, enterprise or development
-
+# type("development") # The default type, can be: appstore, adhoc, enterprise or development
+# type("appstore") # The default type, can be: appstore, adhoc, enterprise or development

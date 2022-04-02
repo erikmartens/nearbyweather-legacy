@@ -22,24 +22,32 @@ extension Constants {
     static let kPrivacyPolicyUrl = URL(string: "https://github.com/erikmartens/NearbyWeather/blob/master/PRIVACYPOLICY.md")!
     static let kTermsOfUseUrl = URL(string: "https://github.com/erikmartens/NearbyWeather/blob/master/TERMSOFUSE.md")!
     static let kOpenWeatherSingleLocationBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/weather")!
-    static let kOpenWeatherMultiLocationBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/find")!
+    static let kOpenWeatherNearbyStationsDataBaseUrl = URL(string: "http://api.openweathermap.org/data/2.5/find")!
     static let kOpenWeatherMapUrl = URL(string: "https://openweathermap.org")!
     static let kOpenWeatherMapInstructionsUrl = URL(string: "https://openweathermap.org/appid")!
     
     static func kOpenWeatherMapCityDetailsUrl(forCityWithName name: String) -> URL {
-      return URL(string: "https://openweathermap.org/find?q=\(name)")!
+      URL(string: "https://openweathermap.org/find?q=\(name)")!
     }
     
     static func kOpenWeatherMapSingleStationtDataRequestUrl(with apiKey: String, stationIdentifier identifier: Int) -> URL {
       let localeTag = Locale.current.languageCode?.lowercased() ?? "en"
+
       let baseUrl = Constants.Urls.kOpenWeatherSingleLocationBaseUrl.absoluteString
       return URL(string: "\(baseUrl)?APPID=\(apiKey)&id=\(identifier)&lang=\(localeTag)")!
     }
     
-    static func kOpenWeatherMapMultiStationtDataRequestUrl(with apiKey: String, currentLatitude latitude: Double, currentLongitude longitude: Double) -> URL {
-      let baseUrl = Constants.Urls.kOpenWeatherMultiLocationBaseUrl.absoluteString
-      let numberOfResults = PreferencesDataService.shared.amountOfResults.integerValue
-      return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)")!
+    static func kOpenWeatherMapApitTestRequestUrl(with apiKey: String) -> URL {
+      let stationName = "Cupertino"
+      let baseUrlString = "http://api.openweathermap.org/data/2.5/weather"
+      return URL(string: "\(baseUrlString)?q=\(stationName)&APPID=\(apiKey)")!
+    }
+    
+    static func kOpenWeatherMapMultiStationtDataRequestUrl(with apiKey: String, latitude: Double, longitude: Double, numberOfResults: Int) -> URL {
+      let localeTag = Locale.current.languageCode?.lowercased() ?? "en"
+      
+      let baseUrl = Constants.Urls.kOpenWeatherNearbyStationsDataBaseUrl.absoluteString
+      return URL(string: "\(baseUrl)?APPID=\(apiKey)&lat=\(latitude)&lon=\(longitude)&cnt=\(numberOfResults)&lang=\(localeTag)")!
     }
   }
 }

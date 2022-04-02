@@ -13,9 +13,16 @@ enum SettingsStep: Step {
   case settings
   case about
   case apiKeyEdit
-  case manageLocations
-  case addLocation
+  case manageBookmarks
+  case addBookmark
+  case changePreferredBookmarkAlert(selectionDelegate: PreferredBookmarkSelectionAlertDelegate)
+  case changePreferredBookmarkAlertAdapted(selectionDelegate: PreferredBookmarkSelectionAlertDelegate, selectedOptionValue: PreferredBookmarkOption?, boomarkedLocations: [WeatherStationDTO])
+  case changeTemperatureUnitAlert(selectionDelegate: TemperatureUnitSelectionAlertDelegate)
+  case changeTemperatureUnitAlertAdapted(selectionDelegate: TemperatureUnitSelectionAlertDelegate, selectedOptionValue: TemperatureUnitOptionValue)
+  case changeDimensionalUnitAlert(selectionDelegate: DimensionalUnitSelectionAlertDelegate)
+  case changeDimensionalUnitAlertAdapted(selectionDelegate: DimensionalUnitSelectionAlertDelegate, selectedOptionValue: DimensionalUnitOptionValue)
   case webBrowser(url: URL)
+  case pop
 }
 
 final class SettingsStepper: Stepper {

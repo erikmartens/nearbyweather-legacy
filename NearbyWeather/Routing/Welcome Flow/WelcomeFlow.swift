@@ -7,6 +7,17 @@
 //
 
 import RxFlow
+import Swinject
+
+// MARK: - Dependencies
+
+extension WelcomeFlow {
+  struct Dependencies {
+    let dependencyContainer: Container
+  }
+}
+
+// MARK: - Class Definition
 
 final class WelcomeFlow: Flow {
   
@@ -16,13 +27,17 @@ final class WelcomeFlow: Flow {
     rootViewController
   }
   
-  private lazy var rootViewController: UINavigationController = {
-    Factory.NavigationController.make(fromType: .standard)
-  }()
+  private lazy var rootViewController = Factory.NavigationController.make(fromType: .standard)
+  
+  // MARK: - Properties
+  
+  let dependencies: Dependencies
   
   // MARK: - Initialization
   
-  init() {}
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
+  }
   
   deinit {
     printDebugMessage(
@@ -41,6 +56,8 @@ final class WelcomeFlow: Flow {
     switch step {
     case .setApiKey:
       return summonWelcomeWindow()
+    case .apiInstructions:
+      return summonInstructions()
     case .setPermissions:
       return summonSetPermissions()
     case .dismiss:
@@ -53,15 +70,35 @@ private extension WelcomeFlow {
   
   private func summonWelcomeWindow() -> FlowContributors {
    
-    let welcomeViewController = R.storyboard.setApiKey.setApiKeyViewController()!
-    rootViewController.setViewControllers([welcomeViewController], animated: false)
-    return .one(flowContributor: .contribute(withNext: welcomeViewController))
+    let setApiKeyViewController = SetApiKeyViewController(
+      dependencies: SetApiKeyViewController.ViewModel.Dependencies(apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService.self)!
+    ))
+    rootViewController.setViewControllers([setApiKeyViewController], animated: false)
+    return .one(flowContributor: .contribute(
+      withNextPresentable: setApiKeyViewController,
+      withNextStepper: setApiKeyViewController.viewModel,
+      allowStepWhenNotPresented: true
+    ))
+  }
+  
+  private func summonInstructions() -> FlowContributors {
+    rootViewController.presentSafariViewController(for: Constants.Urls.kOpenWeatherMapInstructionsUrl)
+    return .none
   }
   
   private func summonSetPermissions() -> FlowContributors {
-    let setPermissionsController = R.storyboard.setPermissions.setPermissionsVC()!
-    rootViewController.pushViewController(setPermissionsController, animated: true)
-    return .one(flowContributor: .contribute(withNext: setPermissionsController))
+    
+    let setPermissionsViewController = SetPermissionsViewController(
+      dependencies: SetPermissionsViewController.ViewModel.Dependencies(
+        userLocationService: dependencies.dependencyContainer.resolve(UserLocationService.self)!,
+        weatherInformationService: dependencies.dependencyContainer.resolve(WeatherInformationService.self)!,
+        applicationCycleService: dependencies.dependencyContainer.resolve(ApplicationCycleService.self)!
+    ))
+    rootViewController.pushViewController(setPermissionsViewController, animated: true)
+    return .one(flowContributor: .contribute(
+      withNextPresentable: setPermissionsViewController,
+      withNextStepper: setPermissionsViewController.viewModel
+    ))
   }
   
   private func dismissWelcomeWindow() -> FlowContributors {

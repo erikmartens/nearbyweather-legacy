@@ -1,136 +1,171 @@
 //
-//  WelcomeScreenViewController.swift
+//  SetApiKeyViewController.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 15.04.17.
-//  Copyright © 2017 Erik Maximilian Martens. All rights reserved.
+//  Created by Erik Maximilian Martens on 11.02.22.
+//  Copyright © 2022 Erik Maximilian Martens. All rights reserved.
 //
 
 import UIKit
-import RxFlow
-import RxCocoa
-import TextFieldCounter
+import RxSwift
 
-final class SetApiKeyViewController: UIViewController, Stepper {
+// MARK: - Definitions
+
+private extension SetApiKeyViewController {
+  struct Definitions {
+    static let mainStackViewInterElementYSpacing: CGFloat = 48
+  }
+}
+
+// MARK: - Class Definition
+
+final class SetApiKeyViewController: UIViewController, BaseViewController {
   
-  // MARK: - Routing
+  typealias ViewModel = SetApiKeyViewModel
   
-  var steps = PublishRelay<Step>()
+  private typealias ContentInsets = Constants.Dimensions.Spacing.ContentInsets
+  
+  // MARK: - UIComponents
+  
+  fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .custom(value: Definitions.mainStackViewInterElementYSpacing)))
+  fileprivate lazy var bubbleView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
+  fileprivate lazy var bubbleContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .large))
+  fileprivate lazy var bubbleDescriptionLabel = Factory.Label.make(fromType: .subtitle(text: R.string.localizable.welcome_api_key_description(), textColor: Constants.Theme.Color.ViewElement.Label.titleLight))
+  fileprivate lazy var apiKeyInputTextField = Factory.TextField.make(fromType: .standard(cornerRadiusWeight: .small))
+  fileprivate lazy var buttonStackView = Factory.StackView.make(fromType: .vertical(distribution: .fillProportionally, spacingWeight: .large))
+  fileprivate lazy var saveButton = Factory.Button.make(fromType: .standard(title: R.string.localizable.save(), height: Constants.Dimensions.InteractableElement.height))
+  fileprivate lazy var instructionsButton = Factory.Button.make(fromType: .plain(title: R.string.localizable.get_api_key_description()))
+  
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
-  private var timer: Timer?
+  let viewModel: ViewModel
   
-  // MARK: - Outlets
+  // MARK: - Initialization
   
-  @IBOutlet weak var bubbleView: UIView!
-  @IBOutlet weak var warningImageView: UIImageView!
+  required init(dependencies: ViewModel.Dependencies) {
+    viewModel = SetApiKeyViewModel(dependencies: dependencies)
+    super.init(nibName: nil, bundle: nil)
+  }
   
-  @IBOutlet weak var descriptionLabel: UILabel!
-  @IBOutlet weak var inputTextField: TextFieldCounter!
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
-  @IBOutlet weak var saveButtonContainerView: UIView!
-  @IBOutlet weak var saveButton: UIButton!
-  @IBOutlet weak var getInstructionsButtons: UIButton!
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
+    )
+  }
   
-  // MARK: - Override Functions
+  // MARK: - ViewController LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = R.string.localizable.welcome()
-    configure()
+    viewModel.viewDidLoad()
+    setupUiComponents()
+    setupBindings()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    checkValidTextFieldInput()
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    inputTextField.becomeFirstResponder()
-    animatePulse()
+    viewModel.viewWillAppear()
+    setupUiAppearance()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    warningImageView.layer.removeAllAnimations()
-    timer?.invalidate()
-  }
-  
-  // MARK: - Helper Functions
-  
-  func configure() {    
-    bubbleView.layer.cornerRadius = 10
-    bubbleView.backgroundColor = .black
-    
-    descriptionLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-    descriptionLabel.textColor = .white
-    descriptionLabel.text! = R.string.localizable.welcome_api_key_description()
-    
-    inputTextField.counterColor = inputTextField.textColor ?? .black
-    inputTextField.limitColor = Constants.Theme.Color.InteractableElement.standardTint
-    inputTextField.textColor = .lightGray
-    inputTextField.tintColor = .lightGray
-    
-    saveButton.setTitle(R.string.localizable.save().uppercased(), for: .normal)
-    saveButton.setTitleColor(.white, for: UIControl.State())
-    saveButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
-    saveButton.layer.cornerRadius = saveButton.bounds.height/2
-    saveButton.layer.backgroundColor = Constants.Theme.Color.MarqueColors.standardDay.cgColor
-    
-    getInstructionsButtons.setTitle(R.string.localizable.get_api_key_description().uppercased(), for: .normal)
-    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButton, for: .normal)
-    getInstructionsButtons.setTitleColor(Constants.Theme.Color.InteractableElement.standardButton, for: .highlighted)
-  }
-  
-  fileprivate func startAnimationTimer() {
-    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: (#selector(SetApiKeyViewController.animatePulse)), userInfo: nil, repeats: false)
-  }
-  
-  @objc private func animatePulse() {
-    warningImageView.layer.removeAllAnimations()
-    warningImageView.animatePulse(withAnimationDelegate: self)
-  }
-  
-  // MARK: - TextField Interaction
-  
-  @IBAction func inputTextFieldEditingChanged(_ sender: TextFieldCounter) {
-    checkValidTextFieldInput()
-  }
-  
-  private func checkValidTextFieldInput() {
-    defer {
-      saveButtonContainerView.isHidden = !saveButton.isEnabled
-    }
-    
-    guard let text = inputTextField.text,
-      text.count == 32 else {
-        saveButton.isEnabled = false
-        inputTextField.textColor = .lightGray
-        return
-    }
-    saveButton.isEnabled = true
-    inputTextField.textColor = Constants.Theme.Color.InteractableElement.standardTint
-  }
-  
-  // MARK: - Button Interaction
-  
-  @IBAction func didTapSaveButton(_ sender: UIButton) {
-    inputTextField.resignFirstResponder()
-    UserDefaults.standard.set(inputTextField.text, forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey)
-    
-    steps.accept(WelcomeStep.setPermissions)
-  }
-  
-  @IBAction func didTapGetInstructionsButton(_ sender: UIButton) {
-    presentSafariViewController(for: Constants.Urls.kOpenWeatherMapInstructionsUrl)
+    viewModel.viewWillDisappear()
   }
 }
 
-extension SetApiKeyViewController: CAAnimationDelegate {
+// MARK: - ViewModel Bindings
+
+extension SetApiKeyViewController {
   
-  func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-    startAnimationTimer()
+  func setupBindings() {
+    viewModel.observeEvents()
+    bindContentFromViewModel(viewModel)
+    bindUserInputToViewModel(viewModel)
+  }
+  
+  func bindContentFromViewModel(_ viewModel: ViewModel) {
+    viewModel.isSaveButtonActiveDriver
+      .drive { [weak self] isEnabled in
+        self?.saveButton.isEnabled = isEnabled
+      }
+      .disposed(by: disposeBag)
+  }
+  
+  func bindUserInputToViewModel(_ viewModel: ViewModel) {
+    apiKeyInputTextField.rx
+      .text
+      .filterNil()
+      .bind(to: viewModel.apiInputTextFieldRelay)
+      .disposed(by: disposeBag)
+    
+    saveButton.rx
+      .tap
+      .bind(to: viewModel.onDidTapSaveButtonSubject)
+      .disposed(by: disposeBag)
+    
+    instructionsButton.rx
+      .tap
+      .bind(to: viewModel.onDidTapInstructionButtonSubject)
+      .disposed(by: disposeBag)
+  }
+}
+
+// MARK: - Setup
+
+private extension SetApiKeyViewController {
+  
+  func setupUiComponents() {
+    // compose stackviews
+    bubbleContentStackView.addArrangedSubview(bubbleDescriptionLabel)
+    bubbleContentStackView.addArrangedSubview(apiKeyInputTextField, constraints: [
+      apiKeyInputTextField.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
+    ])
+  
+    bubbleView.addSubview(bubbleContentStackView, constraints: [
+      bubbleContentStackView.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: ContentInsets.top(from: .large)),
+      bubbleContentStackView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: -ContentInsets.bottom(from: .large)),
+      bubbleContentStackView.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: ContentInsets.leading(from: .large)),
+      bubbleContentStackView.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: -ContentInsets.trailing(from: .large))
+    ])
+    
+    buttonStackView.addArrangedSubview(saveButton, constraints: [
+      saveButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
+    ])
+    buttonStackView.addArrangedSubview(instructionsButton, constraints: [
+      instructionsButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height)
+    ])
+    
+    mainContentStackView.addArrangedSubview(bubbleView)
+    mainContentStackView.addArrangedSubview(buttonStackView)
+    
+    // compose final view
+    view.addSubview(mainContentStackView, constraints: [
+      mainContentStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: ContentInsets.top(from: .large)),
+      mainContentStackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -ContentInsets.bottom(from: .large)),
+      mainContentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: ContentInsets.leading(from: .large)),
+      mainContentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -ContentInsets.trailing(from: .large))
+    ])
+  }
+  
+  func setupUiAppearance() {
+    title = R.string.localizable.welcome()
+    
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    
+    bubbleView.backgroundColor = Constants.Theme.Color.ViewElement.alert
   }
 }

@@ -2,112 +2,142 @@
 //  SetPermissionsViewController.swift
 //  NearbyWeather
 //
-//  Created by Erik Maximilian Martens on 15.04.17.
-//  Copyright © 2017 Erik Maximilian Martens. All rights reserved.
+//  Created by Erik Maximilian Martens on 13.02.22.
+//  Copyright © 2022 Erik Maximilian Martens. All rights reserved.
 //
 
 import UIKit
-import RxFlow
-import RxCocoa
+import RxSwift
 
-final class SetPermissionsViewController: UIViewController, Stepper {
+// MARK: - Definitions
+
+private extension SetPermissionsViewController {
+  struct Definitions {
+    static let mainStackViewInterElementYSpacing: CGFloat = 48
+  }
+}
+
+// MARK: - Class Definition
+
+final class SetPermissionsViewController: UIViewController, BaseViewController {
   
-  // MARK: - Routing
+  typealias ViewModel = SetPermissionsViewModel
   
-  var steps = PublishRelay<Step>()
+  private typealias ContentInsets = Constants.Dimensions.Spacing.ContentInsets
+  
+  // MARK: - UIComponents
+  
+  fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .custom(value: Definitions.mainStackViewInterElementYSpacing)))
+  fileprivate lazy var bubbleView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
+  fileprivate lazy var bubbleContentStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .large))
+  fileprivate lazy var bubbleDescriptionLabel = Factory.Label.make(fromType: .subtitle(text: R.string.localizable.configure_location_permissions_description(), textColor: Constants.Theme.Color.ViewElement.Label.titleLight))
+  fileprivate lazy var configureButton = Factory.Button.make(fromType: .standard(title: R.string.localizable.configure(), height: Constants.Dimensions.InteractableElement.height))
+  
+  // MARK: - Assets
+  
+  private let disposeBag = DisposeBag()
   
   // MARK: - Properties
   
-  private var timer: Timer?
+  let viewModel: ViewModel
   
-  // MARK: - Outlets
+  // MARK: - Initialization
   
-  @IBOutlet weak var bubbleView: UIView!
-  @IBOutlet weak var warningImageView: UIImageView!
+  required init(dependencies: ViewModel.Dependencies) {
+    viewModel = SetPermissionsViewModel(dependencies: dependencies)
+    super.init(nibName: nil, bundle: nil)
+  }
   
-  @IBOutlet weak var descriptionLabel: UILabel!
-  @IBOutlet weak var askPermissionsButton: UIButton!
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
-  // MARK: - Override Functions
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    title = R.string.localizable.location_access()
-    configure()
-    
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(Self.launchApp),
-      name: Notification.Name(rawValue: Constants.Keys.NotificationCenter.kLocationAuthorizationUpdated),
-      object: nil
+  deinit {
+    printDebugMessage(
+      domain: String(describing: self),
+      message: "was deinitialized",
+      type: .info
     )
   }
   
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    animatePulse()
+  // MARK: - ViewController LifeCycle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    viewModel.viewDidLoad()
+    setupUiComponents()
+    setupBindings()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    viewModel.viewWillAppear()
+    setupUiAppearance()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    warningImageView.layer.removeAllAnimations()
-    timer?.invalidate()
-  }
-  
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
-  
-  // MARK: - Helper Functions
-  
-  func configure() {    
-    bubbleView.layer.cornerRadius = 10
-    bubbleView.backgroundColor = .black
-    
-    descriptionLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-    descriptionLabel.textColor = .white
-    descriptionLabel.text! = R.string.localizable.configure_location_permissions_description()
-    
-    askPermissionsButton.setTitle(R.string.localizable.configure().uppercased(), for: .normal)
-    askPermissionsButton.setTitleColor(.white, for: UIControl.State())
-    askPermissionsButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
-    askPermissionsButton.layer.cornerRadius = askPermissionsButton.bounds.height/2
-    askPermissionsButton.layer.backgroundColor = Constants.Theme.Color.MarqueColors.standardDay.cgColor
-  }
-  
-  fileprivate func startAnimationTimer() {
-    timer = Timer.scheduledTimer(
-      timeInterval: 5,
-      target: self,
-      selector: (#selector(Self.animatePulse)),
-      userInfo: nil,
-      repeats: false
-    )
-  }
-  
-  @objc private func animatePulse() {
-    warningImageView.layer.removeAllAnimations()
-    warningImageView.animatePulse(withAnimationDelegate: self)
-  }
-  
-  @objc func launchApp() {
-    steps.accept(WelcomeStep.dismiss)
-  }
-  
-  // MARK: - Button Interaction
-  
-  @IBAction func didTapAskPermissionsButton(_ sender: UIButton) {
-    guard UserLocationService.shared.currentAuthorizationStatus != .notDetermined else {
-      UserLocationService.shared.requestWhenInUseAuthorization()
-      return
-    }
-    launchApp()
+    viewModel.viewWillDisappear()
   }
 }
 
-extension SetPermissionsViewController: CAAnimationDelegate {
+// MARK: - ViewModel Bindings
+
+extension SetPermissionsViewController {
   
-  func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-    startAnimationTimer()
+  func setupBindings() {
+    viewModel.observeEvents()
+    bindContentFromViewModel(viewModel)
+    bindUserInputToViewModel(viewModel)
+  }
+  
+  func bindContentFromViewModel(_ viewModel: ViewModel) {
+    // nothing to do
+  }
+  
+  func bindUserInputToViewModel(_ viewModel: ViewModel) {
+    configureButton.rx
+      .tap
+      .bind(to: viewModel.onDidTapConfigureButtonSubject)
+      .disposed(by: disposeBag)
+  }
+}
+
+// MARK: - Setup
+
+private extension SetPermissionsViewController {
+  
+  func setupUiComponents() {
+    // compose stackviews
+    bubbleContentStackView.addArrangedSubview(bubbleDescriptionLabel)
+  
+    bubbleView.addSubview(bubbleContentStackView, constraints: [
+      bubbleContentStackView.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: ContentInsets.top(from: .large)),
+      bubbleContentStackView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: -ContentInsets.bottom(from: .large)),
+      bubbleContentStackView.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: ContentInsets.leading(from: .large)),
+      bubbleContentStackView.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: -ContentInsets.trailing(from: .large))
+    ])
+    
+    mainContentStackView.addArrangedSubview(bubbleView)
+    mainContentStackView.addArrangedSubview(configureButton)
+    
+    // compose final view
+    view.addSubview(mainContentStackView, constraints: [
+      mainContentStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: ContentInsets.top(from: .large)),
+      mainContentStackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -ContentInsets.bottom(from: .large)),
+      mainContentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: ContentInsets.leading(from: .large)),
+      mainContentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -ContentInsets.trailing(from: .large))
+    ])
+  }
+  
+  func setupUiAppearance() {
+    title = R.string.localizable.location_access()
+    
+    tabBarController?.tabBar.isTranslucent = true
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    view.backgroundColor = Constants.Theme.Color.ViewElement.secondaryBackground
+    
+    bubbleView.backgroundColor = Constants.Theme.Color.ViewElement.alert
   }
 }

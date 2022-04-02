@@ -16,9 +16,6 @@
 		"name": "R.swift",
 		"urlString": "https://github.com/mac-cain13/R.swift"
 	}, {
-		"name": "TextFieldCounter",
-		"urlString": "https://github.com/serralvo/TextFieldCounter"
-	}, {
     "name": "SwiftLint",
     "urlString": "https://github.com/realm/SwiftLint"
   }, {
@@ -39,5 +36,23 @@
   }, {
     "name": "RxFlow",
     "urlString": "https://github.com/RxSwiftCommunity/RxFlow"
+  }, {
+    "name": "RxRealm",
+    "urlString": "https://github.com/RxSwiftCommunity/RxRealm"
+  }, {
+    "name": "RealmSwift",
+    "urlString": "https://github.com/realm/realm-cocoa"
+  }, {
+    "name": "RxAlamofire",
+    "urlString": "https://github.com/RxSwiftCommunity/RxAlamofire"
+  }, {
+    "name": "RxOptional",
+    "urlString": "https://github.com/RxSwiftCommunity/RxOptional"
+  }, {
+    "name": "RxCoreLocation",
+    "urlString": "https://github.com/RxSwiftCommunity/RxCoreLocation"
+  }, {
+    "name": "Swinject",
+    "urlString": "https://github.com/Swinject/Swinject"
   }]
 }

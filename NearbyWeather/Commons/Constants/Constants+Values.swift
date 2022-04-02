@@ -19,22 +19,24 @@ extension Constants.Values {
     static let kBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? Constants.Messages.kUndefined
     static let kVersionBuildString = "Version \(kVersion) Build #\(kBuild)"
   }
-}
-
-extension Constants.Values {
   
   enum TemperatureName {
     static let kCelsius = "Celsius"
     static let kFahrenheit = "Fahrenheit"
     static let kKelvin = "Kelvin"
   }
-}
-
-extension Constants.Values {
   
   enum TemperatureUnit {
     static let kCelsius = "°C"
     static let kFahrenheit = "°F"
     static let kKelvin = "K"
   }
+}
+
+extension Constants.Values {
+  enum ApiKey {}
+}
+
+extension Constants.Values.ApiKey {
+  static let kOpenWeatherMapApiKeyLength = 32
 }

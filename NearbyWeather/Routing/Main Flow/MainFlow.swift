@@ -7,27 +7,38 @@
 //
 
 import RxFlow
+import Swinject
+
+// MARK: - Dependencies
+
+extension MainFlow {
+  struct Dependencies {
+    let dependencyContainer: Container
+  }
+}
+
+// MARK: - Class Definition
 
 final class MainFlow: Flow {
-  
+
   // MARK: - Assets
-  
+
   var root: Presentable {
     rootViewController
   }
+
+  private lazy var rootViewController = Factory.TabBarController.make(fromType: .standard)
   
-  private lazy var rootViewController: UITabBarController = {
-    let tabbar = UITabBarController()
-    tabbar.tabBar.backgroundColor = Constants.Theme.Color.ViewElement.background
-    tabbar.tabBar.barTintColor = Constants.Theme.Color.ViewElement.background
-    tabbar.tabBar.tintColor = Constants.Theme.Color.MarqueColors.standardDay
-    return tabbar
-  }()
+  // MARK: - Properties
   
+  let dependencies: Dependencies
+
   // MARK: - Initialization
-  
-  init() {}
-  
+
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
+  }
+
   deinit {
     printDebugMessage(
       domain: String(describing: self),
@@ -35,9 +46,9 @@ final class MainFlow: Flow {
       type: .info
     )
   }
-  
+
   // MARK: - Functions
-  
+
   func navigate(to step: Step) -> FlowContributors {
     guard let step = step as? MainStep else {
       return .none
@@ -49,29 +60,23 @@ final class MainFlow: Flow {
   }
 }
 
+// MARK: - Summoning Functions
+
 private extension MainFlow {
-  
+
   func summonRootTabBar() -> FlowContributors {
-    
-    let listFlow = ListFlow()
-    let mapFlow = MapFlow()
-    let settingsFlow = SettingsFlow()
-    
-    Flows.whenReady(
-      flow1: listFlow,
-      flow2: mapFlow,
-      flow3: settingsFlow
-    ) { [rootViewController] (listRoot: UINavigationController, mapRoot: UINavigationController, settingsRoot: UINavigationController) in
-      rootViewController.viewControllers = [
-        listRoot,
-        mapRoot,
-        settingsRoot
-      ]
+
+    let listFlow = WeatherListFlow(dependencies: WeatherListFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+    let mapFlow = WeatherMapFlow(dependencies: WeatherMapFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+    let settingsFlow = SettingsFlow(dependencies: SettingsFlow.Dependencies(dependencyContainer: dependencies.dependencyContainer))
+
+    Flows.use([listFlow, mapFlow, settingsFlow], when: .ready) { [unowned rootViewController] rootViewControllers in
+      rootViewController.viewControllers = rootViewControllers
     }
-    
+
     return .multiple(flowContributors: [
-      .contribute(withNextPresentable: listFlow, withNextStepper: ListStepper()),
-      .contribute(withNextPresentable: mapFlow, withNextStepper: MapStepper()),
+      .contribute(withNextPresentable: listFlow, withNextStepper: WeatherListStepper(dependencyContainer: dependencies.dependencyContainer)),
+      .contribute(withNextPresentable: mapFlow, withNextStepper: WeatherMapStepper()),
       .contribute(withNextPresentable: settingsFlow, withNextStepper: SettingsStepper())
     ])
   }

@@ -8,21 +8,55 @@
 
 import RxFlow
 import RxCocoa
+import RxSwift
 
 enum RootStep: Step {
-  case main
+  case loading
   case welcome
+  case main
   case dimissWelcome
 }
+
+// MARK: - Dependencies
+
+extension RootStepper {
+  struct Dependencies {
+    let applicationCycleService: ApplicationStateReading
+    let migrationRunningObservable: Observable<Bool>
+  }
+}
+
+// MARK: - Class Definition
 
 class RootStepper: Stepper {
   
   var steps = PublishRelay<Step>()
+  var initialStep: Step = RootStep.loading
   
-  var initialStep: Step {
-    guard UserDefaults.standard.value(forKey: Constants.Keys.UserDefaults.kNearbyWeatherApiKeyKey) != nil else {
-      return RootStep.welcome
-    }
-    return RootStep.main
+  // MARK: - Assets
+  
+  let disposeBag = DisposeBag()
+  
+  let dependencies: Dependencies
+  
+  // MARK: - Initialization
+  
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
+  }
+  
+  // MARK: - Functions
+  
+  func readyToEmitSteps() {
+    dependencies.migrationRunningObservable
+      .skip { $0 == true }
+      .flatMapLatest { [unowned self] _ in
+        dependencies.applicationCycleService.createGetSetupCompletedObservable()
+      }
+      .take(1)
+      .asSingle()
+      .map { ($0?.completed ?? false) == true ? RootStep.main : RootStep.welcome }
+      .subscribe(onSuccess: steps.accept)
+      .disposed(by: disposeBag)
   }
 }

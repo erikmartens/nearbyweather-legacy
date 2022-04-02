@@ -34,55 +34,54 @@
 
 ## About the App
 
-> ℹ️ By using the app you automatically agree to the [privacy policy](PRIVACYPOLICY.md) and the [terms of use](TERMSOFUSE.md).
+> ❗️ By using the app you automatically agree to the [privacy policy](PRIVACYPOLICY.md) and the [terms of use](TERMSOFUSE.md).
 
-NearbyWeather is a simple weather app, that provides current weather information for nearby cities, as well for bookmarked locations. NearbyWeather uses the OpenWeatherMap API to download weather data. Additionally the OpenWeatherMaps location database is directly bootstrapped into the app for quick access.
+> ❗️Please note that you need to supply your own OpenWeatherMap API key, in order to use the app.
 
-With NearbyWeather you can:
+NearbyWeather is a simple weather app, that provides current weather information for nearby weather stations, as well for bookmarked weather stations. NearbyWeather uses the OpenWeatherMap API to download weather data. Additionally the OpenWeatherMap's station-database is directly bootstrapped into the app for quick access.
 
-- See current weather information for bookmarked and nearby places via a list and a map view
-- See the current temperature on your app icon
-- Detailed weather information is offered in addition to the overviews
-- Add places as bookmarks via OpenWeatherMaps weather-station data base
-- Choose your preferred units (celsius/fahrenheit/kelvin & kilometres/miles)
-- Access previously loaded data offline
+### Supported Languages
 
-```
-❗️Please note that you need to supply your own OpenWeatherMap API key, in order to use the app.
-```
+| Development Language | App Localizations |
+|:--|:--|
+| 🇺🇸 | 🇺🇸 🇩🇪 🇫🇷 🇨🇳 (Traditional) |
 
 ## Mission of this Project
 
-NearbyWeather was created to help you as a reference for developing your skills. The app is kept up to date with the latest best practices in mobile app development. Find out how how modern iOS apps are engineered:
+NearbyWeather was created to help you as a reference for advanced app-building-concepts. The app is kept up to date with the latest best practices in native development for Apple Platforms. Below is a list of the concepts used for different areas of the construction of NearbyWeather:
 
 | Area | Concepts | Status |
-|:--|:--|:--|
-| Language | Swift (latest release) | ✅ |
-| Additional Languages | Objective-C, JavaScript | ✅ |
-| Additional Frameworks | RxSwift | 🔄 In Progress |
-| Architecture | MVVM+C | 🔄 In Progress |
-| Navigation | Coordinator Pattern with RxFlow | ✅ |
-| UI-Construction | Autolayout in Code + Factory Pattern | 🔄 In Progress |
-| Dependencies | Dependency Injection with Swinject & Singletons | 🔄 In Progress / ✅ |
-| Data Persistence | Realm & Files on Disk | 🔄 In Progress / ✅ |
+|:--|:--|:-:|
+| Language | Swift | ✅ |
+| Framework | ReactiveX (RxCocoa, RxSwift) | ✅ |
+| Architecture | MVVM+C | ✅ |
+| Routing | Coordinator Pattern via RxFlow | ✅ |
+| UI-Construction | Layout via Code + Factory Pattern | ✅ |
+| Dependency Management| Swinject | ✅ |
+| Data Persistence | Realm | ✅ |
 | Networking | Alamofire | ✅ |
 | Asset Management | R.Swift | ✅ |
 | Code Quality | SwiftLint | ✅ |
-| Analytics and Reporting | Google Firebase | ✅ |
-| Library Management | CocoaPods | ✅ |
-| Bootsrapped Bundle Data | Node.js Scripts | ✅ |
+| Package Management | CocoaPods | ✅ |
+| Bootsrapping | Node.js Scripts | ✅ |
 | Deployment | Fastlane | ✅ |
-| Testing and Quality Assurance | Unit Tests and UI Tests, SwiftUI Scene Previews | 🅾️ Coming Soon |
+| Crash Data Analytics | Reports to Google Firebase | ✅ |
+| Usage Behavior Analytics | Events to Google Firebase | 🅾️ |
+| UI Deign Verification | SwiftUI Scene Previews | 🅾️ |
+| Continuous Integration | Bitrise | 🅾️ |
+| Quality Assurance | Unit Tests & UI Tests for Regression Tests via CI | 🅾️ |
+
+> __LEGEND:__ ✅ = Done, 🔄 = In Progress, 🅾️ = Coming Soon
 
 ## App Releases
 
-Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects).
+Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects). There you can get an overview of planned features. If you want to suggest a feature, you can submit a new issue for triage.
 
-| Version | Tag |
-|:--|:--|
-| Current Release | [v2.2.1](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.2.1)
-| Next Release | [v2.2.0](https://github.com/erikmartens/NearbyWeather/projects/9) |
-| Future Releases | [v?.?.?](https://github.com/erikmartens/NearbyWeather/projects/1) |
+| Type | Project | Release |
+|:--|:--|:--|
+| Current Release | [Project 3.0.0](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.3.0) | _N/A_ |
+| Next Release | [Project 3.1.0](https://github.com/erikmartens/NearbyWeather/projects/8) | _N/A_ |
+| Future Releases | [Future Backlog Project](https://github.com/erikmartens/NearbyWeather/projects) | _N/A_ |
 
 ## How to Get Started
 
@@ -104,6 +103,10 @@ Past releases are documented in the [release section](https://github.com/erikmar
 
 We looking forward to receiving your contributions. You can find out how to take part in the development of this application. Please find out how to submit code to this repository via the [contribution guidelines](CONTRIBUTING.md).
 
+### Translations
+
+Localizing the app for additional languages is another great way to contribute. If you are an experienced iOS developer, you know what to do. Please create an issue for your chosen language and follow the [contribution guidelines](CONTRIBUTING.md). Otherwise get into contact in order to be introduced to the procedure.
+
 ### Beta Testing
 
 You may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.dev@icloud.com](mailto:erikmartens.dev@icloud.com) to be added to the list of testers.
@@ -120,10 +123,10 @@ If you are having technical issues or want to raise a bug/issue with the app, th
 
 ## Licensing
 
-Copyright © 2016 - 2021 Erik Maximilian Martens.
+Copyright © 2016 - 2022 Erik Maximilian Martens.
 
-Licensed under the **MIT License** (the "License"); you may not use this file except in compliance with the License.
+Licensed under the **MIT License** (the "License"); you may not use this project except in compliance with the License.
 
-You may obtain a copy of the License at https://opensource.org/licenses/MIT.
+You may obtain a copy of the License at [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT).
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the [LICENSE](./LICENSE) for the specific language governing permissions and limitations under the License.

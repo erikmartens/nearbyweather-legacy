@@ -11,6 +11,7 @@ import RxFlow
 
 enum WelcomeStep: Step {
   case setApiKey
+  case apiInstructions
   case setPermissions
   case dismiss
 }

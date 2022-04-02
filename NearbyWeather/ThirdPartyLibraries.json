@@ -54,5 +54,8 @@
   }, {
     "name": "Swinject",
     "urlString": "https://github.com/Swinject/Swinject"
+  }, {
+    "name": "Solar",
+    "urlString": "https://github.com/ceeK/Solar"
   }]
 }

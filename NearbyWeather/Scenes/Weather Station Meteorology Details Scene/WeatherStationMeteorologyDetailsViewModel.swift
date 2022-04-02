@@ -95,17 +95,56 @@ extension WeatherStationMeteorologyDetailsViewModel {
         temperatureUnitOptionObservable,
         dimensionalUnitsOptionObservable,
         weatherStationIsBookmarkedObservable,
-        resultSelector: { weatherInformationDTO, temperatureUnitOption, dimensionalUnitsOption, isBookmark -> BaseCellViewModelProtocol in
-          WeatherStationMeteorologyDetailsHeaderCellViewModel(dependencies: WeatherStationMeteorologyDetailsHeaderCellViewModel.Dependencies(
+        resultSelector: { weatherInformationDTO, temperatureUnitOption, dimensionalUnitsOption, isBookmark -> [BaseCellViewModelProtocol] in
+          var results = [BaseCellViewModelProtocol]()
+          
+          results.append(WeatherStationMeteorologyDetailsHeaderCellViewModel(dependencies: WeatherStationMeteorologyDetailsHeaderCellViewModel.Dependencies(
             weatherInformationDTO: weatherInformationDTO,
             temperatureUnitOption: temperatureUnitOption,
             dimensionalUnitsOption: dimensionalUnitsOption,
             isBookmark: isBookmark
-          ))
+          )))
+          
+          if let feelsLikeTempKelvin = weatherInformationDTO.atmosphericInformation.feelsLikesTemperatureKelvin,
+             let tempKelvinHigh = weatherInformationDTO.atmosphericInformation.temperatureKelvinHigh,
+             let tempKelvinLow = weatherInformationDTO.atmosphericInformation.temperatureKelvinLow {
+            results.append(WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel(dependencies: WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel.Dependencies(
+              lhsText: String
+                .begin(with: "↑")
+                .append(
+                  contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
+                    forTemperatureUnit: temperatureUnitOption,
+                    fromRawTemperature: tempKelvinHigh
+                  ),
+                  delimiter: .none
+                )
+                .append(contentsOf: "↓", delimiter: .space)
+                .append(
+                  contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
+                    forTemperatureUnit: temperatureUnitOption,
+                    fromRawTemperature: tempKelvinLow
+                  ),
+                  delimiter: .none
+                ) ?? "",
+              rhsText: String
+                .begin()
+                .append(contentsOf: R.string.localizable.feels_like().capitalized)
+                .append(
+                  contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
+                    forTemperatureUnit: temperatureUnitOption,
+                    fromRawTemperature: feelsLikeTempKelvin
+                  ),
+                  delimiter: .colonSpace
+                ) ?? "",
+              isDayTime: MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO) ?? true
+            )))
+          }
+          
+          return results
         }
       )
-      .map { headerCell -> [TableViewSectionDataProtocol] in
-        [WeatherStationMeteorologyDetailsHeaderItemsSection(sectionItems: [headerCell])]
+      .map { headerCellItems -> [TableViewSectionDataProtocol] in
+        [WeatherStationMeteorologyDetailsHeaderItemsSection(sectionItems: headerCellItems)]
       }
     
     let dayCycleStringsObservable = weatherInformationDtoObservable

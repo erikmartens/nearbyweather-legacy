@@ -208,6 +208,9 @@
 		F29912E827F8475700BE0D59 /* WeatherStationMeteorologyDetailsSymbolCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912E727F8475700BE0D59 /* WeatherStationMeteorologyDetailsSymbolCellViewModel.swift */; };
 		F29912EA27F8476700BE0D59 /* WeatherStationMeteorologyDetailsSymbolCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912E927F8476700BE0D59 /* WeatherStationMeteorologyDetailsSymbolCellModel.swift */; };
 		F29912EC27F8477200BE0D59 /* WeatherStationMeteorologyDetailsSymbolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912EB27F8477200BE0D59 /* WeatherStationMeteorologyDetailsSymbolCell.swift */; };
+		F29912EF27F8ADA100BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912EE27F8ADA100BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel.swift */; };
+		F29912F127F8ADB400BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912F027F8ADB400BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellModel.swift */; };
+		F29912F327F8ADC500BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29912F227F8ADC500BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCell.swift */; };
 		F2A5CAA62005762A0071BFFB /* MeteorologyInformationConversionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */; };
 		F2A5CAAC200D51870071BFFB /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */; };
 		F2ADB75120FE7014009C9547 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */; };
@@ -522,6 +525,9 @@
 		F29912E727F8475700BE0D59 /* WeatherStationMeteorologyDetailsSymbolCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsSymbolCellViewModel.swift; sourceTree = "<group>"; };
 		F29912E927F8476700BE0D59 /* WeatherStationMeteorologyDetailsSymbolCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsSymbolCellModel.swift; sourceTree = "<group>"; };
 		F29912EB27F8477200BE0D59 /* WeatherStationMeteorologyDetailsSymbolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsSymbolCell.swift; sourceTree = "<group>"; };
+		F29912EE27F8ADA100BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel.swift; sourceTree = "<group>"; };
+		F29912F027F8ADB400BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsHeaderDualLabelSubCellModel.swift; sourceTree = "<group>"; };
+		F29912F227F8ADC500BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStationMeteorologyDetailsHeaderDualLabelSubCell.swift; sourceTree = "<group>"; };
 		F2A5CAA52005762A0071BFFB /* MeteorologyInformationConversionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorologyInformationConversionWorker.swift; sourceTree = "<group>"; };
 		F2A5CAAB200D51870071BFFB /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		F2ADB75020FE7014009C9547 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -1130,6 +1136,7 @@
 			isa = PBXGroup;
 			children = (
 				F2E12F2E25AF645700176087 /* Weather Station Meteorology Details Header */,
+				F29912ED27F8AD6400BE0D59 /* Weather Station Meteorology Details Header Dual Label Sub */,
 				F29912E627F8471800BE0D59 /* Weather Station Meteorology Details Symbol */,
 				F20CA10625B3103500153E47 /* Weather Station Meteorology Details Map */,
 			);
@@ -1590,6 +1597,16 @@
 			path = "Weather Station Meteorology Details Symbol";
 			sourceTree = "<group>";
 		};
+		F29912ED27F8AD6400BE0D59 /* Weather Station Meteorology Details Header Dual Label Sub */ = {
+			isa = PBXGroup;
+			children = (
+				F29912EE27F8ADA100BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel.swift */,
+				F29912F027F8ADB400BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellModel.swift */,
+				F29912F227F8ADC500BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCell.swift */,
+			);
+			path = "Weather Station Meteorology Details Header Dual Label Sub";
+			sourceTree = "<group>";
+		};
 		F2BDACFA27E64E0500FF6401 /* Loading Flow */ = {
 			isa = PBXGroup;
 			children = (
@@ -2018,6 +2035,7 @@
 				F217CBB027DB63E200DAC947 /* AboutAppContributorsItemsMainSection.swift in Sources */,
 				F20CA10825B3114B00153E47 /* WeatherStationMeteorologyDetailsMapCellViewModel.swift in Sources */,
 				F217CB9027D8B9BA00DAC947 /* SettingsPreferencesItemsSubSection1.swift in Sources */,
+				F29912F327F8ADC500BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCell.swift in Sources */,
 				F2D1998525A274ED004C7753 /* Factory+UIAlertAction.swift in Sources */,
 				F217CBC627DB6CF400DAC947 /* SettingsDualLabelSubtitleCellModel.swift in Sources */,
 				F217CB7427D5097200DAC947 /* SettingsBookmarksItemsMainSection.swift in Sources */,
@@ -2060,6 +2078,7 @@
 				F2D1995E25A204FA004C7753 /* WeatherListNearbyItemsSection.swift in Sources */,
 				F2DBEB3223F03A9800CD513B /* UIColor+SemanticInitializer.swift in Sources */,
 				F28F180D25A74C3600AEA99A /* ApiKeyDTO.swift in Sources */,
+				F29912F127F8ADB400BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellModel.swift in Sources */,
 				F2E12F2725AF5F1A00176087 /* WeatherStationMeteorologyDetailsTableViewDataSource.swift in Sources */,
 				F22B0F7C25AB615A0037F957 /* BaseAnnotation.swift in Sources */,
 				F2BDAD0927E72A8D00FF6401 /* SettingsImagedDualLabelSubtitleCell.swift in Sources */,
@@ -2219,6 +2238,7 @@
 				F217CB9627D8F87B00DAC947 /* PreferredBookmarkSelectionAlert.swift in Sources */,
 				F213FA2F23F9EE4200F094D8 /* PreferredBookmarkOption.swift in Sources */,
 				F217CB8627D50DF700DAC947 /* SettingsImagedSingleLabelToggleCellModel.swift in Sources */,
+				F29912EF27F8ADA100BE0D59 /* WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel.swift in Sources */,
 				F217CB6E27D504DA00DAC947 /* BaseTableViewSectionData.swift in Sources */,
 				F237285D2444A9AD00964C49 /* Factory+UIImageView.swift in Sources */,
 				F237100425AB34830072AF29 /* WeatherMapViewModel.swift in Sources */,

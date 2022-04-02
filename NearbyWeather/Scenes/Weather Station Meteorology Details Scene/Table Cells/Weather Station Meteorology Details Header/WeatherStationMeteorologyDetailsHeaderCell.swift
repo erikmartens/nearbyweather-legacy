@@ -27,14 +27,10 @@ final class WeatherStationMeteorologyDetailsHeaderCell: UITableViewCell, BaseCel
   
   // MARK: - UIComponents
   
-  private lazy var backgroundColorView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
   private lazy var weatherConditionSymbolImageView = Factory.ImageView.make(fromType: .weatherConditionSymbol)
   
   private lazy var weatherConditionTitleLabel = Factory.Label.make(fromType: .headline(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   private lazy var currentTemperatureLabel = Factory.Label.make(fromType: .headline(alignment: .right, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
-  
-  private lazy var temperatureHighLowLabel = Factory.Label.make(fromType: .subtitle(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
-  private lazy var temperatureFeelsLikeLabel = Factory.Label.make(fromType: .subtitle(alignment: .right, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   
   // MARK: - Assets
   
@@ -85,28 +81,20 @@ extension WeatherStationMeteorologyDetailsHeaderCell {
 private extension WeatherStationMeteorologyDetailsHeaderCell {
   
   func setContent(for cellModel: WeatherStationMeteorologyDetailsHeaderCellModel) {
-//    let gradientLayer = Factory.GradientLayer.make(fromType: .weatherCell(
-//      frame: backgroundColorView.bounds,
-//      cornerRadiusWeight: .medium,
-//      baseColor: cellModel.backgroundColor
-//    ))
-//    backgroundColorView.layer.insertSublayer(gradientLayer, at: 0)
-    backgroundColorView.backgroundColor = cellModel.backgroundColor
+    contentView.backgroundColor = cellModel.backgroundColor
   
     weatherConditionSymbolImageView.image = cellModel.weatherConditionSymbolImage
     weatherConditionTitleLabel.text = cellModel.weatherConditionTitle
     currentTemperatureLabel.text = cellModel.currentTemperature
-    temperatureHighLowLabel.text = cellModel.temperatureHighLow
-    temperatureFeelsLikeLabel.text = cellModel.feelsLikeTemperature
   }
   
   func layoutUserInterface() {
-    contentView.addSubview(backgroundColorView, constraints: [
-      backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor),
-      backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-      backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-    ])
+    separatorInset = UIEdgeInsets(
+      top: 0,
+      left: contentView.frame.size.width,
+      bottom: 0,
+      right: contentView.frame.size.width
+    )
     
     contentView.addSubview(weatherConditionSymbolImageView, constraints: [
       weatherConditionSymbolImageView.heightAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolWidthHeight),
@@ -119,38 +107,24 @@ private extension WeatherStationMeteorologyDetailsHeaderCell {
     
     contentView.addSubview(weatherConditionTitleLabel, constraints: [
       weatherConditionTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      weatherConditionTitleLabel.topAnchor.constraint(equalTo: weatherConditionSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .large)),
+      weatherConditionTitleLabel.topAnchor.constraint(equalTo: weatherConditionSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
+      weatherConditionTitleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       weatherConditionTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium))
     ])
     
     contentView.addSubview(currentTemperatureLabel, constraints: [
       currentTemperatureLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
       currentTemperatureLabel.widthAnchor.constraint(equalTo: weatherConditionTitleLabel.widthAnchor),
-      currentTemperatureLabel.topAnchor.constraint(equalTo: weatherConditionSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
+      currentTemperatureLabel.topAnchor.constraint(equalTo: weatherConditionSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
+      currentTemperatureLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       currentTemperatureLabel.leadingAnchor.constraint(equalTo: weatherConditionTitleLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      currentTemperatureLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium))
-    ])
-    
-    contentView.addSubview(temperatureHighLowLabel, constraints: [
-      temperatureHighLowLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      temperatureHighLowLabel.topAnchor.constraint(equalTo: weatherConditionTitleLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
-      temperatureHighLowLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
-      temperatureHighLowLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large))
-    ])
-    
-    contentView.addSubview(temperatureFeelsLikeLabel, constraints: [
-      temperatureFeelsLikeLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      temperatureFeelsLikeLabel.widthAnchor.constraint(equalTo: temperatureHighLowLabel.widthAnchor),
-      temperatureFeelsLikeLabel.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
-      temperatureFeelsLikeLabel.leadingAnchor.constraint(equalTo: temperatureHighLowLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      temperatureFeelsLikeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
-      temperatureFeelsLikeLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large))
+      currentTemperatureLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
+      currentTemperatureLabel.firstBaselineAnchor.constraint(equalTo: weatherConditionTitleLabel.firstBaselineAnchor)
     ])
   }
   
   func setupAppearance() {
     selectionStyle = .none
     backgroundColor = .clear
-    contentView.backgroundColor = .clear
   }
 }

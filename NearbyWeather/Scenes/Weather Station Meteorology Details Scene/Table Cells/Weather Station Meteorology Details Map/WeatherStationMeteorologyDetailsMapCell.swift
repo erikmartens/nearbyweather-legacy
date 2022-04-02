@@ -14,7 +14,6 @@ import RxSwift
 private extension WeatherStationMeteorologyDetailsMapCell {
   struct Definitions {
     static let mapViewHeight: CGFloat = 200
-    static let symbolWidth: CGFloat = 20
   }
 }
 

@@ -8,7 +8,7 @@
 
 import MapKit
 
-struct WeatherStationMeteorologyInformationPreviewAnnotationModel {
+struct WeatherStationMeteorologyInformationPreviewAnnotationModel { // swiftlint:disable:this type_name
   let title: String?
   let subtitle: String?
   let weatherConditionSymbol: UIImage?

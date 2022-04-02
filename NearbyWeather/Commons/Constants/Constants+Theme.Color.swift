@@ -17,8 +17,8 @@ extension Constants.Theme.Color {
   enum MarqueColors {
     
     static var standardMarque: UIColor {
-      UIColor.from(dark: .init(hex: 0x72c3fb),
-                   light: .init(hex: 0x50B4FA))
+      UIColor.from(dark: .init(hex: 0x338DDA),
+                   light: .init(hex: 0x337ac7))
     }
   }
   
@@ -113,8 +113,8 @@ extension Constants.Theme.Color {
       }
       
       static var colorBackgroundNight: UIColor {
-        UIColor.from(dark: .init(hex: 0x546e9f),
-                     light: .init(hex: 0x2a4a87))
+        UIColor.from(dark: .init(hex: 0xA57DFE),
+                     light: .init(hex: 0x66599e))
       }
       
       static var border: UIColor {

@@ -99,7 +99,7 @@ private extension MeteorologyInformationConversionWorker {
     case cardinalDirectionNW
     case cardinalDirectionNNW
     
-    init?(degrees: Double) {
+    init?(degrees: Double) { // swiftlint:disable:this cyclomatic_complexity
       guard degrees >= 0 && degrees <= 360 else {
         return nil
       }
@@ -199,7 +199,7 @@ extension MeteorologyInformationConversionWorker {
         systemImageName: "cloud.bolt.rain.fill",
         colorPalette: [
           WeatherInformationColor.white,
-          WeatherInformationColor.blue,
+          WeatherInformationColor.cyan,
           WeatherInformationColor.yellow
         ]
       ))
@@ -218,32 +218,48 @@ extension MeteorologyInformationConversionWorker {
           WeatherInformationColor.yellow
         ]
       ))
-    case let x where x >= 300 && x <= 321:
+    case let x where x == 300 || x == 301 || x == 310:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: isDayTime ? "cloud.sun.rain.fill" : "cloud.moon.rain.fill",
         colorPalette: [
           WeatherInformationColor.white,
           isDayTime ? WeatherInformationColor.yellow : .purple,
-          WeatherInformationColor.blue
+          WeatherInformationColor.cyan
         ]
       ))
-    case let x where x >= 500 && x <= 531:
+    case let x where x == 302 || (x >= 311 && x <= 321):
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "cloud.drizzle.fill",
-        colorPalette: [
-          WeatherInformationColor.white,
-          WeatherInformationColor.blue
-        ]
-      ))
-    case let x where x >= 600 && x <= 602:
-      return Factory.Image.make(fromType: .weatherConditionSymbol(
-        systemImageName: "wind.snow",
         colorPalette: [
           WeatherInformationColor.white,
           WeatherInformationColor.cyan
         ]
       ))
-    case let x where x >= 603 && x <= 622:
+    case let x where x == 500 || x == 501:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.rain.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
+    case let x where x == 511:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.sleet.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
+    case let x where (x >= 502 && x <= 504) || (x >= 520 && x <= 531) :
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.heavyrain.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
+    case let x where (x >= 600 && x <= 602) || x >= 620 && x <= 622:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "cloud.snow.fill",
         colorPalette: [
@@ -251,12 +267,57 @@ extension MeteorologyInformationConversionWorker {
           WeatherInformationColor.cyan
         ]
       ))
-    case let x where x >= 701 && x <= 771:
+    case let x where x >= 611 && x <= 616:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.sleet.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
+    case let x where x == 701:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.fog",
+        colorPalette: [
+          WeatherInformationColor.white.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 711 || x == 762:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "smoke.fill",
+        colorPalette: [
+          WeatherInformationColor.gray.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 721:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "sun.haze.fill",
+        colorPalette: [
+          WeatherInformationColor.yellow,
+          WeatherInformationColor.white.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 731 || x == 751 || x == 761:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "sun.dust.fill",
+        colorPalette: [
+          WeatherInformationColor.yellow,
+          WeatherInformationColor.yellow.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 741:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "cloud.fog.fill",
         colorPalette: [
           WeatherInformationColor.white,
           WeatherInformationColor.white.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 771:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "wind",
+        colorPalette: [
+          WeatherInformationColor.white
         ]
       ))
     case let x where x == 781 || x == 900:
@@ -281,21 +342,14 @@ extension MeteorologyInformationConversionWorker {
           isDayTime ? WeatherInformationColor.yellow : .purple
         ]
       ))
-    case let x where x == 804:
+    case let x where x >= 803 && x <= 804:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "cloud.fill",
         colorPalette: [
           WeatherInformationColor.white
         ]
       ))
-    case let x where x >= 952 && x <= 956 || x == 905:
-      return Factory.Image.make(fromType: .weatherConditionSymbol(
-        systemImageName: "wind",
-        colorPalette: [
-          WeatherInformationColor.white
-        ]
-      ))
-    case let x where x >= 957 && x <= 961 || x == 771:
+    case let x where (x >= 952 && x <= 961) || x == 905:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "wind",
         colorPalette: [

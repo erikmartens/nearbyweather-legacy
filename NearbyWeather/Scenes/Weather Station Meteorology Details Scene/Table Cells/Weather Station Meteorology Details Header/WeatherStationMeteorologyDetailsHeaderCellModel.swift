@@ -12,24 +12,24 @@ struct WeatherStationMeteorologyDetailsHeaderCellModel {
   
   let weatherConditionSymbolImage: UIImage?
   let weatherConditionTitle: String?
-  let weatherConditionSubtitle: String?
-  let temperature: String?
-  let daytimeStatus: String?
+  let currentTemperature: String?
+  let feelsLikeTemperature: String?
+  let temperatureHighLow: String?
   let backgroundColor: UIColor
   
   init(
     weatherConditionSymbolImage: UIImage? = nil,
     weatherConditionTitle: String? = nil,
-    weatherConditionSubtitle: String? = nil,
-    temperature: String? = nil,
-    daytimeStatus: String? = nil,
+    currentTemperature: String? = nil,
+    feelsLikeTemperature: String? = nil,
+    temperatureHighLow: String? = nil,
     backgroundColor: UIColor = Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay
   ) {
     self.weatherConditionSymbolImage = weatherConditionSymbolImage
     self.weatherConditionTitle = weatherConditionTitle
-    self.weatherConditionSubtitle = weatherConditionSubtitle
-    self.temperature = temperature
-    self.daytimeStatus = daytimeStatus
+    self.currentTemperature = currentTemperature
+    self.feelsLikeTemperature = feelsLikeTemperature
+    self.temperatureHighLow = temperatureHighLow
     self.backgroundColor = backgroundColor
   }
   
@@ -40,24 +40,45 @@ struct WeatherStationMeteorologyDetailsHeaderCellModel {
     isBookmark: Bool
   ) {
     let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
-    let isDayTimeString = MeteorologyInformationConversionWorker.isDayTimeString(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
-    let dayCycleStrings = MeteorologyInformationConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates)
     
     self.init(
       weatherConditionSymbolImage: MeteorologyInformationConversionWorker.weatherConditionSymbol(
         fromWeatherCode: weatherInformationDTO.weatherCondition.first?.identifier,
         isDayTime: isDayTime
       ),
-      weatherConditionTitle: weatherInformationDTO.weatherCondition.first?.conditionName?.capitalized,
-      weatherConditionSubtitle: weatherInformationDTO.weatherCondition.first?.conditionDescription?.capitalized,
-      temperature: MeteorologyInformationConversionWorker.temperatureDescriptor(
+      weatherConditionTitle: weatherInformationDTO.weatherCondition.first?.conditionDescription?.capitalized,
+      currentTemperature: MeteorologyInformationConversionWorker.temperatureDescriptor(
         forTemperatureUnit: temperatureUnitOption,
         fromRawTemperature: weatherInformationDTO.atmosphericInformation.temperatureKelvin
       ),
-      daytimeStatus: String
-        .begin(with: isDayTimeString)
-        .append(contentsOf: dayCycleStrings?.currentTimeString, delimiter: .space)
-        .ifEmpty(justReturn: nil),
+      feelsLikeTemperature: String
+        .begin()
+        .append(
+          contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
+            forTemperatureUnit: temperatureUnitOption,
+            fromRawTemperature: weatherInformationDTO.atmosphericInformation.feelsLikesTemperatureKelvin
+          ),
+          delimiter: .colonSpace
+        )
+        .ifEmpty(justReturn: ""),
+      temperatureHighLow: String
+        .begin(with: "↑")
+        .append(
+          contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
+            forTemperatureUnit: temperatureUnitOption,
+            fromRawTemperature: weatherInformationDTO.atmosphericInformation.temperatureKelvinHigh
+          ),
+          delimiter: .none
+        )
+        .append(contentsOf: "↓", delimiter: .space)
+        .append(
+          contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
+            forTemperatureUnit: temperatureUnitOption,
+            fromRawTemperature: weatherInformationDTO.atmosphericInformation.temperatureKelvinLow
+          ),
+          delimiter: .none
+        )
+        .ifEmpty(justReturn: ""),
       backgroundColor: (isDayTime ?? true) ? Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundDay : Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundNight
     )
   }

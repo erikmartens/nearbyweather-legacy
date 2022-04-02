@@ -12,8 +12,13 @@ enum Delimiter {
   case none
   case space
   case comma
+  case commaSpace
   case colon
+  case colonSpace
   case semicolon
+  case semicolonSpace
+  case forwardSlash
+  case forwardSlashSpace
   case custom(string: String)
   
   var stringValue: String {
@@ -23,11 +28,21 @@ enum Delimiter {
     case .space:
       return " "
     case .comma:
+      return ","
+    case .commaSpace:
       return ", "
     case .colon:
+      return ":"
+    case .colonSpace:
       return ": "
     case .semicolon:
+      return ";"
+    case .semicolonSpace:
       return "; "
+    case .forwardSlash:
+      return "/"
+    case .forwardSlashSpace:
+      return "/ "
     case let .custom(string):
       return string
     }

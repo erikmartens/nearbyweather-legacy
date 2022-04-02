@@ -121,3 +121,5 @@ terms_of_use = "Terms of Use";
 email_salutation = "Hey Erik, \n";
 copied = "copied";
 current_time = "current time";
+feels_like = "feels like";
+hi_lo = "Hi/Lo";

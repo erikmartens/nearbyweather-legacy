@@ -149,6 +149,7 @@ protocol UserLocationAccessing {
   func createDeleteUserLocationCompletable() -> Completable
   func createSaveUserLocationCompletable(location: CLLocation?) -> Completable
   func createGetUserLocationObservable() -> Observable<CLLocation?>
+//  func createGetUserLocationSignificantUpdatesObservable() -> Observable<CLLocation?>
 }
 
 extension UserLocationService: UserLocationAccessing {
@@ -182,6 +183,10 @@ extension UserLocationService: UserLocationAccessing {
         return CLLocation(latitude: userLocation.entity.latitude, longitude: userLocation.entity.longitude)
       }
   }
+  
+//  func createGetUserLocationSignificantUpdatesObservable() -> Observable<CLLocation?> {
+//    createGetUserLocationObservable().distinctUntilChanged(Self.locationChangeIsSignificant)
+//  }
 }
 
 // MARK: - User Location Writing
@@ -202,6 +207,19 @@ protocol UserLocationReading {
 extension UserLocationService: UserLocationReading {}
 
 // MARK: - Helpers
+
+//extension UserLocationService {
+//
+//  static func locationChangeIsSignificant(oldLocation: CLLocation?, newLocation: CLLocation?) -> Bool {
+//    guard let oldLocation = oldLocation else {
+//      return true
+//    }
+//    guard let newLocation = newLocation else {
+//      return false
+//    }
+//    return abs(oldLocation.distance(from: newLocation)) > 500
+//  }
+//}
 
 extension UserLocationAuthorizationStatus {
   

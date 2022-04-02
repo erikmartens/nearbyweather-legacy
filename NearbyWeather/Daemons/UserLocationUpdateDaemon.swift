@@ -54,11 +54,11 @@ final class UserLocationUpdateDaemon: NSObject, Daemon {
     guard locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways else {
       return
     }
-    locationManager.startUpdatingLocation()
+    locationManager.startMonitoringSignificantLocationChanges()
   }
   
   func stopObservations() {
-    locationManager.stopUpdatingLocation()
+    locationManager.stopMonitoringSignificantLocationChanges()
     disposeBag = DisposeBag()
   }
 }
@@ -76,7 +76,7 @@ extension UserLocationUpdateDaemon: CLLocationManagerDelegate {
       .subscribe()
     
     if status == .authorizedWhenInUse || status == .authorizedAlways {
-      locationManager.startUpdatingLocation()
+      locationManager.startMonitoringSignificantLocationChanges()
       return
     }
     _ = dependencies.userLocationService

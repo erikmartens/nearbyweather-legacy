@@ -115,16 +115,14 @@ extension WeatherStationMeteorologyDetailsViewModel {
                   contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
                     forTemperatureUnit: temperatureUnitOption,
                     fromRawTemperature: tempKelvinHigh
-                  ),
-                  delimiter: .none
+                  )
                 )
                 .append(contentsOf: "↓", delimiter: .space)
                 .append(
                   contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
                     forTemperatureUnit: temperatureUnitOption,
                     fromRawTemperature: tempKelvinLow
-                  ),
-                  delimiter: .none
+                  )
                 ) ?? "",
               rhsText: String
                 .begin()
@@ -162,7 +160,7 @@ extension WeatherStationMeteorologyDetailsViewModel {
             contentLabelText: R.string.localizable.current_time().capitalized,
             descriptionLabelText: String
               .begin()
-              .append(contentsOf: dayCycleStrings.timeOfDayString)
+              .append(contentsOf: dayCycleStrings.timeOfDayString.capitalized)
               .append(contentsOf: dayCycleStrings.currentTimeString, delimiter: .commaSpace)
           )))
         }

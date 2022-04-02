@@ -72,6 +72,7 @@ final class WeatherStationMeteorologyDetailsSymbolCell: UITableViewCell, BaseCel
   
   override func prepareForReuse() {
     super.prepareForReuse()
+    leadingImageView.transform = CGAffineTransform(rotationAngle: 0)
     disposeBag = DisposeBag()
   }
 }

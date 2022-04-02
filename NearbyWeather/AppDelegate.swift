@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   private var dependencyContainer: Container!
   private var daemonContainer: [Daemon] = []
   
+  private let daemonsAreRunningSubject = BehaviorSubject<Bool>(value: false)
   private let migrationIsRunningSubject = BehaviorSubject<Bool>(value: false)
   
   private var tempOnAsAppIconBadgeBackgroundFetchTaskId: UIBackgroundTaskIdentifier = .invalid
@@ -53,14 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
   
-  /// only called on warm start
+  /// only called on warm start but not when app was unactive from control centre etc. being invoked
   func applicationWillEnterForeground(_ application: UIApplication) {
     startDaemons()
   }
   
   /// called on any start
   func applicationDidBecomeActive(_ application: UIApplication) {
-    // nothing to do
+    startDaemons()
   }
   
   func applicationWillResignActive(_ application: UIApplication) {
@@ -168,13 +169,24 @@ private extension AppDelegate {
   }
   
   func startDaemons() {
-    printDebugMessage(
-      domain: String(describing: self),
-      message: "👹 STARTED",
-      type: .info
-    )
+    _ = daemonsAreRunningSubject
+      .asObservable()
+      .take(1)
+      .asSingle()
+      .flatMapCompletable { [unowned self] running in
+        if !running {
+          daemonContainer.forEach { $0.startObservations() }
+          daemonsAreRunningSubject.onNext(true)
+          printDebugMessage(
+            domain: String(describing: self),
+            message: "👹 STARTED",
+            type: .info
+          )
+        }
+        return Completable.emptyCompletable
+      }
+        .subscribe()
     
-    daemonContainer.forEach { $0.startObservations() }
   }
   
   func stopDaemons() {
@@ -185,6 +197,7 @@ private extension AppDelegate {
     )
     
     daemonContainer.forEach { $0.stopObservations() }
+    daemonsAreRunningSubject.onNext(false)
   }
   
   func restartDaemons() {

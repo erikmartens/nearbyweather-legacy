@@ -413,28 +413,37 @@ extension MeteorologyInformationConversionWorker {
     guard let rawTemperature = rawTemperature else {
       return nil
     }
+    var result: String?
+    
     switch temperatureUnit.value {
     case .celsius:
-      return numberFormatter.string(from: rawTemperature - 273.15)?.append(contentsOf: "°C", delimiter: .none)
+      result = numberFormatter.string(from: rawTemperature - 273.15)?.append(contentsOf: "°C")
     case .fahrenheit:
-      return numberFormatter.string(from: rawTemperature * (9/5) - 459.67)?.append(contentsOf: "°F", delimiter: .none)
+      result = numberFormatter.string(from: rawTemperature * (9/5) - 459.67)?.append(contentsOf: "°F")
     case .kelvin:
-      return numberFormatter.string(from: rawTemperature)?.append(contentsOf: "°K", delimiter: .none)
+      result = numberFormatter.string(from: rawTemperature)?.append(contentsOf: "°K")
     }
+    guard var result = result else {
+      return nil
+    }
+    if result.starts(with: "-0°") {
+      result.replaceSubrange(result.startIndex..<result.index(after: result.startIndex), with: "")
+    }
+    return result
   }
   
   static func cloudCoverageDescriptor(for cloudCoverage: Double?) -> String? {
     guard let cloudCoverage = cloudCoverage else {
       return nil
     }
-    return numberFormatter.string(from: cloudCoverage)?.append(contentsOf: "%", delimiter: .none)
+    return numberFormatter.string(from: cloudCoverage)?.append(contentsOf: "%")
   }
   
   static func humidityDescriptor(for humidity: Double?) -> String? {
     guard let humidity = humidity else {
       return nil
     }
-    return numberFormatter.string(from: humidity)?.append(contentsOf: "%", delimiter: .none)
+    return numberFormatter.string(from: humidity)?.append(contentsOf: "%")
   }
   
   static func airPressureDescriptor(for airPressure: Double?) -> String? {
@@ -469,7 +478,7 @@ extension MeteorologyInformationConversionWorker {
   }
   
   static func windDirectionDescriptor(forWindDirection degrees: Double) -> String? {
-    let degreesString = numberFormatter.string(from: degrees)?.append(contentsOf: "°", delimiter: .none)
+    let degreesString = numberFormatter.string(from: degrees)?.append(contentsOf: "°")
     return degrees.toCardinalDirectionString?.append(contentsOf: degreesString, encasing: .roundBrackets, delimiter: .space)
   }
   
@@ -481,7 +490,7 @@ extension MeteorologyInformationConversionWorker {
     numberFormatter.decimalSeparator = "."
     return String
       .begin(with: numberFormatter.string(from: latitude))
-      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .comma)
+      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .commaSpace)
   }
   
   static func coordinatesCopyTextFor(latitude lat: Double?, longitude lon: Double?) -> String? {
@@ -495,7 +504,7 @@ extension MeteorologyInformationConversionWorker {
     
     return String
       .begin(with: numberFormatter.string(from: latitude))
-      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .comma)
+      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .commaSpace)
   }
   
   static func isDayTime(for weatherInformationModel: WeatherInformationDTO) -> Bool? {
@@ -535,17 +544,17 @@ extension MeteorologyInformationConversionWorker {
     dateFormatter.dateStyle = .none
     dateFormatter.timeStyle = .short
     
-    let dateFormatter2 = DateFormatter()
-    dateFormatter2.calendar = .current
-    dateFormatter2.timeZone = Calendar.current.timeZone
-    dateFormatter2.dateStyle = .none
-    dateFormatter2.timeStyle = .short
+    let dateFormatterRelativeToLocal = DateFormatter()
+    dateFormatterRelativeToLocal.calendar = .current
+    dateFormatterRelativeToLocal.timeZone = Calendar.current.timeZone
+    dateFormatterRelativeToLocal.dateStyle = .none
+    dateFormatterRelativeToLocal.timeStyle = .short
     
     return DayCycleLocalizedTimeStrings(
       timeOfDayString: timeOfDayString,
       currentTimeString: dateFormatter.string(from: Date()),
-      sunriseTimeString: dateFormatter2.string(from: sunriseDate),
-      sunsetTimeString: dateFormatter2.string(from: sunsetDate)
+      sunriseTimeString: dateFormatterRelativeToLocal.string(from: sunriseDate),
+      sunsetTimeString: dateFormatterRelativeToLocal.string(from: sunsetDate)
     )
   }
   

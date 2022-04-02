@@ -71,7 +71,7 @@ NearbyWeather was created to help you as a reference for advanced app-building-c
 | Continuous Integration | Bitrise | 🅾️ |
 | Quality Assurance | Unit Tests & UI Tests for Regression Tests via CI | 🅾️ |
 
-> __LEGEND:__ ✅ = Done, 🔄 = In Progress, 🅾️ = Coming Soon
+> __GLOSSARY:__ ✅ = Done, 🔄 = In Progress, 🅾️ = Coming Soon
 
 ## App Releases
 

@@ -145,22 +145,22 @@ private extension MeteorologyInformationConversionWorker {
     
     var stringValue: String {
       switch self {
-      case .cardinalDirectionN: return "N"
-      case .cardinalDirectionNNE: return "NNE"
-      case .cardinalDirectionNE: return "NE"
-      case .cardinalDirectionENE: return "ENE"
-      case .cardinalDirectionE: return "E"
-      case .cardinalDirectionESE: return "ESE"
-      case .cardinalDirectionSE: return "SE"
-      case .cardinalDirectionSSE: return "SSE"
-      case .cardinalDirectionS: return "S"
-      case .cardinalDirectionSSW: return "SSW"
-      case .cardinalDirectionSW: return "SW"
-      case .cardinalDirectionWSW: return "WSW"
-      case .cardinalDirectionW: return "W"
-      case .cardinalDirectionWNW: return "WNW"
-      case .cardinalDirectionNW: return "NW"
-      case .cardinalDirectionNNW: return "NNW"
+      case .cardinalDirectionN: return R.string.localizable.cardinalDirectionN()
+      case .cardinalDirectionNNE: return R.string.localizable.cardinalDirectionNNE()
+      case .cardinalDirectionNE: return R.string.localizable.cardinalDirectionNE()
+      case .cardinalDirectionENE: return R.string.localizable.cardinalDirectionENE()
+      case .cardinalDirectionE: return R.string.localizable.cardinalDirectionE()
+      case .cardinalDirectionESE: return R.string.localizable.cardinalDirectionESE()
+      case .cardinalDirectionSE: return R.string.localizable.cardinalDirectionSE()
+      case .cardinalDirectionSSE: return R.string.localizable.cardinalDirectionSSE()
+      case .cardinalDirectionS: return R.string.localizable.cardinalDirectionS()
+      case .cardinalDirectionSSW: return R.string.localizable.cardinalDirectionSSW()
+      case .cardinalDirectionSW: return R.string.localizable.cardinalDirectionSW()
+      case .cardinalDirectionWSW: return R.string.localizable.cardinalDirectionWSW()
+      case .cardinalDirectionW: return R.string.localizable.cardinalDirectionW()
+      case .cardinalDirectionWNW: return R.string.localizable.cardinalDirectionWNW()
+      case .cardinalDirectionNW: return R.string.localizable.cardinalDirectionNW()
+      case .cardinalDirectionNNW: return R.string.localizable.cardinalDirectionNNW()
       }
     }
   }
@@ -450,7 +450,7 @@ extension MeteorologyInformationConversionWorker {
     guard let airPressure = airPressure else {
       return nil
     }
-    return numberFormatter.string(from: airPressure)?.append(contentsOf: "hpa", delimiter: .space)
+    return numberFormatter.string(from: airPressure)?.append(contentsOf: "hPa", delimiter: .space)
   }
   
   static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitOption, forDistanceInMetres distance: Double) -> String? {

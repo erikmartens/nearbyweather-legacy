@@ -18,6 +18,7 @@ extension SettingsViewModel {
     let weatherStationService: WeatherStationBookmarkReading & WeatherStationBookmarkSetting
     let preferencesService: SettingsPreferencesSetting & SettingsPreferencesReading
     let notificationService: NotificationPreferencesSetting & NotificationPreferencesReading
+    let apiKeyService: ApiKeyValidity
   }
 }
 
@@ -125,7 +126,42 @@ extension SettingsViewModel {
       ))
     ]
     
-    let openWeatherMapApiSectionObservable = Observable.just(SettingsOpenWeatherMapApiItemsSection(sectionItems: openWeatherMapApiSectionItems))
+    let openWeatherMapApiSectionObservable = dependencies.apiKeyService
+      .createApiKeyIsValidObservable()
+      .map { apiKeyValidity -> [BaseCellViewModelProtocol] in
+        switch apiKeyValidity {
+        case .valid:
+          return [SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
+            symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundGreen.darken(by: 0.1),
+            symbolImageName: "checkmark.seal.fill",
+            labelText: R.string.localizable.apiKey(),
+            selectable: true,
+            disclosable: true,
+            routingIntent: SettingsStep.apiKeyEdit
+          ))]
+        case .invalid, .missing, .unknown:
+          return [
+            SettingsImagedDualLabelSubtitleCellViewModel(dependencies: SettingsImagedDualLabelSubtitleCellViewModel.Dependencies(
+              symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundRed.darken(by: 0.1),
+              symbolImageName: "xmark.seal.fill",
+              contentLabelText: R.string.localizable.apiKey().capitalized,
+              descriptionLabelTextObservable: Observable.just(R.string.localizable.invalid_api_key_error()),
+              selectable: true,
+              disclosable: true,
+              routingIntent: SettingsStep.apiKeyEdit
+            )),
+            SettingsImagedSingleLabelCellViewModel(dependencies: SettingsImagedSingleLabelCellViewModel.Dependencies(
+              symbolImageBackgroundColor: Constants.Theme.Color.ViewElement.CellImage.backgroundYellow,
+              symbolImageName: "lightbulb.fill",
+              labelText: R.string.localizable.get_started_with_openweathermap(),
+              selectable: true,
+              disclosable: true,
+              routingIntent: SettingsStep.webBrowser(url: Constants.Urls.kOpenWeatherMapInstructionsUrl)
+            ))
+          ]
+        }
+      }
+      .map(SettingsOpenWeatherMapApiItemsSection.init)
     
     // Bookmarks Section Main
     let manageBoomarksCell = SettingsImagedDualLabelCellViewModel(dependencies: SettingsImagedDualLabelCellViewModel.Dependencies(

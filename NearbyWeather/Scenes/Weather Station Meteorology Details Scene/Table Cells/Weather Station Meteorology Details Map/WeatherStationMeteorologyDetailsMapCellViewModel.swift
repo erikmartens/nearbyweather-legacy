@@ -40,14 +40,23 @@ final class WeatherStationMeteorologyDetailsMapCellViewModel: NSObject, BaseCell
 
   // MARK: - Events
   
-  lazy var cellModelDriver: Driver<WeatherStationMeteorologyDetailsMapCellModel> = dependencies
-    .preferencesService.createGetMapTypeOptionObservable()
+  lazy var cellModelDriver: Driver<WeatherStationMeteorologyDetailsMapCellModel> = dependencies.preferencesService
+    .createGetMapTypeOptionObservable()
     .map { preferredMapTypeOption -> WeatherStationMeteorologyDetailsMapCellModel in
       WeatherStationMeteorologyDetailsMapCellModel(
         preferredMapTypeOption: preferredMapTypeOption
       )
     }
     .asDriver(onErrorJustReturn: WeatherStationMeteorologyDetailsMapCellModel())
+  
+  lazy var weatherStationLocationObservable: Observable<CLLocationCoordinate2D?> = weatherInformationDtoObservable
+    .map { $0.entity.coordinates }
+    .map { coordinates in
+      guard let latitude = coordinates.latitude, let longitude = coordinates.longitude else {
+        return nil
+      }
+      return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
   
   // MARK: - Observables
   

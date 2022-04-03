@@ -86,7 +86,15 @@ extension WeatherStationMeteorologyDetailsMapCell {
       .drive(onNext: { [unowned mapView] mapAnnotationData in
         mapView.annotations.forEach { mapView.removeAnnotation($0) }
         mapView.addAnnotations(mapAnnotationData.annotationItems)
-        mapView.focus(onCoordinate: mapAnnotationData.annotationItems.first?.coordinate)
+      })
+      .disposed(by: disposeBag)
+    
+    cellViewModel.weatherStationLocationObservable
+      .take(1)
+      .asSingle()
+      .observe(on: MainScheduler.instance)
+      .subscribe(onSuccess: { [unowned self] in
+        mapView.focus(onCoordinate: $0)
       })
       .disposed(by: disposeBag)
   }

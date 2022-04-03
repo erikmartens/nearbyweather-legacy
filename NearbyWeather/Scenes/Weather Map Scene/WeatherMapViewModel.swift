@@ -47,20 +47,13 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
   let onDidTapMapTypeBarButtonSubject = PublishSubject<Void>()
   let onDidTapAmountOfResultsBarButtonSubject = PublishSubject<Void>()
   let onDidTapFocusOnLocationBarButtonSubject = PublishSubject<Void>()
-  
-  let onDidSelectFocusOnWeatherStationSubject = PublishSubject<CLLocation?>()
-  let onDidSelectFocusOnUserLocationSubject = PublishSubject<Void>()
+  let onShouldFocusOnLocationSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: nil)
   
   // MARK: - Drivers
   
   lazy var preferredMapTypeDriver = preferredMapTypeObservable.asDriver(onErrorJustReturn: .standard)
   lazy var preferredAmountOfResultsDriver = preferredAmountOfResultsObservable.asDriver(onErrorJustReturn: .ten)
-  lazy var focusOnWeatherStationDriver = onDidSelectFocusOnWeatherStationSubject.asDriver(onErrorJustReturn: nil)
-  lazy var focusOnUserLocationDriver: Driver<CLLocation?> = onDidSelectFocusOnUserLocationSubject
-    .asObservable()
-    .flatMapLatest { [unowned self] _ in dependencies.userLocationService.createGetUserLocationObservable().take(1) }
-    .map { location -> CLLocation? in location }
-    .asDriver(onErrorJustReturn: nil)
+  lazy var focusOnLocationDriver: Driver<CLLocationCoordinate2D?> = onShouldFocusOnLocationSubject.asDriver(onErrorJustReturn: nil)
   
   // MARK: - Observables
   
@@ -91,14 +84,6 @@ final class WeatherMapViewModel: NSObject, Stepper, BaseViewModel {
       message: "was deinitialized",
       type: .info
     )
-  }
-  
-  func viewWillAppear() {
-    _ = dependencies.userLocationService
-      .createGetUserLocationObservable()
-      .take(1)
-      .asSingle()
-      .subscribe(onSuccess: { [unowned self] _ in onDidSelectFocusOnUserLocationSubject.onNext(()) })
   }
   
   // MARK: - Functions
@@ -174,6 +159,44 @@ extension WeatherMapViewModel {
       )
       .bind { [weak mapDelegate] in mapDelegate?.dataSource.accept($0) }
       .disposed(by: disposeBag)
+    
+    dependencies.userLocationService
+      .createGetUserLocationObservable()
+      .flatMapLatest { [unowned self] userLocation -> Observable<CLLocationCoordinate2D?> in
+        if let userLocation = userLocation {
+          return Observable.just(CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude))
+        }
+        return dependencies.weatherStationService
+          .createGetPreferredBookmarkObservable()
+          .map { $0?.value.stationIdentifier }
+          .flatMapLatest { [unowned self] stationIdentifier -> Observable<Int?> in
+            if let stationIdentifier = stationIdentifier {
+              return Observable.just(stationIdentifier)
+            }
+            return dependencies.weatherStationService
+              .createGetBookmarksSortingObservable()
+              .map { sorting in
+                guard let sorting = sorting, sorting.count >= 1 else {
+                  return nil
+                }
+                return sorting[0]
+              }
+          }
+          .flatMapLatest { [unowned self] stationIdentifier -> Observable<CLLocationCoordinate2D?> in
+            guard let stationIdentifier = stationIdentifier else {
+              return Observable.just(nil)
+            }
+            return dependencies.weatherInformationService
+              .createGetBookmarkedWeatherInformationItemObservable(for: String(stationIdentifier))
+              .map { $0.entity.coordinates.clLocationCoordinate2D }
+          }
+      }
+      .take(1)
+      .asSingle()
+      .subscribe(onSuccess: { [unowned self] location in
+        onShouldFocusOnLocationSubject.onNext(location)
+      })
+      .disposed(by: disposeBag)
   }
   
   func observeUserTapEvents() {    
@@ -219,9 +242,31 @@ extension WeatherMapViewModel: FocusOnLocationSelectionAlertDelegate {
   func didSelectFocusOnLocationOption(_ option: FocusOnLocationOption) {
     switch option {
     case .userLocation:
-      onDidSelectFocusOnUserLocationSubject.onNext(())
+      dependencies.userLocationService
+        .createGetUserLocationObservable()
+        .take(1)
+        .asSingle()
+        .map { location -> CLLocationCoordinate2D? in
+          guard let location = location else {
+            return nil
+          }
+          return CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        }
+        .subscribe(onSuccess: { [unowned self] in onShouldFocusOnLocationSubject.onNext($0) })
+        .disposed(by: disposeBag)
     case let .weatherStation(location):
-      onDidSelectFocusOnWeatherStationSubject.onNext(location)
+      Observable
+        .just(location)
+        .take(1)
+        .asSingle()
+        .map { location -> CLLocationCoordinate2D? in
+          guard let location = location else {
+            return nil
+          }
+          return CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        }
+        .subscribe(onSuccess: { [unowned self] in onShouldFocusOnLocationSubject.onNext($0) })
+        .disposed(by: disposeBag)
     }
   }
 }

@@ -40,6 +40,13 @@ struct WeatherInformationDTO: Codable, Equatable {
       latitude = try? values?.decodeIfPresent(Double.self, forKey: .latitude)
       longitude = try? values?.decodeIfPresent(Double.self, forKey: .longitude)
     }
+    
+    var clLocationCoordinate2D: CLLocationCoordinate2D? {
+      guard let latitude = latitude, let longitude = longitude else {
+        return nil
+      }
+      return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
   }
   
   struct WeatherConditionDTO: Codable, Equatable {

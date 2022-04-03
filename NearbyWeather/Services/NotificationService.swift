@@ -246,7 +246,7 @@ private extension NotificationService {
           information.stationName,
           temperatureSign.stringValue
             .append(contentsOfConvertible: information.temperature, delimiter: .space)
-            .append(contentsOf: information.temperatureUnitOption.value.abbreviation, delimiter: .none)
+            .append(contentsOf: information.temperatureUnitOption.value.abbreviation)
         )
         
         let content = UNMutableNotificationContent()

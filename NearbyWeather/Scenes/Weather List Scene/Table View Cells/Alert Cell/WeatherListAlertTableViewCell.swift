@@ -20,13 +20,18 @@ final class WeatherListAlertTableViewCell: UITableViewCell, BaseCell {
   
   typealias CellViewModel = WeatherListAlertTableViewCellViewModel
   private typealias CellContentInsets = Constants.Dimensions.Spacing.ContentInsets
+  private typealias CellInterelementSpacing = Constants.Dimensions.Spacing.InterElementSpacing
   
   // MARK: - UIComponents
   
   private lazy var backgroundColorView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
-  private lazy var contentStackView = Factory.StackView.make(fromType: .horizontal(spacingWeight: .large))
-  private lazy var alertImageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "thermometer"))
-  private lazy var alertInformationLabel = Factory.Label.make(fromType: .title(numberOfLines: 1))
+  
+  private lazy var alertImageView = Factory.ImageView.make(fromType: .symbol(image: Factory.Image.make(fromType: .symbol(
+    systemImageName: "exclamationmark.bubble.fill",
+    tintColor: Constants.Theme.Color.ViewElement.alert.darken(by: 0.25)
+  ))))
+  private lazy var alertTitleLabel = Factory.Label.make(fromType: .headline(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
+  private lazy var alertDescriptionLabel = Factory.Label.make(fromType: .subtitle(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   
   // MARK: - Assets
   
@@ -82,32 +87,40 @@ extension WeatherListAlertTableViewCell {
 private extension WeatherListAlertTableViewCell {
   
   func setContent(for cellModel: WeatherListAlertTableViewCellModel) {
-    backgroundColorView.backgroundColor = cellModel.backgroundColor
-    alertImageView.image = cellModel.alertImage
-    alertInformationLabel.text = cellModel.alertInformationText
+    alertTitleLabel.text = cellModel.alertTitle
+    alertDescriptionLabel.text = cellModel.alertDescription
   }
   
   func layoutUserInterface() {
     contentView.addSubview(backgroundColorView, constraints: [
       backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
       backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
-      backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
-      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
+      backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
     ])
     
-    contentStackView.addArrangedSubview(alertImageView, constraints: [
+    contentView.addSubview(alertImageView, constraints: [
       alertImageView.heightAnchor.constraint(equalToConstant: Definitions.alertImageViewHeight),
-      alertImageView.widthAnchor.constraint(equalToConstant: Definitions.alertImageViewHeight)
-    ])
-    contentStackView.addArrangedSubview(alertInformationLabel, constraints: [
-      alertInformationLabel.heightAnchor.constraint(equalTo: alertImageView.heightAnchor)
+      alertImageView.widthAnchor.constraint(equalToConstant: Definitions.alertImageViewHeight),
+      alertImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2*CellContentInsets.top(from: .large)),
+      alertImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.topAnchor, constant: -2*CellContentInsets.bottom(from: .large)),
+      alertImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large))
     ])
     
-    backgroundColorView.addSubview(contentStackView, constraints: [
-      contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellContentInsets.top(from: .large)),
-      contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
-      contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .large)),
-      contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large))
+    contentView.addSubview(alertTitleLabel, constraints: [
+      alertTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
+      alertTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2*CellContentInsets.top(from: .large)),
+      alertTitleLabel.leadingAnchor.constraint(equalTo: alertImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
+      alertTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
+      alertTitleLabel.firstBaselineAnchor.constraint(equalTo: alertImageView.firstBaselineAnchor)
+    ])
+    
+    contentView.addSubview(alertDescriptionLabel, constraints: [
+      alertDescriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
+      alertDescriptionLabel.topAnchor.constraint(equalTo: alertTitleLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .medium)),
+      alertDescriptionLabel.leadingAnchor.constraint(equalTo: alertImageView.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .medium)),
+      alertDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .large)),
+      alertDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2*CellContentInsets.bottom(from: .large))
     ])
   }
   
@@ -115,5 +128,6 @@ private extension WeatherListAlertTableViewCell {
     selectionStyle = .none
     backgroundColor = .clear
     contentView.backgroundColor = .clear
+    backgroundColorView.backgroundColor = Constants.Theme.Color.ViewElement.alert
   }
 }

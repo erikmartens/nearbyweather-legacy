@@ -7,10 +7,12 @@ use_frameworks!
 
 def nearbyweather_pods
     pod 'PKHUD', '~> 5.3.0'
-    pod 'Alamofire', '~> 5.5.0'
     pod 'APTimeZones', :git => 'https://github.com/Alterplay/APTimeZones.git', :branch => 'master', :commit => '9ffd147'
+    pod "Solar-dev", "~> 3.0.1"
+    
     pod 'FMDB', '~> 2.7.5'
     pod 'RealmSwift', '~> 10.24.1'
+    pod 'Alamofire', '~> 5.5.0'
     pod 'Swinject', '~> 2.8.1'
 
     pod 'RxSwift', '~> 6.5.0'

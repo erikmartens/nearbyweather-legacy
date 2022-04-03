@@ -9,15 +9,14 @@
 import UIKit
 
 struct WeatherListAlertTableViewCellModel {
-  let backgroundColor = Constants.Theme.Color.ViewElement.alert
-  let alertImage = UIImage() // TODO: fix (prolly gets deleted anyway, when rebuilding the cell)
-  let alertImageTintColor = Constants.Theme.Color.ViewElement.Label.titleLight
-  let alertInformationText: String?
-  let alertInformationTextColor = Constants.Theme.Color.ViewElement.Label.titleLight
+  let alertTitle: String?
+  let alertDescription: String?
   
   init(
-    alertInformationText: String? = nil
+    alertTitle: String? = nil,
+    alertDescription: String? = nil
   ) {
-    self.alertInformationText = alertInformationText
+    self.alertTitle = alertTitle
+    self.alertDescription = alertDescription
   }
 }

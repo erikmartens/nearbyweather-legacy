@@ -93,8 +93,8 @@ extension AddBookmarkViewModel {
           if let usStateCode = $0.state {
             subtitleText = String
               .begin()
-              .append(contentsOf: MeteorologyInformationConversionWorker.usStateName(for: usStateCode), delimiter: .none) // only US states have state codes attached
-              .append(contentsOf: countryName, delimiter: .comma)
+              .append(contentsOf: MeteorologyInformationConversionWorker.usStateName(for: usStateCode)) // only US states have state codes attached
+              .append(contentsOf: countryName, delimiter: .commaSpace)
           } else {
             subtitleText = countryName
           }

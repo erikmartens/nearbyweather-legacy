@@ -111,10 +111,32 @@ final class WeatherListViewModel: NSObject, Stepper, BaseViewModel {
 extension WeatherListViewModel {
   
   func observeDataSource() {
-    // TODO: use this for error cell
-//    let apiKeyValidObservable = dependencies
-//      .apiKeyService
-//      .createGetApiKeyObservable()
+    
+    let alertItemsObservable = dependencies
+      .apiKeyService
+      .createApiKeyIsValidObservable()
+      .map { apiKeyValidity -> [WeatherListAlertTableViewCellViewModel] in
+        switch apiKeyValidity {
+        case .valid:
+          return []
+        case .invalid:
+          return [WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(
+            title: R.string.localizable.invalid_api_key_error().capitalized,
+            description: R.string.localizable.invalid_api_key_error_description()
+          ))]
+        case .missing:
+          return [WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(
+            title: R.string.localizable.missing_api_key_error().capitalized,
+            description: R.string.localizable.missing_api_key_error_description()
+          ))]
+        case .unknown:
+          return [WeatherListAlertTableViewCellViewModel(dependencies: WeatherListAlertTableViewCellViewModel.Dependencies(
+            title: R.string.localizable.unknown_api_key_error().capitalized,
+            description: R.string.localizable.unknown_api_key_error_description()
+          ))]
+        }
+      }
+      .map { WeatherListAlertItemsSection(sectionItems: $0) }
     
     let nearbyListItemsObservable = dependencies.weatherInformationService
       .createGetNearbyWeatherInformationListObservable()
@@ -130,7 +152,7 @@ extension WeatherListViewModel {
           )
       }
       .map { [unowned self] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: false) }
-      .map { [WeatherListNearbyItemsSection(sectionItems: $0)] }
+      .map { WeatherListNearbyItemsSection(sectionItems: $0) }
     
     let bookmarkedListItemsObservable = dependencies.weatherInformationService
       .createGetBookmarkedWeatherInformationListObservable()
@@ -142,22 +164,24 @@ extension WeatherListViewModel {
           .distinctUntilChanged()
       }
       .map { [unowned self] in $0.mapToWeatherInformationTableViewCellViewModel(dependencies: dependencies, isBookmark: true) }
-      .map { [WeatherListBookmarkedItemsSection(sectionItems: $0)] }
+      .map { WeatherListBookmarkedItemsSection(sectionItems: $0) }
     
     Observable
       .combineLatest(
+        alertItemsObservable,
         nearbyListItemsObservable,
         bookmarkedListItemsObservable,
         preferredListTypeObservable,
-        resultSelector: { nearbyListSections, bookmarkedListSections, preferredListType -> [TableViewSectionDataProtocol] in
+        resultSelector: { alertSection, nearbyListSection, bookmarkedListSection, preferredListType -> [TableViewSectionDataProtocol] in
           switch preferredListType {
           case .nearby:
-            return nearbyListSections
+            return [alertSection, nearbyListSection]
           case .bookmarked:
-            return bookmarkedListSections
+            return [alertSection, bookmarkedListSection]
           }
         }
       )
+      .map { $0.compactMap { $0.sectionItems.isEmpty ? nil : $0 } } // remove empty sections
       .bind { [weak tableDataSource] in tableDataSource?.sectionDataSources.accept($0) }
       .disposed(by: disposeBag)
   }

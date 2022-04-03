@@ -40,6 +40,13 @@ struct WeatherInformationDTO: Codable, Equatable {
       latitude = try? values?.decodeIfPresent(Double.self, forKey: .latitude)
       longitude = try? values?.decodeIfPresent(Double.self, forKey: .longitude)
     }
+    
+    var clLocationCoordinate2D: CLLocationCoordinate2D? {
+      guard let latitude = latitude, let longitude = longitude else {
+        return nil
+      }
+      return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
   }
   
   struct WeatherConditionDTO: Codable, Equatable {
@@ -67,11 +74,17 @@ struct WeatherInformationDTO: Codable, Equatable {
   
   struct AtmosphericInformationDTO: Codable, Equatable {
     var temperatureKelvin: Double?
+    var feelsLikesTemperatureKelvin: Double?
+    var temperatureKelvinHigh: Double?
+    var temperatureKelvinLow: Double?
     var pressurePsi: Double?
     var humidity: Double?
     
     enum CodingKeys: String, CodingKey {
       case temperatureKelvin = "temp"
+      case feelsLikesTemperatureKelvin = "feels_like"
+      case temperatureKelvinHigh = "temp_max"
+      case temperatureKelvinLow = "temp_min"
       case pressurePsi = "pressure"
       case humidity
     }
@@ -80,6 +93,9 @@ struct WeatherInformationDTO: Codable, Equatable {
       let values = try? decoder.container(keyedBy: CodingKeys.self)
       
       temperatureKelvin = try? values?.decodeIfPresent(Double.self, forKey: .temperatureKelvin)
+      feelsLikesTemperatureKelvin = try? values?.decodeIfPresent(Double.self, forKey: .feelsLikesTemperatureKelvin)
+      temperatureKelvinHigh = try? values?.decodeIfPresent(Double.self, forKey: .temperatureKelvinHigh)
+      temperatureKelvinLow = try? values?.decodeIfPresent(Double.self, forKey: .temperatureKelvinLow)
       pressurePsi = try? values?.decodeIfPresent(Double.self, forKey: .pressurePsi)
       humidity = try? values?.decodeIfPresent(Double.self, forKey: .humidity)
     }

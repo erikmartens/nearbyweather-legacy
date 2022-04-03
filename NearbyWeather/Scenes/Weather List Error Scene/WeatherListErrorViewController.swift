@@ -13,6 +13,7 @@ import RxSwift
 
 private extension WeatherListErrorViewController {
   struct Definitions {
+    static let symbolImageHeightWidth: CGFloat = 200
     static let mainStackViewInterElementYSpacing: CGFloat = 48
   }
 }
@@ -29,7 +30,11 @@ final class WeatherListErrorViewController: UIViewController, BaseViewController
   fileprivate lazy var mainContentStackView = Factory.StackView.make(fromType: .vertical(alignment: .center, distribution: .equalSpacing, spacingWeight: .custom(value: Definitions.mainStackViewInterElementYSpacing)))
   fileprivate lazy var textStackView = Factory.StackView.make(fromType: .vertical(distribution: .equalSpacing, spacingWeight: .medium))
   
-  fileprivate lazy var imageView = Factory.ImageView.make(fromType: .symbol(systemImageName: "exclamationmark.bubble")) // TODO: check size
+  fileprivate lazy var imageView = Factory.ImageView.make(fromType: .symbol(image: Factory.Image.make(fromType: .symbol(
+    systemImageName: "exclamationmark.bubble",
+    tintColor: Constants.Theme.Color.ViewElement.symbolImageDark,
+    weight: .thin
+  ))))
   fileprivate lazy var titleLabel = Factory.Label.make(fromType: .title(text: nil, alignment: .center, numberOfLines: 0))
   fileprivate lazy var descriptionLabel = Factory.Label.make(fromType: .subtitle(text: nil, alignment: .center, numberOfLines: 0))
   
@@ -128,7 +133,10 @@ private extension WeatherListErrorViewController {
     textStackView.addArrangedSubview(titleLabel)
     textStackView.addArrangedSubview(descriptionLabel)
     
-    mainContentStackView.addArrangedSubview(imageView)
+    mainContentStackView.addArrangedSubview(imageView, constraints: [
+      imageView.heightAnchor.constraint(equalToConstant: Definitions.symbolImageHeightWidth),
+      imageView.widthAnchor.constraint(greaterThanOrEqualToConstant: Definitions.symbolImageHeightWidth)
+    ])
     mainContentStackView.addArrangedSubview(textStackView)
     mainContentStackView.addArrangedSubview(refreshButton, constraints: [
       refreshButton.heightAnchor.constraint(equalToConstant: Constants.Dimensions.InteractableElement.height),

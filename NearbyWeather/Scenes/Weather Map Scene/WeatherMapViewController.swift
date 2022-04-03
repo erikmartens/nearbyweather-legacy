@@ -151,13 +151,15 @@ extension WeatherMapViewController {
       .disposed(by: disposeBag)
     
     viewModel
-      .focusOnWeatherStationDriver
-      .drive(onNext: { [weak mapView] location in mapView?.focus(onCoordinate: location?.coordinate, animated: true) })
-      .disposed(by: disposeBag)
-    
-    viewModel
-      .focusOnUserLocationDriver
-      .drive(onNext: { [weak mapView] userLocation in mapView?.focus(onCoordinate: userLocation?.coordinate, latitudinalMeters: 20000, longitudinalMeters: 20000, animated: true) })
+      .focusOnLocationDriver
+      .drive(onNext: { [weak mapView] location in
+        mapView?.focus(
+          onCoordinate: location,
+          latitudinalMeters: 10000,
+          longitudinalMeters: 10000,
+          animated: true
+        )
+      })
       .disposed(by: disposeBag)
   }
   

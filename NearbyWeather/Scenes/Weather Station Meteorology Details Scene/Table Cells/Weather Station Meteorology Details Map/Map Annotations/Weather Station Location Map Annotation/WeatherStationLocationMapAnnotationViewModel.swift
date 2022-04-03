@@ -20,7 +20,7 @@ extension WeatherStationLocationMapAnnotationViewModel {
 
 // MARK: - Class Definition
 
-final class WeatherStationLocationMapAnnotationViewModel: NSObject, BaseAnnotationViewModel { // swiftlint:disable:this type_name
+final class WeatherStationLocationMapAnnotationViewModel: NSObject, BaseAnnotationViewModel {
   
   // MARK: - Public Access
   

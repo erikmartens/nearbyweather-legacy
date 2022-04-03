@@ -14,7 +14,7 @@ extension Factory {
     
     enum ImageViewType {
       case weatherConditionSymbol
-      case symbol(systemImageName: String? = nil, tintColor: UIColor? = nil)
+      case symbol(image: UIImage)
       case appIcon
       case cellPrefix
     }
@@ -30,22 +30,10 @@ extension Factory {
         imageView.tintAdjustmentMode = .automatic
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
-      case let .symbol(systemImageName, tintColor):
+      case let .symbol(image):
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
-        
-        if let systemImageName = systemImageName {
-          imageView.image = UIImage(
-            systemName: systemImageName,
-            withConfiguration: UIImage.SymbolConfiguration(weight: .semibold)
-          )?
-            .trimmingTransparentPixels()?
-            .withRenderingMode(.alwaysTemplate) ?? UIImage()
-        } else {
-          imageView.image = UIImage()
-        }
-        
-        imageView.tintColor = tintColor ?? Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle
+        imageView.image = image
       case .appIcon:
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = Constants.Dimensions.AppIconImage.cornerRadius

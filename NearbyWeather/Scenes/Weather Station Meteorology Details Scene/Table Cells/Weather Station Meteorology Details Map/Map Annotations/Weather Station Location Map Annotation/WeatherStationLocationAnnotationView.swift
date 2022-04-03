@@ -144,4 +144,3 @@ private extension WeatherStationLocationAnnotationView {
     backgroundColor = .clear
   }
 }
-

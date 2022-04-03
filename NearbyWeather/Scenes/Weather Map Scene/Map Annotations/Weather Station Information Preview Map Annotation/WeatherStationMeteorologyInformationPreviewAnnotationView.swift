@@ -66,7 +66,7 @@ private extension WeatherStationMeteorologyInformationPreviewAnnotationView {
 
 // MARK: - Class Definition
 
-final class WeatherStationMeteorologyInformationPreviewAnnotationView: MKAnnotationView, BaseAnnotationView {
+final class WeatherStationMeteorologyInformationPreviewAnnotationView: MKAnnotationView, BaseAnnotationView { // swiftlint:disable:this type_name
   
   typealias AnnotationViewModel = WeatherStationMeteorologyInformationPreviewMapAnnotationViewModel
   

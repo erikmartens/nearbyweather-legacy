@@ -27,15 +27,10 @@ final class WeatherStationMeteorologyDetailsHeaderCell: UITableViewCell, BaseCel
   
   // MARK: - UIComponents
   
-  private lazy var backgroundColorView = Factory.View.make(fromType: .standard(cornerRadiusWeight: .medium))
-  
   private lazy var weatherConditionSymbolImageView = Factory.ImageView.make(fromType: .weatherConditionSymbol)
   
   private lazy var weatherConditionTitleLabel = Factory.Label.make(fromType: .headline(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
-  private lazy var temperatureLabelLabel = Factory.Label.make(fromType: .headline(alignment: .right, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
-  
-  private lazy var weatherConditionSubtitleLabel = Factory.Label.make(fromType: .subtitle(textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
-  private lazy var dayTimeStatusLabel = Factory.Label.make(fromType: .subtitle(alignment: .right, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
+  private lazy var currentTemperatureLabel = Factory.Label.make(fromType: .headline(alignment: .right, textColor: Constants.Theme.Color.ViewElement.WeatherInformation.colorBackgroundPrimaryTitle))
   
   // MARK: - Assets
   
@@ -86,28 +81,20 @@ extension WeatherStationMeteorologyDetailsHeaderCell {
 private extension WeatherStationMeteorologyDetailsHeaderCell {
   
   func setContent(for cellModel: WeatherStationMeteorologyDetailsHeaderCellModel) {
-//    let gradientLayer = Factory.GradientLayer.make(fromType: .weatherCell(
-//      frame: backgroundColorView.bounds,
-//      cornerRadiusWeight: .medium,
-//      baseColor: cellModel.backgroundColor
-//    ))
-//    backgroundColorView.layer.insertSublayer(gradientLayer, at: 0)
-    backgroundColorView.backgroundColor = cellModel.backgroundColor
+    contentView.backgroundColor = cellModel.backgroundColor
   
     weatherConditionSymbolImageView.image = cellModel.weatherConditionSymbolImage
     weatherConditionTitleLabel.text = cellModel.weatherConditionTitle
-    temperatureLabelLabel.text = cellModel.temperature
-    weatherConditionSubtitleLabel.text = cellModel.weatherConditionSubtitle
-    dayTimeStatusLabel.text = cellModel.daytimeStatus
+    currentTemperatureLabel.text = cellModel.currentTemperature
   }
   
   func layoutUserInterface() {
-    contentView.addSubview(backgroundColorView, constraints: [
-      backgroundColorView.topAnchor.constraint(equalTo: contentView.topAnchor),
-      backgroundColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-      backgroundColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-      backgroundColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-    ])
+    separatorInset = UIEdgeInsets(
+      top: 0,
+      left: contentView.frame.size.width,
+      bottom: 0,
+      right: contentView.frame.size.width
+    )
     
     contentView.addSubview(weatherConditionSymbolImageView, constraints: [
       weatherConditionSymbolImageView.heightAnchor.constraint(equalToConstant: Definitions.weatherConditionSymbolWidthHeight),
@@ -120,38 +107,24 @@ private extension WeatherStationMeteorologyDetailsHeaderCell {
     
     contentView.addSubview(weatherConditionTitleLabel, constraints: [
       weatherConditionTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      weatherConditionTitleLabel.topAnchor.constraint(equalTo: weatherConditionSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
+      weatherConditionTitleLabel.topAnchor.constraint(equalTo: weatherConditionSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
+      weatherConditionTitleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
       weatherConditionTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium))
     ])
     
-    contentView.addSubview(temperatureLabelLabel, constraints: [
-      temperatureLabelLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      temperatureLabelLabel.widthAnchor.constraint(equalTo: weatherConditionTitleLabel.widthAnchor),
-      temperatureLabelLabel.topAnchor.constraint(equalTo: weatherConditionSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
-      temperatureLabelLabel.leadingAnchor.constraint(equalTo: weatherConditionTitleLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      temperatureLabelLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium))
-    ])
-    
-    contentView.addSubview(weatherConditionSubtitleLabel, constraints: [
-      weatherConditionSubtitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      weatherConditionSubtitleLabel.topAnchor.constraint(equalTo: weatherConditionTitleLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
-      weatherConditionSubtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellContentInsets.leading(from: .medium)),
-      weatherConditionSubtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large))
-    ])
-    
-    contentView.addSubview(dayTimeStatusLabel, constraints: [
-      dayTimeStatusLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
-      dayTimeStatusLabel.widthAnchor.constraint(equalTo: weatherConditionSubtitleLabel.widthAnchor),
-      dayTimeStatusLabel.topAnchor.constraint(equalTo: temperatureLabelLabel.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .small)),
-      dayTimeStatusLabel.leadingAnchor.constraint(equalTo: weatherConditionSubtitleLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
-      dayTimeStatusLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
-      dayTimeStatusLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large))
+    contentView.addSubview(currentTemperatureLabel, constraints: [
+      currentTemperatureLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.Dimensions.ContentElement.height),
+      currentTemperatureLabel.widthAnchor.constraint(equalTo: weatherConditionTitleLabel.widthAnchor),
+      currentTemperatureLabel.topAnchor.constraint(equalTo: weatherConditionSymbolImageView.bottomAnchor, constant: CellInterelementSpacing.yDistance(from: .extraLarge)),
+      currentTemperatureLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -CellContentInsets.bottom(from: .large)),
+      currentTemperatureLabel.leadingAnchor.constraint(equalTo: weatherConditionTitleLabel.trailingAnchor, constant: CellInterelementSpacing.xDistance(from: .small)),
+      currentTemperatureLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CellContentInsets.trailing(from: .medium)),
+      currentTemperatureLabel.firstBaselineAnchor.constraint(equalTo: weatherConditionTitleLabel.firstBaselineAnchor)
     ])
   }
   
   func setupAppearance() {
     selectionStyle = .none
     backgroundColor = .clear
-    contentView.backgroundColor = .clear
   }
 }

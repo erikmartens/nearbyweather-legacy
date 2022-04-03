@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxFlow
 import CoreLocation
+import PKHUD
 
 // MARK: - Dependencies
 
@@ -87,36 +88,100 @@ final class WeatherStationMeteorologyDetailsViewModel: NSObject, Stepper, BaseVi
 
 extension WeatherStationMeteorologyDetailsViewModel {
 
-  func observeDataSource() {
+  func observeDataSource() { // swiftlint:disable:this cyclomatic_complexity
     let weatherStationCurrentInformationHeaderSectionItemsObservable = Observable
       .combineLatest(
         weatherInformationDtoObservable.map { $0.entity },
         temperatureUnitOptionObservable,
         dimensionalUnitsOptionObservable,
         weatherStationIsBookmarkedObservable,
-        resultSelector: { weatherInformationDTO, temperatureUnitOption, dimensionalUnitsOption, isBookmark -> BaseCellViewModelProtocol in
-          WeatherStationMeteorologyDetailsHeaderCellViewModel(dependencies: WeatherStationMeteorologyDetailsHeaderCellViewModel.Dependencies(
+        resultSelector: { weatherInformationDTO, temperatureUnitOption, dimensionalUnitsOption, isBookmark -> [BaseCellViewModelProtocol] in
+          var results = [BaseCellViewModelProtocol]()
+          
+          results.append(WeatherStationMeteorologyDetailsHeaderCellViewModel(dependencies: WeatherStationMeteorologyDetailsHeaderCellViewModel.Dependencies(
             weatherInformationDTO: weatherInformationDTO,
             temperatureUnitOption: temperatureUnitOption,
             dimensionalUnitsOption: dimensionalUnitsOption,
             isBookmark: isBookmark
-          ))
+          )))
+          
+          if let feelsLikeTempKelvin = weatherInformationDTO.atmosphericInformation.feelsLikesTemperatureKelvin,
+             let tempKelvinHigh = weatherInformationDTO.atmosphericInformation.temperatureKelvinHigh,
+             let tempKelvinLow = weatherInformationDTO.atmosphericInformation.temperatureKelvinLow {
+            results.append(WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel(dependencies: WeatherStationMeteorologyDetailsHeaderDualLabelSubCellViewModel.Dependencies(
+              lhsText: String
+                .begin(with: "↑")
+                .append(
+                  contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
+                    forTemperatureUnit: temperatureUnitOption,
+                    fromRawTemperature: tempKelvinHigh
+                  )
+                )
+                .append(contentsOf: "↓", delimiter: .space)
+                .append(
+                  contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
+                    forTemperatureUnit: temperatureUnitOption,
+                    fromRawTemperature: tempKelvinLow
+                  )
+                ) ?? "",
+              rhsText: String
+                .begin()
+                .append(contentsOf: R.string.localizable.feels_like().capitalized)
+                .append(
+                  contentsOf: MeteorologyInformationConversionWorker.temperatureDescriptor(
+                    forTemperatureUnit: temperatureUnitOption,
+                    fromRawTemperature: feelsLikeTempKelvin
+                  ),
+                  delimiter: .colonSpace
+                ) ?? "",
+              isDayTime: MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO) ?? true
+            )))
+          }
+          
+          return results
         }
       )
-      .map { headerCell -> [TableViewSectionDataProtocol] in
-        [WeatherStationMeteorologyDetailsHeaderItemsSection(sectionItems: [headerCell])]
+      .map { headerCellItems -> [TableViewSectionDataProtocol] in
+        [WeatherStationMeteorologyDetailsHeaderItemsSection(sectionItems: headerCellItems)]
       }
     
-    let weatherStationCurrentInformationSunCycleSectionItemsObservable = weatherInformationDtoObservable // swiftlint:disable:this identifier_name
+    let dayCycleStringsObservable = weatherInformationDtoObservable
       .map { $0.entity }
-      .map { weatherInformationDTO -> [BaseCellViewModelProtocol] in
-        guard let dayCycleStrings = MeteorologyInformationConversionWorker.dayCycleTimeStrings(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) else {
-          return []
+      .map { MeteorologyInformationConversionWorker.dayCycleTimeStrings(for: $0) }
+      .share(replay: 1)
+    
+    let weatherStationCurrentInformationSunCycleSectionItemsObservable = dayCycleStringsObservable // swiftlint:disable:this identifier_name
+      .map { dayCycleStrings -> [WeatherStationMeteorologyDetailsSymbolCellViewModel] in
+        var results = [WeatherStationMeteorologyDetailsSymbolCellViewModel]()
+        
+        if let dayCycleStrings = dayCycleStrings {
+          results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+            symbolImageName: "clock",
+            contentLabelText: R.string.localizable.current_time().capitalized,
+            descriptionLabelText: String
+              .begin()
+              .append(contentsOf: dayCycleStrings.timeOfDayString.capitalized)
+              .append(contentsOf: dayCycleStrings.currentTimeString, delimiter: .commaSpace)
+          )))
         }
-        return [WeatherStationMeteorologyDetailsSunCycleCellViewModel(dependencies: WeatherStationMeteorologyDetailsSunCycleCellViewModel.Dependencies(
-          sunriseTimeString: dayCycleStrings.sunriseTimeString,
-          sunsetTimeString: dayCycleStrings.sunsetTimeString
-        ))]
+        
+        if let sunriseTimeString = dayCycleStrings?.sunriseTimeString {
+          results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+            symbolImageName: "sunrise.fill",
+            contentLabelText: R.string.localizable.sunrise().capitalized,
+            descriptionLabelText: sunriseTimeString
+          )))
+        }
+        
+        if let sunsetTimeString = dayCycleStrings?.sunsetTimeString {
+          results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+            symbolImageName: "sunset.fill",
+            contentLabelText: R.string.localizable.sunset().capitalized,
+            descriptionLabelText: sunsetTimeString
+          )))
+        }
+        
+        return results
       }
       .map { sunCycleCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsHeaderItemsSection(sectionItems: sunCycleCellItems)]
@@ -124,18 +189,34 @@ extension WeatherStationMeteorologyDetailsViewModel {
     
     let weatherStationCurrentInformationAtmosphericDetailsSectionItemsObservable = weatherInformationDtoObservable // swiftlint:disable:this identifier_name
       .map { $0.entity }
-      .map { weatherInformationDTO -> [BaseCellViewModelProtocol] in
-        guard let cloudCoverage = weatherInformationDTO.cloudCoverage.coverage,
-              let humidity = weatherInformationDTO.atmosphericInformation.humidity,
-              let pressurePsi =  weatherInformationDTO.atmosphericInformation.pressurePsi else {
-          return []
+      .map { weatherInformationModel -> [WeatherStationMeteorologyDetailsSymbolCellViewModel] in
+        var results = [WeatherStationMeteorologyDetailsSymbolCellViewModel]()
+        
+        if let cloudCoverageDescriptor = MeteorologyInformationConversionWorker.cloudCoverageDescriptor(for: weatherInformationModel.cloudCoverage.coverage) {
+          results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+            symbolImageName: "cloud",
+            contentLabelText: R.string.localizable.cloud_coverage().capitalized,
+            descriptionLabelText: cloudCoverageDescriptor
+          )))
         }
         
-        return [WeatherStationMeteorologyDetailsAtmosphericDetailsCellViewModel(dependencies: WeatherStationMeteorologyDetailsAtmosphericDetailsCellViewModel.Dependencies(
-          cloudCoverage: cloudCoverage,
-          humidity: humidity,
-          pressurePsi: pressurePsi
-        ))]
+        if let humidityDescriptor = MeteorologyInformationConversionWorker.humidityDescriptor(for: weatherInformationModel.atmosphericInformation.humidity) {
+          results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+            symbolImageName: "humidity",
+            contentLabelText: R.string.localizable.humidity().capitalized,
+            descriptionLabelText: humidityDescriptor
+          )))
+        }
+        
+        if let airPressureDescriptor = MeteorologyInformationConversionWorker.airPressureDescriptor(for: weatherInformationModel.atmosphericInformation.pressurePsi) {
+          results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+            symbolImageName: "gauge",
+            contentLabelText: R.string.localizable.air_pressure().capitalized,
+            descriptionLabelText: airPressureDescriptor
+          )))
+        }
+        
+        return results
       }
       .map { atmosphericDetailsCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsAtmosphericDetailsItemsSection(sectionItems: atmosphericDetailsCellItems)]
@@ -145,36 +226,75 @@ extension WeatherStationMeteorologyDetailsViewModel {
       .combineLatest(
         weatherInformationDtoObservable.map { $0.entity },
         dimensionalUnitsOptionObservable,
-        resultSelector: { weatherInformationDTO, dimensionalUnitsOption -> [BaseCellViewModelProtocol] in
-          guard let windspeed = weatherInformationDTO.windInformation.windspeed,
-                let windDirectionDegrees = weatherInformationDTO.windInformation.degrees else {
-            return []
+        resultSelector: { weatherInformationModel, dimensionalUnitsOption in
+          var results = [WeatherStationMeteorologyDetailsSymbolCellViewModel]()
+          
+          if let windspeedDescriptor = MeteorologyInformationConversionWorker.windspeedDescriptor(
+            forDistanceSpeedUnit: dimensionalUnitsOption, forWindspeed: weatherInformationModel.windInformation.windspeed) {
+            results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+              symbolImageName: "wind",
+              contentLabelText: R.string.localizable.windspeed().capitalized,
+              descriptionLabelText: windspeedDescriptor
+            )))
           }
-          return [WeatherStationMeteorologyDetailsWindCellViewModel(dependencies: WeatherStationMeteorologyDetailsWindCellViewModel.Dependencies(
-            windSpeed: windspeed,
-            windDirectionDegrees: windDirectionDegrees,
-            dimensionaUnitsPreference: dimensionalUnitsOption
-          ))]
+          
+          if let windDirectionDegrees = weatherInformationModel.windInformation.degrees, let airPressureDescriptor = MeteorologyInformationConversionWorker.windDirectionDescriptor(forWindDirection: windDirectionDegrees) {
+            results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+              symbolImageName: "arrow.down.circle",
+              symbolImageRotationAngle: CGFloat(windDirectionDegrees)*0.0174532925199, // convert to radians
+              contentLabelText: R.string.localizable.wind_direction().capitalized,
+              descriptionLabelText: airPressureDescriptor
+            )))
+          }
+          
+          return results
         }
       )
       .map { windCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsWindItemsSection(sectionItems: windCellItems)]
       }
     
-    let weatherStationCurrentInformationMapSectionItemsObservable = weatherInformationDtoObservable
-      .map { [dependencies] weatherInformationPersistencyModel -> [BaseCellViewModelProtocol] in
-        guard weatherInformationPersistencyModel.entity.coordinates.latitude != nil,
-              weatherInformationPersistencyModel.entity.coordinates.longitude != nil else {
-          return []
+    let weatherStationCurrentInformationMapSectionItemsObservable = Observable
+      .combineLatest(
+        weatherInformationDtoObservable,
+        dimensionalUnitsOptionObservable,
+        dependencies.userLocationService.createGetUserLocationObservable(),
+        resultSelector: { [unowned self] weatherInformationPersistencyModel, dimensionalUnitsOption, currentLocation -> [BaseCellViewModelProtocol] in
+          var results = [BaseCellViewModelProtocol]()
+          
+          guard let latitude = weatherInformationPersistencyModel.entity.coordinates.latitude,
+                let longitude = weatherInformationPersistencyModel.entity.coordinates.longitude else {
+            return results
+          }
+          
+          results.append(WeatherStationMeteorologyDetailsMapCellViewModel(dependencies: WeatherStationMeteorologyDetailsMapCellViewModel.Dependencies(
+            weatherInformationIdentity: weatherInformationPersistencyModel.identity,
+            weatherStationService: dependencies.weatherStationService,
+            weatherInformationService: dependencies.weatherInformationService,
+            preferencesService: dependencies.preferencesService
+          )))
+          
+          if let coordinateDescriptor = MeteorologyInformationConversionWorker.coordinatesDescriptorFor(latitude: latitude, longitude: longitude) {
+            results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+              symbolImageName: "mappin.and.ellipse",
+              contentLabelText: R.string.localizable.coordinates().capitalized,
+              descriptionLabelText: coordinateDescriptor,
+              copyText: MeteorologyInformationConversionWorker.coordinatesCopyTextFor(latitude: latitude, longitude: longitude),
+              selectable: true
+            )))
+          }
+          
+          if let distanceDescriptor = Self.distanceString(for: weatherInformationPersistencyModel.entity, preferredDimensionalUnitsOption: dimensionalUnitsOption, currentLocation: currentLocation) {
+            results.append(WeatherStationMeteorologyDetailsSymbolCellViewModel(dependencies: WeatherStationMeteorologyDetailsSymbolCellViewModel.Dependencies(
+              symbolImageName: "ruler",
+              contentLabelText: R.string.localizable.distance().capitalized,
+              descriptionLabelText: distanceDescriptor
+            )))
+          }
+          
+          return results
         }
-        return [WeatherStationMeteorologyDetailsMapCellViewModel(dependencies: WeatherStationMeteorologyDetailsMapCellViewModel.Dependencies(
-          weatherInformationIdentity: weatherInformationPersistencyModel.identity,
-          weatherStationService: dependencies.weatherStationService,
-          weatherInformationService: dependencies.weatherInformationService,
-          preferencesService: dependencies.preferencesService,
-          userLocationService: dependencies.userLocationService
-        ))]
-      }
+      )
       .map { mapCellItems -> [TableViewSectionDataProtocol] in
         [WeatherStationMeteorologyDetailsMapItemsSection(sectionItems: mapCellItems)]
       }
@@ -214,11 +334,51 @@ private extension WeatherStationMeteorologyDetailsViewModel {
   }
 }
 
+// MARK: - Helpers
+
+private extension WeatherStationMeteorologyDetailsViewModel {
+  
+  static func distanceString(for weatherInformationDTO: WeatherInformationDTO, preferredDimensionalUnitsOption: DimensionalUnitOption, currentLocation: CLLocation?) -> String? {
+    guard let currentLocation = currentLocation,
+          let weatherStationLatitude = weatherInformationDTO.coordinates.latitude,
+          let weatherStationLongitude = weatherInformationDTO.coordinates.longitude else {
+      return nil
+    }
+    let weatherStationlocation = CLLocation(latitude: weatherStationLatitude, longitude: weatherStationLongitude)
+    let distanceInMetres = currentLocation.distance(from: weatherStationlocation)
+    
+    return MeteorologyInformationConversionWorker.distanceDescriptor(forDistanceSpeedUnit: preferredDimensionalUnitsOption, forDistanceInMetres: distanceInMetres)
+  }
+}
+
 // MARK: - Delegate Extensions
 
 extension WeatherStationMeteorologyDetailsViewModel: BaseTableViewSelectionDelegate {
   
   func didSelectRow(at indexPath: IndexPath) {
-    // nothing to do - will be used in the future
+    guard let symbolCellViewModel = tableDataSource.sectionDataSources[indexPath] as? WeatherStationMeteorologyDetailsSymbolCellViewModel,
+            let copyText = symbolCellViewModel.copyText else {
+      return
+    }
+    
+    UIPasteboard.general.string = copyText
+    HUD.flash(.label(R.string.localizable.copied().capitalized), delay: 0.5)
+//    onDidTapCoordinatesLabelSubject
+//      .asObservable()
+//      .withLatestFrom(weatherInformationDtoObservable.map { $0.entity })
+//      .subscribe(on: MainScheduler.instance)
+//      .subscribe(onNext: { weatherInformationModel in
+//        UIPasteboard.general.string = MeteorologyInformationConversionWorker.coordinatesCopyTextFor(
+//          latitude: weatherInformationModel.coordinates.latitude,
+//          longitude: weatherInformationModel.coordinates.longitude
+//        )
+//
+//        let message = String
+//          .begin(with: R.string.localizable.coordinates().capitalized)
+//          .append(contentsOf: R.string.localizable.copied().capitalized, delimiter: .space)
+//
+//        HUD.flash(.label(message), delay: 0.5)
+//      })
+//      .disposed(by: disposeBag)
   }
 }

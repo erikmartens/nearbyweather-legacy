@@ -142,7 +142,8 @@ private extension SettingsFlow {
     let settingsViewController = SettingsViewController(dependencies: SettingsViewModel.Dependencies(
       weatherStationService: dependencies.dependencyContainer.resolve(WeatherStationService.self)!,
       preferencesService: dependencies.dependencyContainer.resolve(PreferencesService.self)!,
-      notificationService: dependencies.dependencyContainer.resolve(NotificationService.self)!
+      notificationService: dependencies.dependencyContainer.resolve(NotificationService.self)!,
+      apiKeyService: dependencies.dependencyContainer.resolve(ApiKeyService.self)!
     ))
     rootViewController.setViewControllers([settingsViewController], animated: false)
     return .one(flowContributor: .contribute(

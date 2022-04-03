@@ -9,11 +9,13 @@
 import Foundation
 import MapKit
 import APTimeZones
+import Solar
 
 // MARK: - Public Type
 
 extension MeteorologyInformationConversionWorker {
   struct DayCycleLocalizedTimeStrings {
+    let timeOfDayString: String
     let currentTimeString: String
     let sunriseTimeString: String
     let sunsetTimeString: String
@@ -99,7 +101,7 @@ private extension MeteorologyInformationConversionWorker {
     case cardinalDirectionNW
     case cardinalDirectionNNW
     
-    init?(degrees: Double) {
+    init?(degrees: Double) { // swiftlint:disable:this cyclomatic_complexity
       guard degrees >= 0 && degrees <= 360 else {
         return nil
       }
@@ -143,22 +145,22 @@ private extension MeteorologyInformationConversionWorker {
     
     var stringValue: String {
       switch self {
-      case .cardinalDirectionN: return "N"
-      case .cardinalDirectionNNE: return "NNE"
-      case .cardinalDirectionNE: return "NE"
-      case .cardinalDirectionENE: return "ENE"
-      case .cardinalDirectionE: return "E"
-      case .cardinalDirectionESE: return "ESE"
-      case .cardinalDirectionSE: return "SE"
-      case .cardinalDirectionSSE: return "SSE"
-      case .cardinalDirectionS: return "S"
-      case .cardinalDirectionSSW: return "SSW"
-      case .cardinalDirectionSW: return "SW"
-      case .cardinalDirectionWSW: return "WSW"
-      case .cardinalDirectionW: return "W"
-      case .cardinalDirectionWNW: return "WNW"
-      case .cardinalDirectionNW: return "NW"
-      case .cardinalDirectionNNW: return "NNW"
+      case .cardinalDirectionN: return R.string.localizable.cardinalDirectionN()
+      case .cardinalDirectionNNE: return R.string.localizable.cardinalDirectionNNE()
+      case .cardinalDirectionNE: return R.string.localizable.cardinalDirectionNE()
+      case .cardinalDirectionENE: return R.string.localizable.cardinalDirectionENE()
+      case .cardinalDirectionE: return R.string.localizable.cardinalDirectionE()
+      case .cardinalDirectionESE: return R.string.localizable.cardinalDirectionESE()
+      case .cardinalDirectionSE: return R.string.localizable.cardinalDirectionSE()
+      case .cardinalDirectionSSE: return R.string.localizable.cardinalDirectionSSE()
+      case .cardinalDirectionS: return R.string.localizable.cardinalDirectionS()
+      case .cardinalDirectionSSW: return R.string.localizable.cardinalDirectionSSW()
+      case .cardinalDirectionSW: return R.string.localizable.cardinalDirectionSW()
+      case .cardinalDirectionWSW: return R.string.localizable.cardinalDirectionWSW()
+      case .cardinalDirectionW: return R.string.localizable.cardinalDirectionW()
+      case .cardinalDirectionWNW: return R.string.localizable.cardinalDirectionWNW()
+      case .cardinalDirectionNW: return R.string.localizable.cardinalDirectionNW()
+      case .cardinalDirectionNNW: return R.string.localizable.cardinalDirectionNNW()
       }
     }
   }
@@ -199,7 +201,7 @@ extension MeteorologyInformationConversionWorker {
         systemImageName: "cloud.bolt.rain.fill",
         colorPalette: [
           WeatherInformationColor.white,
-          WeatherInformationColor.blue,
+          WeatherInformationColor.cyan,
           WeatherInformationColor.yellow
         ]
       ))
@@ -218,32 +220,48 @@ extension MeteorologyInformationConversionWorker {
           WeatherInformationColor.yellow
         ]
       ))
-    case let x where x >= 300 && x <= 321:
+    case let x where x == 300 || x == 301 || x == 310:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: isDayTime ? "cloud.sun.rain.fill" : "cloud.moon.rain.fill",
         colorPalette: [
           WeatherInformationColor.white,
           isDayTime ? WeatherInformationColor.yellow : .purple,
-          WeatherInformationColor.blue
+          WeatherInformationColor.cyan
         ]
       ))
-    case let x where x >= 500 && x <= 531:
+    case let x where x == 302 || (x >= 311 && x <= 321):
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "cloud.drizzle.fill",
-        colorPalette: [
-          WeatherInformationColor.white,
-          WeatherInformationColor.blue
-        ]
-      ))
-    case let x where x >= 600 && x <= 602:
-      return Factory.Image.make(fromType: .weatherConditionSymbol(
-        systemImageName: "wind.snow",
         colorPalette: [
           WeatherInformationColor.white,
           WeatherInformationColor.cyan
         ]
       ))
-    case let x where x >= 603 && x <= 622:
+    case let x where x == 500 || x == 501:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.rain.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
+    case let x where x == 511:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.sleet.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
+    case let x where (x >= 502 && x <= 504) || (x >= 520 && x <= 531) :
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.heavyrain.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
+    case let x where (x >= 600 && x <= 602) || x >= 620 && x <= 622:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "cloud.snow.fill",
         colorPalette: [
@@ -251,12 +269,57 @@ extension MeteorologyInformationConversionWorker {
           WeatherInformationColor.cyan
         ]
       ))
-    case let x where x >= 701 && x <= 771:
+    case let x where x >= 611 && x <= 616:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.sleet.fill",
+        colorPalette: [
+          WeatherInformationColor.white,
+          WeatherInformationColor.cyan
+        ]
+      ))
+    case let x where x == 701:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "cloud.fog",
+        colorPalette: [
+          WeatherInformationColor.white.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 711 || x == 762:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "smoke.fill",
+        colorPalette: [
+          WeatherInformationColor.gray.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 721:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "sun.haze.fill",
+        colorPalette: [
+          WeatherInformationColor.yellow,
+          WeatherInformationColor.white.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 731 || x == 751 || x == 761:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "sun.dust.fill",
+        colorPalette: [
+          WeatherInformationColor.yellow,
+          WeatherInformationColor.yellow.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 741:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "cloud.fog.fill",
         colorPalette: [
           WeatherInformationColor.white,
           WeatherInformationColor.white.withAlphaComponent(0.5)
+        ]
+      ))
+    case let x where x == 771:
+      return Factory.Image.make(fromType: .weatherConditionSymbol(
+        systemImageName: "wind",
+        colorPalette: [
+          WeatherInformationColor.white
         ]
       ))
     case let x where x == 781 || x == 900:
@@ -281,21 +344,14 @@ extension MeteorologyInformationConversionWorker {
           isDayTime ? WeatherInformationColor.yellow : .purple
         ]
       ))
-    case let x where x == 804:
+    case let x where x >= 803 && x <= 804:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "cloud.fill",
         colorPalette: [
           WeatherInformationColor.white
         ]
       ))
-    case let x where x >= 952 && x <= 956 || x == 905:
-      return Factory.Image.make(fromType: .weatherConditionSymbol(
-        systemImageName: "wind",
-        colorPalette: [
-          WeatherInformationColor.white
-        ]
-      ))
-    case let x where x >= 957 && x <= 961 || x == 771:
+    case let x where (x >= 952 && x <= 961) || x == 905:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
         systemImageName: "wind",
         colorPalette: [
@@ -319,7 +375,7 @@ extension MeteorologyInformationConversionWorker {
       ))
     case let x where x == 904:
       return Factory.Image.make(fromType: .weatherConditionSymbol(
-        systemImageName: "thermometer.sun",
+        systemImageName: "thermometer.sun.fill",
         colorPalette: [
           WeatherInformationColor.red,
           WeatherInformationColor.yellow
@@ -357,35 +413,44 @@ extension MeteorologyInformationConversionWorker {
     guard let rawTemperature = rawTemperature else {
       return nil
     }
+    var result: String?
+    
     switch temperatureUnit.value {
     case .celsius:
-      return numberFormatter.string(from: rawTemperature - 273.15)?.append(contentsOf: "°C", delimiter: .none)
+      result = numberFormatter.string(from: rawTemperature - 273.15)?.append(contentsOf: "°C")
     case .fahrenheit:
-      return numberFormatter.string(from: rawTemperature * (9/5) - 459.67)?.append(contentsOf: "°F", delimiter: .none)
+      result = numberFormatter.string(from: rawTemperature * (9/5) - 459.67)?.append(contentsOf: "°F")
     case .kelvin:
-      return numberFormatter.string(from: rawTemperature)?.append(contentsOf: "°K", delimiter: .none)
+      result = numberFormatter.string(from: rawTemperature)?.append(contentsOf: "°K")
     }
+    guard var result = result else {
+      return nil
+    }
+    if result.starts(with: "-0°") {
+      result.replaceSubrange(result.startIndex..<result.index(after: result.startIndex), with: "")
+    }
+    return result
   }
   
   static func cloudCoverageDescriptor(for cloudCoverage: Double?) -> String? {
     guard let cloudCoverage = cloudCoverage else {
       return nil
     }
-    return numberFormatter.string(from: cloudCoverage)?.append(contentsOf: "%", delimiter: .none)
+    return numberFormatter.string(from: cloudCoverage)?.append(contentsOf: "%")
   }
   
   static func humidityDescriptor(for humidity: Double?) -> String? {
     guard let humidity = humidity else {
       return nil
     }
-    return numberFormatter.string(from: humidity)?.append(contentsOf: "%", delimiter: .none)
+    return numberFormatter.string(from: humidity)?.append(contentsOf: "%")
   }
   
   static func airPressureDescriptor(for airPressure: Double?) -> String? {
     guard let airPressure = airPressure else {
       return nil
     }
-    return numberFormatter.string(from: airPressure)?.append(contentsOf: "hpa", delimiter: .space)
+    return numberFormatter.string(from: airPressure)?.append(contentsOf: "hPa", delimiter: .space)
   }
   
   static func distanceDescriptor(forDistanceSpeedUnit distanceSpeedUnit: DimensionalUnitOption, forDistanceInMetres distance: Double) -> String? {
@@ -413,7 +478,7 @@ extension MeteorologyInformationConversionWorker {
   }
   
   static func windDirectionDescriptor(forWindDirection degrees: Double) -> String? {
-    let degreesString = numberFormatter.string(from: degrees)?.append(contentsOf: "°", delimiter: .none)
+    let degreesString = numberFormatter.string(from: degrees)?.append(contentsOf: "°")
     return degrees.toCardinalDirectionString?.append(contentsOf: degreesString, encasing: .roundBrackets, delimiter: .space)
   }
   
@@ -425,7 +490,7 @@ extension MeteorologyInformationConversionWorker {
     numberFormatter.decimalSeparator = "."
     return String
       .begin(with: numberFormatter.string(from: latitude))
-      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .comma)
+      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .commaSpace)
   }
   
   static func coordinatesCopyTextFor(latitude lat: Double?, longitude lon: Double?) -> String? {
@@ -439,33 +504,35 @@ extension MeteorologyInformationConversionWorker {
     
     return String
       .begin(with: numberFormatter.string(from: latitude))
-      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .comma)
+      .append(contentsOf: numberFormatter.string(from: longitude), delimiter: .commaSpace)
   }
   
-  static func isDayTime(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> Bool? {
+  static func isDayTime(for weatherInformationModel: WeatherInformationDTO) -> Bool? {
     
-    guard let cycle = dayCycleDateComponents(for: dayTimeInformation, coordinates: coordinates) else {
-      return nil
-    }
-    
-    return ((cycle.currentTimeDateComponentsHour == cycle.sunriseTimeDateComponentsHour
-              && cycle.currentTimeDateComponentsMinute >= cycle.sunriseTimeDateComponentsMinute)
+    if let cycle = dayCycleDateComponents(for: weatherInformationModel) {
+      return ((cycle.currentTimeDateComponentsHour == cycle.sunriseTimeDateComponentsHour
+               && cycle.currentTimeDateComponentsMinute >= cycle.sunriseTimeDateComponentsMinute)
               || cycle.currentTimeDateComponentsHour > cycle.sunriseTimeDateComponentsHour)
       && ((cycle.currentTimeDateComponentsHour == cycle.sunsetTimeDateComponentsHour
-            && cycle.currentTimeDateComponentsMinute <= cycle.sunsetTimeDateComponentsMinute)
-            || cycle.currentTimeDateComponentsHour < cycle.sunsetTimeDateComponentsHour)
+           && cycle.currentTimeDateComponentsMinute <= cycle.sunsetTimeDateComponentsMinute)
+          || cycle.currentTimeDateComponentsHour < cycle.sunsetTimeDateComponentsHour)
+    }
+    guard let latitude = weatherInformationModel.coordinates.latitude, let longitude = weatherInformationModel.coordinates.longitude else {
+      return nil
+    }
+    return Solar(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))?.isDaytime
   }
   
-  static func isDayTimeString(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> String? {
-    guard let isDayTime = isDayTime(for: dayTimeInformation, coordinates: coordinates) else {
+  static func isDayTimeString(for weatherInformationModel: WeatherInformationDTO) -> String? {
+    guard let isDayTime = isDayTime(for: weatherInformationModel) else {
       return nil
     }
     return isDayTime ? R.string.localizable.dayTime() : R.string.localizable.nightTime()
   }
   
-  static func dayCycleTimeStrings(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> DayCycleLocalizedTimeStrings? {
-    
-    guard let cycle = dayCycleDateComponents(for: dayTimeInformation, coordinates: coordinates),
+  static func dayCycleTimeStrings(for weatherInformationModel: WeatherInformationDTO) -> DayCycleLocalizedTimeStrings? {
+    guard let timeOfDayString = isDayTimeString(for: weatherInformationModel),
+          let cycle = dayCycleDateComponents(for: weatherInformationModel),
           let sunriseDate = Calendar.current.date(from: DateComponents(hour: cycle.sunriseTimeDateComponentsHour, minute: cycle.sunriseTimeDateComponentsMinute)),
           let sunsetDate = Calendar.current.date(from: DateComponents(hour: cycle.sunsetTimeDateComponentsHour, minute: cycle.sunsetTimeDateComponentsMinute)) else {
       return nil
@@ -477,10 +544,17 @@ extension MeteorologyInformationConversionWorker {
     dateFormatter.dateStyle = .none
     dateFormatter.timeStyle = .short
     
+    let dateFormatterRelativeToLocal = DateFormatter()
+    dateFormatterRelativeToLocal.calendar = .current
+    dateFormatterRelativeToLocal.timeZone = Calendar.current.timeZone
+    dateFormatterRelativeToLocal.dateStyle = .none
+    dateFormatterRelativeToLocal.timeStyle = .short
+    
     return DayCycleLocalizedTimeStrings(
+      timeOfDayString: timeOfDayString,
       currentTimeString: dateFormatter.string(from: Date()),
-      sunriseTimeString: dateFormatter.string(from: sunriseDate),
-      sunsetTimeString: dateFormatter.string(from: sunsetDate)
+      sunriseTimeString: dateFormatterRelativeToLocal.string(from: sunriseDate),
+      sunsetTimeString: dateFormatterRelativeToLocal.string(from: sunsetDate)
     )
   }
   
@@ -497,12 +571,10 @@ extension MeteorologyInformationConversionWorker {
 
 private extension MeteorologyInformationConversionWorker {
   
-  static func dayCycleDateComponents(for dayTimeInformation: WeatherInformationDTO.DayTimeInformationDTO?, coordinates: WeatherInformationDTO.CoordinatesDTO) -> DayCycleDateComponents? {
+  static func dayCycleDateComponents(for weatherInformationModel: WeatherInformationDTO) -> DayCycleDateComponents? {
     
-    guard let sunrise =  dayTimeInformation?.sunrise,
-          let sunset =  dayTimeInformation?.sunset,
-          let latitude = coordinates.latitude,
-          let longitude = coordinates.longitude else {
+    guard let latitude = weatherInformationModel.coordinates.latitude,
+          let longitude = weatherInformationModel.coordinates.longitude else {
       return nil
     }
     
@@ -513,9 +585,25 @@ private extension MeteorologyInformationConversionWorker {
     calendar.timeZone = location.timeZone()
     
     let currentTimeDateComponents = calendar.dateComponents([.hour, .minute], from: Date())
-    let sunriseDate = Date(timeIntervalSince1970: sunrise)
+    let sunriseDate: Date?
+    let sunsetDate: Date?
+    
+    if let sunrise = weatherInformationModel.dayTimeInformation.sunrise,
+       let sunset = weatherInformationModel.dayTimeInformation.sunset {
+      sunriseDate = Date(timeIntervalSince1970: sunrise)
+      sunsetDate = Date(timeIntervalSince1970: sunset)
+    } else {
+      let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+      sunriseDate = solar?.sunrise
+      sunsetDate = solar?.sunset
+    }
+    
+    guard let sunriseDate = sunriseDate,
+          let sunsetDate = sunsetDate else {
+      return nil
+    }
+    
     let sunriseDateComponents = calendar.dateComponents([.hour, .minute], from: sunriseDate)
-    let sunsetDate = Date(timeIntervalSince1970: sunset)
     let sunsetDateComponents = calendar.dateComponents([.hour, .minute], from: sunsetDate)
     
     return DayCycleDateComponents(

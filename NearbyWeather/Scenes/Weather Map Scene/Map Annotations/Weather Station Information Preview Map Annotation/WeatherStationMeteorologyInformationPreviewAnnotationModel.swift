@@ -8,7 +8,7 @@
 
 import MapKit
 
-struct WeatherStationMeteorologyInformationPreviewAnnotationModel {
+struct WeatherStationMeteorologyInformationPreviewAnnotationModel { // swiftlint:disable:this type_name
   let title: String?
   let subtitle: String?
   let weatherConditionSymbol: UIImage?
@@ -37,7 +37,7 @@ struct WeatherStationMeteorologyInformationPreviewAnnotationModel {
     temperatureUnitOption: TemperatureUnitOption,
     isBookmark: Bool
   ) {
-    let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO.dayTimeInformation, coordinates: weatherInformationDTO.coordinates) ?? true
+    let isDayTime = MeteorologyInformationConversionWorker.isDayTime(for: weatherInformationDTO) ?? true
     
     var weatherConditionSymbol: UIImage?
     if let weatherConditionIdentifier = weatherInformationDTO.weatherCondition.first?.identifier {

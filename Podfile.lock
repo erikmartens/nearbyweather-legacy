@@ -138,6 +138,7 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - Solar-dev (3.0.1)
   - SwiftLint (0.46.2)
   - Swinject (2.8.1)
 
@@ -157,6 +158,7 @@ DEPENDENCIES:
   - RxOptional (~> 5.0.2)
   - RxRealm (~> 5.0.4)
   - RxSwift (~> 6.5.0)
+  - Solar-dev (~> 3.0.1)
   - SwiftLint (~> 0.46.2)
   - Swinject (~> 2.8.1)
 
@@ -188,6 +190,7 @@ SPEC REPOS:
     - RxRealm
     - RxRelay
     - RxSwift
+    - Solar-dev
     - SwiftLint
     - Swinject
 
@@ -230,9 +233,10 @@ SPEC CHECKSUMS:
   RxRealm: 666c8785327fe2fff972a3093b35dc7055c1ca38
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  Solar-dev: 4612dc9878b9fed2667d23b327f1d4e54e16e8d0
   SwiftLint: 6bc52a21f0fd44cab9aa2dc8e534fb9f5e3ec507
   Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
 
-PODFILE CHECKSUM: d984f3f17f12b1b3eb834b569b35fd966a0c3e70
+PODFILE CHECKSUM: c2e3a19eb3f92e06f24760138369355fc2d93510
 
 COCOAPODS: 1.11.3

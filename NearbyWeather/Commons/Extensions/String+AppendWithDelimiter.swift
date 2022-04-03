@@ -12,8 +12,13 @@ enum Delimiter {
   case none
   case space
   case comma
+  case commaSpace
   case colon
+  case colonSpace
   case semicolon
+  case semicolonSpace
+  case forwardSlash
+  case forwardSlashSpace
   case custom(string: String)
   
   var stringValue: String {
@@ -23,11 +28,21 @@ enum Delimiter {
     case .space:
       return " "
     case .comma:
+      return ","
+    case .commaSpace:
       return ", "
     case .colon:
+      return ":"
+    case .colonSpace:
       return ": "
     case .semicolon:
+      return ";"
+    case .semicolonSpace:
       return "; "
+    case .forwardSlash:
+      return "/"
+    case .forwardSlashSpace:
+      return "/ "
     case let .custom(string):
       return string
     }
@@ -73,7 +88,7 @@ extension String {
     return String(describing: convertible)
   }
   
-  func append(contentsOf string: String?, encasing: Encasing = .none, delimiter: Delimiter, emptyIfPredecessorWasEmpty: Bool = false) -> String {
+  func append(contentsOf string: String?, encasing: Encasing = .none, delimiter: Delimiter = .none, emptyIfPredecessorWasEmpty: Bool = false) -> String {
     guard let string = string else {
       return self
     }
@@ -86,7 +101,7 @@ extension String {
     return "\(self)\(delimiter.stringValue)\(string.encase(using: encasing))"
   }
   
-  func append(contentsOfConvertible convertible: CustomStringConvertible?, encasing: Encasing = .none, delimiter: Delimiter, emptyIfPredecessorWasEmpty: Bool = false) -> String {
+  func append(contentsOfConvertible convertible: CustomStringConvertible?, encasing: Encasing = .none, delimiter: Delimiter = .none, emptyIfPredecessorWasEmpty: Bool = false) -> String {
     guard let convertible = convertible else {
       return self
     }
@@ -103,7 +118,7 @@ extension String {
 
 extension CustomStringConvertible {
   
-  func append(contentsOf string: String?, encasing: Encasing = .none, delimiter: Delimiter) -> String {
+  func append(contentsOf string: String?, encasing: Encasing = .none, delimiter: Delimiter = .none) -> String {
     guard let string = string else {
       return String(describing: self)
     }
@@ -113,7 +128,7 @@ extension CustomStringConvertible {
     return "\(String(describing: self))\(delimiter.stringValue)\(string.encase(using: encasing))"
   }
   
-  func append(contentsOfConvertible convertible: CustomStringConvertible?, encasing: Encasing = .none, delimiter: Delimiter) -> String {
+  func append(contentsOfConvertible convertible: CustomStringConvertible?, encasing: Encasing = .none, delimiter: Delimiter = .none) -> String {
     guard let convertible = convertible else {
       return String(describing: self)
     }

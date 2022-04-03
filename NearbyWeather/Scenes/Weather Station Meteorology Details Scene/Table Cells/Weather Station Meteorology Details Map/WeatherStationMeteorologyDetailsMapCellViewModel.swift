@@ -19,7 +19,6 @@ extension WeatherStationMeteorologyDetailsMapCellViewModel {
     let weatherStationService: WeatherStationBookmarkReading
     let weatherInformationService: WeatherInformationReading
     let preferencesService: WeatherMapPreferenceReading
-    let userLocationService: UserLocationReading
   }
 }
 
@@ -41,26 +40,23 @@ final class WeatherStationMeteorologyDetailsMapCellViewModel: NSObject, BaseCell
 
   // MARK: - Events
   
-  lazy var cellModelDriver: Driver<WeatherStationMeteorologyDetailsMapCellModel> = Observable
-    .combineLatest(
-      weatherInformationDtoObservable.map { $0.entity },
-      dependencies.preferencesService.createGetMapTypeOptionObservable(),
-      dependencies.preferencesService.createGetDimensionalUnitsOptionObservable(),
-      dependencies.userLocationService.createGetUserLocationObservable(),
-      resultSelector: { weatherInformationModel, preferredMapTypeOption, preferredDimensionalUnitsOption, currentLocation -> WeatherStationMeteorologyDetailsMapCellModel in
-        WeatherStationMeteorologyDetailsMapCellModel(
-          preferredMapTypeOption: preferredMapTypeOption,
-          coordinatesString: MeteorologyInformationConversionWorker.coordinatesDescriptorFor(
-            latitude: weatherInformationModel.coordinates.latitude,
-            longitude: weatherInformationModel.coordinates.longitude
-          ),
-          distanceString: Self.distanceString(for: weatherInformationModel, preferredDimensionalUnitsOption: preferredDimensionalUnitsOption, currentLocation: currentLocation)
-        )
-      }
-    )
+  lazy var cellModelDriver: Driver<WeatherStationMeteorologyDetailsMapCellModel> = dependencies.preferencesService
+    .createGetMapTypeOptionObservable()
+    .map { preferredMapTypeOption -> WeatherStationMeteorologyDetailsMapCellModel in
+      WeatherStationMeteorologyDetailsMapCellModel(
+        preferredMapTypeOption: preferredMapTypeOption
+      )
+    }
     .asDriver(onErrorJustReturn: WeatherStationMeteorologyDetailsMapCellModel())
   
-  var onDidTapCoordinatesLabelSubject = PublishSubject<Void>()
+  lazy var weatherStationLocationObservable: Observable<CLLocationCoordinate2D?> = weatherInformationDtoObservable
+    .map { $0.entity.coordinates }
+    .map { coordinates in
+      guard let latitude = coordinates.latitude, let longitude = coordinates.longitude else {
+        return nil
+      }
+      return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
   
   // MARK: - Observables
   
@@ -105,26 +101,6 @@ extension WeatherStationMeteorologyDetailsMapCellViewModel {
       .bind { [weak mapDelegate] in mapDelegate?.dataSource.accept($0) }
       .disposed(by: disposeBag)
   }
-  
-  func observeUserTapEvents() {
-    onDidTapCoordinatesLabelSubject
-      .asObservable()
-      .withLatestFrom(weatherInformationDtoObservable.map { $0.entity })
-      .subscribe(on: MainScheduler.instance)
-      .subscribe(onNext: { weatherInformationModel in
-        UIPasteboard.general.string = MeteorologyInformationConversionWorker.coordinatesCopyTextFor(
-          latitude: weatherInformationModel.coordinates.latitude,
-          longitude: weatherInformationModel.coordinates.longitude
-        )
-        
-        let message = String
-          .begin(with: R.string.localizable.coordinates().capitalized)
-          .append(contentsOf: R.string.localizable.copied().capitalized, delimiter: .space)
-        
-        HUD.flash(.label(message), delay: 0.5)
-      })
-      .disposed(by: disposeBag)
-  }
 }
 
 // MARK: - Delegate Extensions
@@ -137,21 +113,6 @@ extension WeatherStationMeteorologyDetailsMapCellViewModel: BaseMapViewSelection
 }
 
 // MARK: - Private Helpers
-
-private extension WeatherStationMeteorologyDetailsMapCellViewModel {
-  
-  static func distanceString(for weatherInformationDTO: WeatherInformationDTO, preferredDimensionalUnitsOption: DimensionalUnitOption, currentLocation: CLLocation?) -> String? {
-    guard let currentLocation = currentLocation,
-          let weatherStationLatitude = weatherInformationDTO.coordinates.latitude,
-          let weatherStationLongitude = weatherInformationDTO.coordinates.longitude else {
-      return nil
-    }
-    let weatherStationlocation = CLLocation(latitude: weatherStationLatitude, longitude: weatherStationLongitude)
-    let distanceInMetres = currentLocation.distance(from: weatherStationlocation)
-    
-    return MeteorologyInformationConversionWorker.distanceDescriptor(forDistanceSpeedUnit: preferredDimensionalUnitsOption, forDistanceInMetres: distanceInMetres)
-  }
-}
 
 private extension Array where Element == PersistencyModelThreadSafe<WeatherInformationDTO> {
   

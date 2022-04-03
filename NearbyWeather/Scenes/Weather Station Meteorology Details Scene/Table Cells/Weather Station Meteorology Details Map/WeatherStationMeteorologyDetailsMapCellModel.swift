@@ -11,16 +11,10 @@ import Foundation
 struct WeatherStationMeteorologyDetailsMapCellModel {
   
   let preferredMapTypeOption: MapTypeOption?
-  let coordinatesString: String?
-  let distanceString: String?
   
   init(
-    preferredMapTypeOption: MapTypeOption? = nil,
-    coordinatesString: String? = nil,
-    distanceString: String? = nil
+    preferredMapTypeOption: MapTypeOption? = nil
   ) {
     self.preferredMapTypeOption = preferredMapTypeOption
-    self.coordinatesString = coordinatesString
-    self.distanceString = distanceString
   }
 }

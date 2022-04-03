@@ -13,7 +13,7 @@ extension Factory {
   struct Image: FactoryFunction {
     
     enum ImageType {
-      case symbol(systemImageName: String?, tintColor: UIColor? = nil)
+      case symbol(systemImageName: String?, tintColor: UIColor? = nil, weight: UIImage.SymbolWeight = .semibold)
       case cellSymbol(systemImageName: String?)
       case weatherConditionSymbol(systemImageName: String?, colorPalette: [UIColor] = [])
     }
@@ -23,15 +23,14 @@ extension Factory {
     
     static func make(fromType type: InputType) -> ResultType {
       switch type {
-      case let .symbol(systemImageName, tintColor):
+      case let .symbol(systemImageName, tintColor, weight):
         guard let systemImageName = systemImageName else {
           return UIImage()
         }
         return UIImage(
           systemName: systemImageName,
-          withConfiguration: UIImage.SymbolConfiguration(weight: .semibold)
+          withConfiguration: UIImage.SymbolConfiguration(weight: weight)
         )?
-          .trimmingTransparentPixels()?
           .withTintColor(tintColor ?? Constants.Theme.Color.ViewElement.cellPrefixSymbolImage, renderingMode: .alwaysOriginal) ?? UIImage()
       case let .cellSymbol(systemImageName):
         guard let systemImageName = systemImageName else {

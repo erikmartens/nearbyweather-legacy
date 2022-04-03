@@ -32,9 +32,9 @@ extension WeatherListErrorViewModel {
     var title: String {
       switch self {
       case .network:
-        return R.string.localizable.no_weather_data() // TODO: write different descriptions for different error
+        return R.string.localizable.no_internet_connection()
       case .apiKey:
-        return R.string.localizable.no_weather_data()
+        return R.string.localizable.unauthorized_api_key()
       case .noData:
         return R.string.localizable.no_weather_data()
       }
@@ -43,9 +43,9 @@ extension WeatherListErrorViewModel {
     var message: String {
       switch self {
       case .network:
-        return R.string.localizable.no_data_description() // TODO: write different descriptions for different error
+        return R.string.localizable.no_internet_connection_description()
       case .apiKey:
-        return R.string.localizable.no_data_description()
+        return R.string.localizable.unauthorized_api_key_error()
       case .noData:
         return R.string.localizable.no_data_description()
       }

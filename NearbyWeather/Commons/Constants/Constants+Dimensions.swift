@@ -24,12 +24,12 @@ extension Constants.Dimensions {
   
   enum ContentElement {
     /// constant: 34
-    static let height: CGFloat = 24
+    static let height: CGFloat = 20
   }
   
   enum InteractableElement {
     /// constant: 34
-    static let height: CGFloat = 34
+    static let height: CGFloat = 42
   }
   
   enum TableCellImage {

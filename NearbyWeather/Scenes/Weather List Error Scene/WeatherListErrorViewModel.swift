@@ -32,11 +32,11 @@ extension WeatherListErrorViewModel {
     var title: String {
       switch self {
       case .network:
-        return R.string.localizable.no_internet_connection()
+        return R.string.localizable.no_internet_connection().capitalized
       case .apiKey:
-        return R.string.localizable.unauthorized_api_key()
+        return R.string.localizable.unauthorized_api_key().capitalized
       case .noData:
-        return R.string.localizable.no_weather_data()
+        return R.string.localizable.no_weather_data().capitalized
       }
     }
     

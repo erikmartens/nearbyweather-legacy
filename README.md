@@ -81,16 +81,6 @@ NearbyWeather was created to help you as a reference for developing your skills.
 | Deployment | Fastlane | ✅ |
 | Testing and Quality Assurance | Unit Tests and UI Tests | 🅾️ |
 
-## App Releases
-
-Past releases are documented in the [release section](https://github.com/erikmartens/NearbyWeather/releases) of this repository. Future releases are planned via the [project board](https://github.com/erikmartens/NearbyWeather/projects).
-
-| Version | Tag |
-|:--|:--|
-| Current Release | [v2.2.1](https://github.com/erikmartens/NearbyWeather/releases/tag/v2.2.1)
-| Next Release | [v2.3.0](https://github.com/erikmartens/NearbyWeather/projects/5) |
-| Future Releases | [v?.?.?](https://github.com/erikmartens/NearbyWeather/projects/1) |
-
 ## How to Get Started
 
 1. Install the latest version of Xcode from the Mac AppStore

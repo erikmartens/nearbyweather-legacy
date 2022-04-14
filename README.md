@@ -1,3 +1,13 @@
+```
+⚠️ LEGACY REPO: 
+
+⚠️ Further development of NearbyWeather has turned private. 
+⚠️ This repo is no longer accepting contributions and will not get updated. 
+⚠️ You may use all code contained therein in compliance with the MIT license.
+
+```
+<br>
+
 <p align="center">
 <img src="Resources/app_icon.png" alt="NearbyWeather for iOS" height="128" width="128">
 </p>
@@ -19,10 +29,10 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-iOS%2012.0+-lightgrey.svg" alt="Platform: iOS">
 <a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-5.2-orange.svg?style=flat" alt="Swift"/></a>
-<a href="https://github.com/erikmartens/NearbyWeather/commits/develop" title="Latest Commit"><img src="https://img.shields.io/github/last-commit/erikmartens/NearbyWeather?style=flat"></a>
-<a href="https://github.com/erikmartens/NearbyWeather/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/erikmartens/NearbyWeather?style=flat"></a>
-<a href="https://github.com/erikmartens/NearbyWeather/graphs/contributors"><img src="https://img.shields.io/github/contributors/erikmartens/NearbyWeather.svg?style=flat" alt="Contributors"></a>
-<img src="https://img.shields.io/github/license/erikmartens/NearbyWeather.svg?style=flat" alt="License: MIT">
+<a href="https://github.com/erikmartens/nearbyweather-legacy/commits/develop" title="Latest Commit"><img src="https://img.shields.io/github/last-commit/erikmartens/nearbyweather-legacy?style=flat"></a>
+<a href="https://github.com/erikmartens/nearbyweather-legacy/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/erikmartens/nearbyweather-legacy?style=flat"></a>
+<a href="https://github.com/erikmartens/nearbyweather-legacy/graphs/contributors"><img src="https://img.shields.io/github/contributors/erikmartens/nearbyweather-legacy.svg?style=flat" alt="Contributors"></a>
+<img src="https://img.shields.io/github/license/erikmartens/nearbyweather-legacy.svg?style=flat" alt="License: MIT">
 </p>
 <p align="center">
 <a href="https://itunes.apple.com/app/nearbyweather/id1227313069"><img src="Resources/app_store_badge.svg" alt="Download on the App Store"/></a>
@@ -59,12 +69,9 @@ NearbyWeather was created to help you as a reference for developing your skills.
 |:--|:--|:--|
 | Language | Swift (latest release) | ✅ |
 | Additional Languages | Objective-C, JavaScript | ✅ |
-| Additional Frameworks | RxSwift | 🔄 In Progress |
-| Architecture | MVVM+C | 🔄 In Progress |
-| Navigation | Coordinator Pattern with RxFlow | ✅ |
-| UI-Construction | Autolayout in Code + Factory Pattern | 🔄 In Progress |
-| Dependencies | Dependency Injection with Swinject & Singletons | 🔄 In Progress / ✅ |
-| Data Persistence | Realm & Files on Disk | 🔄 In Progress / ✅ |
+| Architecture | MVC+Coordinator (RxFlow) | ✅ |
+| Dependencies | Singletons | ✅ |
+| Data Persistence | Files on Disk | ✅ |
 | Networking | Alamofire | ✅ |
 | Asset Management | R.Swift | ✅ |
 | Code Quality | SwiftLint | ✅ |
@@ -72,7 +79,7 @@ NearbyWeather was created to help you as a reference for developing your skills.
 | Library Management | CocoaPods | ✅ |
 | Bootsrapped Bundle Data | Node.js Scripts | ✅ |
 | Deployment | Fastlane | ✅ |
-| Testing and Quality Assurance | Unit Tests and UI Tests, SwiftUI Scene Previews | 🅾️ Coming Soon |
+| Testing and Quality Assurance | Unit Tests and UI Tests | 🅾️ |
 
 ## App Releases
 
@@ -98,29 +105,9 @@ Past releases are documented in the [release section](https://github.com/erikmar
 7. Configure signing via [fastlane match](https://docs.fastlane.tools/actions/match/) to use your personal certificates
 7. Run `pod install` to be able to build locally
 
-## How to Contribute
-
-### Development
-
-We looking forward to receiving your contributions. You can find out how to take part in the development of this application. Please find out how to submit code to this repository via the [contribution guidelines](CONTRIBUTING.md).
-
-### Beta Testing
-
-You may also assist as a beta tester. Periodically test-builds will become available via Testflight. In order to take part in testing those submit an email address used as an Apple-ID to [erikmartens.dev@icloud.com](mailto:erikmartens.dev@icloud.com) to be added to the list of testers.
-
-## Support & Feedback
-
-If you are having technical issues or want to raise a bug/issue with the app, the preferred way is through [GitHub issues](https://github.com/erikmartens/NearbyWeather/issues). In order to contact Erik Maximilian Martens for any other request please reach out via one of the channels detailed in table below:
-
-| Platform | Link |
-|:--|:--|
-| Discord | <a href="https://discord.gg/fxPgKzC"><img src="https://img.shields.io/discord/717413902689894411.svg?style=shield" alt="Discord: NearbyWeather by Erik Martens"/></a> |
-| Twitter | <a href="https://twitter.com/erik_m_martens"><img src="https://img.shields.io/badge/Twitter-@erik_m_martens-blue.svg" alt="Twitter: @erik_m_martens"/></a> |
-| Email | <a href="mailto:erikmartens.dev@gicloud.com" title="erikmartens.dev@icloud.com"><img src="https://img.shields.io/badge/email-erikmartens.dev@icloud.com-green?logo=mail&style=flat&logoColor=white"></a> |
-
 ## Licensing
 
-Copyright © 2016 - 2021 Erik Maximilian Martens.
+Copyright © 2016 - 2022 Erik Maximilian Martens.
 
 Licensed under the **MIT License** (the "License"); you may not use this file except in compliance with the License.
 

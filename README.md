@@ -17,10 +17,7 @@
 <p align="center">
   <a href="#about-the-app">About the App</a> •
   <a href="#mission-of-this-project">Mission of this Project</a> •
-  <a href="#app-releases">App Releases</a> •
   <a href="#how-to-get-started">How to Get Started</a> •
-  <a href="#how-to-contribute">How to Contribute</a> •
-  <a href="#support--feedback">Support & Feedback</a> •
   <a href="#licensing">Licensing</a>
 </p>
 
